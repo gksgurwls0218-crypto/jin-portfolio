@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef } from "react";
+import Link from "next/link";
 
 type Pt = { x: number; y: number };
 const le = (a: number, b: number, t: number) => a + (b - a) * t;
@@ -101,127 +102,127 @@ export default function Hero() {
 
     const W = 680, H = 415;
     let ph = 0, tk = 0, fr = 0;
-    let ourN = BASE.map(p => ({ ...p }));
-    let oppN = OPPB.map(p => ({ ...p }));
+    const ourN = BASE.map(p => ({ ...p }));
+    const oppN = OPPB.map(p => ({ ...p }));
     let gA = 0, cXt = 0.06;
     let ballX = 0, ballY = 0, ballA = 0;
     let raf: number;
 
     function drawPitch() {
-      ctx.clearRect(0, 0, W, H);
-      ctx.fillStyle = "#060e08"; ctx.fillRect(0, 0, W, H);
-      for (let i = 0; i < 5; i++) { ctx.fillStyle = "rgba(11,22,9,.36)"; ctx.fillRect(66 + i * 104, 16, 52, H - 32); }
-      ctx.strokeStyle = "rgba(255,255,255,.042)"; ctx.lineWidth = 0.5; ctx.setLineDash([]);
-      for (let x = 60; x <= 620; x += 70) { ctx.beginPath(); ctx.moveTo(x, 16); ctx.lineTo(x, H - 16); ctx.stroke(); }
-      for (let y = 18; y <= H - 18; y += 65) { ctx.beginPath(); ctx.moveTo(60, y); ctx.lineTo(620, y); ctx.stroke(); }
-      ctx.strokeStyle = "rgba(72,132,58,.55)"; ctx.lineWidth = 1;
-      ctx.strokeRect(60, 16, 560, H - 32);
-      ctx.beginPath(); ctx.moveTo(340, 16); ctx.lineTo(340, H - 16); ctx.stroke();
-      ctx.beginPath(); ctx.arc(340, H / 2, 50, 0, Math.PI * 2); ctx.stroke();
-      ctx.beginPath(); ctx.arc(340, H / 2, 2.5, 0, Math.PI * 2); ctx.fillStyle = "rgba(72,132,58,.55)"; ctx.fill();
-      ctx.strokeRect(60, 108, 116, H - 216); ctx.strokeRect(504, 108, 116, H - 216);
-      ctx.strokeRect(60, 155, 46, H - 310); ctx.strokeRect(574, 155, 46, H - 310);
-      ctx.lineWidth = 0.8;
-      ctx.beginPath(); ctx.arc(126, H / 2, 2.5, 0, Math.PI * 2); ctx.fill();
-      ctx.beginPath(); ctx.arc(554, H / 2, 2.5, 0, Math.PI * 2); ctx.fill();
-      ctx.font = "7px monospace"; ctx.fillStyle = "rgba(255,255,255,.1)";
-      ctx.textAlign = "left"; ctx.fillText("A1", 64, 26); ctx.fillText("A8", 64, H - 16);
+      ctx!.clearRect(0, 0, W, H);
+      ctx!.fillStyle = "#060e08"; ctx!.fillRect(0, 0, W, H);
+      for (let i = 0; i < 5; i++) { ctx!.fillStyle = "rgba(11,22,9,.36)"; ctx!.fillRect(66 + i * 104, 16, 52, H - 32); }
+      ctx!.strokeStyle = "rgba(255,255,255,.042)"; ctx!.lineWidth = 0.5; ctx!.setLineDash([]);
+      for (let x = 60; x <= 620; x += 70) { ctx!.beginPath(); ctx!.moveTo(x, 16); ctx!.lineTo(x, H - 16); ctx!.stroke(); }
+      for (let y = 18; y <= H - 18; y += 65) { ctx!.beginPath(); ctx!.moveTo(60, y); ctx!.lineTo(620, y); ctx!.stroke(); }
+      ctx!.strokeStyle = "rgba(72,132,58,.55)"; ctx!.lineWidth = 1;
+      ctx!.strokeRect(60, 16, 560, H - 32);
+      ctx!.beginPath(); ctx!.moveTo(340, 16); ctx!.lineTo(340, H - 16); ctx!.stroke();
+      ctx!.beginPath(); ctx!.arc(340, H / 2, 50, 0, Math.PI * 2); ctx!.stroke();
+      ctx!.beginPath(); ctx!.arc(340, H / 2, 2.5, 0, Math.PI * 2); ctx!.fillStyle = "rgba(72,132,58,.55)"; ctx!.fill();
+      ctx!.strokeRect(60, 108, 116, H - 216); ctx!.strokeRect(504, 108, 116, H - 216);
+      ctx!.strokeRect(60, 155, 46, H - 310); ctx!.strokeRect(574, 155, 46, H - 310);
+      ctx!.lineWidth = 0.8;
+      ctx!.beginPath(); ctx!.arc(126, H / 2, 2.5, 0, Math.PI * 2); ctx!.fill();
+      ctx!.beginPath(); ctx!.arc(554, H / 2, 2.5, 0, Math.PI * 2); ctx!.fill();
+      ctx!.font = "7px monospace"; ctx!.fillStyle = "rgba(255,255,255,.1)";
+      ctx!.textAlign = "left"; ctx!.fillText("A1", 64, 26); ctx!.fillText("A8", 64, H - 16);
     }
 
     function drawNode(x: number, y: number, isOur: boolean, r: number, ringA: number) {
       const c = isOur
         ? { fi: "rgba(34,86,28,.86)", st: "rgba(86,196,70,.7)", gl: "rgba(60,185,50,.2)" }
         : { fi: "rgba(108,30,30,.9)", st: "rgba(218,75,62,.8)", gl: "rgba(205,60,50,.16)" };
-      ctx.beginPath(); ctx.arc(x, y, r + 6, 0, Math.PI * 2); ctx.fillStyle = c.gl; ctx.fill();
-      ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fillStyle = c.fi; ctx.fill();
-      ctx.beginPath(); ctx.arc(x - r * 0.24, y - r * 0.26, r * 0.36, 0, Math.PI * 2); ctx.fillStyle = "rgba(255,255,255,.14)"; ctx.fill();
-      ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.strokeStyle = c.st; ctx.lineWidth = 0.95; ctx.stroke();
+      ctx!.beginPath(); ctx!.arc(x, y, r + 6, 0, Math.PI * 2); ctx!.fillStyle = c.gl; ctx!.fill();
+      ctx!.beginPath(); ctx!.arc(x, y, r, 0, Math.PI * 2); ctx!.fillStyle = c.fi; ctx!.fill();
+      ctx!.beginPath(); ctx!.arc(x - r * 0.24, y - r * 0.26, r * 0.36, 0, Math.PI * 2); ctx!.fillStyle = "rgba(255,255,255,.14)"; ctx!.fill();
+      ctx!.beginPath(); ctx!.arc(x, y, r, 0, Math.PI * 2); ctx!.strokeStyle = c.st; ctx!.lineWidth = 0.95; ctx!.stroke();
       if (ringA > 0.01) {
         const p = 0.55 + 0.45 * Math.abs(Math.sin(fr * 0.13));
-        ctx.beginPath(); ctx.arc(x, y, r + 7 + p * 4, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(127,255,106,${ringA * 0.65 * p})`; ctx.lineWidth = 1.1; ctx.stroke();
-        ctx.save(); ctx.globalAlpha = ringA * 0.35; ctx.strokeStyle = "rgba(127,255,106,1)"; ctx.lineWidth = 0.5; ctx.setLineDash([2, 3]);
+        ctx!.beginPath(); ctx!.arc(x, y, r + 7 + p * 4, 0, Math.PI * 2);
+        ctx!.strokeStyle = `rgba(127,255,106,${ringA * 0.65 * p})`; ctx!.lineWidth = 1.1; ctx!.stroke();
+        ctx!.save(); ctx!.globalAlpha = ringA * 0.35; ctx!.strokeStyle = "rgba(127,255,106,1)"; ctx!.lineWidth = 0.5; ctx!.setLineDash([2, 3]);
         ([[x - r - 10, y, x - r - 2, y], [x + r + 2, y, x + r + 10, y], [x, y - r - 10, x, y - r - 2], [x, y + r + 2, x, y + r + 10]] as [number,number,number,number][])
-          .forEach(([x1, y1, x2, y2]) => { ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke(); });
-        ctx.setLineDash([]); ctx.restore();
+          .forEach(([x1, y1, x2, y2]) => { ctx!.beginPath(); ctx!.moveTo(x1, y1); ctx!.lineTo(x2, y2); ctx!.stroke(); });
+        ctx!.setLineDash([]); ctx!.restore();
       }
     }
 
     function playerTag(x: number, y: number, txt: string, a: number, col: string) {
       if (a < 0.01) return;
-      ctx.save(); ctx.globalAlpha = a;
-      ctx.font = "bold 8px monospace";
-      const tw = ctx.measureText(txt).width, pw = tw + 14, ph2 = 14, px = x - pw / 2, py = y - 26;
-      ctx.fillStyle = "rgba(4,12,6,.92)"; rr(ctx, px, py, pw, ph2, 4); ctx.fill();
-      ctx.strokeStyle = col; ctx.lineWidth = 0.6; rr(ctx, px, py, pw, ph2, 4); ctx.stroke();
-      ctx.fillStyle = col; ctx.textAlign = "center"; ctx.fillText(txt, x, py + ph2 - 3.5);
-      ctx.textAlign = "left"; ctx.restore();
+      ctx!.save(); ctx!.globalAlpha = a;
+      ctx!.font = "bold 8px monospace";
+      const tw = ctx!.measureText(txt).width, pw = tw + 14, ph2 = 14, px = x - pw / 2, py = y - 26;
+      ctx!.fillStyle = "rgba(4,12,6,.92)"; rr(ctx!, px, py, pw, ph2, 4); ctx!.fill();
+      ctx!.strokeStyle = col; ctx!.lineWidth = 0.6; rr(ctx!, px, py, pw, ph2, 4); ctx!.stroke();
+      ctx!.fillStyle = col; ctx!.textAlign = "center"; ctx!.fillText(txt, x, py + ph2 - 3.5);
+      ctx!.textAlign = "left"; ctx!.restore();
     }
 
     function dashedArr(fx: number, fy: number, tx: number, ty: number, lbl: string, a: number, col: string) {
       if (a < 0.01) return;
-      ctx.save(); ctx.globalAlpha = a;
-      ctx.strokeStyle = col; ctx.lineWidth = 1; ctx.setLineDash([4, 4]);
-      ctx.beginPath(); ctx.moveTo(fx, fy); ctx.lineTo(tx, ty); ctx.stroke(); ctx.setLineDash([]);
+      ctx!.save(); ctx!.globalAlpha = a;
+      ctx!.strokeStyle = col; ctx!.lineWidth = 1; ctx!.setLineDash([4, 4]);
+      ctx!.beginPath(); ctx!.moveTo(fx, fy); ctx!.lineTo(tx, ty); ctx!.stroke(); ctx!.setLineDash([]);
       const ang = Math.atan2(ty - fy, tx - fx);
-      ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(tx, ty);
-      ctx.lineTo(tx - Math.cos(ang - 0.4) * 10, ty - Math.sin(ang - 0.4) * 10);
-      ctx.lineTo(tx - Math.cos(ang + 0.4) * 10, ty - Math.sin(ang + 0.4) * 10);
-      ctx.closePath(); ctx.fill();
-      ctx.font = "bold 9px monospace"; ctx.fillStyle = col; ctx.fillText(lbl, tx + 6, ty + 4);
-      ctx.restore();
+      ctx!.fillStyle = col; ctx!.beginPath(); ctx!.moveTo(tx, ty);
+      ctx!.lineTo(tx - Math.cos(ang - 0.4) * 10, ty - Math.sin(ang - 0.4) * 10);
+      ctx!.lineTo(tx - Math.cos(ang + 0.4) * 10, ty - Math.sin(ang + 0.4) * 10);
+      ctx!.closePath(); ctx!.fill();
+      ctx!.font = "bold 9px monospace"; ctx!.fillStyle = col; ctx!.fillText(lbl, tx + 6, ty + 4);
+      ctx!.restore();
     }
 
     function solidArr(fx: number, fy: number, tx: number, ty: number, a: number, col: string) {
       if (a < 0.01) return;
-      ctx.save(); ctx.globalAlpha = a;
-      ctx.strokeStyle = col; ctx.lineWidth = 2; ctx.setLineDash([]);
-      ctx.beginPath(); ctx.moveTo(fx, fy); ctx.lineTo(tx, ty); ctx.stroke();
+      ctx!.save(); ctx!.globalAlpha = a;
+      ctx!.strokeStyle = col; ctx!.lineWidth = 2; ctx!.setLineDash([]);
+      ctx!.beginPath(); ctx!.moveTo(fx, fy); ctx!.lineTo(tx, ty); ctx!.stroke();
       const ang = Math.atan2(ty - fy, tx - fx);
-      ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(tx, ty);
-      ctx.lineTo(tx - Math.cos(ang - 0.38) * 13, ty - Math.sin(ang - 0.38) * 13);
-      ctx.lineTo(tx - Math.cos(ang + 0.38) * 13, ty - Math.sin(ang + 0.38) * 13);
-      ctx.closePath(); ctx.fill(); ctx.restore();
+      ctx!.fillStyle = col; ctx!.beginPath(); ctx!.moveTo(tx, ty);
+      ctx!.lineTo(tx - Math.cos(ang - 0.38) * 13, ty - Math.sin(ang - 0.38) * 13);
+      ctx!.lineTo(tx - Math.cos(ang + 0.38) * 13, ty - Math.sin(ang + 0.38) * 13);
+      ctx!.closePath(); ctx!.fill(); ctx!.restore();
     }
 
     function mutTrail(a: number) {
       if (a < 0.01) return;
-      ctx.save(); ctx.globalAlpha = a * 0.45;
-      ctx.strokeStyle = "rgba(127,255,106,.8)"; ctx.lineWidth = 0.9; ctx.setLineDash([3, 5]);
-      ctx.beginPath(); ctx.moveTo(438, 161); ctx.lineTo(390, 210); ctx.stroke();
-      ctx.setLineDash([]); ctx.restore();
+      ctx!.save(); ctx!.globalAlpha = a * 0.45;
+      ctx!.strokeStyle = "rgba(127,255,106,.8)"; ctx!.lineWidth = 0.9; ctx!.setLineDash([3, 5]);
+      ctx!.beginPath(); ctx!.moveTo(438, 161); ctx!.lineTo(390, 210); ctx!.stroke();
+      ctx!.setLineDash([]); ctx!.restore();
     }
 
     function gapZone(a: number) {
       if (a < 0.01) return;
-      ctx.save();
-      ctx.globalAlpha = a * 0.1; ctx.fillStyle = "#7fff6a";
-      ctx.beginPath(); ctx.ellipse(GAP.cx, GAP.cy, GAP.rx, GAP.ry, GAP.angle, 0, Math.PI * 2); ctx.fill();
-      ctx.globalAlpha = a * 0.48; ctx.strokeStyle = "rgba(127,255,106,.6)"; ctx.lineWidth = 0.9; ctx.setLineDash([3, 4]);
-      ctx.beginPath(); ctx.ellipse(GAP.cx, GAP.cy, GAP.rx, GAP.ry, GAP.angle, 0, Math.PI * 2); ctx.stroke();
-      ctx.setLineDash([]);
-      ctx.globalAlpha = a * 0.75; ctx.fillStyle = "rgba(127,255,106,.82)";
-      ctx.font = "7px monospace"; ctx.textAlign = "center"; ctx.fillText("GAP", GAP.cx, GAP.cy + 3);
-      ctx.textAlign = "left"; ctx.restore();
+      ctx!.save();
+      ctx!.globalAlpha = a * 0.1; ctx!.fillStyle = "#7fff6a";
+      ctx!.beginPath(); ctx!.ellipse(GAP.cx, GAP.cy, GAP.rx, GAP.ry, GAP.angle, 0, Math.PI * 2); ctx!.fill();
+      ctx!.globalAlpha = a * 0.48; ctx!.strokeStyle = "rgba(127,255,106,.6)"; ctx!.lineWidth = 0.9; ctx!.setLineDash([3, 4]);
+      ctx!.beginPath(); ctx!.ellipse(GAP.cx, GAP.cy, GAP.rx, GAP.ry, GAP.angle, 0, Math.PI * 2); ctx!.stroke();
+      ctx!.setLineDash([]);
+      ctx!.globalAlpha = a * 0.75; ctx!.fillStyle = "rgba(127,255,106,.82)";
+      ctx!.font = "7px monospace"; ctx!.textAlign = "center"; ctx!.fillText("GAP", GAP.cx, GAP.cy + 3);
+      ctx!.textAlign = "left"; ctx!.restore();
     }
 
     function conceptPill(l1: string, l2: string, a: number) {
       if (a < 0.01) return;
-      ctx.save(); ctx.globalAlpha = a;
+      ctx!.save(); ctx!.globalAlpha = a;
       const cx = 340, cy = H - 64, pw = 248, ph2 = 38;
-      ctx.fillStyle = "rgba(8,18,10,.82)"; rr(ctx, cx - pw / 2, cy - ph2 / 2, pw, ph2, 8); ctx.fill();
-      ctx.strokeStyle = "rgba(90,160,80,.3)"; ctx.lineWidth = 0.6; rr(ctx, cx - pw / 2, cy - ph2 / 2, pw, ph2, 8); ctx.stroke();
-      ctx.textAlign = "center";
-      ctx.font = "10px monospace"; ctx.fillStyle = "rgba(127,255,106,.92)"; ctx.fillText(l1, cx, cy - 4);
-      ctx.font = "9px monospace"; ctx.fillStyle = "rgba(160,210,155,.75)"; ctx.fillText(l2, cx, cy + 12);
-      ctx.textAlign = "left"; ctx.restore();
+      ctx!.fillStyle = "rgba(8,18,10,.82)"; rr(ctx!, cx - pw / 2, cy - ph2 / 2, pw, ph2, 8); ctx!.fill();
+      ctx!.strokeStyle = "rgba(90,160,80,.3)"; ctx!.lineWidth = 0.6; rr(ctx!, cx - pw / 2, cy - ph2 / 2, pw, ph2, 8); ctx!.stroke();
+      ctx!.textAlign = "center";
+      ctx!.font = "10px monospace"; ctx!.fillStyle = "rgba(127,255,106,.92)"; ctx!.fillText(l1, cx, cy - 4);
+      ctx!.font = "9px monospace"; ctx!.fillStyle = "rgba(160,210,155,.75)"; ctx!.fillText(l2, cx, cy + 12);
+      ctx!.textAlign = "left"; ctx!.restore();
     }
 
     function formLabel(x: number, y: number, txt: string, a: number, col: string) {
       if (a < 0.01) return;
-      ctx.save(); ctx.globalAlpha = a;
-      ctx.font = "8px monospace"; ctx.fillStyle = col; ctx.textAlign = "center"; ctx.fillText(txt, x, y);
-      ctx.textAlign = "left"; ctx.restore();
+      ctx!.save(); ctx!.globalAlpha = a;
+      ctx!.font = "8px monospace"; ctx!.fillStyle = col; ctx!.textAlign = "center"; ctx!.fillText(txt, x, y);
+      ctx!.textAlign = "left"; ctx!.restore();
     }
 
     function loop() {
@@ -239,7 +240,7 @@ export default function Hero() {
       cXt = le(cXt, p.xt, xtS);
 
       drawPitch();
-      ctx.save(); ctx.globalAlpha = gA;
+      ctx!.save(); ctx!.globalAlpha = gA;
 
       if (p.id === "MUTATION" || p.id === "VARIABLE" || p.id === "PENETRATE") {
         const ta = p.id === "MUTATION" ? cl((tk - 30) / 36, 0, 1) : 1;
@@ -279,9 +280,9 @@ export default function Hero() {
         ballA = tk < 70 ? 1 : cl(1 - (tk - 70) / 22, 0, 1);
       } else { ballA = 0; }
       if (ballA > 0.01) {
-        ctx.globalAlpha = gA * ballA;
-        ctx.beginPath(); ctx.arc(ballX, ballY, 4, 0, Math.PI * 2); ctx.fillStyle = "rgba(255,255,240,.95)"; ctx.fill();
-        ctx.beginPath(); ctx.arc(ballX, ballY, 8, 0, Math.PI * 2); ctx.fillStyle = "rgba(255,255,200,.18)"; ctx.fill();
+        ctx!.globalAlpha = gA * ballA;
+        ctx!.beginPath(); ctx!.arc(ballX, ballY, 4, 0, Math.PI * 2); ctx!.fillStyle = "rgba(255,255,240,.95)"; ctx!.fill();
+        ctx!.beginPath(); ctx!.arc(ballX, ballY, 8, 0, Math.PI * 2); ctx!.fillStyle = "rgba(255,255,200,.18)"; ctx!.fill();
       }
 
       if (p.id === "VARIABLE") {
@@ -291,7 +292,7 @@ export default function Hero() {
         dashedArr(st.x, st.y, st.x + 44, st.y - 24, "B", aB, "rgba(155,178,255,.78)");
         dashedArr(st.x, st.y, ourN[10].x + 4, ourN[10].y - 16, "C", aC, "rgba(127,255,106,.96)");
       }
-      ctx.restore();
+      ctx!.restore();
 
       const pA = pr > 0.08 && pr < 0.9 ? cl((tk - 8) / 16, 0, 1) : cl((1 - pr) * 9, 0, 1);
       if (p.id === "MUTATION")  conceptPill("[MUTATION]", "ST drops into pocket · CB steps out of line", pA);
@@ -347,14 +348,14 @@ export default function Hero() {
             218apple@naver.com
           </a>
           <div className="flex gap-2 mt-3">
-            <a href="/approach" className="text-xs px-4 py-1.5 rounded-lg"
+            <Link href="/approach" className="text-xs px-4 py-1.5 rounded-lg"
               style={{ background: "rgba(50,98,42,.75)", color: "rgba(185,235,178,.95)", border: "0.5px solid rgba(110,190,95,.4)" }}>
               Approach →
-            </a>
-            <a href="/match-analysis" className="text-xs px-4 py-1.5 rounded-lg"
+            </Link>
+            <Link href="/match-analysis" className="text-xs px-4 py-1.5 rounded-lg"
               style={{ background: "rgba(255,255,255,.07)", color: "rgba(255,255,255,.6)", border: "0.5px solid rgba(255,255,255,.12)" }}>
               Match Analysis
-            </a>
+            </Link>
           </div>
         </div>
 

@@ -3,19 +3,19 @@ import Link from "next/link";
 
 const matches = [
   {
-    slug: "psg-inter-ucl-2024",
+    slug: "psg-inter-ucl-2025",
     competition: "UEFA Champions League · Final",
-    date: "2024.06.01",
+    date: "2025.05.31",
     home: "PSG",
     away: "Inter Milan",
-    tags: ["Lure & Shock", "pre-half space", "4-phase cycle"],
+    tags: ["Mutation", "Pre-Half Space", "season-scale Lure & Shock"],
     metrics: ["xT", "field tilt", "pass network"],
     highlight: true,
   },
   {
-    slug: "psg-bayern-ucl-2024",
+    slug: "psg-bayern-ucl-2026",
     competition: "UEFA Champions League · Semi Final",
-    date: "2024.04–05",
+    date: "2026.04–05",
     home: "PSG",
     away: "Bayern Munich",
     tags: ["variation trigger", "hybrid formation", "PPDA"],

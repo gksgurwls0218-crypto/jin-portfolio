@@ -1,0 +1,197 @@
+---
+slug: psg-inter-ucl-2025
+competition: "UEFA Champions League · Final"
+date: "2025.05.31"
+venue: "Allianz Arena, Munich"
+home: { name: "PSG", score: 5 }
+away: { name: "Inter Milan", score: 0 }
+stats:
+  possession: [59, 41]
+  xg: { value: [2.4, 0.5], verify: true }
+  fieldTilt: { value: 68, est: true }
+  ppda: { value: [7.1, 14.8], est: true }
+tags: ["Mutation", "No-CF rotation", "Pre-Half Space", "season-scale Lure & Shock", "4-phase cycle"]
+verdict3:
+  - "① Inter's 5-3-2 block defends reference points; PSG's no-CF rotation deleted the reference points before kick-off — a Mutation played at system scale."
+  - "② The 5-0 is not a shock event but a season-scale Lure & Shock: eight months of identical structure on film, then the same structure executed at higher speed and width."
+  - "③ The framework strains in one place — PSG generate Shock with almost no in-match Lure. That exception is examined in V4, and it has a price (see the semi-final)."
+featured: true
+next: psg-bayern-ucl-2026
+---
+
+<Context heading="What happens when a system built to defend reference points meets an attack designed to have none?">
+
+Inter arrive as Europe's best-organised block: a back five that defends zones by defending *people entering zones*, screened by a midfield three that closes central lanes by reading the striker's position. Every mechanism in that sentence assumes one thing — that the opponent's attackers have home positions.
+
+PSG's attack has no home positions. Dembélé, Kvaratskhelia and Doué rotate freely through all three front roles; the "4-3-3" on the team sheet resolves, in build-up, into a different geometry almost every sequence. So the question this final poses to the framework: **what happens when a system built to defend reference points meets an attack designed to have none?**
+
+</Context>
+
+<Structures heading="Named shape vs actual shape">
+
+Team-sheet shapes: PSG 4-3-3, Inter 3-5-2. Actual build-up geometries observed: PSG cycled 4-1 / 4-2 / asymmetric back-three cores between sequences; Inter's 5-3-2 stayed constant — which is precisely the asymmetry the match turned on. One side mutated per possession; the other defended each mutation from the same starting grid.
+
+<ShapeMorph
+  shapes={[
+    {
+      label: "SEQ 12'",
+      caption: "4-1: single pivot, both full-backs high and wide.",
+      nodes: [{x:60,y:150},{x:140,y:90},{x:140,y:150},{x:140,y:210},{x:210,y:150},{x:290,y:70},{x:290,y:230},{x:340,y:110},{x:340,y:190}],
+      lanes: [{from:4,to:7},{from:4,to:8}],
+    },
+    {
+      label: "SEQ 27'",
+      caption: "4-2: double pivot forms, both centre-backs split wide.",
+      nodes: [{x:60,y:150},{x:120,y:90},{x:160,y:150},{x:120,y:210},{x:210,y:120},{x:210,y:180},{x:300,y:70},{x:300,y:230},{x:350,y:150}],
+      lanes: [{from:4,to:6},{from:5,to:7}],
+    },
+    {
+      label: "SEQ 63'",
+      caption: "Asymmetric back-three: right-back inverts, left-back stays high.",
+      nodes: [{x:60,y:150},{x:130,y:100},{x:150,y:150},{x:130,y:200},{x:220,y:130},{x:280,y:190},{x:310,y:70},{x:310,y:230},{x:360,y:150}],
+      lanes: [{from:4,to:6},{from:5,to:8}],
+    },
+  ]}
+  opponentNodes={[{x:470,y:60},{x:470,y:150},{x:470,y:240},{x:400,y:100},{x:400,y:200}]}
+/>
+
+</Structures>
+
+<VariationPoints heading="Where the system buffered">
+
+<VariationPoint n={1} title="The reference point that never arrives — no-CF as standing Mutation" time="00'–90'" concepts={["mutation", "buffering"]}>
+
+<PitchDiagram
+  zones={[]}
+  nodes={[
+    {x:568,y:80,team:"opp"},
+    {x:585,y:150,team:"opp",question:true},
+    {x:592,y:207,team:"opp",question:true},
+    {x:585,y:264,team:"opp",question:true},
+    {x:568,y:330,team:"opp"},
+    {x:470,y:130,team:"us"},
+    {x:495,y:207,team:"us"},
+    {x:470,y:284,team:"us"},
+  ]}
+  arrows={[
+    {from:{x:470,y:130},to:{x:495,y:207},kind:"option"},
+    {from:{x:495,y:207},to:{x:470,y:284},kind:"option"},
+    {from:{x:470,y:284},to:{x:470,y:130},kind:"option",label:"ROTATION — NO ANCHOR"},
+  ]}
+/>
+
+A back five marks the striker to set its line. PSG field no striker to mark: the front three rotate continuously, so the player entering the CF zone changes identity every sequence. Inter's central CB spends the match choosing between stepping onto a false arrival or holding the line against nobody — a standing Mutation that makes every Inter defensive decision a fresh computation. Buffering, institutionalised.
+
+</VariationPoint>
+
+<VariationPoint n={2} title="Doué in the Pre-Half Space — the second movement, twice" time="~20' & ~63' [verify]" concepts={["two-engines", "pre-half-space"]}>
+
+<PitchDiagram
+  zones={[{x:430,y:270,width:130,height:80,rx:8,label:"PRE-HALF SPACE"}]}
+  nodes={[
+    {x:560,y:230,team:"opp"},
+    {x:575,y:300,team:"opp"},
+    {x:520,y:170,team:"opp"},
+    {x:470,y:310,team:"us",label:"DOUÉ"},
+  ]}
+  arrows={[
+    {from:{x:470,y:300},to:{x:545,y:255},kind:"option",label:"1 KEY PASS"},
+    {from:{x:565,y:238},to:{x:557,y:254},kind:"cover"},
+    {from:{x:470,y:298},to:{x:600,y:210},kind:"run",label:"2 SECOND MOVEMENT"},
+  ]}
+/>
+
+Both Doué goal sequences begin in the right Pre-Half Space corridor: receive, release a diagonal into the half-space, then attack the arc while Inter's cover slide is still in motion. The passer attacks the reaction to his own pass — the WHEN engine (defenders mid-slide) and the WHERE engine (a diagonal asking lateral + depth questions at once) firing in the same two seconds. Textbook instantiation of the framework's ignition zone.
+
+</VariationPoint>
+
+<VariationPoint n={3} title="The 7-second reset — counterpress as cycle protection" time="recurring" concepts={["four-phase-cycle"]}>
+
+Every PSG loss of possession triggered an immediate 2–3 man counterpress on the ball. Inter — the competition's most dangerous transition side — barely began a counter-attack all night. Read through the four-phase cycle: PSG's rest-attack runners and counterpress launchpad were positioned *during* possession, so ball loss led either to regain-within-seconds (cycle restarts) or to a tempo-killed Inter build-up against a set block. The phases pay for each other.
+
+</VariationPoint>
+
+<VariationPoint n={4} title="Where the framework strains — Shock without Lure" time="framework check" kind="framework-check" concepts={["lure-shock", "falsification"]}>
+
+My model says Shock is earned by Lure: conditioning first, violation second. PSG complicate this. Their rotation is so continuous that no single expectation ever locks in — they generate buffering without in-match conditioning, because *the opponent is never given time to form a prior at all*. Two honest readings: (a) the Lure operated at season scale — eight months of film is the conditioning; (b) permanent mutation is a distinct, Lure-less route to buffering available only to squads with elite one-v-one quality everywhere. I hold both, and note the cost: a system that skips structured conditioning also skips structured protection — the 5-4 semi-final against Bayern showed the same design conceding four in transition.
+
+</VariationPoint>
+
+</VariationPoints>
+
+<DataLayer heading="Reading the match in numbers">
+
+<XTTimeline
+  homeLabel="PSG"
+  awayLabel="INTER"
+  est
+  goals={[12, 20, 63, 73, 86]}
+  vMarkers={[{min: 20, v: 2}, {min: 63, v: 2}]}
+  data={[
+    {min:0,home:0.05,away:0.05},{min:5,home:0.08,away:0.06},{min:10,home:0.14,away:0.05},
+    {min:12,home:0.42,away:0.04},{min:15,home:0.09,away:0.06},{min:20,home:0.55,away:0.05},
+    {min:25,home:0.12,away:0.07},{min:30,home:0.16,away:0.05},{min:35,home:0.1,away:0.06},
+    {min:40,home:0.13,away:0.05},{min:45,home:0.11,away:0.06},{min:50,home:0.09,away:0.05},
+    {min:55,home:0.15,away:0.06},{min:60,home:0.1,away:0.05},{min:63,home:0.6,away:0.04},
+    {min:68,home:0.12,away:0.05},{min:73,home:0.5,away:0.05},{min:78,home:0.11,away:0.04},
+    {min:82,home:0.14,away:0.05},{min:86,home:0.46,away:0.04},{min:90,home:0.1,away:0.05},
+  ]}
+/>
+
+<FieldTilt value={68} homeLabel="PSG" awayLabel="INTER" est />
+
+<PassNetwork
+  title="PSG — PASS NETWORK · high dispersion, no erasable node"
+  caption="Vitinha highest betweenness but not dominant — the plan does not collapse if any one node is removed."
+  nodes={[
+    {label:"Vitinha",x:160,y:110,centrality:0.5},
+    {label:"Marquinhos",x:80,y:150,centrality:0.38},
+    {label:"Hakimi",x:250,y:60,centrality:0.34},
+    {label:"Doué",x:250,y:160,centrality:0.4},
+    {label:"Dembélé",x:120,y:60,centrality:0.36},
+    {label:"Kvaratskhelia",x:120,y:190,centrality:0.37},
+    {label:"Ruiz",x:190,y:170,centrality:0.42},
+  ]}
+  edges={[
+    {from:0,to:1,count:14},{from:0,to:3,count:11},{from:0,to:6,count:12},
+    {from:1,to:4,count:9},{from:6,to:2,count:10},{from:6,to:5,count:9},
+    {from:3,to:2,count:8},{from:5,to:1,count:7},
+  ]}
+/>
+
+<PassNetwork
+  title="INTER — PASS NETWORK · concentrated, one erasable node"
+  caption="Progression funnelled through Çalhanoğlu — remove him and the build-up has no obvious second author."
+  nodes={[
+    {label:"Çalhanoğlu",x:160,y:110,centrality:0.85},
+    {label:"Bastoni",x:80,y:150,centrality:0.3},
+    {label:"Barella",x:230,y:70,centrality:0.32},
+    {label:"Dimarco",x:250,y:170,centrality:0.28},
+    {label:"Acerbi",x:100,y:70,centrality:0.26},
+  ]}
+  edges={[
+    {from:0,to:1,count:16},{from:0,to:2,count:15},{from:0,to:3,count:14},
+    {from:0,to:4,count:12},{from:1,to:4,count:5},
+  ]}
+/>
+
+Reverse-PPDA callout: Inter's pressing intensity on PSG's build-up dropped as the half progressed <strong>est.</strong> — conditioning visible in the opponent's behaviour.
+
+</DataLayer>
+
+<Verdict
+  heading="What the framework predicted, observed, and got wrong"
+  rows={[
+    { predicted: "A fixed-reference block buffers against structural mutation", observed: "Inter's back five computed all night; 5 goals, 0 reply", broke: "" },
+    { predicted: "Two-engine ignition concentrates in the Pre-Half Space", observed: "Both Doué sequences: corridor receive → diagonal → arc run", broke: "" },
+    { predicted: "Shock requires in-match Lure", observed: "PSG produced Shock with minimal in-match conditioning", broke: "Lure operated at season scale, or was skipped — model needs the distinction (V4)" },
+    { predicted: "Skipping structured phases carries a transition cost", observed: "Not punished here (Inter never transitioned)", broke: "Punished a round earlier: 5-4 vs Bayern — evidence lives across matches, not within one" },
+  ]}
+  openQuestions={[
+    "Does permanent rotation work below elite player quality?",
+    "Can season-scale Lure be measured directly (opponent press-shape drift across their last five matches vs PSG film)?",
+    "These carry into the next analysis.",
+  ]}
+  concepts={["mutation", "pre-half-space", "four-phase-cycle"]}
+  next={{ slug: "psg-bayern-ucl-2026", label: "PSG vs Bayern, UCL SF — the cost side of this design" }}
+/>

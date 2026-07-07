@@ -54,8 +54,8 @@ export default function ApproachSection() {
         }}
       >
         <blockquote className="text-sm leading-relaxed" style={{ color: "rgba(225,222,215,0.92)", fontStyle: "italic" }}>
-          "A moment of variation — a variable or a mutation — induces a few seconds of buffering in the opponent's system.
-          Those few seconds change the game. When the system cannot respond to the buffering, the system collapses."
+          &ldquo;A moment of variation — a variable or a mutation — induces a few seconds of buffering in the opponent&rsquo;s system.
+          Those few seconds change the game. When the system cannot respond to the buffering, the system collapses.&rdquo;
         </blockquote>
         <p className="mono text-xs mt-3" style={{ color: "rgba(255,255,255,0.38)" }}>— Variation theory · Jin</p>
       </div>
