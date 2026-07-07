@@ -1,5 +1,7 @@
 "use client";
 import Link from "next/link";
+import { useRef } from "react";
+import TeamBadge from "@/components/match/TeamBadge";
 
 const matches = [
   {
@@ -35,93 +37,174 @@ const matches = [
 ];
 
 export default function MatchSection() {
-  return (
-    <section className="px-9 py-16" style={{ background: "#0e0a06", borderTop: "0.5px solid rgba(255,255,255,0.06)" }}>
-      <div className="flex items-end justify-between mb-10">
-        <div>
-          <p className="mono text-xs tracking-widest mb-3" style={{ color: "rgba(255,155,70,0.88)" }}>
-            02 / MATCH ANALYSIS
-          </p>
-          <h2 className="text-2xl font-medium" style={{ color: "rgba(238,234,228,0.97)" }}>
-            Theory applied to<br />
-            <span style={{ color: "rgba(255,215,120,0.96)" }}>matches analysed</span>
-          </h2>
-        </div>
-        <Link
-          href="/match-analysis"
-          className="mono text-xs tracking-wider"
-          style={{ color: "rgba(255,165,85,0.88)", borderBottom: "0.5px solid rgba(255,165,85,0.35)", paddingBottom: "1px" }}
-        >
-          All analyses →
-        </Link>
-      </div>
+  const trackRef = useRef<HTMLDivElement>(null);
 
-      <div className="flex flex-col gap-2.5">
-        {matches.map((m) => (
+  const scrollByCard = (dir: 1 | -1) => {
+    const track = trackRef.current;
+    if (!track) return;
+    const card = track.querySelector<HTMLElement>("[data-card]");
+    const amount = (card?.offsetWidth ?? 360) + 20;
+    track.scrollBy({ left: dir * amount, behavior: "smooth" });
+  };
+
+  return (
+    <section className="relative px-6 md:px-9 py-24 md:py-28 overflow-hidden" style={{ background: "var(--light-bg-alt)" }}>
+      {/* soft decorative glass backdrop for the carousel's glassmorphism to read against */}
+      <div
+        aria-hidden
+        className="absolute pointer-events-none"
+        style={{
+          top: "-10%", right: "-6%", width: 420, height: 420, borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(31,122,61,0.14) 0%, transparent 70%)",
+          filter: "blur(10px)",
+        }}
+      />
+      <div
+        aria-hidden
+        className="absolute pointer-events-none"
+        style={{
+          bottom: "-14%", left: "-8%", width: 380, height: 380, borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(31,122,61,0.10) 0%, transparent 70%)",
+          filter: "blur(10px)",
+        }}
+      />
+
+      <div className="relative max-w-6xl mx-auto">
+        <div className="flex flex-wrap items-end justify-between gap-4 mb-14">
+          <div>
+            <p className="mono text-xs tracking-[0.18em] mb-3" style={{ color: "var(--accent)" }}>
+              02 / MATCH ANALYSIS
+            </p>
+            <h2 className="font-medium" style={{ color: "var(--light-text)", fontSize: "clamp(24px, 3vw, 32px)", lineHeight: 1.25 }}>
+              Theory applied to<br />
+              <span style={{ color: "var(--accent)" }}>matches analysed</span>
+            </h2>
+          </div>
           <Link
-            key={m.slug}
-            href={`/match-analysis/${m.slug}`}
-            className="rounded-xl px-5 py-4 flex items-center justify-between gap-6 transition-all duration-200"
-            style={{
-              background: m.highlight ? "rgba(255,130,40,0.08)" : "rgba(255,255,255,0.025)",
-              border: m.highlight ? "0.5px solid rgba(255,155,70,0.26)" : "0.5px solid rgba(255,145,60,0.14)",
-              backdropFilter: "blur(6px)",
-            }}
-            onMouseEnter={e => {
-              const el = e.currentTarget as HTMLElement;
-              el.style.background = m.highlight ? "rgba(255,140,45,0.14)" : "rgba(255,130,40,0.07)";
-              el.style.borderColor = "rgba(255,165,75,0.42)";
-              el.style.transform = "translateY(-2px)";
-              el.style.boxShadow = "0 8px 28px rgba(200,100,30,0.1)";
-            }}
-            onMouseLeave={e => {
-              const el = e.currentTarget as HTMLElement;
-              el.style.background = m.highlight ? "rgba(255,130,40,0.08)" : "rgba(255,255,255,0.025)";
-              el.style.borderColor = m.highlight ? "rgba(255,155,70,0.26)" : "rgba(255,145,60,0.14)";
-              el.style.transform = "translateY(0)";
-              el.style.boxShadow = "none";
-            }}
+            href="/match-analysis"
+            className="mono text-xs tracking-wider shrink-0"
+            style={{ color: "var(--accent)", borderBottom: "0.5px solid var(--accent-soft-border)", paddingBottom: "2px" }}
           >
-            <div className="flex flex-col gap-1.5 min-w-0">
-              <span className="mono" style={{ fontSize: "9px", color: "rgba(210,205,200,0.72)" }}>
-                {m.competition} · {m.date}
-              </span>
-              <div className="flex items-baseline gap-3">
-                <span className="font-medium" style={{ fontSize: "15px", color: "rgba(238,234,228,0.97)" }}>{m.home}</span>
-                <span className="mono" style={{ fontSize: "9px", color: "rgba(200,200,195,0.55)" }}>vs</span>
-                <span className="font-medium" style={{ fontSize: "15px", color: "rgba(238,234,228,0.97)" }}>{m.away}</span>
+            All analyses →
+          </Link>
+        </div>
+
+        <div
+          ref={trackRef}
+          className="flex gap-5 overflow-x-auto hide-scrollbar pb-2"
+          style={{ scrollSnapType: "x mandatory" }}
+        >
+          {matches.map((m) => (
+            <Link
+              key={m.slug}
+              data-card
+              href={`/match-analysis/${m.slug}`}
+              className="flex flex-col gap-5 rounded-2xl p-6 transition-all duration-200 shrink-0"
+              style={{
+                width: 360,
+                scrollSnapAlign: "start",
+                background: "rgba(255,255,255,0.62)",
+                backdropFilter: "blur(20px) saturate(160%)",
+                WebkitBackdropFilter: "blur(20px) saturate(160%)",
+                border: m.highlight ? "0.5px solid var(--accent-soft-border)" : "0.5px solid var(--light-border-strong)",
+                boxShadow: "0 8px 30px rgba(20,40,20,0.08)",
+              }}
+              onMouseEnter={e => {
+                const el = e.currentTarget as HTMLElement;
+                el.style.transform = "translateY(-3px)";
+                el.style.boxShadow = "0 16px 38px rgba(20,50,20,0.14)";
+                el.style.borderColor = "var(--accent-soft-border)";
+              }}
+              onMouseLeave={e => {
+                const el = e.currentTarget as HTMLElement;
+                el.style.transform = "translateY(0)";
+                el.style.boxShadow = "0 8px 30px rgba(20,40,20,0.08)";
+                el.style.borderColor = m.highlight ? "var(--accent-soft-border)" : "var(--light-border-strong)";
+              }}
+            >
+              <div className="flex items-center justify-between gap-3">
+                <span className="mono" style={{ fontSize: "9px", color: "var(--light-text-muted)" }}>
+                  {m.competition} · {m.date}
+                </span>
+                {m.highlight && (
+                  <span
+                    className="mono px-2 py-0.5 rounded-md shrink-0"
+                    style={{ fontSize: "8px", background: "var(--accent-tag-bg)", color: "var(--accent-tag-text)", border: "0.5px solid var(--accent-soft-border)" }}
+                  >
+                    FEATURED
+                  </span>
+                )}
               </div>
-              <div className="flex flex-wrap gap-1.5 mt-0.5">
+
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex flex-col items-center gap-2 min-w-0">
+                  <TeamBadge name={m.home} />
+                  <span className="font-medium text-center" style={{ fontSize: "13px", color: "var(--light-text)" }}>{m.home}</span>
+                </div>
+                <span className="mono shrink-0" style={{ fontSize: "10px", color: "var(--light-text-muted)" }}>vs</span>
+                <div className="flex flex-col items-center gap-2 min-w-0">
+                  <TeamBadge name={m.away} />
+                  <span className="font-medium text-center" style={{ fontSize: "13px", color: "var(--light-text)" }}>{m.away}</span>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap gap-1.5">
                 {m.tags.map((t) => (
                   <span
                     key={t}
                     className="mono px-2.5 py-1 rounded-md"
-                    style={{
-                      fontSize: "9px",
-                      background: "rgba(255,135,45,0.15)",
-                      color: "rgba(255,190,115,0.94)",
-                      border: "0.5px solid rgba(255,145,55,0.28)",
-                    }}
+                    style={{ fontSize: "9px", background: "var(--accent-tag-bg)", color: "var(--accent-tag-text)", border: "0.5px solid var(--accent-soft-border)" }}
                   >
                     {t}
                   </span>
                 ))}
               </div>
-            </div>
 
-            <div className="flex flex-col gap-1 text-right shrink-0">
-              <span className="mono" style={{ fontSize: "9px", color: "rgba(200,198,195,0.62)" }}>metrics</span>
-              {m.metrics.map((metric) => (
-                <span key={metric} className="mono" style={{ fontSize: "10px", color: "rgba(255,172,88,0.90)" }}>
-                  {metric}
-                </span>
-              ))}
-              <span className="mono mt-1.5" style={{ fontSize: "9px", color: "rgba(255,158,72,0.65)" }}>
-                → view analysis
-              </span>
-            </div>
-          </Link>
-        ))}
+              <div className="flex items-center justify-between pt-3" style={{ borderTop: "0.5px solid var(--light-border)" }}>
+                <div className="flex gap-2">
+                  {m.metrics.map((metric) => (
+                    <span key={metric} className="mono" style={{ fontSize: "9px", color: "var(--light-text-muted)" }}>
+                      {metric}
+                    </span>
+                  ))}
+                </div>
+                <span className="mono" style={{ fontSize: "10px", color: "var(--accent)" }}>→ view analysis</span>
+              </div>
+            </Link>
+          ))}
+        </div>
+
+        <div className="flex justify-end gap-2 mt-6">
+          <button
+            aria-label="previous match"
+            onClick={() => scrollByCard(-1)}
+            className="mono flex items-center justify-center rounded-full transition-all duration-150"
+            style={{
+              width: 38, height: 38,
+              background: "rgba(255,255,255,0.7)",
+              backdropFilter: "blur(12px)",
+              border: "0.5px solid var(--light-border-strong)",
+              color: "var(--light-text)",
+              fontSize: "14px",
+            }}
+          >
+            ‹
+          </button>
+          <button
+            aria-label="next match"
+            onClick={() => scrollByCard(1)}
+            className="mono flex items-center justify-center rounded-full transition-all duration-150"
+            style={{
+              width: 38, height: 38,
+              background: "var(--accent)",
+              border: "0.5px solid var(--accent-strong)",
+              color: "#fff",
+              fontSize: "14px",
+            }}
+          >
+            ›
+          </button>
+        </div>
       </div>
     </section>
   );

@@ -325,48 +325,48 @@ export default function Hero() {
       <canvas ref={canvasRef} width={680} height={415} className="w-full" style={{ display: "block" }} />
 
       <div
-        className="absolute bottom-0 left-0 right-0 flex justify-between items-end px-8 pb-6 pt-20"
-        style={{ background: "linear-gradient(to top, rgba(6,14,8,.99) 0%, rgba(6,14,8,.70) 44%, transparent 100%)" }}
+        className="absolute bottom-0 left-0 right-0 flex flex-wrap justify-between items-end gap-6 px-6 md:px-10 pb-8 md:pb-10 pt-28"
+        style={{ background: "linear-gradient(to top, rgba(5,11,7,1) 0%, rgba(6,14,8,.94) 38%, rgba(6,14,8,.55) 68%, transparent 100%)" }}
       >
-        <div>
-          <div className="flex items-center gap-2 mb-2.5">
+        <div className="max-w-lg">
+          <div className="flex items-center gap-2 mb-3.5">
             <span style={{
               width: 5, height: 5, borderRadius: "50%", background: "#5aaa48", display: "inline-block",
               animation: "pulse 2.2s ease-in-out infinite",
             }} />
-            <span className="mono text-xs tracking-widest" style={{ color: "rgba(110,200,100,.82)" }}>VARIATION THEORY</span>
+            <span className="mono text-xs tracking-[0.18em]" style={{ color: "rgba(110,200,100,.85)" }}>VARIATION THEORY</span>
           </div>
-          <h1 className="text-2xl font-medium leading-snug mb-1.5" style={{ color: "rgba(242,238,232,1)" }}>
+          <h1 className="font-medium mb-3" style={{ color: "rgba(245,242,236,1)", fontSize: "clamp(28px, 4.2vw, 44px)", lineHeight: 1.15, letterSpacing: "-0.01em" }}>
             System adapts.<br />
             <span style={{ color: "#6fc761" }}>Variation</span> breaks it.
           </h1>
-          <p className="mono text-xs tracking-widest mb-3" style={{ color: "rgba(130,185,125,.65)" }}>
+          <p className="mono text-xs tracking-[0.18em] mb-4" style={{ color: "rgba(140,195,135,.7)" }}>
             TACTICAL ANALYST · DATA-DRIVEN · 2026
           </p>
-          <a href="mailto:218apple@naver.com" className="mono text-xs"
-            style={{ color: "rgba(110,170,105,.82)", borderBottom: "0.5px solid rgba(110,170,105,.3)", paddingBottom: 1 }}>
+          <a href="mailto:218apple@naver.com" className="mono text-xs block mb-4"
+            style={{ color: "rgba(120,180,115,.88)", borderBottom: "0.5px solid rgba(120,180,115,.32)", paddingBottom: 1, width: "fit-content" }}>
             218apple@naver.com
           </a>
-          <div className="flex gap-2 mt-3">
-            <Link href="/approach" className="text-xs px-4 py-1.5 rounded-lg"
-              style={{ background: "rgba(50,98,42,.75)", color: "rgba(185,235,178,.95)", border: "0.5px solid rgba(110,190,95,.4)" }}>
+          <div className="flex gap-2.5">
+            <Link href="/approach" className="text-sm px-5 py-2 rounded-lg font-medium"
+              style={{ background: "rgba(52,102,44,.85)", color: "rgba(198,240,190,.98)", border: "0.5px solid rgba(110,190,95,.45)" }}>
               Approach →
             </Link>
-            <Link href="/match-analysis" className="text-xs px-4 py-1.5 rounded-lg"
-              style={{ background: "rgba(255,255,255,.07)", color: "rgba(255,255,255,.6)", border: "0.5px solid rgba(255,255,255,.12)" }}>
+            <Link href="/match-analysis" className="text-sm px-5 py-2 rounded-lg"
+              style={{ background: "rgba(255,255,255,.08)", color: "rgba(255,255,255,.7)", border: "0.5px solid rgba(255,255,255,.14)" }}>
               Match Analysis
             </Link>
           </div>
         </div>
 
-        <div className="rounded-xl px-4 py-3 text-right min-w-[175px]"
-          style={{ backdropFilter: "blur(18px)", background: "rgba(255,255,255,.05)", border: "0.5px solid rgba(255,255,255,.1)" }}>
-          <div ref={hudLblRef} className="mono text-xs tracking-widest mb-1.5 transition-colors"
-            style={{ color: "rgba(140,200,130,.58)" }}>3-1-4-2 vs 4-4-2</div>
-          <div className="w-full mb-1.5" style={{ height: "1.5px", background: "rgba(255,255,255,.09)", borderRadius: 2, overflow: "hidden" }}>
+        <div className="rounded-xl px-5 py-3.5 text-right min-w-[185px]"
+          style={{ backdropFilter: "blur(18px)", background: "rgba(255,255,255,.055)", border: "0.5px solid rgba(255,255,255,.1)" }}>
+          <div ref={hudLblRef} className="mono text-xs tracking-[0.14em] mb-2 transition-colors"
+            style={{ color: "rgba(140,200,130,.6)" }}>3-1-4-2 vs 4-4-2</div>
+          <div className="w-full mb-2" style={{ height: "1.5px", background: "rgba(255,255,255,.09)", borderRadius: 2, overflow: "hidden" }}>
             <div ref={hudFillRef} style={{ height: "100%", width: "6%", background: "#4a9a42", borderRadius: 2, transition: "width .5s cubic-bezier(.4,0,.2,1), background .4s" }} />
           </div>
-          <span ref={hudValRef} className="mono text-xs" style={{ color: "rgba(155,215,145,.78)" }}>xT —</span>
+          <span ref={hudValRef} className="mono text-xs" style={{ color: "rgba(160,218,150,.82)" }}>xT —</span>
         </div>
       </div>
 

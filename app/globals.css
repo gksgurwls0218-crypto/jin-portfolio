@@ -14,6 +14,25 @@
   --text-muted: rgba(140, 180, 135, 0.55);
   --border-glass: rgba(90, 160, 80, 0.2);
   --border-subtle: rgba(60, 90, 55, 0.3);
+
+  /* ── Light theme (01/APPROACH, 02/MATCH ANALYSIS) ──
+     Single signature accent (same hue family as the hero's green)
+     carried onto a white/light base, per site-wide unification. */
+  --light-bg: #ffffff;
+  --light-bg-alt: #f4f6f3;
+  --light-text: #141815;
+  --light-text-secondary: #545e56;
+  --light-text-muted: #8b948d;
+  --light-border: rgba(20, 30, 20, 0.08);
+  --light-border-strong: rgba(20, 30, 20, 0.14);
+  --light-card-bg: rgba(255, 255, 255, 0.7);
+
+  --accent: #1f7a3d;
+  --accent-strong: #14532a;
+  --accent-soft-bg: rgba(31, 122, 61, 0.06);
+  --accent-soft-border: rgba(31, 122, 61, 0.18);
+  --accent-tag-bg: rgba(31, 122, 61, 0.09);
+  --accent-tag-text: #1f7a3d;
 }
 
 * {
@@ -50,4 +69,13 @@ body {
 .section-divider {
   border: none;
   border-top: 0.5px solid var(--border-subtle);
+}
+
+/* Hide scrollbar for horizontal carousels (still keyboard/scroll accessible) */
+.hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
 }
