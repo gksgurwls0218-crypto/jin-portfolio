@@ -334,18 +334,18 @@ export default function Hero() {
       </div>
       <div className="stage-vignette" />
 
-      {/* copy overlay */}
+      {/* copy overlay — strong scrim so the headline always reads over the animation */}
       <div
-        className="absolute bottom-0 left-0 right-0 flex flex-wrap justify-between items-end gap-8 px-6 md:px-10 pb-10 md:pb-14 pt-40"
-        style={{ background: "linear-gradient(to top, var(--stage) 0%, rgba(6,9,11,.92) 34%, rgba(6,9,11,.5) 66%, transparent 100%)" }}
+        className="absolute bottom-0 left-0 right-0 flex flex-wrap justify-between items-end gap-8 px-6 md:px-10 pb-12 md:pb-16 pt-56"
+        style={{ background: "linear-gradient(to top, var(--stage) 0%, var(--stage) 26%, rgba(6,9,11,.97) 46%, rgba(6,9,11,.78) 66%, rgba(6,9,11,.32) 84%, transparent 100%)" }}
       >
-        <div className="max-w-3xl">
-          <div className="mono t-eyebrow kicker mb-6">Variation theory</div>
-          <h1 className="display mb-6 t-hero" style={{ color: "var(--ink)" }}>
+        <div className="max-w-4xl">
+          <div className="mono t-eyebrow kicker mb-7" style={{ color: "var(--green-bright)" }}>Variation theory</div>
+          <h1 className="display mb-7 t-hero" style={{ color: "#ffffff", textShadow: "0 2px 40px rgba(0,0,0,0.7)" }}>
             System adapts.<br />
             <span style={{ color: "var(--green-bright)" }}>Variation</span> breaks it.
           </h1>
-          <p className="max-w-md mb-8" style={{ color: "var(--ink-2)", fontSize: "clamp(15px,1.5vw,17px)", lineHeight: 1.6 }}>
+          <p className="max-w-lg mb-9" style={{ color: "var(--ink)", fontSize: "clamp(16px,1.7vw,20px)", lineHeight: 1.55, fontWeight: 400 }}>
             A tactical framework built to be unpredictable by design — and proven in the analysis of real matches.
           </p>
           <div className="flex flex-wrap items-center gap-3">

@@ -66,7 +66,7 @@ body {
 .display { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.022em; }
 
 /* Fluid display scale — bold editorial hierarchy */
-.t-hero    { font-size: clamp(40px, 7vw, 92px);  line-height: 0.98; letter-spacing: -0.035em; }
+.t-hero    { font-size: clamp(46px, 8vw, 108px); line-height: 0.96; letter-spacing: -0.04em; font-weight: 700; }
 .t-section { font-size: clamp(32px, 5vw, 60px);  line-height: 1.02; letter-spacing: -0.028em; }
 .t-card    { font-size: clamp(19px, 2vw, 24px);  line-height: 1.12; letter-spacing: -0.015em; }
 .t-eyebrow { font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; }
