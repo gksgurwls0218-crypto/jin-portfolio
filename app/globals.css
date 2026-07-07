@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #0b160a;
+  --bg-surface: #111e10;
+  --bg-glass: rgba(20, 40, 18, 0.55);
+  --pitch-line: rgba(60, 100, 55, 0.35);
+  --green: #2d5a27;
+  --green-bright: #7fff6a;
+  --green-mid: #4a9a42;
+  --green-muted: rgba(140, 200, 130, 0.6);
+  --text-primary: #eeeae4;
+  --text-secondary: rgba(180, 210, 175, 0.7);
+  --text-muted: rgba(140, 180, 135, 0.55);
+  --border-glass: rgba(90, 160, 80, 0.2);
+  --border-subtle: rgba(60, 90, 55, 0.3);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: 'Inter', -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Glass utility */
+.glass {
+  background: var(--bg-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 0.5px solid var(--border-glass);
+}
+
+/* Mono text */
+.mono {
+  font-family: 'JetBrains Mono', 'IBM Plex Mono', monospace;
+}
+
+/* Section divider */
+.section-divider {
+  border: none;
+  border-top: 0.5px solid var(--border-subtle);
+}
