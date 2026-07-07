@@ -4,18 +4,21 @@ import Reveal from "@/components/Reveal";
 
 const concepts = [
   {
+    n: "A",
     tag: "CORE THEORY",
     title: "Lure & Shock",
     desc: "Condition the opponent through repeated cycles. The moment their expectation locks in — the variation triggers system buffering.",
     metric: "xT spike",
   },
   {
+    n: "B",
     tag: "ORIGINAL CONCEPT",
     title: "Pre-Half Space",
     desc: "The zone between the half-space and the final third — where the attacker receives before the defender can set their angle.",
     metric: "reception zone",
   },
   {
+    n: "C",
     tag: "STRUCTURE",
     title: "Hybrid 3-2 / 3-1",
     desc: "A build-up core that shifts shape based on pressure — same players, different roles, different variables unlocked.",
@@ -23,106 +26,116 @@ const concepts = [
   },
 ];
 
+function tilt(e: React.MouseEvent<HTMLElement>) {
+  const el = e.currentTarget;
+  const r = el.getBoundingClientRect();
+  const px = (e.clientX - r.left) / r.width;
+  const py = (e.clientY - r.top) / r.height;
+  const rx = (0.5 - py) * 7;
+  const ry = (px - 0.5) * 8;
+  el.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-6px)`;
+  el.style.setProperty("--gx", `${px * 100}%`);
+  el.style.setProperty("--gy", `${py * 100}%`);
+}
+function reset(e: React.MouseEvent<HTMLElement>) {
+  const el = e.currentTarget;
+  el.style.transform = "perspective(900px) rotateX(0) rotateY(0) translateY(0)";
+  el.style.boxShadow = "none";
+  el.style.borderColor = "var(--edge)";
+}
+
 export default function ApproachSection() {
   return (
-    <section className="px-6 md:px-12 py-24 md:py-32" style={{ background: "var(--light-bg)" }}>
+    <section className="relative px-6 md:px-10 py-28 md:py-40" style={{ background: "var(--stage)" }}>
       <div className="max-w-[1180px] mx-auto">
         <Reveal>
-          <div className="flex flex-wrap items-end justify-between gap-4 mb-14">
-            <div>
-              <p className="mono text-xs tracking-[0.18em] mb-4" style={{ color: "var(--accent)" }}>
-                01 / APPROACH
-              </p>
-              <h2 className="font-semibold" style={{ color: "var(--light-text)", fontSize: "clamp(28px, 4vw, 44px)", lineHeight: 1.2, letterSpacing: "-0.01em" }}>
+          <div className="flex flex-wrap items-end justify-between gap-6 mb-16">
+            <div className="max-w-2xl">
+              <p className="mono t-eyebrow kicker mb-6">01 / Approach</p>
+              <h2 className="display t-section" style={{ color: "var(--ink)" }}>
                 A football built to be<br />
-                <span style={{ color: "var(--accent)" }}>unpredictable by design</span>
+                <span style={{ color: "var(--green-bright)" }}>unpredictable by design.</span>
               </h2>
             </div>
             <Link
               href="/approach"
-              className="mono text-sm tracking-wider shrink-0"
-              style={{ color: "var(--accent)", borderBottom: "0.5px solid var(--accent-soft-border)", paddingBottom: "2px" }}
+              className="mono group inline-flex items-center gap-2 shrink-0 transition-colors duration-300"
+              style={{ fontSize: 13, color: "var(--ink-3)" }}
+              onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "var(--green-bright)")}
+              onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "var(--ink-3)")}
             >
-              Read the full essay →
+              Read the full essay
+              <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
             </Link>
           </div>
         </Reveal>
 
         <Reveal delay={80}>
-          <div
-            className="rounded-[20px] p-9 mb-10"
-            style={{
-              background: "var(--accent-soft-bg)",
-              border: "0.5px solid var(--light-border)",
-              borderLeft: "4px solid var(--accent)",
-            }}
+          <blockquote
+            className="relative mb-16 md:mb-20 pl-6 md:pl-8"
+            style={{ borderLeft: "2px solid var(--green-line)" }}
           >
-            <blockquote className="leading-relaxed" style={{ color: "var(--light-text)", fontSize: "18px", fontStyle: "italic" }}>
-              &ldquo;A moment of variation — a variable or a mutation — induces a few seconds of buffering in the opponent&rsquo;s system.
-              Those few seconds change the game. When the system cannot respond to the buffering, the system collapses.&rdquo;
-            </blockquote>
-            <p className="mono text-xs mt-4" style={{ color: "var(--light-text-muted)" }}>— Variation theory · Jin</p>
-          </div>
+            <p
+              className="display"
+              style={{ color: "var(--ink)", fontSize: "clamp(20px,2.6vw,32px)", lineHeight: 1.32, fontWeight: 500, letterSpacing: "-0.02em" }}
+            >
+              &ldquo;A moment of variation induces a few seconds of buffering in the opponent&rsquo;s system.
+              Those few seconds change the game. When the system cannot respond
+              <span style={{ color: "var(--green-bright)" }}> — it collapses.</span>&rdquo;
+            </p>
+            <p className="mono mt-5" style={{ fontSize: 12, color: "var(--ink-4)", letterSpacing: "0.08em" }}>
+              — Variation theory · Jin
+            </p>
+          </blockquote>
         </Reveal>
 
-        <div className="grid grid-cols-1 gap-7 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
           {concepts.map((c, i) => (
-            <Reveal key={c.title} delay={160 + i * 80}>
+            <Reveal key={c.title} delay={140 + i * 90}>
               <Link
                 href="/approach"
-                className="rounded-[20px] p-9 flex flex-col gap-5 transition-all duration-200 h-full"
+                className="approach-card group relative block h-full rounded-2xl p-8 overflow-hidden"
                 style={{
-                  background: "var(--light-card-bg)",
-                  border: "0.5px solid var(--light-border)",
+                  background: "var(--stage-3)",
+                  border: "0.5px solid var(--edge)",
+                  transformStyle: "preserve-3d",
+                  transition: "transform .4s var(--ease-out), border-color .4s var(--ease-out), box-shadow .4s var(--ease-out)",
                 }}
-                onMouseEnter={e => {
+                onMouseMove={tilt}
+                onMouseLeave={reset}
+                onMouseEnter={(e) => {
                   const el = e.currentTarget as HTMLElement;
-                  el.style.borderColor = "var(--accent-soft-border)";
-                  el.style.transform = "translateY(-4px)";
-                  el.style.boxShadow = "0 20px 40px rgba(20,50,20,0.1)";
+                  el.style.borderColor = "var(--green-line)";
+                  el.style.boxShadow = "var(--lift), var(--glow)";
                 }}
-                onMouseLeave={e => {
-                  const el = e.currentTarget as HTMLElement;
-                  el.style.borderColor = "var(--light-border)";
-                  el.style.transform = "translateY(0)";
-                  el.style.boxShadow = "none";
-                }}
+                onBlur={() => {}}
               >
-                <div className="flex items-center justify-between">
+                {/* cursor-follow glow */}
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  style={{ background: "radial-gradient(320px circle at var(--gx,50%) var(--gy,50%), rgba(125,255,106,0.1), transparent 60%)" }}
+                />
+                <div className="relative flex items-start justify-between mb-8">
+                  <span className="display" style={{ fontSize: 34, color: "var(--edge-2)", lineHeight: 1 }}>{c.n}</span>
                   <span
-                    className="mono tracking-wider"
-                    style={{ fontSize: "11px", color: "var(--light-text-muted)" }}
-                  >
-                    {c.tag}
-                  </span>
-                  <span
-                    className="mono px-3 py-1.5 rounded-lg"
-                    style={{
-                      fontSize: "11px",
-                      background: "var(--accent-tag-bg)",
-                      color: "var(--accent-tag-text)",
-                      border: "0.5px solid var(--accent-soft-border)",
-                    }}
+                    className="mono px-3 py-1.5 rounded-full"
+                    style={{ fontSize: 10, background: "var(--green-soft)", color: "var(--green-bright)", border: "0.5px solid var(--green-line)" }}
                   >
                     {c.metric}
                   </span>
                 </div>
-                <div className="flex flex-col gap-3">
-                  <h3 className="font-semibold" style={{ fontSize: "20px", color: "var(--light-text)" }}>{c.title}</h3>
-                  <p style={{ fontSize: "14.5px", lineHeight: "1.75", color: "var(--light-text-secondary)" }}>{c.desc}</p>
+                <div className="relative flex flex-col gap-3">
+                  <span className="mono" style={{ fontSize: 10, letterSpacing: "0.22em", color: "var(--ink-4)" }}>{c.tag}</span>
+                  <h3 className="display t-card" style={{ color: "var(--ink)" }}>{c.title}</h3>
+                  <p style={{ fontSize: 14.5, lineHeight: 1.72, color: "var(--ink-2)" }}>{c.desc}</p>
                 </div>
                 <span
-                  className="mono mt-auto w-fit"
-                  style={{
-                    fontSize: "12px",
-                    color: "var(--accent)",
-                    background: "var(--accent-tag-bg)",
-                    border: "0.5px solid var(--accent-soft-border)",
-                    padding: "9px 16px",
-                    borderRadius: "10px",
-                  }}
+                  className="relative mono mt-8 inline-flex items-center gap-1.5 transition-colors duration-300"
+                  style={{ fontSize: 12, color: "var(--ink-3)" }}
                 >
-                  → full theory
+                  Full theory
+                  <span className="transition-transform duration-300 group-hover:translate-x-1" style={{ color: "var(--green-mid)" }}>→</span>
                 </span>
               </Link>
             </Reveal>
