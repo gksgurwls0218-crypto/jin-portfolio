@@ -1,11 +1,11 @@
 import Hero from "@/components/Hero";
-import HomeDoors from "@/components/HomeDoors";
+import HomeCarousel from "@/components/HomeCarousel";
 
 export default function Home() {
   return (
     <>
       <Hero />
-      <HomeDoors />
+      <HomeCarousel />
     </>
   );
 }

@@ -31,9 +31,19 @@
   --edge:         rgba(180, 220, 190, 0.09);
   --edge-2:       rgba(180, 220, 190, 0.16);
 
+  /* ── Light / paper (the middle "carousel" page) ── */
+  --paper:        #eef1ec;   /* off-white, faint green tint */
+  --paper-card:   #ffffff;
+  --ink-dark:     #121814;
+  --ink-dark-2:   #4c574f;
+  --ink-dark-3:   #7d877f;
+  --accent-green: #1f7a3d;   /* darker green — reads on white */
+  --edge-dark:    rgba(18, 24, 20, 0.10);
+
   /* ── Depth (used by carousel + cards) ── */
   --glow:         0 0 60px rgba(125, 255, 106, 0.10);
   --lift:         0 30px 80px rgba(0, 0, 0, 0.6);
+  --lift-light:   0 30px 70px rgba(20, 40, 25, 0.16);
 
   /* ── Motion tokens ── */
   --ease-out:     cubic-bezier(0.16, 1, 0.3, 1);

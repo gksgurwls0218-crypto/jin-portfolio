@@ -340,13 +340,12 @@ export default function Hero() {
         style={{ background: "linear-gradient(to top, var(--stage) 0%, var(--stage) 26%, rgba(6,9,11,.97) 46%, rgba(6,9,11,.78) 66%, rgba(6,9,11,.32) 84%, transparent 100%)" }}
       >
         <div className="max-w-4xl">
-          <div className="mono t-eyebrow kicker mb-7" style={{ color: "var(--green-bright)" }}>Variation theory</div>
-          <h1 className="display mb-7 t-hero" style={{ color: "#ffffff", textShadow: "0 2px 40px rgba(0,0,0,0.7)" }}>
-            System adapts.<br />
-            <span style={{ color: "var(--green-bright)" }}>Variation</span> breaks it.
+          <div className="mono t-eyebrow kicker mb-5" style={{ color: "var(--green-mid)" }}>Jin&rsquo;s football philosophy</div>
+          <h1 className="display mb-5 t-hero" style={{ color: "#ffffff", textShadow: "0 2px 40px rgba(0,0,0,0.7)" }}>
+            <span style={{ color: "var(--green-bright)" }}>Variation</span> Theory
           </h1>
-          <p className="max-w-lg mb-9" style={{ color: "var(--ink)", fontSize: "clamp(16px,1.7vw,20px)", lineHeight: 1.55, fontWeight: 400 }}>
-            A tactical framework built to be unpredictable by design — and proven in the analysis of real matches.
+          <p className="mb-9" style={{ color: "var(--ink-2)", fontSize: "clamp(17px,2.1vw,26px)", lineHeight: 1.3, fontWeight: 500 }}>
+            System adapts. <span style={{ color: "var(--ink)" }}>Variation breaks it.</span>
           </p>
           <div className="flex flex-wrap items-center gap-3">
             <Link
