@@ -9,19 +9,28 @@ const QUESTIONS = [
   "How do you draw out players' creativity and initiative?",
 ];
 
+function TopLabel({ n, label }: { n: string; label: string }) {
+  return (
+    <div className="flex items-center gap-3 mb-9">
+      <span className="display" style={{ fontSize: 17, color: "var(--accent-green)", letterSpacing: "0.02em" }}>{n}</span>
+      <span className="mono" style={{ fontSize: 12, letterSpacing: "0.24em", textTransform: "uppercase", color: "var(--ink-dark-3)" }}>{label}</span>
+    </div>
+  );
+}
+
 function cardShell(children: React.ReactNode, href: string) {
   return (
     <Link
       href={href}
-      className="group flex flex-col h-full w-full rounded-[26px] p-10 md:p-11"
+      className="group flex flex-col h-full w-full rounded-[28px] p-11 md:p-12"
       style={{
         background: "var(--paper-card)",
         border: "0.5px solid var(--edge-dark)",
-        boxShadow: "var(--lift-light)",
+        boxShadow: "0 40px 90px rgba(30,50,40,0.18)",
         transition: "border-color .4s var(--ease-out), box-shadow .4s var(--ease-out)",
       }}
-      onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.borderColor = "rgba(31,122,61,0.4)"; el.style.boxShadow = "0 40px 90px rgba(20,40,25,0.22)"; }}
-      onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.borderColor = "var(--edge-dark)"; el.style.boxShadow = "var(--lift-light)"; }}
+      onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.borderColor = "rgba(31,122,61,0.45)"; el.style.boxShadow = "0 50px 110px rgba(20,50,30,0.26)"; }}
+      onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.borderColor = "var(--edge-dark)"; el.style.boxShadow = "0 40px 90px rgba(30,50,40,0.18)"; }}
     >
       {children}
     </Link>
@@ -33,22 +42,19 @@ const items: CarouselItem[] = [
     key: "approach",
     content: cardShell(
       <>
-        <div className="flex items-center justify-between mb-8">
-          <span className="display" style={{ fontSize: 15, color: "var(--accent-green)", letterSpacing: "0.05em" }}>01</span>
-          <span className="mono t-eyebrow" style={{ color: "var(--ink-dark-3)" }}>Approach</span>
-        </div>
-        <h2 className="display mb-6" style={{ fontSize: "clamp(24px,2.6vw,32px)", lineHeight: 1.08, color: "var(--ink-dark)", letterSpacing: "-0.025em" }}>
+        <TopLabel n="01" label="Approach" />
+        <h2 className="display mb-7" style={{ fontSize: "clamp(28px,3vw,38px)", lineHeight: 1.06, color: "var(--ink-dark)", letterSpacing: "-0.028em" }}>
           It all started with<br />four questions.
         </h2>
-        <ol className="flex flex-col gap-2.5 mb-auto">
+        <ol className="flex flex-col gap-3.5 mb-auto">
           {QUESTIONS.map((q, i) => (
-            <li key={i} className="flex gap-2.5" style={{ fontSize: 13, lineHeight: 1.4, color: "var(--ink-dark-2)" }}>
-              <span className="mono shrink-0" style={{ color: "var(--accent-green)", fontSize: 12 }}>{i + 1}</span>
+            <li key={i} className="flex gap-3" style={{ fontSize: 15, lineHeight: 1.4, color: "var(--ink-dark-2)" }}>
+              <span className="mono shrink-0" style={{ color: "var(--accent-green)", fontSize: 14, fontWeight: 500 }}>{i + 1}</span>
               <span>{q}</span>
             </li>
           ))}
         </ol>
-        <span className="mono inline-flex items-center gap-2 mt-7" style={{ fontSize: 13, color: "var(--accent-green)" }}>
+        <span className="mono inline-flex items-center gap-2 mt-9" style={{ fontSize: 14, color: "var(--accent-green)" }}>
           Enter <span className="transition-transform duration-300 group-hover:translate-x-1.5">→</span>
         </span>
       </>,
@@ -59,17 +65,14 @@ const items: CarouselItem[] = [
     key: "match",
     content: cardShell(
       <>
-        <div className="flex items-center justify-between mb-8">
-          <span className="display" style={{ fontSize: 15, color: "var(--accent-green)", letterSpacing: "0.05em" }}>02</span>
-          <span className="mono t-eyebrow" style={{ color: "var(--ink-dark-3)" }}>Match Analysis</span>
-        </div>
-        <h2 className="display mb-6" style={{ fontSize: "clamp(24px,2.6vw,32px)", lineHeight: 1.08, color: "var(--ink-dark)", letterSpacing: "-0.025em" }}>
+        <TopLabel n="02" label="Match Analysis" />
+        <h2 className="display mb-7" style={{ fontSize: "clamp(28px,3vw,38px)", lineHeight: 1.06, color: "var(--ink-dark)", letterSpacing: "-0.028em" }}>
           Variation Theory<br />applied &amp; analysed.
         </h2>
-        <p className="mb-auto" style={{ fontSize: 15, lineHeight: 1.6, color: "var(--ink-dark-2)" }}>
+        <p className="mb-auto" style={{ fontSize: 17, lineHeight: 1.6, color: "var(--ink-dark-2)" }}>
           Real match analysis and articles, written through the lens of Variation Theory.
         </p>
-        <span className="mono inline-flex items-center gap-2 mt-7" style={{ fontSize: 13, color: "var(--accent-green)" }}>
+        <span className="mono inline-flex items-center gap-2 mt-9" style={{ fontSize: 14, color: "var(--accent-green)" }}>
           Enter <span className="transition-transform duration-300 group-hover:translate-x-1.5">→</span>
         </span>
       </>,
@@ -83,12 +86,13 @@ export default function HomeCarousel() {
     <section
       className="relative flex flex-col items-center justify-center px-6"
       style={{
-        minHeight: "175vh",
-        background: "linear-gradient(to bottom, var(--stage) 0%, var(--paper) 22%, var(--paper) 78%, var(--stage) 100%)",
+        minHeight: "155vh",
+        background:
+          "linear-gradient(to bottom, var(--stage) 0%, #b9c6d0 12%, #dde6ec 26%, #f2f6f9 40%, #f7fafc 50%, #f2f6f9 64%, #dde6ec 78%, #b9c6d0 89%, var(--stage) 100%)",
       }}
     >
-      <div className="w-full max-w-[1180px] mx-auto">
-        <Carousel3D items={items} cardWidth={440} cardHeight={400} angleStep={44} radius={380} dark={false} />
+      <div className="w-full max-w-[1240px] mx-auto">
+        <Carousel3D items={items} cardWidth={500} cardHeight={462} angleStep={48} radius={480} dark={false} />
       </div>
     </section>
   );
