@@ -27,6 +27,7 @@ type Props = {
   angleStep?: number;
   radius?: number;
   dark?: boolean; // control button styling for dark vs light backgrounds
+  autoDrift?: boolean; // slow idle auto-rotation
 };
 
 export default function Carousel3D({
@@ -36,6 +37,7 @@ export default function Carousel3D({
   angleStep = 42,
   radius = 360,
   dark = false,
+  autoDrift = true,
 }: Props) {
   const N = items.length;
   const reduced = useSyncExternalStore(subscribeReduce, getReduceSnapshot, getReduceServer);
@@ -87,7 +89,7 @@ export default function Carousel3D({
           if (Math.abs(vel.current) < 0.0006) {
             vel.current = 0;
             idleT.current += 16;
-            if (idleT.current > 3600) { target.current = Math.round(pos.current) + 1; idleT.current = 0; }
+            if (autoDrift && idleT.current > 3600) { target.current = Math.round(pos.current) + 1; idleT.current = 0; }
             else { target.current = Math.round(pos.current); }
           }
         }
@@ -100,7 +102,7 @@ export default function Carousel3D({
     render();
     raf = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(raf);
-  }, [reduced, N, angleStep, radius]);
+  }, [reduced, N, angleStep, radius, autoDrift]);
 
   const onDown = (e: React.PointerEvent) => {
     if (reduced) return;

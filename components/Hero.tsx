@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useRef } from "react";
-import Link from "next/link";
 
 type Pt = { x: number; y: number };
 const le = (a: number, b: number, t: number) => a + (b - a) * t;
@@ -344,28 +343,9 @@ export default function Hero() {
           <h1 className="display mb-5 t-hero" style={{ color: "#ffffff", textShadow: "0 2px 40px rgba(0,0,0,0.7)" }}>
             <span style={{ color: "var(--green-bright)" }}>Variation</span> Theory
           </h1>
-          <p className="mb-9" style={{ color: "var(--ink-2)", fontSize: "clamp(17px,2.1vw,26px)", lineHeight: 1.3, fontWeight: 500 }}>
+          <p className="mb-2" style={{ color: "var(--ink-2)", fontSize: "clamp(17px,2.1vw,26px)", lineHeight: 1.3, fontWeight: 500 }}>
             System adapts. <span style={{ color: "var(--ink)" }}>Variation breaks it.</span>
           </p>
-          <div className="flex flex-wrap items-center gap-3">
-            <Link
-              href="/approach"
-              className="group inline-flex items-center gap-2 text-sm px-6 py-3 rounded-full font-medium transition-all duration-300"
-              style={{ background: "var(--green-bright)", color: "#06180a", border: "0.5px solid var(--green-bright)" }}
-            >
-              Explore the approach
-              <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
-            </Link>
-            <Link
-              href="/match-analysis"
-              className="inline-flex items-center gap-2 text-sm px-6 py-3 rounded-full transition-all duration-300"
-              style={{ background: "rgba(255,255,255,.05)", color: "var(--ink-2)", border: "0.5px solid var(--edge-2)" }}
-              onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.background = "rgba(255,255,255,.09)"; el.style.color = "var(--ink)"; }}
-              onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.background = "rgba(255,255,255,.05)"; el.style.color = "var(--ink-2)"; }}
-            >
-              Match analysis
-            </Link>
-          </div>
         </div>
 
         <div className="glass rounded-2xl px-6 py-4 text-right min-w-[190px]">
