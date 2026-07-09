@@ -46,6 +46,7 @@ export default function Carousel3D({
   const vel = useRef(0);
   const target = useRef<number | null>(null);
   const dragging = useRef(false);
+  const captured = useRef(false);
   const moved = useRef(0);
   const lastX = useRef(0);
   const idleT = useRef(0);
@@ -106,9 +107,12 @@ export default function Carousel3D({
 
   const onDown = (e: React.PointerEvent) => {
     if (reduced) return;
-    dragging.current = true; target.current = null; vel.current = 0; moved.current = 0;
+    // NOTE: do NOT capture the pointer here — capturing on pointerdown makes a
+    // plain tap's click fire on the stage instead of the card <Link>, so cards
+    // never navigate. We only capture once an actual drag starts (in onMove).
+    dragging.current = true; captured.current = false;
+    target.current = null; vel.current = 0; moved.current = 0;
     lastX.current = e.clientX; idleT.current = 0;
-    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
   };
   const onMove = (e: React.PointerEvent) => {
     if (!dragging.current) return;
@@ -118,11 +122,14 @@ export default function Carousel3D({
     vel.current = dpos;
     moved.current += Math.abs(dx);
     lastX.current = e.clientX;
+    if (!captured.current && moved.current > 6) {
+      try { (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId); captured.current = true; } catch {}
+    }
   };
   const onUp = (e: React.PointerEvent) => {
     if (!dragging.current) return;
     dragging.current = false; idleT.current = 0;
-    (e.currentTarget as HTMLElement).releasePointerCapture?.(e.pointerId);
+    if (captured.current) { (e.currentTarget as HTMLElement).releasePointerCapture?.(e.pointerId); captured.current = false; }
     if (Math.abs(vel.current) < 0.004) target.current = Math.round(pos.current);
   };
   const step = (dir: 1 | -1) => { target.current = Math.round(pos.current) + dir; vel.current = 0; idleT.current = 0; };

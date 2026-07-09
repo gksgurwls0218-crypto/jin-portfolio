@@ -19,6 +19,11 @@ const CRESTS: Record<string, CrestMeta> = {
   "Bayern Munich": { initials: "FCB", ring: "#dc052d", fill: ["#c8102e", "#7a0a1e"], text: "#ffffff" },
   Korea:           { initials: "KOR", ring: "#c60c30", fill: ["#0a2a6b", "#061a45"], text: "#ffffff" },
   Paraguay:        { initials: "PAR", ring: "#d52b1e", fill: ["#0a3aa0", "#062561"], text: "#ffffff" },
+  "Czech Republic":{ initials: "CZE", ring: "#d7141a", fill: ["#11457e", "#0a2a52"], text: "#ffffff" },
+  Brazil:          { initials: "BRA", ring: "#ffdf00", fill: ["#009c3b", "#046a2a"], text: "#ffffff" },
+  Haiti:           { initials: "HAI", ring: "#d21034", fill: ["#00209f", "#001466"], text: "#ffffff" },
+  Germany:         { initials: "GER", ring: "#ffce00", fill: ["#1a1a1a", "#000000"], text: "#ffffff" },
+  "Curaçao":       { initials: "CUW", ring: "#f9d616", fill: ["#00267f", "#001a57"], text: "#ffffff" },
 };
 
 function fallback(name: string): CrestMeta {

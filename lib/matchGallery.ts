@@ -66,4 +66,70 @@ export const MATCHES: GalleryMatch[] = [
       },
     },
   },
+  // ── The 3 uploaded reports below. Scores/goals and OPPONENT line-ups are best-effort
+  //    from the decks — please confirm & correct the numbers/names here.
+  {
+    slug: "korea-czech",
+    competition: "International Friendly",
+    date: "2025",
+    venue: "TBD",
+    home: { name: "Korea", score: 2 },
+    away: { name: "Czech Republic", score: 0 },
+    goals: [
+      { team: "home", scorer: "Hwang In-beom", minute: 66 },
+      { team: "home", scorer: "Oh Hyun-gyu", minute: 79 },
+    ],
+    lineups: {
+      home: {
+        formation: "3-4-3",
+        players: ["Kim Seung-gyu", "Lee Han-beom", "Kim Min-jae", "Lee Gi-hyeok", "Lee Tae-seok", "Baek Seung-ho", "Hwang In-beom", "Seol Young-woo", "Son Heung-min", "Lee Kang-in", "Lee Jae-sung"],
+      },
+      away: {
+        formation: "5-2-3",
+        players: ["Staněk", "Coufal", "Hranáč", "Krejčí", "Holeš", "Zelený", "Souček", "Sojka", "Sadílek", "Hložek", "Chorý"],
+      },
+    },
+  },
+  {
+    slug: "brazil-haiti",
+    competition: "International Friendly",
+    date: "2025",
+    venue: "TBD",
+    home: { name: "Brazil", score: 3 },
+    away: { name: "Haiti", score: 0 },
+    goals: [],
+    lineups: {
+      home: {
+        formation: "4-3-3",
+        players: ["Alisson", "Danilo", "Marquinhos", "Gabriel", "Wendell", "Casemiro", "Bruno Guimarães", "Paquetá", "Raphinha", "Cunha", "Vinícius"],
+      },
+      away: {
+        formation: "5-4-1",
+        players: ["Placide", "Bruny", "Numa", "Bazile", "Camejo", "Alcénat", "Saint-Juste", "Cétoute", "Vincent", "Baptiste", "Pierrot"],
+      },
+    },
+  },
+  {
+    slug: "germany-curacao",
+    competition: "International Friendly",
+    date: "2025",
+    venue: "TBD",
+    home: { name: "Germany", score: 4 },
+    away: { name: "Curaçao", score: 0 },
+    goals: [
+      { team: "home", scorer: "Havertz", minute: 49 },
+      { team: "home", scorer: "Brown", minute: 67 },
+      { team: "home", scorer: "Undav", minute: 77 },
+    ],
+    lineups: {
+      home: {
+        formation: "4-2-3-1",
+        players: ["Baumann", "Kimmich", "Tah", "Rüdiger", "Mittelstädt", "Pavlović", "Groß", "Sané", "Wirtz", "Musiala", "Havertz"],
+      },
+      away: {
+        formation: "5-3-2",
+        players: ["Room", "Martina", "Gaari", "Bonevacia", "Sambo", "L. Bacuna", "J. Bacuna", "Janga", "Kastaneer", "Antonia", "Bito"],
+      },
+    },
+  },
 ];
