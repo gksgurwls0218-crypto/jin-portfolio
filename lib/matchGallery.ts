@@ -29,13 +29,23 @@ export type GalleryMatch = {
 export const MATCHES: GalleryMatch[] = [
   {
     slug: "psg-bayern-ucl-2026",
-    competition: "UEFA Champions League · Semi Final",
-    date: "Apr–May 2026",
-    venue: "TBD",
+    competition: "UEFA Champions League 2025/26 · Semi-final, 1st leg",
+    date: "28 Apr 2026",
+    venue: "Parc des Princes",
     home: { name: "PSG", score: 5 },
     away: { name: "Bayern Munich", score: 4 },
     featured: true,
-    goals: [], // hypothetical fixture — add scorers when confirmed
+    goals: [
+      { team: "away", scorer: "Kane (pen)", minute: 17 },
+      { team: "home", scorer: "Kvaratskhelia", minute: 24 },
+      { team: "home", scorer: "João Neves", minute: 33 },
+      { team: "away", scorer: "Olise", minute: 41 },
+      { team: "home", scorer: "Dembélé (pen)", minute: 45 },
+      { team: "home", scorer: "Kvaratskhelia", minute: 56 },
+      { team: "home", scorer: "Dembélé", minute: 58 },
+      { team: "away", scorer: "Upamecano", minute: 65 },
+      { team: "away", scorer: "Luis Díaz", minute: 68 },
+    ],
     lineups: {
       home: {
         formation: "4-3-3",

@@ -32,7 +32,8 @@ function Row({ match }: { match: GalleryMatch }) {
   const [hover, setHover] = useState(false);
 
   return (
-    <div
+    <Link
+      href={`/match-analysis/${match.slug}`}
       className="relative flex flex-col lg:flex-row gap-6 rounded-[26px] p-8 md:p-10"
       style={{
         background: "var(--stage-3)",
@@ -40,6 +41,7 @@ function Row({ match }: { match: GalleryMatch }) {
         boxShadow: hover ? "var(--lift)" : "0 20px 50px rgba(0,0,0,0.35)",
         transition: "border-color .5s var(--ease-out), box-shadow .5s var(--ease-out)",
         minHeight: 300,
+        cursor: "pointer",
       }}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
@@ -83,14 +85,13 @@ function Row({ match }: { match: GalleryMatch }) {
             <span className="mono" style={{ fontSize: 11, color: "var(--ink-4)" }}>{match.venue}</span>
           </div>
           <GoalsList match={match} />
-          <Link
-            href={`/match-analysis/${match.slug}`}
-            className="mono group inline-flex items-center gap-1.5 w-fit mt-1 transition-colors duration-300"
-            style={{ fontSize: 12, color: "var(--ink-3)" }}
+          <span
+            className="mono inline-flex items-center gap-1.5 w-fit mt-1"
+            style={{ fontSize: 12.5, color: "var(--green-mid)" }}
           >
             View analysis
-            <span className="transition-transform duration-300 group-hover:translate-x-1" style={{ color: "var(--green-mid)" }}>→</span>
-          </Link>
+            <span style={{ transform: hover ? "translateX(4px)" : "none", transition: "transform .3s var(--ease-out)" }}>→</span>
+          </span>
         </div>
       </div>
 
@@ -110,7 +111,7 @@ function Row({ match }: { match: GalleryMatch }) {
           <MatchBoard match={match} />
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 

@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { layout, type Spot } from "@/lib/formation";
 import type { GalleryMatch } from "@/lib/matchGallery";
 
@@ -55,22 +54,6 @@ export default function MatchBoard({ match }: { match: GalleryMatch }) {
 
       <Team spots={home} color="var(--green-bright)" textColor="rgba(6,24,10,0.9)" />
       <Team spots={away} color="#ff6a5a" textColor="rgba(30,6,6,0.9)" />
-
-      {/* centre View button */}
-      <div className="absolute left-1/2 top-1/2" style={{ transform: "translate(-50%,-50%)" }}>
-        <Link
-          href={`/match-analysis/${match.slug}`}
-          className="mono group inline-flex items-center gap-2 px-5 py-2.5 rounded-full"
-          style={{
-            fontSize: 12, fontWeight: 500,
-            background: "var(--green-bright)", color: "#06180a",
-            boxShadow: "0 8px 30px rgba(0,0,0,0.6), var(--glow)",
-          }}
-        >
-          View analysis
-          <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
-        </Link>
-      </div>
     </div>
   );
 }
