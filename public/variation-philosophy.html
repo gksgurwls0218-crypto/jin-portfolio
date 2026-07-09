@@ -289,48 +289,85 @@ canvas{display:block;width:100%;border-radius:10px}
 
 
 
-/* ===== jin — unified dark-green theme (matches the rest of the portfolio) ===== */
+/* ===== jin — unified dark-green theme (readability + minimal) ===== */
 :root{
   --navy:#0b100d; --navy2:#111813;
   --blue:#7dff6a; --blue-mid:#59c94f; --blue-lt:rgba(125,255,106,.10); --blue-bd:rgba(125,255,106,.26);
-  --amber:#d0a24a; --amber-lt:rgba(208,162,74,.10); --amber-bd:rgba(208,162,74,.30);
+  --amber:#e0b45e; --amber-lt:rgba(224,180,94,.10); --amber-bd:rgba(224,180,94,.30);
   --emerald:#7dff6a; --emerald-lt:rgba(125,255,106,.10); --emerald-bd:rgba(125,255,106,.26);
-  --slate:#aebdb0; --border:rgba(180,220,190,.12); --bg-alt:#0b1210; --bg-dark:#06090b;
-  --shadow-sm:0 1px 3px rgba(0,0,0,.45); --shadow:0 6px 22px rgba(0,0,0,.5); --shadow-lg:0 14px 44px rgba(0,0,0,.6);
+  --slate:#c2ccc3; --border:rgba(180,220,190,.14); --bg-alt:#0b1210; --bg-dark:#06090b;
+  --shadow-sm:0 1px 3px rgba(0,0,0,.5); --shadow:0 8px 24px rgba(0,0,0,.5); --shadow-lg:0 16px 48px rgba(0,0,0,.6);
 }
-body{ background:#06090b !important; color:#dfe6df !important; }
+body{ background:#06090b !important; color:#e7ede6 !important; }
 h1,h2,h3,h4,h5{ color:#f3f1ea !important; }
-p,li,.sub,.desc{ color:#cdd8cf !important; }
+p,li,td,.sub,.desc{ color:#c9d4cb !important; }
 a{ color:#7dff6a !important; }
+strong,b{ color:#f3f1ea !important; }
 
+/* any light background anywhere -> dark surface */
+[style*="background:#fff"],[style*="background:#FFF"],[style*="background:#F8FAFC"],
+[style*="background:#F1F5F9"],[style*="background:#FFFBEB"],[style*="background:#EFF6FF"],
+[style*="background:#F8FAFC"],[style*="background:#0F172A"],[style*="background:#0f172a"]{ background:#0d1214 !important; }
+
+/* any dark inline text -> light; blue emphases -> green */
+[style*="color:#0F172A"],[style*="color:#1E293B"],[style*="color:#334155"],
+[style*="color:#475569"],[style*="color:#64748B"],[style*="color:#0f172a"]{ color:#c9d4cb !important; }
+[style*="color:#60A5FA"],[style*="color:#93C5FD"],[style*="color:#3B82F6"],[style*="color:#2563EB"],[style*="color:#1E3A8A"]{ color:#7dff6a !important; }
+
+section{ background:#06090b !important; }
+.sec-dark{ background:#0b100d !important; }
 .hero{ background:#06090b !important; }
 .hero h1 em{ color:#7dff6a !important; }
 .hero .sub{ color:#aebdb0 !important; }
 .hero-rule{ background:#7dff6a !important; }
 
-/* every white/light section → dark stage; inline-styled ones too */
-section{ background:#06090b !important; }
-.sec-dark, [style*="#0F172A"], [style*="#F8FAFC"], [style*="#0f172a"]{ background:#0b100d !important; }
+/* cards / surfaces -> dark */
+.card,.metric,.flow-item,.tbl,.board,.board-body,.g-item,.hbox,.q-card{
+  background:#0d1214 !important; border-color:rgba(180,220,190,.14) !important; box-shadow:0 8px 24px rgba(0,0,0,.45) !important;
+}
+.card *,.metric *,.g-item *,.q-card *,.hbox *{ color:#c9d4cb; }
+.card h3,.card h4,.metric h3,.g-item h4,.hbox h3,.hbox h4{ color:#f3f1ea !important; }
+.card-blue,.flow-item.hi,.card-emerald{ background:rgba(125,255,106,.07) !important; border-color:rgba(125,255,106,.26) !important; }
+.card-amber,.flow-item.hi2{ background:rgba(224,180,94,.08) !important; border-color:rgba(224,180,94,.28) !important; }
 
-/* cards / surfaces → dark */
-.card, .metric, .flow-item, .tbl, .board, .board-body{ background:#0d1214 !important; border-color:rgba(180,220,190,.12) !important; color:#dfe6df !important; }
-.card h3,.card h4,.metric h3{ color:#f3f1ea !important; }
-.card p,.card li,.metric p{ color:#cdd8cf !important; }
-.card-blue,.flow-item.hi,.card-emerald{ background:rgba(125,255,106,.06) !important; border-color:rgba(125,255,106,.24) !important; }
-.card-amber,.flow-item.hi2{ background:rgba(208,162,74,.08) !important; border-color:rgba(208,162,74,.28) !important; }
+/* question cards — minimal, small subtle number */
+.q-card h4{ color:#7dff6a !important; }
+.q-card p{ color:#cdd8cf !important; }
+.q-card::before{ font-size:2rem !important; color:rgba(125,255,106,.22) !important; top:18px !important; right:22px !important; font-weight:700 !important; }
 
+/* glossary */
+.g-item{ border-left-color:#4aa64a !important; }
+.g-item.amber{ border-left-color:#e0b45e !important; }
+.g-item p{ color:#c2ccc3 !important; }
+
+/* blockquotes */
+.bq{ background:rgba(125,255,106,.06) !important; border-left-color:#4aa64a !important; }
+.bq p{ color:#e7ede6 !important; }
+.bq-dark{ background:rgba(125,255,106,.06) !important; border-left-color:#7dff6a !important; }
+.bq-dark p{ color:#e7ede6 !important; }
+.bq-amber{ background:rgba(224,180,94,.08) !important; border-left-color:#e0b45e !important; }
+.bq-amber p{ color:#e6d9b8 !important; }
+
+/* highlight spans / flows */
+.hi,.tbl .hi{ color:#7dff6a !important; }
+.flow-item.hi .fl,.flow-item.hi h4{ color:#7dff6a !important; }
+
+/* tags */
 .tag{ background:rgba(125,255,106,.10) !important; color:#7dff6a !important; border-color:rgba(125,255,106,.28) !important; }
-.tag.amber{ background:rgba(208,162,74,.10) !important; color:#d0a24a !important; border-color:rgba(208,162,74,.3) !important; }
-.tag.slate{ background:rgba(255,255,255,.05) !important; color:#aebdb0 !important; border-color:rgba(180,220,190,.14) !important; }
+.tag.amber{ background:rgba(224,180,94,.10) !important; color:#e0b45e !important; border-color:rgba(224,180,94,.3) !important; }
+.tag.slate{ background:rgba(255,255,255,.05) !important; color:#aebdb0 !important; border-color:rgba(180,220,190,.16) !important; }
 
-.ch-num::after,#spike .ch-num::after,#phs .ch-num::after,#apply .ch-num::after{ background:#59c94f !important; }
+/* misc */
+.ch-num{ color:#f3f1ea !important; }
+.ch-num::after,#spike .ch-num::after,#phs .ch-num::after,#apply .ch-num::after{ background:#4aa64a !important; }
 .btn-play{ background:#2f6b34 !important; color:#eafff0 !important; }
-.btn-play:hover{ background:#3c8a45 !important; }
 .tbl th{ background:#0b100d !important; color:#f3f1ea !important; }
-.tbl td{ color:#cdd8cf !important; border-color:rgba(180,220,190,.1) !important; }
+.tbl td{ color:#c9d4cb !important; border-color:rgba(180,220,190,.1) !important; }
 .tbl tr:nth-child(even) td{ background:rgba(255,255,255,.02) !important; }
-.div-line{ background:rgba(180,220,190,.12) !important; }
-.board{ background:#0b1310 !important; }
+.div-line{ background:rgba(180,220,190,.14) !important; }
+.sec-deco{ color:#9fb0a2 !important; }
+.hbox{ background:#0b100d !important; }
+.hbox *{ color:#e7ede6 !important; }
 
 </style>
 </head>
