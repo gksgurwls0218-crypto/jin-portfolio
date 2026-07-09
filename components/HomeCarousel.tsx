@@ -20,20 +20,11 @@ const QUESTIONS = [
   "How do you draw out players' creativity and initiative?",
 ];
 
-function TopLabel({ n, label }: { n: string; label: string }) {
-  return (
-    <div className="flex items-center gap-3 mb-9">
-      <span className="display" style={{ fontSize: 17, color: C.green, letterSpacing: "0.02em" }}>{n}</span>
-      <span className="mono" style={{ fontSize: 12, letterSpacing: "0.24em", textTransform: "uppercase", color: C.muted }}>{label}</span>
-    </div>
-  );
-}
-
-function cardShell(children: React.ReactNode, href: string) {
+function Card({ n, label, title, href, children }: { n: string; label: string; title: React.ReactNode; href: string; children: React.ReactNode }) {
   return (
     <Link
       href={href}
-      className="group flex flex-col h-full w-full rounded-[28px] p-11 md:p-12"
+      className="group flex flex-col h-full w-full rounded-[28px] px-12 py-12 md:px-14 md:py-14"
       style={{
         background: C.card,
         border: `0.5px solid ${C.edge}`,
@@ -43,7 +34,22 @@ function cardShell(children: React.ReactNode, href: string) {
       onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.borderColor = "rgba(31,122,61,0.45)"; el.style.boxShadow = "0 50px 110px rgba(20,50,30,0.26)"; }}
       onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.borderColor = C.edge; el.style.boxShadow = "0 40px 90px rgba(30,50,40,0.18)"; }}
     >
-      {children}
+      <div className="flex items-center gap-3 mb-9">
+        <span className="display" style={{ fontSize: 17, color: C.green, letterSpacing: "0.02em" }}>{n}</span>
+        <span className="mono" style={{ fontSize: 12, letterSpacing: "0.24em", textTransform: "uppercase", color: C.muted }}>{label}</span>
+      </div>
+
+      <h2 className="display mb-9" style={{ fontSize: "clamp(25px,2.7vw,33px)", lineHeight: 1.12, color: C.ink, letterSpacing: "-0.025em" }}>
+        {title}
+      </h2>
+
+      <div>{children}</div>
+
+      <div className="mt-auto pt-8" style={{ borderTop: `0.5px solid ${C.edge}` }}>
+        <span className="mono inline-flex items-center gap-2" style={{ fontSize: 14, color: C.green }}>
+          Enter <span className="transition-transform duration-300 group-hover:translate-x-1.5">→</span>
+        </span>
+      </div>
     </Link>
   );
 }
@@ -51,43 +57,27 @@ function cardShell(children: React.ReactNode, href: string) {
 const items: CarouselItem[] = [
   {
     key: "approach",
-    content: cardShell(
-      <>
-        <TopLabel n="01" label="Approach" />
-        <h2 className="display mb-7" style={{ fontSize: "clamp(28px,3vw,38px)", lineHeight: 1.06, color: C.ink, letterSpacing: "-0.028em" }}>
-          It all started with<br />four questions.
-        </h2>
-        <ol className="flex flex-col gap-3.5 mb-auto">
+    content: (
+      <Card n="01" label="Approach" href="/approach" title={<>It all started with<br />four questions.</>}>
+        <ol className="flex flex-col gap-5">
           {QUESTIONS.map((q, i) => (
-            <li key={i} className="flex gap-3" style={{ fontSize: 15, lineHeight: 1.4, color: C.ink2 }}>
-              <span className="mono shrink-0" style={{ color: C.green, fontSize: 14, fontWeight: 500 }}>{i + 1}</span>
+            <li key={i} className="flex gap-4" style={{ fontSize: 15.5, lineHeight: 1.5, color: C.ink2 }}>
+              <span className="mono shrink-0" style={{ color: C.green, fontSize: 14, fontWeight: 500, paddingTop: 1 }}>{i + 1}</span>
               <span>{q}</span>
             </li>
           ))}
         </ol>
-        <span className="mono inline-flex items-center gap-2 mt-9" style={{ fontSize: 14, color: C.green }}>
-          Enter <span className="transition-transform duration-300 group-hover:translate-x-1.5">→</span>
-        </span>
-      </>,
-      "/approach",
+      </Card>
     ),
   },
   {
     key: "match",
-    content: cardShell(
-      <>
-        <TopLabel n="02" label="Match Analysis" />
-        <h2 className="display mb-7" style={{ fontSize: "clamp(28px,3vw,38px)", lineHeight: 1.06, color: C.ink, letterSpacing: "-0.028em" }}>
-          Variation Theory<br />applied &amp; analysed.
-        </h2>
-        <p className="mb-auto" style={{ fontSize: 17, lineHeight: 1.6, color: C.ink2 }}>
+    content: (
+      <Card n="02" label="Match Analysis" href="/match-analysis" title={<>Variation Theory<br />applied &amp; analysed.</>}>
+        <p style={{ fontSize: 17, lineHeight: 1.7, color: C.ink2 }}>
           Real match analysis and articles, written through the lens of Variation Theory.
         </p>
-        <span className="mono inline-flex items-center gap-2 mt-9" style={{ fontSize: 14, color: C.green }}>
-          Enter <span className="transition-transform duration-300 group-hover:translate-x-1.5">→</span>
-        </span>
-      </>,
-      "/match-analysis",
+      </Card>
     ),
   },
 ];
@@ -103,7 +93,7 @@ export default function HomeCarousel() {
       }}
     >
       <div className="w-full max-w-[1240px] mx-auto">
-        <Carousel3D items={items} cardWidth={500} cardHeight={462} angleStep={48} radius={480} dark={false} autoDrift={false} />
+        <Carousel3D items={items} cardWidth={520} cardHeight={520} angleStep={46} radius={500} dark={false} autoDrift={false} />
       </div>
     </section>
   );
