@@ -288,6 +288,50 @@ canvas{display:block;width:100%;border-radius:10px}
 .nav-brand{font-family:'Space Grotesk',sans-serif;font-size:.9rem;font-weight:700;color:var(--navy);margin-right:auto;white-space:nowrap}
 
 
+
+/* ===== jin — unified dark-green theme (matches the rest of the portfolio) ===== */
+:root{
+  --navy:#0b100d; --navy2:#111813;
+  --blue:#7dff6a; --blue-mid:#59c94f; --blue-lt:rgba(125,255,106,.10); --blue-bd:rgba(125,255,106,.26);
+  --amber:#d0a24a; --amber-lt:rgba(208,162,74,.10); --amber-bd:rgba(208,162,74,.30);
+  --emerald:#7dff6a; --emerald-lt:rgba(125,255,106,.10); --emerald-bd:rgba(125,255,106,.26);
+  --slate:#aebdb0; --border:rgba(180,220,190,.12); --bg-alt:#0b1210; --bg-dark:#06090b;
+  --shadow-sm:0 1px 3px rgba(0,0,0,.45); --shadow:0 6px 22px rgba(0,0,0,.5); --shadow-lg:0 14px 44px rgba(0,0,0,.6);
+}
+body{ background:#06090b !important; color:#dfe6df !important; }
+h1,h2,h3,h4,h5{ color:#f3f1ea !important; }
+p,li,.sub,.desc{ color:#cdd8cf !important; }
+a{ color:#7dff6a !important; }
+
+.hero{ background:#06090b !important; }
+.hero h1 em{ color:#7dff6a !important; }
+.hero .sub{ color:#aebdb0 !important; }
+.hero-rule{ background:#7dff6a !important; }
+
+/* every white/light section → dark stage; inline-styled ones too */
+section{ background:#06090b !important; }
+.sec-dark, [style*="#0F172A"], [style*="#F8FAFC"], [style*="#0f172a"]{ background:#0b100d !important; }
+
+/* cards / surfaces → dark */
+.card, .metric, .flow-item, .tbl, .board, .board-body{ background:#0d1214 !important; border-color:rgba(180,220,190,.12) !important; color:#dfe6df !important; }
+.card h3,.card h4,.metric h3{ color:#f3f1ea !important; }
+.card p,.card li,.metric p{ color:#cdd8cf !important; }
+.card-blue,.flow-item.hi,.card-emerald{ background:rgba(125,255,106,.06) !important; border-color:rgba(125,255,106,.24) !important; }
+.card-amber,.flow-item.hi2{ background:rgba(208,162,74,.08) !important; border-color:rgba(208,162,74,.28) !important; }
+
+.tag{ background:rgba(125,255,106,.10) !important; color:#7dff6a !important; border-color:rgba(125,255,106,.28) !important; }
+.tag.amber{ background:rgba(208,162,74,.10) !important; color:#d0a24a !important; border-color:rgba(208,162,74,.3) !important; }
+.tag.slate{ background:rgba(255,255,255,.05) !important; color:#aebdb0 !important; border-color:rgba(180,220,190,.14) !important; }
+
+.ch-num::after,#spike .ch-num::after,#phs .ch-num::after,#apply .ch-num::after{ background:#59c94f !important; }
+.btn-play{ background:#2f6b34 !important; color:#eafff0 !important; }
+.btn-play:hover{ background:#3c8a45 !important; }
+.tbl th{ background:#0b100d !important; color:#f3f1ea !important; }
+.tbl td{ color:#cdd8cf !important; border-color:rgba(180,220,190,.1) !important; }
+.tbl tr:nth-child(even) td{ background:rgba(255,255,255,.02) !important; }
+.div-line{ background:rgba(180,220,190,.12) !important; }
+.board{ background:#0b1310 !important; }
+
 </style>
 </head>
 

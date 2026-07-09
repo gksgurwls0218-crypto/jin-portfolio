@@ -3,30 +3,9 @@ import Link from "next/link";
 import { useState } from "react";
 import Crest from "@/components/Crest";
 import MatchBoard from "@/components/match/MatchBoard";
+import GoalsSummary from "@/components/match/GoalsSummary";
 import Reveal from "@/components/Reveal";
-import { MATCHES, type GalleryMatch, type Goal } from "@/lib/matchGallery";
-
-function GoalsList({ match }: { match: GalleryMatch }) {
-  if (match.goals.length === 0) {
-    const goalless = match.home.score === 0 && match.away.score === 0;
-    return (
-      <p className="mono" style={{ fontSize: 11, color: "var(--ink-4)" }}>
-        {goalless ? "Goalless draw" : "Scorers to be added"}
-      </p>
-    );
-  }
-  const line = (g: Goal, i: number) => (
-    <div key={i} className="flex items-baseline gap-2.5">
-      <span className="mono" style={{ fontSize: 11, color: "var(--ink-4)", width: 26 }}>{g.minute}&rsquo;</span>
-      <span
-        style={{ width: 6, height: 6, borderRadius: "50%", background: g.team === "home" ? "var(--green-bright)" : "#ff6a5a", transform: "translateY(-1px)" }}
-      />
-      <span style={{ fontSize: 13, color: "var(--ink)", fontWeight: 500 }}>{g.scorer}</span>
-      {g.assist && <span className="mono" style={{ fontSize: 11, color: "var(--ink-3)" }}>· assist {g.assist}</span>}
-    </div>
-  );
-  return <div className="flex flex-col gap-1.5">{match.goals.map(line)}</div>;
-}
+import { MATCHES, type GalleryMatch } from "@/lib/matchGallery";
 
 function Row({ match }: { match: GalleryMatch }) {
   const [hover, setHover] = useState(false);
@@ -84,7 +63,7 @@ function Row({ match }: { match: GalleryMatch }) {
             <span className="mono" style={{ fontSize: 11, color: "var(--ink-3)" }}>{match.date}</span>
             <span className="mono" style={{ fontSize: 11, color: "var(--ink-4)" }}>{match.venue}</span>
           </div>
-          <GoalsList match={match} />
+          <GoalsSummary match={match} />
           <span
             className="mono inline-flex items-center gap-1.5 w-fit mt-1"
             style={{ fontSize: 12.5, color: "var(--green-mid)" }}

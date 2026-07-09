@@ -5,7 +5,7 @@
 
 export type Side = "home" | "away";
 
-export type Goal = { team: Side; scorer: string; minute: number; assist?: string };
+export type Goal = { team: Side; scorer: string; minute: number; plus?: number; pen?: boolean; assist?: string };
 
 export type Lineup = {
   formation: string;   // e.g. "4-3-3"  — sum of lines must be 10 (outfield)
@@ -36,11 +36,11 @@ export const MATCHES: GalleryMatch[] = [
     away: { name: "Bayern Munich", score: 4 },
     featured: true,
     goals: [
-      { team: "away", scorer: "Kane (pen)", minute: 17 },
+      { team: "away", scorer: "Kane", minute: 17, pen: true },
       { team: "home", scorer: "Kvaratskhelia", minute: 24 },
       { team: "home", scorer: "João Neves", minute: 33 },
       { team: "away", scorer: "Olise", minute: 41 },
-      { team: "home", scorer: "Dembélé (pen)", minute: 45 },
+      { team: "home", scorer: "Dembélé", minute: 45, plus: 5, pen: true },
       { team: "home", scorer: "Kvaratskhelia", minute: 56 },
       { team: "home", scorer: "Dembélé", minute: 58 },
       { team: "away", scorer: "Upamecano", minute: 65 },

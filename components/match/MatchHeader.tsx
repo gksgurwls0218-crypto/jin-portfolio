@@ -1,4 +1,6 @@
 import type { MatchFrontmatter } from "@/lib/mdx";
+import { MATCHES } from "@/lib/matchGallery";
+import GoalsSummary from "@/components/match/GoalsSummary";
 
 function Chip({ label, color }: { label: string; color: string }) {
   return (
@@ -30,9 +32,18 @@ export default function MatchHeader({ frontmatter }: { frontmatter: MatchFrontma
           <span className="display" style={{ fontSize: "clamp(30px,5vw,52px)", color: "var(--green-bright)", letterSpacing: "-0.03em" }}>{home.score}&nbsp;–&nbsp;{away.score}</span>
           <span className="display" style={{ fontSize: "clamp(26px,4vw,44px)", color: "var(--ink)", letterSpacing: "-0.02em" }}>{away.name}</span>
         </div>
-        <p className="mono mb-7" style={{ fontSize: 13, color: "var(--ink-3)" }}>
+        <p className="mono mb-6" style={{ fontSize: 13, color: "var(--ink-3)" }}>
           {date} · {venue}
         </p>
+
+        {(() => {
+          const gm = MATCHES.find((m) => m.slug === frontmatter.slug);
+          return gm && gm.goals.length > 0 ? (
+            <div className="mb-7 pb-6 max-w-[560px]" style={{ borderBottom: "0.5px solid var(--edge)" }}>
+              <GoalsSummary match={gm} />
+            </div>
+          ) : null;
+        })()}
 
         <div className="flex gap-3 flex-wrap mb-5">
           <Stat label="Possession" value={`${stats.possession[0]} / ${stats.possession[1]}`} />
