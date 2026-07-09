@@ -74,9 +74,9 @@ const items: CarouselItem[] = [
   {
     key: "match",
     content: (
-      <Card n="02" label="Match Analysis" href="/match-analysis" title={<>Variation Theory<br />applied &amp; analysed.</>}>
+      <Card n="02" label="Match Analysis & Essays" href="/match-analysis" title={<>Variation Theory<br />applied &amp; written.</>}>
         <p style={{ fontSize: 17, lineHeight: 1.7, color: C.ink2 }}>
-          Real match analysis and articles, written through the lens of Variation Theory.
+          Real match breakdowns — and original tactical essays — written through the lens of Variation Theory.
         </p>
       </Card>
     ),

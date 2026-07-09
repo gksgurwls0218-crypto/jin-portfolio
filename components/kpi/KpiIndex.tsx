@@ -16,16 +16,16 @@ function enter(on: boolean) {
 }
 
 export default function KpiIndex({
-  eyebrow, title, accent, intro, items,
-}: { eyebrow: string; title: string; accent: string; intro: string; items: IndexItem[] }) {
+  eyebrow, title, accent, intro, items, backHref = "/kpi-lab", backLabel = "Data & KPI Lab",
+}: { eyebrow: string; title: string; accent: string; intro: string; items: IndexItem[]; backHref?: string; backLabel?: string }) {
   return (
     <section className="relative px-6 md:px-10 pt-32 pb-40" style={{ background: "var(--stage)" }}>
       <div className="max-w-[1180px] mx-auto">
         <Reveal>
-          <Link href="/kpi-lab" className="mono inline-flex items-center gap-2 mb-10 transition-colors duration-300" style={{ fontSize: 12, color: "var(--ink-3)" }}
+          <Link href={backHref} className="mono inline-flex items-center gap-2 mb-10 transition-colors duration-300" style={{ fontSize: 12, color: "var(--ink-3)" }}
             onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "var(--green-bright)")}
             onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "var(--ink-3)")}>
-            ← Data &amp; KPI Lab
+            ← {backLabel}
           </Link>
           <p className="mono t-eyebrow kicker mb-6">{eyebrow}</p>
           <h1 className="display t-section mb-8" style={{ color: "var(--ink)", maxWidth: 900 }}>{title} <span style={{ color: "var(--green-bright)" }}>{accent}</span></h1>

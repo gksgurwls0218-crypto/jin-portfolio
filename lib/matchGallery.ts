@@ -28,38 +28,13 @@ export type GalleryMatch = {
 
 export const MATCHES: GalleryMatch[] = [
   {
-    slug: "psg-inter-ucl-2025",
-    competition: "UEFA Champions League · Final",
-    date: "31 May 2025",
-    venue: "Allianz Arena, Munich",
-    home: { name: "PSG", score: 5 },
-    away: { name: "Inter Milan", score: 0 },
-    featured: true,
-    goals: [
-      { team: "home", scorer: "Hakimi", minute: 12, assist: "Doué" },
-      { team: "home", scorer: "Doué", minute: 20, assist: "Dembélé" },
-      { team: "home", scorer: "Doué", minute: 63, assist: "Kvaratskhelia" },
-      { team: "home", scorer: "Kvaratskhelia", minute: 73 },
-      { team: "home", scorer: "Mayulu", minute: 86, assist: "Barcola" },
-    ],
-    lineups: {
-      home: {
-        formation: "4-3-3",
-        players: ["Donnarumma", "Hakimi", "Marquinhos", "Pacho", "Nuno Mendes", "João Neves", "Vitinha", "Fabián Ruiz", "Doué", "Dembélé", "Kvaratskhelia"],
-      },
-      away: {
-        formation: "3-5-2",
-        players: ["Sommer", "Pavard", "Acerbi", "Bastoni", "Dumfries", "Barella", "Çalhanoğlu", "Mkhitaryan", "Dimarco", "Thuram", "Lautaro"],
-      },
-    },
-  },
-  {
     slug: "psg-bayern-ucl-2026",
     competition: "UEFA Champions League · Semi Final",
     date: "Apr–May 2026",
     venue: "TBD",
     home: { name: "PSG", score: 5 },
     away: { name: "Bayern Munich", score: 4 },
+    featured: true,
     goals: [], // hypothetical fixture — add scorers when confirmed
     lineups: {
       home: {
