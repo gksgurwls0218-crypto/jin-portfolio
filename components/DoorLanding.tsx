@@ -9,7 +9,7 @@ export default function DoorLanding({
   eyebrow, title, accent, intro, doors,
 }: { eyebrow: string; title: string; accent: string; intro: string; doors: Door[] }) {
   return (
-    <section className="relative px-6 md:px-10 pt-40 pb-40" style={{ background: "var(--stage)" }}>
+    <section className="relative px-6 md:px-10 pt-44 pb-40" style={{ background: "var(--stage)" }}>
       <div className="max-w-[1120px] mx-auto">
         <Reveal>
           <p className="mono t-eyebrow kicker mb-7">{eyebrow}</p>

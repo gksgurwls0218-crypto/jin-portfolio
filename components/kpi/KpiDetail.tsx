@@ -29,8 +29,8 @@ export default function KpiDetail({
         <div className="flex flex-col gap-10">
           {blocks.map((b) => (
             <div key={b.label}>
-              <p className="mono t-eyebrow mb-4" style={{ color: "var(--ink-4)" }}>{b.label}</p>
-              <p style={{ fontSize: 17, lineHeight: 1.72, color: "var(--ink-2)" }}>{b.text}</p>
+              <p className="mono mb-4" style={{ fontSize: 13, fontWeight: 500, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--green-bright)" }}>{b.label}</p>
+              <p style={{ fontSize: 17.5, lineHeight: 1.75, color: "var(--ink)" }}>{b.text}</p>
             </div>
           ))}
         </div>

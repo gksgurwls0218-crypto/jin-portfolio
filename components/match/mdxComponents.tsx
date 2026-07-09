@@ -23,12 +23,12 @@ export const mdxComponents = {
   PassNetwork,
   ShapeMorph,
   p: (props: React.ComponentProps<"p">) => (
-    <p style={{ fontSize: 13.5, lineHeight: 1.8, color: "rgba(222,216,206,.88)", marginBottom: 12 }} {...props} />
+    <p style={{ fontSize: 16.5, lineHeight: 1.75, color: "var(--ink-2)", marginBottom: 14 }} {...props} />
   ),
   strong: (props: React.ComponentProps<"strong">) => (
-    <strong style={{ color: "rgba(238,234,228,.97)", fontWeight: 600 }} {...props} />
+    <strong style={{ color: "var(--ink)", fontWeight: 600 }} {...props} />
   ),
   em: (props: React.ComponentProps<"em">) => (
-    <em style={{ color: "rgba(230,225,255,.9)" }} {...props} />
+    <em style={{ color: "var(--green-bright)", fontStyle: "normal", fontWeight: 500 }} {...props} />
   ),
 };

@@ -21,11 +21,11 @@
   --green-soft:   rgba(125, 255, 106, 0.14);
   --green-line:   rgba(125, 255, 106, 0.28);
 
-  /* ── Ink (warm off-white on dark) ── */
+  /* ── Ink (warm off-white on dark) — kept legible, no faint greys ── */
   --ink:          #f3f1ea;
-  --ink-2:        rgba(228, 234, 226, 0.72);
-  --ink-3:        rgba(190, 202, 192, 0.5);
-  --ink-4:        rgba(160, 176, 164, 0.34);
+  --ink-2:        rgba(231, 237, 230, 0.88);
+  --ink-3:        rgba(205, 216, 207, 0.74);
+  --ink-4:        rgba(184, 198, 187, 0.60);
 
   /* ── Lines / edges ── */
   --edge:         rgba(180, 220, 190, 0.09);
@@ -84,7 +84,7 @@ body {
 .t-hero    { font-size: clamp(46px, 8vw, 108px); line-height: 0.96; letter-spacing: -0.04em; font-weight: 700; }
 .t-section { font-size: clamp(32px, 5vw, 60px);  line-height: 1.02; letter-spacing: -0.028em; }
 .t-card    { font-size: clamp(19px, 2vw, 24px);  line-height: 1.12; letter-spacing: -0.015em; }
-.t-eyebrow { font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; }
+.t-eyebrow { font-size: 12.5px; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 500; }
 
 /* Kicker line used before section titles */
 .kicker {

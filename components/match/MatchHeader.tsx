@@ -1,67 +1,53 @@
 import type { MatchFrontmatter } from "@/lib/mdx";
 
-function EstChip() {
+function Chip({ label, color }: { label: string; color: string }) {
   return (
-    <span className="mono ml-1.5 px-1.5 py-0.5 rounded" style={{ fontSize: 8, color: "rgba(255,190,115,.85)", border: "0.5px solid rgba(255,155,70,.4)" }}>
-      est.
+    <span className="mono ml-1.5 px-1.5 py-0.5 rounded" style={{ fontSize: 10, color, border: `0.5px solid ${color}55` }}>
+      {label}
     </span>
   );
 }
-function VerifyChip() {
+
+function Stat({ label, value, extra }: { label: string; value: string; extra?: React.ReactNode }) {
   return (
-    <span className="mono ml-1.5 px-1.5 py-0.5 rounded" style={{ fontSize: 8, color: "#e8536a", border: "0.5px solid rgba(232,83,106,.4)" }}>
-      [verify]
-    </span>
+    <div className="rounded-xl px-4 py-3" style={{ background: "var(--stage-3)", border: "0.5px solid var(--edge)", minWidth: 118 }}>
+      <div className="mono mb-1" style={{ fontSize: 11, letterSpacing: ".1em", color: "var(--ink-3)" }}>{label}{extra}</div>
+      <div className="mono" style={{ fontSize: 17, fontWeight: 500, color: "var(--green-bright)" }}>{value}</div>
+    </div>
   );
 }
 
 export default function MatchHeader({ frontmatter }: { frontmatter: MatchFrontmatter }) {
   const { competition, date, venue, home, away, stats, tags } = frontmatter;
   return (
-    <div className="px-6 md:px-12 pt-14 pb-8" style={{ borderBottom: "0.5px solid rgba(255,255,255,.06)" }}>
-      <p className="mono mb-4" style={{ fontSize: 10, letterSpacing: ".2em", color: "rgba(255,155,70,.88)" }}>
-        02 / MATCH ANALYSIS · {competition.toUpperCase()}
-      </p>
-      <div className="flex items-baseline gap-5 flex-wrap mb-3.5">
-        <span className="font-medium" style={{ fontSize: 30, color: "rgba(238,234,228,.97)" }}>{home.name}</span>
-        <span className="mono" style={{ fontSize: 30, color: "var(--amber, #ffb356)" }}>{home.score} — {away.score}</span>
-        <span className="font-medium" style={{ fontSize: 30, color: "rgba(238,234,228,.97)" }}>{away.name}</span>
-      </div>
-      <p className="mono mb-4.5" style={{ fontSize: 10.5, color: "rgba(215,205,195,.6)" }}>
-        {date} · {venue} · Referee-agnostic tactical read
-      </p>
+    <div className="px-6 md:px-10 pt-28 pb-10" style={{ background: "var(--stage)", borderBottom: "0.5px solid var(--edge)" }}>
+      <div className="max-w-[1000px] mx-auto">
+        <p className="mono t-eyebrow kicker mb-6" style={{ color: "var(--green-mid)" }}>
+          02 / Match Analysis · {competition}
+        </p>
+        <div className="flex items-center gap-5 md:gap-7 flex-wrap mb-4">
+          <span className="display" style={{ fontSize: "clamp(26px,4vw,44px)", color: "var(--ink)", letterSpacing: "-0.02em" }}>{home.name}</span>
+          <span className="display" style={{ fontSize: "clamp(30px,5vw,52px)", color: "var(--green-bright)", letterSpacing: "-0.03em" }}>{home.score}&nbsp;–&nbsp;{away.score}</span>
+          <span className="display" style={{ fontSize: "clamp(26px,4vw,44px)", color: "var(--ink)", letterSpacing: "-0.02em" }}>{away.name}</span>
+        </div>
+        <p className="mono mb-7" style={{ fontSize: 13, color: "var(--ink-3)" }}>
+          {date} · {venue}
+        </p>
 
-      <div className="flex gap-2.5 flex-wrap mb-4">
-        <div className="rounded-lg px-3.5 py-2" style={{ background: "rgba(255,255,255,.035)", border: "0.5px solid rgba(255,145,60,.18)", minWidth: 110 }}>
-          <div className="mono" style={{ fontSize: 8.5, letterSpacing: ".1em", color: "rgba(215,205,195,.55)" }}>POSSESSION</div>
-          <div className="mono" style={{ fontSize: 14, color: "rgba(255,205,140,.95)" }}>{stats.possession[0]} / {stats.possession[1]}</div>
+        <div className="flex gap-3 flex-wrap mb-5">
+          <Stat label="Possession" value={`${stats.possession[0]} / ${stats.possession[1]}`} />
+          <Stat label="xG" value={`${stats.xg.value[0]} / ${stats.xg.value[1]}`} extra={stats.xg.verify ? <Chip label="verify" color="#e8536a" /> : null} />
+          <Stat label="Field Tilt" value={`${stats.fieldTilt.value}%`} extra={stats.fieldTilt.est ? <Chip label="est" color="#c9a24a" /> : null} />
+          <Stat label="PPDA" value={`${stats.ppda.value[0]} / ${stats.ppda.value[1]}`} extra={stats.ppda.est ? <Chip label="est" color="#c9a24a" /> : null} />
         </div>
-        <div className="rounded-lg px-3.5 py-2" style={{ background: "rgba(255,255,255,.035)", border: "0.5px solid rgba(255,145,60,.18)", minWidth: 110 }}>
-          <div className="mono" style={{ fontSize: 8.5, letterSpacing: ".1em", color: "rgba(215,205,195,.55)" }}>
-            xG {stats.xg.verify && <VerifyChip />}
-          </div>
-          <div className="mono" style={{ fontSize: 14, color: "rgba(255,205,140,.95)" }}>{stats.xg.value[0]} / {stats.xg.value[1]}</div>
-        </div>
-        <div className="rounded-lg px-3.5 py-2" style={{ background: "rgba(255,255,255,.035)", border: "0.5px solid rgba(255,145,60,.18)", minWidth: 110 }}>
-          <div className="mono" style={{ fontSize: 8.5, letterSpacing: ".1em", color: "rgba(215,205,195,.55)" }}>
-            FIELD TILT {stats.fieldTilt.est && <EstChip />}
-          </div>
-          <div className="mono" style={{ fontSize: 14, color: "rgba(255,205,140,.95)" }}>{stats.fieldTilt.value}%</div>
-        </div>
-        <div className="rounded-lg px-3.5 py-2" style={{ background: "rgba(255,255,255,.035)", border: "0.5px solid rgba(255,145,60,.18)", minWidth: 110 }}>
-          <div className="mono" style={{ fontSize: 8.5, letterSpacing: ".1em", color: "rgba(215,205,195,.55)" }}>
-            PPDA {stats.ppda.est && <EstChip />}
-          </div>
-          <div className="mono" style={{ fontSize: 14, color: "rgba(255,205,140,.95)" }}>{stats.ppda.value[0]} / {stats.ppda.value[1]}</div>
-        </div>
-      </div>
 
-      <div className="flex gap-1.5 flex-wrap">
-        {tags.map((t) => (
-          <span key={t} className="mono px-2.5 py-1 rounded-md" style={{ fontSize: 9, background: "rgba(255,135,45,.14)", color: "rgba(255,190,115,.94)", border: "0.5px solid rgba(255,145,55,.28)" }}>
-            {t}
-          </span>
-        ))}
+        <div className="flex gap-2 flex-wrap">
+          {tags.map((t) => (
+            <span key={t} className="mono px-3 py-1.5 rounded-full" style={{ fontSize: 12, background: "var(--green-soft)", color: "var(--green-bright)", border: "0.5px solid var(--green-line)" }}>
+              {t}
+            </span>
+          ))}
+        </div>
       </div>
     </div>
   );

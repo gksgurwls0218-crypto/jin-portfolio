@@ -25,7 +25,6 @@ export default function MatchAnalysisPage() {
           n: "02",
           label: "Essays",
           title: "The ideas, written out.",
-          desc: "Ideas, insights, etc..",
         },
       ]}
     />

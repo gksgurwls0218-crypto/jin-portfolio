@@ -42,13 +42,13 @@ export default function KpiIndex({
                 onMouseEnter={enter(true)} onMouseLeave={enter(false)}
               >
                 <div className="flex items-center justify-between gap-3 mb-4">
-                  <span className="mono" style={{ fontSize: 10.5, color: "var(--ink-4)", letterSpacing: "0.06em" }}>{it.sub}</span>
+                  <span className="mono" style={{ fontSize: 12, fontWeight: 500, color: "var(--green-mid)", letterSpacing: "0.06em" }}>{it.sub}</span>
                   {it.badge && (
-                    <span className="mono" style={{ fontSize: 10, fontWeight: 500, color: it.badge.color, padding: "3px 9px", borderRadius: 20, background: it.badge.bg, border: `0.5px solid ${it.badge.border}` }}>{it.badge.label}</span>
+                    <span className="mono" style={{ fontSize: 11, fontWeight: 500, color: it.badge.color, padding: "3px 10px", borderRadius: 20, background: it.badge.bg, border: `0.5px solid ${it.badge.border}` }}>{it.badge.label}</span>
                   )}
                 </div>
-                <h2 className="display mb-3" style={{ fontSize: 18, color: "var(--ink)", lineHeight: 1.14, letterSpacing: "-0.01em" }}>{it.title}</h2>
-                <p className="mb-6" style={{ fontSize: 13.5, lineHeight: 1.6, color: "var(--ink-2)" }}>{it.short}</p>
+                <h2 className="display mb-3" style={{ fontSize: 22, color: "var(--ink)", lineHeight: 1.14, letterSpacing: "-0.01em" }}>{it.title}</h2>
+                <p className="mb-6" style={{ fontSize: 15, lineHeight: 1.62, color: "var(--ink-2)" }}>{it.short}</p>
                 <div className="mt-auto pt-4" style={{ borderTop: "0.5px solid var(--edge)" }}>
                   <EnterTag />
                 </div>
