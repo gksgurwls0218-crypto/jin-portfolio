@@ -59,8 +59,8 @@
 }
 
 /* Reset lives in @layer base so Tailwind utility classes (padding, margin,
-   gap) always win over it — an unlayered `* { padding:0 }` would silently
-   override every px-*/mb-*/mt-auto utility on the site. */
+   gap) always win over it — an unlayered universal padding reset would
+   silently override every spacing utility on the site. */
 @layer base {
   * { box-sizing: border-box; margin: 0; padding: 0; }
 }
