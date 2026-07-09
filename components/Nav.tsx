@@ -25,9 +25,9 @@ export default function Nav() {
       className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-10"
       style={{
         height: 62,
-        background: scrolled ? "rgba(6,9,11,0.72)" : "transparent",
-        backdropFilter: scrolled ? "blur(16px) saturate(150%)" : "none",
-        WebkitBackdropFilter: scrolled ? "blur(16px) saturate(150%)" : "none",
+        background: scrolled ? "rgba(6,9,11,0.94)" : "transparent",
+        backdropFilter: scrolled ? "blur(18px) saturate(150%)" : "none",
+        WebkitBackdropFilter: scrolled ? "blur(18px) saturate(150%)" : "none",
         borderBottom: `0.5px solid ${scrolled ? "var(--edge-2)" : "transparent"}`,
         transition: "background .4s var(--ease-out), border-color .4s var(--ease-out), backdrop-filter .4s var(--ease-out)",
       }}

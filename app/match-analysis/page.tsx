@@ -12,21 +12,20 @@ export default function MatchAnalysisPage() {
       eyebrow="02 / Match Analysis & Essays"
       title="Theory applied,"
       accent="and written down."
-      intro="Two ways in — the matches where Variation Theory meets the game, and the essays where the ideas are worked out in full."
+      intro="Two ways in - the match analysis under Variation Theory, and essays fully written with Variation Theory ideas."
       doors={[
         {
           href: "/match-analysis/matches",
           n: "01",
           label: "Match Analysis",
-          title: "Tested on the pitch.",
-          desc: "Interactive match breakdowns — hover a match to see both line-ups, then step inside for the full analysis.",
+          title: "Match analysis reports.",
         },
         {
           href: "/match-analysis/essays",
           n: "02",
           label: "Essays",
           title: "The ideas, written out.",
-          desc: "Original tactical essays — the concepts behind the framework, argued in long form.",
+          desc: "Ideas, insights, etc..",
         },
       ]}
     />
