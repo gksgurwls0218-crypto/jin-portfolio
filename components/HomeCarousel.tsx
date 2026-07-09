@@ -80,6 +80,19 @@ const items: CarouselItem[] = [
       </Card>
     ),
   },
+  {
+    key: "kpi",
+    content: (
+      <Card n="03" label="Data & KPI Lab" href="/kpi-lab" title={<>Measured,<br />not romanticised.</>}>
+        <p className="mb-5" style={{ fontSize: 17, lineHeight: 1.7, color: C.ink2 }}>
+          The metrics I read matches with — and the original KPIs I&rsquo;m building to measure Variation directly.
+        </p>
+        <p style={{ fontSize: 14, lineHeight: 1.6, color: C.muted }}>
+          xT · VAEP · field tilt · PPDA — plus a lab of metrics of my own.
+        </p>
+      </Card>
+    ),
+  },
 ];
 
 export default function HomeCarousel() {

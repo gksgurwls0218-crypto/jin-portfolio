@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 const links = [
   { href: "/approach", label: "Approach", index: "01" },
   { href: "/match-analysis", label: "Match Analysis", index: "02" },
+  { href: "/kpi-lab", label: "KPI Lab", index: "03" },
 ];
 
 export default function Nav() {
