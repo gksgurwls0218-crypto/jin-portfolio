@@ -47,7 +47,8 @@ function Card({ n, label, title, href, children }: { n: string; label: string; t
 
       <div className="mt-auto pt-8" style={{ borderTop: `0.5px solid ${C.edge}` }}>
         <span className="mono inline-flex items-center gap-2" style={{ fontSize: 14, color: C.green }}>
-          Enter <span className="transition-transform duration-300 group-hover:translate-x-1.5">→</span>
+          <span className="border-b border-transparent group-hover:border-current pb-0.5 transition-colors duration-300">Enter</span>
+          <span className="transition-transform duration-300 group-hover:translate-x-1.5">→</span>
         </span>
       </div>
     </Link>
@@ -83,12 +84,9 @@ const items: CarouselItem[] = [
   {
     key: "kpi",
     content: (
-      <Card n="03" label="Data & KPI Lab" href="/kpi-lab" title={<>Measured,<br />not romanticised.</>}>
-        <p className="mb-5" style={{ fontSize: 17, lineHeight: 1.7, color: C.ink2 }}>
-          The metrics I read matches with — and the original KPIs I&rsquo;m building to measure Variation directly.
-        </p>
-        <p style={{ fontSize: 14, lineHeight: 1.6, color: C.muted }}>
-          xT · VAEP · field tilt · PPDA — plus a lab of metrics of my own.
+      <Card n="03" label="Advanced Data & KPI Lab" href="/kpi-lab" title={<>Could be reckless,<br />or innovative.</>}>
+        <p style={{ fontSize: 16, lineHeight: 1.7, color: C.ink2 }}>
+          A room for advanced data &amp; KPIs to prove Variation Theory. Additionally, a room to think of something new by stepping off the beaten track. Could be reckless — but innovative as well.
         </p>
       </Card>
     ),

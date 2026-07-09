@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import KpiLab from "@/components/KpiLab";
+import KpiLabLanding from "@/components/kpi/KpiLabLanding";
 
 export const metadata: Metadata = {
-  title: "Data & KPI Lab | Jin",
-  description: "The metrics behind Variation Theory — the established toolbox and the original KPIs built to measure variation directly.",
+  title: "Advanced Data & KPI Lab | Jin",
+  description: "Advanced data & KPIs used to prove Variation Theory — and an original lab of new metrics.",
 };
 
 export default function KpiLabPage() {
-  return <KpiLab />;
+  return <KpiLabLanding />;
 }

@@ -1,53 +1,67 @@
 /* Data & KPI Lab content.
-   Two groups:
-   1) STANDARD — established metrics jin applies (the toolbox).
-   2) LAB — KPIs jin designed / re-applied to measure Variation directly.
-      Status + type mirror wiki/synthesis/jin_kpi_lab.md. Edit freely. */
+   Two groups, each with its own index + detail pages:
+   1) STANDARD ("Advanced Data & KPIs for Variation Theory") — established metrics jin applies.
+   2) LAB ("Data & KPI Lab") — KPIs jin designed / re-applied to measure Variation directly.
+      status + type mirror wiki/synthesis/jin_kpi_lab.md. Edit freely. */
 
 export type Standard = {
+  id: string;
   abbr: string;
   name: string;
+  short: string;      // card blurb (interest hook)
   measures: string;   // what it measures
   question: string;   // the tactical question it answers
+  detail: string;     // full write-up
 };
 
 export const STANDARD: Standard[] = [
-  { abbr: "xT",   name: "Expected Threat",       measures: "How much an on-ball action raises scoring probability by moving the ball to a more dangerous zone.", question: "Where does progression actually create danger?" },
-  { abbr: "VAEP", name: "Valuing Actions (VAEP)", measures: "Values every action by its effect on both scoring and conceding probability.", question: "What is each action really worth, at both ends?" },
-  { abbr: "OBV",  name: "On-Ball Value",         measures: "The change in a team's expected goals produced by a single on-ball action.", question: "Which individual actions move the needle?" },
-  { abbr: "EPV",  name: "Expected Possession Value", measures: "The value of the current possession state before the next action is taken.", question: "How valuable is this moment on the pitch?" },
-  { abbr: "PSxG", name: "Post-Shot xG",          measures: "Shot quality after the strike, factoring in placement and contact.", question: "Finishing and shot-stopping over/under-performance." },
-  { abbr: "FT",   name: "Field Tilt",            measures: "A team's share of final-third possession — territorial dominance.", question: "Who controls the dangerous third?" },
-  { abbr: "PPDA", name: "Passes per Defensive Action", measures: "Opponent passes allowed per defensive action in their build-up zone.", question: "How aggressively does the team press?" },
-  { abbr: "FTO",  name: "Forced Turnover",       measures: "Turnovers won through active defensive pressure.", question: "Does the defence create the springboard for transition?" },
-  { abbr: "PP",   name: "Progressive Pass / Carry", measures: "Passes and carries that move the ball meaningfully toward goal.", question: "Who drives progression — and how?" },
-  { abbr: "RFT",  name: "Receptions in Final Third", measures: "Receiving the ball inside the final third.", question: "Who gets the ball into dangerous receiving zones?" },
-  { abbr: "DLB",  name: "Defensive Line Break",  measures: "Actions that break through the opponent's defensive line.", question: "Does build-up actually penetrate the block?" },
-  { abbr: "PN",   name: "Pass Network",          measures: "The map of pass connections and average positions.", question: "What is the team's real shape, and who connects it?" },
+  { id: "xt", abbr: "xT", name: "Expected Threat", short: "A value for every metre of progression.", measures: "How much an on-ball action raises scoring probability by moving the ball to a more dangerous zone.", question: "Where does progression actually create danger?", detail: "Expected Threat divides the pitch into zones and assigns each a probability of leading to a goal within the next few actions. Every pass or carry is then valued by the change in threat between its start and end zone. For the Variation framework it is the base currency: it lets a low-xT conditioning phase (Plan A−) and a high-xT spike (Plan A) be told apart in the data, and it is the input for the timing and sequencing KPIs in the Lab." },
+  { id: "vaep", abbr: "VAEP", name: "Valuing Actions (VAEP)", short: "Every action priced at both ends.", measures: "Values every action by its effect on both scoring and conceding probability.", question: "What is each action really worth, at both ends?", detail: "VAEP estimates, for every action, how much it changes the team's probability of scoring and of conceding in the near future — then nets the two. Unlike xT it credits defensive actions too, which matters for a philosophy that treats defence as option-removal rather than an afterthought." },
+  { id: "obv", abbr: "OBV", name: "On-Ball Value", short: "Which touches move the needle.", measures: "The change in a team's expected goals produced by a single on-ball action.", question: "Which individual actions move the needle?", detail: "On-Ball Value attributes the swing in expected goals to the player performing each on-ball action. It is useful for spotting the individuals who generate variation — the ones whose receptions and carries repeatedly shift the danger level rather than merely recycle possession." },
+  { id: "epv", abbr: "EPV", name: "Expected Possession Value", short: "How much this moment is worth.", measures: "The value of the current possession state before the next action is taken.", question: "How valuable is this moment on the pitch?", detail: "EPV values the state of a possession — position, players, pressure — as a live expected-goals figure, before any action is chosen. Reading EPV across a sequence shows how a possession is being built, and where a variation suddenly lifts the value the opponent thought they had contained." },
+  { id: "psxg", abbr: "PSxG", name: "Post-Shot xG", short: "Shot quality after the strike.", measures: "Shot quality after the strike, factoring in placement and contact.", question: "Finishing and shot-stopping over/under-performance.", detail: "Post-Shot xG re-values a shot once it has been struck, using placement and contact. The gap between xG and PSxG isolates finishing quality; the gap between PSxG and goals isolates goalkeeping. It keeps the analysis honest about how much of a scoreline was chance creation versus execution." },
+  { id: "field-tilt", abbr: "FT", name: "Field Tilt", short: "Who owns the dangerous third.", measures: "A team's share of final-third possession — territorial dominance.", question: "Who controls the dangerous third?", detail: "Field Tilt is the share of final-third possession between the two teams — a cleaner read of territorial control than raw possession. In the framework it tracks whether a conditioning phase is actually pinning the opponent, which is the precondition for a Lure that means anything." },
+  { id: "ppda", abbr: "PPDA", name: "Passes per Defensive Action", short: "How hard the team hunts the ball.", measures: "Opponent passes allowed per defensive action in their build-up zone.", question: "How aggressively does the team press?", detail: "PPDA counts how many passes the opponent is allowed to make per defensive action in their build-up area — a low number means aggressive pressing. It quantifies Phase 1 of the defensive model (the seven-second gegenpress window) and is later re-applied, from the attacking side, in the Lab's Reverse PPDA." },
+  { id: "forced-turnover", abbr: "FTO", name: "Forced Turnover", short: "The springboard for transition.", measures: "Turnovers won through active defensive pressure.", question: "Does the defence create the springboard for transition?", detail: "Forced Turnovers count possessions won through active pressure rather than passive interception. For a direct-transition side they are the ignition point of an attack, and they connect the defensive phase to the very first frame of a Plan A spike." },
+  { id: "progressive", abbr: "PP", name: "Progressive Pass / Carry", short: "Who drives the ball forward.", measures: "Passes and carries that move the ball meaningfully toward goal.", question: "Who drives progression — and how?", detail: "Progressive passes and carries flag the actions that meaningfully advance the ball toward goal. Splitting progression by pass versus carry, and by player, reveals whether a team advances through structure or through individuals leaving their line — the raw material of mutation." },
+  { id: "rft", abbr: "RFT", name: "Receptions in Final Third", short: "Who arrives where it hurts.", measures: "Receiving the ball inside the final third.", question: "Who gets the ball into dangerous receiving zones?", detail: "Receptions in the Final Third count how often, and by whom, the ball is received in the danger area. It is the destination half of the Lab's DLB → RFT conversion metric: breaking a line only matters if someone actually receives beyond it." },
+  { id: "dlb", abbr: "DLB", name: "Defensive Line Break", short: "Does build-up actually pierce?", measures: "Actions that break through the opponent's defensive line.", question: "Does build-up actually penetrate the block?", detail: "A Defensive Line Break is an action that plays through or past a line of the opponent's block. Counting them separates possession that circulates in front of the block from possession that genuinely penetrates it — the moment a variation converts into territory." },
+  { id: "pass-network", abbr: "PN", name: "Pass Network", short: "The team's true shape.", measures: "The map of pass connections and average positions.", question: "What is the team's real shape, and who connects it?", detail: "A pass network plots average positions and the strength of connections between them, exposing a team's real in-possession shape versus its nominal formation. Its dispersion over a season is the basis for one of the Lab's multi-season trend KPIs — a more distributed network is harder to pre-scout." },
 ];
 
 export type LabType = "Combination" | "Re-application" | "Theory-derived";
 export type LabStatus = "concept" | "draft" | "live";
 
 export type LabKpi = {
+  id: string;
   code: string;
   name: string;
   type: LabType;
   status: LabStatus;
-  note: string;
+  short: string;   // card blurb
+  detail: string;  // full write-up
 };
 
 export const LAB: LabKpi[] = [
-  { code: "2-2", name: "DLB → RFT Conversion",        type: "Combination",    status: "draft",   note: "Share of line-breaks that reach a final-third reception — does Plan A carry through to the finish?" },
-  { code: "2-3", name: "xT Spike-Timing Deviation",   type: "Re-application", status: "draft",   note: "The variance in *when* high-xT actions fire — variation means the opponent can't predict the moment." },
-  { code: "3-2", name: "Reverse PPDA",                type: "Re-application", status: "draft",   note: "Pressing read from the attacking side — how the opponent's press is baited and then beaten." },
-  { code: "E-2", name: "Attacking-Channel Entropy",   type: "Theory-derived", status: "draft",   note: "How unpredictably attacks are spread across channels, measured as information entropy." },
-  { code: "E-4", name: "Final-Third Receiver Entropy", type: "Theory-derived", status: "draft",  note: "How unpredictable the final-third receiver is — the attack with no fixed reference point." },
-  { code: "S-1", name: "Match xT Variance",           type: "Re-application", status: "concept", note: "Season-scale spread of match xT — the low-then-spike signature of Lure & Shock." },
-  { code: "S-2", name: "Plan-A Completion Rate",      type: "Combination",    status: "concept", note: "Share of matches in which the full attacking cycle actually completes." },
-  { code: "S-3", name: "Scoring-Pattern Entropy",     type: "Theory-derived", status: "concept", note: "How varied the goal-scoring patterns are across a season." },
-  { code: "S-4", name: "Tactical-Response Diversity",  type: "Re-application", status: "concept", note: "Breadth of responses to different opponent setups (observation-supported)." },
-  { code: "M-1", name: "xT Spike-Frequency Trend",    type: "Re-application", status: "concept", note: "Multi-season trend in how often high-xT spikes are generated." },
-  { code: "M-2", name: "Pass-Network Dispersion Trend", type: "Re-application", status: "concept", note: "Multi-season trend in how distributed the passing network is." },
-  { code: "M-3", name: "New-Signing Adaptation Window", type: "Combination",  status: "concept", note: "How quickly new players reach the system's variation output." },
+  { id: "dlb-rft", code: "2-2", name: "DLB → RFT Conversion", type: "Combination", status: "draft", short: "Does a line-break actually reach a dangerous reception?", detail: "The share of defensive line-breaks (DLB) that lead to a final-third reception (RFT) within a few seconds — a measure of whether a Plan A transition carries all the way to the finish rather than stalling. Draft definition: (DLBs that lead to an RFT) / (total DLBs), with the connecting window still to be fixed (5s? same possession?). Measurable from basic video tagging; next step is establishing a benchmark from real matches." },
+  { id: "xt-spike-timing", code: "2-3", name: "xT Spike-Timing Deviation", type: "Re-application", status: "draft", short: "Can the opponent predict when the danger lands?", detail: "The variance in *when*, inside a possession, high-xT actions occur. Variation says the opponent must not be able to predict the moment of the spike — so a larger spread of spike timings is the goal. Draft method: record the timestamp of each above-threshold xT action, then take the standard deviation across possessions. Needs raw event data with timestamps and a Python/R script to compute." },
+  { id: "reverse-ppda", code: "3-2", name: "Reverse PPDA", type: "Re-application", status: "draft", short: "PPDA read from the attacking side.", detail: "PPDA re-applied from the perspective of the team in possession — how the opponent's press is baited, drawn in, and then broken. It reframes a defensive-pressure metric as a measure of how effectively a build-up lures pressure before releasing through it. Still needs supporting use-cases and literature." },
+  { id: "channel-entropy", code: "E-2", name: "Attacking-Channel Entropy", type: "Theory-derived", status: "draft", short: "How evenly unpredictable are the attacking channels?", detail: "Information entropy applied to which vertical channels an attack uses. A perfectly one-sided attack has low entropy; a genuinely unpredictable one spreads across channels and scores high. Derived directly from information theory; needs a normalised-entropy (H_norm) benchmark and a tagging pipeline." },
+  { id: "receiver-entropy", code: "E-4", name: "Final-Third Receiver Entropy", type: "Theory-derived", status: "draft", short: "Is there a fixed reference point to defend?", detail: "Entropy applied to *who* receives in the final third. A block defends reference points; if the final-third receiver is highly unpredictable (high entropy), there is no reference point to defend — the data face of the no-fixed-position attack. Needs an H_norm benchmark and tagging pipeline." },
+  { id: "match-xt-variance", code: "S-1", name: "Match xT Variance", type: "Re-application", status: "concept", short: "The low-then-spike signature, at season scale.", detail: "The spread of match-level xT across a season — the statistical fingerprint of Lure & Shock played over many games (long, low-threat conditioning phases punctuated by high-threat spikes). Concept stage: needs a season-scale data-collection method." },
+  { id: "plan-a-completion", code: "S-2", name: "Plan-A Completion Rate", type: "Combination", status: "concept", short: "How often does the full attacking cycle complete?", detail: "The proportion of matches in which the complete attacking cycle actually finishes (e.g. a defined number of DLB → RFT completions). Concept stage: the definition of a 'completed' cycle still needs a threshold." },
+  { id: "scoring-entropy", code: "S-3", name: "Scoring-Pattern Entropy", type: "Theory-derived", status: "concept", short: "How varied are the ways goals arrive?", detail: "Entropy applied to goal-scoring patterns across a season — a varied, high-entropy scoring profile is harder to plan against than a one-note one. Concept stage: needs a classification scheme for scoring patterns." },
+  { id: "response-diversity", code: "S-4", name: "Tactical-Response Diversity", type: "Re-application", status: "concept", short: "How many answers to how many setups?", detail: "The breadth of distinct responses a side shows to different opponent setups. Hard to fully quantify, so it is designed as an observation-supported measure rather than a purely numeric one. Concept stage." },
+  { id: "spike-frequency-trend", code: "M-1", name: "xT Spike-Frequency Trend", type: "Re-application", status: "concept", short: "Are the spikes getting more frequent over seasons?", detail: "A multi-season trend in how often high-xT spikes are generated — evidence of whether the model's output is compounding as the squad learns it. Concept stage: needs multi-season data and correction for external variables." },
+  { id: "network-dispersion-trend", code: "M-2", name: "Pass-Network Dispersion Trend", type: "Re-application", status: "concept", short: "Is the shape getting harder to pre-scout?", detail: "A multi-season trend in how distributed the passing network is — a more dispersed network resists pre-scouting. Concept stage: needs multi-season data with correction for player turnover." },
+  { id: "adaptation-window", code: "M-3", name: "New-Signing Adaptation Window", type: "Combination", status: "concept", short: "How fast do new players reach the system's output?", detail: "How long a new signing takes to reach the system's variation output — a measure of how teachable the model is. Concept stage: the definition of 'adapted' still needs a threshold." },
 ];
+
+export const STATUS_BADGE: Record<LabStatus, { label: string; color: string; bg: string; border: string }> = {
+  concept: { label: "Concept", color: "#c9a24a", bg: "rgba(201,162,74,0.12)", border: "rgba(201,162,74,0.30)" },
+  draft:   { label: "Draft",   color: "#5bb85b", bg: "rgba(74,166,74,0.15)",  border: "rgba(74,166,74,0.36)" },
+  live:    { label: "Live",    color: "#7dff6a", bg: "rgba(125,255,106,0.14)", border: "rgba(125,255,106,0.28)" },
+};
+
+export function findStandard(id: string) { return STANDARD.find((m) => m.id === id); }
+export function findLab(id: string) { return LAB.find((k) => k.id === id); }
