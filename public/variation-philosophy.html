@@ -377,6 +377,20 @@ section{ background:#06090b !important; }
 .nav-brand{ color:#f3f1ea !important; }
 .nav-inner{ scrollbar-width:none; }
 .nav-inner::-webkit-scrollbar{ display:none; }
+
+/* bigger chapter dividers + titles */
+.sec-deco{ font-size:.92rem !important; letter-spacing:.26em !important; color:#8fbf93 !important; }
+.ch-num{ font-size:1.25rem !important; letter-spacing:.04em !important; color:#7dff6a !important; }
+.ch-hdr h2{ font-size:2.7rem !important; letter-spacing:-.02em !important; }
+.ch-hdr .desc{ font-size:1.15rem !important; }
+.sec-dark .ch-num,#spike .ch-num,#phs .ch-num,#apply .ch-num{ color:#7dff6a !important; }
+/* keyword nav — horizontal scroll affordance */
+.nav{ position:relative; }
+.nav-inner{ scroll-behavior:smooth; }
+.nav::after{ content:''; position:absolute; top:0; right:0; height:100%; width:64px; background:linear-gradient(to right,transparent,#06090b 78%); pointer-events:none; opacity:0; transition:opacity .2s; z-index:1; }
+.nav.nav-more::after{ opacity:1; }
+.nav::before{ content:'\203A'; position:absolute; top:0; right:18px; height:54px; display:flex; align-items:center; color:#7dff6a; font-size:1.5rem; font-weight:700; z-index:2; pointer-events:none; opacity:0; transition:opacity .2s; }
+.nav.nav-more::before{ opacity:.95; }
 </style>
 </head>
 
@@ -430,7 +444,7 @@ section{ background:#06090b !important; }
     <div class="q-grid fade">
       <div class="q-card" data-num="01">
         <h4>Q. How do you break down a structured defensive block?</h4>
-        <p>Pep's completed grid system — positional space allocation, overlap minimization, clear ordering — has become the modern defensive standard. Breaking through it directly is getting harder. A new approach is needed.</p>
+        <p>Since Pep's positional play (the grid system) became a standard game model of modern football, opposing teams started defending in a heavy low block — securing a point and looking for a few counter-attacks. Teams that want to attack proactively have had to reinvent themselves to find a breakthrough against that heavily structured low block. A new approach is needed.</p>
       </div>
       <div class="q-card" data-num="02">
         <h4>Q. Is it still possible to run one game model for an entire season?</h4>
@@ -444,9 +458,6 @@ section{ background:#06090b !important; }
         <h4>Q. How do you unlock player creativity and proactive decision-making?</h4>
         <p>Give a player only a role and you get a robot. The ability to read, adapt, and execute creatively within structure — the autonomy that fires at the clutch point — is the core condition of this philosophy.</p>
       </div>
-    </div>
-    <div class="bq" style="margin-top:32px">
-      <p>"A moment of variable or mutation introduces a few seconds of buffering into the system. Those seconds change the game — and when the system can't handle the buffer, the system collapses."</p>
     </div>
   </div>
 </section>
@@ -484,7 +495,7 @@ section{ background:#06090b !important; }
         <canvas id="cvMut" height="220"></canvas>
         <div id="mutCfg" style="display:flex;gap:12px;flex-wrap:wrap;font-size:.72rem;color:var(--slate);padding:4px 0">
           <span>① <span id="mutR1L">AM</span> <span id="mutR1S">Attacking MF</span></span>
-          <span>② <span id="mutR2L">IW</span> <span id="mutR2S">Wide Winger</span></span>
+          <span>② <span id="mutR2L">LW</span> <span id="mutR2S">Wide Winger</span></span>
           <span>③ <span id="mutR3L">CDM</span> <span id="mutR3S">Build-up role</span></span>
         </div>
         <div style="display:flex;gap:8px;align-items:center;justify-content:flex-end;margin-top:6px">
@@ -523,27 +534,27 @@ section{ background:#06090b !important; }
       <p class="muted" style="margin-bottom:20px;font-size:.9rem">Each concept is covered in detail with animations in its own section.</p>
       <div class="glossary fade">
         <div class="g-item">
-          <h4>⚡ Spike Theory — Lure → Shock</h4>
+          <h4>Spike Theory — Lure → Shock</h4>
           <p>Condition the opposition through repetition (Lure), then exploit their conditioned response to strike (Shock). The goal is an xT spike — a moment of sudden, sharp escalation.</p>
         </div>
         <div class="g-item amber">
-          <h4>🪤 Into the Trap</h4>
+          <h4>Into the Trap</h4>
           <p>Don't avoid the defensive trap — walk into it deliberately and escape via pre-agreed pattern. The lateral pass protocol is the core tool.</p>
         </div>
         <div class="g-item emerald">
-          <h4>🎯 Clutch Point</h4>
+          <h4>Clutch Point</h4>
           <p>The moment a designated player receives the ball in a designated zone. The player-initiated trigger for pattern play. The switch that flips tempo.</p>
         </div>
         <div class="g-item">
-          <h4>🧠 Buffering</h4>
-          <p>A defender's cognitive delay. Triggered when an unexpected choice breaks an established expectation — lasting 2–4 seconds. That window is where scoring chances are born.</p>
+          <h4>Buffering</h4>
+          <p>A defender's cognitive delay. Triggered when an unexpected choice breaks an established expectation — lasting only a brief window. That window is where scoring chances are born.</p>
         </div>
         <div class="g-item amber">
-          <h4>📐 Pre-Half Space</h4>
+          <h4>Pre-Half Space</h4>
           <p>The zone just before the half-space. The transitional hub of Overload → Isolation switches. The team that owns this space controls the attack.</p>
         </div>
         <div class="g-item emerald">
-          <h4>🦶 Signature Move</h4>
+          <h4>Signature Move</h4>
           <p>A player's unique on-ball habit fingerprint. The core press-escape tool and the individual-level Lure that conditions their marker. A non-negotiable regardless of position.</p>
         </div>
       </div>
@@ -598,9 +609,9 @@ section{ background:#06090b !important; }
         </div>
       </div>
       <div class="board-ctrl">
-        <button class="btn-play" id="btnShock">⚡ SHOCK</button>
+        <button class="btn-play" id="btnShock">SHOCK</button>
         <button class="btn-reset" id="btnPlanReset">↺ Reset</button>
-        <div class="step-info" id="infoPlan">Left flank overload looping — hit ⚡ SHOCK to trigger right isolation</div>
+        <div class="step-info" id="infoPlan">Left flank overload looping — hit SHOCK to trigger right isolation</div>
       </div>
     </div>
 
@@ -722,7 +733,7 @@ section{ background:#06090b !important; }
         <p>To play proactive rather than reactive football, players must read the situation and act on their own judgement. The Clutch Point is where that autonomy ignites.</p>
       </div>
       <div class="card card-amber">
-        <h4 style="color:var(--amber);margin-bottom:10px">🎯 Creativity × Structure</h4>
+        <h4 style="color:var(--amber);margin-bottom:10px">Creativity × Structure</h4>
         <p>Giving players freedom within the pre-agreed pattern (structure). Provide the frame — but how they adapt and execute at the Clutch Point is the player's call. Creativity operating inside structure.</p>
       </div>
     </div>
@@ -731,7 +742,7 @@ section{ background:#06090b !important; }
     <div class="board fade" style="margin-top:28px">
       <div class="board-top">
         <h4>Clutch Point Simulation</h4>
-        <span class="bdesc">U-shape build-up → ⚡Clutch Point triggered → high-speed pattern play</span>
+        <span class="bdesc">U-shape build-up → Clutch Point triggered → high-speed pattern play</span>
       </div>
       <div class="board-body"><canvas id="cvClutch" height="340"></canvas></div>
       <div class="board-ctrl">
@@ -768,7 +779,7 @@ section{ background:#06090b !important; }
         <h3 style="margin-bottom:14px">Buffering — 2 to 4 Seconds of Opportunity</h3>
         <p>A defender's cognitive delay. The 2–4 second decision gap triggered when an unexpected choice breaks their conditioned expectation. That window is where scoring chances are made.</p>
         <div class="bq-amber bq" style="margin-top:16px">
-          <p>Buffering goal: condition the defence to predict "what will they choose next" — then violate that expectation with a different choice and create 2–4 seconds of cognitive gap.</p>
+          <p>Buffering goal: condition the defence to predict "what will they choose next" — then violate that expectation with a different choice and create a brief window of cognitive gap.</p>
         </div>
 
       </div>
@@ -1057,7 +1068,7 @@ section{ background:#06090b !important; }
           </div>
         </div>
         <div class="board-ctrl">
-          <button class="btn-play" id="btnBufPlay2">⚡ SHOCK</button>
+          <button class="btn-play" id="btnBufPlay2">SHOCK</button>
           <button class="btn-reset" id="btnBufReset2">↺ Reset</button>
           <div class="step-info" id="infoBuf2">Left overload looping</div>
         </div>
@@ -1556,7 +1567,7 @@ function bubbleLabel(ctx,text,x,y,bg,fg,size=11){
     pDef.forEach(d=>{d.showQ=false;});
     pISO.hasBall=false;
 
-    document.getElementById('infoPlan').textContent='Left flank 5v5 overload looping — hit ⚡ SHOCK to trigger right Isolation';
+    document.getElementById('infoPlan').textContent='Left flank 5v5 overload looping — hit SHOCK to trigger right Isolation';
   }
 
   function updatePlan(dt,now){
@@ -1677,7 +1688,7 @@ function bubbleLabel(ctx,text,x,y,bg,fg,size=11){
     ctxP.fillText('RIGHT FLANK ISO',W*.54,H*.96);
     ctxP.restore();
     if(shockActive&&shockT>0.2){
-      bubbleLabel(ctxP,'⚡ SHOCK — Left → Right diagonal switch!',W/2,H-18,'rgba(78,205,196,.28)','#4ECDC4',10);
+      bubbleLabel(ctxP,'SHOCK — Left → Right diagonal switch!',W/2,H-18,'rgba(78,205,196,.28)','#4ECDC4',10);
     } else {
       bubbleLabel(ctxP,'Defence conditioned leftward → awaiting SHOCK',W/2,H-18,'rgba(224,92,92,.20)','#E05C5C',10);
     }
@@ -1690,7 +1701,7 @@ function bubbleLabel(ctx,text,x,y,bg,fg,size=11){
     pDef.forEach(d=>{d.showQ=false;});
     pISO.hasBall=false;
     pBall.snap(pCDM.x,pCDM.y);
-    document.getElementById('infoPlan').textContent='⚡ SHOCK — CDM plays diagonal long ball to right RW! All defenders buffering...';
+    document.getElementById('infoPlan').textContent='SHOCK — CDM plays diagonal long ball to right RW! All defenders buffering...';
   });
   document.getElementById('btnPlanReset').addEventListener('click',()=>initPlan());
 
@@ -2188,7 +2199,7 @@ function bubbleLabel(ctx,text,x,y,bg,fg,size=11){
     // 드리블 (step 6)
     if(showDrib){
       drawArrow(ctx,W*PEN_X,H*PEN_Y,W*.88,H*.22,GREEN,2.5,false,11);
-      bubbleLabel(ctx,'⚡Dribble!',W*.85,H*.17,'rgba(94,201,122,.52)','#5EC97A',11);
+      bubbleLabel(ctx,'Dribble!',W*.85,H*.17,'rgba(94,201,122,.52)','#5EC97A',11);
     }
 
     // Draw players
@@ -2774,7 +2785,7 @@ function bubbleLabel(ctx,text,x,y,bg,fg,size=11){
 
     const labels=[
       [getLabel('mutR1L','AM'),getLabel('mutR1S','Attacking MF')],
-      [getLabel('mutR2L','IW'),getLabel('mutR2S','Wide Winger')],
+      [getLabel('mutR2L','LW'),getLabel('mutR2S','Wide Winger')],
       [getLabel('mutR3L','CDM'),getLabel('mutR3S','Build-up role')],
     ];
 
@@ -2823,9 +2834,9 @@ function bubbleLabel(ctx,text,x,y,bg,fg,size=11){
     {dur:4.5, label:'① U-shape build-up — slow tempo, conditioning the opposition'},
     {dur:3.5, label:'② Designated player moves — simultaneously, to their zone'},
     {dur:2.8, label:'③ Clutch pass — slow, but decisive'},
-    {dur:0.4, label:'⚡ CLUTCH POINT triggered!'},
-    {dur:5.0, label:'⚡ High-speed play — 1st pass → one-touch → Arc'},
-    {dur:3.0, label:'⚡ 3 Variables — Best xT choice'},
+    {dur:0.4, label:'CLUTCH POINT triggered!'},
+    {dur:5.0, label:'High-speed play — 1st pass → one-touch → Arc'},
+    {dur:3.0, label:'3 Variables — Best xT choice'},
   ];
   const TOTAL=PH.reduce((s,p)=>s+p.dur,0);
 
@@ -3193,7 +3204,7 @@ function bubbleLabel(ctx,text,x,y,bg,fg,size=11){
       ctx.fillStyle='#FCD34D';
       ctx.font=`bold ${22+cpPulse*4}px sans-serif`;
       ctx.textAlign='center'; ctx.shadowColor='#F59E0B'; ctx.shadowBlur=18;
-      ctx.fillText('⚡ CLUTCH POINT!',W*.50,H*.44);
+      ctx.fillText('CLUTCH POINT!',W*.50,H*.44);
       ctx.shadowBlur=0;
       ctx.font='bold 10px sans-serif'; ctx.fillStyle='rgba(253,230,138,.8)';
       ctx.fillText('Clutch player · position locked · triggered!',W*.50,H*.49);
@@ -4177,9 +4188,9 @@ function bubbleLabel(ctx,text,x,y,bg,fg,size=11){
     {dur:4.5, label:'① U-shape build-up — slow tempo, conditioning the opposition'},
     {dur:3.5, label:'② Designated player moves — simultaneously, to their zone'},
     {dur:2.8, label:'③ Clutch pass — slow, but decisive'},
-    {dur:0.4, label:'⚡ CLUTCH POINT triggered!'},
-    {dur:5.0, label:'⚡ High-speed play — 1st pass → one-touch → Arc'},
-    {dur:3.0, label:'⚡ 3 Variables — Best xT choice'},
+    {dur:0.4, label:'CLUTCH POINT triggered!'},
+    {dur:5.0, label:'High-speed play — 1st pass → one-touch → Arc'},
+    {dur:3.0, label:'3 Variables — Best xT choice'},
   ];
   const TOTAL=PH.reduce((s,p)=>s+p.dur,0);
 
@@ -4426,7 +4437,7 @@ function bubbleLabel(ctx,text,x,y,bg,fg,size=11){
       ctx.save(); ctx.globalAlpha=1;
       ctx.fillStyle='#FCD34D'; ctx.font=`bold ${18+cpPulse*3}px sans-serif`;
       ctx.textAlign='center'; ctx.shadowColor='#F59E0B'; ctx.shadowBlur=14;
-      ctx.fillText('⚡ CLUTCH POINT!',W*.50,H*.44);
+      ctx.fillText('CLUTCH POINT!',W*.50,H*.44);
       ctx.shadowBlur=0; ctx.font='bold 8px sans-serif'; ctx.fillStyle='rgba(253,230,138,.8)';
       ctx.fillText('Clutch player · triggered!',W*.50,H*.50); ctx.restore();
       ball2(g.PRO1,.4+cpPulse*.3,1,0);
@@ -4522,7 +4533,7 @@ function bubbleLabel(ctx,text,x,y,bg,fg,size=11){
     playing=false; if(raf){cancelAnimationFrame(raf);raf=null;}
     t=0; lastTs=null; layout(); render2(0);
     if(playBtn) playBtn.textContent='▶ Play';
-    if(infoEl) infoEl.textContent='U-shape build-up → ⚡ Clutch Point';
+    if(infoEl) infoEl.textContent='U-shape build-up → Clutch Point';
   }
 
   if(playBtn) playBtn.addEventListener('click',()=>{
@@ -5074,5 +5085,22 @@ window.addEventListener('DOMContentLoaded', () => {
 }
 </script>
 
+
+<script>
+(function(){
+  try{
+    document.querySelectorAll('.desc, .lead, .sub, .q-card p, .g-item p, .card p').forEach(function(el){
+      if(el.dataset.sb) return;
+      el.innerHTML = el.innerHTML.replace(/([.?!])\s+(?=[A-Z"'\u201C\u2018])/g, '$1<br>');
+      el.dataset.sb='1';
+    });
+    var ni=document.querySelector('.nav-inner'), nav=document.querySelector('.nav');
+    if(ni&&nav){
+      var upd=function(){ nav.classList.toggle('nav-more', ni.scrollWidth-ni.clientWidth-ni.scrollLeft>4); };
+      ni.addEventListener('scroll',upd,{passive:true}); window.addEventListener('resize',upd); setTimeout(upd,150);
+    }
+  }catch(e){}
+})();
+</script>
 </body>
 </html>
