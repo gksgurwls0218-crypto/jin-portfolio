@@ -402,7 +402,16 @@ section{ background:#06090b !important; }
 .flow-item.hi2 .fl,.flow-item.hi2 h4{ color:#d0a24a !important; }
 
 /* let long words wrap inside tables (fixes clipped text) */
-.tbl td,.tbl th{ overflow-wrap:anywhere !important; word-break:normal !important; }
+.tbl{ table-layout:auto !important; }
+.tbl td,.tbl th{ overflow-wrap:break-word !important; word-break:normal !important; }
+
+/* defence phase panels — unified dark, no white/brown boxes */
+.phase{ border-color:rgba(180,220,190,.14) !important; }
+.phase-hdr{ background:#0b100d !important; }
+.phase-hdr.p1{ background:#0b100d !important; color:#7dff6a !important; }
+.phase-hdr.p2{ background:#0b100d !important; color:#d0a24a !important; }
+.phase-body{ background:#0d1214 !important; }
+.phase-body p{ color:#c9d4cb !important; }
 </style>
 </head>
 
@@ -795,7 +804,7 @@ section{ background:#06090b !important; }
         <h3 style="margin-bottom:14px">Why Pattern Play Matters in Modern Football</h3>
         <p>Modern defence has standardised man-marking-based direct press. Improvised play struggles to replicate consistently against organised pressure. You need a <strong>reproducible attacking entry methodology across a 38-game season</strong>, and the answer is pre-agreed pattern play.</p>
         <h3 style="margin-top:24px;margin-bottom:14px">The Tactical Meaning of the Lateral Pass</h3>
-        <p>The lateral pass isn't just ball movement. It's a <strong>tool for redirecting pressure</strong>. When defensive pressure has concentrated in one direction, the lateral pass neutralises that pressure vector and creates new space.</p>
+        <p>The lateral pass isn't just ball movement. It's a <strong>tool for redirecting pressure</strong>. When defensive pressure has concentrated in one direction, the lateral pass neutralises that line of pressure and creates new space.</p>
         <p>One-touch lateral pass application → ball speed exceeds defensive reaction speed → <strong>tempo spike = xT spike</strong></p>
       </div>
       <div>
@@ -994,8 +1003,8 @@ section{ background:#06090b !important; }
         <p>For the hybrid formation to work, you need players who can handle those roles. Formation changes without substitutions require players to self-adjust their role.</p>
         <div class="g2" style="gap:12px;margin-top:16px">
           <div class="card" style="padding:16px 18px">
-            <h4 style="font-size:.9rem;margin-bottom:6px">Double Squad</h4>
-            <p style="font-size:.85rem;color:var(--slate)">To blur the line between starter and substitute, multiple players must handle the same role (Gwangju, Chelsea examples)</p>
+            <h4 style="font-size:.9rem;margin-bottom:6px">The Sub Effect, Without a Sub</h4>
+            <p style="font-size:.85rem;color:var(--slate)">Sometimes — early in a game, or before the second half — you need a tactical or shape change but it is too soon to spend a substitution. A player who can fill several roles lets you make that change without one: the squad plays deeper than it is, and your substitutions are saved for when they matter most.</p>
           </div>
           <div class="card" style="padding:16px 18px">
             <h4 style="font-size:.9rem;margin-bottom:6px">Role Shift</h4>
@@ -1008,9 +1017,9 @@ section{ background:#06090b !important; }
         <p>Making a senior pro into a multi-position player is difficult. It must be designed from the youth level.</p>
         <div class="hbox" style="margin-top:16px">
           <h4>Core Training Principles</h4>
-          <p>① Basic skills practice across multiple positions — same fundamentals repeated in spaces with different heights and densities</p>
-          <p>② Establish a personal weapon — a unique play style derived from fundamentals + physical attributes</p>
-          <p>③ Full-pitch scanning — turns, dribbles, bounce passes, 2v1 combinations — executed regardless of height and density</p>
+          <p>① Grow each player's strength into an identity — develop the individual trait until it becomes their character on the pitch.</p>
+          <p>② Fundamentals in every zone — the same core skills (turns, dribbles, bounce passes, 2v1 combinations) practised at different heights and densities across the whole pitch.</p>
+          <p>③ Let the signature emerge everywhere — the goal is that each player's own signature move surfaces naturally in every zone of the pitch, not only in one comfort area.</p>
           <p style="margin-top:10px;color:#94A3B8;font-size:.88rem">"Messi dribbles and breaks press from anywhere. Creating Messi is near-impossible. But you can develop the youth player who might become him."</p>
         </div>
       </div>
@@ -1020,7 +1029,7 @@ section{ background:#06090b !important; }
       <table class="tbl">
         <thead><tr><th>Player</th><th>Original Position</th><th>Moved To</th><th>Strengths Carried Over</th></tr></thead>
         <tbody>
-          <tr><td>Gareth Bale</td><td>Midfielder</td><td>Winger</td><td>Speed, crossing</td></tr>
+          <tr><td>Gareth Bale</td><td>Full-back</td><td>Winger</td><td>Speed, crossing</td></tr>
           <tr><td>Lucas Vázquez</td><td>Winger</td><td>Full-back</td><td>Attacking runs, crossing</td></tr>
           <tr><td>Mario Mandžukić</td><td>Striker</td><td>Winger</td><td>Target-man play on the touchline → reduced turnover risk</td></tr>
           <tr><td>Luka Modrić</td><td>Winger</td><td>Central Midfielder</td><td>Dribbling, vision, rhythm control</td></tr>
@@ -1104,7 +1113,7 @@ section{ background:#06090b !important; }
     <!-- 12: Lateral Pass Escape -->
     <div>
       <h3 style="color:#60A5FA;margin-bottom:6px">App 3. Press Escape via Lateral Pass</h3>
-      <p style="color:#94A3B8;margin-bottom:20px">The core execution tool of Into the Trap. Neutralise the press vector via lateral pass under man-marking, and create an exit route.</p>
+      <p style="color:#94A3B8;margin-bottom:20px">The core execution tool of Into the Trap. Neutralise the direction of the press via a lateral pass under man-marking, and create an exit route.</p>
       <div class="board fade" style="margin-bottom:20px">
         <div class="board-top">
           <h4>Lateral Pass Press Escape Drill — Step-by-Step</h4>
@@ -1120,11 +1129,11 @@ section{ background:#06090b !important; }
       <div class="g2" style="gap:16px">
         <div class="card-dark card">
           <h4 style="color:#60A5FA;margin-bottom:10px">Why the Lateral Pass</h4>
-          <p style="color:#CBD5E1;font-size:.9rem">Forward pass follows the same vector as the press → easy for defence to intercept. Lateral pass is perpendicular to the press vector → forces the defence to change direction. One-touch lateral — faster than defensive reaction time. Cannot be processed.</p>
+          <p style="color:#CBD5E1;font-size:.9rem">A forward pass runs in the same direction the press is coming from → easy for the defence to read and cut out. A lateral pass cuts across that direction → it forces the defence to turn and change its angle. Played one-touch, it moves faster than the defence can react — it can't be processed in time.</p>
         </div>
         <div class="card-dark card" style="border-left:3px solid #D97706">
           <h4 style="color:#FDE68A;margin-bottom:10px">Chained Press Escape</h4>
-          <p style="color:#CBD5E1;font-size:.9rem">A1 → lateral pass → A2 (defence changes direction) → A2 → forward pass into reversed space. The defence must handle two direction changes — and buffering occurs in the gap between them.</p>
+          <p style="color:#CBD5E1;font-size:.9rem">A first player receives under pressure and plays a lateral pass to a team-mate; the defence shifts across to follow, changing direction. That team-mate then plays forward into the space the defence has just left behind. The defence is forced to change direction twice in quick succession — and the buffering happens in the gap between those two turns.</p>
         </div>
       </div>
     </div>
