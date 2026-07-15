@@ -391,6 +391,15 @@ section{ background:#06090b !important; }
 .nav.nav-more::after{ opacity:1; }
 .nav::before{ content:'\203A'; position:absolute; top:0; right:18px; height:54px; display:flex; align-items:center; color:#7dff6a; font-size:1.5rem; font-weight:700; z-index:2; pointer-events:none; opacity:0; transition:opacity .2s; }
 .nav.nav-more::before{ opacity:.95; }
+
+/* concept flow — minimal: no white arrow boxes, no colour-tinted panels */
+.flow-item,.flow-item.hi,.flow-item.hi2{ background:#0d1214 !important; border-color:rgba(180,220,190,.12) !important; }
+.flow-item:not(:last-child)::after{ background:transparent !important; color:#59c94f !important; font-weight:400 !important; font-size:1.05rem !important; }
+.flow-item .fl{ color:#8fbf93 !important; }
+.flow-item h4{ color:#f3f1ea !important; }
+.flow-item p{ color:#c2ccc3 !important; }
+.flow-item.hi .fl,.flow-item.hi h4{ color:#7dff6a !important; }
+.flow-item.hi2 .fl,.flow-item.hi2 h4{ color:#d0a24a !important; }
 </style>
 </head>
 
@@ -615,6 +624,16 @@ section{ background:#06090b !important; }
       </div>
     </div>
 
+    <div class="board fade" style="margin-top:24px">
+      <div class="board-top"><h4>Plan A (Shock) — Strike: Overload → Isolation</h4><span class="bdesc">The situation after the switch — one Overload→Isolation move opens a momentary buffering gap</span></div>
+      <div class="board-body"><canvas id="cvBuffer" height="280"></canvas></div>
+      <div class="board-ctrl">
+        <button class="btn-play" id="btnBufPlay">▶ Start</button>
+        <button class="btn-reset" id="btnBufReset">↺ Reset</button>
+        <div class="step-info" id="infoBuf">Plan A- left overload → awaiting SHOCK trigger</div>
+      </div>
+    </div>
+
     <div class="flow fade" style="margin-top:28px">
       <div class="flow-item hi"><div class="fl">Lure</div><h4>Plan A- Cycle</h4><p>Complete attack cycle. Opposition conditioning in progress.</p></div>
       <div class="flow-item"><div class="fl">Judgement</div><h4>Manager's Read</h4><p>Assessing conditioning progress + game flow + scoreline</p></div>
@@ -639,7 +658,7 @@ section{ background:#06090b !important; }
     <div class="sec-deco">03 — Core Concept</div>
     <div class="ch-hdr">
       <div class="ch-num">Into the Trap</div>
-      <h2>Walk Into the Trap</h2>
+      <h2>Step Into the Trap</h2>
       <p class="desc">Don't go around the defensive trap — step inside deliberately and solve it from within. The only reproducible method for breaking structured defences.</p>
     </div>
 
@@ -648,18 +667,18 @@ section{ background:#06090b !important; }
         <h3 style="margin-bottom:14px">Defining the Trap</h3>
         <p>Every defensive structure has an intended trap. High block creates numerical superiority up front; mid-block increases central density to channel wide; low block seals off the final third entirely. <strong>The shape varies, but the purpose is singular — draw the attacking team into a chosen position and deal with them there.</strong></p>
         <div class="bq-amber bq" style="margin-top:16px">
-          <p>Methods that avoid the trap are inconsistent. Individual quality depends on form; set pieces are limited in frequency; going around it only lasts until the opposition adjusts direction and you're back inside.</p>
+          <p>Methods that avoid the trap are inconsistent. Individual quality depends on condition; set pieces are limited in frequency; going around it only lasts until the opposition adjusts direction and you're back inside.</p>
         </div>
       </div>
       <div>
-        <h3 style="margin-bottom:14px">Why Walk In</h3>
+        <h3 style="margin-bottom:14px">Why Step In</h3>
         <p>Across a 38-game season, through a full tournament — if you need a <strong>reproducible attacking entry methodology</strong>, going around the trap is not the answer. <strong>Pre-agreeing how to escape from inside</strong> is the only reliably reproducible solution.</p>
         <p>The moment you escape with one pre-agreed pass from inside the trap, the defenders who committed to the press are stranded on the wrong side. <strong>Space opens instantly.</strong></p>
         <div class="tbl-wrap" style="margin-top:16px">
           <table class="tbl">
             <thead><tr><th>Block Type</th><th>Trap Shape</th><th>Into the Trap Response</th></tr></thead>
             <tbody>
-              <tr><td>High Block</td><td>Front press + numerical advantage</td><td class="hi">Lateral pass protocol → press nullified</td></tr>
+              <tr><td>High Block</td><td>Direct press + numerical advantage</td><td class="hi">Lateral pass protocol → press nullified</td></tr>
               <tr><td>Mid Block</td><td>Midfield density + channelling</td><td class="hi">Lateral pass protocol → escape</td></tr>
               <tr><td>Low Block</td><td>Final third entry sealed</td><td class="hi">Lateral pass protocol → escape</td></tr>
             </tbody>
@@ -714,6 +733,7 @@ section{ background:#06090b !important; }
       <div>
         <h3 style="margin-bottom:14px">Tempo Switch — Speed Multiplication</h3>
         <p>The U-shape build-up's horizontal, slow tempo switches immediately to <strong>vertical, high-speed pattern play</strong> at the Clutch Point. That speed differential itself triggers defensive buffering.</p>
+        <p>This is the same core idea introduced earlier as the lateral-pass <strong>pre-agreed pattern play</strong> — one philosophy applied at a different scale. Whether it is the lateral-pass protocol escaping the trap or the Clutch Point firing the tempo switch, everything points in a single direction: a pre-agreed pattern that manufactures buffering.</p>
         <p>One-touch play + pre-agreed passing routes = attack executed faster than defensive cognition. The pattern completes before defenders can respond.</p>
         <div class="tbl-wrap" style="margin-top:16px">
           <table class="tbl">
@@ -729,7 +749,7 @@ section{ background:#06090b !important; }
 
     <div class="g2 fade" style="margin-top:24px">
       <div class="card card-blue">
-        <h4 style="color:var(--blue);margin-bottom:10px">🏃 Conditions for Proactive Football</h4>
+        <h4 style="color:var(--blue);margin-bottom:10px">Conditions for Proactive Football</h4>
         <p>To play proactive rather than reactive football, players must read the situation and act on their own judgement. The Clutch Point is where that autonomy ignites.</p>
       </div>
       <div class="card card-amber">
@@ -757,26 +777,26 @@ section{ background:#06090b !important; }
 
 <div class="div-line"></div>
 
-<!-- ── 05. PROMISED PATTERN + BUFFERING ──────── -->
+<!-- ── 05. PRE-AGREED PATTERN + BUFFERING ──────── -->
 <section id="pattern">
   <div class="wrap">
     <div class="sec-deco">05 — Pattern Play</div>
     <div class="ch-hdr">
-      <div class="ch-num">Promised Pattern Play</div>
-      <h2>Promised Pattern Play & Buffering</h2>
+      <div class="ch-num">Pre-Agreed Pattern Play</div>
+      <h2>Pre-Agreed Pattern Play & Buffering</h2>
       <p class="desc">The only reliable condition for consistent chance creation in modern football. The lateral pass is the core tool.</p>
     </div>
 
     <div class="g2 fade">
       <div>
         <h3 style="margin-bottom:14px">Why Pattern Play Matters in Modern Football</h3>
-        <p>Modern defence has standardised man-marking-based front press. Improvised play struggles to replicate consistently against organised pressure. You need a <strong>reproducible attacking entry methodology across a 38-game season</strong>, and the answer is pre-agreed pattern play.</p>
+        <p>Modern defence has standardised man-marking-based direct press. Improvised play struggles to replicate consistently against organised pressure. You need a <strong>reproducible attacking entry methodology across a 38-game season</strong>, and the answer is pre-agreed pattern play.</p>
         <h3 style="margin-top:24px;margin-bottom:14px">The Tactical Meaning of the Lateral Pass</h3>
         <p>The lateral pass isn't just ball movement. It's a <strong>tool for redirecting pressure</strong>. When defensive pressure has concentrated in one direction, the lateral pass neutralises that pressure vector and creates new space.</p>
         <p>One-touch lateral pass application → ball speed exceeds defensive reaction speed → <strong>tempo spike = xT spike</strong></p>
       </div>
       <div>
-        <h3 style="margin-bottom:14px">Buffering — 2 to 4 Seconds of Opportunity</h3>
+        <h3 style="margin-bottom:14px">Buffering — A Fleeting Window of Opportunity</h3>
         <p>A defender's cognitive delay. The momentary decision gap triggered when an unexpected choice breaks their conditioned expectation. That window is where scoring chances are made.</p>
         <div class="bq-amber bq" style="margin-top:16px">
           <p>Buffering goal: condition the defence to predict "what will they choose next" — then violate that expectation with a different choice and create a momentary cognitive gap.</p>
@@ -785,28 +805,6 @@ section{ background:#06090b !important; }
       </div>
     </div>
 
-    <!-- Plan A- + 버퍼링 2열 나란히 (한 화면에) -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:28px;align-items:start">
-      <div class="board">
-        <div class="board-top">
-          <h4>Under Press — Overload</h4>
-          <span class="bdesc">Repeated Overload patterns shift the defensive centre of gravity</span>
-        </div>
-        <div class="board-body"><canvas id="cvPlanMinus2" height="280"></canvas></div>
-        <div class="board-ctrl">
-          <div class="step-info" style="font-size:.8rem;color:#94A3B8">Defence is being conditioned leftward</div>
-        </div>
-      </div>
-      <div class="board">
-        <div class="board-top"><h4>Lateral Switch → Defensive Buffering — Isolation</h4><span class="bdesc">One Overload→Isolation switch creates a momentary buffering gap</span></div>
-        <div class="board-body"><canvas id="cvBuffer" height="280"></canvas></div>
-        <div class="board-ctrl">
-          <button class="btn-play" id="btnBufPlay">▶ Start</button>
-          <button class="btn-reset" id="btnBufReset">↺ Reset</button>
-          <div class="step-info" id="infoBuf">Plan A- left overload → awaiting SHOCK trigger</div>
-        </div>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -871,7 +869,7 @@ section{ background:#06090b !important; }
     <div class="g2 fade" style="margin-top:28px">
       <div>
         <h3 style="margin-bottom:14px">Why This Concept Exists</h3>
-        <p>As man-marking-based front press has become standard in modern football, <strong>on-ball quality is now demanded at every position</strong>. When build-up core players like CB or DM buckle under press, the entire team structure shakes.</p>
+        <p>As man-marking-based direct press has become standard in modern football, <strong>on-ball quality is now demanded at every position</strong>. When build-up core players like CB or DM buckle under press, the entire team structure shakes.</p>
         <p>If you can't be elite — <strong>deeply internalise one solid on-ball habit.</strong> That's the realistic individual-level solution to beating man-marking pressure.</p>
 
         <h3 style="margin-top:24px;margin-bottom:14px">Two Core Functions</h3>
@@ -993,11 +991,11 @@ section{ background:#06090b !important; }
         <p>For the hybrid formation to work, you need players who can handle those roles. Formation changes without substitutions require players to self-adjust their role.</p>
         <div class="g2" style="gap:12px;margin-top:16px">
           <div class="card" style="padding:16px 18px">
-            <h4 style="font-size:.9rem;margin-bottom:6px">📋 Double Squad</h4>
+            <h4 style="font-size:.9rem;margin-bottom:6px">Double Squad</h4>
             <p style="font-size:.85rem;color:var(--slate)">To blur the line between starter and substitute, multiple players must handle the same role (Gwangju, Chelsea examples)</p>
           </div>
           <div class="card" style="padding:16px 18px">
-            <h4 style="font-size:.9rem;margin-bottom:6px">🔄 Role Shift</h4>
+            <h4 style="font-size:.9rem;margin-bottom:6px">Role Shift</h4>
             <p style="font-size:.85rem;color:var(--slate)">Carrying original position strengths into a new role → extended career + new tactical resource</p>
           </div>
         </div>
@@ -1157,7 +1155,7 @@ section{ background:#06090b !important; }
           ② Slow opposition's forward momentum<br>
           ③ Buy time to reset the defensive block</p>
           <div style="margin-top:12px;padding:12px;background:#EFF6FF;border-radius:8px;font-size:.85rem;color:#1E3A8A">
-            <strong>⚠️ Unsustainable:</strong> Klopp's Liverpool, Postecoglou's Spurs — full-press throughout → late-season injury accumulation + squad breakdown.
+            <strong>Unsustainable:</strong> Klopp's Liverpool, Postecoglou's Spurs — full-press throughout → late-season injury accumulation + squad breakdown.
           </div>
         </div>
       </div>
@@ -1838,7 +1836,7 @@ function bubbleLabel(ctx,text,x,y,bg,fg,size=11){
     }
     if(phase>=PHASES.length-1&&phaseT>PHASES[PHASES.length-1].dur){
       running=false;
-      document.getElementById('infoBuf').textContent='✓ Done — overload created the 1v1, best dribbler finishes';
+      document.getElementById('infoBuf').textContent='Done — overload created the 1v1, best dribbler finishes';
     }
   }
 
@@ -4581,7 +4579,7 @@ function bubbleLabel(ctx,text,x,y,bg,fg,size=11){
       '② C2 at arc top · C1 at arc base — same depth positioning',
       '③ GK → C2 (arc top) — C1 at arc base, facing forward',
       '④ C2 lateral pass → C1 (top to base, pure lateral)',
-      '✓ Press escape complete — C1 drives forward',
+      'Press escape complete — C1 drives forward',
     ];
 
     function initLat(){
