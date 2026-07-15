@@ -400,6 +400,9 @@ section{ background:#06090b !important; }
 .flow-item p{ color:#c2ccc3 !important; }
 .flow-item.hi .fl,.flow-item.hi h4{ color:#7dff6a !important; }
 .flow-item.hi2 .fl,.flow-item.hi2 h4{ color:#d0a24a !important; }
+
+/* let long words wrap inside tables (fixes clipped text) */
+.tbl td,.tbl th{ overflow-wrap:anywhere !important; word-break:normal !important; }
 </style>
 </head>
 
@@ -626,7 +629,7 @@ section{ background:#06090b !important; }
 
     <div class="board fade" style="margin-top:24px">
       <div class="board-top"><h4>Plan A (Shock) — Strike: Overload → Isolation</h4><span class="bdesc">The situation after the switch — one Overload→Isolation move opens a momentary buffering gap</span></div>
-      <div class="board-body"><canvas id="cvBuffer" height="280"></canvas></div>
+      <div class="board-body"><canvas id="cvBuffer" height="200"></canvas></div>
       <div class="board-ctrl">
         <button class="btn-play" id="btnBufPlay">▶ Start</button>
         <button class="btn-reset" id="btnBufReset">↺ Reset</button>
@@ -824,8 +827,8 @@ section{ background:#06090b !important; }
       <div>
         <h3 style="color:#60A5FA;margin-bottom:14px">Defining the Pre-Half Space</h3>
         <p>The intermediate zone just before entering the half-space (goal-side diagonal channel). xT jumps to the 0.08–0.20 range here, and any player receiving in this zone simultaneously holds two options.</p>
-        <p><strong style="color:#fff">① Direct penetration into the half-space (Isolation option)</strong><br>
-        <strong style="color:#fff">② Cutback cross to create a second space</strong></p>
+        <p><strong style="color:#fff">① Direct penetration into the half-space, then move diagonally into the cut-back position</strong><br>
+        <strong style="color:#fff">② Switch the flank of the pitch</strong></p>
         <p>Holding both options simultaneously is what creates a structural dilemma for the defence.</p>
       </div>
       <div>
@@ -880,13 +883,13 @@ section{ background:#06090b !important; }
           </div>
           <div class="card card-amber" style="padding:16px 18px">
             <h4 style="font-size:.9rem;color:var(--amber);margin-bottom:6px">② Next Action Setup</h4>
-            <p style="font-size:.85rem">The habitual preparation that sets up the next action more comfortably. Operates below conscious awareness.</p>
+            <p style="font-size:.85rem">The habitual preparation that sets up the next action more comfortably. Operates unconsciously, below awareness.</p>
           </div>
         </div>
       </div>
       <div>
         <h3 style="margin-bottom:14px">Individual-Level Lure and Shock</h3>
-        <p>The SM operates as a Lure and Shock mechanism at the individual level too. Once the marker learns the player's SM pattern — that expectation itself becomes the new Lure. Exploiting the marker's expectation is the individual Shock.</p>
+        <p>The signature move operates as a Lure and Shock mechanism at the individual level too. Once the marker learns the player's signature-move pattern — that expectation itself becomes the new Lure. Exploiting the marker's expectation is the individual Shock.</p>
         <div class="tbl-wrap" style="margin-top:16px">
           <table class="tbl">
             <thead><tr><th>On-Ball Action</th><th>Fingerprint Expression</th></tr></thead>
@@ -914,7 +917,7 @@ section{ background:#06090b !important; }
     <div class="sec-deco">08 — Structure</div>
     <div class="ch-hdr">
       <div class="ch-num">Hybrid Formation</div>
-      <h2>3-2-3-1 Hybrid Formation</h2>
+      <h2>3-2 / 3-1 Hybrid Formation</h2>
       <p class="desc">An era where roles matter more than positions. A structural design built to realise Mutation — role-based fluid formation.</p>
     </div>
 
@@ -959,10 +962,10 @@ section{ background:#06090b !important; }
       </div>
       <div>
         <h3 style="margin-bottom:16px">Rest-Attack & Rest-Defence</h3>
-        <p><strong>Rest-Attack</strong>: Even while attacking, maintain positioning already prepared for the next turnover. Some players hold counter-defensive positions without joining the attack.</p>
-        <p><strong>Rest-Defence</strong>: Maintain positions that allow immediate defensive structure on a counter. Don't lose defensive balance even while in possession.</p>
+        <p><strong>Rest-Attack</strong>: the attacking shape a team keeps ready even without the ball. Certain forwards stay high in counter-positions rather than tracking back, so the instant possession is won the counter is already launched — the defensive phase and the attack are designed together.</p>
+        <p><strong>Rest-Defence</strong>: the defensive shape a team keeps while in possession. A group of players holds balanced, covering positions behind the ball — often two layers with a numerical +1 over the opponent's forwards — so the moment the ball is lost, the counter is shut down immediately.</p>
         <div class="bq-amber bq" style="margin-top:16px">
-          <p><strong>Transition must always be anticipated.</strong> The switch between attack and defence is instant. Always be prepared to defend while attacking, and to attack while defending.</p>
+          <p><strong>Transition must always be prepared.</strong> The switch between attack and defence is instant. Always be prepared to defend while attacking, and to attack while defending.</p>
         </div>
       </div>
     </div>
