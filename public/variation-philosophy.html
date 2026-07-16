@@ -384,13 +384,15 @@ section{ background:#06090b !important; }
 .ch-hdr h2{ font-size:2.7rem !important; letter-spacing:-.02em !important; }
 .ch-hdr .desc{ font-size:1.15rem !important; }
 .sec-dark .ch-num,#spike .ch-num,#phs .ch-num,#apply .ch-num{ color:#7dff6a !important; }
-/* keyword nav — horizontal scroll affordance */
+/* keyword nav — clickable arrow controls (+ mouse-wheel scroll) */
 .nav{ position:relative; }
 .nav-inner{ scroll-behavior:auto; }
-.nav::after{ content:''; position:absolute; top:0; right:0; height:100%; width:64px; background:linear-gradient(to right,transparent,#06090b 78%); pointer-events:none; opacity:0; transition:opacity .2s; z-index:1; }
-.nav.nav-more::after{ opacity:1; }
-.nav::before{ content:'\203A'; position:absolute; top:0; right:18px; height:54px; display:flex; align-items:center; color:#7dff6a; font-size:1.5rem; font-weight:700; z-index:2; pointer-events:none; opacity:0; transition:opacity .2s; }
-.nav.nav-more::before{ opacity:.95; }
+.nav-arrow{ position:absolute; top:0; height:54px; width:52px; display:flex; align-items:center; border:none; color:#7dff6a; font-size:1.5rem; font-weight:700; cursor:pointer; z-index:3; opacity:0; pointer-events:none; transition:opacity .2s; padding:0; }
+.nav-arrow-right{ right:0; justify-content:flex-end; padding-right:16px; background:linear-gradient(to right,transparent,#06090b 60%); }
+.nav-arrow-left{ left:0; justify-content:flex-start; padding-left:16px; background:linear-gradient(to left,transparent,#06090b 60%); }
+.nav-arrow:hover{ color:#a8ff97; }
+.nav.nav-more .nav-arrow-right{ opacity:1; pointer-events:auto; }
+.nav.nav-less .nav-arrow-left{ opacity:1; pointer-events:auto; }
 
 /* concept flow — minimal: no white arrow boxes, no colour-tinted panels */
 .flow-item,.flow-item.hi,.flow-item.hi2{ background:#0d1214 !important; border-color:rgba(180,220,190,.12) !important; }
@@ -1180,7 +1182,7 @@ section{ background:#06090b !important; }
           ② Wide channelling → guide them into our numerical advantage<br>
           ③ Trap activated → ball recovered or danger zone cleared</p>
           <p><strong>Mid-block trap setup:</strong> Increase midfield density to pre-design the spaces the attacking team can enter. When they enter — double pressure.</p>
-          <div style="margin-top:12px;padding:12px;background:#FFFBEB;border-radius:8px;font-size:.85rem;color:#78350F">
+          <div style="margin-top:12px;padding:14px 16px;background:rgba(208,150,74,.12);border:0.5px solid rgba(208,150,74,.30);border-radius:8px;font-size:.85rem;color:#d29a5c">
             <strong>Key:</strong> Gegenpressing is the most modern defensive method but has physical limits. The 7-second principle creates sustainability.
           </div>
         </div>
@@ -5106,24 +5108,39 @@ window.addEventListener('DOMContentLoaded', () => {
     });
     var ni=document.querySelector('.nav-inner'), nav=document.querySelector('.nav');
     if(ni&&nav){
-      var upd=function(){ nav.classList.toggle('nav-more', ni.scrollWidth-ni.clientWidth-ni.scrollLeft>4); };
+      var upd=function(){
+        nav.classList.toggle('nav-more', ni.scrollWidth-ni.clientWidth-ni.scrollLeft>4);
+        nav.classList.toggle('nav-less', ni.scrollLeft>4);
+      };
       ni.addEventListener('scroll',upd,{passive:true}); window.addEventListener('resize',upd); setTimeout(upd,150);
-      // mouse wheel -> smooth horizontal scroll (so a mouse works, not only a trackpad)
+      // smooth horizontal scroll shared by wheel + arrow buttons
       var target=0, animating=false;
       function step(){
         var cur=ni.scrollLeft, diff=target-cur;
         if(Math.abs(diff)<0.5){ ni.scrollLeft=target; animating=false; return; }
         ni.scrollLeft=cur+diff*0.18; requestAnimationFrame(step);
       }
+      function scrollBy(dx){
+        if(!animating) target=ni.scrollLeft;
+        target=Math.max(0, Math.min(ni.scrollWidth-ni.clientWidth, target+dx));
+        if(!animating){ animating=true; requestAnimationFrame(step); }
+      }
+      // mouse wheel -> horizontal (so a mouse works, not only a trackpad)
       ni.addEventListener('wheel', function(e){
         if(ni.scrollWidth<=ni.clientWidth) return;
         var d=Math.abs(e.deltaY)>=Math.abs(e.deltaX)?e.deltaY:e.deltaX;
         if(!d) return;
-        e.preventDefault();
-        if(!animating) target=ni.scrollLeft;
-        target=Math.max(0, Math.min(ni.scrollWidth-ni.clientWidth, target+d));
-        if(!animating){ animating=true; requestAnimationFrame(step); }
+        e.preventDefault(); scrollBy(d);
       }, {passive:false});
+      // clickable arrow buttons
+      ['left','right'].forEach(function(side){
+        var b=document.createElement('button');
+        b.type='button'; b.className='nav-arrow nav-arrow-'+side;
+        b.setAttribute('aria-label', side==='right'?'scroll right':'scroll left');
+        b.textContent = side==='right' ? '›' : '‹';
+        b.addEventListener('click', function(){ scrollBy((side==='right'?1:-1)*ni.clientWidth*0.7); });
+        nav.appendChild(b);
+      });
     }
   }catch(e){}
 })();
