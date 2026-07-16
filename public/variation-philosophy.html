@@ -386,7 +386,7 @@ section{ background:#06090b !important; }
 .sec-dark .ch-num,#spike .ch-num,#phs .ch-num,#apply .ch-num{ color:#7dff6a !important; }
 /* keyword nav — horizontal scroll affordance */
 .nav{ position:relative; }
-.nav-inner{ scroll-behavior:smooth; }
+.nav-inner{ scroll-behavior:auto; }
 .nav::after{ content:''; position:absolute; top:0; right:0; height:100%; width:64px; background:linear-gradient(to right,transparent,#06090b 78%); pointer-events:none; opacity:0; transition:opacity .2s; z-index:1; }
 .nav.nav-more::after{ opacity:1; }
 .nav::before{ content:'\203A'; position:absolute; top:0; right:18px; height:54px; display:flex; align-items:center; color:#7dff6a; font-size:1.5rem; font-weight:700; z-index:2; pointer-events:none; opacity:0; transition:opacity .2s; }
@@ -5108,6 +5108,22 @@ window.addEventListener('DOMContentLoaded', () => {
     if(ni&&nav){
       var upd=function(){ nav.classList.toggle('nav-more', ni.scrollWidth-ni.clientWidth-ni.scrollLeft>4); };
       ni.addEventListener('scroll',upd,{passive:true}); window.addEventListener('resize',upd); setTimeout(upd,150);
+      // mouse wheel -> smooth horizontal scroll (so a mouse works, not only a trackpad)
+      var target=0, animating=false;
+      function step(){
+        var cur=ni.scrollLeft, diff=target-cur;
+        if(Math.abs(diff)<0.5){ ni.scrollLeft=target; animating=false; return; }
+        ni.scrollLeft=cur+diff*0.18; requestAnimationFrame(step);
+      }
+      ni.addEventListener('wheel', function(e){
+        if(ni.scrollWidth<=ni.clientWidth) return;
+        var d=Math.abs(e.deltaY)>=Math.abs(e.deltaX)?e.deltaY:e.deltaX;
+        if(!d) return;
+        e.preventDefault();
+        if(!animating) target=ni.scrollLeft;
+        target=Math.max(0, Math.min(ni.scrollWidth-ni.clientWidth, target+d));
+        if(!animating){ animating=true; requestAnimationFrame(step); }
+      }, {passive:false});
     }
   }catch(e){}
 })();
