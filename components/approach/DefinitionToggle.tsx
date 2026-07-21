@@ -29,9 +29,9 @@ export default function DefinitionToggle() {
             style={{
               fontSize: 9.5,
               letterSpacing: ".12em",
-              color: mode === m ? "rgba(185,205,255,.96)" : "rgba(255,255,255,.45)",
-              background: mode === m ? "rgba(80,115,255,.2)" : "transparent",
-              border: mode === m ? "0.5px solid rgba(120,155,255,.4)" : "0.5px solid transparent",
+              color: mode === m ? "rgba(255,255,255,.96)" : "rgba(255,255,255,.45)",
+              background: mode === m ? "rgba(51,51,47,.22)" : "transparent",
+              border: mode === m ? "0.5px solid rgba(51,51,47,.45)" : "0.5px solid transparent",
             }}
           >
             {m.toUpperCase()}

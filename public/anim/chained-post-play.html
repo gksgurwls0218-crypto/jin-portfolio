@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chained Post Play — Variation Theory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Noto+Sans+KR:wght@600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:transparent}
+body{font-family:'Space Grotesk',sans-serif}
+.board{background:#0d1214;border-radius:16px;overflow:hidden;border:0.5px solid rgba(180,220,190,.14)}
+.board-top{padding:14px 18px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.board-top h4{color:#f3f1ea;font-size:.82rem;margin:0;font-weight:600}
+.board-body{padding:16px 18px}
+.board-ctrl{display:flex;align-items:center;gap:10px;padding:12px 18px;border-top:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.02)}
+.board-ctrl button{font-family:'Space Grotesk',sans-serif;font-size:.76rem;font-weight:600;letter-spacing:.03em;padding:7px 16px;border-radius:8px;border:none;cursor:pointer;transition:all .15s}
+.btn-play{background:#2f6b34;color:#eafff0}
+.btn-play:hover{background:#3c8143}
+.btn-reset{background:rgba(255,255,255,.08);color:#c2ccc3;border:1px solid rgba(255,255,255,.14)}
+.btn-reset:hover{background:rgba(255,255,255,.14)}
+.step-info{font-size:.74rem;color:#8fbf93;line-height:1.4;font-style:italic}
+canvas{display:block;width:100%;aspect-ratio:2.3/1;border-radius:10px}
+</style>
+</head>
+<body>
+
+<div class="board">
+  <div class="board-top"><h4>Chained Post Play — Pattern Simulation</h4></div>
+  <div class="board-body"><canvas id="cvPost" height="240"></canvas></div>
+  <div class="board-ctrl">
+    <button class="btn-play" id="btnPostPlay">&#9654; Next</button>
+    <button class="btn-reset" id="btnPostReset">&#8634; Restart</button>
+    <div class="step-info" id="infoPost">Post play pattern start</div>
+  </div>
+</div>
+
+<script>
+try{
+const ease={outC:t=>1-Math.pow(1-t,3)};
+function lerp(a,b,t){return a+(b-a)*t}
+function clamp(v,mn,mx){return Math.max(mn,Math.min(mx,v))}
+function dist(a,b){return Math.sqrt((a.x-b.x)**2+(a.y-b.y)**2)}
+function bezier(t,p0,cp,p1){const u=1-t;return{x:u*u*p0.x+2*u*t*cp.x+t*t*p1.x,y:u*u*p0.y+2*u*t*cp.y+t*t*p1.y}}
+function autoCP(p0,p1,lift=0.25){const d=dist(p0,p1);return{x:(p0.x+p1.x)/2,y:(p0.y+p1.y)/2-d*lift}}
+
+class Player{
+  constructor(x,y,color,label,r=15){this.x=x;this.y=y;this.tx=x;this.ty=y;this.color=color;this.label=label;this.r=r;this.glowA=0;this.qA=0;this.hovered=false;this.vel={x:0,y:0}}
+  moveTo(x,y){this.tx=x;this.ty=y}
+  snap(x,y){this.x=x;this.y=y;this.tx=x;this.ty=y}
+  update(dt){
+    const spd=clamp(6*dt,0,.18);
+    this.x=lerp(this.x,this.tx,spd); this.y=lerp(this.y,this.ty,spd);
+    this.glowA=lerp(this.glowA,this.hasBall?0.8:this.hovered?0.4:0,clamp(5*dt,0,.3));
+    this.qA=lerp(this.qA,this.showQ?1:0,clamp(4*dt,0,.25));
+  }
+  draw(ctx,now){
+    const r=this.r;
+    ctx.save(); ctx.shadowColor='rgba(0,0,0,.5)'; ctx.shadowBlur=8; ctx.shadowOffsetY=3;
+    ctx.beginPath(); ctx.arc(this.x,this.y,r,0,Math.PI*2); ctx.fillStyle=this.color; ctx.fill(); ctx.restore();
+    if(this.glowA>0.02){
+      ctx.save(); ctx.globalAlpha=this.glowA; ctx.shadowColor=this.color; ctx.shadowBlur=20;
+      ctx.beginPath(); ctx.arc(this.x,this.y,r+5,0,Math.PI*2); ctx.strokeStyle=this.color; ctx.lineWidth=2.5; ctx.stroke(); ctx.restore();
+    }
+    const gr=ctx.createRadialGradient(this.x-r*.3,this.y-r*.3,0,this.x,this.y,r);
+    gr.addColorStop(0,lighten(this.color,.3)); gr.addColorStop(1,this.color);
+    ctx.beginPath(); ctx.arc(this.x,this.y,r,0,Math.PI*2); ctx.fillStyle=gr; ctx.fill();
+    ctx.strokeStyle='rgba(255,255,255,.35)'; ctx.lineWidth=1.5; ctx.stroke();
+    ctx.font=`700 ${Math.max(8,r*.7)}px DM Mono`; ctx.fillStyle='#fff'; ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText(this.label,this.x,this.y+.5); ctx.textBaseline='alphabetic';
+    if(this.qA>0.02){
+      ctx.save(); ctx.globalAlpha=this.qA; const bounce=Math.sin(now/180)*4;
+      ctx.font='bold 18px sans-serif'; ctx.fillStyle='#ff4444'; ctx.textAlign='center';
+      ctx.shadowColor='rgba(255,0,0,.6)'; ctx.shadowBlur=8; ctx.fillText('?',this.x,this.y-r-14+bounce); ctx.restore();
+    }
+  }
+}
+function lighten(hex,amt){
+  const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
+  return `rgb(${Math.min(255,r+Math.round(255*amt))},${Math.min(255,g+Math.round(255*amt))},${Math.min(255,b+Math.round(255*amt))})`;
+}
+class Ball{
+  constructor(x,y){this.x=x;this.y=y;this.trail=[];this.anim=null;this.spin=0}
+  playTo(p0,p1,dur=0.55,lift=0.22){const cp=autoCP(p0,p1,lift);this.anim={p0:{...p0},cp,p1:{...p1},dur,t:0,done:false}}
+  update(dt){
+    if(!this.anim||this.anim.done){this.trail.push({x:this.x,y:this.y,age:0})}
+    if(this.anim&&!this.anim.done){
+      this.anim.t=Math.min(this.anim.t+dt/this.anim.dur,1);
+      const te=ease.outC(this.anim.t);
+      const pos=bezier(te,this.anim.p0,this.anim.cp,this.anim.p1);
+      this.trail.push({x:this.x,y:this.y,age:0});
+      this.x=pos.x; this.y=pos.y; this.spin+=dt*12;
+      if(this.anim.t>=1){this.anim.done=true}
+    }
+    for(const t of this.trail) t.age+=dt;
+    this.trail=this.trail.filter(t=>t.age<0.22);
+  }
+  draw(ctx){
+    for(const t of this.trail){
+      const a=clamp(1-t.age/0.22,0,1);
+      ctx.beginPath(); ctx.arc(t.x,t.y,4*a,0,Math.PI*2); ctx.fillStyle=`rgba(255,255,200,${a*0.3})`; ctx.fill();
+    }
+    ctx.save(); ctx.shadowColor='rgba(0,0,0,.4)'; ctx.shadowBlur=6; ctx.shadowOffsetY=3;
+    ctx.beginPath(); ctx.arc(this.x,this.y,7,0,Math.PI*2); ctx.fillStyle='#fff'; ctx.fill(); ctx.restore();
+    ctx.beginPath(); ctx.arc(this.x,this.y,7,0,Math.PI*2); ctx.fillStyle='#fff'; ctx.fill();
+    ctx.strokeStyle='#333'; ctx.lineWidth=1; ctx.stroke();
+    ctx.save(); ctx.translate(this.x,this.y); ctx.rotate(this.spin);
+    ctx.beginPath(); ctx.moveTo(-5,0); ctx.lineTo(5,0); ctx.strokeStyle='rgba(0,0,0,.15)'; ctx.lineWidth=1; ctx.stroke(); ctx.restore();
+  }
+  snap(x,y){this.x=x;this.y=y;this.anim=null;this.trail=[]}
+}
+function drawPitch(ctx,W,H){
+  const stripes=8;
+  for(let i=0;i<stripes;i++){ ctx.fillStyle=i%2===0?'#275221':'#2d5a27'; ctx.fillRect(0,i*(H/stripes),W,H/stripes+1); }
+  ctx.strokeStyle='rgba(255,255,255,.55)'; ctx.lineWidth=1.4;
+  ctx.strokeRect(10,10,W-20,H-20);
+  ctx.beginPath(); ctx.moveTo(W/2,10); ctx.lineTo(W/2,H-10); ctx.stroke();
+  const cr=Math.min(W,H)*.12;
+  ctx.beginPath(); ctx.arc(W/2,H/2,cr,0,Math.PI*2); ctx.stroke();
+  ctx.beginPath(); ctx.arc(W/2,H/2,3,0,Math.PI*2); ctx.fillStyle='rgba(255,255,255,.55)'; ctx.fill();
+  const paW=W*.17,paH=H*.44;
+  ctx.strokeRect(10,(H-paH)/2,paW,paH); ctx.strokeRect(W-10-paW,(H-paH)/2,paW,paH);
+  const sbW=paW*.42,sbH=H*.2;
+  ctx.strokeRect(10,(H-sbH)/2,sbW,sbH); ctx.strokeRect(W-10-sbW,(H-sbH)/2,sbW,sbH);
+  ctx.beginPath(); ctx.arc(10+paW*.72,H/2,3,0,Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.arc(W-10-paW*.72,H/2,3,0,Math.PI*2); ctx.fill();
+  const gH=H*.17;
+  ctx.fillStyle='rgba(255,255,255,.12)';
+  ctx.fillRect(0,(H-gH)/2,10,gH); ctx.fillRect(W-10,(H-gH)/2,10,gH);
+  ctx.strokeRect(0,(H-gH)/2,10,gH); ctx.strokeRect(W-10,(H-gH)/2,10,gH);
+}
+function drawArrow(ctx,x1,y1,x2,y2,color,w=2,dashed=false,headSize=9){
+  ctx.save(); ctx.strokeStyle=color; ctx.lineWidth=w;
+  if(dashed) ctx.setLineDash([7,5]); else ctx.setLineDash([]);
+  ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke(); ctx.setLineDash([]);
+  const angle=Math.atan2(y2-y1,x2-x1);
+  ctx.fillStyle=color; ctx.beginPath(); ctx.moveTo(x2,y2);
+  ctx.lineTo(x2-headSize*Math.cos(angle-.42),y2-headSize*Math.sin(angle-.42));
+  ctx.lineTo(x2-headSize*Math.cos(angle+.42),y2-headSize*Math.sin(angle+.42));
+  ctx.closePath(); ctx.fill(); ctx.restore();
+}
+function bubbleLabel(ctx,text,x,y,bg,fg,size=11){
+  ctx.save(); ctx.font=`600 ${size}px Noto Sans KR`;
+  const tw=ctx.measureText(text).width+16;
+  ctx.fillStyle=bg; ctx.beginPath(); ctx.roundRect(x-tw/2,y-14,tw,22,5); ctx.fill();
+  ctx.fillStyle=fg; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(text,x,y-3); ctx.restore();
+}
+
+// ── cvPost — Chained Post Play board ──
+const cv=document.getElementById('cvPost');
+const ctx=cv.getContext('2d');
+let W=0,H=0,step=0;
+let showMark=true,showOpts=false,showPath=false,show1v1=false,showPen=false,showDrib=false;
+const GOLD='#C9A84C',LGOLD='#F0C858',RED='#E05C5C',GREEN='#5EC97A';
+const PEN_X=0.74, PEN_Y=0.16;
+
+const aGK  =new Player(0,0,GOLD,'GK',9);
+const aLCB =new Player(0,0,GOLD,'LCB',9);
+const aCB  =new Player(0,0,GOLD,'CB',9);
+const aRCB =new Player(0,0,GOLD,'RCB',9);
+const aDM1 =new Player(0,0,LGOLD,'DM',12);
+const aDM2 =new Player(0,0,GOLD,'DM',10);
+const aLW  =new Player(0,0,GOLD,'LW',10);
+const aP1  =new Player(0,0,LGOLD,'AM',13);
+const aAM2 =new Player(0,0,GOLD,'MF',9);
+const aRW  =new Player(0,0,GOLD,'RW',9);
+const aST  =new Player(0,0,LGOLD,'ST',12);
+
+const dGK  =new Player(0,0,RED,'GK',9);
+const dLB  =new Player(0,0,RED,'LB',9);
+const dLCB =new Player(0,0,RED,'LCB',11);
+const dRCB =new Player(0,0,RED,'RCB',11);
+const dRB  =new Player(0,0,RED,'RB',9);
+const dLM  =new Player(0,0,RED,'LM',9);
+const dLCM =new Player(0,0,RED,'LCM',11);
+const dRCM =new Player(0,0,RED,'RCM',10);
+const dRM  =new Player(0,0,RED,'RM',9);
+const dLS  =new Player(0,0,RED,'LS',11);
+const dRS  =new Player(0,0,RED,'RS',9);
+
+const ball=new Ball(0,0);
+const atkP=[aGK,aLCB,aCB,aRCB,aDM1,aDM2,aLW,aP1,aAM2,aRW,aST];
+const defP=[dGK,dLB,dLCB,dRCB,dRB,dLM,dLCM,dRCM,dRM,dLS,dRS];
+const allP=[...atkP,...defP];
+
+const MSGS=[
+  'Stage 0 — High Press Man-Marking. Holder (DM) has ball, everyone marked',
+  "Stage 1/6 — Both pivot players offer simultaneously! They are the holder's pass options",
+  'Stage 2/6 — Holder → Pivot 2 (ST) pass. Pivot 2 receives',
+  'Stage 3/6 — Lateral pass! Pivot 1 moves and receives (1v1 marked)',
+  'Stage 4/6 — Pivot 1 post play! Marker goes 1v1, space opens behind',
+  'Stage 5/6 — One touch! Ball and player move simultaneously into space → receive and drive',
+  'Stage 6/6 — Space dribble advance! High Press structurally broken'
+];
+
+function initPost(){
+  W=cv.offsetWidth; H=cv.offsetHeight;
+  if(!W||!H)return;
+  const dpr=window.devicePixelRatio||1;
+  cv.width=Math.round(W*dpr); cv.height=Math.round(H*dpr);
+  cv.style.width=W+'px'; cv.style.height=H+'px';
+  ctx.setTransform(1,0,0,1,0,0); ctx.scale(dpr,dpr);
+  step=0;
+  showMark=true; showOpts=false; showPath=false; show1v1=false; showPen=false; showDrib=false;
+  aGK.snap(W*.04,H*.50);
+  aLCB.snap(W*.12,H*.24); aCB.snap(W*.12,H*.50); aRCB.snap(W*.12,H*.76);
+  aDM1.snap(W*.33,H*.46); aDM2.snap(W*.27,H*.65);
+  aLW.snap(W*.40,H*.14); aP1.snap(W*.40,H*.28); aAM2.snap(W*.46,H*.66); aRW.snap(W*.40,H*.86); aST.snap(W*.52,H*.48);
+  dGK.snap(W*.96,H*.50);
+  dLB.snap(W*.64,H*.18); dLCB.snap(W*.58,H*.44); dRCB.snap(W*.62,H*.62); dRB.snap(W*.64,H*.82);
+  dLM.snap(W*.43,H*.16); dLCM.snap(W*.42,H*.28); dRCM.snap(W*.47,H*.66); dRM.snap(W*.43,H*.84);
+  dLS.snap(W*.33,H*.46); dRS.snap(W*.26,H*.60);
+  ball.snap(aDM1.x,aDM1.y);
+  allP.forEach(p=>{p.showQ=false;p.hasBall=false});
+  aDM1.hasBall=true;
+  document.getElementById('infoPost').textContent=MSGS[0];
+}
+
+function nextPost(){
+  if(!W)initPost();
+  if(step>=6)return;
+  step++;
+  allP.forEach(p=>p.showQ=false);
+  document.getElementById('infoPost').textContent=MSGS[step];
+  if(step===1){ showOpts=true; showMark=false; }
+  if(step===2){
+    showOpts=false;
+    aDM1.hasBall=false; aST.hasBall=true;
+    ball.playTo({x:W*.33,y:H*.46},{x:W*.52,y:H*.48},0.44,0.05);
+    dLS.moveTo(W*.40,H*.47);
+  }
+  if(step===3){
+    aST.hasBall=false; showPath=true;
+    aP1.moveTo(W*.46,H*.36);
+    ball.playTo({x:W*.52,y:H*.48},{x:W*.46,y:H*.36},0.44,0.04);
+    dLCM.moveTo(W*.46,H*.35);
+  }
+  if(step===4){
+    showPath=false; show1v1=true;
+    aP1.hasBall=true;
+    dLCM.moveTo(W*.46,H*.36);
+    dLCB.moveTo(W*.54,H*.46);
+    aLW.moveTo(W*.56,H*.14);
+  }
+  if(step===5){
+    show1v1=false; showPen=true;
+    aP1.hasBall=false;
+    ball.playTo({x:W*.46,y:H*.36},{x:W*PEN_X,y:H*PEN_Y},0.52,0.12);
+    aLW.moveTo(W*PEN_X,H*PEN_Y);
+    dLM.showQ=true; dLCM.showQ=true;
+  }
+  if(step===6){
+    showPen=false; showDrib=true;
+    aLW.hasBall=true;
+    const dribX=W*.87, dribY=H*.20;
+    ball.playTo({x:W*PEN_X,y:H*PEN_Y},{x:dribX,y:dribY},0.55,0.04);
+    aLW.moveTo(dribX,dribY);
+    dLM.showQ=true; dLCM.showQ=true; dLB.showQ=true;
+  }
+}
+
+function updatePost(dt){ if(!W)return; allP.forEach(p=>p.update(dt)); ball.update(dt); }
+
+function drawPost(now){
+  if(!W)return;
+  ctx.clearRect(0,0,W,H);
+  drawPitch(ctx,W,H);
+
+  ctx.save(); ctx.font='700 11px DM Mono'; ctx.textAlign='right';
+  ctx.fillStyle='rgba(224,92,92,.85)'; ctx.fillText('HIGH PRESS',W*.94,H*.07); ctx.restore();
+  ctx.save(); ctx.font='700 10px DM Mono'; ctx.textAlign='center';
+  ctx.fillStyle='rgba(232,201,108,.7)'; ctx.fillText('3-2-4-1',W*.13,H*.07); ctx.restore();
+
+  if(step>=4){
+    const za=0.05+0.03*Math.sin(now/500);
+    ctx.save(); ctx.globalAlpha=za; ctx.fillStyle=GREEN;
+    ctx.beginPath(); ctx.roundRect(W*.65,H*.08,W*.28,H*.38,6); ctx.fill(); ctx.restore();
+    ctx.save(); ctx.globalAlpha=0.55; ctx.font='700 10px DM Mono'; ctx.textAlign='center'; ctx.fillStyle=GREEN;
+    ctx.fillText('Space',W*.79,H*.13); ctx.restore();
+  }
+  if(showMark){
+    const pairs=[[dLS,aDM1],[dLCM,aP1],[dLCB,aST],[dLM,aLW],[dRM,aRW],[dRCM,aAM2]];
+    pairs.forEach(([d,a])=>{
+      ctx.save(); ctx.globalAlpha=0.22; ctx.setLineDash([4,5]);
+      ctx.strokeStyle=RED; ctx.lineWidth=1.2;
+      ctx.beginPath(); ctx.moveTo(d.x,d.y); ctx.lineTo(a.x,a.y); ctx.stroke();
+      ctx.setLineDash([]); ctx.restore();
+    });
+    ctx.save(); ctx.globalAlpha=0.65; ctx.font='600 9px DM Mono'; ctx.textAlign='center'; ctx.fillStyle=RED;
+    ctx.fillText('Man-Marking',W*.55,H*.95); ctx.restore();
+  }
+  if(step<=3){
+    ctx.save(); ctx.globalAlpha=0.30; ctx.setLineDash([3,5]);
+    ctx.strokeStyle=RED; ctx.lineWidth=1.1;
+    ctx.beginPath(); ctx.moveTo(dLCB.x,dLCB.y); ctx.lineTo(aST.x,aST.y); ctx.stroke();
+    ctx.setLineDash([]); ctx.restore();
+  }
+  [aP1,aST].forEach(p=>{
+    const a=0.28+0.20*Math.sin(now/320);
+    ctx.save(); ctx.globalAlpha=a;
+    ctx.beginPath(); ctx.arc(p.x,p.y,p.r+7,0,Math.PI*2);
+    ctx.strokeStyle=LGOLD; ctx.lineWidth=1.8; ctx.setLineDash([4,4]); ctx.stroke();
+    ctx.setLineDash([]); ctx.restore();
+  });
+  if(showOpts){
+    const a=0.55+0.45*Math.sin(now/250);
+    ctx.save(); ctx.globalAlpha=a;
+    drawArrow(ctx,aDM1.x+8,aDM1.y-6,aP1.x,aP1.y+8,LGOLD,2,true,9);
+    drawArrow(ctx,aDM1.x+8,aDM1.y+4,aST.x,aST.y-4,LGOLD,2,true,9);
+    ctx.restore();
+    bubbleLabel(ctx,'Option①',aP1.x+2,aP1.y-22,'rgba(240,200,80,.3)','#F0C858',9);
+    bubbleLabel(ctx,'Option②',aST.x+4,aST.y-22,'rgba(240,200,80,.3)','#F0C858',9);
+    bubbleLabel(ctx,'Pivot = Option',aDM1.x,aDM1.y-50,'rgba(255,180,50,.4)','#ffb432',10);
+  }
+  if(showPath){
+    ctx.save(); ctx.setLineDash([5,4]);
+    ctx.strokeStyle='rgba(240,200,80,.55)'; ctx.lineWidth=1.8;
+    ctx.beginPath(); ctx.moveTo(W*.52,H*.48); ctx.lineTo(W*.46,H*.36); ctx.stroke();
+    ctx.setLineDash([]); ctx.restore();
+    bubbleLabel(ctx,'Lateral pass',W*.50,H*.38,'rgba(240,200,80,.38)','#F0C858',10);
+    drawArrow(ctx,W*.40,H*.28,W*.46,H*.36,LGOLD,1.5,true,7);
+  }
+  if(show1v1){
+    const a=0.55+0.40*Math.sin(now/200);
+    ctx.save(); ctx.globalAlpha=a;
+    drawArrow(ctx,dLCM.x,dLCM.y,aP1.x,aP1.y+2,RED,2,false,9);
+    ctx.restore();
+    bubbleLabel(ctx,'1v1',aP1.x,aP1.y-62,'rgba(255,180,50,.4)','#ffb432',10);
+    drawArrow(ctx,aLW.x,aLW.y,W*PEN_X,H*PEN_Y,GREEN,1.6,false,7);
+  }
+  if(showPen&&!showDrib){
+    bubbleLabel(ctx,'Simultaneously!',W*(PEN_X-.06),H*(PEN_Y+.08),'rgba(94,201,122,.4)','#5EC97A',10);
+  }
+  if(showDrib){
+    drawArrow(ctx,W*PEN_X,H*PEN_Y,W*.88,H*.22,GREEN,2.5,false,11);
+    bubbleLabel(ctx,'Dribble!',W*.85,H*.17,'rgba(94,201,122,.52)','#5EC97A',11);
+  }
+
+  defP.forEach(p=>p.draw(ctx,now));
+  atkP.forEach(p=>p.draw(ctx,now));
+  ball.draw(ctx);
+
+  if(step<=1){
+    ctx.save(); ctx.font='600 8px Noto Sans KR, sans-serif'; ctx.textAlign='center'; ctx.fillStyle=LGOLD;
+    ctx.fillText('Holder',aDM1.x,aDM1.y-aDM1.r-6); ctx.restore();
+  }
+  ctx.save(); ctx.font='600 8px Noto Sans KR, sans-serif'; ctx.textAlign='center'; ctx.fillStyle=LGOLD;
+  ctx.fillText('Pivot 1',aP1.x,aP1.y+aP1.r+13);
+  ctx.fillText('Pivot 2',aST.x,aST.y+aST.r+13);
+  ctx.restore();
+
+  const lbl=step>=6?'Space dribble advance! — High Press structurally broken':
+            step>=5?'Key Point: ball and player simultaneously into space!':
+            step>=4?'1v1 post play — marker engaged, space opens':
+            step>=1?'Pivot = option — the holder decides':
+            'High Press Man-Marking vs Pivot Strategy';
+  bubbleLabel(ctx,lbl,W/2,H-14,'rgba(0,0,0,.45)','rgba(255,255,255,.45)',9);
+}
+
+document.getElementById('btnPostPlay').addEventListener('click',nextPost);
+document.getElementById('btnPostReset').addEventListener('click',initPost);
+
+let lastTs=null;
+function loop(ts){
+  if(lastTs===null) lastTs=ts;
+  const dt=Math.min((ts-lastTs)/1000,.05); lastTs=ts;
+  updatePost(dt); drawPost(ts);
+  requestAnimationFrame(loop);
+}
+window.addEventListener('load',()=>{
+  function tryStart(){
+    initPost();
+    if(!W){ requestAnimationFrame(tryStart); return; }
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(tryStart);
+});
+window.addEventListener('resize',()=>{ initPost(); });
+}catch(e){ console.warn('Post anim error',e); }
+</script>
+</body>
+</html>

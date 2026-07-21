@@ -13,15 +13,16 @@ const items: IndexItem[] = LAB.map((k) => ({
   sub: `${k.code} · ${k.type}`,
   short: k.short,
   badge: STATUS_BADGE[k.status],
+  tags: k.basedOn,
 }));
 
 export default function LabIndexPage() {
   return (
     <KpiIndex
       eyebrow="03 / Data & KPI Lab"
-      title="Metrics I'm"
-      accent="designing."
-      intro="Original KPIs built to measure what off-the-shelf data can't — the timing, sequencing and unpredictability that variation lives on. Status is honest: most are still in development."
+      title="A Lab where new metrics"
+      accent="born"
+      intro="These are not certified KPIs. These are born to measure Variation Theory and sometimes off the beaten path. Revolutionary thoughts are sometimes originated from unusual creativity. Creativities are still on the way to establish a new thing."
       items={items}
     />
   );

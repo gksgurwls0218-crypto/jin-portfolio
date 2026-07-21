@@ -48,7 +48,7 @@ export default function EssayNav() {
   return (
     <nav
       className="sticky top-0 z-10 flex gap-0.5 px-6 md:px-12 overflow-x-auto"
-      style={{ background: "rgba(7,7,15,.92)", backdropFilter: "blur(16px)", borderBottom: "0.5px solid rgba(255,255,255,.07)" }}
+      style={{ background: "var(--stage-glass)", backdropFilter: "blur(16px)", borderBottom: "0.5px solid var(--edge-2)" }}
     >
       {SECTIONS.map((s) => (
         <a
@@ -57,14 +57,15 @@ export default function EssayNav() {
           className="mono whitespace-nowrap px-2.5 py-2.5 rounded-md transition-colors duration-150"
           style={{
             fontSize: 9.5,
-            color: active === s.id ? "rgba(185,205,255,.96)" : "rgba(255,255,255,.42)",
-            background: active === s.id ? "rgba(80,115,255,.18)" : "transparent",
+            fontWeight: active === s.id ? 600 : 400,
+            color: active === s.id ? "var(--green-bright)" : "var(--ink-3)",
+            background: active === s.id ? "var(--green-soft)" : "transparent",
           }}
         >
           {s.label}
         </a>
       ))}
-      <div className="absolute bottom-0 left-0 h-[2px]" style={{ width: `${progress * 100}%`, background: "rgba(120,155,255,.8)", transition: "width 80ms linear" }} />
+      <div className="absolute bottom-0 left-0 h-[2px]" style={{ width: `${progress * 100}%`, background: "var(--green-bright)", transition: "width 80ms linear" }} />
     </nav>
   );
 }

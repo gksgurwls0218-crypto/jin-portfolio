@@ -48,12 +48,18 @@ export const MATCHES: GalleryMatch[] = [
     ],
     lineups: {
       home: {
+        // Confirmed XI (ESPN / fcbayern.com / Confirmed Lineups, 28 Apr 2026): Safonov; Mendes, Marquinhos, Pacho, Hakimi; Zaïre-Emery, Neves, Vitinha; Kvaratskhelia, Dembélé, Doué.
+        // Fixes vs previous data: GK was wrongly Donnarumma (actually Safonov); Hakimi/Mendes sides were swapped (Hakimi = RB, Mendes = LB);
+        // Fabián Ruiz was not a starter (he subbed on for Zaïre-Emery, 64') — Zaïre-Emery started.
         formation: "4-3-3",
-        players: ["Donnarumma", "Hakimi", "Marquinhos", "Pacho", "Nuno Mendes", "João Neves", "Vitinha", "Fabián Ruiz", "Doué", "Dembélé", "Kvaratskhelia"],
+        // jin correction: Marquinhos / Pacho swapped.
+        players: ["Safonov", "Nuno Mendes", "Pacho", "Marquinhos", "Hakimi", "Zaïre-Emery", "João Neves", "Vitinha", "Kvaratskhelia", "Dembélé", "Doué"],
       },
       away: {
+        // Confirmed XI: Neuer; Stanišić, Upamecano, Tah, Davies; Kimmich, Pavlović; Olise, Musiala, Díaz; Kane.
+        // jin correction: Davies / Stanišić swapped, Kimmich / Pavlović swapped, Luis Díaz / Olise swapped.
         formation: "4-2-3-1",
-        players: ["Neuer", "Kimmich", "Upamecano", "Tah", "Davies", "Pavlović", "Goretzka", "Olise", "Musiala", "Sané", "Kane"],
+        players: ["Neuer", "Stanišić", "Tah", "Upamecano", "Davies", "Kimmich", "Pavlović", "Olise", "Musiala", "Luis Díaz", "Kane"],
       },
     },
   },
@@ -70,8 +76,10 @@ export const MATCHES: GalleryMatch[] = [
     ],
     lineups: {
       home: {
+        // Back-3 stoppers and wide forwards corrected: Kim Min-jae = left stopper, Lee Han-beom = right stopper;
+        // Eom Ji-sung = left wing, Lee Dong-gyeong = right wing. jin correction: Kim Moon-hwan / Lee Myung-jae swapped.
         formation: "3-4-3",
-        players: ["Kim Seung-gyu", "Lee Han-beom", "Park Jin-seob", "Kim Min-jae", "Kim Moon-hwan", "Kim Jin-gyu", "Hwang In-beom", "Lee Myung-jae", "Lee Dong-gyeong", "Son Heung-min", "Eom Ji-sung"],
+        players: ["Kim Seung-gyu", "Kim Min-jae", "Park Jin-seob", "Lee Han-beom", "Lee Myung-jae", "Kim Jin-gyu", "Hwang In-beom", "Kim Moon-hwan", "Eom Ji-sung", "Son Heung-min", "Lee Dong-gyeong"],
       },
       away: {
         formation: "4-2-3-1",
@@ -95,12 +103,15 @@ export const MATCHES: GalleryMatch[] = [
     ],
     lineups: {
       home: {
+        // Back-3 corrected: Lee Gi-hyuk = left stopper, Kim Min-jae = center, Lee Han-beom = right stopper.
+        // Front-3 corrected: Son Heung-min central, Lee Jae-sung left, Lee Kang-in right.
         formation: "3-4-3",
-        players: ["Kim Seung-gyu", "Lee Han-beom", "Kim Min-jae", "Lee Gi-hyuk", "Lee Tae-seok", "Paik Seung-ho", "Hwang In-beom", "Seol Young-woo", "Son Heung-min", "Lee Kang-in", "Lee Jae-sung"],
+        players: ["Kim Seung-gyu", "Lee Gi-hyuk", "Kim Min-jae", "Lee Han-beom", "Lee Tae-seok", "Paik Seung-ho", "Hwang In-beom", "Seol Young-woo", "Lee Jae-sung", "Son Heung-min", "Lee Kang-in"],
       },
       away: {
+        // Corrected per jin's screenshot: Coufal = right side of the back five.
         formation: "5-2-3",
-        players: ["Kovář", "Coufal", "Hranáč", "Chaloupek", "Krejčí", "Zelený", "Souček", "Sojka", "Schick", "Sulc", "Provod"],
+        players: ["Kovář", "Coufal", "Chaloupek", "Hranáč", "Krejčí", "Zelený", "Souček", "Sojka", "Provod", "Schick", "Sulc"],
       },
     },
   },
@@ -118,12 +129,15 @@ export const MATCHES: GalleryMatch[] = [
     ],
     lineups: {
       home: {
+        // L/R corrected per official lineup graphic: Douglas Santos (LB) – Gabriel (LCB) – Marquinhos (RCB) – Danilo (RB);
+        // Paquetá – Casemiro – Guimarães across midfield; Vinícius Jr (left) – Cunha (center) – Raphinha (right) up top.
         formation: "4-3-3",
-        players: ["Alisson", "Danilo", "Marquinhos", "Gabriel", "Douglas Santos", "Casemiro", "Bruno Guimarães", "Paquetá", "Raphinha", "Cunha", "Vinícius Jr"],
+        players: ["Alisson", "Douglas Santos", "Gabriel", "Marquinhos", "Danilo", "Paquetá", "Casemiro", "Bruno Guimarães", "Vinícius Jr", "Cunha", "Raphinha"],
       },
       away: {
+        // L/R corrected per official lineup graphic (Haiti attacks the opposite direction, so their right side reads first).
         formation: "5-4-1",
-        players: ["Placide", "Arcus", "Ade", "Delcroix", "Experience", "Duverne", "Bellegarde", "Providence", "Jean Jacques", "Casimir", "Pierrot"],
+        players: ["Placide", "Arcus", "Duverne", "Ade", "Delcroix", "Experience", "Casimir", "Jean Jacques", "Bellegarde", "Providence", "Pierrot"],
       },
     },
   },
@@ -136,22 +150,26 @@ export const MATCHES: GalleryMatch[] = [
     away: { name: "Curaçao", score: 1 },
     goals: [
       { team: "home", scorer: "Nmecha", minute: 6 },
-      { team: "home", scorer: "Schlotterbeck", minute: 38 },
-      { team: "home", scorer: "Havertz", minute: 45 },
-      { team: "home", scorer: "Musiala", minute: 47 },
-      { team: "home", scorer: "Brown", minute: 68 },
-      { team: "home", scorer: "Undav", minute: 78 },
-      { team: "home", scorer: "Havertz", minute: 88 },
-      // Curaçao's goal — confirm scorer/minute
+      { team: "home", scorer: "Schlotterbeck", minute: 37 },
+      { team: "home", scorer: "Musiala", minute: 46 },
+      { team: "home", scorer: "Havertz", minute: 49, pen: true },
+      { team: "home", scorer: "Brown", minute: 67 },
+      { team: "home", scorer: "Undav", minute: 77 },
+      { team: "home", scorer: "Havertz", minute: 87 },
+      { team: "away", scorer: "Comenencia", minute: 21 },
     ],
     lineups: {
       home: {
-        formation: "3-4-3",
-        players: ["Neuer", "Tah", "Schlotterbeck", "Kimmich", "Brown", "Pavlović", "Nmecha", "Sané", "Musiala", "Havertz", "Wirtz"],
+        // Corrected per jin's own analysis report (GER_CUW_AnalysisReport.key): formation is 4-2-3-1, not 3-4-3.
+        // Back four L→R: Brown, Schlotterbeck, Tah, Kimmich (Kimmich = right, per jin's screenshot). Pivot: Pavlović/Nmecha.
+        formation: "4-2-3-1",
+        players: ["Neuer", "Brown", "Schlotterbeck", "Tah", "Kimmich", "Pavlović", "Nmecha", "Wirtz", "Musiala", "Sané", "Havertz"],
       },
       away: {
-        formation: "4-1-2-3",
-        players: ["Room", "Floranus", "Obispo", "Bazoer", "Fonville", "Juninho Bacuna", "Comenencia", "Leandro Bacuna", "Locadia", "Hansen", "Chong"],
+        // Corrected per jin's own analysis report: formation is 4-3-1-2, not 4-1-2-3.
+        // Hansen = left side of the front two (per jin's screenshot).
+        formation: "4-3-1-2",
+        players: ["Room", "Floranus", "Obispo", "Bazoer", "Fonville", "Juninho Bacuna", "Leandro Bacuna", "Chong", "Comenencia", "Locadia", "Hansen"],
       },
     },
   },

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lateral Pass Press Escape — Variation Theory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Noto+Sans+KR:wght@600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:transparent}
+body{font-family:'Space Grotesk',sans-serif}
+.board{background:#0d1214;border-radius:16px;overflow:hidden;border:0.5px solid rgba(180,220,190,.14)}
+.board-top{padding:14px 18px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.board-top h4{color:#f3f1ea;font-size:.82rem;margin:0;font-weight:600}
+.board-top .bdesc{color:#8fbf93;font-size:.72rem;margin:0;margin-left:auto}
+.board-body{padding:16px 18px}
+.board-ctrl{display:flex;align-items:center;gap:10px;padding:12px 18px;border-top:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.02)}
+.board-ctrl button{font-family:'Space Grotesk',sans-serif;font-size:.76rem;font-weight:600;letter-spacing:.03em;padding:7px 16px;border-radius:8px;border:none;cursor:pointer;transition:all .15s}
+.btn-play{background:#2f6b34;color:#eafff0}
+.btn-play:hover{background:#3c8143}
+.btn-reset{background:rgba(255,255,255,.08);color:#c2ccc3;border:1px solid rgba(255,255,255,.14)}
+.btn-reset:hover{background:rgba(255,255,255,.14)}
+.step-info{font-size:.74rem;color:#8fbf93;line-height:1.4;font-style:italic}
+canvas{display:block;width:100%;aspect-ratio:2.3/1;border-radius:10px}
+</style>
+</head>
+<body>
+
+<div class="board">
+  <div class="board-top">
+    <h4>Lateral Pass Press Escape Drill — Step-by-Step</h4>
+    <span class="bdesc">GK&middot;C1 bounce &rarr; C2 receive &rarr; one-touch lateral &rarr; C1 presses forward</span>
+  </div>
+  <div class="board-body"><canvas id="cvLateral" height="260"></canvas></div>
+  <div class="board-ctrl">
+    <button class="btn-play" id="btnLatPlay">&#9654; Next</button>
+    <button class="btn-reset" id="btnLatReset">&#8634; Restart</button>
+    <div class="step-info" id="infoLat">GK holds ball — step through the drill</div>
+  </div>
+</div>
+
+<script>
+try{
+function lerp(a,b,t){return a+(b-a)*t}
+function clamp(v,mn,mx){return Math.max(mn,Math.min(mx,v))}
+function dist(a,b){return Math.sqrt((a.x-b.x)**2+(a.y-b.y)**2)}
+const ease={outC:t=>1-Math.pow(1-t,3)};
+function bezier(t,p0,cp,p1){const u=1-t;return{x:u*u*p0.x+2*u*t*cp.x+t*t*p1.x,y:u*u*p0.y+2*u*t*cp.y+t*t*p1.y}}
+function autoCP(p0,p1,lift=0.25){const d=dist(p0,p1);return{x:(p0.x+p1.x)/2,y:(p0.y+p1.y)/2-d*lift}}
+
+class Player{
+  constructor(x,y,color,label,r=15){this.x=x;this.y=y;this.tx=x;this.ty=y;this.color=color;this.label=label;this.r=r;this.glowA=0;this.qA=0;this.hovered=false}
+  moveTo(x,y){this.tx=x;this.ty=y}
+  snap(x,y){this.x=x;this.y=y;this.tx=x;this.ty=y}
+  update(dt){
+    const spd=clamp(6*dt,0,.18);
+    this.x=lerp(this.x,this.tx,spd); this.y=lerp(this.y,this.ty,spd);
+    this.glowA=lerp(this.glowA,this.hasBall?0.8:this.hovered?0.4:0,clamp(5*dt,0,.3));
+    this.qA=lerp(this.qA,this.showQ?1:0,clamp(4*dt,0,.25));
+  }
+  draw(ctx,now){
+    const r=this.r;
+    ctx.save(); ctx.shadowColor='rgba(0,0,0,.5)'; ctx.shadowBlur=8; ctx.shadowOffsetY=3;
+    ctx.beginPath(); ctx.arc(this.x,this.y,r,0,Math.PI*2); ctx.fillStyle=this.color; ctx.fill(); ctx.restore();
+    if(this.glowA>0.02){
+      ctx.save(); ctx.globalAlpha=this.glowA; ctx.shadowColor=this.color; ctx.shadowBlur=20;
+      ctx.beginPath(); ctx.arc(this.x,this.y,r+5,0,Math.PI*2); ctx.strokeStyle=this.color; ctx.lineWidth=2.5; ctx.stroke(); ctx.restore();
+    }
+    const gr=ctx.createRadialGradient(this.x-r*.3,this.y-r*.3,0,this.x,this.y,r);
+    gr.addColorStop(0,lighten(this.color,.3)); gr.addColorStop(1,this.color);
+    ctx.beginPath(); ctx.arc(this.x,this.y,r,0,Math.PI*2); ctx.fillStyle=gr; ctx.fill();
+    ctx.strokeStyle='rgba(255,255,255,.35)'; ctx.lineWidth=1.5; ctx.stroke();
+    ctx.font=`700 ${Math.max(8,r*.7)}px DM Mono`; ctx.fillStyle='#fff'; ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText(this.label,this.x,this.y+.5); ctx.textBaseline='alphabetic';
+  }
+}
+function lighten(hex,amt){
+  const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
+  return `rgb(${Math.min(255,r+Math.round(255*amt))},${Math.min(255,g+Math.round(255*amt))},${Math.min(255,b+Math.round(255*amt))})`;
+}
+class Ball{
+  constructor(x,y){this.x=x;this.y=y;this.trail=[];this.anim=null;this.spin=0}
+  playTo(p0,p1,dur=0.55,lift=0.22){const cp=autoCP(p0,p1,lift);this.anim={p0:{...p0},cp,p1:{...p1},dur,t:0,done:false}}
+  update(dt){
+    if(!this.anim||this.anim.done){this.trail.push({x:this.x,y:this.y,age:0})}
+    if(this.anim&&!this.anim.done){
+      this.anim.t=Math.min(this.anim.t+dt/this.anim.dur,1);
+      const te=ease.outC(this.anim.t);
+      const pos=bezier(te,this.anim.p0,this.anim.cp,this.anim.p1);
+      this.trail.push({x:this.x,y:this.y,age:0});
+      this.x=pos.x; this.y=pos.y; this.spin+=dt*12;
+      if(this.anim.t>=1){this.anim.done=true}
+    }
+    for(const t of this.trail) t.age+=dt;
+    this.trail=this.trail.filter(t=>t.age<0.22);
+  }
+  draw(ctx){
+    for(const t of this.trail){
+      const a=clamp(1-t.age/0.22,0,1);
+      ctx.beginPath(); ctx.arc(t.x,t.y,4*a,0,Math.PI*2); ctx.fillStyle=`rgba(255,255,200,${a*0.3})`; ctx.fill();
+    }
+    ctx.save(); ctx.shadowColor='rgba(0,0,0,.4)'; ctx.shadowBlur=6; ctx.shadowOffsetY=3;
+    ctx.beginPath(); ctx.arc(this.x,this.y,7,0,Math.PI*2); ctx.fillStyle='#fff'; ctx.fill(); ctx.restore();
+    ctx.beginPath(); ctx.arc(this.x,this.y,7,0,Math.PI*2); ctx.fillStyle='#fff'; ctx.fill();
+    ctx.strokeStyle='#333'; ctx.lineWidth=1; ctx.stroke();
+    ctx.save(); ctx.translate(this.x,this.y); ctx.rotate(this.spin);
+    ctx.beginPath(); ctx.moveTo(-5,0); ctx.lineTo(5,0); ctx.strokeStyle='rgba(0,0,0,.15)'; ctx.lineWidth=1; ctx.stroke(); ctx.restore();
+  }
+}
+function drawPitch(ctx,W,H){
+  const stripes=8;
+  for(let i=0;i<stripes;i++){ ctx.fillStyle=i%2===0?'#275221':'#2d5a27'; ctx.fillRect(0,i*(H/stripes),W,H/stripes+1); }
+  ctx.strokeStyle='rgba(255,255,255,.55)'; ctx.lineWidth=1.4;
+  ctx.strokeRect(10,10,W-20,H-20);
+  ctx.beginPath(); ctx.moveTo(W/2,10); ctx.lineTo(W/2,H-10); ctx.stroke();
+  const cr=Math.min(W,H)*.12;
+  ctx.beginPath(); ctx.arc(W/2,H/2,cr,0,Math.PI*2); ctx.stroke();
+  ctx.beginPath(); ctx.arc(W/2,H/2,3,0,Math.PI*2); ctx.fillStyle='rgba(255,255,255,.55)'; ctx.fill();
+  const paW=W*.17,paH=H*.44;
+  ctx.strokeRect(10,(H-paH)/2,paW,paH); ctx.strokeRect(W-10-paW,(H-paH)/2,paW,paH);
+  const sbW=paW*.42,sbH=H*.2;
+  ctx.strokeRect(10,(H-sbH)/2,sbW,sbH); ctx.strokeRect(W-10-sbW,(H-sbH)/2,sbW,sbH);
+  ctx.beginPath(); ctx.arc(10+paW*.72,H/2,3,0,Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.arc(W-10-paW*.72,H/2,3,0,Math.PI*2); ctx.fill();
+  const gH=H*.17;
+  ctx.fillStyle='rgba(255,255,255,.12)';
+  ctx.fillRect(0,(H-gH)/2,10,gH); ctx.fillRect(W-10,(H-gH)/2,10,gH);
+  ctx.strokeRect(0,(H-gH)/2,10,gH); ctx.strokeRect(W-10,(H-gH)/2,10,gH);
+}
+function drawArrow(ctx,x1,y1,x2,y2,color,w=2,dashed=false,headSize=9){
+  ctx.save(); ctx.strokeStyle=color; ctx.lineWidth=w;
+  if(dashed) ctx.setLineDash([7,5]); else ctx.setLineDash([]);
+  ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke(); ctx.setLineDash([]);
+  const angle=Math.atan2(y2-y1,x2-x1);
+  ctx.fillStyle=color; ctx.beginPath(); ctx.moveTo(x2,y2);
+  ctx.lineTo(x2-headSize*Math.cos(angle-.42),y2-headSize*Math.sin(angle-.42));
+  ctx.lineTo(x2-headSize*Math.cos(angle+.42),y2-headSize*Math.sin(angle+.42));
+  ctx.closePath(); ctx.fill(); ctx.restore();
+}
+function zoneRect(ctx,x,y,w,h,color,alpha,pulse){
+  ctx.save(); ctx.globalAlpha=alpha*(pulse||1); ctx.fillStyle=color;
+  ctx.beginPath(); ctx.roundRect(x,y,w,h,6); ctx.fill();
+  ctx.globalAlpha=Math.min(1,(alpha+.15)*(pulse||1)); ctx.strokeStyle=color; ctx.lineWidth=2; ctx.stroke(); ctx.restore();
+}
+function bubbleLabel(ctx,text,x,y,bg,fg,size=11){
+  ctx.save(); ctx.font=`600 ${size}px Noto Sans KR`;
+  const tw=ctx.measureText(text).width+16;
+  ctx.fillStyle=bg; ctx.beginPath(); ctx.roundRect(x-tw/2,y-14,tw,22,5); ctx.fill();
+  ctx.fillStyle=fg; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(text,x,y-3); ctx.restore();
+}
+
+// ── cvLateral — press escape drill ──
+const cv=document.getElementById('cvLateral');
+const ctx=cv.getContext('2d');
+let W=0,H=0,step=0;
+const GOLD='#C9A84C',LGOLD='#F0C858',TEAL='#4ECDC4',GREEN='#5EC97A',RED='#E05C5C';
+
+const pGK =new Player(0,0,GOLD,'GK',11);
+const pCB1=new Player(0,0,GOLD,'CB',10);
+const pCB2=new Player(0,0,GOLD,'CB',10);
+const pCB3=new Player(0,0,GOLD,'CB',10);
+const pC1 =new Player(0,0,LGOLD,'C1',13);
+const pC2 =new Player(0,0,LGOLD,'C2',13);
+const ball=new Ball(0,0);
+const allP=[pGK,pCB1,pCB2,pCB3,pC1,pC2];
+
+const MSGS=[
+  'GK holds ball — check C1·C2 positioning',
+  '① C1 advances to arc base — bounce pass with GK',
+  '② C2 at arc top · C1 at arc base — same depth positioning',
+  '③ GK → C2 (arc top) — C1 at arc base, facing forward',
+  '④ C2 lateral pass → C1 (top to base, pure lateral)',
+  'Press escape complete — C1 drives forward',
+];
+
+function initLat(){
+  W=cv.offsetWidth; H=cv.offsetHeight;
+  if(!W||!H)return;
+  const dpr=window.devicePixelRatio||1;
+  cv.width=Math.round(W*dpr); cv.height=Math.round(H*dpr);
+  cv.style.width=W+'px'; cv.style.height=H+'px';
+  ctx.setTransform(1,0,0,1,0,0); ctx.scale(dpr,dpr);
+  pGK.snap(W*.04,H*.50);
+  pCB1.snap(W*.15,H*.22);
+  pCB2.snap(W*.14,H*.50);
+  pCB3.snap(W*.15,H*.78);
+  pC1.snap(W*.38,H*.64);
+  pC2.snap(W*.38,H*.24);
+  allP.forEach(p=>{p.showQ=false;p.hasBall=false});
+  pGK.hasBall=true; ball.x=pGK.x; ball.y=pGK.y; ball.trail=[]; ball.anim=null;
+  step=0;
+  const info=document.getElementById('infoLat');
+  if(info) info.textContent=MSGS[0];
+}
+
+function nextLat(){
+  if(!W)initLat();
+  if(!W||step>=5) return;
+  step++;
+  allP.forEach(p=>p.showQ=false);
+  const info=document.getElementById('infoLat');
+  if(info) info.textContent=MSGS[step];
+  if(step===1){
+    pGK.hasBall=false; pC1.hasBall=true;
+    pC1.moveTo(W*.22,H*.60);
+    ball.playTo({x:pGK.x,y:pGK.y},{x:W*.22,y:H*.60},0.40,0.05);
+  }
+  if(step===2){
+    pC1.hasBall=false;
+    pC2.moveTo(W*.27,H*.26);
+    pC1.moveTo(W*.27,H*.62);
+    ball.playTo({x:W*.22,y:H*.60},{x:pGK.x,y:pGK.y},0.30,0.04);
+  }
+  if(step===3){
+    pGK.hasBall=false; pC2.hasBall=true;
+    ball.playTo({x:pGK.x,y:pGK.y},{x:W*.27,y:H*.26},0.40,0.04);
+    pC1.moveTo(W*.27,H*.62);
+  }
+  if(step===4){
+    pC2.hasBall=false; pC1.hasBall=true;
+    ball.playTo({x:W*.27,y:H*.26},{x:W*.27,y:H*.62},0.38,0.01);
+  }
+  if(step===5){
+    pC1.moveTo(W*.54,H*.60);
+  }
+}
+
+function updateLat(dt){ allP.forEach(p=>p.update(dt)); ball.update(dt); }
+
+function drawLat(ts){
+  if(!W||!H) return;
+  ctx.clearRect(0,0,W,H);
+  drawPitch(ctx,W,H);
+
+  ctx.save(); ctx.globalAlpha=0.05; ctx.fillStyle='#5B9BD5';
+  ctx.fillRect(0,0,W*.52,H); ctx.restore();
+
+  if(step>=1){
+    ctx.save(); ctx.globalAlpha=step===1?0.80:0.18; ctx.setLineDash([6,5]);
+    ctx.strokeStyle=LGOLD; ctx.lineWidth=2;
+    ctx.beginPath(); ctx.moveTo(pGK.x,pGK.y); ctx.lineTo(pC1.x,pC1.y); ctx.stroke();
+    ctx.setLineDash([]); ctx.restore();
+    if(step===1){
+      bubbleLabel(ctx,'Bounce pass',lerp(pGK.x,pC1.x,.55),lerp(pGK.y,pC1.y,.5)-14,'rgba(240,200,80,.40)','#F0C858',10);
+      const ma=0.50+0.35*Math.sin(ts/280);
+      ctx.save(); ctx.globalAlpha=ma;
+      drawArrow(ctx,W*.38,H*.64,W*.22,H*.60,TEAL,1.6,true,7);
+      ctx.restore();
+      bubbleLabel(ctx,'Advance to arc base',W*.33,H*.72,'rgba(78,205,196,.42)','#4ECDC4',10);
+    }
+  }
+  if(step===2){
+    const aA=0.60+0.30*Math.sin(ts/300);
+    ctx.save(); ctx.globalAlpha=aA;
+    drawArrow(ctx,W*.38,H*.24,W*.27,H*.26,LGOLD,1.8,false,8);
+    ctx.restore();
+    bubbleLabel(ctx,'C2 arc top',W*.34,H*.18,'rgba(240,200,80,.38)','#F0C858',10);
+    const bA=0.45+0.30*Math.sin(ts/320);
+    ctx.save(); ctx.globalAlpha=bA;
+    drawArrow(ctx,W*.22,H*.60,W*.27,H*.62,TEAL,1.5,true,6);
+    ctx.restore();
+    bubbleLabel(ctx,'C1 arc base',W*.28,H*.72,'rgba(78,205,196,.38)','#4ECDC4',10);
+    ctx.save(); ctx.globalAlpha=0.28; ctx.setLineDash([4,6]);
+    ctx.strokeStyle=TEAL; ctx.lineWidth=1.2;
+    ctx.beginPath(); ctx.moveTo(W*.27,H*.16); ctx.lineTo(W*.27,H*.76); ctx.stroke();
+    ctx.setLineDash([]); ctx.restore();
+    bubbleLabel(ctx,'Same depth',W*.27,H*.10,'rgba(78,205,196,.40)','#4ECDC4',9);
+  }
+  if(step>=3){
+    if(step<=4){
+      ctx.save(); ctx.globalAlpha=0.32; ctx.setLineDash([4,6]);
+      ctx.strokeStyle=TEAL; ctx.lineWidth=1.3;
+      ctx.beginPath(); ctx.moveTo(W*.27,H*.16); ctx.lineTo(W*.27,H*.76); ctx.stroke();
+      ctx.setLineDash([]); ctx.restore();
+      bubbleLabel(ctx,'Same depth',W*.27,H*.10,'rgba(78,205,196,.38)','#4ECDC4',9);
+    }
+    ctx.save(); ctx.globalAlpha=step===3?0.85:0.22; ctx.setLineDash([6,5]);
+    ctx.strokeStyle=LGOLD; ctx.lineWidth=2;
+    ctx.beginPath(); ctx.moveTo(pGK.x,pGK.y); ctx.lineTo(pC2.x,pC2.y); ctx.stroke();
+    ctx.setLineDash([]); ctx.restore();
+    if(step===3){
+      bubbleLabel(ctx,'GK → C2',lerp(pGK.x,pC2.x,.5),lerp(pGK.y,pC2.y,.5)-14,'rgba(240,200,80,.40)','#F0C858',10);
+      const ta=0.55+0.40*Math.sin(ts/280);
+      ctx.save(); ctx.globalAlpha=ta;
+      drawArrow(ctx,pC1.x,pC1.y,pC1.x+28,pC1.y,TEAL,2,false,7);
+      ctx.restore();
+      bubbleLabel(ctx,'Facing forward',pC1.x+36,pC1.y+4,'rgba(78,205,196,.45)','#4ECDC4',10);
+      bubbleLabel(ctx,'C2 arc top',pC2.x,pC2.y-18,'rgba(240,200,80,.35)','#F0C858',9);
+      bubbleLabel(ctx,'C1 arc base',pC1.x+4,pC1.y+18,'rgba(78,205,196,.35)','#4ECDC4',9);
+    }
+  }
+  if(step>=4){
+    ctx.save(); ctx.globalAlpha=step===4?0.92:0.32;
+    drawArrow(ctx,pC2.x,pC2.y,pC1.x,pC1.y,LGOLD,3.0,false,12);
+    ctx.restore();
+    if(step===4){
+      ctx.save(); ctx.globalAlpha=0.60; ctx.setLineDash([3,5]);
+      ctx.strokeStyle=TEAL; ctx.lineWidth=1.2;
+      ctx.beginPath(); ctx.moveTo(W*.27,H*.16); ctx.lineTo(W*.27,H*.76); ctx.stroke();
+      ctx.setLineDash([]); ctx.restore();
+      bubbleLabel(ctx,'Lateral pass! (C2→C1, across pitch width)',W*.38,lerp(pC2.y,pC1.y,.5),'rgba(240,200,80,.62)','#F0C858',12);
+      ctx.save(); ctx.globalAlpha=0.65; ctx.font='700 9px DM Mono';
+      ctx.textAlign='center'; ctx.fillStyle=RED;
+      ctx.fillText('Defence cannot react',W*.50,lerp(pC2.y,pC1.y,.5)+20); ctx.restore();
+      const fa=0.65+0.28*Math.sin(ts/260);
+      ctx.save(); ctx.globalAlpha=fa;
+      drawArrow(ctx,pC1.x,pC1.y,pC1.x+26,pC1.y,TEAL,1.8,false,6);
+      ctx.restore();
+    }
+  }
+  if(step>=5){
+    const fa=0.55+0.28*Math.sin(ts/260);
+    ctx.save(); ctx.globalAlpha=fa;
+    drawArrow(ctx,pC1.x,pC1.y,W*.76,H*.42,GREEN,2,false,9);
+    drawArrow(ctx,pC1.x,pC1.y,W*.78,H*.60,GREEN,2.5,false,11);
+    drawArrow(ctx,pC1.x,pC1.y,W*.76,H*.74,GREEN,2,false,9);
+    ctx.restore();
+    zoneRect(ctx,pC1.x+14,H*.30,W*.24,H*.52,GREEN,0.07,0);
+    bubbleLabel(ctx,'Forward drive',W*.80,H*.58,'rgba(94,201,122,.55)',GREEN,11);
+    bubbleLabel(ctx,'Press escape complete!',pC1.x,pC1.y-26,'rgba(94,201,122,.65)',GREEN,13);
+  }
+
+  allP.forEach(p=>p.draw(ctx,ts));
+  ball.draw(ctx);
+  bubbleLabel(ctx,MSGS[step],W/2,H-14,'rgba(0,0,0,.50)','rgba(255,255,255,.78)',11);
+}
+
+document.getElementById('btnLatPlay').addEventListener('click',nextLat);
+document.getElementById('btnLatReset').addEventListener('click',initLat);
+
+let lastTs=null;
+function loop(ts){
+  if(lastTs===null) lastTs=ts;
+  const dt=Math.min((ts-lastTs)/1000,.05); lastTs=ts;
+  updateLat(dt); drawLat(ts);
+  requestAnimationFrame(loop);
+}
+window.addEventListener('load',()=>{
+  function tryStart(){
+    initLat();
+    if(!W){ requestAnimationFrame(tryStart); return; }
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(tryStart);
+});
+window.addEventListener('resize',()=>{ initLat(); });
+}catch(e){ console.warn('Lateral anim error',e); }
+</script>
+</body>
+</html>

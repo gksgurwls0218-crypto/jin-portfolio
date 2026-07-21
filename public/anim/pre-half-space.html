@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pre-Half Space — Variation Theory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Noto+Sans+KR:wght@600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:transparent}
+body{font-family:'Space Grotesk',sans-serif}
+.board{background:#0d1214;border-radius:16px;overflow:hidden;border:0.5px solid rgba(180,220,190,.14)}
+.board-top{padding:14px 18px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.board-top h4{color:#f3f1ea;font-size:.82rem;margin:0;font-weight:600}
+.board-top .bdesc{color:#8fbf93;font-size:.72rem;margin:0;margin-left:auto}
+.board-body{padding:16px 18px}
+.board-ctrl{display:flex;align-items:center;gap:10px;padding:12px 18px;border-top:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.02)}
+.board-ctrl button{font-family:'Space Grotesk',sans-serif;font-size:.76rem;font-weight:600;letter-spacing:.03em;padding:7px 16px;border-radius:8px;border:none;cursor:pointer;transition:all .15s}
+.btn-play{background:#2f6b34;color:#eafff0}
+.btn-play:hover{background:#3c8143}
+.btn-reset{background:rgba(255,255,255,.08);color:#c2ccc3;border:1px solid rgba(255,255,255,.14)}
+.btn-reset:hover{background:rgba(255,255,255,.14)}
+.step-info{font-size:.74rem;color:#8fbf93;line-height:1.4;font-style:italic}
+canvas{display:block;width:100%;aspect-ratio:2.3/1;border-radius:10px}
+</style>
+</head>
+<body>
+
+<div class="board">
+  <div class="board-top"><h4>Pre-Half Space — Two Engines Firing</h4><span class="bdesc">Space occupied &rarr; two options held simultaneously &rarr; defensive dilemma</span></div>
+  <div class="board-body"><canvas id="cvPHS" height="240"></canvas></div>
+  <div class="board-ctrl">
+    <button class="btn-play" id="btnPHSPlay">&#9654; Next</button>
+    <button class="btn-reset" id="btnPHSReset">&#8634; Reset</button>
+    <div class="step-info" id="infoPHS">Checking space distribution and PHS position</div>
+  </div>
+</div>
+
+<script>
+try{
+const ease={out:t=>1-(1-t)*(1-t),outC:t=>1-Math.pow(1-t,3)};
+function lerp(a,b,t){return a+(b-a)*t}
+function clamp(v,mn,mx){return Math.max(mn,Math.min(mx,v))}
+function dist(a,b){return Math.sqrt((a.x-b.x)**2+(a.y-b.y)**2)}
+function bezier(t,p0,cp,p1){const u=1-t;return{x:u*u*p0.x+2*u*t*cp.x+t*t*p1.x,y:u*u*p0.y+2*u*t*cp.y+t*t*p1.y}}
+function autoCP(p0,p1,lift=0.25){const d=dist(p0,p1);return{x:(p0.x+p1.x)/2,y:(p0.y+p1.y)/2-d*lift}}
+
+class Player{
+  constructor(x,y,color,label,r=15){this.x=x;this.y=y;this.tx=x;this.ty=y;this.color=color;this.label=label;this.r=r;this.glowA=0;this.qA=0;this.hovered=false;this.vel={x:0,y:0}}
+  moveTo(x,y){this.tx=x;this.ty=y}
+  snap(x,y){this.x=x;this.y=y;this.tx=x;this.ty=y}
+  update(dt){
+    const spd=clamp(6*dt,0,.18);
+    this.x=lerp(this.x,this.tx,spd); this.y=lerp(this.y,this.ty,spd);
+    this.glowA=lerp(this.glowA,this.hasBall?0.8:this.hovered?0.4:0,clamp(5*dt,0,.3));
+    this.qA=lerp(this.qA,this.showQ?1:0,clamp(4*dt,0,.25));
+  }
+  draw(ctx,now){
+    const r=this.r;
+    ctx.save(); ctx.shadowColor='rgba(0,0,0,.5)'; ctx.shadowBlur=8; ctx.shadowOffsetY=3;
+    ctx.beginPath(); ctx.arc(this.x,this.y,r,0,Math.PI*2); ctx.fillStyle=this.color; ctx.fill(); ctx.restore();
+    if(this.glowA>0.02){
+      ctx.save(); ctx.globalAlpha=this.glowA; ctx.shadowColor=this.color; ctx.shadowBlur=20;
+      ctx.beginPath(); ctx.arc(this.x,this.y,r+5,0,Math.PI*2); ctx.strokeStyle=this.color; ctx.lineWidth=2.5; ctx.stroke(); ctx.restore();
+    }
+    const gr=ctx.createRadialGradient(this.x-r*.3,this.y-r*.3,0,this.x,this.y,r);
+    gr.addColorStop(0,lighten(this.color,.3)); gr.addColorStop(1,this.color);
+    ctx.beginPath(); ctx.arc(this.x,this.y,r,0,Math.PI*2); ctx.fillStyle=gr; ctx.fill();
+    ctx.strokeStyle='rgba(255,255,255,.35)'; ctx.lineWidth=1.5; ctx.stroke();
+    ctx.font=`700 ${Math.max(8,r*.7)}px DM Mono`; ctx.fillStyle='#fff'; ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText(this.label,this.x,this.y+.5); ctx.textBaseline='alphabetic';
+    if(this.qA>0.02){
+      ctx.save(); ctx.globalAlpha=this.qA; const bounce=Math.sin(now/180)*4;
+      ctx.font='bold 18px sans-serif'; ctx.fillStyle='#ff4444'; ctx.textAlign='center';
+      ctx.shadowColor='rgba(255,0,0,.6)'; ctx.shadowBlur=8; ctx.fillText('?',this.x,this.y-r-14+bounce); ctx.restore();
+    }
+  }
+  isHit(mx,my){return Math.hypot(mx-this.x,my-this.y)<this.r+6}
+}
+function lighten(hex,amt){
+  const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
+  return `rgb(${Math.min(255,r+Math.round(255*amt))},${Math.min(255,g+Math.round(255*amt))},${Math.min(255,b+Math.round(255*amt))})`;
+}
+
+class Ball{
+  constructor(x,y){this.x=x;this.y=y;this.trail=[];this.anim=null;this.spin=0}
+  playTo(p0,p1,dur=0.55,lift=0.22){const cp=autoCP(p0,p1,lift);this.anim={p0:{...p0},cp,p1:{...p1},dur,t:0,done:false}}
+  update(dt){
+    if(!this.anim||this.anim.done){this.trail.push({x:this.x,y:this.y,age:0})}
+    if(this.anim&&!this.anim.done){
+      this.anim.t=Math.min(this.anim.t+dt/this.anim.dur,1);
+      const te=ease.outC(this.anim.t);
+      const pos=bezier(te,this.anim.p0,this.anim.cp,this.anim.p1);
+      this.trail.push({x:this.x,y:this.y,age:0});
+      this.x=pos.x; this.y=pos.y; this.spin+=dt*12;
+      if(this.anim.t>=1){this.anim.done=true}
+    }
+    for(const t of this.trail) t.age+=dt;
+    this.trail=this.trail.filter(t=>t.age<0.22);
+  }
+  draw(ctx){
+    for(const t of this.trail){
+      const a=clamp(1-t.age/0.22,0,1);
+      ctx.beginPath(); ctx.arc(t.x,t.y,4*a,0,Math.PI*2); ctx.fillStyle=`rgba(255,255,200,${a*0.3})`; ctx.fill();
+    }
+    ctx.save(); ctx.shadowColor='rgba(0,0,0,.4)'; ctx.shadowBlur=6; ctx.shadowOffsetY=3;
+    ctx.beginPath(); ctx.arc(this.x,this.y,7,0,Math.PI*2); ctx.fillStyle='#fff'; ctx.fill(); ctx.restore();
+    ctx.beginPath(); ctx.arc(this.x,this.y,7,0,Math.PI*2); ctx.fillStyle='#fff'; ctx.fill();
+    ctx.strokeStyle='#333'; ctx.lineWidth=1; ctx.stroke();
+    ctx.save(); ctx.translate(this.x,this.y); ctx.rotate(this.spin);
+    ctx.beginPath(); ctx.moveTo(-5,0); ctx.lineTo(5,0); ctx.strokeStyle='rgba(0,0,0,.15)'; ctx.lineWidth=1; ctx.stroke(); ctx.restore();
+  }
+  isDone(){return !this.anim||this.anim.done}
+  snap(x,y){this.x=x;this.y=y;this.anim=null;this.trail=[]}
+}
+
+function drawPitch(ctx,W,H){
+  const stripes=8;
+  for(let i=0;i<stripes;i++){ ctx.fillStyle=i%2===0?'#275221':'#2d5a27'; ctx.fillRect(0,i*(H/stripes),W,H/stripes+1); }
+  ctx.strokeStyle='rgba(255,255,255,.55)'; ctx.lineWidth=1.4;
+  ctx.strokeRect(10,10,W-20,H-20);
+  ctx.beginPath(); ctx.moveTo(W/2,10); ctx.lineTo(W/2,H-10); ctx.stroke();
+  const cr=Math.min(W,H)*.12;
+  ctx.beginPath(); ctx.arc(W/2,H/2,cr,0,Math.PI*2); ctx.stroke();
+  ctx.beginPath(); ctx.arc(W/2,H/2,3,0,Math.PI*2); ctx.fillStyle='rgba(255,255,255,.55)'; ctx.fill();
+  const paW=W*.17,paH=H*.44;
+  ctx.strokeRect(10,(H-paH)/2,paW,paH); ctx.strokeRect(W-10-paW,(H-paH)/2,paW,paH);
+  const sbW=paW*.42,sbH=H*.2;
+  ctx.strokeRect(10,(H-sbH)/2,sbW,sbH); ctx.strokeRect(W-10-sbW,(H-sbH)/2,sbW,sbH);
+  ctx.beginPath(); ctx.arc(10+paW*.72,H/2,3,0,Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.arc(W-10-paW*.72,H/2,3,0,Math.PI*2); ctx.fill();
+  const gH=H*.17;
+  ctx.fillStyle='rgba(255,255,255,.12)';
+  ctx.fillRect(0,(H-gH)/2,10,gH); ctx.fillRect(W-10,(H-gH)/2,10,gH);
+  ctx.strokeRect(0,(H-gH)/2,10,gH); ctx.strokeRect(W-10,(H-gH)/2,10,gH);
+}
+function drawArrow(ctx,x1,y1,x2,y2,color,w=2,dashed=false,headSize=9){
+  ctx.save(); ctx.strokeStyle=color; ctx.lineWidth=w;
+  if(dashed) ctx.setLineDash([7,5]); else ctx.setLineDash([]);
+  ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke(); ctx.setLineDash([]);
+  const angle=Math.atan2(y2-y1,x2-x1);
+  ctx.fillStyle=color; ctx.beginPath(); ctx.moveTo(x2,y2);
+  ctx.lineTo(x2-headSize*Math.cos(angle-.42),y2-headSize*Math.sin(angle-.42));
+  ctx.lineTo(x2-headSize*Math.cos(angle+.42),y2-headSize*Math.sin(angle+.42));
+  ctx.closePath(); ctx.fill(); ctx.restore();
+}
+function zoneRect(ctx,x,y,w,h,color,alpha,pulse){
+  ctx.save(); ctx.globalAlpha=alpha*(pulse||1); ctx.fillStyle=color;
+  ctx.beginPath(); ctx.roundRect(x,y,w,h,6); ctx.fill();
+  ctx.globalAlpha=Math.min(1,(alpha+.15)*(pulse||1)); ctx.strokeStyle=color; ctx.lineWidth=2; ctx.stroke(); ctx.restore();
+}
+function bubbleLabel(ctx,text,x,y,bg,fg,size=11){
+  ctx.save(); ctx.font=`600 ${size}px Noto Sans KR`;
+  const tw=ctx.measureText(text).width+16;
+  ctx.fillStyle=bg; ctx.beginPath(); ctx.roundRect(x-tw/2,y-14,tw,22,5); ctx.fill();
+  ctx.fillStyle=fg; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(text,x,y-3); ctx.restore();
+}
+
+// ── cvPHS — Pre-Half Space board ──
+const cv=document.getElementById('cvPHS');
+const ctx=cv.getContext('2d');
+let W=0,H=0,step=0;
+const GOLD='#C9A84C',LGOLD='#F0C858',RED='#E05C5C',GREEN='#5EC97A',TEAL='#4ECDC4';
+
+const aDM =new Player(0,0,GOLD,'DM',11);
+const aPHS=new Player(0,0,TEAL,'PHS',14);
+const aHS =new Player(0,0,LGOLD,'HS',13);
+const a9  =new Player(0,0,GREEN,'9',14);
+const aCM =new Player(0,0,GOLD,'CM',10);
+const dSB =new Player(0,0,RED,'SB',11);
+const dCB1=new Player(0,0,RED,'CB',12);
+const dCB2=new Player(0,0,RED,'CB',12);
+const dCDM=new Player(0,0,RED,'CDM',11);
+const ball=new Ball(0,0);
+const atkP=[aDM,aPHS,aHS,a9,aCM];
+const defP=[dSB,dCB1,dCB2,dCDM];
+const allP=[...atkP,...defP];
+
+let phsOrigin={x:0,y:0}, hsReceive={x:0,y:0};
+let showOpts=false,showPass=false,showRun=false,showCross=false,showBoth=false;
+
+const MSGS=[
+  'Stage 0 — Holder (DM) has ball. PHS player waiting at mid-final third boundary, wide',
+  'Stage 1/5 — Holder → PHS (boundary wide). SB follows',
+  'Stage 2/5 — Two options spotted from PHS: HS key pass OR direct box penetration',
+  'Stage 3/5 — Pass & Move! Key pass + immediate cutback run simultaneously',
+  'Stage 4/5 — Forward along HS channel → cross position. PHS = cutback, Forward = waiting for header',
+  'Stage 5/5 — Cross OR cutback — defence cannot cover either'
+];
+
+function initPHS(){
+  W=cv.offsetWidth; H=cv.offsetHeight;
+  if(!W||!H)return;
+  const dpr=window.devicePixelRatio||1;
+  cv.width=Math.round(W*dpr); cv.height=Math.round(H*dpr);
+  cv.style.width=W+'px'; cv.style.height=H+'px';
+  ctx.setTransform(1,0,0,1,0,0); ctx.scale(dpr,dpr);
+  step=0; showOpts=false; showPass=false; showRun=false; showCross=false; showBoth=false;
+  aDM.snap(W*.30,H*.52); aPHS.snap(W*.63,H*.12); aHS.snap(W*.76,H*.24); a9.snap(W*.86,H*.50); aCM.snap(W*.50,H*.58);
+  phsOrigin={x:W*.63,y:H*.12}; hsReceive={x:W*.76,y:H*.26};
+  dSB.snap(W*.64,H*.10); dCB1.snap(W*.82,H*.34); dCB2.snap(W*.80,H*.64); dCDM.snap(W*.62,H*.44);
+  ball.snap(aDM.x,aDM.y);
+  allP.forEach(p=>{p.showQ=false;p.hasBall=false});
+  aDM.hasBall=true;
+  document.getElementById('infoPHS').textContent=MSGS[0];
+}
+
+function nextPHS(){
+  if(!W)initPHS();
+  if(step>=5)return;
+  step++;
+  allP.forEach(p=>p.showQ=false);
+  document.getElementById('infoPHS').textContent=MSGS[step];
+  if(step===1){
+    aDM.hasBall=false;
+    ball.playTo({x:aDM.x,y:aDM.y},{x:aPHS.x,y:aPHS.y},0.50,0.08);
+    dSB.moveTo(W*.64,H*.12);
+  }
+  if(step===2){ aPHS.hasBall=true; showOpts=true; }
+  if(step===3){
+    showOpts=false; showPass=true; showRun=true;
+    aPHS.hasBall=false;
+    ball.playTo({x:aPHS.x,y:aPHS.y},{x:hsReceive.x,y:hsReceive.y},0.44,0.10);
+    aHS.moveTo(hsReceive.x,hsReceive.y);
+    aPHS.moveTo(W*.76,H*.30);
+    dCDM.moveTo(W*.68,H*.28);
+  }
+  if(step===4){
+    showRun=false; showCross=true;
+    aHS.hasBall=true;
+    const crossX=W*.90, crossY=H*.24;
+    ball.playTo({x:hsReceive.x,y:hsReceive.y},{x:crossX,y:crossY},0.55,0.06);
+    aHS.moveTo(crossX,crossY);
+    aPHS.moveTo(W*.84,H*.34);
+    a9.moveTo(W*.86,H*.52);
+    dCB1.showQ=true;
+    dSB.moveTo(W*.88,H*.22);
+  }
+  if(step===5){ showBoth=true; dCB1.showQ=true; dCB2.showQ=true; }
+}
+
+function updatePHS(dt){
+  if(!W)return;
+  allP.forEach(p=>p.update(dt));
+  ball.update(dt);
+}
+
+function drawPHS(now){
+  if(!W)return;
+  ctx.clearRect(0,0,W,H);
+  drawPitch(ctx,W,H);
+
+  ctx.save(); ctx.globalAlpha=0.55; ctx.setLineDash([7,5]);
+  ctx.strokeStyle='rgba(255,200,80,1)'; ctx.lineWidth=2;
+  ctx.beginPath(); ctx.moveTo(W*.67,10); ctx.lineTo(W*.67,H-10); ctx.stroke();
+  ctx.setLineDash([]); ctx.restore();
+  ctx.save(); ctx.globalAlpha=0.65;
+  ctx.font='700 10px DM Mono'; ctx.textAlign='center'; ctx.fillStyle='rgba(255,200,80,1)';
+  ctx.fillText('FINAL THIRD',W*.83,H*.96);
+  ctx.fillText('MID THIRD',W*.50,H*.96);
+  ctx.restore();
+
+  const phsA=0.13+0.05*Math.sin(now/380);
+  zoneRect(ctx,W*.57,H*.04,W*.14,H*.20,TEAL,phsA,1);
+  ctx.save(); ctx.globalAlpha=0.85+0.15*Math.sin(now/380);
+  ctx.strokeStyle=TEAL; ctx.lineWidth=2.5;
+  ctx.beginPath(); ctx.roundRect(W*.57,H*.04,W*.14,H*.20,6); ctx.stroke(); ctx.restore();
+  ctx.save(); ctx.globalAlpha=0.90;
+  ctx.font='bold 11px DM Mono'; ctx.textAlign='center'; ctx.fillStyle=TEAL;
+  ctx.shadowColor=TEAL; ctx.shadowBlur=6; ctx.fillText('PHS',W*.64,H*.03); ctx.shadowBlur=0;
+  ctx.font='600 9px Noto Sans KR'; ctx.fillText('Pre-Half Space',W*.64,H*.95); ctx.restore();
+
+  if(step>=2){
+    const hsA=step>=3?0.15+0.05*Math.sin(now/320):0.12;
+    zoneRect(ctx,W*.69,H*.12,W*.14,H*.26,LGOLD,hsA,1);
+    ctx.save(); ctx.globalAlpha=0.85; ctx.strokeStyle=LGOLD; ctx.lineWidth=2;
+    ctx.beginPath(); ctx.roundRect(W*.69,H*.12,W*.14,H*.26,6); ctx.stroke(); ctx.restore();
+    ctx.save(); ctx.globalAlpha=0.90;
+    ctx.font='bold 11px DM Mono'; ctx.textAlign='center'; ctx.fillStyle=LGOLD;
+    ctx.shadowColor=LGOLD; ctx.shadowBlur=5; ctx.fillText('HS',W*.76,H*.11); ctx.shadowBlur=0; ctx.restore();
+  }
+
+  if(showOpts){
+    const a=0.55+0.45*Math.sin(now/240);
+    ctx.save(); ctx.globalAlpha=a;
+    drawArrow(ctx,aPHS.x+4,aPHS.y+6,aHS.x-4,aHS.y-2,LGOLD,2.5,true,10);
+    drawArrow(ctx,aPHS.x+8,aPHS.y+8,a9.x-6,a9.y-6,TEAL,2.5,true,10);
+    ctx.restore();
+    bubbleLabel(ctx,'① Key pass→HS',aPHS.x+54,aPHS.y+8,'rgba(240,200,80,.38)','#F0C858',11);
+    bubbleLabel(ctx,'② Direct run',aPHS.x+46,aPHS.y+38,'rgba(78,205,196,.38)','#4ECDC4',11);
+    bubbleLabel(ctx,'Pass & Move',aPHS.x,aPHS.y-46,'rgba(255,180,50,.50)','#ffb432',12);
+  }
+  if(showPass){
+    ctx.save(); ctx.setLineDash([6,4]);
+    ctx.strokeStyle='rgba(240,200,80,.75)'; ctx.lineWidth=2.2;
+    ctx.beginPath(); ctx.moveTo(phsOrigin.x,phsOrigin.y); ctx.lineTo(aHS.x,aHS.y);
+    ctx.stroke(); ctx.setLineDash([]); ctx.restore();
+    bubbleLabel(ctx,'Key pass!',W*.70,H*.14,'rgba(240,200,80,.50)','#F0C858',12);
+  }
+  if(showRun){
+    const ra=0.62+0.30*Math.sin(now/200);
+    ctx.save(); ctx.globalAlpha=ra;
+    drawArrow(ctx,phsOrigin.x,phsOrigin.y,W*.84,H*.34,TEAL,2.5,false,11);
+    ctx.restore();
+    bubbleLabel(ctx,'Pass & Move!',phsOrigin.x-12,phsOrigin.y+44,'rgba(78,205,196,.46)','#4ECDC4',12);
+  }
+  if(showCross){
+    ctx.save(); ctx.globalAlpha=0.55; ctx.setLineDash([6,4]);
+    ctx.strokeStyle=LGOLD; ctx.lineWidth=2;
+    ctx.beginPath(); ctx.moveTo(hsReceive.x,hsReceive.y); ctx.lineTo(aHS.x,aHS.y);
+    ctx.stroke(); ctx.setLineDash([]); ctx.restore();
+    bubbleLabel(ctx,'Cross',aHS.x,aHS.y-36,'rgba(240,200,80,.50)','#F0C858',12);
+    const cutPulse=0.55+0.40*Math.sin(now/220);
+    ctx.save(); ctx.globalAlpha=cutPulse;
+    ctx.beginPath(); ctx.arc(aPHS.x,aPHS.y,aPHS.r+11,0,Math.PI*2);
+    ctx.strokeStyle=TEAL; ctx.lineWidth=2.5; ctx.setLineDash([4,3]); ctx.stroke(); ctx.setLineDash([]); ctx.restore();
+    bubbleLabel(ctx,'Cutback',aPHS.x,aPHS.y-36,'rgba(78,205,196,.50)','#4ECDC4',12);
+    const hdrPulse=0.55+0.40*Math.sin(now/250);
+    ctx.save(); ctx.globalAlpha=hdrPulse;
+    ctx.beginPath(); ctx.arc(a9.x,a9.y,a9.r+11,0,Math.PI*2);
+    ctx.strokeStyle=GREEN; ctx.lineWidth=2.5; ctx.setLineDash([4,3]); ctx.stroke(); ctx.setLineDash([]); ctx.restore();
+    bubbleLabel(ctx,'Header',a9.x,a9.y-36,'rgba(94,201,122,.50)','#5EC97A',12);
+    const ca=0.50+0.35*Math.sin(now/200);
+    ctx.save(); ctx.globalAlpha=ca;
+    drawArrow(ctx,aHS.x,aHS.y+4,a9.x,a9.y-8,LGOLD,2.2,true,9);
+    drawArrow(ctx,aHS.x,aHS.y+6,aPHS.x+4,aPHS.y-4,TEAL,2,true,8);
+    ctx.restore();
+  }
+  if(showBoth){
+    bubbleLabel(ctx,'Cross OR Cutback',W*.84,H*.24,'rgba(240,200,80,.44)','#F0C858',12);
+    bubbleLabel(ctx,"Defence can't choose!",W*.84,H*.70,'rgba(224,92,92,.48)','#E05C5C',12);
+    const ca=0.70+0.30*Math.sin(now/180);
+    ctx.save(); ctx.globalAlpha=ca;
+    drawArrow(ctx,aHS.x,aHS.y+4,a9.x,a9.y-8,LGOLD,2.5,true,10);
+    drawArrow(ctx,aHS.x,aHS.y+6,aPHS.x+4,aPHS.y-4,TEAL,2.2,true,9);
+    ctx.restore();
+  }
+
+  defP.forEach(p=>p.draw(ctx,now));
+  atkP.forEach(p=>p.draw(ctx,now));
+  ball.draw(ctx);
+
+  ctx.save(); ctx.font='600 10px Noto Sans KR'; ctx.textAlign='center';
+  if(step<=1){ ctx.fillStyle=GOLD; ctx.fillText('Holder',aDM.x,aDM.y-aDM.r-7); }
+  if(step<=3){
+    ctx.fillStyle=TEAL; ctx.fillText('PHS',aPHS.x,aPHS.y+aPHS.r+13);
+    ctx.fillStyle=LGOLD; ctx.fillText('HS',aHS.x,aHS.y+aHS.r+13);
+    ctx.fillStyle=GREEN; ctx.fillText('ST',a9.x,a9.y+a9.r+13);
+  }
+  ctx.restore();
+
+  const lbl=step>=5?'Cross OR Cutback — defence cannot cover either':
+            step>=4?'HS channel advance → cross position / PHS cutback / forward header':
+            step>=3?'Pass & Move: key pass then immediate cutback run':
+            step>=2?'Two options from PHS simultaneously — defensive dilemma begins':
+            'PHS = mid/final third boundary, wide zone — optimal firing point for both engines';
+  bubbleLabel(ctx,lbl,W/2,H-14,'rgba(0,0,0,.50)','rgba(255,255,255,.75)',11);
+}
+
+document.getElementById('btnPHSPlay').addEventListener('click',nextPHS);
+document.getElementById('btnPHSReset').addEventListener('click',initPHS);
+
+let lastTs=null;
+function loop(ts){
+  if(lastTs===null) lastTs=ts;
+  const dt=Math.min((ts-lastTs)/1000,.05); lastTs=ts;
+  updatePHS(dt); drawPHS(ts);
+  requestAnimationFrame(loop);
+}
+window.addEventListener('load',()=>{
+  function tryStart(){
+    initPHS();
+    if(!W){ requestAnimationFrame(tryStart); return; }
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(tryStart);
+});
+window.addEventListener('resize',()=>{ initPHS(); });
+}catch(e){ console.warn('PHS anim error',e); }
+</script>
+</body>
+</html>

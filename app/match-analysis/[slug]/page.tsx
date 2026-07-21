@@ -4,6 +4,7 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import { getMatchSlugs, getMatchSource } from "@/lib/mdx";
 import { mdxComponents } from "@/components/match/mdxComponents";
 import MatchHeader from "@/components/match/MatchHeader";
+import MatchVideo from "@/components/match/MatchVideo";
 
 export function generateStaticParams() {
   return getMatchSlugs().map((slug) => ({ slug }));
@@ -29,6 +30,9 @@ export default async function MatchAnalysisPage({ params }: { params: Promise<{ 
 
   return (
     <div style={{ background: "var(--stage)" }}>
+      {frontmatter.video ? (
+        <MatchVideo src={frontmatter.video} captionsEn={frontmatter.captionsEn} captionsKo={frontmatter.captionsKo} />
+      ) : null}
       <MatchHeader frontmatter={frontmatter} />
 
       <div className="px-6 md:px-10 pt-10">

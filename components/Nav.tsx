@@ -25,7 +25,7 @@ export default function Nav() {
       className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-10"
       style={{
         height: 62,
-        background: scrolled ? "#06090b" : "transparent",
+        background: scrolled ? "rgba(255,255,255,0.86)" : "transparent",
         backdropFilter: scrolled ? "blur(18px) saturate(150%)" : "none",
         WebkitBackdropFilter: scrolled ? "blur(18px) saturate(150%)" : "none",
         boxShadow: scrolled ? "0 1px 0 var(--edge-2)" : "none",
@@ -37,7 +37,7 @@ export default function Nav() {
         <Link
           href="/"
           className="mono flex items-center gap-2.5 group shrink-0"
-          style={{ fontSize: 11, letterSpacing: "0.16em", color: "var(--ink-2)" }}
+          style={{ fontSize: 12, letterSpacing: "0.14em", color: "var(--ink)" }}
         >
           <span
             className="pulse-dot"
@@ -55,17 +55,17 @@ export default function Nav() {
               <Link
                 key={l.href}
                 href={l.href}
-                className="mono relative flex items-center gap-1.5 px-2.5 md:px-3.5 py-2 rounded-full transition-all duration-300"
+                className="mono relative flex items-center gap-1.5 px-3 md:px-4 py-2.5 rounded-full transition-all duration-300"
                 style={{
-                  fontSize: 12,
-                  color: active ? "var(--green-bright)" : "var(--ink-3)",
+                  fontSize: 13,
+                  color: active ? "var(--green-bright)" : "var(--ink-2)",
                   background: active ? "var(--green-soft)" : "transparent",
                   border: `0.5px solid ${active ? "var(--green-line)" : "transparent"}`,
                 }}
                 onMouseEnter={(e) => { if (!active) (e.currentTarget as HTMLElement).style.color = "var(--ink)"; }}
-                onMouseLeave={(e) => { if (!active) (e.currentTarget as HTMLElement).style.color = "var(--ink-3)"; }}
+                onMouseLeave={(e) => { if (!active) (e.currentTarget as HTMLElement).style.color = "var(--ink-2)"; }}
               >
-                <span style={{ fontSize: 9, opacity: 0.6 }}>{l.index}</span>
+                <span style={{ fontSize: 9.5, opacity: 0.7 }}>{l.index}</span>
                 {l.label}
               </Link>
             );

@@ -15,7 +15,7 @@ const sections = [
     href: "/kpi-lab/lab",
     n: "02",
     label: "Data & KPI Lab",
-    title: "Stepping off the track.",
+    title: "Stepping off the beaten path",
     desc: "Original metrics I'm developing to measure what off-the-shelf data can't: the timing, sequencing and unpredictability that variation lives on.",
   },
 ];

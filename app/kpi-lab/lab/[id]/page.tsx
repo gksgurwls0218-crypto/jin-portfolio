@@ -28,6 +28,7 @@ export default async function LabDetailPage({ params }: { params: Promise<{ id: 
       badge={badge}
       blocks={[
         { label: "What it is", text: k.detail },
+        { label: "Built from", text: `Grounded in existing KPIs/data: ${k.basedOn.join(", ")}.` },
         { label: "Development status", text: `${badge.label} — ${k.status === "draft" ? "measurement method defined; benchmark and validation still to come." : k.status === "live" ? "validated on real match data and usable in the field." : "an idea with the measurement method still to be established."}` },
       ]}
     />

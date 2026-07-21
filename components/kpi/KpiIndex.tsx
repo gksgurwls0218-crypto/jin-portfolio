@@ -4,7 +4,7 @@ import Reveal from "@/components/Reveal";
 import EnterTag from "@/components/EnterTag";
 
 export type Badge = { label: string; color: string; bg: string; border: string };
-export type IndexItem = { href: string; title: string; sub: string; short: string; badge?: Badge };
+export type IndexItem = { href: string; title: string; sub: string; short: string; badge?: Badge; tags?: string[] };
 
 function enter(on: boolean) {
   return (e: React.MouseEvent<HTMLElement>) => {
@@ -48,7 +48,20 @@ export default function KpiIndex({
                   )}
                 </div>
                 <h2 className="display mb-3" style={{ fontSize: 22, color: "var(--ink)", lineHeight: 1.14, letterSpacing: "-0.01em" }}>{it.title}</h2>
-                <p className="mb-6" style={{ fontSize: 15, lineHeight: 1.62, color: "var(--ink-2)" }}>{it.short}</p>
+                <p className="mb-4" style={{ fontSize: 15, lineHeight: 1.62, color: "var(--ink-2)" }}>{it.short}</p>
+                {it.tags && it.tags.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5 mb-2">
+                    {it.tags.map((t) => (
+                      <span
+                        key={t}
+                        className="mono"
+                        style={{ fontSize: 10, fontWeight: 500, color: "var(--ink-3)", padding: "2px 8px", borderRadius: 20, background: "var(--stage-2)", border: "0.5px solid var(--edge-2)" }}
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                )}
                 <div className="mt-auto pt-4" style={{ borderTop: "0.5px solid var(--edge)" }}>
                   <EnterTag />
                 </div>

@@ -8,16 +8,16 @@ export default function ConceptIndex() {
         <div
           key={c.id}
           className="rounded-lg p-4"
-          style={{ background: "rgba(255,255,255,.03)", border: "0.5px solid rgba(120,150,255,.2)" }}
+          style={{ background: "var(--stage-2)", border: "0.5px solid var(--green-line)" }}
         >
           <Link
             href={`#${c.section}`}
             className="font-medium"
-            style={{ fontSize: 13.5, color: "rgba(238,234,228,.97)" }}
+            style={{ fontSize: 13.5, color: "var(--ink)" }}
           >
             {c.label}
           </Link>
-          <p className="mono mt-1 mb-2" style={{ fontSize: 9, color: "rgba(150,175,255,.6)" }}>{c.sectionLabel}</p>
+          <p className="mono mt-1 mb-2" style={{ fontSize: 9, color: "var(--green-mid)" }}>{c.sectionLabel}</p>
           {c.evidence.length > 0 ? (
             <div className="flex flex-wrap gap-1.5">
               {c.evidence.map((e) => (
@@ -25,14 +25,14 @@ export default function ConceptIndex() {
                   key={e.slug}
                   href={`/match-analysis/${e.slug}`}
                   className="mono px-2 py-1 rounded-md"
-                  style={{ fontSize: 9, background: "rgba(255,135,45,.14)", color: "rgba(255,190,115,.94)", border: "0.5px solid rgba(255,145,55,.28)" }}
+                  style={{ fontSize: 9, background: "rgba(51,51,47,.14)", color: "rgba(35,35,33,.94)", border: "0.5px solid rgba(51,51,47,.32)" }}
                 >
                   {e.label} →
                 </Link>
               ))}
             </div>
           ) : (
-            <p className="mono" style={{ fontSize: 9, color: "rgba(255,255,255,.3)" }}>no evidencing match yet</p>
+            <p className="mono" style={{ fontSize: 9, color: "var(--ink-4)" }}>no evidencing match yet</p>
           )}
         </div>
       ))}

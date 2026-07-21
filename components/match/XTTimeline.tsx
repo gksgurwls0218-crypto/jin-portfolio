@@ -45,8 +45,8 @@ export default function XTTimeline({ data, homeLabel, awayLabel, goals = [], vMa
     : null;
 
   return (
-    <div className="rounded-lg p-3.5" style={{ background: "rgba(0,0,0,.25)", border: "0.5px solid rgba(255,145,60,.18)" }}>
-      <p className="mono mb-2" style={{ fontSize: 9, letterSpacing: ".14em", color: "rgba(255,190,115,.75)" }}>
+    <div className="rounded-lg p-3.5" style={{ background: "rgba(20,24,26,0.94)", border: "0.5px solid rgba(51,51,47,0.35)" }}>
+      <p className="mono mb-2" style={{ fontSize: 9, letterSpacing: ".14em", color: "var(--green-bright)" }}>
         XT TIMELINE · ROLLING THREAT BY MINUTE{est && " · est. (hand-tagged from broadcast)"}
       </p>
       <svg
@@ -58,21 +58,21 @@ export default function XTTimeline({ data, homeLabel, awayLabel, goals = [], vMa
       >
         <line x1={PAD_L} y1={BASE_Y} x2={W - PAD_R} y2={BASE_Y} stroke="rgba(255,255,255,.18)" strokeWidth={1} />
 
-        <text x={PAD_L} y={16} fontFamily="'JetBrains Mono',monospace" fontSize={8.5} fill="rgba(255,190,115,.8)">{homeLabel}</text>
+        <text x={PAD_L} y={16} fontFamily="'JetBrains Mono',monospace" fontSize={8.5} fill="var(--green-bright)">{homeLabel}</text>
         <text x={PAD_L} y={28} fontFamily="'JetBrains Mono',monospace" fontSize={8.5} fill="rgba(200,200,200,.5)">{awayLabel}</text>
 
         <polyline points={linePoints("away")} fill="none" stroke="rgba(200,200,200,.3)" strokeWidth={1.4} />
-        <polyline points={linePoints("home")} fill="none" stroke="rgba(255,172,88,.95)" strokeWidth={1.8} />
+        <polyline points={linePoints("home")} fill="none" stroke="rgba(51,51,47,.95)" strokeWidth={1.8} />
 
         {goals.map((g) => (
-          <text key={g} x={xFor(g)} y={137} textAnchor="middle" fontFamily="'JetBrains Mono',monospace" fontSize={8} fill="rgba(255,215,120,.95)">
+          <text key={g} x={xFor(g)} y={137} textAnchor="middle" fontFamily="'JetBrains Mono',monospace" fontSize={8} fill="rgba(51,51,47,.95)">
             {g}&apos; ⚽
           </text>
         ))}
 
         {vMarkers.map((m, i) => (
           <a key={i} href={`#v${m.v}`} style={{ cursor: "pointer" }}>
-            <text x={xFor(m.min)} y={TOP_Y + 4} textAnchor="middle" fontFamily="'JetBrains Mono',monospace" fontSize={8} fill="rgba(165,178,255,.95)">
+            <text x={xFor(m.min)} y={TOP_Y + 4} textAnchor="middle" fontFamily="'JetBrains Mono',monospace" fontSize={8} fill="rgba(51,51,47,.95)">
               V{m.v}
             </text>
           </a>
@@ -81,12 +81,12 @@ export default function XTTimeline({ data, homeLabel, awayLabel, goals = [], vMa
         {nearest && (
           <g>
             <line x1={xFor(nearest.min)} y1={TOP_Y} x2={xFor(nearest.min)} y2={BASE_Y} stroke="rgba(255,255,255,.4)" strokeWidth={1} strokeDasharray="2 3" />
-            <circle cx={xFor(nearest.min)} cy={yFor(nearest.home)} r={3} fill="rgba(255,215,120,.98)" />
+            <circle cx={xFor(nearest.min)} cy={yFor(nearest.home)} r={3} fill="rgba(51,51,47,.98)" />
             <circle cx={xFor(nearest.min)} cy={yFor(nearest.away)} r={3} fill="rgba(220,220,220,.9)" />
           </g>
         )}
       </svg>
-      <p className="mono mt-2" style={{ fontSize: 9.5, color: "rgba(220,210,195,.7)" }}>
+      <p className="mono mt-2" style={{ fontSize: 9.5, color: "rgba(220,224,222,.7)" }}>
         {nearest ? `${nearest.min}' — ${homeLabel} ${nearest.home.toFixed(2)} · ${awayLabel} ${nearest.away.toFixed(2)}` : "drag to scrub · click a V-marker to jump to that card"}
       </p>
     </div>

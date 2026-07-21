@@ -107,40 +107,56 @@ export default function Hero() {
     let ballX = 0, ballY = 0, ballA = 0;
     let raf: number;
 
+    // Match the canvas backing-store resolution to its real on-screen size ×
+    // devicePixelRatio, then scale the context so all existing draw code keeps
+    // using the 680×415 logical coordinate space unchanged.
+    function configureCanvasResolution() {
+      const rect = canvas!.getBoundingClientRect();
+      if (rect.width === 0 || rect.height === 0) return;
+      const dpr = window.devicePixelRatio || 1;
+      canvas!.width = Math.round(rect.width * dpr);
+      canvas!.height = Math.round(rect.height * dpr);
+      canvas!.style.width = rect.width + "px";
+      canvas!.style.height = rect.height + "px";
+      ctx!.setTransform(1, 0, 0, 1, 0, 0);
+      ctx!.scale((rect.width * dpr) / W, (rect.height * dpr) / H);
+    }
+
     function drawPitch() {
       ctx!.clearRect(0, 0, W, H);
-      ctx!.fillStyle = "#060e08"; ctx!.fillRect(0, 0, W, H);
-      for (let i = 0; i < 5; i++) { ctx!.fillStyle = "rgba(11,22,9,.36)"; ctx!.fillRect(66 + i * 104, 16, 52, H - 32); }
-      ctx!.strokeStyle = "rgba(255,255,255,.042)"; ctx!.lineWidth = 0.5; ctx!.setLineDash([]);
-      for (let x = 60; x <= 620; x += 70) { ctx!.beginPath(); ctx!.moveTo(x, 16); ctx!.lineTo(x, H - 16); ctx!.stroke(); }
-      for (let y = 18; y <= H - 18; y += 65) { ctx!.beginPath(); ctx!.moveTo(60, y); ctx!.lineTo(620, y); ctx!.stroke(); }
-      ctx!.strokeStyle = "rgba(72,132,58,.55)"; ctx!.lineWidth = 1;
-      ctx!.strokeRect(60, 16, 560, H - 32);
-      ctx!.beginPath(); ctx!.moveTo(340, 16); ctx!.lineTo(340, H - 16); ctx!.stroke();
+      ctx!.fillStyle = "#ffffff"; ctx!.fillRect(0, 0, W, H);
+      // texture bleeds edge-to-edge (0..W, 0..H) — no inset margin, no framing box
+      for (let i = 0; i < 8; i++) { ctx!.fillStyle = "rgba(51,51,47,.035)"; ctx!.fillRect(i * (W / 8), 0, W / 16, H); }
+      ctx!.strokeStyle = "rgba(20,24,26,.05)"; ctx!.lineWidth = 0.5; ctx!.setLineDash([]);
+      for (let x = 0; x <= W; x += 68) { ctx!.beginPath(); ctx!.moveTo(x, 0); ctx!.lineTo(x, H); ctx!.stroke(); }
+      for (let y = 0; y <= H; y += 65) { ctx!.beginPath(); ctx!.moveTo(0, y); ctx!.lineTo(W, y); ctx!.stroke(); }
+      // no outer perimeter stroke — pitch reads as continuous surface, not a boxed frame
+      ctx!.strokeStyle = "rgba(51,51,47,.30)"; ctx!.lineWidth = 1;
+      ctx!.beginPath(); ctx!.moveTo(340, 0); ctx!.lineTo(340, H); ctx!.stroke();
       ctx!.beginPath(); ctx!.arc(340, H / 2, 50, 0, Math.PI * 2); ctx!.stroke();
-      ctx!.beginPath(); ctx!.arc(340, H / 2, 2.5, 0, Math.PI * 2); ctx!.fillStyle = "rgba(72,132,58,.55)"; ctx!.fill();
+      ctx!.beginPath(); ctx!.arc(340, H / 2, 2.5, 0, Math.PI * 2); ctx!.fillStyle = "rgba(51,51,47,.30)"; ctx!.fill();
       ctx!.strokeRect(60, 108, 116, H - 216); ctx!.strokeRect(504, 108, 116, H - 216);
       ctx!.strokeRect(60, 155, 46, H - 310); ctx!.strokeRect(574, 155, 46, H - 310);
       ctx!.lineWidth = 0.8;
       ctx!.beginPath(); ctx!.arc(126, H / 2, 2.5, 0, Math.PI * 2); ctx!.fill();
       ctx!.beginPath(); ctx!.arc(554, H / 2, 2.5, 0, Math.PI * 2); ctx!.fill();
-      ctx!.font = "7px monospace"; ctx!.fillStyle = "rgba(255,255,255,.1)";
-      ctx!.textAlign = "left"; ctx!.fillText("A1", 64, 26); ctx!.fillText("A8", 64, H - 16);
+      ctx!.font = "7px monospace"; ctx!.fillStyle = "rgba(20,24,26,.14)";
+      ctx!.textAlign = "left"; ctx!.fillText("A1", 12, 16); ctx!.fillText("A8", 12, H - 8);
     }
 
     function drawNode(x: number, y: number, isOur: boolean, r: number, ringA: number) {
       const c = isOur
-        ? { fi: "rgba(34,86,28,.86)", st: "rgba(86,196,70,.7)", gl: "rgba(60,185,50,.2)" }
-        : { fi: "rgba(108,30,30,.9)", st: "rgba(218,75,62,.8)", gl: "rgba(205,60,50,.16)" };
+        ? { fi: "rgba(51,51,47,.92)", st: "rgba(23,21,18,.9)", gl: "rgba(51,51,47,.18)" }
+        : { fi: "rgba(122,52,66,.82)", st: "rgba(88,34,44,.92)", gl: "rgba(122,52,66,.16)" };
       ctx!.beginPath(); ctx!.arc(x, y, r + 6, 0, Math.PI * 2); ctx!.fillStyle = c.gl; ctx!.fill();
       ctx!.beginPath(); ctx!.arc(x, y, r, 0, Math.PI * 2); ctx!.fillStyle = c.fi; ctx!.fill();
-      ctx!.beginPath(); ctx!.arc(x - r * 0.24, y - r * 0.26, r * 0.36, 0, Math.PI * 2); ctx!.fillStyle = "rgba(255,255,255,.14)"; ctx!.fill();
+      ctx!.beginPath(); ctx!.arc(x - r * 0.24, y - r * 0.26, r * 0.36, 0, Math.PI * 2); ctx!.fillStyle = "rgba(255,255,255,.20)"; ctx!.fill();
       ctx!.beginPath(); ctx!.arc(x, y, r, 0, Math.PI * 2); ctx!.strokeStyle = c.st; ctx!.lineWidth = 0.95; ctx!.stroke();
       if (ringA > 0.01) {
         const p = 0.55 + 0.45 * Math.abs(Math.sin(fr * 0.13));
         ctx!.beginPath(); ctx!.arc(x, y, r + 7 + p * 4, 0, Math.PI * 2);
-        ctx!.strokeStyle = `rgba(127,255,106,${ringA * 0.65 * p})`; ctx!.lineWidth = 1.1; ctx!.stroke();
-        ctx!.save(); ctx!.globalAlpha = ringA * 0.35; ctx!.strokeStyle = "rgba(127,255,106,1)"; ctx!.lineWidth = 0.5; ctx!.setLineDash([2, 3]);
+        ctx!.strokeStyle = `rgba(51,51,47,${ringA * 0.65 * p})`; ctx!.lineWidth = 1.1; ctx!.stroke();
+        ctx!.save(); ctx!.globalAlpha = ringA * 0.35; ctx!.strokeStyle = "rgba(51,51,47,1)"; ctx!.lineWidth = 0.5; ctx!.setLineDash([2, 3]);
         ([[x - r - 10, y, x - r - 2, y], [x + r + 2, y, x + r + 10, y], [x, y - r - 10, x, y - r - 2], [x, y + r + 2, x, y + r + 10]] as [number,number,number,number][])
           .forEach(([x1, y1, x2, y2]) => { ctx!.beginPath(); ctx!.moveTo(x1, y1); ctx!.lineTo(x2, y2); ctx!.stroke(); });
         ctx!.setLineDash([]); ctx!.restore();
@@ -152,7 +168,7 @@ export default function Hero() {
       ctx!.save(); ctx!.globalAlpha = a;
       ctx!.font = "bold 8px monospace";
       const tw = ctx!.measureText(txt).width, pw = tw + 14, ph2 = 14, px = x - pw / 2, py = y - 26;
-      ctx!.fillStyle = "rgba(4,12,6,.92)"; rr(ctx!, px, py, pw, ph2, 4); ctx!.fill();
+      ctx!.fillStyle = "rgba(20,24,26,.92)"; rr(ctx!, px, py, pw, ph2, 4); ctx!.fill();
       ctx!.strokeStyle = col; ctx!.lineWidth = 0.6; rr(ctx!, px, py, pw, ph2, 4); ctx!.stroke();
       ctx!.fillStyle = col; ctx!.textAlign = "center"; ctx!.fillText(txt, x, py + ph2 - 3.5);
       ctx!.textAlign = "left"; ctx!.restore();
@@ -187,7 +203,7 @@ export default function Hero() {
     function mutTrail(a: number) {
       if (a < 0.01) return;
       ctx!.save(); ctx!.globalAlpha = a * 0.45;
-      ctx!.strokeStyle = "rgba(127,255,106,.8)"; ctx!.lineWidth = 0.9; ctx!.setLineDash([3, 5]);
+      ctx!.strokeStyle = "rgba(51,51,47,.8)"; ctx!.lineWidth = 0.9; ctx!.setLineDash([3, 5]);
       ctx!.beginPath(); ctx!.moveTo(438, 161); ctx!.lineTo(390, 210); ctx!.stroke();
       ctx!.setLineDash([]); ctx!.restore();
     }
@@ -195,12 +211,12 @@ export default function Hero() {
     function gapZone(a: number) {
       if (a < 0.01) return;
       ctx!.save();
-      ctx!.globalAlpha = a * 0.1; ctx!.fillStyle = "#7fff6a";
+      ctx!.globalAlpha = a * 0.1; ctx!.fillStyle = "#33332f";
       ctx!.beginPath(); ctx!.ellipse(GAP.cx, GAP.cy, GAP.rx, GAP.ry, GAP.angle, 0, Math.PI * 2); ctx!.fill();
-      ctx!.globalAlpha = a * 0.48; ctx!.strokeStyle = "rgba(127,255,106,.6)"; ctx!.lineWidth = 0.9; ctx!.setLineDash([3, 4]);
+      ctx!.globalAlpha = a * 0.48; ctx!.strokeStyle = "rgba(51,51,47,.6)"; ctx!.lineWidth = 0.9; ctx!.setLineDash([3, 4]);
       ctx!.beginPath(); ctx!.ellipse(GAP.cx, GAP.cy, GAP.rx, GAP.ry, GAP.angle, 0, Math.PI * 2); ctx!.stroke();
       ctx!.setLineDash([]);
-      ctx!.globalAlpha = a * 0.75; ctx!.fillStyle = "rgba(127,255,106,.82)";
+      ctx!.globalAlpha = a * 0.85; ctx!.fillStyle = "rgba(23,21,18,.9)";
       ctx!.font = "7px monospace"; ctx!.textAlign = "center"; ctx!.fillText("GAP", GAP.cx, GAP.cy + 3);
       ctx!.textAlign = "left"; ctx!.restore();
     }
@@ -208,12 +224,12 @@ export default function Hero() {
     function conceptPill(l1: string, l2: string, a: number) {
       if (a < 0.01) return;
       ctx!.save(); ctx!.globalAlpha = a;
-      const cx = 340, cy = H - 64, pw = 248, ph2 = 38;
-      ctx!.fillStyle = "rgba(8,18,10,.82)"; rr(ctx!, cx - pw / 2, cy - ph2 / 2, pw, ph2, 8); ctx!.fill();
-      ctx!.strokeStyle = "rgba(90,160,80,.3)"; ctx!.lineWidth = 0.6; rr(ctx!, cx - pw / 2, cy - ph2 / 2, pw, ph2, 8); ctx!.stroke();
+      const cx = 340, cy = 48, pw = 300, ph2 = 40;
+      ctx!.fillStyle = "rgba(20,24,26,.90)"; rr(ctx!, cx - pw / 2, cy - ph2 / 2, pw, ph2, 8); ctx!.fill();
+      ctx!.strokeStyle = "rgba(255,255,255,.22)"; ctx!.lineWidth = 0.6; rr(ctx!, cx - pw / 2, cy - ph2 / 2, pw, ph2, 8); ctx!.stroke();
       ctx!.textAlign = "center";
-      ctx!.font = "10px monospace"; ctx!.fillStyle = "rgba(127,255,106,.92)"; ctx!.fillText(l1, cx, cy - 4);
-      ctx!.font = "9px monospace"; ctx!.fillStyle = "rgba(160,210,155,.75)"; ctx!.fillText(l2, cx, cy + 12);
+      ctx!.font = "10px monospace"; ctx!.fillStyle = "rgba(255,255,255,.94)"; ctx!.fillText(l1, cx, cy - 4);
+      ctx!.font = "9px monospace"; ctx!.fillStyle = "rgba(255,255,255,.62)"; ctx!.fillText(l2, cx, cy + 12);
       ctx!.textAlign = "left"; ctx!.restore();
     }
 
@@ -251,15 +267,15 @@ export default function Hero() {
       // Formation labels on SETUP + ADVANCE
       if (p.id === "SETUP" || p.id === "ADVANCE") {
         const la = p.id === "SETUP" ? cl(tk / 22, 0, 1) : cl(1 - (tk / p.dur * 0.85), 0, 1);
-        formLabel(280, 34, "3-1-4-2", la, "rgba(86,196,70,.62)");
-        formLabel(480, 34, "4-4-2", la, "rgba(218,75,62,.62)");
-        formLabel(490, 46, "MID-BLOCK", la, "rgba(218,75,62,.42)");
+        formLabel(280, 34, "3-1-4-2", la, "rgba(51,51,47,.65)");
+        formLabel(480, 34, "4-4-2", la, "rgba(122,52,66,.62)");
+        formLabel(490, 46, "MID-BLOCK", la, "rgba(122,52,66,.42)");
       }
 
       oppN.forEach((n, i) => drawNode(n.x, n.y, false, i === 0 ? 11 : 8, 0));
 
       if (p.id === "PENETRATE") {
-        solidArr(438, 253, 514, 207, cl(tk / 20, 0, 1), "rgba(127,255,106,.88)");
+        solidArr(438, 253, 514, 207, cl(tk / 20, 0, 1), "rgba(23,21,18,.92)");
       }
 
       ourN.forEach((n, i) => {
@@ -268,8 +284,8 @@ export default function Hero() {
         drawNode(n.x, n.y, true, i === 0 ? 11 : 8, hl);
       });
 
-      if (p.id === "MUTATION") playerTag(ourN[9].x, ourN[9].y, "MUTATION", cl((tk - 38) / 24, 0, 1), "rgba(127,255,106,.92)");
-      if (p.id === "VARIABLE") playerTag(ourN[9].x, ourN[9].y, "VARIABLE", cl((tk - 6) / 20, 0, 1), "rgba(127,255,106,.92)");
+      if (p.id === "MUTATION") playerTag(ourN[9].x, ourN[9].y, "MUTATION", cl((tk - 38) / 24, 0, 1), "rgba(255,255,255,.94)");
+      if (p.id === "VARIABLE") playerTag(ourN[9].x, ourN[9].y, "VARIABLE", cl((tk - 6) / 20, 0, 1), "rgba(255,255,255,.94)");
 
       if (p.id === "VARIABLE") {
         ballX = ourN[9].x + 9; ballY = ourN[9].y - 5; ballA = cl((tk - 16) / 22, 0, 1);
@@ -280,16 +296,16 @@ export default function Hero() {
       } else { ballA = 0; }
       if (ballA > 0.01) {
         ctx!.globalAlpha = gA * ballA;
-        ctx!.beginPath(); ctx!.arc(ballX, ballY, 4, 0, Math.PI * 2); ctx!.fillStyle = "rgba(255,255,240,.95)"; ctx!.fill();
-        ctx!.beginPath(); ctx!.arc(ballX, ballY, 8, 0, Math.PI * 2); ctx!.fillStyle = "rgba(255,255,200,.18)"; ctx!.fill();
+        ctx!.beginPath(); ctx!.arc(ballX, ballY, 4, 0, Math.PI * 2); ctx!.fillStyle = "rgba(20,24,26,.88)"; ctx!.fill();
+        ctx!.beginPath(); ctx!.arc(ballX, ballY, 8, 0, Math.PI * 2); ctx!.fillStyle = "rgba(20,24,26,.14)"; ctx!.fill();
       }
 
       if (p.id === "VARIABLE") {
         const st = ourN[9], dm = ourN[4];
         const aA = cl((tk - 30) / 20, 0, 1), aB = cl((tk - 54) / 20, 0, 1), aC = cl((tk - 78) / 20, 0, 1);
-        dashedArr(st.x, st.y, dm.x + 8, dm.y, "A", aA, "rgba(155,178,255,.78)");
-        dashedArr(st.x, st.y, st.x + 44, st.y - 24, "B", aB, "rgba(155,178,255,.78)");
-        dashedArr(st.x, st.y, ourN[10].x + 4, ourN[10].y - 16, "C", aC, "rgba(127,255,106,.96)");
+        dashedArr(st.x, st.y, dm.x + 8, dm.y, "A", aA, "rgba(20,24,26,.36)");
+        dashedArr(st.x, st.y, st.x + 44, st.y - 24, "B", aB, "rgba(20,24,26,.36)");
+        dashedArr(st.x, st.y, ourN[10].x + 4, ourN[10].y - 16, "C", aC, "rgba(23,21,18,.98)");
       }
       ctx!.restore();
 
@@ -305,18 +321,29 @@ export default function Hero() {
       const hi = p.id === "PENETRATE" && cXt > 0.4;
       if (hudLblRef.current) {
         hudLblRef.current.textContent = labels[p.id] ?? "";
-        hudLblRef.current.style.color = hi ? "rgba(127,255,106,.92)" : "rgba(140,200,130,.58)";
+        hudLblRef.current.style.color = hi ? "rgba(23,21,18,.95)" : "rgba(20,24,26,.56)";
       }
       if (hudFillRef.current) {
         hudFillRef.current.style.width = (cXt * 100).toFixed(0) + "%";
-        hudFillRef.current.style.background = hi ? "#7fff6a" : "#4a9a42";
+        hudFillRef.current.style.background = hi ? "#33332f" : "#232321";
       }
       if (hudValRef.current) hudValRef.current.textContent = cXt > 0.065 ? "xT " + cXt.toFixed(2) : "xT —";
 
       raf = requestAnimationFrame(loop);
     }
+    configureCanvasResolution();
+
+    let ro: ResizeObserver | undefined;
+    if (typeof ResizeObserver !== "undefined") {
+      ro = new ResizeObserver(() => configureCanvasResolution());
+      ro.observe(canvas);
+    }
+
     loop();
-    return () => cancelAnimationFrame(raf);
+    return () => {
+      cancelAnimationFrame(raf);
+      ro?.disconnect();
+    };
   }, []);
 
   return (
@@ -327,20 +354,20 @@ export default function Hero() {
           ref={canvasRef}
           width={680}
           height={415}
-          className="w-full max-w-[1400px]"
-          style={{ display: "block", opacity: 0.92, maskImage: "radial-gradient(130% 120% at 50% 42%, #000 55%, transparent 100%)", WebkitMaskImage: "radial-gradient(130% 120% at 50% 42%, #000 55%, transparent 100%)" }}
+          className="w-full h-full"
+          style={{ display: "block", opacity: 0.96 }}
         />
       </div>
-      <div className="stage-vignette" />
 
-      {/* copy overlay — strong scrim so the headline always reads over the animation */}
+      {/* copy overlay — light scrim, just enough for legibility; the pitch and
+          players stay visible underneath instead of being blocked out */}
       <div
         className="absolute bottom-0 left-0 right-0 flex flex-wrap justify-between items-end gap-8 px-6 md:px-10 pb-12 md:pb-16 pt-56"
-        style={{ background: "linear-gradient(to top, var(--stage) 0%, var(--stage) 26%, rgba(6,9,11,.97) 46%, rgba(6,9,11,.78) 66%, rgba(6,9,11,.32) 84%, transparent 100%)" }}
+        style={{ background: "linear-gradient(to top, var(--stage) 0%, var(--stage) 10%, rgba(255,255,255,.55) 24%, rgba(255,255,255,.2) 42%, transparent 62%)" }}
       >
         <div className="max-w-4xl">
           <div className="mono t-eyebrow kicker mb-5" style={{ color: "var(--green-mid)" }}>Jin&rsquo;s football philosophy</div>
-          <h1 className="display mb-5 t-hero" style={{ color: "#ffffff", textShadow: "0 2px 40px rgba(0,0,0,0.7)" }}>
+          <h1 className="display mb-5 t-hero" style={{ color: "var(--ink)" }}>
             <span style={{ color: "var(--green-bright)" }}>Variation</span> Theory
           </h1>
           <p className="mb-2" style={{ color: "var(--ink-2)", fontSize: "clamp(17px,2.1vw,26px)", lineHeight: 1.3, fontWeight: 500 }}>
@@ -350,12 +377,17 @@ export default function Hero() {
 
         <div className="glass rounded-2xl px-6 py-4 text-right min-w-[190px]">
           <div ref={hudLblRef} className="mono mb-2.5 transition-colors" style={{ fontSize: 11, letterSpacing: "0.14em", color: "var(--ink-3)" }}>3-1-4-2 vs 4-4-2</div>
-          <div className="w-full mb-2.5" style={{ height: "2px", background: "rgba(255,255,255,.09)", borderRadius: 2, overflow: "hidden" }}>
+          <div className="w-full mb-2.5" style={{ height: "2px", background: "rgba(20,24,26,.10)", borderRadius: 2, overflow: "hidden" }}>
             <div ref={hudFillRef} style={{ height: "100%", width: "6%", background: "var(--green-mid)", borderRadius: 2, transition: "width .5s var(--ease-out), background .4s" }} />
           </div>
           <span ref={hudValRef} className="mono" style={{ fontSize: 12, color: "var(--green-bright)" }}>xT —</span>
         </div>
       </div>
+
+      {/* smooth colour handoff — fades from paper into the next section's
+          solid accent band so the transition reads as one continuous scroll
+          instead of a hard cut */}
+      <div aria-hidden="true" style={{ height: 240, background: "linear-gradient(to bottom, var(--stage) 0%, var(--signal) 100%)" }} />
     </section>
   );
 }

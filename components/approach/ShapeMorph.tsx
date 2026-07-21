@@ -36,9 +36,9 @@ export default function ShapeMorph({ shapes, opponentNodes, width = 620, height 
             style={{
               fontSize: 9.5,
               letterSpacing: ".1em",
-              color: idx === i ? "rgba(185,205,255,.96)" : "rgba(255,255,255,.45)",
-              background: idx === i ? "rgba(80,115,255,.2)" : "transparent",
-              border: idx === i ? "0.5px solid rgba(120,155,255,.4)" : "0.5px solid transparent",
+              color: idx === i ? "rgba(255,255,255,.96)" : "rgba(255,255,255,.45)",
+              background: idx === i ? "rgba(51,51,47,.22)" : "transparent",
+              border: idx === i ? "0.5px solid rgba(51,51,47,.45)" : "0.5px solid transparent",
             }}
           >
             {s.label}

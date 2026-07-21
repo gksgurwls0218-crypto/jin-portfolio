@@ -1,49 +1,63 @@
 @import "tailwindcss";
 
 /* ============================================================
-   jin-portfolio — DARK CINEMATIC design system
-   Reference mood: tympanus 3D Carousel (near-black stage,
-   single glowing focal subject, depth via light + blur).
-   One signature colour: pitch/signal green.
+   jin-portfolio — CLEAN / MODERN design system
+   Reference mood: Opta, FotMob, Sofascore — white base, one
+   signature colour, restrained type colour (ink + one accent).
+   Emphasis is done with weight, size and underline, not with
+   extra hues. Two "bands" (paper / signal) let sections signal
+   a change of gear without introducing a third colour.
    ============================================================ */
 
 :root {
-  /* ── Stage (near-black, faint green undertone) ── */
-  --stage:        #06090b;   /* page base */
-  --stage-2:      #090d0f;   /* raised sections */
-  --stage-3:      #0d1214;   /* cards / surfaces */
-  --stage-glass:  rgba(18, 26, 22, 0.5);
+  /* ── Stage — the "paper" band (default: white/near-white) ── */
+  --stage:        #ffffff;   /* page base */
+  --stage-2:      #f5f7f6;   /* raised sections */
+  --stage-3:      #ffffff;   /* cards / surfaces (bordered, not tinted) */
+  --stage-glass:  rgba(255, 255, 255, 0.78);
 
-  /* ── Signature green ── */
-  --green:        #2f6b34;
-  --green-mid:    #4aa64a;
-  --green-bright: #7dff6a;   /* focal glow / signal */
-  --green-soft:   rgba(125, 255, 106, 0.14);
-  --green-line:   rgba(125, 255, 106, 0.28);
+  /* ── Signature accent — charcoal monotone, several weights only.
+     (Var names kept as --green* for continuity across the codebase —
+     the values below are warm charcoal, not green.) ── */
+  --green:        #171512;   /* pressed / deepest — solid band bg */
+  --green-mid:    #232321;   /* secondary use — kickers, small labels */
+  --green-bright: #33332f;   /* the one pop colour — links, CTAs, focal marks */
+  --green-soft:   rgba(51, 51, 47, 0.08);
+  --green-line:   rgba(51, 51, 47, 0.30);
 
-  /* ── Ink (warm off-white on dark) — kept legible, no faint greys ── */
-  --ink:          #f3f1ea;
-  --ink-2:        rgba(231, 237, 230, 0.88);
-  --ink-3:        rgba(205, 216, 207, 0.74);
-  --ink-4:        rgba(184, 198, 187, 0.60);
+  /* ── Signal — the inverted band (accent-solid, paper-on-top) ── */
+  --signal:       var(--green);
+  --signal-2:     #0f0d0b;
+  --signal-ink:   #ffffff;
+  --signal-ink-2: rgba(255, 255, 255, 0.82);
+  --signal-ink-3: rgba(255, 255, 255, 0.60);
+  --signal-edge:  rgba(255, 255, 255, 0.16);
+
+  /* ── Ink — near-black text, one hue at varying weight only ── */
+  --ink:          #14181a;
+  --ink-2:        rgba(20, 24, 26, 0.76);
+  --ink-3:        rgba(20, 24, 26, 0.56);
+  --ink-4:        rgba(20, 24, 26, 0.40);
 
   /* ── Lines / edges ── */
-  --edge:         rgba(180, 220, 190, 0.09);
-  --edge-2:       rgba(180, 220, 190, 0.16);
+  --edge:         rgba(20, 24, 26, 0.09);
+  --edge-2:       rgba(20, 24, 26, 0.16);
 
-  /* ── Light / paper (the middle "carousel" page) ── */
-  --paper:        #eef1ec;   /* off-white, faint green tint */
+  /* ── Legacy "paper" aliases — older components reference these
+     names directly; point them at the same tokens above so the
+     whole site stays on one palette instead of two. ── */
+  --paper:        var(--stage-2);
   --paper-card:   #ffffff;
-  --ink-dark:     #121814;
-  --ink-dark-2:   #4c574f;
-  --ink-dark-3:   #7d877f;
-  --accent-green: #1f7a3d;   /* darker green — reads on white */
-  --edge-dark:    rgba(18, 24, 20, 0.10);
+  --ink-dark:     var(--ink);
+  --ink-dark-2:   var(--ink-2);
+  --ink-dark-3:   var(--ink-3);
+  --accent-green: var(--green-mid);
+  --edge-dark:    var(--edge);
 
-  /* ── Depth (used by carousel + cards) ── */
-  --glow:         0 0 60px rgba(125, 255, 106, 0.10);
-  --lift:         0 30px 80px rgba(0, 0, 0, 0.6);
-  --lift-light:   0 30px 70px rgba(20, 40, 25, 0.16);
+  /* ── Depth — soft, not glowing ── */
+  --glow:         0 0 40px rgba(51, 51, 47, 0.10);
+  --lift:         0 24px 60px rgba(20, 24, 26, 0.12);
+  --lift-light:   0 16px 36px rgba(20, 24, 26, 0.08);
 
   /* ── Motion tokens ── */
   --ease-out:     cubic-bezier(0.16, 1, 0.3, 1);
@@ -104,14 +118,24 @@ body {
   border: 0.5px solid var(--edge-2);
 }
 
-/* ── Grain / vignette overlays for cinematic depth ── */
+/* ── Soft edge falloff — a hint of depth, not a cinematic vignette ── */
 .stage-vignette {
   position: absolute; inset: 0; pointer-events: none;
-  background: radial-gradient(120% 90% at 50% 0%, transparent 55%, rgba(0,0,0,0.55) 100%);
+  background: radial-gradient(120% 90% at 50% 0%, transparent 65%, rgba(20,24,26,0.05) 100%);
 }
 
 .hide-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
 .hide-scrollbar::-webkit-scrollbar { display: none; }
+
+/* ── Band pattern: hero (paper) → next section inverts to signal (solid
+   accent, paper-coloured type) so the page change registers instantly,
+   then later sections return to paper. Only two colours in play. ── */
+.band-signal {
+  background: var(--signal);
+  color: var(--signal-ink);
+}
+.band-signal .kicker { color: var(--signal-ink-2); }
+.band-signal .kicker::before { background: linear-gradient(90deg, transparent, var(--signal-edge)); }
 
 /* ── Reveal (scroll-in). JS toggles [data-shown] ── */
 .reveal {

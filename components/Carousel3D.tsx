@@ -136,11 +136,13 @@ export default function Carousel3D({
   const goTo = (i: number) => { target.current = Math.round((pos.current - i) / N) * N + i; vel.current = 0; idleT.current = 0; };
   const onClickCapture = (e: React.MouseEvent) => { if (moved.current > 6) { e.preventDefault(); e.stopPropagation(); } };
 
+  // "dark" here means the carousel sits on the solid accent ("signal") band,
+  // so controls use the inverted paper-on-accent tokens instead of ink.
   const btn = dark
-    ? { bg: "rgba(255,255,255,0.05)", border: "var(--edge-2)", color: "var(--ink-2)", activeBg: "var(--green-bright)", activeColor: "#06180a" }
+    ? { bg: "rgba(255,255,255,0.12)", border: "var(--signal-edge)", color: "var(--signal-ink)", activeBg: "var(--signal-ink)", activeColor: "var(--green)" }
     : { bg: "rgba(18,24,20,0.04)", border: "var(--edge-dark)", color: "var(--ink-dark-2)", activeBg: "var(--accent-green)", activeColor: "#ffffff" };
-  const dotColor = dark ? "var(--edge-2)" : "var(--edge-dark)";
-  const dotActive = dark ? "var(--green-bright)" : "var(--accent-green)";
+  const dotColor = dark ? "var(--signal-edge)" : "var(--edge-dark)";
+  const dotActive = dark ? "var(--signal-ink)" : "var(--accent-green)";
 
   // ── reduced-motion fallback: simple stacked cards ──
   if (reduced) {
@@ -179,11 +181,11 @@ export default function Carousel3D({
       </div>
 
       {/* controls */}
-      <div className="flex items-center justify-center gap-5 mt-8">
+      <div className="flex items-center justify-center gap-7 mt-9">
         <button
           aria-label="previous" onClick={() => step(-1)}
           className="mono flex items-center justify-center rounded-full transition-all duration-200"
-          style={{ width: 46, height: 46, background: btn.bg, border: `0.5px solid ${btn.border}`, color: btn.color, fontSize: 17, cursor: "pointer" }}
+          style={{ width: 64, height: 64, background: btn.bg, border: `0.5px solid ${btn.border}`, color: btn.color, fontSize: 26, cursor: "pointer" }}
         >‹</button>
         <div className="flex items-center gap-2">
           {items.map((_, i) => (
@@ -195,7 +197,7 @@ export default function Carousel3D({
         <button
           aria-label="next" onClick={() => step(1)}
           className="mono flex items-center justify-center rounded-full transition-all duration-200"
-          style={{ width: 46, height: 46, background: btn.activeBg, border: `0.5px solid ${btn.activeBg}`, color: btn.activeColor, fontSize: 17, cursor: "pointer" }}
+          style={{ width: 64, height: 64, background: btn.activeBg, border: `0.5px solid ${btn.activeBg}`, color: btn.activeColor, fontSize: 26, cursor: "pointer" }}
         >›</button>
       </div>
     </div>

@@ -12,7 +12,7 @@ export default function MatchAnalysisPage() {
       eyebrow="02 / Match Analysis & Essays"
       title="Theory applied,"
       accent="and written down."
-      intro="Two ways in - the match analysis under Variation Theory, and essays fully written with Variation Theory ideas."
+      intro="Two ways in - the match analysis under Variation Theory, new tactical terms defined myself to explain Variation Theory"
       doors={[
         {
           href: "/match-analysis/matches",
@@ -23,8 +23,8 @@ export default function MatchAnalysisPage() {
         {
           href: "/match-analysis/essays",
           n: "02",
-          label: "Essays",
-          title: "The ideas, written out.",
+          label: "New concepts",
+          title: "Tactical terms I made",
         },
       ]}
     />

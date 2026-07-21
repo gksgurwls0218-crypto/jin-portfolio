@@ -30,20 +30,20 @@ export default function FourPhaseRing() {
           onMouseLeave={() => setHovered(null)}
           className={`absolute ${p.pos} rounded-md px-3 py-2 text-center cursor-default z-10 transition-colors duration-150`}
           style={{
-            background: hovered === p.id ? "rgba(80,115,255,.14)" : "rgba(255,255,255,.04)",
-            border: hovered === p.id ? "0.5px solid rgba(120,155,255,.55)" : "0.5px solid rgba(120,150,255,.28)",
+            background: hovered === p.id ? "rgba(51,51,47,.16)" : "var(--stage-2)",
+            border: hovered === p.id ? "0.5px solid rgba(51,51,47,.55)" : "0.5px solid rgba(51,51,47,.28)",
             minWidth: 108,
           }}
         >
-          <p className="mono" style={{ fontSize: 10, color: "rgba(200,215,255,.95)", letterSpacing: ".08em" }}>{p.name}</p>
-          <p className="mono mt-0.5" style={{ fontSize: 8.5, color: "rgba(150,175,255,.6)" }}>{p.sub}</p>
+          <p className="mono" style={{ fontSize: 10, color: "var(--green)", letterSpacing: ".08em" }}>{p.name}</p>
+          <p className="mono mt-0.5" style={{ fontSize: 8.5, color: "rgba(51,51,47,.65)" }}>{p.sub}</p>
         </div>
       ))}
 
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full px-4 py-3 text-center"
-        style={{ background: "rgba(80,115,255,.1)", border: "0.5px solid rgba(120,150,255,.3)" }}>
-        <p className="mono" style={{ fontSize: 9, color: "rgba(165,178,255,.9)" }}>3-2 / 3-1</p>
-        <p className="mono" style={{ fontSize: 7.5, color: "rgba(150,175,255,.55)" }}>core</p>
+        style={{ background: "rgba(51,51,47,.12)", border: "0.5px solid rgba(51,51,47,.3)" }}>
+        <p className="mono" style={{ fontSize: 9, color: "var(--green)" }}>3-2 / 3-1</p>
+        <p className="mono" style={{ fontSize: 7.5, color: "rgba(51,51,47,.6)" }}>core</p>
       </div>
 
       <svg viewBox="0 0 320 320" className="absolute inset-0 pointer-events-none" style={{ width: "100%", height: "100%" }}>
@@ -54,7 +54,7 @@ export default function FourPhaseRing() {
               key={i}
               d={arc.path}
               fill="none"
-              stroke="rgba(127,255,106,.85)"
+              stroke="rgba(35,35,33,.85)"
               strokeWidth={1.4}
               style={{ opacity: active ? 1 : 0.25, transition: "opacity 200ms ease" }}
             />

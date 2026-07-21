@@ -3,8 +3,8 @@ import KpiIndex, { type IndexItem } from "@/components/kpi/KpiIndex";
 import { ESSAYS } from "@/lib/essays";
 
 export const metadata: Metadata = {
-  title: "Essays | Jin",
-  description: "Original tactical essays — the concepts behind Variation Theory, argued in long form.",
+  title: "New concepts | Jin",
+  description: "New concepts to prove Variation Theory is applicable and reliable — a lab to make new things, name the spaces, and evolve football.",
 };
 
 const items: IndexItem[] = ESSAYS.map((e) => ({
@@ -19,10 +19,10 @@ export default function EssaysIndexPage() {
     <KpiIndex
       backHref="/match-analysis"
       backLabel="Match Analysis & Essays"
-      eyebrow="02 / Essays"
-      title="The ideas,"
-      accent="written out."
-      intro="Original tactical writing — the concepts the framework is built on, each argued in full."
+      eyebrow="02 / New concepts"
+      title="Tactical terms"
+      accent="I made"
+      intro="New concepts to prove Variation Theory is applicable and reliable. A lab to make new things, theories, name the spaces, and evolve football."
       items={items}
     />
   );

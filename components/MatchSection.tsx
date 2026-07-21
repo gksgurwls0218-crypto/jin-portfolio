@@ -102,7 +102,7 @@ function MatchCardInner({ m, focal }: { m: Match; focal: boolean }) {
           <span
             key={t}
             className="mono px-2.5 py-1 rounded-full"
-            style={{ fontSize: 10, background: "rgba(255,255,255,0.04)", color: "var(--ink-2)", border: "0.5px solid var(--edge)" }}
+            style={{ fontSize: 10, background: "var(--stage-2)", color: "var(--ink-2)", border: "0.5px solid var(--edge)" }}
           >
             {t}
           </span>
@@ -115,7 +115,7 @@ function MatchCardInner({ m, focal }: { m: Match; focal: boolean }) {
           className="mono inline-flex items-center gap-1.5 px-4 py-2 rounded-full transition-all duration-300"
           style={{
             fontSize: 11,
-            color: focal ? "#06180a" : "var(--green-bright)",
+            color: focal ? "var(--ink)" : "var(--green-bright)",
             background: focal ? "var(--green-bright)" : "var(--green-soft)",
             border: "0.5px solid var(--green-line)",
           }}
@@ -389,7 +389,7 @@ export default function MatchSection() {
                 aria-label="next"
                 onClick={() => step(1)}
                 className="mono flex items-center justify-center rounded-full transition-all duration-200"
-                style={{ width: 44, height: 44, background: "var(--green-bright)", border: "0.5px solid var(--green-bright)", color: "#06180a", fontSize: 16, cursor: "pointer" }}
+                style={{ width: 44, height: 44, background: "var(--green-bright)", border: "0.5px solid var(--green-bright)", color: "var(--ink)", fontSize: 16, cursor: "pointer" }}
               >›</button>
             </div>
           </div>

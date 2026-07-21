@@ -48,21 +48,23 @@ const ROWS: { metric: string; cells: { level: Level; note: string }[] }[] = [
   },
 ];
 
-const LEVEL_STYLE: Record<Level, { bg: string; border: string; color: string; label: string }> = {
-  high: { bg: "rgba(127,255,106,.1)", border: "rgba(127,255,106,.4)", color: "rgba(160,230,150,.95)", label: "HIGH" },
-  low: { bg: "rgba(232,83,106,.08)", border: "rgba(232,83,106,.3)", color: "rgba(230,150,155,.9)", label: "LOW" },
-  mixed: { bg: "rgba(255,155,70,.08)", border: "rgba(255,155,70,.3)", color: "rgba(230,190,150,.9)", label: "MIXED" },
+// Differentiated by weight, not hue: HIGH is the bold/bright accent read, LOW is
+// pushed to a quiet neutral, MIXED sits in between — one accent colour, three weights.
+const LEVEL_STYLE: Record<Level, { bg: string; border: string; color: string; label: string; weight: number }> = {
+  high: { bg: "var(--green-soft)", border: "rgba(51,51,47,.45)", color: "var(--green)", label: "HIGH", weight: 700 },
+  low: { bg: "transparent", border: "var(--edge-2)", color: "var(--ink-3)", label: "LOW", weight: 400 },
+  mixed: { bg: "rgba(51,51,47,.05)", border: "var(--green-line)", color: "rgba(35,35,33,.75)", label: "MIXED", weight: 500 },
 };
 
 export default function KpiFingerprint() {
   const [col, setCol] = useState<number | null>(null);
 
   return (
-    <div className="rounded-lg overflow-x-auto" style={{ background: "rgba(255,255,255,.02)", border: "0.5px solid rgba(120,150,255,.2)" }}>
+    <div className="rounded-lg overflow-x-auto" style={{ background: "var(--stage-2)", border: "0.5px solid var(--green-line)" }}>
       <table className="w-full" style={{ borderCollapse: "collapse", fontSize: 11, minWidth: 560 }}>
         <thead>
           <tr>
-            <th className="text-left" style={{ padding: "10px 12px", fontSize: 9, letterSpacing: ".1em", color: "rgba(255,255,255,.45)", borderBottom: "0.5px solid rgba(255,255,255,.14)" }}>METRIC</th>
+            <th className="text-left" style={{ padding: "10px 12px", fontSize: 9, letterSpacing: ".1em", color: "var(--ink-3)", borderBottom: "0.5px solid var(--edge)" }}>METRIC</th>
             {COLUMNS.map((c, i) => (
               <th
                 key={c}
@@ -71,9 +73,9 @@ export default function KpiFingerprint() {
                 className="text-left cursor-default"
                 style={{
                   padding: "10px 12px", fontSize: 9, letterSpacing: ".08em",
-                  color: col === i ? "rgba(200,215,255,.98)" : "rgba(255,255,255,.5)",
-                  borderBottom: "0.5px solid rgba(255,255,255,.14)",
-                  background: col === i ? "rgba(80,115,255,.08)" : "transparent",
+                  color: col === i ? "var(--green)" : "var(--ink-3)",
+                  borderBottom: "0.5px solid var(--edge)",
+                  background: col === i ? "var(--green-soft)" : "transparent",
                 }}
               >
                 {c}
@@ -84,7 +86,7 @@ export default function KpiFingerprint() {
         <tbody>
           {ROWS.map((row) => (
             <tr key={row.metric}>
-              <td style={{ padding: "10px 12px", color: "rgba(222,224,230,.85)", borderBottom: "0.5px solid rgba(255,255,255,.06)" }}>{row.metric}</td>
+              <td style={{ padding: "10px 12px", color: "var(--ink-2)", borderBottom: "0.5px solid var(--edge)" }}>{row.metric}</td>
               {row.cells.map((cell, i) => {
                 const s = LEVEL_STYLE[cell.level];
                 return (
@@ -93,9 +95,9 @@ export default function KpiFingerprint() {
                     title={cell.note}
                     onMouseEnter={() => setCol(i)}
                     onMouseLeave={() => setCol(null)}
-                    style={{ padding: "10px 12px", borderBottom: "0.5px solid rgba(255,255,255,.06)", background: col === i ? "rgba(80,115,255,.05)" : "transparent" }}
+                    style={{ padding: "10px 12px", borderBottom: "0.5px solid var(--edge)", background: col === i ? "var(--green-soft)" : "transparent" }}
                   >
-                    <span className="mono px-2 py-0.5 rounded" style={{ fontSize: 9, background: s.bg, border: `0.5px solid ${s.border}`, color: s.color }}>
+                    <span className="mono px-2 py-0.5 rounded" style={{ fontSize: 9, fontWeight: s.weight, background: s.bg, border: `0.5px solid ${s.border}`, color: s.color }}>
                       {s.label}
                     </span>
                   </td>
@@ -105,7 +107,7 @@ export default function KpiFingerprint() {
           ))}
         </tbody>
       </table>
-      <p className="mono px-3 py-2.5" style={{ fontSize: 9, color: "rgba(150,175,255,.6)" }}>hover a column or cell for the reading · sourced qualitatively from public match record, not raw event data</p>
+      <p className="mono px-3 py-2.5" style={{ fontSize: 9, color: "var(--green-mid)" }}>hover a column or cell for the reading · sourced qualitatively from public match record, not raw event data</p>
     </div>
   );
 }

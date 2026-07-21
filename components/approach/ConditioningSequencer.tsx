@@ -50,9 +50,9 @@ export default function ConditioningSequencer() {
             style={{
               fontSize: 9,
               letterSpacing: ".08em",
-              color: idx === i ? "rgba(185,205,255,.96)" : "rgba(255,255,255,.45)",
-              background: idx === i ? "rgba(80,115,255,.2)" : "transparent",
-              border: idx === i ? "0.5px solid rgba(120,155,255,.4)" : "0.5px solid transparent",
+              color: idx === i ? "rgba(255,255,255,.96)" : "rgba(255,255,255,.45)",
+              background: idx === i ? "rgba(51,51,47,.22)" : "transparent",
+              border: idx === i ? "0.5px solid rgba(51,51,47,.45)" : "0.5px solid transparent",
             }}
           >
             {s.label}
@@ -107,7 +107,7 @@ export default function ConditioningSequencer() {
         {/* route: cycles 1-3 always attack the right flank */}
         {!isShock && (
           <path d={`M ${OUR.piv1.x} ${OUR.piv1.y} Q ${OUR.wF.x - 60} ${OUR.wF.y + 10} ${OUR.wF.x} ${OUR.wF.y} T ${OUR.st.x} ${OUR.st.y}`}
-            fill="none" stroke="rgba(155,178,255,.8)" strokeWidth={1.6} strokeDasharray={isRecursion ? undefined : "5 4"} />
+            fill="none" stroke="rgba(18,161,80,.75)" strokeWidth={1.6} strokeDasharray={isRecursion ? undefined : "5 4"} />
         )}
 
         {/* shock: ball breaks left, through the vacated space */}
@@ -123,8 +123,8 @@ export default function ConditioningSequencer() {
         {/* recursion: shot-fake → key pass, small scale near the box */}
         {isRecursion && (
           <>
-            <line x1={OUR.st.x - 20} y1={OUR.st.y} x2={OUR.st.x + 30} y2={OUR.st.y - 10} stroke="rgba(255,155,70,.8)" strokeWidth={1.4} strokeDasharray="3 3" />
-            <text x={OUR.st.x + 32} y={OUR.st.y - 14} fontFamily="'JetBrains Mono',monospace" fontSize={8} fill="rgba(255,190,115,.9)">SHOT-FAKE</text>
+            <line x1={OUR.st.x - 20} y1={OUR.st.y} x2={OUR.st.x + 30} y2={OUR.st.y - 10} stroke="rgba(18,161,80,.55)" strokeWidth={1.4} strokeDasharray="3 3" />
+            <text x={OUR.st.x + 32} y={OUR.st.y - 14} fontFamily="'JetBrains Mono',monospace" fontSize={8} fill="rgba(18,161,80,.75)">SHOT-FAKE</text>
             <path d={`M ${OUR.st.x} ${OUR.st.y} Q ${OUR.st.x + 40} ${OUR.st.y + 40} ${OUR.wL.x + 60} ${OUR.wL.y}`} fill="none" stroke="rgba(127,255,106,.9)" strokeWidth={1.8} />
             <text x={OUR.st.x + 10} y={OUR.st.y + 30} fontFamily="'JetBrains Mono',monospace" fontSize={8} fill="rgba(127,255,106,.9)">KEY PASS</text>
           </>
@@ -132,11 +132,11 @@ export default function ConditioningSequencer() {
       </svg>
 
       <div className="px-3 py-2.5" style={{ borderTop: "0.5px solid rgba(72,132,58,.25)" }}>
-        <p className="mono mb-1.5" style={{ fontSize: 9, color: "rgba(150,175,255,.6)", letterSpacing: ".1em" }}>ROLLING xT</p>
+        <p className="mono mb-1.5" style={{ fontSize: 9, color: "rgba(51,51,47,.7)", letterSpacing: ".1em" }}>ROLLING xT</p>
         <svg viewBox="0 0 300 40" style={{ display: "block", width: "100%", height: 40 }}>
           <polyline
             points={STEPS.map((s, i) => `${(i / (STEPS.length - 1)) * 290 + 5},${36 - s.xt * 34}`).join(" ")}
-            fill="none" stroke="rgba(255,172,88,.85)" strokeWidth={1.6}
+            fill="none" stroke="rgba(51,51,47,.85)" strokeWidth={1.6}
           />
           {STEPS.map((s, i) => (
             <circle
@@ -144,7 +144,7 @@ export default function ConditioningSequencer() {
               cx={(i / (STEPS.length - 1)) * 290 + 5}
               cy={36 - s.xt * 34}
               r={idx === i ? 3.5 : 2}
-              fill={idx === i ? "rgba(255,215,120,.98)" : "rgba(255,172,88,.6)"}
+              fill={idx === i ? "rgba(51,51,47,.98)" : "rgba(51,51,47,.6)"}
             />
           ))}
         </svg>

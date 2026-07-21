@@ -25,7 +25,7 @@ export default function KpiLabPage() {
           href: "/kpi-lab/lab",
           n: "02",
           label: "Data & KPI Lab",
-          title: "Stepping off the track.",
+          title: "Stepping off the beaten path",
           desc: "Very new metrics to develop myself. A lab to create new metrics and show it to the world.",
         },
       ]}

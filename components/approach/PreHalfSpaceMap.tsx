@@ -50,7 +50,7 @@ export default function PreHalfSpaceMap() {
         />
         <text x={472} y={166} fontFamily="'JetBrains Mono',monospace" fontSize={8.5} fill="rgba(127,255,106,.95)">2 SECOND MOVEMENT</text>
       </svg>
-      <p className="mono px-3 py-2" style={{ fontSize: 9, color: "rgba(140,175,255,.7)", letterSpacing: ".1em" }}>
+      <p className="mono px-3 py-2" style={{ fontSize: 9, color: "rgba(51,51,47,.75)", letterSpacing: ".1em" }}>
         hover to play the second-movement sequence
       </p>
     </div>

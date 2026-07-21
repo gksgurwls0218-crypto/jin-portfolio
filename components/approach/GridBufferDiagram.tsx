@@ -17,7 +17,7 @@ function Grid({ fracture }: { fracture?: { col: number; row: number }[] }) {
       <line
         key={`v${c}`}
         x1={c * cellW} y1={0} x2={c * cellW} y2={H}
-        stroke={isFractured ? "rgba(232,83,106,.4)" : "rgba(120,150,255,.22)"}
+        stroke={isFractured ? "rgba(18,161,80,.55)" : "rgba(18,161,80,.22)"}
         strokeWidth={1}
         strokeDasharray={isFractured ? "2 5" : undefined}
         className="transition-all duration-500"
@@ -30,7 +30,7 @@ function Grid({ fracture }: { fracture?: { col: number; row: number }[] }) {
       <line
         key={`h${r}`}
         x1={0} y1={r * cellH} x2={W} y2={r * cellH}
-        stroke={isFractured ? "rgba(232,83,106,.4)" : "rgba(120,150,255,.22)"}
+        stroke={isFractured ? "rgba(18,161,80,.55)" : "rgba(18,161,80,.22)"}
         strokeWidth={1}
         strokeDasharray={isFractured ? "2 5" : undefined}
         className="transition-all duration-500"
@@ -74,7 +74,7 @@ export default function GridBufferDiagram() {
             );
           })}
         </svg>
-        <p className="mono px-3 py-2" style={{ fontSize: 9, color: "rgba(140,175,255,.7)", letterSpacing: ".1em" }}>THE STANDARD — every zone occupied</p>
+        <p className="mono px-3 py-2" style={{ fontSize: 9, color: "rgba(51,51,47,.75)", letterSpacing: ".1em" }}>THE STANDARD — every zone occupied</p>
       </div>
 
       <div className="group rounded-lg overflow-hidden" style={{ background: "#0a1207", border: "0.5px solid rgba(72,132,58,.35)" }}>
@@ -98,7 +98,7 @@ export default function GridBufferDiagram() {
           ))}
           <circle cx={attacker.x} cy={attacker.y} r={8} fill="rgba(34,86,28,.86)" stroke="rgba(86,196,70,.9)" strokeWidth={1.3} />
         </svg>
-        <p className="mono px-3 py-2" style={{ fontSize: 9, color: "rgba(140,175,255,.7)", letterSpacing: ".1em" }}>THE BUFFER — hover to see the fracture</p>
+        <p className="mono px-3 py-2" style={{ fontSize: 9, color: "rgba(51,51,47,.75)", letterSpacing: ".1em" }}>THE BUFFER — hover to see the fracture</p>
       </div>
     </div>
   );

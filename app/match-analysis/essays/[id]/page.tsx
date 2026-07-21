@@ -10,7 +10,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params;
   const e = findEssay(id);
-  return e ? { title: `${e.title} — Essay | Jin`, description: e.blurb } : {};
+  return e ? { title: `${e.title} — Tactical Term | Jin`, description: e.blurb } : {};
 }
 
 export default async function EssayDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -21,7 +21,7 @@ export default async function EssayDetailPage({ params }: { params: Promise<{ id
   return (
     <KpiDetail
       backHref="/match-analysis/essays"
-      backLabel="Essays"
+      backLabel="Tactical terms"
       kicker={`${e.category} · ${e.ko}`}
       title={e.title}
       blocks={e.blocks}

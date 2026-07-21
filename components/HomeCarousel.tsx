@@ -2,15 +2,16 @@
 import Link from "next/link";
 import Carousel3D, { type CarouselItem } from "@/components/Carousel3D";
 
-// Hardcoded light-page colours (independent of CSS custom properties, so the
-// card text is always dark and legible on the white carousel page).
+// Card colours pull from the shared token system so the cards read
+// consistently wherever they sit — including floating on the solid
+// accent "signal" band below.
 const C = {
-  card: "#ffffff",
-  ink: "#16201a",
-  ink2: "#46524a",
-  muted: "#8a938b",
-  green: "#1f7a3d",
-  edge: "rgba(18,24,20,0.10)",
+  card: "var(--stage-3)",
+  ink: "var(--ink)",
+  ink2: "var(--ink-2)",
+  muted: "var(--ink-4)",
+  green: "var(--green-mid)",
+  edge: "var(--edge)",
 };
 
 const QUESTIONS = [
@@ -31,7 +32,7 @@ function Card({ n, label, title, href, children }: { n: string; label: string; t
         boxShadow: "0 40px 90px rgba(30,50,40,0.18)",
         transition: "border-color .4s var(--ease-out), box-shadow .4s var(--ease-out)",
       }}
-      onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.borderColor = "rgba(31,122,61,0.45)"; el.style.boxShadow = "0 50px 110px rgba(20,50,30,0.26)"; }}
+      onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.borderColor = "var(--green-line)"; el.style.boxShadow = "0 50px 110px rgba(20,50,30,0.26)"; }}
       onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.borderColor = C.edge; el.style.boxShadow = "0 40px 90px rgba(30,50,40,0.18)"; }}
     >
       <div className="flex items-center gap-3 mb-9">
@@ -96,15 +97,14 @@ const items: CarouselItem[] = [
 export default function HomeCarousel() {
   return (
     <section
-      className="relative flex flex-col items-center justify-center px-6"
-      style={{
-        minHeight: "155vh",
-        background:
-          "linear-gradient(to bottom, var(--stage) 0%, #aebecb 12%, #d7e2ea 26%, #eef3f7 40%, #f6f9fc 50%, #eef3f7 64%, #d7e2ea 78%, #aebecb 89%, var(--stage) 100%)",
-      }}
+      className="band-signal relative flex flex-col items-center justify-center px-6"
+      style={{ minHeight: "155vh" }}
     >
       <div className="w-full max-w-[1240px] mx-auto">
-        <Carousel3D items={items} cardWidth={520} cardHeight={520} angleStep={46} radius={500} dark={false} autoDrift={false} />
+        <p className="mono t-eyebrow kicker mb-10 justify-center md:justify-start" style={{ letterSpacing: "0.22em" }}>
+          Three ways in
+        </p>
+        <Carousel3D items={items} cardWidth={520} cardHeight={520} angleStep={46} radius={500} dark autoDrift={false} />
       </div>
     </section>
   );

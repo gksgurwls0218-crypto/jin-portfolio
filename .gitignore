@@ -16,6 +16,7 @@
 # next.js
 /.next/
 /out/
+/tmp/
 
 # production
 /build
@@ -35,6 +36,10 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# large match video files — hosted on Cloudflare R2, not in git (captions stay tracked)
+/public/match-video/*.mp4
+/public/match-video/compressed/
 
 # typescript
 *.tsbuildinfo

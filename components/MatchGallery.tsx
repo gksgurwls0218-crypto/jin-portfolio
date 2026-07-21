@@ -7,6 +7,21 @@ import GoalsSummary from "@/components/match/GoalsSummary";
 import Reveal from "@/components/Reveal";
 import { MATCHES, type GalleryMatch } from "@/lib/matchGallery";
 
+// match.date is a display string like "28 Apr 2026" or "14 Oct 2025" — not lexicographically
+// sortable (day comes first), so parse it into a real timestamp for ordering.
+const MONTHS: Record<string, number> = {
+  jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5,
+  jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11,
+};
+function parseMatchDate(dateStr: string): number {
+  const m = dateStr.match(/(\d{1,2})\s+([A-Za-z]{3,})\s+(\d{4})/);
+  if (!m) return 0;
+  const [, day, mon, year] = m;
+  const month = MONTHS[mon.slice(0, 3).toLowerCase()] ?? 0;
+  return new Date(Number(year), month, Number(day)).getTime();
+}
+const MATCHES_BY_RECENT = [...MATCHES].sort((a, b) => parseMatchDate(b.date) - parseMatchDate(a.date));
+
 function Row({ match }: { match: GalleryMatch }) {
   const [hover, setHover] = useState(false);
 
@@ -110,7 +125,7 @@ export default function MatchGallery() {
         </Reveal>
 
         <div className="flex flex-col gap-8">
-          {MATCHES.map((m, i) => (
+          {MATCHES_BY_RECENT.map((m, i) => (
             <Reveal key={m.slug} delay={i * 90}>
               <Row match={m} />
             </Reveal>

@@ -46,7 +46,7 @@ export default function MatchNav() {
   return (
     <nav
       className="sticky top-0 z-10 flex gap-0.5 px-6 md:px-12 overflow-x-auto"
-      style={{ background: "rgba(14,10,6,.92)", backdropFilter: "blur(16px)", borderBottom: "0.5px solid rgba(255,255,255,.07)" }}
+      style={{ background: "var(--stage-glass)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", borderBottom: "0.5px solid var(--edge)" }}
     >
       {SECTIONS.map((s) => (
         <a
@@ -55,14 +55,15 @@ export default function MatchNav() {
           className="mono whitespace-nowrap px-2.5 py-2.5 rounded-md transition-colors duration-150"
           style={{
             fontSize: 9.5,
-            color: active === s.id ? "rgba(255,205,140,.96)" : "rgba(255,255,255,.42)",
-            background: active === s.id ? "rgba(255,135,45,.16)" : "transparent",
+            fontWeight: active === s.id ? 600 : 400,
+            color: active === s.id ? "var(--green-mid)" : "var(--ink-3)",
+            background: active === s.id ? "var(--green-soft)" : "transparent",
           }}
         >
           {s.label}
         </a>
       ))}
-      <div className="absolute bottom-0 left-0 h-[2px]" style={{ width: `${progress * 100}%`, background: "rgba(255,155,70,.8)", transition: "width 80ms linear" }} />
+      <div className="absolute bottom-0 left-0 h-[2px]" style={{ width: `${progress * 100}%`, background: "var(--green-bright)", transition: "width 80ms linear" }} />
     </nav>
   );
 }

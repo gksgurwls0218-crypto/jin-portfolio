@@ -1,7 +1,61 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
+import { ESSAY_VISUALS } from "./EssayVisuals";
 
 export type Badge = { label: string; color: string; bg: string; border: string };
-export type Block = { label: string; text: string };
+export type Block = {
+  label: string;
+  text: string;
+  /** Optional embedded animation — path under /public, e.g. "/anim/pre-half-space.html" */
+  visualSrc?: string;
+  /** Optional key into the ESSAY_VISUALS registry — a redesigned, site-native sketch */
+  visualComponent?: string;
+  /** Small caption shown under the embed, e.g. source/credit note */
+  visualCaption?: string;
+  /** Embed height in px. Defaults to 420. Ignored by visualComponent. */
+  visualHeight?: number;
+};
+
+function SketchFrame({ caption, children }: { caption?: string; children: ReactNode }) {
+  return (
+    <div className="mt-5">
+      <div
+        className="rounded-2xl"
+        style={{ border: "0.5px solid var(--edge)", background: "var(--ink)", padding: "20px 22px" }}
+      >
+        {children}
+      </div>
+      {caption ? (
+        <p className="mono mt-2" style={{ fontSize: 11, color: "var(--ink-4)" }}>
+          {caption}
+        </p>
+      ) : null}
+    </div>
+  );
+}
+
+function VisualEmbed({ src, caption, height = 420 }: { src: string; caption?: string; height?: number }) {
+  return (
+    <div className="mt-5">
+      <div
+        className="rounded-2xl overflow-hidden"
+        style={{ border: "0.5px solid var(--edge)", background: "var(--ink)" }}
+      >
+        <iframe
+          src={src}
+          title={caption || "Variation Theory diagram"}
+          style={{ width: "100%", height, border: "none", display: "block" }}
+          loading="lazy"
+        />
+      </div>
+      {caption ? (
+        <p className="mono mt-2" style={{ fontSize: 11, color: "var(--ink-4)" }}>
+          {caption}
+        </p>
+      ) : null}
+    </div>
+  );
+}
 
 export default function KpiDetail({
   backHref, backLabel, kicker, title, badge, blocks,
@@ -27,10 +81,29 @@ export default function KpiDetail({
         <h1 className="display mb-14" style={{ fontSize: "clamp(32px,5vw,52px)", lineHeight: 1.04, letterSpacing: "-0.03em", color: "var(--ink)" }}>{title}</h1>
 
         <div className="flex flex-col gap-10">
-          {blocks.map((b) => (
-            <div key={b.label}>
-              <p className="mono mb-4" style={{ fontSize: 13, fontWeight: 500, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--green-bright)" }}>{b.label}</p>
+          {blocks.map((b, i) => (
+            <div key={b.label} style={{ paddingTop: i === 0 ? 0 : 28, borderTop: i === 0 ? "none" : "0.5px solid var(--edge)" }}>
+              <p
+                className="mono mb-5"
+                style={{
+                  fontSize: 14, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase",
+                  color: "var(--ink)", display: "inline-block", borderBottom: "2px solid var(--ink)", paddingBottom: 6,
+                }}
+              >
+                {b.label}
+              </p>
               <p style={{ fontSize: 17.5, lineHeight: 1.75, color: "var(--ink)" }}>{b.text}</p>
+              {b.visualSrc ? <VisualEmbed src={b.visualSrc} caption={b.visualCaption} height={b.visualHeight} /> : null}
+              {b.visualComponent && ESSAY_VISUALS[b.visualComponent]
+                ? (() => {
+                    const Sketch = ESSAY_VISUALS[b.visualComponent];
+                    return (
+                      <SketchFrame caption={b.visualCaption}>
+                        <Sketch />
+                      </SketchFrame>
+                    );
+                  })()
+                : null}
             </div>
           ))}
         </div>
