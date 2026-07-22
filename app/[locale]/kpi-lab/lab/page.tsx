@@ -15,8 +15,8 @@ const HEAD: Record<Locale, { eyebrow: string; title: string; accent: string; int
     eyebrow: "03 / 데이터 & KPI 랩",
     title: "새로운 지표가 태어나는",
     accent: "실험실",
-    intro: "이것들은 공인된 KPI가 아니다. 변이 이론을 측정하기 위해, 때로는 정해진 길에서 벗어나 태어난 지표들이다. 혁명적인 생각은 때때로 남다른 창의성에서 나온다. 이 창의성들은 아직 새로운 것을 정립해가는 길 위에 있다.",
-    backLabel: "고급 데이터 & KPI 랩",
+    intro: "이것들은 공인된 KPI가 아니라, 변이 이론을 측정하기 위해 때로는 정해진 길에서 벗어나 태어난 지표들이다. 남다른 창의성에서 나온 혁명적인 생각들이며, 아직 새로운 것을 정립해가는 길 위에 있다.",
+    backLabel: "Advanced Data & KPI 랩",
   },
 };
 

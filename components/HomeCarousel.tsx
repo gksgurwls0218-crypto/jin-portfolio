@@ -34,23 +34,23 @@ const COPY = {
   },
   cards: {
     approach: {
-      label: { en: "Approach", ko: "접근법" },
+      label: { en: "Approach", ko: "변이 이론, Variation Theory" },
       title: { en: <>It all started with<br />four questions.</>, ko: <>모든 것은 네 개의<br />질문에서 시작됐다.</> },
     },
     match: {
-      label: { en: "Match Analysis & Essays", ko: "경기 분석 & 에세이" },
-      title: { en: <>Variation Theory<br />applied &amp; written.</>, ko: <>변이 이론,<br />적용하고 기록하다.</> },
+      label: { en: "Match Analysis & Essays", ko: "경기 분석 & 새로운 개념" },
+      title: { en: <>Variation Theory<br />applied &amp; written.</>, ko: <>변이 이론의 시각으로<br />바라본 분석 결과물</> },
       body: {
         en: "Real match breakdowns — and original tactical essays — written through the lens of Variation Theory.",
-        ko: "변이 이론의 렌즈로 풀어낸 실제 경기 분석 — 그리고 직접 쓴 전술 에세이.",
+        ko: "변이 이론의 렌즈로 풀어낸 실제 경기 분석 — 그리고 그것을 설명하기 위해 직접 만든 새로운 전술 개념.",
       },
     },
     kpi: {
-      label: { en: "Advanced Data & KPI Lab", ko: "고급 데이터 & KPI 랩" },
-      title: { en: <>Could be reckless,<br />or innovative.</>, ko: <>무모할 수도,<br />혁신적일 수도.</> },
+      label: { en: "Advanced Data & KPI Lab", ko: "Advanced Data & KPI 랩" },
+      title: { en: <>Could be reckless,<br />or innovative.</>, ko: <>무모와 혁신<br />사이</> },
       body: {
         en: "A room for advanced data & KPIs to prove Variation Theory. Additionally, a room to think of something new by stepping off the beaten track. Could be reckless — but innovative as well.",
-        ko: "변이 이론을 증명하기 위한 고급 데이터와 KPI의 공간. 그리고 정해진 길에서 벗어나 새로운 것을 고민하는 공간. 무모할 수도 있지만, 그만큼 혁신적일 수도.",
+        ko: "변이 이론을 증명하기 위한 Advanced Data와 KPI의 공간, 그리고 정해진 길에서 벗어나 새로운 것을 고민하는 공간이다. 무모할 수도 있지만, 그만큼 혁신적일 수도.",
       },
     },
   },

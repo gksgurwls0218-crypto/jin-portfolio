@@ -11,9 +11,9 @@ const HEAD: Record<Locale, { eyebrow: string; title: string; accent: string; int
     intro: "Established, advanced metrics — used not as decoration but to test whether Variation Theory actually shows up in the data.",
   },
   ko: {
-    eyebrow: "03 / 고급 데이터 & KPI",
+    eyebrow: "03 / Advanced Data & KPI",
     title: "내가 경기를 읽는",
-    accent: "지표들.",
+    accent: "지표들",
     intro: "정립된 고급 지표들 — 장식이 아니라, 변이 이론이 실제로 데이터에 나타나는지 검증하기 위해 쓴다.",
   },
 };
@@ -28,6 +28,6 @@ export default async function AdvancedIndexPage({ params }: { params: Promise<{ 
     sub: m.abbr,
     short: locale === "ko" ? STANDARD_KO[m.id]?.short ?? m.short : m.short,
   }));
-  const backLabel = locale === "ko" ? "고급 데이터 & KPI 랩" : "Advanced Data & KPI Lab";
+  const backLabel = locale === "ko" ? "Advanced Data & KPI 랩" : "Advanced Data & KPI Lab";
   return <KpiIndex eyebrow={h.eyebrow} title={h.title} accent={h.accent} intro={h.intro} items={items} backHref="/kpi-lab" backLabel={backLabel} />;
 }

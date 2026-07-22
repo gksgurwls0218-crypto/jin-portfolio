@@ -21,7 +21,7 @@ export function pick<T>(locale: Locale, pair: { en: T; ko: T }): T {
 // Longer page copy lives with the page/lib data as { en, ko } pairs.
 export const UI = {
   nav: {
-    approach: { en: "Approach", ko: "접근법" },
+    approach: { en: "Approach", ko: "변이 이론, Variation Theory" },
     match: { en: "Match Analysis", ko: "경기 분석" },
     kpi: { en: "KPI Lab", ko: "KPI 랩" },
     portfolio: { en: "JIN’S PORTFOLIO", ko: "JIN’S PORTFOLIO" },

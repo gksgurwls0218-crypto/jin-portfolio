@@ -4,10 +4,10 @@ import { useLocale } from "@/lib/useLocale";
 
 const HERO_COPY = {
   eyebrow: { en: "Jin’s football philosophy", ko: "Jin의 축구 철학" },
-  titleAccent: { en: "Variation", ko: "변이" },
-  titleRest: { en: " Theory", ko: " 이론" },
-  line1: { en: "System adapts.", ko: "시스템은 적응한다." },
-  line2: { en: "Variation breaks it.", ko: "변이가 그것을 깨뜨린다." },
+  titleAccent: { en: "Variation", ko: "변이 이론," },
+  titleRest: { en: " Theory", ko: " Variation Theory" },
+  line1: { en: "System adapts.", ko: "시스템을 깨뜨릴 철학," },
+  line2: { en: "Variation breaks it.", ko: "변수와 변이" },
 } as const;
 
 type Pt = { x: number; y: number };
@@ -378,7 +378,8 @@ export default function Hero() {
         <div className="max-w-4xl">
           <div className="mono t-eyebrow kicker mb-5" style={{ color: "var(--green-mid)" }}>{HERO_COPY.eyebrow[locale]}</div>
           <h1 className="display mb-5 t-hero" style={{ color: "var(--ink)" }}>
-            <span style={{ color: "var(--green-bright)" }}>{HERO_COPY.titleAccent[locale]}</span>{HERO_COPY.titleRest[locale]}
+            <span style={{ color: "var(--green-bright)" }}>{HERO_COPY.titleAccent[locale]}</span>
+            <span style={{ whiteSpace: locale === "ko" ? "nowrap" : "normal" }}>{HERO_COPY.titleRest[locale]}</span>
           </h1>
           <p className="mb-2" style={{ color: "var(--ink-2)", fontSize: "clamp(17px,2.1vw,26px)", lineHeight: 1.3, fontWeight: 500 }}>
             {HERO_COPY.line1[locale]} <span style={{ color: "var(--ink)" }}>{HERO_COPY.line2[locale]}</span>

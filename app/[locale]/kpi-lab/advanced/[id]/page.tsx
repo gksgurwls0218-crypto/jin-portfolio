@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 
 const LABELS: Record<Locale, { back: string; measures: string; question: string; framework: string }> = {
   en: { back: "Advanced Data & KPIs", measures: "What it measures", question: "The question it answers", framework: "In the Variation framework" },
-  ko: { back: "고급 데이터 & KPI", measures: "무엇을 측정하는가", question: "답하는 질문", framework: "변이 프레임워크 안에서" },
+  ko: { back: "Advanced Data & KPI", measures: "무엇을 측정하는가", question: "답하는 질문", framework: "변이 프레임워크 안에서" },
 };
 
 export default async function AdvancedDetailPage({ params }: { params: Promise<{ id: string; locale: string }> }) {

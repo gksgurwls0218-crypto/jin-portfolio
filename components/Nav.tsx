@@ -69,6 +69,7 @@ export default function Nav() {
                   color: active ? "var(--green-bright)" : "var(--ink-2)",
                   background: active ? "var(--green-soft)" : "transparent",
                   border: `0.5px solid ${active ? "var(--green-line)" : "transparent"}`,
+                  whiteSpace: "nowrap",
                 }}
                 onMouseEnter={(e) => { if (!active) (e.currentTarget as HTMLElement).style.color = "var(--ink)"; }}
                 onMouseLeave={(e) => { if (!active) (e.currentTarget as HTMLElement).style.color = "var(--ink-2)"; }}

@@ -90,6 +90,17 @@ body {
   overflow-x: hidden;
 }
 
+/* Korean line-breaking: the browser default breaks CJK text between any two
+   syllable blocks, so a single word (e.g. "게임") can split across lines.
+   `word-break: keep-all` restricts breaks to actual word boundaries (spaces)
+   instead — the standard fix for Korean web typography. `overflow-wrap`
+   stays as a safety net so a genuinely unbreakable long token still wraps
+   rather than overflowing its container. */
+:lang(ko) {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
 /* ── Type helpers ── */
 .mono    { font-family: var(--font-mono); }
 .display { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.022em; }

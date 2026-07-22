@@ -12,7 +12,7 @@ import { useLocale } from "@/lib/useLocale";
 const GALLERY_COPY = {
   eyebrow: { en: "02 / Match Analysis", ko: "02 / 경기 분석" },
   title1: { en: "Theory applied to", ko: "이론을 경기에" },
-  title2: { en: "matches analysed.", ko: "적용해 분석하다." },
+  title2: { en: "matches analysed.", ko: "적용해 분석하다" },
   intro: {
     en: "Each analysis states what the framework predicted, then reports what actually happened. Hover a match to see both line-ups — then step inside.",
     ko: "각 분석은 프레임워크가 무엇을 예측했는지 밝힌 뒤, 실제로 무슨 일이 일어났는지 보고한다. 경기 위에 마우스를 올리면 양 팀 라인업이 보인다 — 그런 뒤 안으로 들어가 보라.",

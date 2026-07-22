@@ -15,8 +15,8 @@ const HEAD: Record<Locale, { eyebrow: string; title: string; accent: string; int
     eyebrow: "02 / 새로운 개념",
     title: "내가 만든",
     accent: "전술 용어",
-    intro: "변이 이론이 적용 가능하고 신뢰할 수 있음을 증명하기 위한 새로운 개념들. 새로운 것과 이론을 만들고, 공간에 이름을 붙이고, 축구를 진화시키는 실험실.",
-    backLabel: "경기 분석 & 에세이",
+    intro: "변이 이론이 작동하기 위해, 축구의 진화를 위해 직접 만든 개념들과 시각",
+    backLabel: "경기 분석 & 새로운 개념",
   },
 };
 

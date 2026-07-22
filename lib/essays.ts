@@ -25,7 +25,7 @@ export const ESSAYS: Essay[] = [
   {
     id: "pre-half-space",
     title: "Pre-Half Space",
-    ko: "프리 하프스페이스",
+    ko: "Pre-Half Space",
     category: "Original concept",
     blurb: "A space I named myself — the real starting point of a modern attack.",
     blocks: [
@@ -60,7 +60,7 @@ export const ESSAYS: Essay[] = [
   {
     id: "chained-post-play",
     title: "Chained Post-Play",
-    ko: "연쇄적 포스트 플레이",
+    ko: "Chained Post Play",
     category: "Attacking structure",
     blurb: "Two pivots at once, so the defender loses whatever he chooses.",
     blocks: [
@@ -94,7 +94,7 @@ export const ESSAYS: Essay[] = [
   {
     id: "sustainable-mid-block",
     title: "The Sustainable Mid-Block",
-    ko: "지속가능성 미들블록",
+    ko: "Sustainable Mid-Block",
     category: "Tactical evolution",
     blurb: "Qatar 2022's lesson: the efficient team won, not the busy one.",
     blocks: [
@@ -188,7 +188,7 @@ export const ESSAYS: Essay[] = [
   {
     id: "signature-move",
     title: "Signature Move",
-    ko: "시그니처 무브",
+    ko: "Signature Move",
     category: "Individual variable",
     blurb: "Not every player can be a crack — but every player can own one on-ball habit no defender can fully copy.",
     blocks: [

@@ -13,13 +13,13 @@ const CONTENT: Record<Locale, { eyebrow: string; title: string; accent: string; 
     ],
   },
   ko: {
-    eyebrow: "03 / 고급 데이터 & KPI 랩",
-    title: "무모할 수도,",
-    accent: "혁신적일 수도.",
-    intro: "변이 이론을 증명하기 위한 고급 데이터와 KPI를 다루는 공간, 그리고 정해진 길에서 벗어나 새로운 것을 고민하는 실험실.",
+    eyebrow: "03 / Advanced Data & KPI 랩",
+    title: "무모와 혁신",
+    accent: "사이",
+    intro: "변이 이론을 증명하기 위한 Advanced Data와 KPI를 다루는 공간, 그리고 정해진 길에서 벗어나 새로운 것을 고민하는 실험실.",
     doors: [
-      { href: "/kpi-lab/advanced", n: "01", label: "변이 이론을 위한 고급 데이터 & KPI", title: "증거의 층위.", desc: "변이 이론이 어떻게 작동하는지 측정하는 지표들." },
-      { href: "/kpi-lab/lab", n: "02", label: "데이터 & KPI 랩", title: "정해진 길에서 벗어나", desc: "내가 직접 개발하는 아주 새로운 지표들. 새 지표를 만들어 세상에 내보이는 실험실." },
+      { href: "/kpi-lab/advanced", n: "01", label: "변이 이론을 위한 Advanced Data & KPI", title: "측정법", desc: "변이 이론이 어떻게 작동하는지 측정하는 지표들." },
+      { href: "/kpi-lab/lab", n: "02", label: "데이터 & KPI 랩", title: "혁신 센터", desc: "내가 직접 개발하는 아주 새로운 지표들, 세상에 내보이는 실험실." },
     ],
   },
 };
