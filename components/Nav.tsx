@@ -13,6 +13,7 @@ const links = [
 export default function Nav() {
   const pathname = usePathname() || "/";
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const seg = pathname.split("/")[1];
   const locale: Locale = isLocale(seg) ? seg : DEFAULT_LOCALE;
@@ -28,16 +29,32 @@ export default function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Close the mobile menu whenever the route changes (a link was tapped).
+  useEffect(() => { setMenuOpen(false); }, [pathname]);
+
+  // Lock background scroll while the full-screen mobile menu is open.
+  useEffect(() => {
+    if (menuOpen) {
+      const prev = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => { document.body.style.overflow = prev; };
+    }
+  }, [menuOpen]);
+
+  // The bar goes solid once scrolled OR while the menu overlay is open, so the
+  // hamburger/close control always has a legible backdrop.
+  const solid = scrolled || menuOpen;
+
   return (
     <nav
-      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-10"
+      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-5 sm:px-6 md:px-10"
       style={{
         height: 62,
-        background: scrolled ? "rgba(255,255,255,0.86)" : "transparent",
-        backdropFilter: scrolled ? "blur(18px) saturate(150%)" : "none",
-        WebkitBackdropFilter: scrolled ? "blur(18px) saturate(150%)" : "none",
-        boxShadow: scrolled ? "0 1px 0 var(--edge-2)" : "none",
-        borderBottom: `0.5px solid ${scrolled ? "var(--edge-2)" : "transparent"}`,
+        background: solid ? "rgba(255,255,255,0.86)" : "transparent",
+        backdropFilter: solid ? "blur(18px) saturate(150%)" : "none",
+        WebkitBackdropFilter: solid ? "blur(18px) saturate(150%)" : "none",
+        boxShadow: solid ? "0 1px 0 var(--edge-2)" : "none",
+        borderBottom: `0.5px solid ${solid ? "var(--edge-2)" : "transparent"}`,
         transition: "background .4s var(--ease-out), border-color .4s var(--ease-out), backdrop-filter .4s var(--ease-out)",
       }}
     >
@@ -54,9 +71,10 @@ export default function Nav() {
           <span className="transition-colors duration-300 group-hover:text-[color:var(--ink)]">{UI.nav.portfolio[locale]}</span>
         </Link>
 
-        <span className="hidden sm:block" style={{ width: 1, height: 14, background: "var(--edge-2)" }} />
+        <span className="hidden md:block" style={{ width: 1, height: 14, background: "var(--edge-2)" }} />
 
-        <div className="flex items-center gap-1">
+        {/* ── desktop inline links (hidden on mobile) ── */}
+        <div className="hidden md:flex items-center gap-1">
           {links.map((l) => {
             const active = pathname.startsWith(lp(l.href));
             return (
@@ -82,29 +100,85 @@ export default function Nav() {
         </div>
       </div>
 
-      {/* ── language switcher ── */}
-      <div className="flex items-center gap-0.5 rounded-full p-0.5" style={{ border: "0.5px solid var(--edge-2)", background: "rgba(255,255,255,0.5)" }}>
-        {LOCALES.map((l) => {
-          const active = l === locale;
-          return (
-            <Link
-              key={l}
-              href={swapHref(l)}
-              hrefLang={l}
-              aria-label={l === "ko" ? "한국어" : "English"}
-              className="mono rounded-full px-2.5 py-1 transition-colors duration-200"
-              style={{
-                fontSize: 11,
-                letterSpacing: "0.08em",
-                fontWeight: active ? 600 : 400,
-                color: active ? "var(--green-bright)" : "var(--ink-3)",
-                background: active ? "var(--green-soft)" : "transparent",
-              }}
-            >
-              {l.toUpperCase()}
-            </Link>
-          );
-        })}
+      <div className="flex items-center gap-2.5">
+        {/* ── language switcher (always visible) ── */}
+        <div className="flex items-center gap-0.5 rounded-full p-0.5" style={{ border: "0.5px solid var(--edge-2)", background: "rgba(255,255,255,0.5)" }}>
+          {LOCALES.map((l) => {
+            const active = l === locale;
+            return (
+              <Link
+                key={l}
+                href={swapHref(l)}
+                hrefLang={l}
+                aria-label={l === "ko" ? "한국어" : "English"}
+                className="mono rounded-full px-2.5 py-1 transition-colors duration-200"
+                style={{
+                  fontSize: 11,
+                  letterSpacing: "0.08em",
+                  fontWeight: active ? 600 : 400,
+                  color: active ? "var(--green-bright)" : "var(--ink-3)",
+                  background: active ? "var(--green-soft)" : "transparent",
+                }}
+              >
+                {l.toUpperCase()}
+              </Link>
+            );
+          })}
+        </div>
+
+        {/* ── hamburger / close toggle (mobile only) ── */}
+        <button
+          type="button"
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen((v) => !v)}
+          className="md:hidden flex items-center justify-center rounded-full"
+          style={{ width: 40, height: 40, border: "0.5px solid var(--edge-2)", background: "rgba(255,255,255,0.5)", color: "var(--ink)" }}
+        >
+          <span className="relative block" style={{ width: 16, height: 12 }}>
+            <span style={{ position: "absolute", left: 0, right: 0, height: 1.5, borderRadius: 2, background: "currentColor", top: menuOpen ? 5 : 0, transform: menuOpen ? "rotate(45deg)" : "none", transition: "top .3s var(--ease-out), transform .3s var(--ease-out), opacity .3s" }} />
+            <span style={{ position: "absolute", left: 0, right: 0, height: 1.5, borderRadius: 2, background: "currentColor", top: 5, opacity: menuOpen ? 0 : 1, transition: "opacity .2s" }} />
+            <span style={{ position: "absolute", left: 0, right: 0, height: 1.5, borderRadius: 2, background: "currentColor", top: menuOpen ? 5 : 10, transform: menuOpen ? "rotate(-45deg)" : "none", transition: "top .3s var(--ease-out), transform .3s var(--ease-out)" }} />
+          </span>
+        </button>
+      </div>
+
+      {/* ── full-screen mobile menu overlay ── */}
+      <div
+        className="md:hidden fixed inset-0"
+        style={{
+          top: 62,
+          background: "rgba(255,255,255,0.97)",
+          backdropFilter: "blur(20px) saturate(150%)",
+          WebkitBackdropFilter: "blur(20px) saturate(150%)",
+          zIndex: 40,
+          opacity: menuOpen ? 1 : 0,
+          pointerEvents: menuOpen ? "auto" : "none",
+          transform: menuOpen ? "translateY(0)" : "translateY(-8px)",
+          transition: "opacity .3s var(--ease-out), transform .3s var(--ease-out)",
+        }}
+      >
+        <div className="flex flex-col px-6 pt-6">
+          {links.map((l, i) => {
+            const active = pathname.startsWith(lp(l.href));
+            return (
+              <Link
+                key={l.href}
+                href={lp(l.href)}
+                className="flex items-baseline gap-4 py-5"
+                style={{
+                  borderBottom: i < links.length - 1 ? "0.5px solid var(--edge)" : "none",
+                  color: active ? "var(--green-bright)" : "var(--ink)",
+                }}
+              >
+                <span className="mono" style={{ fontSize: 13, color: "var(--green-mid)", opacity: 0.8 }}>{l.index}</span>
+                <span className="display" style={{ fontSize: "clamp(28px, 8vw, 40px)", letterSpacing: "-0.02em", lineHeight: 1 }}>
+                  {UI.nav[l.key][locale]}
+                </span>
+              </Link>
+            );
+          })}
+        </div>
       </div>
     </nav>
   );

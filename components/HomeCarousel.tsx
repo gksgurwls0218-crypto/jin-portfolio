@@ -60,7 +60,7 @@ function Card({ n, label, title, href, locale, children }: { n: string; label: s
   return (
     <Link
       href={href}
-      className="group flex flex-col h-full w-full rounded-[28px] px-12 py-12 md:px-14 md:py-14"
+      className="group flex flex-col h-full w-full rounded-[24px] md:rounded-[28px] px-7 py-8 sm:px-10 sm:py-10 md:px-14 md:py-14"
       style={{
         background: C.card,
         border: `0.5px solid ${C.edge}`,
@@ -130,11 +130,10 @@ export default function HomeCarousel() {
 
   return (
     <section
-      className="band-signal relative flex flex-col items-center justify-center px-6"
-      style={{ minHeight: "155vh" }}
+      className="band-signal relative flex flex-col items-center justify-center px-5 sm:px-6 py-24 md:py-0 md:min-h-[155vh]"
     >
       <div className="w-full max-w-[1240px] mx-auto">
-        <p className="mono t-eyebrow kicker mb-10 justify-center md:justify-start" style={{ letterSpacing: "0.22em" }}>
+        <p className="mono t-eyebrow kicker mb-8 md:mb-10 justify-center md:justify-start" style={{ letterSpacing: "0.22em" }}>
           {COPY.threeWaysIn[locale]}
         </p>
         <Carousel3D items={items} cardWidth={520} cardHeight={520} angleStep={46} radius={500} dark autoDrift={false} />

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "../globals.css";
@@ -13,6 +13,16 @@ const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono-jb", di
 export function generateStaticParams() {
   return LOCALES.map((locale) => ({ locale }));
 }
+
+// Without this, mobile browsers assume a ~980px desktop viewport and shrink the
+// whole page to fit — the site reads as a tiny, zoomed-out PC layout. Locking the
+// viewport to the device width lets the responsive CSS actually respond to the
+// real screen. User zoom stays enabled for accessibility.
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
 
 const META: Record<Locale, Metadata> = {
   en: {

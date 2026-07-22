@@ -358,13 +358,15 @@ export default function Hero() {
 
   return (
     <section className="relative w-full overflow-hidden" style={{ background: "var(--stage)", minHeight: "100svh" }}>
-      {/* pitch stage — the animated canvas sits centred, full-bleed, cinematic */}
-      <div className="absolute inset-0 flex items-center justify-center" style={{ paddingTop: 62 }}>
+      {/* pitch stage — the animated canvas sits centred. On desktop it fills the
+          section full-bleed (cinematic); on mobile it keeps its natural 680:415
+          aspect ratio (h-auto) so the pitch isn't squashed into a tall portrait box. */}
+      <div className="absolute inset-0 flex items-center justify-center px-4 md:px-0" style={{ paddingTop: 62 }}>
         <canvas
           ref={canvasRef}
           width={680}
           height={415}
-          className="w-full h-full"
+          className="w-full h-auto md:h-full"
           style={{ display: "block", opacity: 0.96 }}
         />
       </div>
@@ -372,7 +374,7 @@ export default function Hero() {
       {/* copy overlay — light scrim, just enough for legibility; the pitch and
           players stay visible underneath instead of being blocked out */}
       <div
-        className="absolute bottom-0 left-0 right-0 flex flex-wrap justify-between items-end gap-8 px-6 md:px-10 pb-12 md:pb-16 pt-56"
+        className="absolute bottom-0 left-0 right-0 flex flex-wrap justify-between items-end gap-6 md:gap-8 px-6 md:px-10 pb-10 md:pb-16 pt-40 md:pt-56"
         style={{ background: "linear-gradient(to top, var(--stage) 0%, var(--stage) 10%, rgba(255,255,255,.55) 24%, rgba(255,255,255,.2) 42%, transparent 62%)" }}
       >
         <div className="max-w-4xl">

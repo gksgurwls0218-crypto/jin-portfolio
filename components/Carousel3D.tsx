@@ -13,6 +13,19 @@ function subscribeReduce(cb: () => void) {
 const getReduceSnapshot = () => typeof window !== "undefined" && window.matchMedia(REDUCE_QUERY).matches;
 const getReduceServer = () => false;
 
+// On phones the fixed-width 3-D carousel overflows the screen and its horizontal
+// drag fights the page's vertical scroll. Below this width we fall back to a
+// simple full-width vertical stack of the same cards instead.
+const MOBILE_QUERY = "(max-width: 767px)";
+function subscribeMobile(cb: () => void) {
+  if (typeof window === "undefined") return () => {};
+  const mq = window.matchMedia(MOBILE_QUERY);
+  mq.addEventListener("change", cb);
+  return () => mq.removeEventListener("change", cb);
+}
+const getMobileSnapshot = () => typeof window !== "undefined" && window.matchMedia(MOBILE_QUERY).matches;
+const getMobileServer = () => false;
+
 function rel(i: number, pos: number, n: number) {
   let d = i - pos;
   d = ((d % n) + n) % n;
@@ -41,6 +54,7 @@ export default function Carousel3D({
 }: Props) {
   const N = items.length;
   const reduced = useSyncExternalStore(subscribeReduce, getReduceSnapshot, getReduceServer);
+  const isMobile = useSyncExternalStore(subscribeMobile, getMobileSnapshot, getMobileServer);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const pos = useRef(0);
   const vel = useRef(0);
@@ -53,7 +67,7 @@ export default function Carousel3D({
   const [active, setActive] = useState(0);
 
   useEffect(() => {
-    if (reduced) return;
+    if (reduced || isMobile) return;
     let raf = 0;
 
     const render = () => {
@@ -103,7 +117,7 @@ export default function Carousel3D({
     render();
     raf = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(raf);
-  }, [reduced, N, angleStep, radius, autoDrift]);
+  }, [reduced, isMobile, N, angleStep, radius, autoDrift]);
 
   const onDown = (e: React.PointerEvent) => {
     if (reduced) return;
@@ -144,12 +158,13 @@ export default function Carousel3D({
   const dotColor = dark ? "var(--signal-edge)" : "var(--edge-dark)";
   const dotActive = dark ? "var(--signal-ink)" : "var(--accent-green)";
 
-  // ── reduced-motion fallback: simple stacked cards ──
-  if (reduced) {
+  // ── fallback: simple stacked cards (mobile, or reduced-motion) ──
+  // Mobile → full-width vertical stack. Desktop reduced-motion → centred row.
+  if (reduced || isMobile) {
     return (
-      <div className="flex flex-col md:flex-row gap-6 justify-center items-stretch">
+      <div className="flex flex-col md:flex-row gap-6 justify-center items-stretch w-full">
         {items.map((it) => (
-          <div key={it.key} style={{ width: cardWidth, maxWidth: "100%" }}>{it.content}</div>
+          <div key={it.key} className="mx-auto md:mx-0 w-full" style={{ maxWidth: cardWidth }}>{it.content}</div>
         ))}
       </div>
     );
