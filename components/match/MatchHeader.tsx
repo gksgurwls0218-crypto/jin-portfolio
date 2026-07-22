@@ -1,6 +1,17 @@
 import type { MatchFrontmatter } from "@/lib/mdx";
 import { MATCHES } from "@/lib/matchGallery";
 import GoalsSummary from "@/components/match/GoalsSummary";
+import type { Locale } from "@/lib/i18n";
+
+const MH = {
+  eyebrow: { en: "02 / Match Analysis", ko: "02 / 경기 분석" },
+  possession: { en: "Possession", ko: "점유율" },
+  fieldTilt: { en: "Field Tilt", ko: "필드 틸트" },
+  proxyNote: {
+    en: "xT (proxy): Opta·Sofascore·Fotmob·FIFA don’t publish match-level xT — it’s an internal analytics-tool metric, not a broadcast stat. This is a modeled index (0–100 share per team) built from this match’s own xG share and field-tilt share, not the official Karun Singh xT model — a directional read, not a real per-possession xT number.",
+    ko: "xT (proxy): Opta·Sofascore·Fotmob·FIFA는 경기 단위 xT를 공개하지 않는다 — 방송 지표가 아니라 분석 툴 내부 지표다. 이 값은 이 경기 자체의 xG 점유율과 필드 틸트 점유율로 만든 모델링 지수(팀당 0–100 점유율)이며, 공식 Karun Singh xT 모델이 아니다 — 실제 점유 단위 xT가 아니라 방향성만 읽는 값이다.",
+  },
+} as const;
 
 function Chip({ label, color }: { label: string; color: string }) {
   return (
@@ -59,13 +70,13 @@ function SoloStat({ label, teamName, value, extra }: { label: string; teamName: 
   );
 }
 
-export default function MatchHeader({ frontmatter }: { frontmatter: MatchFrontmatter }) {
+export default function MatchHeader({ frontmatter, locale = "en" }: { frontmatter: MatchFrontmatter; locale?: Locale }) {
   const { competition, date, venue, home, away, stats } = frontmatter;
   return (
     <div className="px-6 md:px-10 pt-28 pb-10" style={{ background: "var(--stage)", borderBottom: "0.5px solid var(--edge)" }}>
       <div className="max-w-[1000px] mx-auto">
         <p className="mono t-eyebrow kicker mb-6" style={{ color: "var(--green-mid)" }}>
-          02 / Match Analysis · {competition}
+          {MH.eyebrow[locale]} · {competition}
         </p>
         <div className="flex items-center gap-5 md:gap-7 flex-wrap mb-4">
           <span className="display" style={{ fontSize: "clamp(26px,4vw,44px)", color: "var(--ink)", letterSpacing: "-0.02em" }}>{home.name}</span>
@@ -86,7 +97,7 @@ export default function MatchHeader({ frontmatter }: { frontmatter: MatchFrontma
         })()}
 
         <div className="flex gap-3 flex-wrap mb-5">
-          <Stat label="Possession" homeName={home.name} awayName={away.name} homeValue={`${stats.possession[0]}%`} awayValue={`${stats.possession[1]}%`} />
+          <Stat label={MH.possession[locale]} homeName={home.name} awayName={away.name} homeValue={`${stats.possession[0]}%`} awayValue={`${stats.possession[1]}%`} />
           <Stat
             label="xG"
             homeName={home.name}
@@ -95,7 +106,7 @@ export default function MatchHeader({ frontmatter }: { frontmatter: MatchFrontma
             awayValue={`${stats.xg.value[1]}`}
             extra={stats.xg.verify ? <Chip label="verify" color="#14181a" /> : null}
           />
-          <SoloStat label="Field Tilt" teamName={home.name} value={`${stats.fieldTilt.value}%`} extra={stats.fieldTilt.est ? <Chip label="est" color="#232321" /> : null} />
+          <SoloStat label={MH.fieldTilt[locale]} teamName={home.name} value={`${stats.fieldTilt.value}%`} extra={stats.fieldTilt.est ? <Chip label="est" color="#232321" /> : null} />
           <Stat
             label="PPDA"
             homeName={home.name}
@@ -138,7 +149,7 @@ export default function MatchHeader({ frontmatter }: { frontmatter: MatchFrontma
 
         {stats.xt ? (
           <p className="mono" style={{ fontSize: 11, lineHeight: 1.6, color: "var(--ink-4)", maxWidth: 560 }}>
-            xT (proxy): Opta·Sofascore·Fotmob·FIFA don&rsquo;t publish match-level xT — it&rsquo;s an internal analytics-tool metric, not a broadcast stat. This is a modeled index (0–100 share per team) built from this match&rsquo;s own xG share and field-tilt share, not the official Karun Singh xT model — a directional read, not a real per-possession xT number.
+            {MH.proxyNote[locale]}
           </p>
         ) : null}
       </div>

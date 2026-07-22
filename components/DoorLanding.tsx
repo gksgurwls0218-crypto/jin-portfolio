@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+import Link from "@/components/LocaleLink";
 import Reveal from "@/components/Reveal";
 import EnterTag from "@/components/EnterTag";
 

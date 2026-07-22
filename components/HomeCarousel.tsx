@@ -1,6 +1,8 @@
 "use client";
-import Link from "next/link";
+import Link from "@/components/LocaleLink";
 import Carousel3D, { type CarouselItem } from "@/components/Carousel3D";
+import { UI, type Locale } from "@/lib/i18n";
+import { useLocale } from "@/lib/useLocale";
 
 // Card colours pull from the shared token system so the cards read
 // consistently wherever they sit — including floating on the solid
@@ -14,14 +16,47 @@ const C = {
   edge: "var(--edge)",
 };
 
-const QUESTIONS = [
-  "How do you break down a set defensive block?",
-  "Is the era of one fixed Plan A — for a match, for a season — over?",
-  "How do you cope with football stretched to a 100-minute game?",
-  "How do you draw out players' creativity and initiative?",
-];
+const COPY = {
+  threeWaysIn: UI.common.threeWaysIn,
+  questions: {
+    en: [
+      "How do you break down a set defensive block?",
+      "Is the era of one fixed Plan A — for a match, for a season — over?",
+      "How do you cope with football stretched to a 100-minute game?",
+      "How do you draw out players' creativity and initiative?",
+    ],
+    ko: [
+      "짜여진 수비 블록을 어떻게 무너뜨리는가?",
+      "한 경기, 한 시즌 내내 고정된 하나의 Plan A 시대는 끝났는가?",
+      "100분 경기로 늘어난 축구에 어떻게 대응하는가?",
+      "선수들의 창의성과 주도성을 어떻게 끌어내는가?",
+    ],
+  },
+  cards: {
+    approach: {
+      label: { en: "Approach", ko: "접근법" },
+      title: { en: <>It all started with<br />four questions.</>, ko: <>모든 것은 네 개의<br />질문에서 시작됐다.</> },
+    },
+    match: {
+      label: { en: "Match Analysis & Essays", ko: "경기 분석 & 에세이" },
+      title: { en: <>Variation Theory<br />applied &amp; written.</>, ko: <>변이 이론,<br />적용하고 기록하다.</> },
+      body: {
+        en: "Real match breakdowns — and original tactical essays — written through the lens of Variation Theory.",
+        ko: "변이 이론의 렌즈로 풀어낸 실제 경기 분석 — 그리고 직접 쓴 전술 에세이.",
+      },
+    },
+    kpi: {
+      label: { en: "Advanced Data & KPI Lab", ko: "고급 데이터 & KPI 랩" },
+      title: { en: <>Could be reckless,<br />or innovative.</>, ko: <>무모할 수도,<br />혁신적일 수도.</> },
+      body: {
+        en: "A room for advanced data & KPIs to prove Variation Theory. Additionally, a room to think of something new by stepping off the beaten track. Could be reckless — but innovative as well.",
+        ko: "변이 이론을 증명하기 위한 고급 데이터와 KPI의 공간. 그리고 정해진 길에서 벗어나 새로운 것을 고민하는 공간. 무모할 수도 있지만, 그만큼 혁신적일 수도.",
+      },
+    },
+  },
+} as const;
 
-function Card({ n, label, title, href, children }: { n: string; label: string; title: React.ReactNode; href: string; children: React.ReactNode }) {
+function Card({ n, label, title, href, locale, children }: { n: string; label: string; title: React.ReactNode; href: string; locale: Locale; children: React.ReactNode }) {
   return (
     <Link
       href={href}
@@ -48,7 +83,7 @@ function Card({ n, label, title, href, children }: { n: string; label: string; t
 
       <div className="mt-auto pt-8" style={{ borderTop: `0.5px solid ${C.edge}` }}>
         <span className="mono inline-flex items-center gap-2" style={{ fontSize: 14, color: C.green }}>
-          <span className="border-b border-transparent group-hover:border-current pb-0.5 transition-colors duration-300">Enter</span>
+          <span className="border-b border-transparent group-hover:border-current pb-0.5 transition-colors duration-300">{UI.common.enter[locale]}</span>
           <span className="transition-transform duration-300 group-hover:translate-x-1.5">→</span>
         </span>
       </div>
@@ -56,45 +91,43 @@ function Card({ n, label, title, href, children }: { n: string; label: string; t
   );
 }
 
-const items: CarouselItem[] = [
-  {
-    key: "approach",
-    content: (
-      <Card n="01" label="Approach" href="/approach" title={<>It all started with<br />four questions.</>}>
-        <ol className="flex flex-col gap-5">
-          {QUESTIONS.map((q, i) => (
-            <li key={i} className="flex gap-4" style={{ fontSize: 15.5, lineHeight: 1.5, color: C.ink2 }}>
-              <span className="mono shrink-0" style={{ color: C.green, fontSize: 14, fontWeight: 500, paddingTop: 1 }}>{i + 1}</span>
-              <span>{q}</span>
-            </li>
-          ))}
-        </ol>
-      </Card>
-    ),
-  },
-  {
-    key: "match",
-    content: (
-      <Card n="02" label="Match Analysis & Essays" href="/match-analysis" title={<>Variation Theory<br />applied &amp; written.</>}>
-        <p style={{ fontSize: 17, lineHeight: 1.7, color: C.ink2 }}>
-          Real match breakdowns — and original tactical essays — written through the lens of Variation Theory.
-        </p>
-      </Card>
-    ),
-  },
-  {
-    key: "kpi",
-    content: (
-      <Card n="03" label="Advanced Data & KPI Lab" href="/kpi-lab" title={<>Could be reckless,<br />or innovative.</>}>
-        <p style={{ fontSize: 16, lineHeight: 1.7, color: C.ink2 }}>
-          A room for advanced data &amp; KPIs to prove Variation Theory. Additionally, a room to think of something new by stepping off the beaten track. Could be reckless — but innovative as well.
-        </p>
-      </Card>
-    ),
-  },
-];
-
 export default function HomeCarousel() {
+  const locale = useLocale();
+
+  const items: CarouselItem[] = [
+    {
+      key: "approach",
+      content: (
+        <Card n="01" label={COPY.cards.approach.label[locale]} href="/approach" title={COPY.cards.approach.title[locale]} locale={locale}>
+          <ol className="flex flex-col gap-5">
+            {COPY.questions[locale].map((q, i) => (
+              <li key={i} className="flex gap-4" style={{ fontSize: 15.5, lineHeight: 1.5, color: C.ink2 }}>
+                <span className="mono shrink-0" style={{ color: C.green, fontSize: 14, fontWeight: 500, paddingTop: 1 }}>{i + 1}</span>
+                <span>{q}</span>
+              </li>
+            ))}
+          </ol>
+        </Card>
+      ),
+    },
+    {
+      key: "match",
+      content: (
+        <Card n="02" label={COPY.cards.match.label[locale]} href="/match-analysis" title={COPY.cards.match.title[locale]} locale={locale}>
+          <p style={{ fontSize: 17, lineHeight: 1.7, color: C.ink2 }}>{COPY.cards.match.body[locale]}</p>
+        </Card>
+      ),
+    },
+    {
+      key: "kpi",
+      content: (
+        <Card n="03" label={COPY.cards.kpi.label[locale]} href="/kpi-lab" title={COPY.cards.kpi.title[locale]} locale={locale}>
+          <p style={{ fontSize: 16, lineHeight: 1.7, color: C.ink2 }}>{COPY.cards.kpi.body[locale]}</p>
+        </Card>
+      ),
+    },
+  ];
+
   return (
     <section
       className="band-signal relative flex flex-col items-center justify-center px-6"
@@ -102,7 +135,7 @@ export default function HomeCarousel() {
     >
       <div className="w-full max-w-[1240px] mx-auto">
         <p className="mono t-eyebrow kicker mb-10 justify-center md:justify-start" style={{ letterSpacing: "0.22em" }}>
-          Three ways in
+          {COPY.threeWaysIn[locale]}
         </p>
         <Carousel3D items={items} cardWidth={520} cardHeight={520} angleStep={46} radius={500} dark autoDrift={false} />
       </div>

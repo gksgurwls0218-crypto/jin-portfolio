@@ -1,6 +1,9 @@
 "use client";
+import { UI } from "@/lib/i18n";
+import { useLocale } from "@/lib/useLocale";
 
 export default function Footer() {
+  const locale = useLocale();
   return (
     <footer
       className="relative px-6 md:px-10 pt-20 pb-10"
@@ -8,7 +11,7 @@ export default function Footer() {
     >
       <div className="max-w-[1180px] mx-auto flex flex-col gap-10">
         <div className="flex flex-col gap-4">
-          <span className="mono t-eyebrow" style={{ color: "var(--green-mid)" }}>Get in touch</span>
+          <span className="mono t-eyebrow" style={{ color: "var(--green-mid)" }}>{UI.common.getInTouch[locale]}</span>
           <a
             href="mailto:218apple@naver.com"
             className="display group inline-flex items-center gap-3 w-fit transition-colors duration-300"
@@ -22,7 +25,7 @@ export default function Footer() {
         </div>
         <div className="flex items-center justify-between pt-6" style={{ borderTop: "0.5px solid var(--edge)" }}>
           <span className="mono" style={{ fontSize: 11, color: "var(--ink-4)", letterSpacing: "0.04em" }}>
-            Jin · Tactical Analyst · {new Date().getFullYear()}
+            {UI.common.role[locale]} · {new Date().getFullYear()}
           </span>
           <span className="mono" style={{ fontSize: 11, color: "var(--ink-4)", letterSpacing: "0.16em" }}>
             VARIATION THEORY

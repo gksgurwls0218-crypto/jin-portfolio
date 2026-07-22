@@ -60,8 +60,23 @@ export function getMatchSlugs(): string[] {
     .map((f) => f.replace(/\.mdx$/, ""));
 }
 
-export function getMatchSource(slug: string): { frontmatter: MatchFrontmatter; content: string } {
-  const raw = fs.readFileSync(path.join(MATCHES_DIR, `${slug}.mdx`), "utf-8");
+export function getMatchSource(slug: string, locale: "en" | "ko" = "en"): { frontmatter: MatchFrontmatter; content: string } {
+  // Korean bodies live in content/matches/ko/<slug>.mdx. When a Korean file is
+  // missing, fall back to the English source so the page still renders.
+  const koPath = path.join(MATCHES_DIR, "ko", `${slug}.mdx`);
+  const enPath = path.join(MATCHES_DIR, `${slug}.mdx`);
+
+  if (locale === "ko" && fs.existsSync(koPath)) {
+    const koRaw = fs.readFileSync(koPath, "utf-8");
+    const ko = matter(koRaw);
+    // English frontmatter is the canonical source for stats/lineups; merge any
+    // Korean frontmatter overrides (e.g. verdict3) on top of it.
+    const enRaw = fs.readFileSync(enPath, "utf-8");
+    const en = matter(enRaw);
+    return { frontmatter: { ...(en.data as MatchFrontmatter), ...(ko.data as Partial<MatchFrontmatter>) }, content: ko.content };
+  }
+
+  const raw = fs.readFileSync(enPath, "utf-8");
   const { data, content } = matter(raw);
   return { frontmatter: data as MatchFrontmatter, content };
 }

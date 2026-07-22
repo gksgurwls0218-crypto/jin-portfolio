@@ -1,11 +1,23 @@
 "use client";
-import Link from "next/link";
+import Link from "@/components/LocaleLink";
 import { useState } from "react";
 import Crest from "@/components/Crest";
 import MatchBoard from "@/components/match/MatchBoard";
 import GoalsSummary from "@/components/match/GoalsSummary";
 import Reveal from "@/components/Reveal";
 import { MATCHES, type GalleryMatch } from "@/lib/matchGallery";
+import { UI } from "@/lib/i18n";
+import { useLocale } from "@/lib/useLocale";
+
+const GALLERY_COPY = {
+  eyebrow: { en: "02 / Match Analysis", ko: "02 / 경기 분석" },
+  title1: { en: "Theory applied to", ko: "이론을 경기에" },
+  title2: { en: "matches analysed.", ko: "적용해 분석하다." },
+  intro: {
+    en: "Each analysis states what the framework predicted, then reports what actually happened. Hover a match to see both line-ups — then step inside.",
+    ko: "각 분석은 프레임워크가 무엇을 예측했는지 밝힌 뒤, 실제로 무슨 일이 일어났는지 보고한다. 경기 위에 마우스를 올리면 양 팀 라인업이 보인다 — 그런 뒤 안으로 들어가 보라.",
+  },
+} as const;
 
 // match.date is a display string like "28 Apr 2026" or "14 Oct 2025" — not lexicographically
 // sortable (day comes first), so parse it into a real timestamp for ordering.
@@ -24,6 +36,7 @@ const MATCHES_BY_RECENT = [...MATCHES].sort((a, b) => parseMatchDate(b.date) - p
 
 function Row({ match }: { match: GalleryMatch }) {
   const [hover, setHover] = useState(false);
+  const locale = useLocale();
 
   return (
     <Link
@@ -51,7 +64,7 @@ function Row({ match }: { match: GalleryMatch }) {
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-6">
           <span className="mono" style={{ fontSize: 11, color: "var(--green-mid)", letterSpacing: "0.06em" }}>{match.competition}</span>
           {match.featured && (
-            <span className="mono px-2 py-0.5 rounded-full" style={{ fontSize: 9, background: "var(--green-soft)", color: "var(--green-bright)", border: "0.5px solid var(--green-line)" }}>FEATURED</span>
+            <span className="mono px-2 py-0.5 rounded-full" style={{ fontSize: 9, background: "var(--green-soft)", color: "var(--green-bright)", border: "0.5px solid var(--green-line)" }}>{UI.common.featured[locale]}</span>
           )}
         </div>
 
@@ -83,7 +96,7 @@ function Row({ match }: { match: GalleryMatch }) {
             className="mono inline-flex items-center gap-1.5 w-fit mt-1"
             style={{ fontSize: 12.5, color: "var(--green-mid)" }}
           >
-            View analysis
+            {UI.common.viewAnalysis[locale]}
             <span style={{ transform: hover ? "translateX(4px)" : "none", transition: "transform .3s var(--ease-out)" }}>→</span>
           </span>
         </div>
@@ -110,17 +123,18 @@ function Row({ match }: { match: GalleryMatch }) {
 }
 
 export default function MatchGallery() {
+  const locale = useLocale();
   return (
     <section className="relative px-6 md:px-10 pt-36 pb-40" style={{ background: "var(--stage-2)" }}>
       <div className="max-w-[1180px] mx-auto">
         <Reveal>
-          <p className="mono t-eyebrow kicker mb-7">02 / Match Analysis</p>
+          <p className="mono t-eyebrow kicker mb-7">{GALLERY_COPY.eyebrow[locale]}</p>
           <h1 className="display t-section mb-8" style={{ color: "var(--ink)", maxWidth: 900 }}>
-            Theory applied to<br />
-            <span style={{ color: "var(--green-bright)" }}>matches analysed.</span>
+            {GALLERY_COPY.title1[locale]}<br />
+            <span style={{ color: "var(--green-bright)" }}>{GALLERY_COPY.title2[locale]}</span>
           </h1>
           <p className="mb-20" style={{ color: "var(--ink-2)", fontSize: "clamp(16px,1.6vw,19px)", lineHeight: 1.6, maxWidth: 640 }}>
-            Each analysis states what the framework predicted, then reports what actually happened. Hover a match to see both line-ups — then step inside.
+            {GALLERY_COPY.intro[locale]}
           </p>
         </Reveal>
 

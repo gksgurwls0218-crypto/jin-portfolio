@@ -1,17 +1,30 @@
 "use client";
 import { useEffect, useState } from "react";
+import type { Locale } from "@/lib/i18n";
 
-const SECTIONS = [
-  { id: "s1", label: "§1 THE STANDARDISED GAME" },
-  { id: "s2", label: "§2 VARIABLE & MUTATION" },
-  { id: "s3", label: "§3 LURE & SHOCK" },
-  { id: "s4", label: "§4 TWO ENGINES" },
-  { id: "s5", label: "§5 STRUCTURE" },
-  { id: "s6", label: "§6 MEASUREMENT" },
-  { id: "s7", label: "§7 FOR A CLUB" },
-];
+const SECTIONS_BY_LOCALE: Record<Locale, { id: string; label: string }[]> = {
+  en: [
+    { id: "s1", label: "§1 THE STANDARDISED GAME" },
+    { id: "s2", label: "§2 VARIABLE & MUTATION" },
+    { id: "s3", label: "§3 LURE & SHOCK" },
+    { id: "s4", label: "§4 TWO ENGINES" },
+    { id: "s5", label: "§5 STRUCTURE" },
+    { id: "s6", label: "§6 MEASUREMENT" },
+    { id: "s7", label: "§7 FOR A CLUB" },
+  ],
+  ko: [
+    { id: "s1", label: "§1 표준화된 게임" },
+    { id: "s2", label: "§2 변수 & 변이" },
+    { id: "s3", label: "§3 루어 앤 쇼크" },
+    { id: "s4", label: "§4 두 개의 엔진" },
+    { id: "s5", label: "§5 구조" },
+    { id: "s6", label: "§6 측정" },
+    { id: "s7", label: "§7 구단을 위해" },
+  ],
+};
 
-export default function EssayNav() {
+export default function EssayNav({ locale = "en" }: { locale?: Locale }) {
+  const SECTIONS = SECTIONS_BY_LOCALE[locale];
   const [active, setActive] = useState("s1");
   const [progress, setProgress] = useState(0);
 

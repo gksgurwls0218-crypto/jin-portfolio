@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+import Link from "@/components/LocaleLink";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import TeamBadge from "@/components/match/TeamBadge";
 import Reveal from "@/components/Reveal";

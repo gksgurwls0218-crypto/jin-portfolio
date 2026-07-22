@@ -1,5 +1,14 @@
 "use client";
 import { useEffect, useRef } from "react";
+import { useLocale } from "@/lib/useLocale";
+
+const HERO_COPY = {
+  eyebrow: { en: "Jin’s football philosophy", ko: "Jin의 축구 철학" },
+  titleAccent: { en: "Variation", ko: "변이" },
+  titleRest: { en: " Theory", ko: " 이론" },
+  line1: { en: "System adapts.", ko: "시스템은 적응한다." },
+  line2: { en: "Variation breaks it.", ko: "변이가 그것을 깨뜨린다." },
+} as const;
 
 type Pt = { x: number; y: number };
 const le = (a: number, b: number, t: number) => a + (b - a) * t;
@@ -88,6 +97,7 @@ function rr(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: n
 }
 
 export default function Hero() {
+  const locale = useLocale();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const hudLblRef = useRef<HTMLDivElement>(null);
   const hudFillRef = useRef<HTMLDivElement>(null);
@@ -366,12 +376,12 @@ export default function Hero() {
         style={{ background: "linear-gradient(to top, var(--stage) 0%, var(--stage) 10%, rgba(255,255,255,.55) 24%, rgba(255,255,255,.2) 42%, transparent 62%)" }}
       >
         <div className="max-w-4xl">
-          <div className="mono t-eyebrow kicker mb-5" style={{ color: "var(--green-mid)" }}>Jin&rsquo;s football philosophy</div>
+          <div className="mono t-eyebrow kicker mb-5" style={{ color: "var(--green-mid)" }}>{HERO_COPY.eyebrow[locale]}</div>
           <h1 className="display mb-5 t-hero" style={{ color: "var(--ink)" }}>
-            <span style={{ color: "var(--green-bright)" }}>Variation</span> Theory
+            <span style={{ color: "var(--green-bright)" }}>{HERO_COPY.titleAccent[locale]}</span>{HERO_COPY.titleRest[locale]}
           </h1>
           <p className="mb-2" style={{ color: "var(--ink-2)", fontSize: "clamp(17px,2.1vw,26px)", lineHeight: 1.3, fontWeight: 500 }}>
-            System adapts. <span style={{ color: "var(--ink)" }}>Variation breaks it.</span>
+            {HERO_COPY.line1[locale]} <span style={{ color: "var(--ink)" }}>{HERO_COPY.line2[locale]}</span>
           </p>
         </div>
 
