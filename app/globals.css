@@ -160,6 +160,37 @@ body {
 @keyframes pulse { 0%,100% { opacity: .35; transform: scale(.85); } 50% { opacity: 1; transform: scale(1.2); } }
 .pulse-dot { animation: pulse 2.2s var(--ease-io) infinite; }
 
+/* ── Essay animation embeds (KpiDetail's VisualEmbed) ──
+   On mobile these are fixed-logical-pixel canvas animations rendered inside
+   a narrow iframe box, so their internal labels/text end up tiny. Bleed the
+   frame to the true viewport edges and boost its height below the md
+   breakpoint to reclaim readable size; revert to the original card layout
+   and the author-set height (--embed-h, set inline per block) at md+. */
+.embed-frame {
+  border-radius: 0;
+  border-left: none !important;
+  border-right: none !important;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  width: 100vw;
+}
+.embed-frame-iframe {
+  height: calc(var(--embed-h) * 1.4);
+}
+@media (min-width: 768px) {
+  .embed-frame {
+    border-radius: 1rem;
+    border-left: 0.5px solid var(--edge) !important;
+    border-right: 0.5px solid var(--edge) !important;
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+  }
+  .embed-frame-iframe {
+    height: var(--embed-h);
+  }
+}
+
 /* ── Accessibility: honour reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

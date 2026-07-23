@@ -2,11 +2,38 @@
    here are redesigned for the site's own visual language — none are lifted
    directly from jin's blog images. Sources are cited in each component or
    in the essay block's visualCaption. Estimates/illustrative (non-empirical)
-   diagrams are labelled as such inline, per project rules. */
+   diagrams are labelled as such inline, per project rules.
+
+   IMPORTANT: every sketch below renders inside KpiDetail's SketchFrame,
+   whose card background is the dark var(--ink) token (not the page's light
+   var(--stage)). Any text/line drawn directly on that card — i.e. not
+   inside one of the light var(--stage-2) sub-cards used by StatPair,
+   PlayerFitGrid, LeverkusenFlow's boxes, CBTempoDiagram's boxes — must use
+   the on-dark D_* constants below, not the shared light-mode --ink* tokens
+   (those are near-black and become invisible on a near-black card). */
 
 import type { ReactNode, ComponentType } from "react";
 
+// ---------- on-dark palette (for text/lines sitting directly on the
+// SketchFrame's dark card, as opposed to inside a light --stage-2 sub-card) ----------
+
+const D_TEXT = "rgba(255,255,255,.94)";
+const D_TEXT2 = "rgba(255,255,255,.72)";
+const D_TEXT3 = "rgba(255,255,255,.58)";
+const D_TEXT4 = "rgba(255,255,255,.40)";
+const D_EDGE = "rgba(255,255,255,.14)";
+const D_EDGE2 = "rgba(255,255,255,.22)";
+const D_ACCENT = "rgba(255,255,255,.98)"; // the "pop" on dark — weight, not a new hue
+
 // ---------- shared bits ----------
+
+function Caption({ children, mt = 4 }: { children: ReactNode; mt?: 3 | 4 }) {
+  return (
+    <p className={`mono mt-${mt}`} style={{ fontSize: 10.5, color: D_TEXT4, lineHeight: 1.6 }}>
+      {children}
+    </p>
+  );
+}
 
 function Tag({ children }: { children: ReactNode }) {
   return (
@@ -16,8 +43,8 @@ function Tag({ children }: { children: ReactNode }) {
         fontSize: 10.5,
         padding: "3px 8px",
         borderRadius: 20,
-        border: "0.5px solid var(--edge-2)",
-        color: "var(--ink-3)",
+        border: `0.5px solid ${D_EDGE2}`,
+        color: D_TEXT3,
         whiteSpace: "nowrap",
       }}
     >
@@ -45,13 +72,13 @@ function BarRow({
   return (
     <div className="flex items-center gap-3">
       <div style={{ width: 118, flexShrink: 0 }}>
-        <p className="mono" style={{ fontSize: 12, color: "var(--ink-2)" }}>{label}</p>
-        {sub ? <p className="mono" style={{ fontSize: 10, color: "var(--ink-4)" }}>{sub}</p> : null}
+        <p className="mono" style={{ fontSize: 12, color: D_TEXT2 }}>{label}</p>
+        {sub ? <p className="mono" style={{ fontSize: 10, color: D_TEXT4 }}>{sub}</p> : null}
       </div>
       <div style={{ flex: 1, height: 20, background: "var(--stage-2)", borderRadius: 6, overflow: "hidden", border: "0.5px solid var(--edge)" }}>
         <div style={{ width: `${pct}%`, height: "100%", background: color, borderRadius: 6 }} />
       </div>
-      <p className="mono" style={{ width: 68, textAlign: "right", fontSize: 12.5, color: "var(--ink)", flexShrink: 0 }}>{display}</p>
+      <p className="mono" style={{ width: 68, textAlign: "right", fontSize: 12.5, color: D_TEXT, flexShrink: 0 }}>{display}</p>
     </div>
   );
 }
@@ -69,24 +96,24 @@ function TimelineTrack({
         {steps.map((s, i) => (
           <div key={s.label} style={{ flex: 1, position: "relative", paddingRight: i < steps.length - 1 ? 14 : 0 }}>
             {i < steps.length - 1 && (
-              <div style={{ position: "absolute", top: 5, right: 0, width: 14, height: 1, background: "var(--edge-2)" }} />
+              <div style={{ position: "absolute", top: 5, right: 0, width: 14, height: 1, background: D_EDGE }} />
             )}
             <div
               style={{
                 width: 10,
                 height: 10,
                 borderRadius: "50%",
-                background: s.active ? "var(--green-bright)" : "var(--ink-4)",
+                background: s.active ? D_ACCENT : D_TEXT4,
                 marginBottom: 10,
               }}
             />
-            <p className="mono" style={{ fontSize: 10, color: "var(--ink-4)", marginBottom: 3 }}>{s.era}</p>
-            <p className="mono" style={{ fontSize: 13, color: s.active ? "var(--green-bright)" : "var(--ink)", marginBottom: 4, fontWeight: 500 }}>{s.label}</p>
-            <p style={{ fontSize: 12, lineHeight: 1.5, color: "var(--ink-3)" }}>{s.detail}</p>
+            <p className="mono" style={{ fontSize: 10, color: D_TEXT4, marginBottom: 3 }}>{s.era}</p>
+            <p className="mono" style={{ fontSize: 13, color: s.active ? D_ACCENT : D_TEXT, marginBottom: 4, fontWeight: s.active ? 700 : 500 }}>{s.label}</p>
+            <p style={{ fontSize: 12, lineHeight: 1.5, color: D_TEXT3 }}>{s.detail}</p>
           </div>
         ))}
       </div>
-      {note ? <p className="mono mt-5" style={{ fontSize: 10.5, color: "var(--ink-4)" }}>{note}</p> : null}
+      {note ? <Caption mt={4}>{note}</Caption> : null}
     </div>
   );
 }
@@ -111,7 +138,7 @@ function StatPair({
           </div>
         ))}
       </div>
-      {note ? <p className="mono mt-4" style={{ fontSize: 10.5, color: "var(--ink-4)" }}>{note}</p> : null}
+      {note ? <Caption mt={4}>{note}</Caption> : null}
     </div>
   );
 }
@@ -136,9 +163,9 @@ export function PlayerFitGrid() {
           </div>
         ))}
       </div>
-      <p className="mono mt-4" style={{ fontSize: 10.5, color: "var(--ink-4)" }}>
+      <Caption>
         Illustrative — jin's read of players who habitually occupy and release from the pre-half space, not a ranked or sourced list.
-      </p>
+      </Caption>
     </div>
   );
 }
@@ -159,6 +186,9 @@ export function PHSZoneDiagram() {
   const EDGE = "rgba(20,24,26,.40)";
   const EDGE_SOFT = "rgba(20,24,26,.28)";
   const INK4 = "rgba(20,24,26,.62)";
+  // The three "THIRD" labels sit above the pitch rect (y<20), outside its light
+  // fill — on the SketchFrame's dark card directly, so they need a light colour.
+  const OUTER_LABEL = D_TEXT3;
   return (
     <div>
       <svg viewBox="0 0 640 410" width="100%" style={{ display: "block" }}>
@@ -179,9 +209,9 @@ export function PHSZoneDiagram() {
         {/* thirds (defensive | middle | final) */}
         <line x1="220" y1="20" x2="220" y2="380" stroke={EDGE_SOFT} strokeWidth="1.25" strokeDasharray="4 4" />
         <line x1="420" y1="20" x2="420" y2="380" stroke={EDGE_SOFT} strokeWidth="1.25" strokeDasharray="4 4" />
-        <text x="120" y="14" textAnchor="middle" className="mono" fontSize="9.5" fontWeight={500} fill={INK4}>DEFENSIVE THIRD</text>
-        <text x="320" y="14" textAnchor="middle" className="mono" fontSize="9.5" fontWeight={500} fill={INK4}>MIDDLE THIRD</text>
-        <text x="520" y="14" textAnchor="middle" className="mono" fontSize="9.5" fontWeight={500} fill={INK4}>FINAL THIRD</text>
+        <text x="120" y="14" textAnchor="middle" className="mono" fontSize="9.5" fontWeight={500} fill={OUTER_LABEL}>DEFENSIVE THIRD</text>
+        <text x="320" y="14" textAnchor="middle" className="mono" fontSize="9.5" fontWeight={500} fill={OUTER_LABEL}>MIDDLE THIRD</text>
+        <text x="520" y="14" textAnchor="middle" className="mono" fontSize="9.5" fontWeight={500} fill={OUTER_LABEL}>FINAL THIRD</text>
 
         {/* halfway line + centre circle */}
         <line x1="320" y1="20" x2="320" y2="380" stroke={EDGE} strokeWidth="1.25" />
@@ -232,9 +262,9 @@ export function PHSZoneDiagram() {
         <text x="380" y="45" textAnchor="middle" className="mono" fontSize="10.5" fontWeight={600} fill={GREEN}>PHS</text>
         <text x="380" y="355" textAnchor="middle" className="mono" fontSize="10.5" fontWeight={600} fill={GREEN}>PHS</text>
       </svg>
-      <p className="mono mt-3" style={{ fontSize: 10.5, color: "var(--ink-4)" }}>
+      <Caption mt={3}>
         Schematic, not a heat map — the pre-half space as jin defines it: the touchline-adjacent strip of the middle third, narrowed to the portion nearest the final third, on both flanks. Estimated xT range for this zone: 0.08–0.20, jin's working estimate, not a sourced measurement.
-      </p>
+      </Caption>
     </div>
   );
 }
@@ -248,9 +278,9 @@ export function PassQualityBar() {
         <BarRow label="Accurate pass to feet" value={100} max={150} display="100" color="var(--ink-4)" />
         <BarRow label="One-touch, on the move" value={135} max={150} display="120–150" color="var(--green-bright)" />
       </div>
-      <p className="mono mt-4" style={{ fontSize: 10.5, color: "var(--ink-4)" }}>
+      <Caption>
         jin's own conceptual scale for weighing pass quality in chained post-play — not a measured statistic. Illustrates why a one-touch lateral into a moving receiver is worth more than an accurate pass to a stationary one.
-      </p>
+      </Caption>
     </div>
   );
 }
@@ -265,19 +295,19 @@ export function GwangjuRoleDiagram() {
       <div className="flex flex-col gap-4">
         {rows.map((r) => (
           <div key={r.primary} className="flex items-center gap-3 flex-wrap">
-            <div style={{ padding: "8px 14px", borderRadius: 10, background: "var(--green-soft)", border: "0.5px solid var(--green-line)" }}>
-              <p className="mono" style={{ fontSize: 12.5, color: "var(--green-bright)" }}>{r.primary}</p>
+            <div style={{ padding: "8px 14px", borderRadius: 10, background: "rgba(255,255,255,.08)", border: `0.5px solid ${D_EDGE2}` }}>
+              <p className="mono" style={{ fontSize: 12.5, color: D_ACCENT, fontWeight: 600 }}>{r.primary}</p>
             </div>
-            <span className="mono" style={{ fontSize: 11, color: "var(--ink-4)" }}>role covered by →</span>
+            <span className="mono" style={{ fontSize: 11, color: D_TEXT4 }}>role covered by →</span>
             <div className="flex gap-2 flex-wrap">
               {r.covers.map((c) => <Tag key={c}>{c}</Tag>)}
             </div>
           </div>
         ))}
       </div>
-      <p className="mono mt-4" style={{ fontSize: 10.5, color: "var(--ink-4)" }}>
+      <Caption>
         Gwangju FC (Lee Jung-hyo), jin's blog notes on role substitution — every player can deputise for the pivot pattern, which is what keeps the chained structure running through fixture congestion and injuries.
-      </p>
+      </Caption>
     </div>
   );
 }
@@ -294,7 +324,7 @@ export function LeverkusenFlow() {
         <div style={{ padding: "10px 16px", borderRadius: 10, background: "var(--stage-2)", border: "0.5px solid var(--edge-2)" }}>
           <p className="mono" style={{ fontSize: 13, color: "var(--ink)", fontWeight: 500 }}>Xhaka — reads the whole pitch</p>
         </div>
-        <div style={{ width: 1, height: 18, background: "var(--edge-2)" }} />
+        <div style={{ width: 1, height: 18, background: D_EDGE }} />
         <div className="flex gap-3 flex-wrap justify-center">
           {branches.map((b) => (
             <div key={b.label} style={{ width: 168, padding: "12px 14px", borderRadius: 12, background: "var(--stage-2)", border: "0.5px solid var(--edge)" }}>
@@ -304,9 +334,9 @@ export function LeverkusenFlow() {
           ))}
         </div>
       </div>
-      <p className="mono mt-4" style={{ fontSize: 10.5, color: "var(--ink-4)" }}>
+      <Caption>
         Leverkusen under Xabi Alonso, jin's blog reading of the double-pivot activation pattern — illustrative sequence, not a play-by-play from a single dataset.
-      </p>
+      </Caption>
     </div>
   );
 }
@@ -343,17 +373,17 @@ export function QatarDistanceChart() {
   ];
   return (
     <div>
-      <p className="mono mb-2" style={{ fontSize: 10.5, color: "var(--ink-4)" }}>Out by the Round of 16</p>
+      <p className="mono mb-2" style={{ fontSize: 10.5, color: D_TEXT4 }}>Out by the Round of 16</p>
       <div className="flex flex-col gap-2 mb-5">
         {early.map((t) => <BarRow key={t.label} label={t.label} value={t.v} max={125} display={`${t.v.toFixed(1)} km`} color="var(--ink-4)" />)}
       </div>
-      <p className="mono mb-2" style={{ fontSize: 10.5, color: "var(--ink-4)" }}>Semi-finalists / finalists</p>
+      <p className="mono mb-2" style={{ fontSize: 10.5, color: D_TEXT4 }}>Semi-finalists / finalists</p>
       <div className="flex flex-col gap-2">
         {deep.map((t) => <BarRow key={t.label} label={t.label} value={t.v} max={125} display={`${t.v.toFixed(1)} km`} color="var(--green-bright)" />)}
       </div>
-      <p className="mono mt-4" style={{ fontSize: 10.5, color: "var(--ink-4)", lineHeight: 1.6 }}>
+      <Caption>
         Average Total Distance Covered per match, hand-aggregated from all 64 FIFA official post-match summary reports, Qatar 2022. Three of four deep-running teams (Argentina, France, Morocco) averaged less than every early-exit team. Croatia is the exception in this sample — two of its wins went to extra time, which mechanically adds ~30 minutes of distance and pulls its average up; the other three deep-running teams didn't have that many extra-time matches. Correlation, not causation — a small, single-tournament sample.
-      </p>
+      </Caption>
     </div>
   );
 }
@@ -370,9 +400,9 @@ export function FsqcaConsistencyChart() {
       <div className="flex flex-col gap-3">
         {rows.map((r) => <BarRow key={r.label} label={r.label} sub={r.sub} value={r.v} max={100} display={`${r.v}%`} />)}
       </div>
-      <p className="mono mt-4" style={{ fontSize: 10.5, color: "var(--ink-4)", lineHeight: 1.6 }}>
+      <Caption>
         Consistency of the 4 winning configurations found by fsQCA on Qatar 2022 (49 decisive matches, 98 teams). No single KPI was a necessary condition for winning — different combinations of the same 7 KPIs all cleared ~90% consistency. Source: Yan et al. (2024), "How to win in FIFA World Cup Qatar 2022?", Frontiers in Psychology 14:1307346.
-      </p>
+      </Caption>
     </div>
   );
 }
@@ -431,9 +461,9 @@ export function CBTempoDiagram() {
           </div>
         </div>
       </div>
-      <p className="mono mt-4" style={{ fontSize: 10.5, color: "var(--ink-4)" }}>
+      <Caption>
         "Two tempos saved" is jin's own framing of the touch-count gap, not a measured average — illustrates why the line-CB's strong foot changes how fast an overload can flip to isolation.
-      </p>
+      </Caption>
     </div>
   );
 }
@@ -442,7 +472,7 @@ export function DMTimelineAndRecovery() {
   return (
     <div className="flex flex-col gap-6">
       <DMRoleTimeline />
-      <div style={{ height: 1, background: "var(--edge)" }} />
+      <div style={{ height: 1, background: D_EDGE }} />
       <RecoveryTimeStat />
     </div>
   );

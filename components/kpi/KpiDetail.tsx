@@ -38,13 +38,14 @@ function VisualEmbed({ src, caption, height = 420 }: { src: string; caption?: st
   return (
     <div className="mt-5">
       <div
-        className="rounded-2xl overflow-hidden"
-        style={{ border: "0.5px solid var(--edge)", background: "var(--ink)" }}
+        className="embed-frame overflow-hidden"
+        style={{ border: "0.5px solid var(--edge)", background: "var(--ink)", ["--embed-h" as string]: `${height}px` }}
       >
         <iframe
           src={src}
           title={caption || "Variation Theory diagram"}
-          style={{ width: "100%", height, border: "none", display: "block" }}
+          className="embed-frame-iframe"
+          style={{ width: "100%", border: "none", display: "block" }}
           loading="lazy"
         />
       </div>
