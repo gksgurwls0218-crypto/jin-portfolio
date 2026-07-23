@@ -22,7 +22,7 @@ export default function FourPhaseRing() {
   const [hovered, setHovered] = useState<PhaseId | null>(null);
 
   return (
-    <div className="relative mx-auto" style={{ width: 320, height: 320 }}>
+    <div className="relative mx-auto" style={{ width: "min(320px, 86vw)", height: "min(320px, 86vw)" }}>
       {PHASES.map((p) => (
         <div
           key={p.id}

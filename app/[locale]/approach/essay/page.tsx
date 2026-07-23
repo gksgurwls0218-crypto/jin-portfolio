@@ -299,7 +299,7 @@ export default async function ApproachEssayPage({ params }: { params: Promise<{ 
       {/* ── HERO ── */}
       <div className="px-6 md:px-12 pt-16 pb-10" style={{ borderBottom: "0.5px solid var(--edge)" }}>
         <p className="mono mb-3.5" style={{ fontSize: 10, letterSpacing: ".22em", color: "var(--green-mid)" }}>{t.heroTag}</p>
-        <h1 className="font-medium mb-1.5" style={{ fontSize: 40, letterSpacing: "-.01em", color: "var(--ink)" }}>{t.heroTitle}</h1>
+        <h1 className="font-medium mb-1.5" style={{ fontSize: "clamp(29px, 7vw, 40px)", letterSpacing: "-.01em", color: "var(--ink)" }}>{t.heroTitle}</h1>
         <p className="mb-6" style={{ fontSize: 15, color: "var(--ink-2)" }}>{t.heroSub}</p>
         <div className="rounded-xl p-5 max-w-[720px]" style={{ background: "var(--stage-2)", border: "0.5px solid var(--edge-2)", borderLeft: "2px solid var(--green-bright)", backdropFilter: "blur(8px)" }}>
           <blockquote style={{ fontSize: 15, lineHeight: 1.8, fontStyle: "italic", color: "var(--ink)" }}>{t.quote}</blockquote>
