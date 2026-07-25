@@ -5,7 +5,7 @@ import { ESSAY_VISUALS } from "./EssayVisuals";
 export type Badge = { label: string; color: string; bg: string; border: string };
 export type Block = {
   label: string;
-  text: string;
+  text: ReactNode;
   /** Optional embedded animation — path under /public, e.g. "/anim/pre-half-space.html" */
   visualSrc?: string;
   /** Optional key into the ESSAY_VISUALS registry — a redesigned, site-native sketch */

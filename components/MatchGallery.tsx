@@ -122,6 +122,71 @@ function Row({ match }: { match: GalleryMatch }) {
   );
 }
 
+/* Tournament-scale report — a whole competition rather than a single fixture, so it
+   gets its own card shape instead of the home-vs-away scoreline used above. */
+const TOURNAMENT_COPY = {
+  tag: { en: "TOURNAMENT REPORT", ko: "대회 리포트" },
+  competition: { en: "FIFA World Cup 2026 · all 104 matches", ko: "2026 FIFA 월드컵 · 104경기 전수" },
+  title: { en: "The underdog does not lose.", ko: "약팀이 지는 게 아니다." },
+  sub: {
+    en: "The barren game model loses. Every official FIFA post-match report of the tournament, parsed in full — 208 team-matches — and read back against variation theory. Including the three measures of mine that failed.",
+    ko: "무력한 게임 모델이 진다. 대회 FIFA 공식 경기 리포트 전수 파싱 — 208 팀-경기 — 을 변이 이론에 되비춰 읽었다. 실패한 내 지표 세 개까지 그대로.",
+  },
+  stats: {
+    en: [["0 / 15", "barren reactive, knockouts"], ["88.9%", "productive reactive"], ["86.2%", "xG picks the winner"], ["104", "matches parsed"]],
+    ko: [["15전 0승", "무력한 반응형 (녹아웃)"], ["88.9%", "생산적 반응형 승률"], ["86.2%", "xG의 승자 적중률"], ["104", "전 경기 파싱"]],
+  },
+} as const;
+
+function TournamentRow() {
+  const locale = useLocale();
+  const [hover, setHover] = useState(false);
+  return (
+    <Link
+      href="/match-analysis/wc2026-report"
+      className="relative flex flex-col lg:flex-row gap-8 rounded-[26px] p-8 md:p-10"
+      style={{
+        background: "var(--green)",
+        color: "var(--signal-ink)",
+        border: `0.5px solid ${hover ? "var(--signal-edge)" : "transparent"}`,
+        boxShadow: hover ? "var(--lift)" : "0 20px 50px rgba(0,0,0,0.35)",
+        transition: "box-shadow .5s var(--ease-out), border-color .5s var(--ease-out)",
+        cursor: "pointer",
+      }}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+    >
+      <div className="flex-1">
+        <div className="flex flex-wrap items-center gap-3 mb-6">
+          <span className="mono px-2 py-0.5 rounded-full" style={{ fontSize: 9, letterSpacing: ".14em", border: "0.5px solid var(--signal-edge)", color: "var(--signal-ink-2)" }}>
+            {TOURNAMENT_COPY.tag[locale]}
+          </span>
+          <span className="mono" style={{ fontSize: 11, color: "var(--signal-ink-3)", letterSpacing: "0.06em" }}>
+            {TOURNAMENT_COPY.competition[locale]}
+          </span>
+        </div>
+        <h2 className="display mb-4" style={{ fontSize: "clamp(28px,4vw,46px)", lineHeight: 1.08, letterSpacing: "-0.035em" }}>
+          {TOURNAMENT_COPY.title[locale]}
+        </h2>
+        <p style={{ fontSize: 15.5, lineHeight: 1.68, color: "var(--signal-ink-2)", maxWidth: 560 }}>
+          {TOURNAMENT_COPY.sub[locale]}
+        </p>
+        <span className="mono inline-block mt-7" style={{ fontSize: 11.5, letterSpacing: ".14em", color: "var(--signal-ink)", borderBottom: "1px solid var(--signal-edge)", paddingBottom: 3 }}>
+          {UI.common.viewAnalysis[locale].toUpperCase()} →
+        </span>
+      </div>
+      <div className="grid grid-cols-2 gap-x-8 gap-y-6 shrink-0 self-center" style={{ minWidth: 240 }}>
+        {TOURNAMENT_COPY.stats[locale].map(([big, label]) => (
+          <div key={label} className="pt-3" style={{ borderTop: "0.5px solid var(--signal-edge)" }}>
+            <span className="display block" style={{ fontSize: 26, letterSpacing: "-0.03em" }}>{big}</span>
+            <span className="mono block mt-1" style={{ fontSize: 9.5, letterSpacing: ".12em", color: "var(--signal-ink-3)" }}>{label}</span>
+          </div>
+        ))}
+      </div>
+    </Link>
+  );
+}
+
 export default function MatchGallery() {
   const locale = useLocale();
   return (
@@ -139,8 +204,11 @@ export default function MatchGallery() {
         </Reveal>
 
         <div className="flex flex-col gap-8">
+          <Reveal>
+            <TournamentRow />
+          </Reveal>
           {MATCHES_BY_RECENT.map((m, i) => (
-            <Reveal key={m.slug} delay={i * 90}>
+            <Reveal key={m.slug} delay={(i + 1) * 90}>
               <Row match={m} />
             </Reveal>
           ))}
