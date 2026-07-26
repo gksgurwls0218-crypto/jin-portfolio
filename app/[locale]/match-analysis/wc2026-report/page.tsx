@@ -19,11 +19,11 @@ import {
 
 const METADATA: Record<Locale, Metadata> = {
   en: {
-    title: "World Cup 2026 — Tournament Report | Jin",
+    title: "World Cup 2026 — Tactical Trends Report | Jin",
     description: "All 104 official FIFA post-match reports, parsed in full. What loses is not the reactive model — it is the barren one.",
   },
   ko: {
-    title: "2026 월드컵 대회 리포트 | Jin",
+    title: "2026 월드컵 전술 트렌드 리포트 | Jin",
     description: "FIFA 공식 경기 리포트 104경기 전수 파싱. 지는 것은 반응형 모델이 아니라 무력한 모델이다.",
   },
 };
@@ -181,7 +181,7 @@ export default async function WC2026ReportPage({ params }: { params: Promise<{ l
       <header className="px-6 md:px-10 pt-16 pb-10" style={{ background: "var(--green)", color: "var(--signal-ink)" }}>
         <div className="max-w-[1000px] mx-auto">
           <span className="mono block mb-5" style={{ fontSize: 11.5, letterSpacing: ".2em", color: "var(--signal-ink-3)" }}>
-            {ko ? "대회 리포트" : "Tournament report"} · FIFA WORLD CUP 2026
+            {ko ? "전술 트렌드 리포트" : "Tactical trends report"} · FIFA WORLD CUP 2026
           </span>
           <h1 className="display" style={{ fontSize: "clamp(30px,5.2vw,58px)", lineHeight: 1.06, letterSpacing: "-0.035em" }}>
             {ko ? "약팀이 지는 게 아니다." : "The underdog does not lose."}

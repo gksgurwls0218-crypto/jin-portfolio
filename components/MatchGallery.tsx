@@ -125,7 +125,7 @@ function Row({ match }: { match: GalleryMatch }) {
 /* Tournament-scale report — a whole competition rather than a single fixture, so it
    gets its own card shape instead of the home-vs-away scoreline used above. */
 const TOURNAMENT_COPY = {
-  tag: { en: "TOURNAMENT REPORT", ko: "대회 리포트" },
+  tag: { en: "TACTICAL TRENDS REPORT", ko: "전술 트렌드 리포트" },
   competition: { en: "FIFA World Cup 2026 · all 104 matches", ko: "2026 FIFA 월드컵 · 104경기 전수" },
   title: { en: "The underdog does not lose.", ko: "약팀이 지는 게 아니다." },
   sub: {
