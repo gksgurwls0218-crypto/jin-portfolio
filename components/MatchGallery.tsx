@@ -187,6 +187,71 @@ function TournamentRow() {
   );
 }
 
+/* Standalone long-form match report — authored as a self-contained HTML document
+   and embedded at /match-analysis/korea-jordan, so it gets a report-shaped card
+   rather than the home-vs-away scoreline used above. */
+const REPORT_COPY = {
+  tag: { en: "MATCH REPORT", ko: "경기 분석 리포트" },
+  competition: { en: "AFC Asian Cup Qatar 2023 · Korea Republic 2-2 Jordan", ko: "AFC 아시안컵 카타르 2023 · 대한민국 2-2 요르단" },
+  title: { en: "Was it the penetration, or the pressing?", ko: "침투가 원인이었나, 압박이 원인이었나" },
+  sub: {
+    en: "Two claims tested in order. Penetration halved — and shots went up. What changed was not the runs in front but the pressing behind them. Every figure marked for what is measured and what is assumed.",
+    ko: "두 개의 가설을 순서대로 검증했다. 침투는 반토막 났는데 슈팅은 늘었다. 바뀐 것은 앞선의 침투가 아니라 상대의 압박이었다. 확정된 수치와 가정을 그림마다 구분해 표시했다.",
+  },
+  stats: {
+    en: [["164 → 81", "runs in behind"], ["14 → 22", "shots"], ["42 → 25", "CB circulation"], ["14 / 6 / 16", "A–B–A shots"]],
+    ko: [["164 → 81", "뒷공간 침투"], ["14 → 22", "슈팅"], ["42 → 25", "센터백 순환"], ["14 / 6 / 16", "A–B–A 슈팅"]],
+  },
+} as const;
+
+function ReportRow() {
+  const locale = useLocale();
+  const [hover, setHover] = useState(false);
+  return (
+    <Link
+      href="/match-analysis/korea-jordan"
+      className="relative flex flex-col lg:flex-row gap-8 rounded-[26px] p-8 md:p-10"
+      style={{
+        background: "var(--green-soft)",
+        border: `0.5px solid ${hover ? "var(--green-bright)" : "var(--green-line)"}`,
+        boxShadow: hover ? "var(--lift)" : "none",
+        transition: "box-shadow .5s var(--ease-out), border-color .5s var(--ease-out)",
+        cursor: "pointer",
+      }}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+    >
+      <div className="flex-1">
+        <div className="flex flex-wrap items-center gap-3 mb-6">
+          <span className="mono px-2 py-0.5 rounded-full" style={{ fontSize: 9, letterSpacing: ".14em", border: "0.5px solid var(--green-line)", color: "var(--green-bright)" }}>
+            {REPORT_COPY.tag[locale]}
+          </span>
+          <span className="mono" style={{ fontSize: 11, color: "var(--ink-3)", letterSpacing: "0.06em" }}>
+            {REPORT_COPY.competition[locale]}
+          </span>
+        </div>
+        <h2 className="display mb-4" style={{ fontSize: "clamp(26px,3.4vw,40px)", lineHeight: 1.1, letterSpacing: "-0.035em", color: "var(--ink)" }}>
+          {REPORT_COPY.title[locale]}
+        </h2>
+        <p style={{ fontSize: 15.5, lineHeight: 1.68, color: "var(--ink-2)", maxWidth: 560 }}>
+          {REPORT_COPY.sub[locale]}
+        </p>
+        <span className="mono inline-block mt-7" style={{ fontSize: 11.5, letterSpacing: ".14em", color: "var(--green-bright)", borderBottom: "1px solid var(--green-line)", paddingBottom: 3 }}>
+          {UI.common.viewAnalysis[locale].toUpperCase()} →
+        </span>
+      </div>
+      <div className="grid grid-cols-2 gap-x-8 gap-y-6 shrink-0 self-center" style={{ minWidth: 240 }}>
+        {REPORT_COPY.stats[locale].map(([big, label]) => (
+          <div key={label} className="pt-3" style={{ borderTop: "0.5px solid var(--green-line)" }}>
+            <span className="display block" style={{ fontSize: 22, letterSpacing: "-0.03em", color: "var(--ink)" }}>{big}</span>
+            <span className="mono block mt-1" style={{ fontSize: 9.5, letterSpacing: ".12em", color: "var(--ink-3)" }}>{label}</span>
+          </div>
+        ))}
+      </div>
+    </Link>
+  );
+}
+
 export default function MatchGallery() {
   const locale = useLocale();
   return (
@@ -206,6 +271,9 @@ export default function MatchGallery() {
         <div className="flex flex-col gap-8">
           <Reveal>
             <TournamentRow />
+          </Reveal>
+          <Reveal delay={70}>
+            <ReportRow />
           </Reveal>
           {MATCHES_BY_RECENT.map((m, i) => (
             <Reveal key={m.slug} delay={(i + 1) * 90}>
