@@ -21,18 +21,36 @@ const GALLERY_COPY = {
 
 // match.date is a display string like "28 Apr 2026" or "14 Oct 2025" — not lexicographically
 // sortable (day comes first), so parse it into a real timestamp for ordering.
-const MONTHS: Record<string, number> = {
-  jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5,
-  jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11,
-};
-function parseMatchDate(dateStr: string): number {
-  const m = dateStr.match(/(\d{1,2})\s+([A-Za-z]{3,})\s+(\d{4})/);
-  if (!m) return 0;
-  const [, day, mon, year] = m;
-  const month = MONTHS[mon.slice(0, 3).toLowerCase()] ?? 0;
-  return new Date(Number(year), month, Number(day)).getTime();
-}
-const MATCHES_BY_RECENT = [...MATCHES].sort((a, b) => parseMatchDate(b.date) - parseMatchDate(a.date));
+/* ─────────────────────────────────────────────────────────────────────────
+   갤러리 정렬 = 사이트에 올린 날짜(publishedAt) 최신순.
+   경기가 열린 날짜(date)가 아니다 — 2025년 경기를 오늘 분석해 올렸다면
+   그 카드가 맨 위에 와야 최신 작업이 먼저 보인다.
+
+   새 분석을 추가할 때:
+   · MDX 경기 리포트  → lib/matchGallery.ts 의 해당 항목에 publishedAt 추가
+   · 단독 HTML 리포트 → 아래 STANDALONE 배열에 한 줄 추가
+   둘 다 여기서 하나의 목록으로 합쳐져 날짜순으로 정렬된다.
+   ───────────────────────────────────────────────────────────────────────── */
+type CardEntry =
+  | { kind: "match"; key: string; publishedAt: string; match: GalleryMatch }
+  | { kind: "tournament"; key: string; publishedAt: string }
+  | { kind: "report"; key: string; publishedAt: string };
+
+const STANDALONE: CardEntry[] = [
+  { kind: "tournament", key: "wc2026-report", publishedAt: "2026-07-26" },
+  { kind: "report", key: "korea-jordan", publishedAt: "2026-08-11" },
+];
+
+const GALLERY_CARDS: CardEntry[] = [
+  ...STANDALONE,
+  ...MATCHES.map<CardEntry>((m) => ({
+    kind: "match",
+    key: m.slug,
+    // publishedAt이 비어 있으면 목록 맨 뒤로 (빈 문자열이 가장 작게 정렬된다)
+    publishedAt: m.publishedAt ?? "",
+    match: m,
+  })),
+].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
 
 function Row({ match }: { match: GalleryMatch }) {
   const [hover, setHover] = useState(false);
@@ -269,15 +287,11 @@ export default function MatchGallery() {
         </Reveal>
 
         <div className="flex flex-col gap-8">
-          <Reveal>
-            <TournamentRow />
-          </Reveal>
-          <Reveal delay={70}>
-            <ReportRow />
-          </Reveal>
-          {MATCHES_BY_RECENT.map((m, i) => (
-            <Reveal key={m.slug} delay={(i + 1) * 90}>
-              <Row match={m} />
+          {GALLERY_CARDS.map((c, i) => (
+            <Reveal key={c.key} delay={i * 80}>
+              {c.kind === "tournament" ? <TournamentRow />
+                : c.kind === "report" ? <ReportRow />
+                : <Row match={c.match} />}
             </Reveal>
           ))}
         </div>

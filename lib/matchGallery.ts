@@ -16,6 +16,9 @@ export type GalleryTeam = { name: string; score: number };
 
 export type GalleryMatch = {
   slug: string;
+  /* 사이트에 올린 날짜(YYYY-MM-DD). 갤러리 정렬 기준 — 경기 날짜가 아니라 게시 순서다.
+     새 리포트를 추가할 때는 이 값을 반드시 채운다. 비어 있으면 목록 맨 뒤로 밀린다. */
+  publishedAt?: string;
   competition: string;
   date: string;
   venue: string;
@@ -29,6 +32,7 @@ export type GalleryMatch = {
 export const MATCHES: GalleryMatch[] = [
   {
     slug: "psg-bayern-ucl-2026",
+    publishedAt: "2026-07-07",
     competition: "UEFA Champions League 2025/26 · Semi-final, 1st leg",
     date: "28 Apr 2026",
     venue: "Parc des Princes",
@@ -65,6 +69,7 @@ export const MATCHES: GalleryMatch[] = [
   },
   {
     slug: "korea-paraguay-2026",
+    publishedAt: "2026-07-07",
     competition: "International Friendly",
     date: "14 Oct 2025",
     venue: "Seoul World Cup Stadium",
@@ -91,6 +96,7 @@ export const MATCHES: GalleryMatch[] = [
   //    from the decks — please confirm & correct the numbers/names here.
   {
     slug: "korea-czech",
+    publishedAt: "2026-07-09",
     competition: "FIFA World Cup 2026 · Group A",
     date: "11 Jun 2026",
     venue: "Guadalajara Stadium",
@@ -117,6 +123,7 @@ export const MATCHES: GalleryMatch[] = [
   },
   {
     slug: "brazil-haiti",
+    publishedAt: "2026-07-09",
     competition: "FIFA World Cup 2026 · Group C",
     date: "19 Jun 2026",
     venue: "Philadelphia Stadium",
@@ -143,6 +150,7 @@ export const MATCHES: GalleryMatch[] = [
   },
   {
     slug: "germany-curacao",
+    publishedAt: "2026-07-09",
     competition: "FIFA World Cup 2026 · Group E",
     date: "14 Jun 2026",
     venue: "Houston Stadium",
