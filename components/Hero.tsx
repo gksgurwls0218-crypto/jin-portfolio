@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef } from "react";
 import { useLocale } from "@/lib/useLocale";
+import BilingualNote from "@/components/BilingualNote";
 
 const HERO_COPY = {
   eyebrow: { en: "Jin’s football philosophy", ko: "Jin의 축구 철학" },
@@ -383,9 +384,13 @@ export default function Hero() {
             <span style={{ color: "var(--green-bright)" }}>{HERO_COPY.titleAccent[locale]}</span>
             <span style={{ whiteSpace: locale === "ko" ? "nowrap" : "normal" }}>{HERO_COPY.titleRest[locale]}</span>
           </h1>
-          <p className="mb-2" style={{ color: "var(--ink-2)", fontSize: "clamp(17px,2.1vw,26px)", lineHeight: 1.3, fontWeight: 500 }}>
+          <p className="mb-5" style={{ color: "var(--ink-2)", fontSize: "clamp(17px,2.1vw,26px)", lineHeight: 1.3, fontWeight: 500 }}>
             {HERO_COPY.line1[locale]} <span style={{ color: "var(--ink)" }}>{HERO_COPY.line2[locale]}</span>
           </p>
+
+          {/* bilingual authorship strip — doubles as the second, unmissable
+              entry point into the other language edition */}
+          <BilingualNote />
         </div>
 
         <div className="glass rounded-2xl px-6 py-4 text-right min-w-[190px]">

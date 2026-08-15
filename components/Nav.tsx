@@ -2,7 +2,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { UI, LOCALES, isLocale, DEFAULT_LOCALE, type Locale } from "@/lib/i18n";
+import { UI, isLocale, DEFAULT_LOCALE, type Locale } from "@/lib/i18n";
+import LangSwitch from "@/components/LangSwitch";
 
 const links = [
   { href: "/approach", key: "approach", index: "01" },
@@ -17,9 +18,6 @@ export default function Nav() {
 
   const seg = pathname.split("/")[1];
   const locale: Locale = isLocale(seg) ? seg : DEFAULT_LOCALE;
-  // path without the locale prefix (e.g. "/approach" or "" for home)
-  const rest = isLocale(seg) ? pathname.slice(("/" + seg).length) || "" : pathname === "/" ? "" : pathname;
-  const swapHref = (l: Locale) => `/${l}${rest}`;
   const lp = (href: string) => `/${locale}${href}`;
 
   useEffect(() => {
@@ -101,30 +99,8 @@ export default function Nav() {
       </div>
 
       <div className="flex items-center gap-2.5">
-        {/* ── language switcher (always visible) ── */}
-        <div className="flex items-center gap-0.5 rounded-full p-0.5" style={{ border: "0.5px solid var(--edge-2)", background: "rgba(255,255,255,0.5)" }}>
-          {LOCALES.map((l) => {
-            const active = l === locale;
-            return (
-              <Link
-                key={l}
-                href={swapHref(l)}
-                hrefLang={l}
-                aria-label={l === "ko" ? "한국어" : "English"}
-                className="mono rounded-full px-2.5 py-1 transition-colors duration-200"
-                style={{
-                  fontSize: 11,
-                  letterSpacing: "0.08em",
-                  fontWeight: active ? 600 : 400,
-                  color: active ? "var(--green-bright)" : "var(--ink-3)",
-                  background: active ? "var(--green-soft)" : "transparent",
-                }}
-              >
-                {l.toUpperCase()}
-              </Link>
-            );
-          })}
-        </div>
+        {/* ── language switcher (always visible, desktop + mobile) ── */}
+        <LangSwitch />
 
         {/* ── hamburger / close toggle (mobile only) ── */}
         <button
@@ -178,6 +154,17 @@ export default function Nav() {
               </Link>
             );
           })}
+
+          {/* language control repeated at the bottom of the mobile menu, in its
+              larger form — the top-bar pill is small on a phone and the menu is
+              where a reader goes looking for site-level options. */}
+          <div className="flex flex-col gap-3 pt-8">
+            <span className="mono t-eyebrow" style={{ color: "var(--green-mid)", fontSize: 11, letterSpacing: "0.18em" }}>
+              {UI.lang.label[locale]}
+            </span>
+            <LangSwitch size="large" />
+            <p style={{ fontSize: 13, lineHeight: 1.55, color: "var(--ink-3)" }}>{UI.lang.note[locale]}</p>
+          </div>
         </div>
       </div>
     </nav>

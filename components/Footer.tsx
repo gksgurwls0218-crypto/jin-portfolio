@@ -1,6 +1,7 @@
 "use client";
 import { UI } from "@/lib/i18n";
 import { useLocale } from "@/lib/useLocale";
+import LangSwitch from "@/components/LangSwitch";
 
 export default function Footer() {
   const locale = useLocale();
@@ -23,6 +24,16 @@ export default function Footer() {
             <span className="transition-transform duration-300 group-hover:translate-x-1.5" style={{ color: "var(--green-mid)" }}>→</span>
           </a>
         </div>
+        {/* language block — a visitor who reached the bottom of a page should not
+            have to scroll back up to switch editions */}
+        <div className="flex flex-col gap-3 pt-8" style={{ borderTop: "0.5px solid var(--edge)" }}>
+          <span className="mono" style={{ fontSize: 11, letterSpacing: "0.18em", color: "var(--green-mid)" }}>
+            {UI.lang.label[locale]}
+          </span>
+          <LangSwitch size="large" />
+          <p style={{ fontSize: 13, lineHeight: 1.6, color: "var(--ink-3)", maxWidth: 560 }}>{UI.lang.note[locale]}</p>
+        </div>
+
         <div className="flex items-center justify-between pt-6" style={{ borderTop: "0.5px solid var(--edge)" }}>
           <span className="mono" style={{ fontSize: 11, color: "var(--ink-4)", letterSpacing: "0.04em" }}>
             {UI.common.role[locale]} · {new Date().getFullYear()}

@@ -26,6 +26,24 @@ export const UI = {
     kpi: { en: "KPI Lab", ko: "KPI 랩" },
     portfolio: { en: "JIN’S PORTFOLIO", ko: "JIN’S PORTFOLIO" },
   },
+  // Language control + the bilingual-authorship claim. Korean readers should be
+  // able to see, on the home page, that the English edition is written by Jin
+  // himself rather than machine-translated — it is part of what the portfolio
+  // is claiming about him.
+  lang: {
+    label: { en: "LANGUAGE / 언어", ko: "언어 / LANGUAGE" },
+    note: {
+      en: "Every analysis on this site is written by me in both English and Korean. Neither edition is a translation of the other.",
+      ko: "이 사이트의 모든 분석은 제가 한국어와 영어로 직접 작성합니다. 어느 쪽도 번역본이 아닙니다.",
+    },
+    // Short form for the hero strip.
+    heroNote: {
+      en: "Written by me in English and Korean — neither version is a translation",
+      ko: "한국어와 영어로 직접 작성합니다 — 영문판은 번역본이 아닙니다",
+    },
+    // Call to action that flips the locale.
+    swapCta: { en: "한국어로 읽기", ko: "Read in English" },
+  },
   common: {
     enter: { en: "Enter", ko: "들어가기" },
     viewAnalysis: { en: "View analysis", ko: "분석 보기" },
