@@ -35,6 +35,14 @@ const nextConfig: NextConfig = {
         headers: [{ key: "Cache-Control", value: "no-cache, must-revalidate" }],
       },
       {
+        source: "/suwon-cross-shot.html",
+        headers: [{ key: "Cache-Control", value: "no-cache, must-revalidate" }],
+      },
+      {
+        source: "/suwon-cross-shot.ko.html",
+        headers: [{ key: "Cache-Control", value: "no-cache, must-revalidate" }],
+      },
+      {
         source: "/anim/:path*",
         headers: [{ key: "Cache-Control", value: "no-cache, must-revalidate" }],
       },

@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="20 K League 2 matches against 96 Big 5 clubs. Suwon Samsung's leak narrows to a single phase — cross to shot. With the Cross Freedom model (Z×F×A) and the context T.">
+<title>Suwon Samsung — From Cross to Shot: Locating the Leak</title>
+<style>
+:root{
+  --page:#f9f9f7; --surface-1:#fcfcfb;
+  --text-primary:#0b0b0b; --text-secondary:#52514e; --muted:#898781;
+  --grid:#e1e0d9; --axis:#c3c2b7; --border:rgba(11,11,11,0.10);
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a;
+  --good:#0ca30c; --critical:#d03b3b; --warning:#fab219;
+  --seq250:#86b6ef; --seq350:#5598e7; --seq450:#2a78d6; --seq600:#184f95;
+}
+:root[data-theme="dark"]{
+  --page:#0d0d0d; --surface-1:#1a1a19;
+  --text-primary:#ffffff; --text-secondary:#c3c2b7; --muted:#898781;
+  --grid:#2c2c2a; --axis:#383835; --border:rgba(255,255,255,0.10);
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+  --seq250:#184f95; --seq350:#256abf; --seq450:#3987e5; --seq600:#86b6ef;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --page:#0d0d0d; --surface-1:#1a1a19;
+    --text-primary:#ffffff; --text-secondary:#c3c2b7; --muted:#898781;
+    --grid:#2c2c2a; --axis:#383835; --border:rgba(255,255,255,0.10);
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+    --seq250:#184f95; --seq350:#256abf; --seq450:#3987e5; --seq600:#86b6ef;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--text-primary);
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.65;
+  -webkit-font-smoothing:antialiased;}
+.wrap{max-width:920px;margin:0 auto;padding:0 22px 90px}
+header.hero{padding:64px 0 34px;border-bottom:1px solid var(--border);margin-bottom:44px}
+.kicker{font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-weight:650}
+h1{font-size:clamp(28px,4.6vw,42px);line-height:1.22;margin:14px 0 12px;letter-spacing:-.02em;font-weight:720}
+.sub{font-size:clamp(15px,2vw,17.5px);color:var(--text-secondary);max-width:64ch;margin:0}
+.meta{margin-top:22px;font-size:12.5px;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.meta span:not(:last-child)::after{content:"·";margin-left:8px;color:var(--axis)}
+h2{font-size:clamp(20px,2.7vw,25px);margin:60px 0 6px;letter-spacing:-.015em;font-weight:700}
+h2 .num{color:var(--muted);font-weight:600;margin-right:10px;font-variant-numeric:tabular-nums}
+h3{font-size:16.5px;margin:32px 0 8px;font-weight:670}
+p{margin:12px 0;color:var(--text-secondary);max-width:70ch}
+p strong,li strong{color:var(--text-primary);font-weight:650}
+ul{color:var(--text-secondary);max-width:70ch;padding-left:20px}
+li{margin:6px 0}
+.lede{font-size:17px;color:var(--text-primary);border-left:3px solid var(--s2);
+  padding:2px 0 2px 18px;margin:22px 0 28px;max-width:66ch}
+.statrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:26px 0 8px}
+.stat{background:var(--surface-1);border:1px solid var(--border);border-radius:12px;padding:16px 17px}
+.stat .lab{font-size:12px;color:var(--muted);font-weight:600;letter-spacing:.01em}
+.stat .val{font-size:31px;font-weight:700;letter-spacing:-.025em;margin:5px 0 2px;line-height:1.1}
+.stat .note{font-size:12.5px;color:var(--text-secondary)}
+.stat.hl{border-color:var(--s2)} .stat.hl .val{color:var(--s2)}
+figure{margin:30px 0 8px;background:var(--surface-1);border:1px solid var(--border);
+  border-radius:14px;padding:20px 20px 14px}
+figcaption{font-size:13px;color:var(--text-secondary);margin-top:12px;padding-top:11px;
+  border-top:1px solid var(--grid)}
+.figtitle{font-size:15.5px;font-weight:660;margin:0 0 3px;color:var(--text-primary)}
+.figsub{font-size:12.5px;color:var(--muted);margin:0 0 15px}
+svg{display:block;width:100%;height:auto;overflow:visible}
+.legend{display:flex;gap:15px;flex-wrap:wrap;font-size:12.5px;color:var(--text-secondary);margin:0 0 12px}
+.legend i{width:11px;height:11px;border-radius:3px;display:inline-block;margin-right:6px;vertical-align:-1px}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:18px 0}
+th,td{text-align:right;padding:8px 10px;border-bottom:1px solid var(--grid);font-variant-numeric:tabular-nums}
+th:first-child,td:first-child{text-align:left;font-variant-numeric:normal}
+thead th{color:var(--muted);font-weight:640;font-size:12px;border-bottom:1px solid var(--axis)}
+tbody tr.hl td{background:color-mix(in srgb,var(--s2) 9%,transparent);font-weight:640;color:var(--text-primary)}
+.tbtn{font:inherit;font-size:12.5px;color:var(--text-secondary);background:none;
+  border:1px solid var(--border);border-radius:7px;padding:4px 11px;cursor:pointer;margin-top:11px}
+.tbtn:hover{background:var(--page)}
+.tblwrap{display:none;overflow-x:auto;max-height:340px}
+.tblwrap.on{display:block}
+.callout{background:var(--surface-1);border:1px solid var(--border);border-left:3px solid var(--s1);
+  border-radius:10px;padding:15px 18px;margin:24px 0;font-size:14.5px;color:var(--text-primary);max-width:70ch}
+.callout.warn{border-left-color:var(--warning)}
+.callout.key{border-left-color:var(--s2)}
+.callout .t{font-weight:680;font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);display:block;margin-bottom:6px}
+.tip{position:fixed;pointer-events:none;background:var(--surface-1);border:1px solid var(--border);
+  border-radius:9px;padding:8px 11px;font-size:12.5px;color:var(--text-primary);opacity:0;
+  transition:opacity .09s;box-shadow:0 6px 22px rgba(0,0,0,.13);z-index:99;white-space:nowrap}
+.tip b{font-weight:670} .tip .m{color:var(--text-secondary)}
+.toggle{position:fixed;top:16px;right:16px;z-index:50;background:var(--surface-1);
+  border:1px solid var(--border);border-radius:9px;padding:6px 12px;font:inherit;font-size:12.5px;
+  color:var(--text-secondary);cursor:pointer}
+footer{margin-top:70px;padding-top:26px;border-top:1px solid var(--border);font-size:12.5px;color:var(--muted)}
+footer p{color:var(--muted);font-size:12.5px;max-width:74ch}
+.pill{display:inline-block;font-size:11.5px;font-weight:650;padding:2px 9px;border-radius:20px;
+  border:1px solid var(--border);color:var(--text-secondary);margin-right:6px}
+@media(max-width:640px){.stat .val{font-size:26px}figure{padding:16px 13px 11px}}
+
+/* --- data scope table --- */
+.scopewrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table.scope{font-size:12.8px;min-width:760px}
+table.scope th,table.scope td{padding:8px 9px;white-space:nowrap}
+table.scope th:last-child{text-align:left}
+table.scope td.nt{text-align:left;white-space:normal;color:var(--muted);font-size:12px;
+  min-width:250px;font-variant-numeric:normal;line-height:1.5}
+table.scope td.nt b{color:var(--text-secondary);font-weight:640}
+/* --- T block --- */
+.tblock{border:1.5px dashed var(--axis);border-radius:12px;padding:18px 20px 6px;margin:30px 0 8px;
+  background:color-mix(in srgb,var(--s2) 3.5%,transparent)}
+.tblock h3{margin-top:0}
+.tblock ol{color:var(--text-secondary);max-width:70ch;padding-left:22px;margin:10px 0}
+.tblock ol li{margin:7px 0}
+.badge{display:inline-block;font-size:11px;font-weight:670;letter-spacing:.04em;padding:2px 9px;
+  border-radius:20px;background:color-mix(in srgb,var(--s2) 14%,transparent);color:var(--s2);
+  vertical-align:2px;margin-left:8px}
+.callout.rb .t{text-transform:none;font-size:13px;letter-spacing:.01em;color:var(--text-secondary)}
+</style>
+</head>
+<body>
+<button class="toggle" id="tg">◐ Dark</button>
+<div class="wrap">
+
+<header class="hero">
+  <div class="kicker">Match Analysis · K League 2 2026</div>
+  <h1>From Cross to Shot<br>Where Suwon Samsung loses value</h1>
+  <p class="sub">Suwon Samsung lead K League 2 and have conceded fewer goals than any other side. Yet they have scored the fewest of the top six. Using 20 matches of data against 96 clubs from Europe's Big 5 leagues, this report narrows the gap to a single phase.</p>
+  <div class="meta"><span>Hyuckjin Han · Tactical Analysis</span><span>Aug 2026</span><span>K League Data Portal (Bepro11), 20 matches</span><span>FBref / Opta, Big 5 leagues 2025-26, 96 clubs</span><span>FIFA TSG</span></div>
+</header>
+
+<p class="lede">The conclusion first. Suwon take slightly <em>more</em> shots per match than the European average, and their conversion after the shot — shots on target, goals — is almost identical to Europe. The only phase where they differ is <strong>cross&nbsp;→&nbsp;shot</strong>.</p>
+
+<div class="statrow"><div class="stat"><div class="lab">Crosses / match</div><div class="val">27.7</div><div class="note">Europe 17.6 · <b>1.58×</b></div></div><div class="stat"><div class="lab">Shots / match</div><div class="val">13.6</div><div class="note">Europe 12.6 · 1.08×</div></div><div class="stat hl"><div class="lab">Crosses ÷ shots</div><div class="val">2.04</div><div class="note">Europe 1.40 · <b>1.46×</b></div></div><div class="stat"><div class="lab">Shots on target</div><div class="val">34.9%</div><div class="note">Europe 34.3% · <b>identical</b></div></div></div>
+
+<h2><span class="num">00</span>Scope of the data used in this report</h2>
+<p>Every figure that follows comes from exactly these four populations. Stating the boundaries of the sample first is a precondition for reading the rest.</p>
+<div class="scopewrap">
+<table class="scope">
+  <thead><tr><th>Population</th><th>Clubs</th><th>Team-matches</th><th>Crosses</th><th>Shots</th><th>On target</th><th>Goals</th><th>Period · notes</th></tr></thead>
+  <tbody><tr><td>Big 5 (Europe)</td><td>96</td><td>3,502</td><td>61,481</td><td>44,034</td><td>15,104</td><td>4,713</td><td class='nt'>2025-26 <b>completed</b> season · 38 rounds ENG/ESP/ITA/GER, 34 FRA (2 clubs 33)</td></tr><tr><td>K League 1</td><td>12</td><td>262</td><td>5,372</td><td>2,987</td><td>1,008</td><td>307</td><td class='nt'>2026 season <b>in progress</b> · rounds 1–23 (Gangwon &amp; Incheon 21 matches, the other ten 22)</td></tr><tr><td>K League 2</td><td>17</td><td>336</td><td>6,938</td><td>3,972</td><td>1,408</td><td>466</td><td class='nt'>2026 season <b>in progress</b> · rounds 1–21 (13 clubs 20 matches, 4 clubs 19)</td></tr><tr class='hl'><td>Suwon Samsung</td><td>1</td><td>20</td><td>554</td><td>272</td><td>95</td><td>29</td><td class='nt'>28 Feb – 7 Aug 2026 · round 12 was a bye (odd number of clubs)</td></tr></tbody>
+</table>
+</div>
+<p style="font-size:13px;color:var(--muted);max-width:74ch">All figures retrieved 2026-08-13. K League figures come from the Korea Professional Football League data portal (supplied by Bepro11); European figures are FBref (Opta) club season totals. The portal's xG excludes penalty-kick goals and opponent own goals. Because K League 2 has 17 clubs — an odd number — one club rests each round, so match counts differ by up to one.</p>
+
+<h2><span class="num">01</span>Locating the leak</h2>
+<p>Splitting cross-to-goal into three conversion steps makes it immediately clear where the value drains away. Suwon are <strong>effectively identical to the European average in the second and third steps</strong>. Only the first step is 22.5pp lower.</p>
+
+<figure>
+  <p class="figtitle">Conversion funnel — cross → shot → shot on target → goal</p>
+  <p class="figsub">Each bar is the conversion rate against the previous step. Sample boundaries as in the table above.</p>
+  <div class="legend"><span><i style="background:var(--seq450)"></i>cross → shot</span><span><i style="background:var(--seq350)"></i>shot → on target</span><span><i style="background:var(--seq250)"></i>on target → goal</span></div>
+  <svg id="c-funnel" viewBox="0 0 720 320" role="img" aria-label="Conversion funnel — cross → shot → shot on target → goal"></svg>
+  <figcaption><b>Only the cross-to-shot rate is low.</b> Suwon 49.1% / K League 2 57.2% / K League 1 55.6% / Europe 71.6%. The two steps after the shot sit at 33–35% and 30–34% for all four populations — effectively the same.</figcaption>
+</figure>
+
+<div class="callout key"><span class="t">What this narrows down</span>Everything after the shot is created — shot accuracy, finishing — is already at European level. <b>The thing to fix is confined to one phase: crosses that do not become shots.</b></div>
+
+<h2><span class="num">02</span>What this ratio means across 96 European clubs</h2>
+<p>Across the 96 Big 5 clubs, <strong>how many crosses a team puts in has no relationship to how much it scores (r&nbsp;=&nbsp;+0.03)</strong>. The rate at which crosses become shots, by contrast, is strongly linked to scoring at <strong>r&nbsp;=&nbsp;−0.68</strong>.</p>
+
+<div class="callout rb"><span class="t">How to read r</span>r expresses, on a scale from −1 to +1, <b>the degree to which two quantities move together</b>. +1 means one rises exactly as the other rises; 0 means no relationship at all; −1 means one rises exactly as the other falls. Conventionally |r| around 0.1 is read as weak, around 0.3 as moderate, and 0.5 or above as strong. <b>r says nothing about cause</b> — which way the causation runs has to be judged by observation and design, not by r.</div>
+
+<figure>
+  <p class="figtitle">Crosses ÷ shots vs goals per match — 96 Big 5 clubs</p>
+  <p class="figsub">Further right means more crosses spent per shot created. Hover a point for that club's figures.</p>
+  <div class="legend"><span><i style="background:var(--s1)"></i>96 Big 5 clubs</span><span><i style="background:var(--s3)"></i>reference clubs (labelled)</span><span><i style="background:var(--s2)"></i>Suwon Samsung</span></div>
+  <svg id="c-scatter" viewBox="0 0 720 430" role="img" aria-label="Crosses ÷ shots vs goals per match — 96 Big 5 clubs"></svg>
+  <button class="tbtn" data-t="t-scatter">View as table</button>
+  <div class="tblwrap" id="t-scatter"></div>
+  <figcaption>The trend line is an ordinary least-squares fit over 96 clubs. <b>Suwon's 2.04 would be the highest of all 96</b>, and the clubs in that range are mostly relegation candidates. At the other end (0.79–0.87) sit Barcelona, Bayern, PSG and Real Madrid.</figcaption>
+</figure>
+
+<figure>
+  <p class="figtitle">Split into quartiles, there is no exception</p>
+  <p class="figsub">The 96 clubs divided into four groups by crosses ÷ shots, with each group's mean goals per match</p>
+  <svg id="c-quart" viewBox="0 0 720 220" role="img" aria-label="Split into quartiles, there is no exception"></svg>
+  <figcaption>The quartile that <b>crosses the most (19.3 per match) scores the least (1.05 goals)</b>. The decline is monotonic, with no exception. Suwon's 2.04 sits above even the bottom quartile's mean of 1.75.</figcaption>
+</figure>
+
+<h2><span class="num">03</span>So does this mean crossing less — no</h2>
+<p>Clubs that cross a lot <em>and</em> convert well do exist. <strong>Inter Milan average 23.0 crosses, 17.1 shots and 2.24 goals per match.</strong> Their crossing volume is close to Suwon's; their conversion ratio is 1.35.</p>
+
+<figure>
+  <p class="figtitle">Shot output among clubs with comparable crossing volume</p>
+  <p class="figsub">Crosses and shots per match. At the same crossing volume, shot output diverges sharply.</p>
+  <div class="legend"><span><i style="background:var(--s1)"></i>crosses / match</span><span><i style="background:var(--s3)"></i>shots / match</span><span style="color:var(--s2);font-weight:640">■ highlighted band = Suwon Samsung</span></div>
+  <svg id="c-prof" viewBox="0 0 720 300" role="img" aria-label="Shot output among clubs with comparable crossing volume"></svg>
+  <figcaption>Athletic Club and Newcastle cross heavily with ratios close to Suwon's (1.77–1.78). <b>Inter and Lens turn the same heavy volume into 1.35–1.38.</b> What separates them is conversion, not volume.</figcaption>
+</figure>
+
+<div class="callout key"><span class="t">The target point</span>Moving Suwon halfway to the European ratio on both terms gives <b>23.3 crosses and 16.7 shots per match</b>. That is almost exactly Inter Milan's measured profile (23.0 · 17.1). <b>In other words, the target is reachable while keeping a wide-attacking identity intact.</b></div>
+
+<h2><span class="num">04</span>What decides conversion — Cross Freedom</h2>
+<p>So what separates the conversion rates? Combining 20 matches of data with detailed observation of two, it resolves into three elements. They do not add — they <strong>multiply</strong>. If one is zero, the whole is zero. Alongside them sits one piece of context that stays outside the formula: <strong>T (time)</strong>.</p>
+
+<figure>
+  <p class="figtitle">Z × F × A — the three elements of cross quality, plus the context T</p>
+  <p class="figsub">What each element looks like when it approaches zero, and what was observed at Suwon</p>
+  <svg id="c-zfa" viewBox="0 0 720 285" role="img" aria-label="Z × F × A — the three elements of cross quality, plus the context T"></svg>
+  <figcaption>FIFA's TSG reports that at the 2022 World Cup cross types shifted — <b>driven crosses −47%, push crosses +38%, cut-back goals 2→7</b>: a move from speed toward precision and timing.</figcaption>
+</figure>
+
+<h3>Z — Zone: freedom and value pull against each other</h3><p>Deep by the touchline the opponent has little reason to close you down, so <strong>freedom comes easily but the angle and distance make the ball cheap.</strong> In the zone adjacent to the half-space the opponent must close you down, so freedom is hard to win — but cut-backs, in-swingers and low passes all become available. FIFA describes <strong>the cut-back as “the hardest pattern for a defence to deal with.”</strong></p><h3>F — Freedom: pressure, time, options</h3><p>Building on FIFA Football Language's three classes — <span class="pill">No pressure</span><span class="pill">Indirect</span><span class="pill">Direct</span> — we record pressure at the moment of impact (F1), time in possession of the ball (F2) and whether options other than the cross exist (F3), each scored 0–2.</p><h3>A — Arrival: number of bodies and concentration</h3><p>The number of players entering the box (N) is the necessary condition; how many of them are within 5m of the landing point (Nc) comes next, and concentration is D = Nc ÷ N. Because Nc can never exceed N, <strong>raising concentration also requires bodies.</strong> That said, FIFA reports that both 2022 World Cup finalists <strong>put fewer players in the box than the tournament average (3.3) while converting above average</strong> — there is a threshold on numbers, and above it only concentration and positioning remain.</p>
+
+<div class="tblock">
+  <h3>T — Time: context, not a formula <span class="badge">in development</span></h3>
+  <p>T is not a fourth term multiplied alongside Z, F and A. It is treated as <b>the context that governs how much of those three is actually realised</b>. At the same zone (Z), the same pressure (F) and the same arrival (A), a ball that gets there one beat earlier gives the crosser time to choose and gives the players in the box time to complete their movement. <b>The transfer of the crosser's time into the box</b> is what T is about.</p>
+  <p>There is more than one way to produce it — a <b>three-player connection</b> between winger, half-space and full-back that pins the opponent on one side so the ball can be delivered a beat earlier from the other; <b>overload → isolation</b>, creating the 1v1 so the ball is released before contact; rapid switches that arrive before the defence is set; and a <b>low, fast pass weight on the natural foot</b> that cuts the ball's flight time. These are not mutually exclusive, and which combination fits Suwon is still <b>in development</b>.</p>
+  <p style="color:var(--text-primary);font-weight:640;margin-bottom:0">What cannot yet be claimed about T</p>
+  <ol><li><b>Whether it is an independent term or part of F is unresolved.</b> T overlaps substantially with F2 (time in possession). Until the overlap is separated, counting both is double counting.</li><li><b>There is no measurement standard.</b> “One beat earlier” is currently an observer's judgement; neither a threshold in seconds nor an event definition has been fixed. Quantifying it at this stage would give different values for different observers.</li><li><b>The sample is two matches.</b> It was pronounced in only one of them. No effect size for T can be asserted from that.</li></ol>Until these three are resolved, T stays <b>an item to record and observe</b>. It is not promoted to a metric.
+</div>
+
+<h2><span class="num">05</span>Observation — same opponent, home and away</h2>
+<p>The two matches against Paju — at home (R18) and away (R2) — produced almost the same number of crosses, 35 and 37. The quality of the chances created diverged sharply.</p>
+
+<figure>
+  <p class="figtitle">Expected goals (xG) per shot — R18 home vs Paju (0-0) vs R2 away at Paju (1-0)</p>
+  <p class="figsub">Each dot is one shot. Further right means a higher probability of scoring.</p>
+  <svg id="c-shots" viewBox="0 0 720 210" role="img" aria-label="Expected goals (xG) per shot — R18 home vs Paju (0-0) vs R2 away at Paju (1-0)"></svg>
+  <figcaption>Away, three chances above 0.20 xG were created; at home, one. Conversely, shots at or below 0.05 xG numbered 8 at home (50% of all shots) and 4 away (31%). <b>With the same number of crosses, xG per shot differed by a factor of 1.9 — 0.076 against 0.141.</b></figcaption>
+</figure>
+
+<div class="callout"><span class="t">A line from the observation notes</span>“Even when the 1v1 is won and the cross goes in, its accuracy is bound to drop — because the point it is delivered from is too far from the half-space.” — As each match wore on, support around the crossing point thinned, and freedom that had been produced by structure was replaced by freedom dependent on an individual beating a man.</div>
+
+<h2><span class="num">06</span>Target figures</h2>
+<p>Metrics already at European level are marked explicitly as <strong>hold</strong>. Separating what to change from what to leave alone is the first condition of a plan.</p>
+
+<table>
+  <thead><tr><th>Metric</th><th>Current</th><th>First target</th><th>Final target</th><th>Basis</th></tr></thead>
+  <tbody><tr class='hl'><td>Crosses ÷ shots</td><td>2.04</td><td>1.75</td><td>1.40</td><td>K League 2 mean → European mean</td></tr><tr><td>Crosses / match</td><td>27.7</td><td>25.0</td><td>23.3</td><td>Inter Milan profile</td></tr><tr><td>Shots / match</td><td>13.6</td><td>14.5</td><td>16.7</td><td>Inter Milan profile</td></tr><tr><td>Crosses per goal</td><td>19.1</td><td>16.0</td><td>13.0</td><td>European mean</td></tr><tr><td>Shots on target</td><td>34.9%</td><td colspan="2" style="text-align:center;color:var(--good);font-weight:650">Hold — already at the European average</td><td>Europe 34.3%</td></tr></tbody>
+</table>
+
+<h2><span class="num">07</span>Limitations</h2>
+<div class="callout warn"><span class="t">To be read alongside everything above</span><b>The definition of a cross may differ.</b> European data is Opta; K League data is Bepro11. Three things mitigate this — ① K League 1 (1.80) and K League 2 (1.75) are internally consistent with each other. ② Suwon's 2.04 is 17% above the K League 2 mean under the same definition. ③ Recomputing with corner kicks excluded gives Suwon 1.63 against a K League 2 mean of 1.38 — <b>the same 1.18× multiple</b>.</div>
+<ul><li><strong>The seasons differ.</strong> Europe is a completed 2025-26 season; the K League is mid-2026 (see the scope table above)</li><li><strong>Correlation is not causation.</strong> Whether a low conversion rate causes low scoring, or weak scoring makes a team lean on crosses, cannot be separated from this data alone</li><li><strong>The FIFA material is a World Cup</strong> sample and does not transfer directly to league football</li><li><strong>At this sample size this is observation, not a test.</strong> Shot- and goal-based metrics are not claimed as significant until at least one full season is available</li><li><strong>T is not yet a metric.</strong> Until the three limits set out in section 4 are resolved it is handled as an observation item only</li></ul>
+
+<footer>
+  <p><b>Sources</b> — Korea Professional Football League K League Data Portal, supplementary records and expected goals (supplied by Bepro11), 2026 K League 1 &amp; 2 / FBref (Opta), Big 5 European Leagues 2025-26 club statistics, 96 clubs / FIFA Training Centre Technical Study Group, “Use of wide areas to create goal-scoring opportunities” (FWC Qatar 2022) and “Game Insights Ep.3: Using wide areas”. All retrieved 2026-08-13.</p>
+  <p style="margin-top:10px">The figures here are a re-analysis of publicly available data; the interpretation and the proposals are the author's own.</p>
+</footer>
+</div>
+
+<div class="tip" id="tip"></div>
+<script>
+const DATA = {"scatter": [{"t": "Alavés", "l": "LaLiga", "x": 1.632, "y": 1.08, "c": 19.8, "s": 12.2, "g": 41}, {"t": "Angers", "l": "Ligue1", "x": 1.68, "y": 0.82, "c": 15.6, "s": 9.3, "g": 28}, {"t": "Arsenal", "l": "PL", "x": 1.23, "y": 1.76, "c": 17.9, "s": 14.5, "g": 67}, {"t": "Aston Villa", "l": "PL", "x": 1.253, "y": 1.39, "c": 15.9, "s": 12.7, "g": 53}, {"t": "Atalanta", "l": "SerieA", "x": 1.263, "y": 1.32, "c": 18.7, "s": 14.8, "g": 50}, {"t": "Athletic Club", "l": "LaLiga", "x": 1.768, "y": 1.11, "c": 24.3, "s": 13.7, "g": 42}, {"t": "Atlético Madrid", "l": "LaLiga", "x": 1.546, "y": 1.53, "c": 20.3, "s": 13.1, "g": 58}, {"t": "Augsburg", "l": "Bundesliga", "x": 1.407, "y": 1.32, "c": 18.4, "s": 13.1, "g": 45}, {"t": "Auxerre", "l": "Ligue1", "x": 1.495, "y": 0.88, "c": 16.0, "s": 10.7, "g": 30}, {"t": "Barcelona", "l": "LaLiga", "x": 0.792, "y": 2.47, "c": 14.4, "s": 18.2, "g": 94}, {"t": "Bayern Munich", "l": "Bundesliga", "x": 0.841, "y": 3.5, "c": 16.1, "s": 19.2, "g": 119}, {"t": "Bologna", "l": "SerieA", "x": 1.369, "y": 1.24, "c": 17.7, "s": 12.9, "g": 47}, {"t": "Bournemouth", "l": "PL", "x": 1.382, "y": 1.5, "c": 19.1, "s": 13.8, "g": 57}, {"t": "Brentford", "l": "PL", "x": 1.677, "y": 1.39, "c": 17.9, "s": 10.7, "g": 53}, {"t": "Brest", "l": "Ligue1", "x": 1.461, "y": 1.24, "c": 16.3, "s": 11.2, "g": 42}, {"t": "Brighton", "l": "PL", "x": 1.445, "y": 1.34, "c": 18.8, "s": 13.0, "g": 51}, {"t": "Burnley", "l": "PL", "x": 1.454, "y": 0.92, "c": 13.6, "s": 9.3, "g": 35}, {"t": "Cagliari", "l": "SerieA", "x": 1.308, "y": 1.05, "c": 14.3, "s": 10.9, "g": 40}, {"t": "Celta Vigo", "l": "LaLiga", "x": 1.131, "y": 1.37, "c": 11.4, "s": 10.1, "g": 52}, {"t": "Chelsea", "l": "PL", "x": 1.33, "y": 1.5, "c": 17.8, "s": 13.4, "g": 57}, {"t": "Como", "l": "SerieA", "x": 1.122, "y": 1.68, "c": 16.2, "s": 14.5, "g": 64}, {"t": "Cremonese", "l": "SerieA", "x": 1.98, "y": 0.84, "c": 18.0, "s": 9.1, "g": 32}, {"t": "Crystal Palace", "l": "PL", "x": 1.367, "y": 1.05, "c": 15.9, "s": 11.6, "g": 40}, {"t": "Dortmund", "l": "Bundesliga", "x": 1.503, "y": 2.03, "c": 19.7, "s": 13.1, "g": 69}, {"t": "Elche", "l": "LaLiga", "x": 1.454, "y": 1.24, "c": 15.7, "s": 10.8, "g": 47}, {"t": "Espanyol", "l": "LaLiga", "x": 1.669, "y": 1.11, "c": 21.1, "s": 12.6, "g": 42}, {"t": "Everton", "l": "PL", "x": 1.592, "y": 1.18, "c": 17.7, "s": 11.1, "g": 45}, {"t": "Fiorentina", "l": "SerieA", "x": 1.466, "y": 1.05, "c": 18.9, "s": 12.9, "g": 40}, {"t": "Frankfurt", "l": "Bundesliga", "x": 1.243, "y": 1.79, "c": 14.9, "s": 12.0, "g": 61}, {"t": "Freiburg", "l": "Bundesliga", "x": 1.418, "y": 1.44, "c": 17.4, "s": 12.2, "g": 49}, {"t": "Fulham", "l": "PL", "x": 1.422, "y": 1.13, "c": 18.0, "s": 12.7, "g": 43}, {"t": "Genoa", "l": "SerieA", "x": 1.482, "y": 1.08, "c": 16.9, "s": 11.4, "g": 41}, {"t": "Getafe", "l": "LaLiga", "x": 2.037, "y": 0.82, "c": 18.8, "s": 9.2, "g": 31}, {"t": "Girona", "l": "LaLiga", "x": 1.39, "y": 1.0, "c": 15.6, "s": 11.2, "g": 38}, {"t": "Gladbach", "l": "Bundesliga", "x": 1.337, "y": 1.18, "c": 15.5, "s": 11.6, "g": 40}, {"t": "Hamburger SV", "l": "Bundesliga", "x": 1.277, "y": 1.18, "c": 15.7, "s": 12.3, "g": 40}, {"t": "Heidenheim", "l": "Bundesliga", "x": 1.486, "y": 1.21, "c": 17.0, "s": 11.4, "g": 41}, {"t": "Hellas Verona", "l": "SerieA", "x": 1.39, "y": 0.63, "c": 15.4, "s": 11.1, "g": 24}, {"t": "Hoffenheim", "l": "Bundesliga", "x": 1.457, "y": 1.79, "c": 20.5, "s": 14.1, "g": 61}, {"t": "Inter", "l": "SerieA", "x": 1.346, "y": 2.24, "c": 23.0, "s": 17.1, "g": 85}, {"t": "Juventus", "l": "SerieA", "x": 1.166, "y": 1.55, "c": 19.6, "s": 16.8, "g": 59}, {"t": "Köln", "l": "Bundesliga", "x": 1.401, "y": 1.38, "c": 18.8, "s": 13.4, "g": 47}, {"t": "Lazio", "l": "SerieA", "x": 1.225, "y": 1.03, "c": 13.4, "s": 11.0, "g": 39}, {"t": "Le Havre", "l": "Ligue1", "x": 1.995, "y": 0.91, "c": 21.9, "s": 11.0, "g": 31}, {"t": "Lecce", "l": "SerieA", "x": 1.724, "y": 0.74, "c": 16.9, "s": 9.8, "g": 28}, {"t": "Leeds United", "l": "PL", "x": 1.419, "y": 1.26, "c": 17.8, "s": 12.6, "g": 48}, {"t": "Lens", "l": "Ligue1", "x": 1.378, "y": 1.91, "c": 22.7, "s": 16.5, "g": 65}, {"t": "Levante", "l": "LaLiga", "x": 1.416, "y": 1.24, "c": 17.7, "s": 12.5, "g": 47}, {"t": "Leverkusen", "l": "Bundesliga", "x": 1.2, "y": 1.97, "c": 18.2, "s": 15.2, "g": 67}, {"t": "Lille", "l": "Ligue1", "x": 1.401, "y": 1.5, "c": 19.1, "s": 13.6, "g": 51}, {"t": "Liverpool", "l": "PL", "x": 1.296, "y": 1.61, "c": 20.1, "s": 15.5, "g": 61}, {"t": "Lorient", "l": "Ligue1", "x": 1.4, "y": 1.38, "c": 15.9, "s": 11.3, "g": 47}, {"t": "Lyon", "l": "Ligue1", "x": 1.621, "y": 1.53, "c": 19.9, "s": 12.3, "g": 52}, {"t": "Mainz 05", "l": "Bundesliga", "x": 1.668, "y": 1.29, "c": 20.1, "s": 12.1, "g": 44}, {"t": "Mallorca", "l": "LaLiga", "x": 1.76, "y": 1.24, "c": 19.1, "s": 10.8, "g": 47}, {"t": "Manchester City", "l": "PL", "x": 1.047, "y": 1.95, "c": 16.4, "s": 15.7, "g": 74}, {"t": "Manchester Utd", "l": "PL", "x": 1.074, "y": 1.74, "c": 16.8, "s": 15.7, "g": 66}, {"t": "Marseille", "l": "Ligue1", "x": 1.174, "y": 1.82, "c": 17.7, "s": 15.1, "g": 62}, {"t": "Metz", "l": "Ligue1", "x": 1.813, "y": 0.91, "c": 18.2, "s": 10.1, "g": 31}, {"t": "Milan", "l": "SerieA", "x": 1.27, "y": 1.39, "c": 16.8, "s": 13.2, "g": 53}, {"t": "Monaco", "l": "Ligue1", "x": 1.383, "y": 1.68, "c": 17.3, "s": 12.5, "g": 57}, {"t": "Nantes", "l": "Ligue1", "x": 1.449, "y": 0.85, "c": 16.4, "s": 11.3, "g": 28}, {"t": "Napoli", "l": "SerieA", "x": 1.331, "y": 1.5, "c": 17.6, "s": 13.2, "g": 57}, {"t": "Newcastle", "l": "PL", "x": 1.78, "y": 1.39, "c": 23.1, "s": 12.9, "g": 53}, {"t": "Nice", "l": "Ligue1", "x": 1.639, "y": 1.03, "c": 18.4, "s": 11.2, "g": 35}, {"t": "Nottingham", "l": "PL", "x": 1.735, "y": 1.24, "c": 21.7, "s": 12.5, "g": 47}, {"t": "Osasuna", "l": "LaLiga", "x": 1.749, "y": 1.11, "c": 20.7, "s": 11.8, "g": 42}, {"t": "Oviedo", "l": "LaLiga", "x": 1.716, "y": 0.68, "c": 17.0, "s": 9.9, "g": 26}, {"t": "Paris FC", "l": "Ligue1", "x": 1.377, "y": 1.35, "c": 16.0, "s": 11.6, "g": 46}, {"t": "Parma", "l": "SerieA", "x": 1.572, "y": 0.68, "c": 16.8, "s": 10.7, "g": 26}, {"t": "Pisa", "l": "SerieA", "x": 1.783, "y": 0.66, "c": 17.1, "s": 9.6, "g": 25}, {"t": "PSG", "l": "Ligue1", "x": 0.845, "y": 2.15, "c": 14.9, "s": 17.7, "g": 73}, {"t": "Rayo Vallecano", "l": "LaLiga", "x": 1.447, "y": 1.08, "c": 20.2, "s": 13.9, "g": 41}, {"t": "RB Leipzig", "l": "Bundesliga", "x": 1.067, "y": 1.88, "c": 16.9, "s": 15.8, "g": 64}, {"t": "Real Betis", "l": "LaLiga", "x": 1.03, "y": 1.53, "c": 14.6, "s": 14.2, "g": 58}, {"t": "Real Madrid", "l": "LaLiga", "x": 0.872, "y": 2.03, "c": 15.2, "s": 17.5, "g": 77}, {"t": "Real Sociedad", "l": "LaLiga", "x": 1.387, "y": 1.5, "c": 17.2, "s": 12.4, "g": 57}, {"t": "Rennes", "l": "Ligue1", "x": 1.378, "y": 1.65, "c": 19.5, "s": 14.2, "g": 56}, {"t": "Roma", "l": "SerieA", "x": 1.38, "y": 1.55, "c": 18.3, "s": 13.2, "g": 59}, {"t": "Sassuolo", "l": "SerieA", "x": 1.096, "y": 1.18, "c": 11.7, "s": 10.7, "g": 45}, {"t": "Sevilla", "l": "LaLiga", "x": 1.416, "y": 1.16, "c": 16.3, "s": 11.5, "g": 44}, {"t": "St Pauli", "l": "Bundesliga", "x": 1.689, "y": 0.85, "c": 17.2, "s": 10.2, "g": 29}, {"t": "Strasbourg", "l": "Ligue1", "x": 1.427, "y": 1.68, "c": 16.3, "s": 11.4, "g": 57}, {"t": "Stuttgart", "l": "Bundesliga", "x": 1.31, "y": 2.06, "c": 20.0, "s": 15.3, "g": 70}, {"t": "Sunderland", "l": "PL", "x": 1.548, "y": 1.0, "c": 16.1, "s": 10.4, "g": 38}, {"t": "Torino", "l": "SerieA", "x": 1.481, "y": 1.11, "c": 17.5, "s": 11.8, "g": 42}, {"t": "Tottenham", "l": "PL", "x": 1.752, "y": 1.24, "c": 20.1, "s": 11.4, "g": 47}, {"t": "Toulouse", "l": "Ligue1", "x": 1.151, "y": 1.39, "c": 14.8, "s": 12.9, "g": 46}, {"t": "Udinese", "l": "SerieA", "x": 1.276, "y": 1.16, "c": 14.7, "s": 11.6, "g": 44}, {"t": "Union Berlin", "l": "Bundesliga", "x": 1.59, "y": 1.29, "c": 19.8, "s": 12.5, "g": 44}, {"t": "Valencia", "l": "LaLiga", "x": 1.55, "y": 1.21, "c": 18.3, "s": 11.8, "g": 46}, {"t": "Villarreal", "l": "LaLiga", "x": 1.009, "y": 1.87, "c": 12.1, "s": 12.0, "g": 71}, {"t": "Werder Bremen", "l": "Bundesliga", "x": 1.379, "y": 1.06, "c": 18.0, "s": 13.0, "g": 36}, {"t": "West Ham", "l": "PL", "x": 1.579, "y": 1.16, "c": 16.8, "s": 10.6, "g": 44}, {"t": "Wolfsburg", "l": "Bundesliga", "x": 1.284, "y": 1.29, "c": 15.3, "s": 11.9, "g": 44}, {"t": "Wolves", "l": "PL", "x": 1.881, "y": 0.68, "c": 18.3, "s": 9.7, "g": 26}], "suwon": {"t": "수원 삼성", "x": 2.037, "y": 1.45, "c": 27.7, "s": 13.6, "g": 29}, "funnel": [{"n": "유럽 5대리그", "cr": 61481, "sh": 44034, "sot": 15104, "g": 4713}, {"n": "K리그2", "cr": 6938, "sh": 3972, "sot": 1408, "g": 466}, {"n": "K리그1", "cr": 5372, "sh": 2987, "sot": 1008, "g": 307}, {"n": "수원 삼성", "cr": 554, "sh": 272, "sot": 95, "g": 29}], "quartile": [{"q": "Q1", "r": "0.79–1.28", "v": 1.11, "cr": 15.64, "sh": 14.3, "g": 1.71}, {"q": "Q2", "r": "1.28–1.41", "v": 1.363, "cr": 17.85, "sh": 13.1, "g": 1.42}, {"q": "Q3", "r": "1.42–1.58", "v": 1.475, "cr": 17.47, "sh": 11.86, "g": 1.22}, {"q": "Q4", "r": "1.59–2.04", "v": 1.747, "cr": 19.28, "sh": 11.07, "g": 1.05}], "profile": [{"n": "수원 삼성", "cr": 27.7, "sh": 13.6, "r": 2.037, "g": 1.45, "hl": 1}, {"n": "인터", "cr": 23.0, "sh": 17.1, "r": 1.346, "g": 2.24, "hl": 2}, {"n": "랑스", "cr": 22.7, "sh": 16.5, "r": 1.378, "g": 1.91, "hl": 2}, {"n": "뉴캐슬", "cr": 23.1, "sh": 12.9, "r": 1.78, "g": 1.39, "hl": 0}, {"n": "빌바오", "cr": 24.3, "sh": 13.7, "r": 1.768, "g": 1.11, "hl": 0}, {"n": "바이에른", "cr": 16.1, "sh": 19.2, "r": 0.841, "g": 3.5, "hl": 2}], "shots": {"R18": [{"p": "일류첸코", "v": 0.25}, {"p": "페신", "v": 0.2}, {"p": "일류첸코", "v": 0.13}, {"p": "르본", "v": 0.1}, {"p": "강현묵", "v": 0.1}, {"p": "이상민", "v": 0.09}, {"p": "김도연", "v": 0.07}, {"p": "페신", "v": 0.07}, {"p": "일류첸코", "v": 0.05}, {"p": "일류첸코", "v": 0.04}, {"p": "이건희", "v": 0.03}, {"p": "김도연", "v": 0.03}, {"p": "박현빈", "v": 0.03}, {"p": "이건희", "v": 0.01}, {"p": "박현빈", "v": 0.01}, {"p": "박현빈", "v": 0.01}], "R2": [{"p": "브루노 실바", "v": 0.37}, {"p": "김지현", "v": 0.31}, {"p": "(미확정)", "v": 0.28}, {"p": "일류첸코", "v": 0.16}, {"p": "김지현", "v": 0.13}, {"p": "김지현", "v": 0.13}, {"p": "강현묵", "v": 0.13}, {"p": "브루노 실바", "v": 0.12}, {"p": "일류첸코", "v": 0.06}, {"p": "김지현", "v": 0.05}, {"p": "강성진", "v": 0.03}, {"p": "박현빈", "v": 0.03}, {"p": "박현빈", "v": 0.03}]}};
+const L = {"f_leg": ["cross → shot", "shot → on target", "on target → goal"], "f_names": {"유럽 5대리그": "Big 5 (Europe)", "K리그2": "K League 2", "K리그1": "K League 1", "수원 삼성": "Suwon Samsung"}, "sc_x": "Crosses ÷ shots (crosses spent per shot)", "sc_y": "Goals per match", "sc_reg": "regression · r = −0.68", "sc_tbtn": ["View as table", "Close table"], "sc_th": ["Club", "League", "Crosses÷shots", "Crosses/match", "Shots/match", "Goals/match"], "q_x": "Goals per match", "q_unit": "", "p_y": "Per match", "p_r": "ratio ", "p_names": {"수원 삼성": "Suwon Samsung", "인터": "Inter", "랑스": "Lens", "뉴캐슬": "Newcastle", "빌바오": "Athletic Club", "바이에른": "Bayern"}, "sh_rows": [["R18 home vs Paju", "0-0 · 16 shots · 35 crosses"], ["R2 away at Paju", "1-0 · 13 shots · 37 crosses"]], "sh_x": "Expected goals (xG) of a single shot", "sh_band": "low-xG band", "z_items": [["Z", "Zone", "freedom vs value", "deep and wide is free, but has no angle"], ["F", "Freedom", "pressure · time · options", "a cross under contact cannot choose its landing point"], ["A", "Arrival", "numbers N · concentration D", "bodies that never reach the landing point count for nothing"]], "z_mul": "The three do not add — they multiply. If one is zero, the whole is zero.", "z_t_k": "T", "z_t_n": "Time — context · in development", "z_t_d": "A ball that arrives one beat earlier transfers the crosser's time into the box. Produced by three-player connections, overload→isolation, rapid switches and a low, fast pass weight.", "ref": {"Barcelona": "Barcelona", "Bayern Munich": "Bayern", "PSG": "PSG", "Real Madrid": "Real Madrid", "Inter": "Inter", "Getafe": "Getafe", "Wolves": "Wolves", "Le Havre": "Le Havre"}, "q_tip": ["crosses÷shots", "per match", "crosses", "shots", "goals per match"], "p_tip": ["crosses / match", "shots / match", "crosses÷shots", "goals"], "sh_p": {"일류첸코": "Ilyutchenko", "페신": "Pesin", "르본": "Le Bon", "강현묵": "Kang Hyun-mook", "이상민": "Lee Sang-min", "김도연": "Kim Do-yeon", "이건희": "Lee Gun-hee", "박현빈": "Park Hyun-bin", "브루노 실바": "Bruno Silva", "김지현": "Kim Ji-hyun", "강성진": "Kang Sung-jin", "(미확정)": "(unidentified)"}, "dark": "◐ Dark", "light": "◑ Light"}, L_ = L;
+const $=s=>document.querySelector(s), tip=$('#tip');
+const cs=()=>getComputedStyle(document.documentElement);
+const C=n=>cs().getPropertyValue(n).trim();
+const NS='http://www.w3.org/2000/svg';
+function el(t,a={}){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;}
+function txt(x,y,s,o={}){const e=el('text',Object.assign({x,y,fill:'var(--muted)','font-size':11,'font-family':'inherit'},o));e.textContent=s;return e;}
+function showTip(ev,html){tip.innerHTML=html;tip.style.opacity=1;
+  const r=tip.getBoundingClientRect();let x=ev.clientX+14,y=ev.clientY-r.height-10;
+  if(x+r.width>innerWidth-8)x=ev.clientX-r.width-14; if(y<8)y=ev.clientY+16;
+  tip.style.left=x+'px';tip.style.top=y+'px';}
+function hideTip(){tip.style.opacity=0}
+
+/* ---------- 1. FUNNEL ---------- */
+function funnel(){
+  const s=$('#c-funnel'); s.innerHTML='';
+  const W=720,H=320,L=104,R=26,T=16,B=42, pw=W-L-R;
+  const rows=DATA.funnel.map(d=>({n:L_.f_names[d.n],v:[100*d.sh/d.cr,100*d.sot/d.sh,100*d.g/d.sot]}));
+  const bh=17, grp=(H-T-B)/rows.length;
+  const cols=[C('--seq450'),C('--seq350'),C('--seq250')];
+  const labs=L_.f_leg;
+  [0,25,50,75,100].forEach(t=>{const x=L+pw*t/100;
+    s.appendChild(el('line',{x1:x,y1:T,x2:x,y2:H-B,stroke:C('--grid'),'stroke-width':1}));
+    s.appendChild(txt(x,H-B+18,t+'%',{'text-anchor':'middle'}));});
+  rows.forEach((r,i)=>{
+    const y0=T+i*grp+4;
+    const nm=txt(L-12,y0+grp/2-4,r.n,{'text-anchor':'end','font-size':12.5,fill:C('--text-primary'),'font-weight':(r.n.indexOf('수원')>=0||r.n.indexOf('Suwon')>=0)?700:550});
+    s.appendChild(nm);
+    r.v.forEach((v,j)=>{
+      const y=y0+j*(bh+3), w=Math.max(2,pw*v/100);
+      const rc=el('rect',{x:L,y,width:w,height:bh,rx:4,fill:cols[j]});
+      rc.style.cursor='pointer';
+      rc.addEventListener('mousemove',e=>showTip(e,`<b>${r.n}</b><br><span class="m">${labs[j]}</span> ${v.toFixed(1)}%`));
+      rc.addEventListener('mouseleave',hideTip);
+      s.appendChild(rc);
+      if(j===0) s.appendChild(txt(L+w+7,y+13,v.toFixed(1)+'%',{fill:C('--text-primary'),'font-size':12,'font-weight':680}));
+      else s.appendChild(txt(L+w+7,y+13,v.toFixed(1)+'%',{'font-size':11.5}));
+    });
+  });
+}
+
+/* ---------- 2. SCATTER ---------- */
+const REF=L_.ref;
+function scatter(){
+  const s=$('#c-scatter'); s.innerHTML='';
+  const W=720,H=430,L=56,R=26,T=14,B=52, pw=W-L-R, ph=H-T-B;
+  const xs=[0.7,2.15], ys=[0.4,3.7];
+  const X=v=>L+pw*(v-xs[0])/(xs[1]-xs[0]), Y=v=>T+ph-ph*(v-ys[0])/(ys[1]-ys[0]);
+  [0.8,1.0,1.2,1.4,1.6,1.8,2.0].forEach(t=>{
+    s.appendChild(el('line',{x1:X(t),y1:T,x2:X(t),y2:T+ph,stroke:C('--grid'),'stroke-width':1}));
+    s.appendChild(txt(X(t),T+ph+19,t.toFixed(1),{'text-anchor':'middle'}));});
+  [0.5,1,1.5,2,2.5,3,3.5].forEach(t=>{
+    s.appendChild(el('line',{x1:L,y1:Y(t),x2:L+pw,y2:Y(t),stroke:C('--grid'),'stroke-width':1}));
+    s.appendChild(txt(L-9,Y(t)+4,t.toFixed(1),{'text-anchor':'end'}));});
+  s.appendChild(txt(L+pw/2,T+ph+40,L_.sc_x,{'text-anchor':'middle','font-size':12,fill:C('--text-secondary')}));
+  s.appendChild(txt(-(T+ph/2),14,L_.sc_y,{'text-anchor':'middle','font-size':12,fill:C('--text-secondary'),transform:'rotate(-90)'}));
+  // regression
+  const P=DATA.scatter, n=P.length;
+  const mx=P.reduce((a,d)=>a+d.x,0)/n, my=P.reduce((a,d)=>a+d.y,0)/n;
+  const b=P.reduce((a,d)=>a+(d.x-mx)*(d.y-my),0)/P.reduce((a,d)=>a+(d.x-mx)**2,0), a0=my-b*mx;
+  s.appendChild(el('line',{x1:X(0.75),y1:Y(a0+b*0.75),x2:X(2.1),y2:Y(a0+b*2.1),
+    stroke:C('--axis'),'stroke-width':2,'stroke-dasharray':'6 5'}));
+  const rg=el('g'); 
+  rg.appendChild(el('line',{x1:X(1.72),y1:Y(3.32),x2:X(1.80),y2:Y(3.32),stroke:C('--axis'),'stroke-width':2,'stroke-dasharray':'6 5'}));
+  const rt=txt(X(1.83),Y(3.32)+4,L_.sc_reg,{'font-size':11.5,fill:C('--text-secondary'),'font-weight':620});
+  rg.appendChild(rt); s.appendChild(rg);
+  // points
+  P.forEach(d=>{
+    const isRef=REF[d.t];
+    const c=el('circle',{cx:X(d.x),cy:Y(d.y),r:isRef?6.5:5,
+      fill:isRef?C('--s3'):C('--s1'),'fill-opacity':isRef?1:.62,
+      stroke:C('--surface-1'),'stroke-width':2});
+    c.style.cursor='pointer';
+    c.addEventListener('mousemove',e=>showTip(e,`<b>${isRef||d.t}</b><br><span class="m">${L_.sc_th[2]}</span> ${d.x.toFixed(2)} · <span class="m">${L_.sc_th[5]}</span> ${d.y.toFixed(2)}<br><span class="m">${L_.sc_th[3]}</span> ${d.c} · <span class="m">${L_.sc_th[4]}</span> ${d.s}`));
+    c.addEventListener('mouseleave',hideTip);
+    s.appendChild(c);
+  });
+  // labels for refs
+  const off={'Barcelona':[9,-9],'Bayern Munich':[10,4],'PSG':[-8,-11],'Real Madrid':[10,13],
+   'Inter':[10,-8],'Getafe':[10,14],'Wolves':[-10,5],'Le Havre':[-10,-11]};
+  P.filter(d=>REF[d.t]).forEach(d=>{const o=off[d.t]||[8,-8];
+    s.appendChild(txt(X(d.x)+o[0],Y(d.y)+o[1],REF[d.t],{'font-size':11.5,fill:C('--text-primary'),'font-weight':600,
+      'text-anchor':o[0]<0?'end':'start'}));});
+  // suwon
+  const S=DATA.suwon;
+  const sq=el('path',{d:`M${X(S.x)} ${Y(S.y)-9} L${X(S.x)+9} ${Y(S.y)} L${X(S.x)} ${Y(S.y)+9} L${X(S.x)-9} ${Y(S.y)} Z`,
+    fill:C('--s2'),stroke:C('--surface-1'),'stroke-width':2.5});
+  sq.style.cursor='pointer';
+  sq.addEventListener('mousemove',e=>showTip(e,`<b>${L_.p_names['수원 삼성']}</b><br><span class="m">${L_.sc_th[2]}</span> 2.04 · <span class="m">${L_.sc_th[5]}</span> 1.45<br><span class="m">${L_.sc_th[3]}</span> 27.7 · <span class="m">${L_.sc_th[4]}</span> 13.6`));
+  sq.addEventListener('mouseleave',hideTip);
+  s.appendChild(sq);
+  s.appendChild(txt(X(S.x)-13,Y(S.y)-9,L_.p_names['수원 삼성'],{'font-size':13,fill:C('--s2'),'font-weight':720,'text-anchor':'end'}));
+  // table
+  const tw=$('#t-scatter');
+  const sorted=[...P].sort((x,y)=>x.x-y.x);
+  tw.innerHTML='<table><thead><tr>'+L_.sc_th.map(h=>'<th>'+h+'</th>').join('')+'</tr></thead><tbody>'
+   +`<tr class="hl"><td>${L_.p_names['수원 삼성']}</td><td>K League 2</td><td>2.037</td><td>27.7</td><td>13.6</td><td>1.45</td></tr>`
+   +sorted.map(d=>`<tr><td>${REF[d.t]||d.t}</td><td>${d.l}</td><td>${d.x.toFixed(3)}</td><td>${d.c}</td><td>${d.s}</td><td>${d.y.toFixed(2)}</td></tr>`).join('')
+   +'</tbody></table>';
+}
+
+/* ---------- 3. QUARTILE ---------- */
+function quart(){
+  const s=$('#c-quart'); s.innerHTML='';
+  const W=720,H=220,L=118,R=70,T=12,B=34,pw=W-L-R,ph=H-T-B;
+  const Q=DATA.quartile, bh=26, gap=(ph-bh*4)/3, max=1.9;
+  [0,0.5,1,1.5].forEach(t=>{const x=L+pw*t/max;
+    s.appendChild(el('line',{x1:x,y1:T,x2:x,y2:T+ph,stroke:C('--grid'),'stroke-width':1}));
+    s.appendChild(txt(x,T+ph+18,t.toFixed(1),{'text-anchor':'middle'}));});
+  s.appendChild(txt(L+pw/2,T+ph+32,L_.q_x,{'text-anchor':'middle','font-size':11.5,fill:C('--text-secondary')}));
+  Q.forEach((q,i)=>{
+    const y=T+i*(bh+gap), w=pw*q.g/max;
+    const r=el('rect',{x:L,y,width:w,height:bh,rx:4,fill:C('--seq450'),'fill-opacity':1-i*0.16});
+    r.style.cursor='pointer';
+    r.addEventListener('mousemove',e=>showTip(e,`<b>${q.q} · ${L_.q_tip[0]} ${q.r}</b><br><span class="m">${L_.q_tip[1]}</span> ${L_.q_tip[2]} ${q.cr} · ${L_.q_tip[3]} ${q.sh}<br><span class="m">${L_.q_tip[4]}</span> ${q.g}`));
+    r.addEventListener('mouseleave',hideTip);
+    s.appendChild(r);
+    s.appendChild(txt(L-12,y+17,q.q+'  '+q.r,{'text-anchor':'end','font-size':12,fill:C('--text-primary'),'font-weight':560}));
+    s.appendChild(txt(L+w+8,y+17,q.g.toFixed(2)+L_.q_unit,{'font-size':12.5,fill:C('--text-primary'),'font-weight':660}));
+  });
+}
+
+/* ---------- 4. PROFILE ---------- */
+function prof(){
+  const s=$('#c-prof'); s.innerHTML='';
+  const W=720,H=300,L=76,R=30,T=14,B=46,pw=W-L-R,ph=H-T-B;
+  const P=DATA.profile, n=P.length, gw=pw/n, max=30;
+  [0,10,20,30].forEach(t=>{const y=T+ph-ph*t/max;
+    s.appendChild(el('line',{x1:L,y1:y,x2:L+pw,y2:y,stroke:C('--grid'),'stroke-width':1}));
+    s.appendChild(txt(L-9,y+4,t,{'text-anchor':'end'}));});
+  s.appendChild(txt(-(T+ph/2),15,L_.p_y,{'text-anchor':'middle','font-size':11.5,fill:C('--text-secondary'),transform:'rotate(-90)'}));
+  P.forEach((d,i)=>{
+    const cx=L+gw*i+gw/2, bw=Math.min(30,gw*0.31);
+    const isSu=d.hl===1;
+    if(isSu) s.appendChild(el('rect',{x:cx-gw/2+4,y:T-4,width:gw-8,height:ph+8,rx:10,
+      fill:C('--s2'),'fill-opacity':0.09}));
+    [['cr',C('--s1'),-bw-1],['sh',C('--s3'),1]].forEach(([k,col,dx])=>{
+      const h=ph*d[k]/max, y=T+ph-h;
+      const r=el('rect',{x:cx+dx,y,width:bw,height:h,rx:4,fill:col});
+      r.style.cursor='pointer';
+      r.addEventListener('mousemove',e=>showTip(e,`<b>${L_.p_names[d.n]||d.n}</b><br><span class="m">${k==='cr'?L_.p_tip[0]:L_.p_tip[1]}</span> ${d[k]}<br><span class="m">${L_.p_tip[2]}</span> ${d.r} · <span class="m">${L_.p_tip[3]}</span> ${d.g}`));
+      r.addEventListener('mouseleave',hideTip);
+      s.appendChild(r);
+      s.appendChild(txt(cx+dx+bw/2,y-6,d[k].toFixed(1),{'text-anchor':'middle','font-size':11,fill:C('--text-secondary')}));
+    });
+    s.appendChild(txt(cx,T+ph+19,L_.p_names[d.n]||d.n,{'text-anchor':'middle','font-size':12.5,
+      fill:isSu?C('--s2'):C('--text-primary'),'font-weight':isSu?720:560}));
+    s.appendChild(txt(cx,T+ph+36,L_.p_r+d.r.toFixed(2),{'text-anchor':'middle','font-size':11,
+      fill:isSu?C('--s2'):C('--muted'),'font-weight':isSu?650:400}));
+  });
+}
+
+/* ---------- 5. ZFA ---------- */
+function wrapTxt(str,maxpx,fs){
+  const cw=c=>/[ᄀ-ᇿ㄰-㆏가-힣一-鿿぀-ヿ]/.test(c)?fs:fs*0.545;
+  const sp=fs*0.32, out=[]; let cur='',w=0;
+  str.split(' ').forEach(t=>{
+    const tw=[...t].reduce((a,c)=>a+cw(c),0);
+    if(cur && w+sp+tw>maxpx){out.push(cur);cur=t;w=tw;}
+    else {cur=cur?cur+' '+t:t; w=cur===t?tw:w+sp+tw;}
+  });
+  if(cur)out.push(cur); return out;
+}
+function zfa(){
+  const s=$('#c-zfa'); s.innerHTML='';
+  const W=720;
+  const cols=[C('--s1'),C('--s3'),C('--s2')];
+  const items=L_.z_items.map((a,i)=>({k:a[0],n:a[1],d:a[2],z:a[3],c:cols[i]}));
+  const bw=196, gap=(W-bw*3)/2, pad=20, iw=bw-pad-14;
+  items.forEach(it=>{it.dl=wrapTxt(it.d,iw,11.5); it.zl=wrapTxt(it.z,iw,11.5);});
+  const maxD=Math.max(...items.map(i=>i.dl.length)), maxZ=Math.max(...items.map(i=>i.zl.length));
+  const zTop=94+(maxD-1)*15+25;                 // first body line baseline
+  const cardH=zTop+(maxZ-1)*16+14;
+  items.forEach((it,i)=>{
+    const x=i*(bw+gap);
+    s.appendChild(el('rect',{x,y:10,width:bw,height:cardH,rx:12,fill:'none',stroke:C('--border'),'stroke-width':1.5}));
+    s.appendChild(el('rect',{x,y:10,width:5,height:cardH,rx:2.5,fill:it.c}));
+    s.appendChild(txt(x+pad,52,it.k,{'font-size':30,'font-weight':750,fill:it.c}));
+    s.appendChild(txt(x+pad,74,it.n,{'font-size':13,fill:C('--text-primary'),'font-weight':650}));
+    it.dl.forEach((ln,j)=>s.appendChild(txt(x+pad,94+j*15,ln,{'font-size':11.5,fill:C('--muted')})));
+    it.zl.forEach((ln,j)=>s.appendChild(txt(x+pad,zTop+j*16,ln,{'font-size':11.5,fill:C('--text-secondary')})));
+    if(i<2) s.appendChild(txt(x+bw+gap/2,10+cardH/2,'×',{'text-anchor':'middle','font-size':24,fill:C('--muted'),'font-weight':300}));
+  });
+  let y=10+cardH+30;
+  wrapTxt(L_.z_mul,W-40,13.5).forEach((ln,j)=>
+    s.appendChild(txt(W/2,y+j*19,ln,{'text-anchor':'middle','font-size':13.5,fill:C('--text-primary'),'font-weight':640})));
+  y+=wrapTxt(L_.z_mul,W-40,13.5).length*19+8;
+  const tl=wrapTxt(L_.z_t_d,W-72,11.5);
+  const bh=48+tl.length*15;
+  s.appendChild(el('rect',{x:0,y,width:W,height:bh,rx:12,fill:'none',stroke:C('--axis'),'stroke-width':1.5,'stroke-dasharray':'7 5'}));
+  s.appendChild(txt(22,y+32,L_.z_t_k,{'font-size':26,'font-weight':750,fill:C('--s2')}));
+  s.appendChild(txt(56,y+28,L_.z_t_n,{'font-size':13.5,fill:C('--text-primary'),'font-weight':660}));
+  tl.forEach((ln,j)=>s.appendChild(txt(56,y+48+j*15,ln,{'font-size':11.5,fill:C('--text-secondary')})));
+  s.setAttribute('viewBox',`0 0 ${W} ${y+bh+6}`);
+}
+
+/* ---------- 6. SHOTS ---------- */
+function shots(){
+  const s=$('#c-shots'); s.innerHTML='';
+  const W=720,H=210,L=118,R=40,T=22,B=42,pw=W-L-R;
+  const rows=[{n:L_.sh_rows[0][0],k:'R18',sub:L_.sh_rows[0][1],c:C('--s2')},
+              {n:L_.sh_rows[1][0],k:'R2',sub:L_.sh_rows[1][1],c:C('--s3')}];
+  const max=0.40, X=v=>L+pw*v/max;
+  [0,0.1,0.2,0.3,0.4].forEach(t=>{
+    s.appendChild(el('line',{x1:X(t),y1:T-6,x2:X(t),y2:H-B+4,stroke:C('--grid'),'stroke-width':1}));
+    s.appendChild(txt(X(t),H-B+22,t.toFixed(2),{'text-anchor':'middle'}));});
+  s.appendChild(txt(L+pw/2,H-B+38,L_.sh_x,{'text-anchor':'middle','font-size':11.5,fill:C('--text-secondary')}));
+  s.appendChild(el('rect',{x:L,y:T-10,width:X(0.05)-L,height:H-B-T+18,fill:C('--muted'),'fill-opacity':.07}));
+  s.appendChild(txt(X(0.025),T-14,L_.sh_band,{'text-anchor':'middle','font-size':10.5,fill:C('--muted')}));
+  rows.forEach((r,i)=>{
+    const y=T+22+i*62;
+    s.appendChild(txt(L-12,y-2,r.n,{'text-anchor':'end','font-size':12.5,fill:C('--text-primary'),'font-weight':640}));
+    s.appendChild(txt(L-12,y+15,r.sub,{'text-anchor':'end','font-size':11,fill:C('--muted')}));
+    s.appendChild(el('line',{x1:L,y1:y+2,x2:L+pw,y2:y+2,stroke:C('--axis'),'stroke-width':1}));
+    const seen={};
+    DATA.shots[r.k].forEach(d=>{
+      const key=d.v.toFixed(2); seen[key]=(seen[key]||0)+1;
+      const cy=y+2-(seen[key]-1)*11;
+      const c=el('circle',{cx:X(d.v),cy,r:5,fill:r.c,'fill-opacity':.85,stroke:C('--surface-1'),'stroke-width':1.5});
+      c.style.cursor='pointer';
+      c.addEventListener('mousemove',e=>showTip(e,`<b>${L_.sh_p[d.p]||d.p}</b><br><span class="m">xG</span> ${d.v.toFixed(2)}`));
+      c.addEventListener('mouseleave',hideTip);
+      s.appendChild(c);
+    });
+  });
+}
+
+function draw(){funnel();scatter();quart();prof();zfa();shots();}
+draw();
+document.querySelectorAll('.tbtn').forEach(b=>b.addEventListener('click',()=>{
+  const t=document.getElementById(b.dataset.t); t.classList.toggle('on');
+  b.textContent=t.classList.contains('on')?L_.sc_tbtn[1]:L_.sc_tbtn[0];}));
+const tg=$('#tg');
+function setT(t){document.documentElement.setAttribute('data-theme',t);
+  tg.textContent=t==='dark'?L_.light:L_.dark;requestAnimationFrame(draw);}
+setT(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+tg.addEventListener('click',()=>setT(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark'));
+addEventListener('resize',()=>{clearTimeout(window._r);window._r=setTimeout(draw,180)});
+
+</script>
+
+</body></html>

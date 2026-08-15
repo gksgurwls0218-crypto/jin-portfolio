@@ -6,7 +6,7 @@ import MatchBoard from "@/components/match/MatchBoard";
 import GoalsSummary from "@/components/match/GoalsSummary";
 import Reveal from "@/components/Reveal";
 import { MATCHES, type GalleryMatch } from "@/lib/matchGallery";
-import { UI } from "@/lib/i18n";
+import { UI, type Locale } from "@/lib/i18n";
 import { useLocale } from "@/lib/useLocale";
 
 const GALLERY_COPY = {
@@ -39,6 +39,7 @@ type CardEntry =
 const STANDALONE: CardEntry[] = [
   { kind: "tournament", key: "wc2026-report", publishedAt: "2026-07-26" },
   { kind: "report", key: "korea-jordan", publishedAt: "2026-08-11" },
+  { kind: "report", key: "suwon-cross-shot", publishedAt: "2026-08-15" },
 ];
 
 const GALLERY_CARDS: CardEntry[] = [
@@ -205,29 +206,57 @@ function TournamentRow() {
   );
 }
 
-/* Standalone long-form match report — authored as a self-contained HTML document
-   and embedded at /match-analysis/korea-jordan, so it gets a report-shaped card
-   rather than the home-vs-away scoreline used above. */
-const REPORT_COPY = {
-  tag: { en: "MATCH REPORT", ko: "경기 분석 리포트" },
-  competition: { en: "AFC Asian Cup Qatar 2023 · Korea Republic 2-2 Jordan", ko: "AFC 아시안컵 카타르 2023 · 대한민국 2-2 요르단" },
-  title: { en: "Was it the penetration, or the pressing?", ko: "침투가 원인이었나, 압박이 원인이었나" },
-  sub: {
-    en: "Two claims tested in order. Penetration halved — and shots went up. What changed was not the runs in front but the pressing behind them. Every figure marked for what is measured and what is assumed.",
-    ko: "두 개의 가설을 순서대로 검증했다. 침투는 반토막 났는데 슈팅은 늘었다. 바뀐 것은 앞선의 침투가 아니라 상대의 압박이었다. 확정된 수치와 가정을 그림마다 구분해 표시했다.",
-  },
-  stats: {
-    en: [["164 → 81", "runs in behind"], ["14 → 22", "shots"], ["42 → 25", "CB circulation"], ["14 / 6 / 16", "A–B–A shots"]],
-    ko: [["164 → 81", "뒷공간 침투"], ["14 → 22", "슈팅"], ["42 → 25", "센터백 순환"], ["14 / 6 / 16", "A–B–A 슈팅"]],
-  },
-} as const;
+/* Standalone long-form reports — each authored as a self-contained HTML document
+   and embedded at /match-analysis/[key], so they get a report-shaped card rather
+   than the home-vs-away scoreline used above.
+   새 단독 리포트를 추가할 때: 아래 REPORTS에 항목 하나 + 위 STANDALONE에 한 줄. */
+type ReportStat = readonly [string, string];
+type ReportCopy = {
+  tag: Record<Locale, string>;
+  competition: Record<Locale, string>;
+  title: Record<Locale, string>;
+  sub: Record<Locale, string>;
+  stats: Record<Locale, readonly ReportStat[]>;
+};
 
-function ReportRow() {
+const REPORTS: Record<"korea-jordan" | "suwon-cross-shot", ReportCopy> = {
+  "korea-jordan": {
+    tag: { en: "MATCH REPORT", ko: "경기 분석 리포트" },
+    competition: { en: "AFC Asian Cup Qatar 2023 · Korea Republic 2-2 Jordan", ko: "AFC 아시안컵 카타르 2023 · 대한민국 2-2 요르단" },
+    title: { en: "Was it the penetration, or the pressing?", ko: "침투가 원인이었나, 압박이 원인이었나" },
+    sub: {
+      en: "Two claims tested in order. Penetration halved — and shots went up. What changed was not the runs in front but the pressing behind them. Every figure marked for what is measured and what is assumed.",
+      ko: "두 개의 가설을 순서대로 검증했다. 침투는 반토막 났는데 슈팅은 늘었다. 바뀐 것은 앞선의 침투가 아니라 상대의 압박이었다. 확정된 수치와 가정을 그림마다 구분해 표시했다.",
+    },
+    stats: {
+      en: [["164 → 81", "runs in behind"], ["14 → 22", "shots"], ["42 → 25", "CB circulation"], ["14 / 6 / 16", "A–B–A shots"]],
+      ko: [["164 → 81", "뒷공간 침투"], ["14 → 22", "슈팅"], ["42 → 25", "센터백 순환"], ["14 / 6 / 16", "A–B–A 슈팅"]],
+    },
+  },
+  "suwon-cross-shot": {
+    tag: { en: "TEAM REPORT", ko: "팀 분석 리포트" },
+    competition: { en: "K League 2 2026 · Suwon Samsung · 20 matches", ko: "K리그2 2026 · 수원 삼성 · 20경기" },
+    title: { en: "From cross to shot", ko: "크로스에서 슈팅으로" },
+    sub: {
+      en: "League leaders with the best defence, yet the fewest goals of the top six. Set against 96 Big 5 clubs, the gap narrows to one phase — crosses that never become shots. The Cross Freedom model (Z×F×A) sets out what decides it, with the context T marked as still in development.",
+      ko: "리그 1위이자 최소 실점 팀인데 상위 6팀 중 득점이 가장 적다. 유럽 5대리그 96팀과 대조하면 차이가 나는 구간은 하나로 좁혀진다 — 슈팅이 되지 못하는 크로스. 자유 크로스도(Z×F×A)로 무엇이 그것을 가르는지 정리하고, 맥락 T는 개발 중임을 명시했다.",
+    },
+    stats: {
+      en: [["49.1%", "cross → shot (Europe 71.6%)"], ["2.04", "crosses ÷ shots"], ["r = −0.68", "ratio vs goals, 96 clubs"], ["34.9%", "shots on target — hold"]],
+      ko: [["49.1%", "크로스 → 슈팅 (유럽 71.6%)"], ["2.04", "크로스 ÷ 슈팅"], ["r = −0.68", "비율과 득점, 96팀"], ["34.9%", "유효슛 비율 — 유지"]],
+    },
+  },
+};
+
+type ReportId = keyof typeof REPORTS;
+
+function ReportRow({ id }: { id: ReportId }) {
   const locale = useLocale();
   const [hover, setHover] = useState(false);
+  const REPORT_COPY = REPORTS[id];
   return (
     <Link
-      href="/match-analysis/korea-jordan"
+      href={`/match-analysis/${id}`}
       className="relative flex flex-col lg:flex-row gap-8 rounded-[26px] p-8 md:p-10"
       style={{
         background: "var(--green-soft)",
@@ -290,7 +319,7 @@ export default function MatchGallery() {
           {GALLERY_CARDS.map((c, i) => (
             <Reveal key={c.key} delay={i * 80}>
               {c.kind === "tournament" ? <TournamentRow />
-                : c.kind === "report" ? <ReportRow />
+                : c.kind === "report" ? <ReportRow id={c.key as ReportId} />
                 : <Row match={c.match} />}
             </Reveal>
           ))}
