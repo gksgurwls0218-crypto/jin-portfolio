@@ -17,7 +17,7 @@ export default async function JwcPage({ params }: { params: Promise<{ locale: st
   const badge = STATUS_BADGE.draft;
   return (
     <KpiDetail
-      backHref="/kpi-lab"
+      backHref="/kpi-lab/lab"
       backLabel={c.backLabel}
       kicker={c.kicker}
       title={c.title}

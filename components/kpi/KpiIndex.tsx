@@ -4,7 +4,13 @@ import Reveal from "@/components/Reveal";
 import EnterTag from "@/components/EnterTag";
 
 export type Badge = { label: string; color: string; bg: string; border: string };
-export type IndexItem = { href: string; title: string; sub: string; short: string; badge?: Badge; tags?: string[] };
+export type IndexItem = {
+  href: string; title: string; sub: string; short: string;
+  badge?: Badge; tags?: string[];
+  /** Short right-aligned note in the card footer — the Lab uses it for the
+      added/updated date the index is sorted on. */
+  meta?: string;
+};
 
 function enter(on: boolean) {
   return (e: React.MouseEvent<HTMLElement>) => {
@@ -62,8 +68,11 @@ export default function KpiIndex({
                     ))}
                   </div>
                 )}
-                <div className="mt-auto pt-4" style={{ borderTop: "0.5px solid var(--edge)" }}>
+                <div className="mt-auto pt-4 flex items-center justify-between gap-3" style={{ borderTop: "0.5px solid var(--edge)" }}>
                   <EnterTag />
+                  {it.meta && (
+                    <span className="mono" style={{ fontSize: 10.5, color: "var(--ink-4)", whiteSpace: "nowrap" }}>{it.meta}</span>
+                  )}
                 </div>
               </Link>
             </Reveal>
