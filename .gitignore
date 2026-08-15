@@ -44,3 +44,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# scratch folder used by Cowork sessions (cannot delete on the mount)
+/_to_delete/

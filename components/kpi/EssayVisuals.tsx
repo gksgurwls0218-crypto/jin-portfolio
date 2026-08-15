@@ -13,6 +13,7 @@
    (those are near-black and become invisible on a near-black card). */
 
 import type { ReactNode, ComponentType } from "react";
+import { JWC_VISUALS } from "./JwcVisuals";
 
 // ---------- on-dark palette (for text/lines sitting directly on the
 // SketchFrame's dark card, as opposed to inside a light --stage-2 sub-card) ----------
@@ -516,4 +517,6 @@ export const ESSAY_VISUALS: Record<string, ComponentType> = {
   "overload-dm-recovery-combo": DMTimelineAndRecovery,
   "overload-cb-tempo": CBTempoDiagram,
   "striker-timeline": StrikerTimeline,
+  // JWC (win contribution) figures live in their own file — see JwcVisuals.tsx
+  ...JWC_VISUALS,
 };
