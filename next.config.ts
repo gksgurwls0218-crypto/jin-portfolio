@@ -43,6 +43,14 @@ const nextConfig: NextConfig = {
         headers: [{ key: "Cache-Control", value: "no-cache, must-revalidate" }],
       },
       {
+        source: "/wc2022-2026-champions.ko.html",
+        headers: [{ key: "Cache-Control", value: "no-cache, must-revalidate" }],
+      },
+      {
+        source: "/wc2022-2026-champions.html",
+        headers: [{ key: "Cache-Control", value: "no-cache, must-revalidate" }],
+      },
+      {
         source: "/anim/:path*",
         headers: [{ key: "Cache-Control", value: "no-cache, must-revalidate" }],
       },

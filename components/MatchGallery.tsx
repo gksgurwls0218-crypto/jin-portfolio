@@ -40,6 +40,7 @@ const STANDALONE: CardEntry[] = [
   { kind: "tournament", key: "wc2026-report", publishedAt: "2026-07-26" },
   { kind: "report", key: "korea-jordan", publishedAt: "2026-08-11" },
   { kind: "report", key: "suwon-cross-shot", publishedAt: "2026-08-15" },
+  { kind: "report", key: "wc2022-2026-champions", publishedAt: "2026-08-19" },
 ];
 
 const GALLERY_CARDS: CardEntry[] = [
@@ -219,7 +220,7 @@ type ReportCopy = {
   stats: Record<Locale, readonly ReportStat[]>;
 };
 
-const REPORTS: Record<"korea-jordan" | "suwon-cross-shot", ReportCopy> = {
+const REPORTS: Record<"korea-jordan" | "suwon-cross-shot" | "wc2022-2026-champions", ReportCopy> = {
   "korea-jordan": {
     tag: { en: "MATCH REPORT", ko: "경기 분석 리포트" },
     competition: { en: "AFC Asian Cup Qatar 2023 · Korea Republic 2-2 Jordan", ko: "AFC 아시안컵 카타르 2023 · 대한민국 2-2 요르단" },
@@ -244,6 +245,19 @@ const REPORTS: Record<"korea-jordan" | "suwon-cross-shot", ReportCopy> = {
     stats: {
       en: [["49.1%", "cross → shot (Europe 71.6%)"], ["2.04", "crosses ÷ shots"], ["r = −0.68", "ratio vs goals, 96 clubs"], ["34.9%", "shots on target — hold"]],
       ko: [["49.1%", "크로스 → 슈팅 (유럽 71.6%)"], ["2.04", "크로스 ÷ 슈팅"], ["r = −0.68", "비율과 득점, 96팀"], ["34.9%", "유효슛 비율 — 유지"]],
+    },
+  },
+  "wc2022-2026-champions": {
+    tag: { en: "TOURNAMENT COMPARISON", ko: "대회 비교 리포트" },
+    competition: { en: "Qatar 2022 × North America 2026 · 168 matches", ko: "카타르 2022 × 북중미 2026 · 168경기" },
+    title: { en: "Losing moved from volume to allocation", ko: "패배의 원인은 총량에서 배분으로 옮겨갔다" },
+    sub: {
+      en: "FIFA changed the ruler between the two tournaments — so the raw numbers are dropped for tournament-relative z-scores. The team that ran more lost in 2022; the team that pressed more lost in 2026. Six robustness checks, and the one conclusion that failed them is corrected in the text.",
+      ko: "두 대회 사이에 FIFA가 자를 바꿨다 — 그래서 원값을 버리고 대회 내 z-score로 비교했다. 2022에 진 팀은 많이 뛴 팀이고, 2026에 진 팀은 많이 압박한 팀이다. 검증 6종을 돌렸고, 통과하지 못한 결론 하나는 본문에서 그대로 수정했다.",
+    },
+    stats: {
+      en: [["81.8%", "2022 knockouts — the team that ran less won"], ["11.5%", "2026 heaviest pressers, win rate"], ["4 / 4", "finalists whose ace walked most"], ["168", "matches parsed"]],
+      ko: [["81.8%", "2022 녹아웃 · 덜 뛴 팀 승리"], ["11.5%", "2026 최다 압박 4분위 승률"], ["4 / 4", "결승 진출팀 에이스가 걷기 최상위"], ["168", "전 경기 파싱"]],
     },
   },
 };
