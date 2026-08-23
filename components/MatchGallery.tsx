@@ -41,6 +41,7 @@ const STANDALONE: CardEntry[] = [
   { kind: "report", key: "korea-jordan", publishedAt: "2026-08-11" },
   { kind: "report", key: "suwon-cross-shot", publishedAt: "2026-08-15" },
   { kind: "report", key: "wc2022-2026-champions", publishedAt: "2026-08-19" },
+  { kind: "report", key: "suwon-proposal-visuals", publishedAt: "2026-08-23" },
 ];
 
 const GALLERY_CARDS: CardEntry[] = [
@@ -220,7 +221,20 @@ type ReportCopy = {
   stats: Record<Locale, readonly ReportStat[]>;
 };
 
-const REPORTS: Record<"korea-jordan" | "suwon-cross-shot" | "wc2022-2026-champions", ReportCopy> = {
+const REPORTS: Record<"korea-jordan" | "suwon-cross-shot" | "wc2022-2026-champions" | "suwon-proposal-visuals", ReportCopy> = {
+  "suwon-proposal-visuals": {
+    tag: { en: "VISUAL DESIGN BRIEF", ko: "시각자료 설계안" },
+    competition: { en: "K League 2 2026 · Suwon Samsung · 21 matches", ko: "K리그2 2026 · 수원 삼성 · 21경기" },
+    title: { en: "You do not need more crosses", ko: "크로스를 더 올릴 필요는 없다" },
+    sub: {
+      en: "The club that crosses more than anyone in K League 2 ranks 6th for goals. Twelve figures locate the leak in one phase and set out what to change in front of it — two tactical boards for the hook, a ribbon narrowing through four multiplying gates, league gaps drawn as circles on a real pitch. Each carries the sample it rests on.",
+      ko: "리그에서 크로스를 가장 많이 올리는 팀이 득점 6위다. 그림 12종으로 결손 구간을 한 곳으로 좁히고, 그 앞의 무엇을 바꿔야 하는지까지 간다 — 훅을 여는 전술판 두 장, 네 관문을 곱하며 좁아지는 리본, 실제 경기장 위에 원으로 올린 리그 간 격차. 그림마다 근거가 된 표본을 함께 적었다.",
+    },
+    stats: {
+      en: [["12", "figures across eight acts"], ["49.1%", "cross → shot (Europe 71.6%)"], ["2.94×", "K1 ÷ K2, midfield centre"], ["13", "hypotheses logged as refuted"]],
+      ko: [["12종", "8막에 들어가는 그림"], ["49.1%", "크로스 → 슈팅 (유럽 71.6%)"], ["2.94배", "K1 ÷ K2, 중원 중앙"], ["13건", "반증 기록에 올린 가설"]],
+    },
+  },
   "korea-jordan": {
     tag: { en: "MATCH REPORT", ko: "경기 분석 리포트" },
     competition: { en: "AFC Asian Cup Qatar 2023 · Korea Republic 2-2 Jordan", ko: "AFC 아시안컵 카타르 2023 · 대한민국 2-2 요르단" },

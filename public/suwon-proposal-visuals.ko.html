@@ -1,0 +1,1045 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>크로스를 더 올릴 필요는 없다 — 수원 삼성 제안서 시각자료</title>
+<meta name="description" content="리그에서 크로스를 가장 많이 올리는 팀이 득점 6위다. 2026 K리그2 21경기를 유럽 5대리그 96팀과 대조해 결손 구간을 한 곳으로 좁혔다 — 바꿀 것은 양이 아니라 조건이다. 8막 제안서 시각자료 12종.">
+<style>
+:root{
+  --page:#f9f9f7; --surface-1:#fcfcfb;
+  --text-primary:#0b0b0b; --text-secondary:#52514e; --muted:#898781;
+  --grid:#e1e0d9; --axis:#c3c2b7; --border:rgba(11,11,11,0.10);
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a;
+  --good:#0ca30c; --critical:#d03b3b; --warning:#fab219;
+  --seq250:#86b6ef; --seq350:#5598e7; --seq450:#2a78d6; --seq600:#184f95;
+}
+:root[data-theme="dark"]{
+  --page:#0d0d0d; --surface-1:#1a1a19;
+  --text-primary:#ffffff; --text-secondary:#c3c2b7; --muted:#898781;
+  --grid:#2c2c2a; --axis:#383835; --border:rgba(255,255,255,0.10);
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+  --seq250:#184f95; --seq350:#256abf; --seq450:#3987e5; --seq600:#86b6ef;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --page:#0d0d0d; --surface-1:#1a1a19;
+    --text-primary:#ffffff; --text-secondary:#c3c2b7; --muted:#898781;
+    --grid:#2c2c2a; --axis:#383835; --border:rgba(255,255,255,0.10);
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+    --seq250:#184f95; --seq350:#256abf; --seq450:#3987e5; --seq600:#86b6ef;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--text-primary);
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.65;
+  -webkit-font-smoothing:antialiased;}
+.wrap{max-width:920px;margin:0 auto;padding:0 22px 90px}
+header.hero{padding:64px 0 34px;border-bottom:1px solid var(--border);margin-bottom:44px}
+.kicker{font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-weight:650}
+h1{font-size:clamp(28px,4.6vw,42px);line-height:1.22;margin:14px 0 12px;letter-spacing:-.02em;font-weight:720}
+.sub{font-size:clamp(15px,2vw,17.5px);color:var(--text-secondary);max-width:64ch;margin:0}
+.meta{margin-top:22px;font-size:12.5px;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.meta span:not(:last-child)::after{content:"·";margin-left:8px;color:var(--axis)}
+h2{font-size:clamp(20px,2.7vw,25px);margin:60px 0 6px;letter-spacing:-.015em;font-weight:700}
+h2 .num{color:var(--muted);font-weight:600;margin-right:10px;font-variant-numeric:tabular-nums}
+h3{font-size:16.5px;margin:32px 0 8px;font-weight:670}
+p{margin:12px 0;color:var(--text-secondary);max-width:70ch}
+p strong,li strong{color:var(--text-primary);font-weight:650}
+ul{color:var(--text-secondary);max-width:70ch;padding-left:20px}
+li{margin:6px 0}
+.lede{font-size:17px;color:var(--text-primary);border-left:3px solid var(--s2);
+  padding:2px 0 2px 18px;margin:22px 0 28px;max-width:66ch}
+.statrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:26px 0 8px}
+.stat{background:var(--surface-1);border:1px solid var(--border);border-radius:12px;padding:16px 17px}
+.stat .lab{font-size:12px;color:var(--muted);font-weight:600;letter-spacing:.01em}
+.stat .val{font-size:31px;font-weight:700;letter-spacing:-.025em;margin:5px 0 2px;line-height:1.1}
+.stat .note{font-size:12.5px;color:var(--text-secondary)}
+.stat.hl{border-color:var(--s2)} .stat.hl .val{color:var(--s2)}
+figure{margin:30px 0 8px;background:var(--surface-1);border:1px solid var(--border);
+  border-radius:14px;padding:20px 20px 14px}
+figcaption{font-size:13px;color:var(--text-secondary);margin-top:12px;padding-top:11px;
+  border-top:1px solid var(--grid)}
+.figtitle{font-size:15.5px;font-weight:660;margin:0 0 3px;color:var(--text-primary)}
+.figsub{font-size:12.5px;color:var(--muted);margin:0 0 15px}
+svg{display:block;width:100%;height:auto;overflow:visible}
+.legend{display:flex;gap:15px;flex-wrap:wrap;font-size:12.5px;color:var(--text-secondary);margin:0 0 12px}
+.legend i{width:11px;height:11px;border-radius:3px;display:inline-block;margin-right:6px;vertical-align:-1px}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:18px 0}
+th,td{text-align:right;padding:8px 10px;border-bottom:1px solid var(--grid);font-variant-numeric:tabular-nums}
+th:first-child,td:first-child{text-align:left;font-variant-numeric:normal}
+thead th{color:var(--muted);font-weight:640;font-size:12px;border-bottom:1px solid var(--axis)}
+tbody tr.hl td{background:color-mix(in srgb,var(--s2) 9%,transparent);font-weight:640;color:var(--text-primary)}
+.tbtn{font:inherit;font-size:12.5px;color:var(--text-secondary);background:none;
+  border:1px solid var(--border);border-radius:7px;padding:4px 11px;cursor:pointer;margin-top:11px}
+.tbtn:hover{background:var(--page)}
+.tblwrap{display:none;overflow-x:auto;max-height:340px}
+.tblwrap.on{display:block}
+.callout{background:var(--surface-1);border:1px solid var(--border);border-left:3px solid var(--s1);
+  border-radius:10px;padding:15px 18px;margin:24px 0;font-size:14.5px;color:var(--text-primary);max-width:70ch}
+.callout.warn{border-left-color:var(--warning)}
+.callout.key{border-left-color:var(--s2)}
+.callout .t{font-weight:680;font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);display:block;margin-bottom:6px}
+.tip{position:fixed;pointer-events:none;background:var(--surface-1);border:1px solid var(--border);
+  border-radius:9px;padding:8px 11px;font-size:12.5px;color:var(--text-primary);opacity:0;
+  transition:opacity .09s;box-shadow:0 6px 22px rgba(0,0,0,.13);z-index:99;white-space:nowrap}
+.tip b{font-weight:670} .tip .m{color:var(--text-secondary)}
+.toggle{position:fixed;top:16px;right:16px;z-index:50;background:var(--surface-1);
+  border:1px solid var(--border);border-radius:9px;padding:6px 12px;font:inherit;font-size:12.5px;
+  color:var(--text-secondary);cursor:pointer}
+footer{margin-top:70px;padding-top:26px;border-top:1px solid var(--border);font-size:12.5px;color:var(--muted)}
+footer p{color:var(--muted);font-size:12.5px;max-width:74ch}
+.pill{display:inline-block;font-size:11.5px;font-weight:650;padding:2px 9px;border-radius:20px;
+  border:1px solid var(--border);color:var(--text-secondary);margin-right:6px}
+@media(max-width:640px){.stat .val{font-size:26px}figure{padding:16px 13px 11px}}
+
+/* --- data scope table --- */
+.scopewrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table.scope{font-size:12.8px;min-width:760px}
+table.scope th,table.scope td{padding:8px 9px;white-space:nowrap}
+table.scope th:last-child{text-align:left}
+table.scope td.nt{text-align:left;white-space:normal;color:var(--muted);font-size:12px;
+  min-width:250px;font-variant-numeric:normal;line-height:1.5}
+table.scope td.nt b{color:var(--text-secondary);font-weight:640}
+/* --- T block --- */
+.tblock{border:1.5px dashed var(--axis);border-radius:12px;padding:18px 20px 6px;margin:30px 0 8px;
+  background:color-mix(in srgb,var(--s2) 3.5%,transparent)}
+.tblock h3{margin-top:0}
+.tblock ol{color:var(--text-secondary);max-width:70ch;padding-left:22px;margin:10px 0}
+.tblock ol li{margin:7px 0}
+.badge{display:inline-block;font-size:11px;font-weight:670;letter-spacing:.04em;padding:2px 9px;
+  border-radius:20px;background:color-mix(in srgb,var(--s2) 14%,transparent);color:var(--s2);
+  vertical-align:2px;margin-left:8px}
+/* --- language switch --- */
+.langsw{position:fixed;top:16px;right:96px;z-index:50;background:var(--surface-1);
+  border:1px solid var(--border);border-radius:9px;padding:6px 12px;font-size:12.5px;
+  color:var(--text-secondary);cursor:pointer;text-decoration:none}
+.langsw:hover{background:var(--page);color:var(--text-primary)}
+@media(max-width:640px){.langsw{right:88px;padding:6px 10px}}
+.callout.rb .t{text-transform:none;font-size:13px;letter-spacing:.01em;color:var(--text-secondary)}
+/* ===== viz catalog additions ===== */
+.actnav{display:flex;flex-wrap:wrap;gap:7px;margin:26px 0 8px}
+.actnav a{font-size:12.5px;text-decoration:none;color:var(--text-secondary);border:1px solid var(--border);
+  border-radius:20px;padding:5px 12px;background:var(--surface-1)}
+.actnav a:hover{border-color:var(--s1);color:var(--text-primary)}
+.act{margin:66px 0 0;padding-top:8px}
+.actlab{display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:.1em;
+  color:var(--s2);border:1px solid var(--s2);border-radius:20px;padding:2px 11px;margin-bottom:10px}
+.why{background:color-mix(in srgb,var(--s1) 5%,transparent);border:1px solid var(--border);
+  border-left:3px solid var(--s1);border-radius:10px;padding:13px 16px;margin:16px 0 6px;
+  font-size:13.5px;color:var(--text-secondary);max-width:72ch}
+.why b{color:var(--text-primary);font-weight:660}
+.why .h{display:block;font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--muted);font-weight:680;margin-bottom:5px}
+.qt{border-left:3px solid var(--axis);padding:4px 0 4px 16px;margin:18px 0;font-size:14px;
+  color:var(--text-secondary);max-width:70ch;font-style:normal}
+.qt cite{display:block;font-style:normal;font-size:12px;color:var(--muted);margin-top:6px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:13px;margin:22px 0 6px}
+.card{background:var(--surface-1);border:1px solid var(--border);border-radius:13px;padding:16px 17px}
+.card .n{font-size:11.5px;font-weight:700;letter-spacing:.06em;color:var(--s2)}
+.card h4{margin:6px 0 8px;font-size:15.5px;font-weight:680;color:var(--text-primary)}
+.card p{font-size:13px;margin:6px 0;color:var(--text-secondary);max-width:none}
+.card .tagr{margin-top:10px;display:flex;gap:6px;flex-wrap:wrap}
+.card .tg{font-size:11px;padding:2px 8px;border-radius:20px;border:1px solid var(--border);color:var(--muted)}
+.card.p1{border-top:3px solid var(--s2)} .card.p2{border-top:3px solid var(--s1)}
+.card.p3{border-top:3px solid var(--s3)} .card.p4{border-top:3px solid var(--axis)}
+table.ref td.v{color:var(--critical);font-weight:660;white-space:nowrap}
+table.ref td.h{text-align:left;font-variant-numeric:normal}
+table.ref td.h s{color:var(--muted);text-decoration-thickness:1px}
+table.ref td.e{text-align:left;font-size:12.5px;color:var(--text-secondary);font-variant-numeric:normal}
+table.ref tr.own td.v{color:var(--warning)}
+.gaugewrap{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:6px 0 4px}
+@media(max-width:620px){.gaugewrap{grid-template-columns:1fr}}
+.gauge{border:1px solid var(--border);border-radius:12px;padding:15px 16px;background:var(--page)}
+.gauge.on{border-color:var(--s3);background:color-mix(in srgb,var(--s3) 6%,transparent)}
+.gauge.off{border-color:var(--s2);background:color-mix(in srgb,var(--s2) 5%,transparent)}
+.gauge .gt{font-size:14.5px;font-weight:680;margin-bottom:2px}
+.gauge .gs{font-size:12px;color:var(--muted);margin-bottom:12px}
+.grow{display:flex;align-items:center;gap:9px;margin:7px 0;font-size:12.5px;color:var(--text-secondary)}
+.grow .gl{width:62px;flex:none;color:var(--muted)}
+.cells{display:flex;gap:3px;flex:1}
+.cells i{height:11px;flex:1;border-radius:3px;background:var(--grid)}
+.cells i.f{background:var(--s3)} .cells i.p{background:var(--s2);opacity:.42}
+.gauge.off .cells i.f{background:var(--s2)}
+.gsum{margin-top:12px;padding-top:10px;border-top:1px solid var(--grid);font-size:12.5px;color:var(--text-secondary)}
+.gsum b{color:var(--text-primary)}
+.chain{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;margin:8px 0 2px}
+.ch{flex:1 1 130px;border:1px solid var(--border);border-radius:11px;padding:12px 13px;background:var(--page);min-width:0}
+.ch .cl{font-size:11px;letter-spacing:.08em;font-weight:700;color:var(--muted)}
+.ch .cn{font-size:15px;font-weight:680;margin:3px 0 5px}
+.ch .cd{font-size:12px;color:var(--text-secondary);line-height:1.5}
+.op{flex:0 0 26px;display:flex;align-items:center;justify-content:center;font-size:19px;color:var(--muted);font-weight:400}
+.ch.lo{border-color:var(--s2);background:color-mix(in srgb,var(--s2) 7%,transparent)}
+.ch.lo .cn{color:var(--s2)}
+.ch.ok{border-color:var(--s3);background:color-mix(in srgb,var(--s3) 6%,transparent)}
+.ch.res{border-style:dashed;flex:1 1 120px}
+.chlab{font-size:12px;color:var(--muted);margin:16px 0 5px;font-weight:640}
+@media(max-width:640px){
+  .chain{flex-direction:column}
+  .ch,.ch.res{flex:1 1 auto;width:100%}
+  .op{flex:0 0 24px;height:24px;font-size:17px}
+}
+.boards{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:6px 0 2px}
+@media(max-width:720px){.boards{grid-template-columns:1fr;gap:22px}}
+/* --- index computation table --- */
+.frm{font-size:13px;color:var(--text-secondary);background:var(--page);border:1px solid var(--border);
+  border-radius:9px;padding:10px 14px;margin:16px 0 4px;line-height:1.9}
+.frm b{color:var(--text-primary);font-weight:660}
+.frm .mop{color:var(--muted);margin:0 6px}
+table.idx{width:100%;border-collapse:collapse;font-size:13.5px;margin:6px 0 2px}
+table.idx th{color:var(--muted);font-weight:640;font-size:11.5px;text-align:right;
+  padding:6px 10px;border-bottom:1px solid var(--axis)}
+table.idx th:first-child,table.idx th:last-child{text-align:left}
+table.idx td{text-align:right;padding:8px 10px;border-bottom:1px solid var(--grid);
+  font-variant-numeric:tabular-nums;color:var(--text-secondary)}
+table.idx td.tm{text-align:left;font-variant-numeric:normal;color:var(--text-secondary)}
+table.idx td.tm b{color:var(--text-primary);font-weight:680}
+table.idx td.ix{color:var(--text-primary);font-weight:680}
+table.idx td.nt{text-align:left;font-variant-numeric:normal;font-size:12px;color:var(--muted);white-space:nowrap}
+table.idx tr.us td{background:color-mix(in srgb,var(--s1) 6%,transparent)}
+table.idx tr.dif td{border-bottom:1px solid var(--axis)}
+table.idx tr.dif td.ix{font-size:15px;font-weight:720}
+table.idx td.pos{color:var(--s3)} table.idx td.neg{color:var(--s2)}
+table.idx tr.dif td.nt{color:var(--text-secondary);font-weight:600}
+table.idx td.lo{color:var(--s2);font-weight:680}
+.idxwrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+@media(max-width:600px){table.idx{min-width:520px}}
+/* --- inline glossary --- */
+.gloss{margin:14px 0 0;padding:11px 14px;border:1px dashed var(--axis);border-radius:9px;
+  background:color-mix(in srgb,var(--s1) 3.5%,transparent);font-size:12.5px;line-height:1.75;
+  color:var(--text-secondary);max-width:none}
+.gloss .gh{display:block;font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--muted);font-weight:700;margin-bottom:4px}
+.gloss b{color:var(--text-primary);font-weight:680;font-variant-numeric:tabular-nums}
+.gloss i{font-style:normal;color:var(--muted)}
+figcaption + .gloss{margin-top:11px}
+/* --- concept link --- */
+a.cx{color:var(--s1);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--s1) 45%,transparent);
+  font-weight:640;padding-bottom:.5px}
+a.cx:hover{border-bottom-color:var(--s1);background:color-mix(in srgb,var(--s1) 9%,transparent)}
+a.cx::after{content:"↗";font-size:.78em;margin-left:2px;vertical-align:1px;color:var(--muted)}
+.cxnote{font-size:12px;color:var(--muted);margin:14px 0 0;padding-top:11px;border-top:1px solid var(--grid)}
+.cxnote a.cx{font-weight:600}
+
+</style>
+</head><body>
+<div class="wrap">
+<button class="toggle" id="tg">다크 모드</button>
+
+<header class="hero">
+  <div class="kicker">수원 삼성 · 전술 제안서</div>
+  <h1>크로스를 더 올릴 필요는 없다</h1>
+  <p class="sub">리그에서 크로스를 가장 많이 올리는 팀이 득점 6위다.
+  <b>2026 K리그2 21경기</b>를 유럽 5대리그 96팀·2025 K리그 기술보고서와 대조해 결손 구간을 한 곳으로 좁혔다 —
+  크로스가 슛이 되는 지점. <b>바꿀 것은 양이 아니라 그 앞의 조건이다.</b>
+  8막 제안서에 들어갈 그림 12종을, 각각 <b>왜 이 그림인가</b>(처음 보는 사람이 3초 안에 읽는 것)와 함께 정리했다.</p>
+  <div class="meta"><span>2026 K리그2 · R1~R22 중 21경기 (R12 자료 없음)</span><span>시각자료 12종</span><span>초안 v1</span></div>
+  <nav class="actnav">
+    <a href="#a0">0막 훅</a><a href="#a1">1막 문제</a><a href="#a2">2막 위치</a><a href="#a3">3막 원인</a>
+    <a href="#a4">4막 메커니즘</a><a href="#a5">5막 반증</a><a href="#a6">6막 처방</a><a href="#a7">7막 왜 지금</a><a href="#a8">8막 정직성</a>
+  </nav>
+</header>
+
+<!-- ============ 0막 ============ -->
+<section class="act" id="a0">
+  <span class="actlab">0막 · 훅</span>
+  <h2>같은 선수, 다른 크로스</h2>
+  <p class="lede">수원의 코너킥은 리그가 인정한 무기다. 같은 선수가 같은 박스에 올리는 오픈플레이 크로스는 리그에서 가장 많고, 가장 적게 슛이 된다.</p>
+
+  <div class="why"><span class="h">왜 이 그림인가</span>
+  <b>전술판 두 장</b>이면 설명이 필요 없다. 왼쪽은 압박자가 없고 박스에 다섯 명이 서 있고,
+  오른쪽은 압박자가 둘이고 박스에 둘이다. <b>두 그림에서 같은 것은 선수이고, 다른 것은 조건뿐</b>이다.
+  능력 문제라는 반박을 첫 장면에서 미리 막는다.</div>
+
+  <figure>
+    <p class="figtitle">① 같은 박스, 두 장면 — 코너킥 vs 오픈플레이 크로스</p>
+    <p class="figsub">상대 진영 마지막 40m · 골문은 위쪽</p>
+    <div class="boards"><div id="v1a"></div><div id="v1b"></div></div>
+    <div class="legend" style="margin-top:12px"><span><i style="background:var(--s1);border-radius:50%"></i>수원</span>
+      <span><i style="background:var(--axis);border-radius:50%"></i>상대</span>
+      <span style="color:var(--muted)">점선 화살표 = 크로스 경로</span></div>
+    <figcaption>코너킥은 <b>정의상 압박 0, 시간 무제한, 박스 배치 완료</b>인 상태에서 올라간다 — 시즌 110회로 리그 2위이고,
+    연맹 기술보고서가 K리그2 세트피스 사례로 수원을 지목했다.
+    오른쪽은 <b>R7 김포전에서 반복된 장면을 정성 기록에 따라 재현</b>한 것이다(선수 배치는 예시 도해이며 좌표 측정값이 아니다).
+    오픈플레이 크로스는 시즌 554회로 리그 1위인데, 슛 전환은 <b>49.1%</b> — 유럽 5대리그는 71.6%다.</figcaption>
+  </figure>
+
+  <blockquote class="qt">“수원의 선수들은 압박이 없으면 크로스 퀄리티가 뛰어나다. 좋은 키커들이 많고 코너킥들이 다 날카롭다.”
+  <cite>R10 수원FC 원정 · 정성 기록</cite></blockquote>
+</section>
+
+<!-- ============ 1막 ============ -->
+<section class="act" id="a1">
+  <span class="actlab">1막 · 문제</span>
+  <h2>가장 많이 만들고, 가장 적게 거둔다</h2>
+
+  <div class="why"><span class="h">왜 이 그림인가</span>
+  막대가 위에서 아래로 <b>계단처럼 무너지는 모양</b> 하나로 제안서 전체의 문제 정의가 끝난다.
+  “수원이 못 만든다”가 아니라 <b>“만드는 건 리그 1위인데 거두는 데서 사라진다”</b>가 보인다.
+  z-점수는 <b>리그 평균이 0, 한 칸이 한 표준편차</b>라고만 설명하면 된다.</div>
+
+  <figure>
+    <p class="figtitle">② 투입 · 산출 · 효율 — 리그 평균 대비 (z-점수)</p>
+    <p class="figsub">2026 K리그2 17팀 · 시즌 누적</p>
+    <div class="legend"><span><i style="background:var(--s1)"></i>투입 — 얼마나 만들었는가</span>
+      <span><i style="background:var(--s2)"></i>산출 · 효율 — 얼마나 거뒀는가</span></div>
+    <div id="v2"></div>
+    <figcaption>파란 점 = 얼마나 만들었는가(투입), 주황 점 = 얼마나 거뒀는가(산출·효율).
+    투입은 전부 <b>+1.0σ 이상</b>, 득점은 <b>+0.22σ</b>, 슛 1개당 득점은 <b>−0.45σ</b>로 평균 아래다.</figcaption>
+    <div class="gloss"><span class="gh">이 그림의 약어</span>
+<b>z-점수</b> 리그 평균에서 얼마나 떨어져 있는지를 재는 눈금. <b>0 = 리그 평균</b>이고, 한 칸(1σ)은 17개 팀이 평균에서 흩어진 폭 한 단위다.
++2σ면 리그에서 사실상 가장 많다는 뜻이고, 음수면 평균 아래다.</div>
+  </figure>
+
+  <div class="callout key"><span class="t">한 문장</span>
+  리그에서 크로스·파이널서드 패스·키패스를 <b>가장 많이 만드는 팀</b>이, 득점에서는 <b>6위</b>다.</div>
+</section>
+
+<!-- ============ 2막 ============ -->
+<section class="act" id="a2">
+  <span class="actlab">2막 · 위치 확정</span>
+  <h2>새는 곳은 한 군데다</h2>
+
+  <div class="why"><span class="h">왜 이 그림인가</span>
+  “어디가 문제냐”는 질문에 <b>세 구간 중 첫 칸만 낮고 나머지 두 칸은 유럽과 같다</b>는 그림으로 답한다.
+  범인을 지목하는 것이 아니라 <b>범위를 좁히는</b> 그림이다. 마무리·결정력 이야기를 여기서 잘라낸다.</div>
+
+  <figure>
+    <p class="figtitle">③ 구간별 통과율 — 크로스에서 골까지 세 개의 문</p>
+    <p class="figsub">유럽 5대리그 96팀 · K리그1 12팀 · K리그2 17팀 · 수원 삼성 21경기</p>
+    <div class="legend"><span><i style="background:var(--s1)"></i>유럽 5대리그</span>
+      <span><i style="background:var(--axis)"></i>K리그2</span>
+      <span><i style="background:var(--muted)"></i>K리그1</span>
+      <span><i style="background:var(--s2)"></i>수원 삼성</span></div>
+    <div id="v3"></div>
+    <figcaption>첫 구간에서만 <b>22.5%p</b> 벌어지고, 그 뒤 두 구간은 유럽과 소수점 한 자리까지 겹친다.
+    <b>슛을 못 넣는 팀이 아니라, 크로스가 슛이 되지 않는 팀이다.</b></figcaption>
+    <div class="gloss"><span class="gh">이 그림의 약어</span>
+<b>통과율</b> 앞 단계 100개가 다음 단계로 몇 개 넘어갔는지. 크로스 100개 → 슛 49.1개면 49.1%다.
+<b>%p</b> 퍼센트끼리 뺀 차이. 71.6% − 49.1% = <b>22.5%p</b> — "22.5% 차이"가 아니라 "퍼센트 눈금 위에서 22.5칸 차이"라는 뜻이다.</div>
+  </figure>
+
+  <div class="why"><span class="h">왜 이 그림인가</span>
+  퍼널이 “수원의 내부 구조”를 보여준다면, 산점도는 <b>수원이 96팀 지도 위 어디에 있는지</b>를 보여준다.
+  점 하나가 한 팀이고 수원만 주황이다. <b>가장 오른쪽에 있다</b>는 사실이 설명 없이 읽힌다.</div>
+
+  <figure>
+    <p class="figtitle">④ 슛 1개당 크로스 개수 vs 경기당 득점 — 유럽 96팀 지도</p>
+    <p class="figsub">2025/26 프리미어리그 · 라리가 · 세리에A · 분데스리가 · 리그1</p>
+    <div id="v4"></div>
+    <figcaption>점선은 96팀 추세선(r = −0.68). 크로스를 슛으로 바꾸는 비율이 나쁠수록 득점이 낮다.
+    <b>수원은 96팀 어느 팀보다 오른쪽에 있다.</b> 인터 밀란은 크로스를 경기당 23개나 올리면서도 왼쪽 위에 있다 —
+    <b>총량이 아니라 전환의 문제</b>라는 반증 장치다.</figcaption>
+    <div class="gloss"><span class="gh">이 그림의 약어</span>
+<b>r</b> 두 값이 같이 움직이는 정도. <b>0이면 무관, ±1이면 완전히 붙어 움직인다.</b>
+여기서 <b>r = −0.68</b>은 "슛 하나에 크로스를 많이 쓰는 팀일수록 득점이 낮은 경향이 뚜렷하다"는 뜻이다. 경향이지 법칙은 아니다.</div>
+  </figure>
+</section>
+
+<!-- ============ 3막 ============ -->
+<section class="act" id="a3">
+  <span class="actlab">3막 · 원인</span>
+  <h2>크로스는 선택이 아니라 결과일 수 있다</h2>
+
+  <div class="why"><span class="h">왜 이 그림인가</span>
+  <b>계단이 한 방향으로만 올라간다.</b> 예외 없는 단조 증가는 통계를 모르는 사람에게 가장 강한 그림이다.
+  “중원을 더 거친 경기일수록 기회가 많았다”가 막대 네 개로 끝난다.</div>
+
+  <figure>
+    <p class="figtitle">⑤ 중원 경유 지수 사분위별 산출</p>
+    <p class="figsub">21경기를 중원 경유 지수 순으로 4등분 · 각 5경기</p>
+    <div id="v5"></div>
+    <figcaption>중원 경유 지수 = <b>중원 투입률 × 중원 전진률</b>, 양 팀 패스 매트릭스 21경기를 직접 파싱해 산출했다.
+    <b>xG 2.1배, 슛 1.8배</b>. 네 구간 모두 단조적이다.
+    <b>주의</b> — 이것은 관찰된 연관이지 인과의 증명이 아니다. 사분위당 5경기다.</figcaption>
+    <div class="gloss"><span class="gh">이 그림의 약어</span>
+<b>Q1 · Q2 · Q3 · Q4</b> 21경기를 중원 경유 지수가 낮은 순으로 줄 세워 <b>4등분한 구간</b>(사분위)이다.
+Q1은 가장 적게 경유한 5경기, Q4는 가장 많이 경유한 5경기. 특정 경기가 아니라 <i>구간의 평균</i>을 보는 것이다.<br>
+<b>xG</b> 기대득점. 그 슛들이 <b>평균적으로 몇 골이 되는가</b>를 슛 위치·상황으로 환산한 값이다.
+xG 1.96이면 "이 정도 기회를 만든 경기는 보통 두 골쯤 난다". 실제 득점과 달라도 이상하지 않다 — 그 차이가 결정력이다.</div>
+  </figure>
+
+  <div class="callout key"><span class="t">그리고 이 영역에서만 상대와 같다</span>
+  21경기 양 팀 패스 매트릭스를 같은 규칙으로 대조하면 수원 <b>5.95%</b> 대 상대 <b>5.51%</b>로
+  <b>통계적으로 구분되지 않는다(t = 0.44)</b>. 크로스·파이널서드 패스·키패스를 리그에서 가장 많이 만드는 팀이,
+  중원 중앙을 경유하는 능력에서는 상대와 같다.
+  다만 결과와는 단조적으로 연결된다 — 승 +2.43%p · 무 −0.45%p · 패 −3.70%p.
+  <b>주의</b> — 패배 4경기는 표본이 매우 작다. 방향만 읽고 크기는 읽지 않는다.</div>
+
+  <div class="gloss"><span class="gh">t 는 무엇인가</span>
+  <b>t</b> 두 값의 차이가 <b>실제 차이인지, 경기마다 오르내리는 폭 안에서 나온 것인지</b>를 재는 눈금이다.
+  경기별 편차 대비 차이의 크기이며, <b>대략 2를 넘어야 "차이가 있다"고 말한다.</b>
+  여기서 <b>t = 0.44</b>는 차이(+0.44%p)가 경기별 편차의 절반도 되지 않는다는 뜻 —
+  <b>수원과 상대를 구분할 수 없다</b>는 결론이다.</div>
+</section>
+
+<!-- ============ 4막 ============ -->
+<section class="act" id="a4">
+  <span class="actlab">4막 · 메커니즘</span>
+  <h2>그 크로스가 값이 되지 않는 이유</h2>
+
+  <div class="why"><span class="h">왜 이 그림인가</span>
+  더하기가 아니라 <b>곱하기</b>라는 것이 이 그림의 전부다.
+  왼쪽에서 출발한 폭이 네 관문을 지나며 줄어들고, <b>한 관문에서 반으로 줄면 뒤가 아무리 좋아도 절반은 돌아오지 않는다.</b>
+  두 줄을 겹쳐 놓으면 <b>어느 칸에서 갈렸는지</b>가 손가락으로 짚힌다.</div>
+
+  <figure>
+    <p class="figtitle">⑥ 크로스의 값 = Z × F × A × Del</p>
+    <p class="figsub">같은 시즌 · 일주일 간격의 두 경기가 네 관문을 통과하는 모습</p>
+    <div id="v7"></div>
+    <figcaption><b>양 끝만 실제 기록이다</b> — R7 크로스 29개 → 슛 4개(13.8%), R8 크로스 35개 → 슛 13개(37.1%).
+    가운데 네 칸의 감소 폭은 <b>정성 관찰 등급을 배분한 예시</b>이며 측정값이 아니다.
+    R7은 A(도착)와 Del(배달)에서 절반씩 잃었고 — 29개 중 적정 밴드가 <b>1개</b>였다 —
+    R8은 2톱 전환으로 A가 회복되면서 같은 크로스 수에서 슛이 세 배가 됐다.
+    <b>T(시간·문맥)는 지표로 승격시키지 않고 조건으로 기록한다.</b></figcaption>
+  </figure>
+
+<!-- ============ 5막 ============ -->
+<section class="act" id="a5">
+  <span class="actlab">5막 · 반증</span>
+  <h2>능력이 아니라 조건이다</h2>
+
+  <div class="why"><span class="h">왜 이 그림인가</span>
+  0막에서 던진 훅을 여기서 갚는다. <b>일주일 간격의 두 경기</b>, <b>상대·산출량이 겹치는 두 경기</b> —
+  선수도 감독도 훈련도 같은데 결과가 갈린 쌍을 나란히 놓는다.
+  통제된 비교는 “운이 나빴다”는 반박을 가장 싸게 막는다.</div>
+
+  <figure>
+    <p class="figtitle">⑦ R7 ↔ R8 — 연속 라운드, 일주일 간격</p>
+    <p class="figsub">마지막 4-3-3 (0-1 패) ↔ 첫 4-4-2 (1-0 승)</p>
+    <div class="legend"><span><i style="background:var(--axis)"></i>R7 김포</span><span><i style="background:var(--s3)"></i>R8 경남</span></div>
+    <div id="v8"></div>
+    <figcaption>크로스는 거의 같은데(29 → 35) 박스 안 슛이 <b>2 → 9</b>로 바뀌었다.
+    올린 양이 아니라 <b>박스에 도착한 인원(A)</b>이 달라진 결과다.
+    <b>주의</b> — 한 쌍의 경기다. 방향의 예시이지 검정이 아니다.</figcaption>
+  </figure>
+
+  <figure>
+    <p class="figtitle">⑧ R10 ↔ R22 — 같은 상대, 소수점까지 같은 산출</p>
+    <p class="figsub">수원FC 원정 (1-3 패) ↔ 수원FC 홈 (2-2 무)</p>
+    <div class="legend"><span><i style="background:var(--axis)"></i>R10</span><span><i style="background:var(--muted)"></i>R22</span></div>
+    <div id="v9a"></div>
+    <p style="font-size:13px;color:var(--muted);margin:14px 0 4px">↓ 그런데 뒤집힌 것이 하나 있다</p>
+    <div id="v9b"></div>
+
+    <p style="font-size:13px;color:var(--muted);margin:20px 0 0">이 값이 어떻게 나오는가</p>
+    <div class="frm">중원 경유 지수 = <b>중원 투입률</b> <span class="mop">×</span> <b>중원 전진률</b>
+      &nbsp;&nbsp;<span class="mop">·</span>&nbsp;&nbsp; 경유 주도권 = <b>수원 지수</b> <span class="mop">−</span> <b>상대 지수</b></div>
+    <div class="idxwrap"><table class="idx">
+      <thead><tr><th></th><th>투입률</th><th>전진률</th><th>지수</th><th></th></tr></thead>
+      <tbody>
+        <tr class="us"><td class="tm"><b>R10</b> 수원</td><td>27.1%</td><td class="lo">8.0%</td><td class="ix">2.17</td><td class="nt">← 21경기 중 최저</td></tr>
+        <tr><td class="tm">R10 수원FC</td><td>31.3%</td><td>12.7%</td><td class="ix">3.97</td><td class="nt"></td></tr>
+        <tr class="dif"><td class="tm"></td><td></td><td></td><td class="ix neg">−1.79</td><td class="nt">주도권 · 21경기 중 17위</td></tr>
+        <tr class="us"><td class="tm"><b>R22</b> 수원</td><td>36.9%</td><td>15.0%</td><td class="ix">5.53</td><td class="nt"></td></tr>
+        <tr><td class="tm">R22 수원FC</td><td>40.3%</td><td class="lo">5.6%</td><td class="ix">2.26</td><td class="nt"></td></tr>
+        <tr class="dif"><td class="tm"></td><td></td><td></td><td class="ix pos">+3.27</td><td class="nt">주도권 · 21경기 중 5위</td></tr>
+      </tbody>
+    </table></div>
+
+    <figcaption>두 관문을 곱하는 이유는 <b>둘 다 통과해야 “경유”이기 때문</b>이다 — 중원에 넣고 앞으로 못 보내면 경유가 아니고,
+    앞으로 잘 보내도 애초에 공이 안 들어가면 경유가 아니다.
+    R22 수원FC를 보면 투입은 40.3%로 높은데 전진이 <b>5.6%</b>다. 정성 기록의 <i>“수원FC가 롱볼을 많이 전개해서 위협 장면이 덜 나옴”</i> 과 같은 장면이다.
+    양 팀을 같은 규칙(포털 포지션 라벨 · 교체 제외)으로 계산했다.
+    <b>이 프로젝트에서 가장 통제가 잘 된 단일 증거</b>다 — 만든 양은 같았고, 중원의 주도권만 뒤집혔다.</figcaption>
+  </figure>
+
+  <blockquote class="qt">“아웃 채널링 과정에서 중앙 미드필더 한 명은 측면으로 진출하고, 남은 한 명은 센터백 보좌함.
+  그러면 2톱 아래에 중앙이 비게 됨. … K1이었으면 중원 유출과 노출이 심했을 것.”
+  <cite>R22 수원FC 홈 · 정성 기록 — 데이터가 뒤에서 같은 결론에 도달했다</cite></blockquote>
+</section>
+
+<!-- ============ 6막 ============ -->
+<section class="act" id="a6">
+  <span class="actlab">6막 · 처방</span>
+  <h2>무엇을 하면 되는가</h2>
+
+  <div class="why"><span class="h">왜 이 그림인가</span>
+  제안서에서 <b>가장 먼저 넘겨보게 되는 장</b>이다. 그래서 차트가 아니라 카드다.
+  카드마다 <b>근거 · 형태 · 착수 시점</b>이 같은 자리에 있어야 비교가 된다.
+  왼쪽 위가 가장 빨리 되는 것, 오른쪽으로 갈수록 오래 걸리는 것으로 배치한다.</div>
+
+  <div class="cards">
+    <div class="card p1"><div class="n">1순위 · 지금 당장</div><h4>배달 밴드와 동선 합의</h4>
+      <p>인스윙 밴드 드릴 — 스몰박스 양 옆, 수비 뒤. 크로서의 목표 지점과 도착 선수의 동선을 <a class="cx" href="/variation-philosophy.ko.html#pattern" target="_blank" rel="noopener">사전에 합의</a>한다.</p>
+      <p><b>사람도 구조도 바꾸지 않는다.</b> 가장 빨리 실행되고 가장 빨리 보인다.</p>
+      <div class="tagr"><span class="tg">R7 · 29개 중 적정 1개</span><span class="tg">Del · Fit-R</span></div></div>
+
+    <div class="card p2"><div class="n">2순위 · 시즌 중</div><h4>전환을 생산한다</h4>
+      <p>큰 전환 직후 3초 이내 크로스 상황의 반복. <a class="cx" href="/variation-philosophy.ko.html#spike" target="_blank" rel="noopener">Lure and Shock</a>의 시간 축을 훈련으로 옮긴 형태.</p>
+      <p>T는 <b>지표로 승격시키지 않는다.</b> 기록·관찰 항목으로 남긴다.</p>
+      <div class="tagr"><span class="tg">전환 → 정확도 r ≈ +0.4</span><span class="tg">T</span></div></div>
+
+    <div class="card p3"><div class="n">3순위 · 승격 전 착수</div><h4>중원을 경유하는 전진</h4>
+      <p><a class="cx" href="/variation-philosophy.ko.html#trap" target="_blank" rel="noopener">횡패스 protocol</a> · <a class="cx" href="/variation-philosophy.ko.html#apply" target="_blank" rel="noopener">연쇄적 포스트 플레이</a>. 측면으로 밀려나기 전에 중앙을 한 번 거치는 경로를 만든다.</p>
+      <p><b>시즌 중에 완성되지 않는다.</b> 그래서 지금 착수해야 하는 유일한 항목이다.</p>
+      <div class="tagr"><span class="tg">Zone 8 · 2.94배</span><span class="tg">사분위 xG 2.1배</span></div></div>
+
+    <div class="card p4"><div class="n">선행 조건</div><h4>공수 균형</h4>
+      <p>3선이 벗겨졌을 때의 보좌. 박스 인원을 늘리는 트랙2의 <b>선행 조건</b>이며 순서를 바꾸지 않는다. 뒤가 열리면 <a class="cx" href="/variation-philosophy.ko.html#terms" target="_blank" rel="noopener">변이</a>를 시도할 수 없다.</p>
+      <p>2026 데이터만 사용한다.</p>
+      <div class="tagr"><span class="tg">관찰 7건</span><span class="tg">트랙2 전제</span></div></div>
+  </div>
+
+  <div class="callout"><span class="t">하지 않아도 되는 것</span>
+  크로스 늘리기(리그 1위) · 박스 진입 늘리기(리그 2위) · 크로스 정확도 훈련(성공률 리그 5위) ·
+  더 뛰기(활동량은 두 리그가 같고, 수원은 이미 평균 이하다).
+  <b>제안서는 더할 것이 아니라 바꿀 것을 말한다.</b></div>
+
+  <p class="cxnote">파란 밑줄이 그어진 말 — <a class="cx" href="/variation-philosophy.ko.html#spike" target="_blank" rel="noopener">Lure and Shock</a> ·
+  <a class="cx" href="/variation-philosophy.ko.html#trap" target="_blank" rel="noopener">횡패스 protocol</a> ·
+  <a class="cx" href="/variation-philosophy.ko.html#apply" target="_blank" rel="noopener">연쇄적 포스트 플레이</a> ·
+  <a class="cx" href="/variation-philosophy.ko.html#pattern" target="_blank" rel="noopener">사전 합의 패턴</a> ·
+  <a class="cx" href="/variation-philosophy.ko.html#terms" target="_blank" rel="noopener">변수와 변이</a> — 은 이 제안서의 바탕이 된 개념들이다.
+  누르면 각 개념을 애니메이션과 함께 설명한 페이지로 새 탭에서 넘어간다.</p>
+</section>
+
+<!-- ============ 7막 ============ -->
+<section class="act" id="a7">
+  <span class="actlab">7막 · 왜 지금인가</span>
+  <h2>승격하면 개선점이 생존 조건이 된다</h2>
+
+  <div class="why"><span class="h">왜 이 그림인가</span>
+  <b>실제 경기장 위에 격차의 크기를 원으로 올린다.</b> 표로 보면 열여덟 줄인 것이,
+  피치 위에 놓이면 “격차가 어디에 있는가”가 한 번에 읽힌다.
+  중원 중앙에 큰 원 하나가 있고 <b>상대 박스에는 점만 남는다</b> — 그것이 이 그림의 전부다.</div>
+
+  <figure>
+    <p class="figtitle">⑨ K리그1 ÷ K리그2 구역별 VAEP 배율</p>
+    <p class="figsub">2025 K리그 기술보고서 · 원 크기 = 두 리그의 격차 크기</p>
+    <div id="v10"></div>
+    <figcaption>K리그1이 K리그2보다 잘하는 곳은 <b>상대 박스가 아니다.</b>
+    격차의 74%가 자기 진영과 중원에서 나오고, 그중 중원 중앙이 2.94배로 압도적이다.
+    수원이 중원을 쓰지 못하는 것은 수원만의 문제가 아니라 <b>K리그2 전체의 특성</b>이며,
+    그래서 승격 시 가장 먼저 부딪히는 지점이다.</figcaption>
+    <div class="gloss"><span class="gh">이 그림의 약어</span>
+<b>VAEP</b> 한 동작(패스·드리블·수비)이 <b>득점 확률을 얼마나 올리고 실점 확률을 얼마나 낮췄는지</b>를 합산한 값.
+"좋은 플레이였다"를 숫자로 옮긴 것이라고 보면 된다. 여기서는 두 리그의 같은 구역 VAEP를 나눈 <b>배율</b>만 쓴다 —
+<b>1.00배면 두 리그가 같고</b>, 2.94배면 K리그1이 그 구역에서 세 배 가까운 값을 만든다는 뜻이다.<br>
+<b>Zone 1~18</b> 경기장을 가로 6칸 × 세로 3칸으로 나눈 구역 번호. 왼쪽이 우리 골문, 오른쪽이 상대 골문이다.</div>
+  </figure>
+
+  <div class="why"><span class="h">왜 이 그림인가</span>
+  “K2가 수준이 낮다”는 흔한 말을 <b>절반만 사실</b>로 정정하는 그림.
+  두 선의 오른쪽 끝은 붙어 있고 왼쪽 끝만 벌어진다 →
+  <b>K1은 상대가 강한 리그가 아니라 쉬운 경기가 없는 리그</b>다.</div>
+
+  <figure>
+    <p class="figtitle">⑩ 상위 4팀 · 하위 4팀 평균 — 두 리그 비교</p>
+    <p class="figsub">2025 K리그 기술보고서 · 팀 총 VAEP</p>
+    <div id="v11"></div>
+    <figcaption>상위권은 −2.3%로 사실상 같고, 하위권에서 −17.2% 벌어진다.
+    K리그1 변동계수 9.6% 대 K리그2 15.8%.
+    <b>K2에서는 시즌의 상당 부분이 “이길 수 있는 경기”이고, K1에는 그런 경기가 없다.</b>
+    38경기 대 32경기 — 여섯 경기가 더 있다.</figcaption>
+    <div class="gloss"><span class="gh">이 그림의 약어</span>
+<b>변동계수</b> 팀들이 서로 얼마나 흩어져 있는지를 평균 대비 비율로 나타낸 값.
+<b>낮을수록 팀 간 수준이 고르다.</b> K리그1 9.6% 대 K리그2 15.8% — K리그2가 1.6배 더 벌어져 있다.</div>
+  </figure>
+</section>
+
+<!-- ============ 8막 ============ -->
+<section class="act" id="a8">
+  <span class="actlab">8막 · 정직성</span>
+  <h2>우리가 틀렸던 것</h2>
+
+  <div class="why"><span class="h">왜 이 그림인가</span>
+  <b>취소선이 그려진 목록</b>은 그 자체로 방법의 신뢰를 만든다.
+  마지막 세 줄은 <b>수원의 가설이 아니라 제안자 본인의 미검증 이론</b>이다.
+  남의 가설만 반증한 목록과, 자기 것까지 올린 목록은 읽는 사람에게 전혀 다르게 도착한다.</div>
+
+  <figure>
+    <p class="figtitle">⑪ 반증 기록</p>
+    <p class="figsub">검증 과정에서 기각되거나 수정된 가설</p>
+    <table class="ref">
+      <thead><tr><th style="text-align:left">가설</th><th style="text-align:left;width:88px">판정</th><th style="text-align:left">근거</th></tr></thead>
+      <tbody>
+        <tr><td class="h"><s>크로스 성공률이 문제다</s></td><td class="v">기각</td><td class="e">24.4% · 리그 5위 (z = +0.67)</td></tr>
+        <tr><td class="h"><s>크로스 양이 슛의 질을 떨어뜨린다</s></td><td class="v">지지 안 됨</td><td class="e">경기 수준 r = +0.097</td></tr>
+        <tr><td class="h"><s>4-4-2 전환이 실패했다</s></td><td class="v">기각</td><td class="e">경기당 xG 1.01 → 1.75 (+73%)</td></tr>
+        <tr><td class="h"><s>전환 후 슛의 질이 떨어졌다</s></td><td class="v">기각</td><td class="e">골 기준 −27%지만 xG/슛 0.104 → 0.109 불변 — 결정력 변동이었다</td></tr>
+        <tr><td class="h"><s>일류첸코 이적이 공격을 무너뜨렸다</s></td><td class="v">기각</td><td class="e">이적 후 슛 13.61 → 13.67, 박스 안 슛 8.8 → 9.0</td></tr>
+        <tr><td class="h"><s>4-4-2가 수비를 악화시켰다</s></td><td class="v">기각</td><td class="e">R8~19 상대 슛 7.91 · 박스 안 5.00 — 전 구간 불변</td></tr>
+        <tr><td class="h"><s>상대가 수원을 피지컬로 상대한다</s></td><td class="v">지지 안 됨</td><td class="e">6개 지표 전부 t &lt; 1.5 · 점유 보정 시 수원이 30% 더 자주 붙는다</td></tr>
+        <tr><td class="h"><s>K2가 K1보다 경기가 많다</s></td><td class="v">기각</td><td class="e">K1 38경기 / K2 32경기</td></tr>
+        <tr><td class="h"><s>패스 길이 다양성 = 속도 변화</s></td><td class="v">프록시 실패</td><td class="e">측정된 것은 “롱볼로 밀려난 정도”였다</td></tr>
+        <tr><td class="h">K2 수준이 전반적으로 낮다</td><td class="v">부분만 사실</td><td class="e">상위 4팀 −2.3% / 하위 4팀 −17.2%</td></tr>
+        <tr class="own"><td class="h">제안자 이론 — L3 (반복 노출의 임계)</td><td class="v">미검증</td><td class="e">K ≈ 4로 보이지만 검정에 48경기가 필요하다</td></tr>
+        <tr class="own"><td class="h">제안자 이론 — 버퍼링</td><td class="v">미검증</td><td class="e">삼각측량 수준이며 증명이 아니다</td></tr>
+        <tr class="own"><td class="h">제안자 이론 — L2</td><td class="v">관측 불가</td><td class="e">현재 가용 데이터로는 관측 자체가 불가능하다</td></tr>
+      </tbody>
+    </table>
+    <figcaption>주황색 세 줄은 수원의 가설이 아니라 <b>제안자 본인의 이론</b>이다.
+    그리고 방법론 규칙 하나가 남았다 — <b>효율을 골 기반 수치로 단독 판단하지 않는다. 반드시 xG로 교차 확인한다.</b>
+    이 프로젝트에서 같은 함정에 두 번 빠졌다.</figcaption>
+  </figure>
+</section>
+
+<footer>
+  <p><b>데이터 출처</b> — 2026 K리그2 21경기 팀스탯·부가기록·패스 매트릭스(자체 파싱) · 2025 K리그 기술보고서 ·
+  유럽 5대리그 96팀 2025/26 공개 집계.</p>
+  <p><b>읽는 법</b> — “관찰”과 “검정”을 구분해 표기했다. 사분위·페어 비교는 표본이 작아 방향만 읽는다.
+  포메이션 전환 전후 비교는 이번 시즌 내부 구간 비교이며 <b>감독 간 비교가 아니다</b>.</p>
+  <p>2026 · 수원 삼성 전술 제안서 · 시각자료 설계안</p>
+</footer>
+</div>
+
+<script>window.__RD__={"scatter": [{"t": "Alavés", "l": "LaLiga", "x": 1.632, "y": 1.08, "c": 19.8, "s": 12.2, "g": 41}, {"t": "Angers", "l": "Ligue1", "x": 1.68, "y": 0.82, "c": 15.6, "s": 9.3, "g": 28}, {"t": "Arsenal", "l": "PL", "x": 1.23, "y": 1.76, "c": 17.9, "s": 14.5, "g": 67}, {"t": "Aston Villa", "l": "PL", "x": 1.253, "y": 1.39, "c": 15.9, "s": 12.7, "g": 53}, {"t": "Atalanta", "l": "SerieA", "x": 1.263, "y": 1.32, "c": 18.7, "s": 14.8, "g": 50}, {"t": "Athletic Club", "l": "LaLiga", "x": 1.768, "y": 1.11, "c": 24.3, "s": 13.7, "g": 42}, {"t": "Atlético Madrid", "l": "LaLiga", "x": 1.546, "y": 1.53, "c": 20.3, "s": 13.1, "g": 58}, {"t": "Augsburg", "l": "Bundesliga", "x": 1.407, "y": 1.32, "c": 18.4, "s": 13.1, "g": 45}, {"t": "Auxerre", "l": "Ligue1", "x": 1.495, "y": 0.88, "c": 16.0, "s": 10.7, "g": 30}, {"t": "Barcelona", "l": "LaLiga", "x": 0.792, "y": 2.47, "c": 14.4, "s": 18.2, "g": 94}, {"t": "Bayern Munich", "l": "Bundesliga", "x": 0.841, "y": 3.5, "c": 16.1, "s": 19.2, "g": 119}, {"t": "Bologna", "l": "SerieA", "x": 1.369, "y": 1.24, "c": 17.7, "s": 12.9, "g": 47}, {"t": "Bournemouth", "l": "PL", "x": 1.382, "y": 1.5, "c": 19.1, "s": 13.8, "g": 57}, {"t": "Brentford", "l": "PL", "x": 1.677, "y": 1.39, "c": 17.9, "s": 10.7, "g": 53}, {"t": "Brest", "l": "Ligue1", "x": 1.461, "y": 1.24, "c": 16.3, "s": 11.2, "g": 42}, {"t": "Brighton", "l": "PL", "x": 1.445, "y": 1.34, "c": 18.8, "s": 13.0, "g": 51}, {"t": "Burnley", "l": "PL", "x": 1.454, "y": 0.92, "c": 13.6, "s": 9.3, "g": 35}, {"t": "Cagliari", "l": "SerieA", "x": 1.308, "y": 1.05, "c": 14.3, "s": 10.9, "g": 40}, {"t": "Celta Vigo", "l": "LaLiga", "x": 1.131, "y": 1.37, "c": 11.4, "s": 10.1, "g": 52}, {"t": "Chelsea", "l": "PL", "x": 1.33, "y": 1.5, "c": 17.8, "s": 13.4, "g": 57}, {"t": "Como", "l": "SerieA", "x": 1.122, "y": 1.68, "c": 16.2, "s": 14.5, "g": 64}, {"t": "Cremonese", "l": "SerieA", "x": 1.98, "y": 0.84, "c": 18.0, "s": 9.1, "g": 32}, {"t": "Crystal Palace", "l": "PL", "x": 1.367, "y": 1.05, "c": 15.9, "s": 11.6, "g": 40}, {"t": "Dortmund", "l": "Bundesliga", "x": 1.503, "y": 2.03, "c": 19.7, "s": 13.1, "g": 69}, {"t": "Elche", "l": "LaLiga", "x": 1.454, "y": 1.24, "c": 15.7, "s": 10.8, "g": 47}, {"t": "Espanyol", "l": "LaLiga", "x": 1.669, "y": 1.11, "c": 21.1, "s": 12.6, "g": 42}, {"t": "Everton", "l": "PL", "x": 1.592, "y": 1.18, "c": 17.7, "s": 11.1, "g": 45}, {"t": "Fiorentina", "l": "SerieA", "x": 1.466, "y": 1.05, "c": 18.9, "s": 12.9, "g": 40}, {"t": "Frankfurt", "l": "Bundesliga", "x": 1.243, "y": 1.79, "c": 14.9, "s": 12.0, "g": 61}, {"t": "Freiburg", "l": "Bundesliga", "x": 1.418, "y": 1.44, "c": 17.4, "s": 12.2, "g": 49}, {"t": "Fulham", "l": "PL", "x": 1.422, "y": 1.13, "c": 18.0, "s": 12.7, "g": 43}, {"t": "Genoa", "l": "SerieA", "x": 1.482, "y": 1.08, "c": 16.9, "s": 11.4, "g": 41}, {"t": "Getafe", "l": "LaLiga", "x": 2.037, "y": 0.82, "c": 18.8, "s": 9.2, "g": 31}, {"t": "Girona", "l": "LaLiga", "x": 1.39, "y": 1.0, "c": 15.6, "s": 11.2, "g": 38}, {"t": "Gladbach", "l": "Bundesliga", "x": 1.337, "y": 1.18, "c": 15.5, "s": 11.6, "g": 40}, {"t": "Hamburger SV", "l": "Bundesliga", "x": 1.277, "y": 1.18, "c": 15.7, "s": 12.3, "g": 40}, {"t": "Heidenheim", "l": "Bundesliga", "x": 1.486, "y": 1.21, "c": 17.0, "s": 11.4, "g": 41}, {"t": "Hellas Verona", "l": "SerieA", "x": 1.39, "y": 0.63, "c": 15.4, "s": 11.1, "g": 24}, {"t": "Hoffenheim", "l": "Bundesliga", "x": 1.457, "y": 1.79, "c": 20.5, "s": 14.1, "g": 61}, {"t": "Inter", "l": "SerieA", "x": 1.346, "y": 2.24, "c": 23.0, "s": 17.1, "g": 85}, {"t": "Juventus", "l": "SerieA", "x": 1.166, "y": 1.55, "c": 19.6, "s": 16.8, "g": 59}, {"t": "Köln", "l": "Bundesliga", "x": 1.401, "y": 1.38, "c": 18.8, "s": 13.4, "g": 47}, {"t": "Lazio", "l": "SerieA", "x": 1.225, "y": 1.03, "c": 13.4, "s": 11.0, "g": 39}, {"t": "Le Havre", "l": "Ligue1", "x": 1.995, "y": 0.91, "c": 21.9, "s": 11.0, "g": 31}, {"t": "Lecce", "l": "SerieA", "x": 1.724, "y": 0.74, "c": 16.9, "s": 9.8, "g": 28}, {"t": "Leeds United", "l": "PL", "x": 1.419, "y": 1.26, "c": 17.8, "s": 12.6, "g": 48}, {"t": "Lens", "l": "Ligue1", "x": 1.378, "y": 1.91, "c": 22.7, "s": 16.5, "g": 65}, {"t": "Levante", "l": "LaLiga", "x": 1.416, "y": 1.24, "c": 17.7, "s": 12.5, "g": 47}, {"t": "Leverkusen", "l": "Bundesliga", "x": 1.2, "y": 1.97, "c": 18.2, "s": 15.2, "g": 67}, {"t": "Lille", "l": "Ligue1", "x": 1.401, "y": 1.5, "c": 19.1, "s": 13.6, "g": 51}, {"t": "Liverpool", "l": "PL", "x": 1.296, "y": 1.61, "c": 20.1, "s": 15.5, "g": 61}, {"t": "Lorient", "l": "Ligue1", "x": 1.4, "y": 1.38, "c": 15.9, "s": 11.3, "g": 47}, {"t": "Lyon", "l": "Ligue1", "x": 1.621, "y": 1.53, "c": 19.9, "s": 12.3, "g": 52}, {"t": "Mainz 05", "l": "Bundesliga", "x": 1.668, "y": 1.29, "c": 20.1, "s": 12.1, "g": 44}, {"t": "Mallorca", "l": "LaLiga", "x": 1.76, "y": 1.24, "c": 19.1, "s": 10.8, "g": 47}, {"t": "Manchester City", "l": "PL", "x": 1.047, "y": 1.95, "c": 16.4, "s": 15.7, "g": 74}, {"t": "Manchester Utd", "l": "PL", "x": 1.074, "y": 1.74, "c": 16.8, "s": 15.7, "g": 66}, {"t": "Marseille", "l": "Ligue1", "x": 1.174, "y": 1.82, "c": 17.7, "s": 15.1, "g": 62}, {"t": "Metz", "l": "Ligue1", "x": 1.813, "y": 0.91, "c": 18.2, "s": 10.1, "g": 31}, {"t": "Milan", "l": "SerieA", "x": 1.27, "y": 1.39, "c": 16.8, "s": 13.2, "g": 53}, {"t": "Monaco", "l": "Ligue1", "x": 1.383, "y": 1.68, "c": 17.3, "s": 12.5, "g": 57}, {"t": "Nantes", "l": "Ligue1", "x": 1.449, "y": 0.85, "c": 16.4, "s": 11.3, "g": 28}, {"t": "Napoli", "l": "SerieA", "x": 1.331, "y": 1.5, "c": 17.6, "s": 13.2, "g": 57}, {"t": "Newcastle", "l": "PL", "x": 1.78, "y": 1.39, "c": 23.1, "s": 12.9, "g": 53}, {"t": "Nice", "l": "Ligue1", "x": 1.639, "y": 1.03, "c": 18.4, "s": 11.2, "g": 35}, {"t": "Nottingham", "l": "PL", "x": 1.735, "y": 1.24, "c": 21.7, "s": 12.5, "g": 47}, {"t": "Osasuna", "l": "LaLiga", "x": 1.749, "y": 1.11, "c": 20.7, "s": 11.8, "g": 42}, {"t": "Oviedo", "l": "LaLiga", "x": 1.716, "y": 0.68, "c": 17.0, "s": 9.9, "g": 26}, {"t": "Paris FC", "l": "Ligue1", "x": 1.377, "y": 1.35, "c": 16.0, "s": 11.6, "g": 46}, {"t": "Parma", "l": "SerieA", "x": 1.572, "y": 0.68, "c": 16.8, "s": 10.7, "g": 26}, {"t": "Pisa", "l": "SerieA", "x": 1.783, "y": 0.66, "c": 17.1, "s": 9.6, "g": 25}, {"t": "PSG", "l": "Ligue1", "x": 0.845, "y": 2.15, "c": 14.9, "s": 17.7, "g": 73}, {"t": "Rayo Vallecano", "l": "LaLiga", "x": 1.447, "y": 1.08, "c": 20.2, "s": 13.9, "g": 41}, {"t": "RB Leipzig", "l": "Bundesliga", "x": 1.067, "y": 1.88, "c": 16.9, "s": 15.8, "g": 64}, {"t": "Real Betis", "l": "LaLiga", "x": 1.03, "y": 1.53, "c": 14.6, "s": 14.2, "g": 58}, {"t": "Real Madrid", "l": "LaLiga", "x": 0.872, "y": 2.03, "c": 15.2, "s": 17.5, "g": 77}, {"t": "Real Sociedad", "l": "LaLiga", "x": 1.387, "y": 1.5, "c": 17.2, "s": 12.4, "g": 57}, {"t": "Rennes", "l": "Ligue1", "x": 1.378, "y": 1.65, "c": 19.5, "s": 14.2, "g": 56}, {"t": "Roma", "l": "SerieA", "x": 1.38, "y": 1.55, "c": 18.3, "s": 13.2, "g": 59}, {"t": "Sassuolo", "l": "SerieA", "x": 1.096, "y": 1.18, "c": 11.7, "s": 10.7, "g": 45}, {"t": "Sevilla", "l": "LaLiga", "x": 1.416, "y": 1.16, "c": 16.3, "s": 11.5, "g": 44}, {"t": "St Pauli", "l": "Bundesliga", "x": 1.689, "y": 0.85, "c": 17.2, "s": 10.2, "g": 29}, {"t": "Strasbourg", "l": "Ligue1", "x": 1.427, "y": 1.68, "c": 16.3, "s": 11.4, "g": 57}, {"t": "Stuttgart", "l": "Bundesliga", "x": 1.31, "y": 2.06, "c": 20.0, "s": 15.3, "g": 70}, {"t": "Sunderland", "l": "PL", "x": 1.548, "y": 1.0, "c": 16.1, "s": 10.4, "g": 38}, {"t": "Torino", "l": "SerieA", "x": 1.481, "y": 1.11, "c": 17.5, "s": 11.8, "g": 42}, {"t": "Tottenham", "l": "PL", "x": 1.752, "y": 1.24, "c": 20.1, "s": 11.4, "g": 47}, {"t": "Toulouse", "l": "Ligue1", "x": 1.151, "y": 1.39, "c": 14.8, "s": 12.9, "g": 46}, {"t": "Udinese", "l": "SerieA", "x": 1.276, "y": 1.16, "c": 14.7, "s": 11.6, "g": 44}, {"t": "Union Berlin", "l": "Bundesliga", "x": 1.59, "y": 1.29, "c": 19.8, "s": 12.5, "g": 44}, {"t": "Valencia", "l": "LaLiga", "x": 1.55, "y": 1.21, "c": 18.3, "s": 11.8, "g": 46}, {"t": "Villarreal", "l": "LaLiga", "x": 1.009, "y": 1.87, "c": 12.1, "s": 12.0, "g": 71}, {"t": "Werder Bremen", "l": "Bundesliga", "x": 1.379, "y": 1.06, "c": 18.0, "s": 13.0, "g": 36}, {"t": "West Ham", "l": "PL", "x": 1.579, "y": 1.16, "c": 16.8, "s": 10.6, "g": 44}, {"t": "Wolfsburg", "l": "Bundesliga", "x": 1.284, "y": 1.29, "c": 15.3, "s": 11.9, "g": 44}, {"t": "Wolves", "l": "PL", "x": 1.881, "y": 0.68, "c": 18.3, "s": 9.7, "g": 26}], "suwon": {"t": "수원 삼성", "x": 2.037, "y": 1.45, "c": 27.7, "s": 13.6, "g": 29}};</script>
+<script>
+(function(){
+var NS='http://www.w3.org/2000/svg';
+function el(id){return document.getElementById(id)}
+function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim()}
+var TIP=document.createElement('div');TIP.className='tip';document.body.appendChild(TIP);
+function tipOn(e,html){TIP.innerHTML=html;TIP.style.opacity=1;tipMove(e)}
+function tipMove(e){var x=e.clientX+13,y=e.clientY-11;var r=TIP.getBoundingClientRect();
+  if(x+r.width>innerWidth-8)x=e.clientX-r.width-13; if(y<6)y=6;
+  TIP.style.left=x+'px';TIP.style.top=y+'px'}
+function tipOff(){TIP.style.opacity=0}
+function hov(node,html){node.setAttribute('style','cursor:default');
+  node.addEventListener('mouseenter',function(e){tipOn(e,html)});
+  node.addEventListener('mousemove',tipMove);
+  node.addEventListener('mouseleave',tipOff);}
+function svg(w,h){var s=document.createElementNS(NS,'svg');
+  s.setAttribute('viewBox','0 0 '+w+' '+h);s.setAttribute('role','img');return s}
+function mk(t,a){var n=document.createElementNS(NS,t);for(var k in a)n.setAttribute(k,a[k]);return n}
+function txt(x,y,s,o){o=o||{};var n=mk('text',{x:x,y:y,'font-size':o.fs||11.5,
+  fill:o.fill||'var(--text-secondary)','text-anchor':o.ta||'start',
+  'font-weight':o.fw||500,'font-family':'system-ui,-apple-system,sans-serif'});
+  if(o.tn!==false)n.setAttribute('style','font-variant-numeric:tabular-nums');
+  n.textContent=s;return n}
+
+/* ---------- V2 : z-score lollipop ---------- */
+function v2(){
+ var D=[{n:'크로스 시도',z:1.96,r:'1위',v:'554회',g:0},
+        {n:'공격진영 패스',z:1.81,r:'1위',v:'2,019회',g:0},
+        {n:'박스 안 슛',z:1.52,r:'2위',v:'178개',g:0},
+        {n:'키패스',z:1.33,r:'1위',v:'194회',g:0},
+        {n:'슛',z:1.25,r:'2위',v:'272개',g:0},
+        {n:'코너킥',z:1.25,r:'2위',v:'110회',g:0},
+        {n:'유효슛',z:0.99,r:'3위',v:'95개',g:0},
+        {n:'득점',z:0.22,r:'6위',v:'29골',g:1},
+        {n:'슛 1개당 득점',z:-0.45,r:'10위',v:'0.107',g:2}];
+  var W=760,LW=118,PAD=150,rowH=34,GAP=22,H=D.length*rowH+GAP+56;
+ var x0=LW,x1=W-PAD,lo=-0.8,hi=2.15;
+ function X(z){return x0+(z-lo)/(hi-lo)*(x1-x0)}
+ function RY(i){return 40+i*rowH+(i>=7?GAP:0)}
+ var s=svg(W,H),zx=X(0);
+ [-0.5,0,0.5,1,1.5,2].forEach(function(t){
+   s.appendChild(mk('line',{x1:X(t),x2:X(t),y1:24,y2:H-24,stroke:t===0?'var(--axis)':'var(--grid)','stroke-width':t===0?1.5:1}));
+   s.appendChild(txt(X(t),16,t===0?'리그 평균':(t>0?'+':'')+t,{ta:'middle',fs:10.5,fill:'var(--muted)',fw:t===0?650:500}));
+ });
+ var yd=RY(6)+rowH/2+GAP/2-2;
+ s.appendChild(mk('line',{x1:8,x2:W-8,y1:yd,y2:yd,stroke:'var(--grid)','stroke-width':1,'stroke-dasharray':'3 4'}));
+ D.forEach(function(d,i){
+   var y=RY(i), c=d.g===0?'var(--s1)':'var(--s2)';
+   var a=Math.min(zx,X(d.z)),b=Math.max(zx,X(d.z));
+   s.appendChild(mk('rect',{x:a,y:y-3.5,width:Math.max(b-a,1),height:7,rx:3.5,fill:c,opacity:d.g===0?.34:.42}));
+   var dot=mk('circle',{cx:X(d.z),cy:y,r:6,fill:c,stroke:'var(--surface-1)','stroke-width':2});
+   hov(dot,'<b>'+d.n+'</b><br><span class="m">'+d.v+' · 리그 '+d.r+' · z = '+(d.z>0?'+':'')+d.z.toFixed(2).replace('-','\u2212')+'</span>');
+   s.appendChild(dot);
+   s.appendChild(txt(LW-14,y+4,d.n,{ta:'end',fs:12.5,fill:d.g?'var(--text-primary)':'var(--text-secondary)',fw:d.g?660:500,tn:false}));
+   var lx=(d.z>=0?X(d.z):zx)+12;
+   s.appendChild(txt(lx,y+4,(d.z>0?'+':'')+d.z.toFixed(2).replace('-','\u2212')+'σ   리그 '+d.r,{fs:11.5,
+     fill:d.g?'var(--s2)':'var(--muted)',fw:d.g?660:500,tn:false}));
+ });
+ el('v2').appendChild(s);
+}
+
+/* ---------- V3 : stage pass-rate ---------- */
+function v3(){
+ var ST=[{n:'크로스 → 슛',k:0},{n:'슛 → 유효슛',k:1},{n:'유효슛 → 골',k:2}];
+ var S=[{n:'유럽 5대리그',v:[71.6,34.3,31.2],c:'var(--s1)',o:1},
+        {n:'K리그2 평균',v:[57.3,35.4,33.1],c:'var(--axis)',o:1},
+        {n:'K리그1 평균',v:[55.6,33.7,29.8],c:'var(--muted)',o:1},
+        {n:'수원 삼성',v:[49.1,34.9,30.5],c:'var(--s2)',o:1}];
+ var W=760,H=330,L=44,R=16,T=26,B=64;
+ var pw=(W-L-R)/3, bw=Math.min(34,(pw-34)/4);
+ function Y(v){return H-B-(v/80)*(H-B-T)}
+ var s=svg(W,H);
+ [0,20,40,60,80].forEach(function(t){
+   s.appendChild(mk('line',{x1:L,x2:W-R,y1:Y(t),y2:Y(t),stroke:'var(--grid)','stroke-width':1}));
+   s.appendChild(txt(L-9,Y(t)+4,t+'%',{ta:'end',fs:10.5,fill:'var(--muted)'}));
+ });
+ ST.forEach(function(st,gi){
+   var gx=L+gi*pw+(pw-(bw*4+9))/2;
+   S.forEach(function(se,si){
+     var x=gx+si*(bw+3),y=Y(se.v[gi]);
+     var r=mk('rect',{x:x,y:y,width:bw,height:H-B-y,rx:4,fill:se.c,opacity:si===3||si===0?1:.62});
+     hov(r,'<b>'+se.n+'</b><br><span class="m">'+st.n+' 통과율 '+se.v[gi].toFixed(1)+'%</span>');
+     s.appendChild(r);
+     s.appendChild(txt(x+bw/2,y-6,se.v[gi].toFixed(1),{ta:'middle',fs:10.5,
+       fill:si===3?'var(--s2)':'var(--muted)',fw:si===3?680:500}));
+   });
+   s.appendChild(txt(L+gi*pw+pw/2,H-B+22,st.n,{ta:'middle',fs:13,fill:'var(--text-primary)',fw:660,tn:false}));
+   if(gi)s.appendChild(mk('line',{x1:L+gi*pw,x2:L+gi*pw,y1:T-6,y2:H-B+32,stroke:'var(--grid)','stroke-width':1,'stroke-dasharray':'3 4'}));
+ });
+ s.appendChild(mk('line',{x1:L,x2:W-R,y1:H-B,y2:H-B,stroke:'var(--axis)','stroke-width':1.5}));
+ s.appendChild(txt(L+pw/2,H-B+42,'← 유일하게 벌어지는 구간 (−22.5%p)',{ta:'middle',fs:11.5,fill:'var(--s2)',fw:640,tn:false}));
+ s.appendChild(txt(L+pw*2,H-B+42,'이후 두 구간은 유럽과 사실상 같다',{ta:'middle',fs:11.5,fill:'var(--muted)',fw:500,tn:false}));
+ el('v3').appendChild(s);
+}
+
+/* ---------- V4 : 96-team scatter ---------- */
+function v4(D){
+ var W=760,H=420,L=52,R=20,T=18,B=52;
+ var xs=[0.7,2.15],ys=[0.5,3.7];
+ function X(v){return L+(v-xs[0])/(xs[1]-xs[0])*(W-L-R)}
+ function Y(v){return H-B-(v-ys[0])/(ys[1]-ys[0])*(H-B-T)}
+ var s=svg(W,H);
+ [0.8,1.2,1.6,2.0].forEach(function(t){
+   s.appendChild(mk('line',{x1:X(t),x2:X(t),y1:T,y2:H-B,stroke:'var(--grid)','stroke-width':1}));
+   s.appendChild(txt(X(t),H-B+18,t.toFixed(1),{ta:'middle',fs:10.5,fill:'var(--muted)'}));});
+ [1,2,3].forEach(function(t){
+   s.appendChild(mk('line',{x1:L,x2:W-R,y1:Y(t),y2:Y(t),stroke:'var(--grid)','stroke-width':1}));
+   s.appendChild(txt(L-9,Y(t)+4,t.toFixed(1),{ta:'end',fs:10.5,fill:'var(--muted)'}));});
+ // regression on the 96
+ var n=D.scatter.length,sx=0,sy=0,sxy=0,sxx=0;
+ D.scatter.forEach(function(d){sx+=d.x;sy+=d.y;sxy+=d.x*d.y;sxx+=d.x*d.x});
+ var b=(n*sxy-sx*sy)/(n*sxx-sx*sx),a=(sy-b*sx)/n;
+ s.appendChild(mk('line',{x1:X(0.75),y1:Y(a+b*0.75),x2:X(2.1),y2:Y(a+b*2.1),
+   stroke:'var(--axis)','stroke-width':2,'stroke-dasharray':'6 5'}));
+ D.scatter.forEach(function(d){
+   var c=mk('circle',{cx:X(d.x),cy:Y(d.y),r:4.2,fill:'var(--s1)',opacity:.33});
+   hov(c,'<b>'+d.t+'</b><br><span class="m">'+d.l+' · 크로스÷슛 '+d.x.toFixed(2)+' · 득점 '+d.y.toFixed(2)+'/경기</span>');
+   s.appendChild(c);});
+ var LB={'Inter':[9,-8,'인터 밀란'],'Bayern Munich':[9,4,'바이에른'],'Getafe':[-9,14,'헤타페'],
+   'Wolves':[-9,6,'울버햄튼'],'Newcastle':[10,4,'뉴캐슬']};
+ D.scatter.forEach(function(d){ if(!LB[d.t])return; var o=LB[d.t];
+   s.appendChild(mk('circle',{cx:X(d.x),cy:Y(d.y),r:4.6,fill:'var(--s1)',opacity:.95}));
+   s.appendChild(txt(X(d.x)+o[0],Y(d.y)+o[1],o[2],{ta:o[0]<0?'end':'start',fs:11,fill:'var(--text-secondary)',fw:600,tn:false}));});
+ var su=D.suwon;
+ s.appendChild(mk('circle',{cx:X(su.x),cy:Y(su.y),r:10,fill:'none',stroke:'var(--s2)','stroke-width':2,opacity:.45}));
+ var sc=mk('circle',{cx:X(su.x),cy:Y(su.y),r:6.5,fill:'var(--s2)',stroke:'var(--surface-1)','stroke-width':2});
+ hov(sc,'<b>수원 삼성</b><br><span class="m">크로스÷슛 2.04 (96팀 중 최상위) · 득점 1.45/경기</span>');
+ s.appendChild(sc);
+ s.appendChild(txt(X(su.x)-14,Y(su.y)-13,'수원 삼성',{ta:'end',fs:13,fill:'var(--s2)',fw:700,tn:false}));
+ s.appendChild(txt(W-R,T+14,'r = −0.68',{ta:'end',fs:12.5,fill:'var(--muted)',fw:640}));
+ s.appendChild(txt(W/2,H-8,'슛 1개당 크로스 개수  →  많이 올릴수록 오른쪽',{ta:'middle',fs:11.5,fill:'var(--muted)',tn:false}));
+ s.appendChild(txt(L-42,T-4,'경기당 득점',{ta:'start',fs:10.5,fill:'var(--muted)',tn:false}));
+ el('v4').appendChild(s);
+}
+
+/* ---------- V5 : routing quartiles ---------- */
+function v5(){
+ var Q=[{q:'Q1',r:'가장 적게 경유',xg:0.93,sh:10.2},{q:'Q2',r:'',xg:1.14,sh:11.4},
+        {q:'Q3',r:'',xg:1.79,sh:14.0},{q:'Q4',r:'가장 많이 경유',xg:1.96,sh:18.8}];
+ var RAMP=['var(--seq250)','var(--seq350)','var(--seq450)','var(--seq600)'];
+ var W=760,H=280,T=34,B=58,gap=52,pw=(W-gap)/2,L=46;
+ var s=svg(W,H);
+ [{k:'xg',mx:2.2,t:'경기당 xG (기대득점)',u:''},{k:'sh',mx:20,t:'경기당 슛',u:''}].forEach(function(P,pi){
+   var ox=pi*(pw+gap), x0=ox+L, x1=ox+pw-6, bw=(x1-x0)/4-14;
+   function Y(v){return H-B-(v/P.mx)*(H-B-T)}
+   s.appendChild(txt(ox+L-10,T-14,P.t,{fs:12.5,fill:'var(--text-primary)',fw:660,tn:false}));
+   s.appendChild(mk('line',{x1:x0-8,x2:x1,y1:H-B,y2:H-B,stroke:'var(--axis)','stroke-width':1.5}));
+   Q.forEach(function(d,i){
+     var x=x0+i*((x1-x0)/4)+7,y=Y(d[P.k]);
+     var r=mk('rect',{x:x,y:y,width:bw,height:H-B-y,rx:4,fill:RAMP[i]});
+     hov(r,'<b>'+d.q+' — 중원 경유 '+(i===0?'하위':i===3?'상위':'중간')+' 5경기</b><br><span class="m">'+P.t+' '+d[P.k]+'</span>');
+     s.appendChild(r);
+     s.appendChild(txt(x+bw/2,y-7,d[P.k].toFixed(P.k==='xg'?2:1),{ta:'middle',fs:12,fill:'var(--text-primary)',fw:670}));
+     s.appendChild(txt(x+bw/2,H-B+17,d.q,{ta:'middle',fs:11.5,fill:'var(--muted)',fw:600}));
+   });
+   var m=P.k==='xg'?'2.1배':'1.8배';
+   s.appendChild(txt(ox+pw-6,H-B+40,'Q1 → Q4  '+m,{ta:'end',fs:12,fill:'var(--s2)',fw:660,tn:false}));
+   s.appendChild(txt(ox+L-4,H-B+40,'← 경유 적음',{fs:11,fill:'var(--muted)',tn:false}));
+ });
+ el('v5').appendChild(s);
+}
+
+/* ---------- V8 : R7 ↔ R8 small multiples ---------- */
+function pairPanels(host,items,aLab,bLab,aC,bC,aT,bT){
+ aT=aT||'var(--muted)';bT=bT||'var(--text-primary)';
+ var W=760,pw=W/items.length,H=185,T=44,B=48;
+ var s=svg(W,H);
+ items.forEach(function(it,i){
+   var ox=i*pw,cx=ox+pw/2,mx=it.mx||Math.max(it.a,it.b)*1.35;
+   function Y(v){return H-B-(v/mx)*(H-B-T)}
+   var bw=Math.min(38,pw/3.4);
+   [[it.a,aC,cx-bw-4],[it.b,bC,cx+4]].forEach(function(p,k){
+     var y=Y(p[0]);
+     var r=mk('rect',{x:p[2],y:y,width:bw,height:Math.max(H-B-y,2),rx:4,fill:p[1]});
+     hov(r,'<b>'+(k?bLab:aLab)+'</b><br><span class="m">'+it.n+' '+p[0]+'</span>');
+     s.appendChild(r);
+     s.appendChild(txt(p[2]+bw/2,y-7,String(p[0]),{ta:'middle',fs:12,fill:k?bT:aT,fw:670}));
+   });
+   s.appendChild(txt(cx,H-B+19,it.n,{ta:'middle',fs:12,fill:'var(--text-primary)',fw:640,tn:false}));
+   if(it.d)s.appendChild(txt(cx,H-B+36,it.d,{ta:'middle',fs:11,fill:'var(--s2)',fw:620,tn:false}));
+   s.appendChild(mk('line',{x1:ox+6,x2:ox+pw-6,y1:H-B,y2:H-B,stroke:'var(--axis)','stroke-width':1.3}));
+   if(i)s.appendChild(mk('line',{x1:ox,x2:ox,y1:T-22,y2:H-B+40,stroke:'var(--grid)','stroke-width':1}));
+ });
+ el(host).appendChild(s);
+}
+
+/* ---------- V11 : top4 / bottom4 dumbbell ---------- */
+function v11(){
+ var D=[{n:'K리그1',t:4.396,b:3.526,c:'var(--s1)'},{n:'K리그2',t:4.293,b:2.921,c:'var(--s2)'}];
+ var W=760,H=210,L=92,R=64,T=48,B=56;
+ var lo=2.75,hi=4.6;
+ function X(v){return L+(v-lo)/(hi-lo)*(W-L-R)}
+ var s=svg(W,H);
+ [3.0,3.5,4.0,4.5].forEach(function(t){
+   s.appendChild(mk('line',{x1:X(t),x2:X(t),y1:T-16,y2:H-B+4,stroke:'var(--grid)','stroke-width':1}));
+   s.appendChild(txt(X(t),H-B+22,t.toFixed(1),{ta:'middle',fs:10.5,fill:'var(--muted)'}));});
+ s.appendChild(txt(X(4.35),T-26,'상위 4팀 평균',{ta:'middle',fs:11.5,fill:'var(--muted)',fw:640,tn:false}));
+ s.appendChild(txt(X(3.2),T-26,'하위 4팀 평균',{ta:'middle',fs:11.5,fill:'var(--muted)',fw:640,tn:false}));
+ D.forEach(function(d,i){
+   var y=T+8+i*44;
+   s.appendChild(mk('line',{x1:X(d.b),x2:X(d.t),y1:y,y2:y,stroke:d.c,'stroke-width':3,opacity:.35}));
+   [[d.b,'하위'],[d.t,'상위']].forEach(function(p,k){
+     var cc=mk('circle',{cx:X(p[0]),cy:y,r:8,fill:k?d.c:'var(--surface-1)',stroke:d.c,'stroke-width':2.5});
+     hov(cc,'<b>'+d.n+' '+p[1]+' 4팀</b><br><span class="m">팀 총 VAEP 평균 '+p[0].toFixed(3)+'</span>');
+     s.appendChild(cc);});
+   s.appendChild(txt(L-16,y+5,d.n,{ta:'end',fs:13.5,fill:'var(--text-primary)',fw:670,tn:false}));
+   s.appendChild(txt(X(d.b)-13,y+5,d.b.toFixed(2),{ta:'end',fs:12,fill:d.c,fw:660}));
+   s.appendChild(txt(X(d.t)+13,y+5,d.t.toFixed(2),{fs:12,fill:d.c,fw:660}));
+ });
+ var y1=T+8,y2=T+52;
+ s.appendChild(mk('line',{x1:X(4.293),x2:X(4.396),y1:y2+16,y2:y2+16,stroke:'var(--axis)','stroke-width':1}));
+ s.appendChild(txt(X(4.34),y2+31,'−2.3%',{ta:'middle',fs:12,fill:'var(--muted)',fw:660}));
+ s.appendChild(mk('line',{x1:X(2.921),x2:X(3.526),y1:y2+16,y2:y2+16,stroke:'var(--s2)','stroke-width':2}));
+ s.appendChild(txt(X(3.22),y2+31,'−17.2%',{ta:'middle',fs:12.5,fill:'var(--s2)',fw:700}));
+ s.appendChild(txt(W-R+8,y1+5,'',{fs:11}));
+ s.appendChild(txt(L-16,H-14,'상위권은 거의 같다.  차이는 전부 하위권에서 온다.',{fs:12,fill:'var(--text-secondary)',fw:620,tn:false}));
+ el('v11').appendChild(s);
+}
+
+
+/* ---------- V1 : two tactical boards ---------- */
+function halfPitch(s,ox,oy,PW,depth){
+ var g=mk('g',{transform:'translate('+ox+','+oy+')'});
+ var k=PW/68, PH=(depth||52.5)*k, cx=PW/2;
+ var ln={stroke:'var(--axis)','stroke-width':1.3,fill:'none'};
+ g.appendChild(mk('rect',{x:0,y:0,width:PW,height:PH,rx:2,fill:'transparent',
+   stroke:'var(--axis)','stroke-width':1.3}));
+ g.appendChild(mk('rect',{x:cx-20.16*k,y:0,width:40.32*k,height:16.5*k,
+   fill:'none',stroke:'var(--axis)','stroke-width':1.3}));
+ g.appendChild(mk('rect',{x:cx-9.16*k,y:0,width:18.32*k,height:5.5*k,
+   fill:'none',stroke:'var(--axis)','stroke-width':1.3}));
+ g.appendChild(mk('circle',{cx:cx,cy:11*k,r:2,fill:'var(--axis)'}));
+ var r=9.15*k, dy=16.5*k-11*k, dx=Math.sqrt(Math.max(r*r-dy*dy,1));
+ g.appendChild(mk('path',{d:'M'+(cx-dx)+' '+(16.5*k)+' A'+r+' '+r+' 0 0 0 '+(cx+dx)+' '+(16.5*k),
+   fill:'none',stroke:'var(--axis)','stroke-width':1.3}));
+ g.appendChild(mk('path',{d:'M0 '+(1*k)+' A'+(1*k)+' '+(1*k)+' 0 0 0 '+(1*k)+' 0',fill:'none',stroke:'var(--axis)','stroke-width':1.1}));
+ g.appendChild(mk('path',{d:'M'+PW+' '+(1*k)+' A'+(1*k)+' '+(1*k)+' 0 0 1 '+(PW-1*k)+' 0',fill:'none',stroke:'var(--axis)','stroke-width':1.1}));
+ g.appendChild(mk('line',{x1:cx-3.66*k,x2:cx+3.66*k,y1:0,y2:0,stroke:'var(--text-primary)','stroke-width':3.4}));
+ return {g:g,k:k,PH:PH,cx:cx};
+}
+function pl(g,x,y,type,lab){
+ var fill = type==='a'?'var(--s1)': type==='d'?'var(--axis)':'var(--s2)';
+ g.appendChild(mk('circle',{cx:x,cy:y,r:8.5,fill:fill,stroke:'var(--surface-1)','stroke-width':1.6}));
+ if(lab)g.appendChild(txt(x,y+3.6,lab,{ta:'middle',fs:9.5,fill:'#fff',fw:700}));
+}
+function board(host,cfg){
+ var PWD=364,DEP=40,PHT=DEP*(PWD/68),PY=52,H=PY+PHT+26,W=PWD;
+ var s=svg(W,H);
+ var defs=mk('defs',{});
+ var mm=mk('marker',{id:'arw_'+host,viewBox:'0 0 10 10',refX:8,refY:5,markerWidth:5,markerHeight:5,orient:'auto-start-reverse'});
+ mm.appendChild(mk('path',{d:'M0 1 L9 5 L0 9 z',fill:cfg.c}));defs.appendChild(mm);s.appendChild(defs);
+ var P=halfPitch(s,0,PY,PWD,DEP);s.appendChild(P.g);
+ var g=P.g,cx=P.cx;
+ s.appendChild(txt(0,16,cfg.t,{fs:14.5,fill:cfg.c,fw:700,tn:false}));
+ s.appendChild(txt(0,34,cfg.s,{fs:11.5,fill:'var(--muted)',tn:false}));
+ g.appendChild(mk('path',{d:cfg.path,fill:'none',stroke:cfg.c,'stroke-width':2,
+   'stroke-dasharray':'5 4','marker-end':'url(#arw_'+host+')'}));
+ cfg.def.forEach(function(p){pl(g,p[0],p[1],'d')});
+ cfg.att.forEach(function(p){pl(g,p[0],p[1],'a')});
+ pl(g,cfg.ball[0],cfg.ball[1],'a',cfg.ball[2]);
+ g.appendChild(mk('circle',{cx:cfg.ball[0],cy:cfg.ball[1],r:27,fill:'none',stroke:cfg.c,'stroke-width':1.4,'stroke-dasharray':'3 3'}));
+ cfg.notes.forEach(function(n,i){g.appendChild(txt(n[0],n[1],n[2],{fs:11.5,fill:cfg.c,fw:680,tn:false}))});
+ g.appendChild(txt(cx,110,cfg.arr,{ta:'middle',fs:12.5,fill:'var(--s1)',fw:700,tn:false}));
+ s.appendChild(txt(0,PY+P.PH+19,cfg.foot,{fs:11,fill:'var(--muted)',tn:false}));
+ el(host).appendChild(s);
+}
+function v1(){
+ var CX=182;
+ board('v1a',{t:'코너킥',s:'정지 상황 · 시즌 110회 (리그 2위)',c:'var(--s3)',
+   path:'M14 14 Q '+(CX-30)+' 78 '+(CX+2)+' 44',
+   att:[[CX-64,46],[CX-24,34],[CX+16,40],[CX+54,54],[CX-6,66]],
+   def:[[CX-46,24],[CX-10,20],[CX+26,25],[CX+58,36],[CX-32,52],[CX+10,54]],
+   ball:[12,12,'K'], arr:'박스 도착 5명',
+   notes:[[4,64,'압박자 0명'],[4,78,'준비 시간 무제한']],
+   foot:'K = 키커 · 점선 원 = 압박 반경'});
+ board('v1b',{t:'오픈플레이 크로스',s:'흐르는 상황 · 시즌 554회 (리그 1위)',c:'var(--s2)',
+   path:'M30 150 Q '+(CX-40)+' 96 '+(CX+8)+' 50',
+   att:[[CX-6,48],[CX+38,58]],
+   def:[[CX-52,32],[CX-16,29],[CX+22,37],[CX+56,48],[CX+6,60],[50,136],[42,172]],
+   ball:[30,150,'C'], arr:'박스 도착 2명',
+   notes:[[68,152,'압박자 2명'],[68,166,'선택 시간 1~2초']],
+   foot:'C = 크로서 · R7 김포전 반복 장면의 재현'});
+}
+
+/* ---------- V7 : multiplication waterfall ---------- */
+function v7(){
+ var GATE=[{k:'Z',n:'구역',d:'깊은 측면 vs 하프스페이스'},
+           {k:'F',n:'자유도',d:'압박 · 시간 · 선택지'},
+           {k:'A',n:'도착',d:'인원 수 × 집결도 × 적합'},
+           {k:'Del',n:'배달',d:'짧음 / 적정 / 김'}];
+ var ROW=[{t:'R7 김포 홈 · 0-1 패',s:'크로스 29개',e:'슛 4개',pct:13.8,
+           f:[.80,.75,.46,.50],g:['보통','보통','낮음 — 원톱, 도착 인원 부족','매우 낮음 — 29개 중 적정 밴드 1개'],
+           c:'var(--s2)'},
+          {t:'R8 경남 원정 · 1-0 승',s:'크로스 35개',e:'슛 13개',pct:37.1,
+           f:[.82,.78,.75,.775],g:['보통','보통','높음 — 2톱, 도착 인원 증가','보통'],
+           c:'var(--s3)'}];
+ var W=760,L=118,R=118,T=64,rowH=132,H=T+ROW.length*rowH+34;
+ var x0=L,x1=W-R,seg=(x1-x0)/4,MAXH=64;
+ var s=svg(W,H);
+ GATE.forEach(function(g,i){
+   var xc=x0+i*seg+seg/2;
+   s.appendChild(mk('line',{x1:x0+i*seg,x2:x0+i*seg,y1:T-30,y2:H-30,stroke:'var(--grid)','stroke-width':1}));
+   s.appendChild(txt(xc,T-42,g.k,{ta:'middle',fs:13,fill:'var(--s1)',fw:720}));
+   s.appendChild(txt(xc,T-28,g.n,{ta:'middle',fs:12,fill:'var(--text-primary)',fw:650,tn:false}));
+   s.appendChild(txt(xc,T-15,g.d,{ta:'middle',fs:10,fill:'var(--muted)',tn:false}));
+ });
+ s.appendChild(mk('line',{x1:x1,x2:x1,y1:T-30,y2:H-30,stroke:'var(--grid)','stroke-width':1}));
+ s.appendChild(txt(x0-8,T-28,'출발',{ta:'end',fs:12,fill:'var(--muted)',fw:640,tn:false}));
+ s.appendChild(txt(x1+8,T-28,'결과',{fs:12,fill:'var(--muted)',fw:640,tn:false}));
+ ROW.forEach(function(r,ri){
+   var yc=T+ri*rowH+50, cum=1, pts=[{x:x0,h:MAXH}];
+   r.f.forEach(function(f,i){cum*=f;pts.push({x:x0+(i+1)*seg,h:MAXH*cum})});
+   var up='',dn='';
+   pts.forEach(function(p,i){up+=(i?' L':'M')+p.x+' '+(yc-p.h/2)});
+   for(var i=pts.length-1;i>=0;i--)dn+=' L'+pts[i].x+' '+(yc+pts[i].h/2);
+   s.appendChild(mk('path',{d:up+dn+' Z',fill:r.c,opacity:.30,stroke:r.c,'stroke-width':1.5}));
+   for(var i=0;i<4;i++){
+     var a=pts[i],b=pts[i+1];
+     s.appendChild(mk('path',{d:'M'+a.x+' '+(yc-a.h/2)+' L'+b.x+' '+(yc-b.h/2)+
+       ' L'+b.x+' '+(yc-a.h/2)+' Z',fill:r.c,opacity:.10}));
+     s.appendChild(mk('path',{d:'M'+a.x+' '+(yc+a.h/2)+' L'+b.x+' '+(yc+b.h/2)+
+       ' L'+b.x+' '+(yc+a.h/2)+' Z',fill:r.c,opacity:.10}));
+     var loss=Math.round((1-r.f[i])*100);
+     var mid=(a.x+b.x)/2, hot=r.f[i]<.6;
+     s.appendChild(txt(mid,yc-MAXH/2-10,'−'+loss+'%',{ta:'middle',fs:11.5,
+       fill:hot?r.c:'var(--muted)',fw:hot?700:560}));
+     s.appendChild(txt(mid,yc+MAXH/2+18,r.g[i].split(' — ')[0],{ta:'middle',fs:10.5,
+       fill:hot?r.c:'var(--muted)',fw:hot?680:520,tn:false}));
+     var note=r.g[i].split(' — ')[1];
+     if(note)s.appendChild(txt(mid,yc+MAXH/2+31,note,{ta:'middle',fs:9.8,fill:'var(--muted)',tn:false}));
+   }
+   s.appendChild(txt(x0-10,yc-8,r.t,{ta:'end',fs:12.5,fill:'var(--text-primary)',fw:660,tn:false}));
+   s.appendChild(txt(x0-10,yc+8,r.s,{ta:'end',fs:11.5,fill:'var(--muted)',tn:false}));
+   s.appendChild(txt(x1+10,yc-8,r.e,{fs:13,fill:r.c,fw:700,tn:false}));
+   s.appendChild(txt(x1+10,yc+9,r.pct.toFixed(1)+'% 생존',{fs:11.5,fill:'var(--muted)'}));
+   if(ri)s.appendChild(mk('line',{x1:8,x2:W-8,y1:T+ri*rowH-16,y2:T+ri*rowH-16,stroke:'var(--grid)','stroke-width':1,'stroke-dasharray':'3 4'}));
+ });
+ s.appendChild(txt(W/2,H-8,'네 관문을 곱한다 — 한 칸이 반으로 줄면 앞의 세 칸이 아무리 좋아도 결과가 반이 된다',
+   {ta:'middle',fs:11.5,fill:'var(--muted)',tn:false}));
+ el('v7').appendChild(s);
+}
+
+/* ---------- V10 : full pitch, gap bubbles ---------- */
+function v10(){
+ var Z={2:1.10,6:2.00,8:2.94,12:0.90,14:1.13,17:1.02};
+ var NM={2:'자기 박스 중앙',6:'수비 3rd 측면',8:'중원 중앙',12:'공격 3rd 측면',14:'Zone 14',17:'상대 박스'};
+ var W=760,ML=22,MR=22,T=34,B=94;
+ var PW=W-ML-MR, k=PW/105, PH=68*k, cy=T+PH/2, cxm=ML+PW/2;
+ var H=T+PH+B, s=svg(W,H);
+ var A='var(--axis)';
+ s.appendChild(mk('rect',{x:ML,y:T,width:PW,height:PH,rx:2,fill:'none',stroke:A,'stroke-width':1.4}));
+ s.appendChild(mk('line',{x1:cxm,x2:cxm,y1:T,y2:T+PH,stroke:A,'stroke-width':1.2}));
+ s.appendChild(mk('circle',{cx:cxm,cy:cy,r:9.15*k,fill:'none',stroke:A,'stroke-width':1.2}));
+ s.appendChild(mk('circle',{cx:cxm,cy:cy,r:2,fill:A}));
+ [0,1].forEach(function(side){
+   var sx=side?ML+PW:ML, dir=side?-1:1;
+   s.appendChild(mk('rect',{x:side?sx-16.5*k:sx,y:cy-20.16*k,width:16.5*k,height:40.32*k,fill:'none',stroke:A,'stroke-width':1.2}));
+   s.appendChild(mk('rect',{x:side?sx-5.5*k:sx,y:cy-9.16*k,width:5.5*k,height:18.32*k,fill:'none',stroke:A,'stroke-width':1.2}));
+   s.appendChild(mk('circle',{cx:sx+dir*11*k,cy:cy,r:1.8,fill:A}));
+   var r=9.15*k,dx=16.5*k-11*k,dy=Math.sqrt(r*r-dx*dx),ax=sx+dir*16.5*k;
+   s.appendChild(mk('path',{d:'M'+ax+' '+(cy-dy)+' A'+r+' '+r+' 0 0 '+(side?1:0)+' '+ax+' '+(cy+dy),fill:'none',stroke:A,'stroke-width':1.2}));
+   s.appendChild(mk('line',{x1:sx,x2:sx-dir*2.5,y1:cy-3.66*k,y2:cy-3.66*k,stroke:'var(--text-primary)','stroke-width':3}));
+   s.appendChild(mk('line',{x1:sx,x2:sx-dir*2.5,y1:cy+3.66*k,y2:cy+3.66*k,stroke:'var(--text-primary)','stroke-width':3}));
+   s.appendChild(mk('line',{x1:sx-dir*2.5,x2:sx-dir*2.5,y1:cy-3.66*k,y2:cy+3.66*k,stroke:'var(--text-primary)','stroke-width':3}));
+ });
+ var cw=PW/6,chh=PH/3;
+ for(var i=1;i<6;i++)s.appendChild(mk('line',{x1:ML+i*cw,x2:ML+i*cw,y1:T,y2:T+PH,
+   stroke:'var(--axis)','stroke-width':1.2,'stroke-dasharray':'6 5'}));
+ for(var j=1;j<3;j++)s.appendChild(mk('line',{x1:ML,x2:ML+PW,y1:T+j*chh,y2:T+j*chh,
+   stroke:'var(--axis)','stroke-width':1.2,'stroke-dasharray':'6 5'}));
+ var order=[8,6,14,2,17,12];
+ order.forEach(function(num){
+   var c=Math.floor((num-1)/3),r=(num-1)%3,v=Z[num];
+   var x=ML+c*cw+cw/2,y=T+r*chh+chh/2, d=v-1, rad=Math.sqrt(Math.abs(d))*33;
+   var col=d>=0?'var(--s1)':'var(--s2)';
+   var big=rad>=40;
+   var cc=mk('circle',{cx:x,cy:y,r:rad,fill:col,opacity:d>=0?.78:.7,stroke:'var(--surface-1)','stroke-width':2});
+   hov(cc,'<b>Zone '+num+' · '+NM[num]+'</b><br><span class="m">K1 '+(d>=0?'우위':'열세')+' — VAEP '+v.toFixed(2)+'배</span>');
+   s.appendChild(cc);
+   if(big){
+     s.appendChild(txt(x,y-2,v.toFixed(2)+'배',{ta:'middle',fs:num===8?17:14,fill:'#fff',fw:730}));
+     s.appendChild(txt(x,y+14,NM[num],{ta:'middle',fs:9.5,fill:'#fff',fw:560,tn:false}));
+   }else{
+     s.appendChild(txt(x,y+rad+16,v.toFixed(2)+'배',{ta:'middle',fs:12.5,fill:'var(--text-primary)',fw:690}));
+     s.appendChild(txt(x,y+rad+29,NM[num],{ta:'middle',fs:10.5,fill:'var(--muted)',fw:530,tn:false}));
+   }
+ });
+ s.appendChild(txt(ML,T-12,'◀ 우리 골문',{fs:11,fill:'var(--muted)',tn:false}));
+ s.appendChild(txt(ML+PW,T-12,'상대 골문 ▶',{ta:'end',fs:11,fill:'var(--muted)',tn:false}));
+ var ly=T+PH+26;
+ s.appendChild(mk('circle',{cx:ML+7,cy:ly-4,r:7,fill:'var(--s1)',opacity:.78}));
+ s.appendChild(txt(ML+20,ly,'K리그1 우위',{fs:11.5,fill:'var(--text-secondary)',tn:false}));
+ s.appendChild(mk('circle',{cx:ML+142,cy:ly-4,r:7,fill:'var(--s2)',opacity:.7}));
+ s.appendChild(txt(ML+155,ly,'K리그2 우위',{fs:11.5,fill:'var(--text-secondary)',tn:false}));
+ s.appendChild(txt(ML+PW,ly,'원 크기 = 배율에서 1(두 리그 동일)을 뺀 값 · 18구역 중 격차 상위 6개',{ta:'end',fs:11.5,fill:'var(--muted)',tn:false}));
+ s.appendChild(txt(ML,ly+25,'상대 박스(Z17)에는 점만 남는다 — 두 리그가 1.02배로 사실상 같다.',{fs:12.5,fill:'var(--s2)',fw:650,tn:false}));
+ s.appendChild(txt(ML,ly+42,'격차는 중원 중앙에서 2.94배로 벌어진다.',{fs:12.5,fill:'var(--s2)',fw:650,tn:false}));
+ el('v10').appendChild(s);
+}
+
+fetch_data();
+function fetch_data(){
+ var D=window.__RD__;
+ try{v1()}catch(e){console.error('v1',e)}
+ try{v2()}catch(e){console.error('v2',e)}
+ try{v3()}catch(e){console.error('v3',e)}
+ try{v4(D)}catch(e){console.error('v4',e)}
+ try{v5()}catch(e){console.error('v5',e)}
+ try{v7()}catch(e){console.error('v7',e)}
+ try{pairPanels('v8',[
+   {n:'크로스 시도',a:29,b:35},{n:'슛',a:4,b:13,d:'×3.3'},
+   {n:'박스 안 슛',a:2,b:9,d:'×4.5'},{n:'크로스 ÷ 슛',a:7.25,b:2.69,d:'−63%'}],
+   'R7 김포 (마지막 4-3-3)','R8 경남 (첫 4-4-2)','var(--axis)','var(--s3)','var(--muted)','var(--s3)')}catch(e){console.error('v8',e)}
+ try{pairPanels('v9a',[
+   {n:'슛',a:12,b:14},{n:'유효슛',a:5,b:5},{n:'박스 안 슛',a:7,b:7},
+   {n:'크로스 성공',a:5,b:5},{n:'공격진영 패스',a:71,b:72}],
+   'R10 (1-3 패)','R22 (2-2 무)','var(--axis)','var(--muted)','var(--muted)','var(--text-primary)')}catch(e){console.error('v9a',e)}
+ try{v9b()}catch(e){console.error('v9b',e)}
+ try{v10()}catch(e){console.error('v10',e)}
+ try{v11()}catch(e){console.error('v11',e)}
+}
+
+/* ---------- V9b : routing initiative flip ---------- */
+function v9b(){
+ var D=[{n:'R10  수원FC 원정 · 1-3 패',v:-1.79,r:'21경기 중 17위'},
+        {n:'R22  수원FC 홈 · 2-2 무',v:3.27,r:'21경기 중 5위'}];
+ var W=760,H=170,L=200,R=120,T=34,B=34;
+ var lo=-2.6,hi=4.0;
+ function X(v){return L+(v-lo)/(hi-lo)*(W-L-R)}
+ var s=svg(W,H),zx=X(0);
+ s.appendChild(mk('line',{x1:zx,x2:zx,y1:T-12,y2:H-B+4,stroke:'var(--axis)','stroke-width':1.5}));
+ s.appendChild(txt(zx,T-18,'상대와 동일',{ta:'middle',fs:10.5,fill:'var(--muted)',fw:620,tn:false}));
+ D.forEach(function(d,i){
+   var y=T+6+i*40,c=d.v>0?'var(--s3)':'var(--s2)';
+   var a=Math.min(zx,X(d.v)),b=Math.max(zx,X(d.v));
+   var rr=mk('rect',{x:a,y:y,width:Math.max(b-a,2),height:21,rx:4,fill:c});
+   hov(rr,'<b>'+d.n+'</b><br><span class="m">중원 경유 주도권 '+(d.v>0?'+':'')+d.v.toFixed(2)+' · '+d.r+'</span>');
+   s.appendChild(rr);
+   s.appendChild(txt(L-14,y+15,d.n,{ta:'end',fs:12.5,fill:'var(--text-primary)',fw:640,tn:false}));
+   s.appendChild(txt((d.v>0?b:zx)+10,y+15,(d.v>0?'+':'')+d.v.toFixed(2).replace('-','\u2212')+'  ('+d.r+')',
+     {fs:11.5,fill:c,fw:640,tn:false}));
+ });
+ s.appendChild(txt(W/2,H-6,'산출량은 소수점까지 같았고, 뒤집힌 것은 중원의 주도권이다',
+   {ta:'middle',fs:11.5,fill:'var(--muted)',tn:false}));
+ el('v9b').appendChild(s);
+}
+
+/* theme toggle */
+var tg=el('tg');
+if(tg)tg.addEventListener('click',function(){
+  var cur=document.documentElement.getAttribute('data-theme');
+  if(!cur)cur=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+  document.documentElement.setAttribute('data-theme',cur==='dark'?'light':'dark');
+  tg.textContent=cur==='dark'?'다크 모드':'라이트 모드';
+});
+})();
+</script>
+
+</body></html>
