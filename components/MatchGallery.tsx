@@ -42,6 +42,7 @@ const STANDALONE: CardEntry[] = [
   { kind: "report", key: "suwon-cross-shot", publishedAt: "2026-08-15" },
   { kind: "report", key: "wc2022-2026-champions", publishedAt: "2026-08-19" },
   { kind: "report", key: "suwon-proposal-visuals", publishedAt: "2026-08-23" },
+  { kind: "report", key: "suwon-revision", publishedAt: "2026-08-27" },
 ];
 
 const GALLERY_CARDS: CardEntry[] = [
@@ -221,7 +222,20 @@ type ReportCopy = {
   stats: Record<Locale, readonly ReportStat[]>;
 };
 
-const REPORTS: Record<"korea-jordan" | "suwon-cross-shot" | "wc2022-2026-champions" | "suwon-proposal-visuals", ReportCopy> = {
+const REPORTS: Record<"korea-jordan" | "suwon-cross-shot" | "wc2022-2026-champions" | "suwon-proposal-visuals" | "suwon-revision", ReportCopy> = {
+  "suwon-revision": {
+    tag: { en: "REVISION", ko: "정정 · 재검증 리포트" },
+    competition: { en: "K League 2 2026 · Suwon Samsung · 279 shot coordinates, 23 pass matrices", ko: "K리그2 2026 · 수원 삼성 · 슛 좌표 279개 · 패스 매트릭스 23경기" },
+    title: { en: "Cross → shot was half of it", ko: "｢크로스 → 슈팅｣은 절반이었다" },
+    sub: {
+      en: "A revision of my own report. I pulled 279 shot coordinates off the league’s chalk boards and re-read 23 pass matrices, and three of my conclusions did not survive it — the leak has two cut points rather than one, the route I named as the cause had already corrected itself over the season, and the 554 crosses I built the argument on included set pieces. Every Suwon figure comes from the K League Data Portal alone.",
+      ko: "내 리포트를 내가 고친다. 경기 기록판에서 슛 좌표 279개를 직접 뽑고 패스 매트릭스 23경기를 다시 읽었더니, 지난 결론 세 개가 살아남지 못했다 — 결손 구간의 절단면은 하나가 아니라 둘이고, 원인으로 지목한 경로는 이미 스스로 고쳐지고 있었으며, 논거로 삼은 크로스 554회에는 세트피스가 섞여 있었다. 수원에 관한 모든 수치는 K리그 데이터포털 하나에서만 가져왔다.",
+    },
+    stats: {
+      en: [["279", "shot coordinates extracted"], ["2", "cut points, not one"], ["r = −0.78", "back-route share vs round"], ["3", "of my own conclusions corrected"]],
+      ko: [["279개", "직접 추출한 슛 좌표"], ["2개", "절단면 — 하나가 아니다"], ["r = −0.78", "후방직결 비율 × 라운드"], ["3건", "내가 고친 내 결론"]],
+    },
+  },
   "suwon-proposal-visuals": {
     tag: { en: "VISUAL DESIGN BRIEF", ko: "시각자료 설계안" },
     competition: { en: "K League 2 2026 · Suwon Samsung · 21 matches", ko: "K리그2 2026 · 수원 삼성 · 21경기" },

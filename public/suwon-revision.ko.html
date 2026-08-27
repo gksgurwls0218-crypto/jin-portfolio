@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="수원 삼성의 결손 구간을 「크로스 → 슈팅」 하나로 좁혔던 지난 결론을, 슛 279개의 좌표를 직접 추출해 다시 검증했다. 절단면은 두 개였고, 내가 지목한 원인은 이미 스스로 고쳐지고 있었다.">
+<title>「크로스 → 슈팅」은 절반이었다 — 수원 삼성, 결손 구간 재검증</title>
+<style>
+:root{
+  --page:#f9f9f7; --surface-1:#fcfcfb;
+  --text-primary:#0b0b0b; --text-secondary:#52514e; --muted:#898781;
+  --grid:#e1e0d9; --axis:#c3c2b7; --border:rgba(11,11,11,0.10);
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a;
+  --good:#0ca30c; --critical:#d03b3b; --warning:#fab219;
+  --seq250:#86b6ef; --seq350:#5598e7; --seq450:#2a78d6; --seq600:#184f95;
+}
+:root[data-theme="dark"]{
+  --page:#0d0d0d; --surface-1:#1a1a19;
+  --text-primary:#ffffff; --text-secondary:#c3c2b7; --muted:#898781;
+  --grid:#2c2c2a; --axis:#383835; --border:rgba(255,255,255,0.10);
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+  --seq250:#184f95; --seq350:#256abf; --seq450:#3987e5; --seq600:#86b6ef;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --page:#0d0d0d; --surface-1:#1a1a19;
+    --text-primary:#ffffff; --text-secondary:#c3c2b7; --muted:#898781;
+    --grid:#2c2c2a; --axis:#383835; --border:rgba(255,255,255,0.10);
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+    --seq250:#184f95; --seq350:#256abf; --seq450:#3987e5; --seq600:#86b6ef;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--text-primary);
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.65;
+  -webkit-font-smoothing:antialiased;}
+.wrap{max-width:920px;margin:0 auto;padding:0 22px 90px}
+
+.themebtn{position:fixed;top:14px;right:16px;z-index:9;font:inherit;font-size:12.5px;
+  color:var(--text-secondary);background:var(--surface-1);border:1px solid var(--border);
+  border-radius:7px;padding:5px 11px;cursor:pointer}
+
+header.hero{padding:64px 0 34px;border-bottom:1px solid var(--border);margin-bottom:44px}
+.kicker{font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-weight:650}
+h1{font-size:clamp(28px,4.6vw,42px);line-height:1.22;margin:14px 0 12px;letter-spacing:-.02em;font-weight:720}
+.sub{font-size:clamp(15px,2vw,17.5px);color:var(--text-secondary);max-width:64ch;margin:0}
+.meta{margin-top:22px;font-size:12.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 20px}
+.meta b{color:var(--text-secondary);font-weight:600}
+
+h2{font-size:clamp(20px,2.7vw,25px);margin:60px 0 6px;letter-spacing:-.015em;font-weight:700}
+h2 .num{color:var(--muted);font-weight:600;margin-right:10px;font-variant-numeric:tabular-nums}
+h3{font-size:16.5px;margin:32px 0 8px;font-weight:670}
+p{margin:12px 0;max-width:68ch}
+ul,ol{max-width:68ch;padding-left:20px}
+li{margin:7px 0}
+a{color:var(--s1)}
+strong{font-weight:660}
+code{font-family:ui-monospace,Menlo,monospace;font-size:.88em;
+  background:color-mix(in srgb,var(--text-primary) 6%,transparent);padding:1px 5px;border-radius:4px}
+
+.lede{font-size:17px;color:var(--text-primary);border-left:3px solid var(--s2);
+  padding:2px 0 2px 18px;margin:22px 0 28px;max-width:66ch}
+.quiet{color:var(--text-secondary)}
+
+.statrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:26px 0 8px}
+.stat{background:var(--surface-1);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+.stat .k{font-size:11.5px;color:var(--muted);letter-spacing:.04em}
+.stat .v{font-size:23px;font-weight:700;margin-top:3px;font-variant-numeric:tabular-nums}
+.stat .n{font-size:11.5px;color:var(--text-secondary);margin-top:2px}
+
+figure{margin:30px 0 8px;background:var(--surface-1);border:1px solid var(--border);
+  border-radius:14px;padding:20px 20px 14px}
+figure svg{display:block;width:100%;height:auto}
+.figtitle{font-size:14px;font-weight:670;margin:0 0 2px}
+.fignote{font-size:12.5px;color:var(--muted);margin:0 0 14px}
+figcaption{font-size:13px;color:var(--text-secondary);margin-top:12px;padding-top:11px;
+  border-top:1px solid var(--grid)}
+
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:18px 0;min-width:480px}
+th,td{text-align:right;padding:8px 10px;border-bottom:1px solid var(--grid);font-variant-numeric:tabular-nums}
+th:first-child,td:first-child{text-align:left;font-variant-numeric:normal}
+th{font-size:11.5px;letter-spacing:.05em;color:var(--muted);font-weight:650;text-transform:uppercase}
+tr.hl td{background:color-mix(in srgb,var(--s2) 9%,transparent);font-weight:640}
+td.dim{color:var(--muted)}
+td.up{color:var(--s3);font-weight:640}
+td.dn{color:var(--s2);font-weight:640}
+
+.fixbox{background:var(--surface-1);border:1px solid var(--border);border-left:3px solid var(--critical);
+  border-radius:12px;padding:18px 20px;margin:24px 0}
+.fixbox .lab{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--critical);font-weight:680;margin-bottom:8px}
+.fixbox p{margin:8px 0}
+.fixbox p:last-child{margin-bottom:0}
+.before{font-size:14px;color:var(--muted);border-left:2px solid var(--grid);padding-left:14px;margin:10px 0}
+.before b{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-secondary);margin-bottom:3px}
+
+.callout{background:var(--surface-1);border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin:24px 0}
+.callout .lab{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:680;margin-bottom:8px}
+.callout > :last-child{margin-bottom:0}
+
+.glossary{font-size:13px;color:var(--text-secondary);background:color-mix(in srgb,var(--text-primary) 3.5%,transparent);
+  border-radius:10px;padding:14px 16px;margin:18px 0}
+.glossary dt{font-weight:670;color:var(--text-primary);display:inline}
+.glossary dd{display:inline;margin:0 0 0 6px}
+.glossary div{margin:6px 0}
+
+footer{margin-top:70px;padding-top:22px;border-top:1px solid var(--border);
+  font-size:12.5px;color:var(--muted);line-height:1.9}
+</style>
+</head>
+<body>
+<button class="themebtn" id="tt">◐ 테마</button>
+<div class="wrap">
+
+<header class="hero">
+  <p class="kicker">Match Analysis · K리그2 2026 · 재검증</p>
+  <h1>「크로스 → 슈팅」은 절반이었다</h1>
+  <p class="sub">지난달 나는 수원 삼성의 결손 구간을 한 곳으로 좁혔다. 그 뒤 경기 기록판에서 <strong>슛 279개의 좌표</strong>를 직접 뽑아 같은 질문을 다시 던졌더니, 답이 하나 더 나왔다. 그리고 내가 원인으로 지목했던 것은 이미 스스로 고쳐지고 있었다. 이 글은 내 결론을 내가 고친 기록이다.</p>
+  <div class="meta">
+    <span>한혁진 · 전술분석</span>
+    <span><b>2026.08</b></span>
+    <span>출처 <b>K리그 데이터포털 단일</b> (공급 Bepro11)</span>
+    <span><b>22경기</b></span>
+    <span>chalk board 좌표 <b>슛 279개</b></span>
+    <span>유럽 5대리그 <b>96팀</b> 대조</span>
+  </div>
+</header>
+
+<p class="lede">처음 오신 분을 위해 — 이 글은 앞선 분석을 읽지 않아도 그대로 읽힌다. 다만 <strong>어디를 어떻게 고쳤는지</strong>가 글의 뼈대이므로, 앞 결론을 먼저 요약하고 시작한다.</p>
+
+<h2><span class="num">00</span>다시 여는 이유</h2>
+
+<p>수원 삼성은 2026 K리그2 <strong>1위이자 리그 최소 실점 팀</strong>이다. 그런데 승격 경쟁 상위권에서 <strong>득점이 가장 적다</strong>. 앞선 분석은 그 결손이 어디서 생기는지를 물었고, 20경기와 유럽 5대리그 96팀을 대조해 이렇게 답했다.</p>
+
+<div class="callout">
+  <p class="lab">지난 결론</p>
+  <p>크로스에서 골까지를 세 구간으로 나누면 <strong>「크로스 → 슈팅」 하나만</strong> 유럽 평균보다 22.5%p 낮다. 그 뒤 두 구간(슛→유효슛, 유효슛→득점)은 유럽과 소수점 한 자리까지 같다. <strong>슛을 못 넣는 팀이 아니라, 크로스가 슛이 되지 않는 팀이다.</strong></p>
+</div>
+
+<p>이 결론 자체는 지금도 유효하다. <strong>다만 세 군데가 틀렸거나 모자랐다.</strong></p>
+
+<div class="tw">
+<table>
+  <thead><tr><th>무엇을 고치나</th><th>지난 글</th><th>이 글</th></tr></thead>
+  <tbody>
+    <tr class="hl"><td>절단면의 개수</td><td>한 곳 — 크로스→슛</td><td><strong>두 곳.</strong> 만성 결손과 경기별 변동은 다른 칸에 있다</td></tr>
+    <tr><td>원인 후보 Z(위치)</td><td>세 요소 중 하나로 열어둠</td><td><strong>배제.</strong> 좌표로 확인했다</td></tr>
+    <tr><td>내가 지목한 경로 문제</td><td>고쳐야 할 것</td><td><strong>이미 고쳐지는 중이었다</strong>(r = −0.78)</td></tr>
+    <tr><td>오픈플레이 크로스 554회</td><td>오픈플레이 수치로 사용</td><td><strong>세트피스가 섞여 있었다</strong></td></tr>
+  </tbody>
+</table>
+</div>
+
+<p class="quiet">아래 순서로 간다. 문제 정의(01) → 지난 결론의 근거(02) → 첫 번째 정정(03) → 좌표로 다시 물음(04) → 두 번째 정정(05) → 세 번째 정정(06) → 바뀐 처방(07) → 이 글의 한계(08).</p>
+
+<h2><span class="num">01</span>문제 — 만드는 건 1위, 거두는 건 6위</h2>
+
+<p>먼저 문제가 실재하는지부터. 2026 K리그2 17개 팀 대비 수원의 위치를 표준편차 단위(z-점수)로 놓으면 모양이 한눈에 보인다.</p>
+
+<figure>
+  <p class="figtitle">투입 · 산출 · 효율 — 리그 평균 대비 (z-점수)</p>
+  <p class="fignote">2026 K리그2 17팀 · R21까지 · 0 = 리그 평균, 한 칸 = 한 표준편차</p>
+  <svg viewBox="0 0 720 420" role="img" aria-label="수원 삼성의 지표별 z-점수. 크로스 시도 플러스 1.96을 비롯한 투입 지표는 전부 플러스 1.0 이상인데, 산출인 득점은 플러스 0.22, 효율인 슛당 득점은 마이너스 0.45다.">
+    <line x1="250" y1="34" x2="250" y2="376" stroke="var(--axis)" stroke-width="1.5"/>
+    <line x1="380" y1="34" x2="380" y2="376" stroke="var(--grid)"/>
+    <line x1="510" y1="34" x2="510" y2="376" stroke="var(--grid)"/>
+    <line x1="120" y1="34" x2="120" y2="376" stroke="var(--grid)"/>
+    <text x="120" y="396" font-size="10.5" fill="var(--muted)" text-anchor="middle">−1σ</text>
+    <text x="250" y="396" font-size="10.5" fill="var(--muted)" text-anchor="middle">리그 평균</text>
+    <text x="380" y="396" font-size="10.5" fill="var(--muted)" text-anchor="middle">+1σ</text>
+    <text x="510" y="396" font-size="10.5" fill="var(--muted)" text-anchor="middle">+2σ</text>
+
+    <text x="18" y="30" font-size="11.5" font-weight="650" fill="var(--muted)" letter-spacing="1.2">투입 — 얼마나 만들었는가</text>
+    <text x="240" y="52" font-size="13" fill="var(--text-primary)" text-anchor="end">크로스 시도</text>
+    <rect x="250" y="41" width="255" height="14" rx="4" fill="var(--s1)"/>
+    <text x="513" y="52" font-size="11.5" fill="var(--text-primary)">+1.96</text>
+    <text x="240" y="80" font-size="13" fill="var(--text-primary)" text-anchor="end">공격진영 패스</text>
+    <rect x="250" y="69" width="235" height="14" rx="4" fill="var(--s1)"/>
+    <text x="493" y="80" font-size="11.5" fill="var(--text-primary)">+1.81</text>
+    <text x="240" y="108" font-size="13" fill="var(--text-primary)" text-anchor="end">PA내 슛</text>
+    <rect x="250" y="97" width="198" height="14" rx="4" fill="var(--s1)"/>
+    <text x="456" y="108" font-size="11.5" fill="var(--text-primary)">+1.52</text>
+    <text x="240" y="136" font-size="13" fill="var(--text-primary)" text-anchor="end">키패스</text>
+    <rect x="250" y="125" width="173" height="14" rx="4" fill="var(--s1)"/>
+    <text x="431" y="136" font-size="11.5" fill="var(--text-primary)">+1.33</text>
+    <text x="240" y="164" font-size="13" fill="var(--text-primary)" text-anchor="end">슛</text>
+    <rect x="250" y="153" width="163" height="14" rx="4" fill="var(--s1)"/>
+    <text x="421" y="164" font-size="11.5" fill="var(--text-primary)">+1.25</text>
+    <text x="240" y="192" font-size="13" fill="var(--text-primary)" text-anchor="end">유효슛</text>
+    <rect x="250" y="181" width="129" height="14" rx="4" fill="var(--s1)"/>
+    <text x="387" y="192" font-size="11.5" fill="var(--text-primary)">+0.99</text>
+
+    <text x="18" y="230" font-size="11.5" font-weight="650" fill="var(--muted)" letter-spacing="1.2">산출</text>
+    <text x="240" y="238" font-size="13" font-weight="660" fill="var(--text-primary)" text-anchor="end">득점</text>
+    <rect x="250" y="227" width="29" height="14" rx="4" fill="var(--s2)"/>
+    <text x="287" y="238" font-size="11.5" font-weight="650" fill="var(--text-primary)">+0.22</text>
+    <text x="342" y="238" font-size="10.5" fill="var(--muted)">리그 6위</text>
+
+    <text x="18" y="276" font-size="11.5" font-weight="650" fill="var(--muted)" letter-spacing="1.2">효율</text>
+    <text x="240" y="284" font-size="13" fill="var(--text-primary)" text-anchor="end">크로스 성공률</text>
+    <rect x="250" y="273" width="87" height="14" rx="4" fill="var(--s2)"/>
+    <text x="345" y="284" font-size="11.5" fill="var(--text-primary)">+0.67</text>
+    <text x="394" y="284" font-size="10.5" fill="var(--muted)">← 배달 능력은 리그 5위</text>
+    <text x="240" y="312" font-size="13" fill="var(--text-primary)" text-anchor="end">슛당 유효슛</text>
+    <rect x="225" y="301" width="25" height="14" rx="4" fill="var(--s2)"/>
+    <text x="217" y="312" font-size="11.5" fill="var(--text-primary)" text-anchor="end">−0.19</text>
+    <text x="240" y="340" font-size="13" font-weight="660" fill="var(--text-primary)" text-anchor="end">슛당 득점</text>
+    <rect x="192" y="329" width="58" height="14" rx="4" fill="var(--s2)"/>
+    <text x="184" y="340" font-size="11.5" font-weight="650" fill="var(--text-primary)" text-anchor="end">−0.45</text>
+    <text x="394" y="340" font-size="10.5" fill="var(--muted)">리그 10위</text>
+  </svg>
+  <figcaption>투입 여섯 개가 전부 +1.0σ 위에 있는데 산출인 득점은 +0.22σ에서 멈추고, 슛당 득점은 평균 아래로 내려간다. 유일한 예외가 크로스 성공률 +0.67σ — <strong>배달 능력 자체는 리그 5위다. 문제는 정확도가 아니다.</strong></figcaption>
+</figure>
+
+<p><strong>리그에서 크로스·파이널서드 패스·키패스를 가장 많이 만드는 팀이, 득점에서는 6위다.</strong> 문제는 실재한다. 다음 질문은 그 손실이 어느 구간에서 발생하는가다.</p>
+
+<h2><span class="num">02</span>지난 결론 — 결손 구간의 위치</h2>
+
+<p>크로스에서 골까지를 세 개의 문으로 나누고, 각 문의 통과율을 유럽 5대리그 96팀·K리그1·K리그2와 나란히 놓았다.</p>
+
+<div class="statrow">
+  <div class="stat"><div class="k">크로스 → 슛</div><div class="v" style="color:var(--s2)">49.1%</div><div class="n">유럽 71.6% · <strong>−22.5%p</strong></div></div>
+  <div class="stat"><div class="k">슛 → 유효슛</div><div class="v">34.9%</div><div class="n">유럽 34.3% · 사실상 동일</div></div>
+  <div class="stat"><div class="k">유효슛 → 득점</div><div class="v">30.5%</div><div class="n">유럽 30~34% · 동일</div></div>
+</div>
+
+<p>첫 문에서만 벌어지고 뒤의 두 문은 겹친다. 그래서 <em>"슛을 못 넣는 팀이 아니라, 크로스가 슛이 되지 않는 팀"</em>이라고 썼다. 유럽 96팀에서 크로스 총량은 득점과 무관하지만(r = +0.03), 크로스를 슛으로 바꾸는 비율은 득점과 <strong>r = −0.68</strong>로 강하게 연결된다는 것도 함께 확인했다.</p>
+
+<p><strong>여기까지는 지금도 유효하다.</strong> 문제는 그다음 한 문장이었다.</p>
+
+<h2><span class="num">03</span>첫 번째 정정 — "유럽 평균과 같다"를 "문제가 없다"로 읽었다</h2>
+
+<div class="fixbox">
+  <p class="lab">정정 1</p>
+  <div class="before"><b>지난 글</b>슛을 만든 뒤의 과정 — 슛의 정확도, 마무리 — 은 <strong>이미 유럽 수준이다.</strong> 고쳐야 할 곳은 크로스가 슛으로 전환되지 않는 구간 하나로 확정된다.</div>
+  <p><strong>평균이 같다는 것은 문제가 없다는 뜻이 아니다.</strong> 평균이 같아도 경기마다 크게 흔들린다면, 그 흔들림이 승패를 만든다.</p>
+</div>
+
+<p>같은 20경기를 이번에는 <strong>바깥과 비교하지 않고 안에서 갈랐다.</strong> 이긴 경기와 진 경기의 각 구간 통과율을 나란히 놓는다.</p>
+
+<div class="tw">
+<table>
+  <thead><tr><th>전환</th><th>승 (12)</th><th>무 (4)</th><th>패 (4)</th><th>승 − 패</th></tr></thead>
+  <tbody>
+    <tr><td>크로스 → 슛</td><td>0.601</td><td>0.378</td><td>0.464</td><td>+0.137</td></tr>
+    <tr><td>슛 → 박스 안</td><td class="dim">0.638</td><td class="dim">0.676</td><td class="dim">0.626</td><td class="dim">+0.012</td></tr>
+    <tr class="hl"><td>슛 → 유효슛</td><td>0.399</td><td>0.379</td><td>0.261</td><td>+0.138</td></tr>
+    <tr><td class="dim">유효슛 → 득점 †</td><td class="dim">0.408</td><td class="dim">0.071</td><td class="dim">0.169</td><td class="dim">+0.239</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p><strong>두 번째 줄을 보라.</strong> 슛이 박스 안에서 나오는 비율은 이겼을 때와 졌을 때가 사실상 같다(0.638 vs 0.626). 득점과의 상관도 <strong>−0.02</strong>로 완전히 무관하다. 수원은 PA내 슛이 리그 2위(+1.52σ)인데, <strong>그 지표가 승패를 전혀 설명하지 못한다.</strong></p>
+
+<p>갈리는 것은 <strong>그 슛이 골문을 향하는가</strong>다. 슛 → 유효슛 전환이 승 0.399, 패 0.261로 벌어지고, 득점과의 상관이 <strong>+0.46</strong>(t = 2.22)이다.</p>
+
+<p class="quiet">† 유효슛 → 득점의 +0.81은 근거로 쓰지 않는다. 득점은 유효슛의 부분집합이라 동어반복 성분이 크다.</p>
+
+<p>절대량으로 보면 더 분명하다. <strong>진 경기에서 크로스도, 슛도, 박스 안 슛도 더 많다.</strong> 승리 경기가 더 많은 항목은 유효슛 하나뿐이다.</p>
+
+<div class="tw">
+<table>
+  <thead><tr><th>경기당</th><th>승 (12)</th><th>무 (4)</th><th>패 (4)</th></tr></thead>
+  <tbody>
+    <tr><td>크로스 시도</td><td>23.7</td><td>30.0</td><td class="dn">37.5</td></tr>
+    <tr><td>슛</td><td>13.2</td><td>11.5</td><td class="dn">17.0</td></tr>
+    <tr><td>PA내 슛</td><td>8.4</td><td>8.0</td><td class="dn">11.3</td></tr>
+    <tr class="hl"><td>유효슛</td><td class="up">5.0</td><td>4.8</td><td>4.0</td></tr>
+    <tr class="hl"><td>득점</td><td class="up">2.00</td><td>0.50</td><td>0.75</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>그래서 절단면은 두 개다</h3>
+
+<figure>
+  <p class="figtitle">같은 깔때기, 두 개의 질문</p>
+  <p class="fignote">위 = 남들과 비교했을 때 · 아래 = 이길 때와 질 때를 비교했을 때</p>
+  <svg viewBox="0 0 720 320" role="img" aria-label="같은 깔때기를 두 방향으로 읽는다. 유럽 평균과 비교하면 크로스에서 슛으로 가는 칸만 22.5퍼센트포인트 낮고, 수원 20경기 안에서 승패를 비교하면 슛에서 유효슛으로 가는 칸이 갈린다.">
+    <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+
+    <text x="24" y="26" font-size="12.5" font-weight="670" fill="var(--muted)">횡단면 — 유럽 96팀·K리그와 비교하면</text>
+    <rect x="118" y="44" width="164" height="34" rx="6" fill="color-mix(in srgb,var(--s2) 14%,transparent)" stroke="var(--s2)" stroke-width="1.5"/>
+    <text x="200" y="60" font-size="12.5" font-weight="700" fill="var(--s2)" text-anchor="middle">여기만 −22.5%p</text>
+    <text x="200" y="73" font-size="10.5" fill="var(--s2)" text-anchor="middle">수원 49.1% / 유럽 71.6%</text>
+    <line x1="200" y1="80" x2="200" y2="126" stroke="var(--s2)" stroke-width="1.75" marker-end="url(#ar)" color="var(--s2)"/>
+
+    <text x="380" y="62" font-size="10.5" fill="var(--muted)" text-anchor="middle">34.9% ≈ 유럽 34.3%</text>
+    <text x="380" y="76" font-size="10.5" fill="var(--muted)" text-anchor="middle">차이 없음</text>
+    <line x1="380" y1="82" x2="380" y2="126" stroke="var(--axis)" stroke-dasharray="4 3" marker-end="url(#ar)" color="var(--axis)"/>
+
+    <rect x="24" y="132" width="112" height="48" rx="8" fill="var(--page)" stroke="var(--axis)"/>
+    <text x="80" y="152" font-size="13" font-weight="660" fill="var(--text-primary)" text-anchor="middle">크로스</text>
+    <text x="80" y="169" font-size="12" fill="var(--muted)" text-anchor="middle">554</text>
+    <line x1="140" y1="156" x2="260" y2="156" stroke="var(--axis)" marker-end="url(#ar)" color="var(--axis)"/>
+    <rect x="264" y="132" width="112" height="48" rx="8" fill="var(--page)" stroke="var(--axis)"/>
+    <text x="320" y="152" font-size="13" font-weight="660" fill="var(--text-primary)" text-anchor="middle">슛</text>
+    <text x="320" y="169" font-size="12" fill="var(--muted)" text-anchor="middle">272</text>
+    <line x1="380" y1="156" x2="440" y2="156" stroke="var(--axis)" marker-end="url(#ar)" color="var(--axis)"/>
+    <rect x="444" y="132" width="112" height="48" rx="8" fill="var(--page)" stroke="var(--axis)"/>
+    <text x="500" y="152" font-size="13" font-weight="660" fill="var(--text-primary)" text-anchor="middle">유효슛</text>
+    <text x="500" y="169" font-size="12" fill="var(--muted)" text-anchor="middle">95</text>
+    <line x1="560" y1="156" x2="620" y2="156" stroke="var(--axis)" marker-end="url(#ar)" color="var(--axis)"/>
+    <rect x="624" y="132" width="72" height="48" rx="8" fill="var(--page)" stroke="var(--axis)"/>
+    <text x="660" y="152" font-size="13" font-weight="660" fill="var(--text-primary)" text-anchor="middle">득점</text>
+    <text x="660" y="169" font-size="12" fill="var(--muted)" text-anchor="middle">29</text>
+
+    <line x1="380" y1="186" x2="380" y2="228" stroke="var(--s1)" stroke-width="1.75" marker-end="url(#ar)" color="var(--s1)"/>
+    <rect x="286" y="232" width="188" height="46" rx="6" fill="color-mix(in srgb,var(--s1) 13%,transparent)" stroke="var(--s1)" stroke-width="1.5"/>
+    <text x="380" y="250" font-size="12.5" font-weight="700" fill="var(--s1)" text-anchor="middle">여기가 승패를 가른다</text>
+    <text x="380" y="264" font-size="10.5" fill="var(--s1)" text-anchor="middle">승 39.9% / 패 26.1%</text>
+    <text x="380" y="275" font-size="10" fill="var(--s1)" text-anchor="middle">평균은 유럽과 같은데 분산이 크다</text>
+
+    <line x1="200" y1="186" x2="200" y2="228" stroke="var(--axis)" stroke-dasharray="4 3" marker-end="url(#ar)" color="var(--axis)"/>
+    <text x="200" y="250" font-size="10.5" fill="var(--muted)" text-anchor="middle">승 0.601 / 패 0.464</text>
+    <text x="200" y="264" font-size="10.5" fill="var(--muted)" text-anchor="middle">갈리지만 약하다</text>
+
+    <text x="24" y="304" font-size="12.5" font-weight="670" fill="var(--muted)">종단면 — 수원 20경기 안에서 승·패를 비교하면</text>
+  </svg>
+  <figcaption>위는 <strong>"수원이 남들보다 어디가 약한가"</strong> — 답은 크로스→슛. 아래는 <strong>"수원이 이길 때와 질 때 무엇이 다른가"</strong> — 답은 슛→유효슛. 두 번째 칸의 평균은 유럽과 같지만 경기별 분산이 승패와 연결된다. 지난 글은 평균을 봤고, 이 글은 분산을 본다.</figcaption>
+</figure>
+
+<div class="callout">
+  <p class="lab">고쳐 쓴 한 문장</p>
+  <p><strong>만성 결손은 「크로스 → 슛」에 있고, 경기별 승패는 「슛 → 유효슛」의 흔들림이 가른다.</strong></p>
+  <p class="quiet">앞의 것은 구조를 바꿔야 하고, 뒤의 것은 상태를 바꿔야 한다. 그리고 둘은 결국 같은 곳을 가리킨다 — 크로스가 도착하는 순간 박스가 어떻게 채워져 있는가.</p>
+</div>
+
+<h2><span class="num">04</span>좌표로 다시 묻는다 — 위치인가 상태인가</h2>
+
+<p>"박스 안 슛인데 골문을 향하지 못한다"까지 왔다. 이유는 두 갈래다.</p>
+
+<ul>
+  <li><strong>위치의 문제라면</strong> — 볼이 나쁜 자리에 도착한다는 뜻이고, 전환이 낮은 경기의 슛 위치가 <em>실제로 더 나빠야</em> 한다</li>
+  <li><strong>상태의 문제라면</strong> — 자리는 좋은데 그 자리에 선 조건이 나쁘다는 뜻이고, 슛 위치는 <em>같아야</em> 한다</li>
+</ul>
+
+<p>지금까지는 이 질문에 답할 데이터가 없었다. 그래서 <strong>포털의 경기 기록판(chalk board)에서 슛 마커를 색으로 분리해 좌표를 추출했다.</strong> 22경기, 수원 슛 <strong>279개</strong>. 20경기에서 팀 기록과 대조해 <strong>18경기가 오차 2개 이내</strong>다.</p>
+
+<div class="glossary">
+  <div><dt>추출 방법</dt><dd>기록판은 벡터가 아니라 이미지다. 마커의 색(홈팀 남색 · 원정팀 주황)으로 덩어리를 찾아 중심 좌표를 피치 105×68 좌표로 환산했다. 검증은 팀 기록의 슛 수·PA내 슛 수와의 대조로 했다.</dd></div>
+  <div><dt>한계</dt><dd>겹쳐 그려진 마커가 병합돼 20경기 중 2경기에서 3개씩 모자란다. 좌표 자체의 오차는 대략 0.5m 수준이다.</dd></div>
+</div>
+
+<p>유효슛 전환이 낮은 경기와 높은 경기를 갈라 슛 위치를 비교했다.</p>
+
+<div class="tw">
+<table>
+  <thead><tr><th></th><th>경기</th><th>슛 중앙거리</th><th>평균거리</th><th>PA내 비율</th><th>12m 이내</th><th>유효/슛</th><th>득점</th></tr></thead>
+  <tbody>
+    <tr><td>저전환 <span class="quiet">(&lt; 0.30)</span></td><td>6</td><td>16.0 m</td><td>16.7 m</td><td class="dim">62%</td><td class="dn">40%</td><td>0.197</td><td>0.83</td></tr>
+    <tr><td>고전환 <span class="quiet">(≥ 0.45)</span></td><td>4</td><td>16.9 m</td><td>17.6 m</td><td class="dim">63%</td><td>27%</td><td class="up">0.561</td><td class="up">2.00</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p class="lede"><strong>PA내 비율이 62% 대 63%로 같다.</strong> 그리고 거리는 오히려 <strong>저전환 경기의 슛이 더 가깝다.</strong></p>
+
+<p>예상과 반대다. 슛이 골문에 더 가까운 경기에서 유효슛 전환이 더 낮다(12m 이내 비율과 유효슛 전환의 상관 <strong>−0.48</strong>, t = −2.32). 그리고 PA내 비율은 전환율과 아무 관계가 없다(−0.15).</p>
+
+<div class="fixbox">
+  <p class="lab">정정 2 — 원인 후보 하나를 지운다</p>
+  <p>앞선 분석은 크로스의 값을 <code>위치 × 자유도 × 도착</code>의 곱으로 놓았다. <strong>이제 첫 항을 지울 수 있다.</strong> 볼이 나쁜 자리에 도착하는 게 아니다 — 좋은 자리에, 오히려 더 가까운 자리에 도착하는데도 골문을 못 향한다.</p>
+  <p><strong>남는 것은 자유도와 도착 구성이다.</strong> 세 항 중 하나를 데이터로 배제한 것이고, 이건 모델이 약해진 게 아니라 좁아진 것이다.</p>
+</div>
+
+<p class="quiet">다만 <strong>"가까운 슛이 나쁘다"를 인과로 읽으면 안 된다.</strong> 가까운 슛이 많다는 건 상대 박스가 밀집했다는 신호로 보는 편이 맞다 — 물러선 상대를 두들길수록 슛은 가까워지고 동시에 막힌다. 그러면 이 표는 <em>"가까이 쏘지 마라"</em>가 아니라 <strong>"밀집한 박스에 더 밀어 넣는 것이 답이 아니다"</strong>로 읽힌다. 진 경기의 크로스가 37.5개, 이긴 경기가 23.7개라는 사실과 같은 이야기다.</p>
+
+<h3>그리고 이 숫자</h3>
+
+<figure>
+  <p class="figtitle">슛 279개는 어디서 나왔나 — 골문까지의 거리 분포</p>
+  <p class="fignote">2026 K리그2 22경기 · 수원 삼성 · chalk board 좌표 추출</p>
+  <svg viewBox="0 0 720 240" role="img" aria-label="수원 슛 279개의 거리 분포. 6미터 이내 슛이 7개로 전체의 2.5퍼센트에 불과하고, 18미터 밖 슛이 43퍼센트다.">
+    <line x1="128" y1="24" x2="128" y2="212" stroke="var(--axis)" stroke-width="1.5"/>
+    <text x="118" y="46" font-size="12" fill="var(--text-primary)" text-anchor="end">≤ 6 m</text>
+    <rect x="128" y="34" width="45" height="22" rx="4" fill="var(--s2)"/>
+    <text x="183" y="50" font-size="12.5" font-weight="650" fill="var(--text-primary)">7개 · 2.5%</text>
+    <text x="118" y="84" font-size="12" fill="var(--text-primary)" text-anchor="end">6–12 m</text>
+    <rect x="128" y="72" width="510" height="22" rx="4" fill="var(--seq450)"/>
+    <text x="628" y="88" font-size="12.5" fill="#fff" text-anchor="end">80개 · 28.7%</text>
+    <text x="118" y="122" font-size="12" fill="var(--text-primary)" text-anchor="end">12–18 m</text>
+    <rect x="128" y="110" width="459" height="22" rx="4" fill="var(--seq450)"/>
+    <text x="577" y="126" font-size="12.5" fill="#fff" text-anchor="end">72개 · 25.8%</text>
+    <text x="118" y="160" font-size="12" fill="var(--text-primary)" text-anchor="end">18–25 m</text>
+    <rect x="128" y="148" width="497" height="22" rx="4" fill="var(--seq350)"/>
+    <text x="615" y="164" font-size="12.5" fill="#fff" text-anchor="end">78개 · 28.0%</text>
+    <text x="118" y="198" font-size="12" fill="var(--text-primary)" text-anchor="end">&gt; 25 m</text>
+    <rect x="128" y="186" width="268" height="22" rx="4" fill="var(--seq250)"/>
+    <text x="386" y="202" font-size="12.5" fill="var(--text-primary)" text-anchor="end">42개 · 15.1%</text>
+    <text x="128" y="230" font-size="10.5" fill="var(--muted)">골문 중앙까지의 직선 거리 · 페널티 마크는 11m, 페널티 박스 앞선은 16.5m</text>
+  </svg>
+  <figcaption><strong>6m 이내 슛이 시즌 통틀어 7개다.</strong> 크로스를 554개 올리고 박스 안에서 178번 쐈는데, 골문 코앞에서 나온 슛이 스물두 경기에 일곱 번이다. 반대편 끝에서는 <strong>18m 밖 슛이 43%</strong>다. 박스에 들어가긴 하는데 <em>깊이</em> 들어가지 못한다 — 이것이 도착 구성이 무너졌을 때의 가장 직접적인 그림이다.</figcaption>
+</figure>
+
+<h2><span class="num">05</span>두 번째 정정 — 내가 지목한 경로는 이미 고쳐지고 있었다</h2>
+
+<p>앞선 분석에서 나는 크로스의 질을 떨어뜨리는 원인으로 <strong>전달 경로</strong>를 지목했다. 후방에서 중원을 거치지 않고 곧장 측면으로 나가는 패스가 많으면, 상대 수비의 시선이 한 번도 꺾이지 않아 크로서에게 붙기 쉽다는 논지였다. 실측에서 그런 경로가 <strong>전체의 34%</strong>였다.</p>
+
+<p>이번에 21경기 패스 매트릭스를 라운드순으로 다시 세워 봤다.</p>
+
+<figure>
+  <p class="figtitle">후방이 중원을 건너뛴 비율 — 라운드별</p>
+  <p class="fignote">후방(GK·DF)이 보낸 전진 패스 중 중원을 거치지 않고 전방으로 직결한 비중 · R12는 홀수 팀 편성에 따른 수원 휴식</p>
+  <svg viewBox="0 0 720 300" role="img" aria-label="후방 직결 비율이 1라운드 51.6퍼센트에서 21라운드 15.8퍼센트까지 시즌 내내 하락한다. 라운드와의 상관은 마이너스 0.78이다.">
+    <line x1="62" y1="248" x2="700" y2="248" stroke="var(--axis)" stroke-width="1.25"/>
+    <line x1="62" y1="28" x2="62" y2="248" stroke="var(--axis)" stroke-width="1.25"/>
+    <line x1="62" y1="59" x2="700" y2="59" stroke="var(--grid)"/>
+    <line x1="62" y1="97" x2="700" y2="97" stroke="var(--grid)"/>
+    <line x1="62" y1="135" x2="700" y2="135" stroke="var(--grid)"/>
+    <line x1="62" y1="174" x2="700" y2="174" stroke="var(--grid)"/>
+    <line x1="62" y1="212" x2="700" y2="212" stroke="var(--grid)"/>
+    <text x="54" y="63" font-size="10.5" fill="var(--muted)" text-anchor="end">50%</text>
+    <text x="54" y="101" font-size="10.5" fill="var(--muted)" text-anchor="end">40%</text>
+    <text x="54" y="139" font-size="10.5" fill="var(--muted)" text-anchor="end">30%</text>
+    <text x="54" y="178" font-size="10.5" fill="var(--muted)" text-anchor="end">20%</text>
+    <text x="54" y="216" font-size="10.5" fill="var(--muted)" text-anchor="end">10%</text>
+
+    <line x1="70" y1="72" x2="690" y2="196" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="6 4" opacity=".6"/>
+    <polyline fill="none" stroke="var(--s1)" stroke-width="2" stroke-linejoin="round"
+      points="70,53 101,67 132,82 163,135 194,99 225,170 256,135 287,146 318,185 349,124 380,178 442,174 473,179 504,203 535,171 566,163 597,185 628,171 659,166 690,190"/>
+    <g fill="var(--s1)">
+      <circle cx="70" cy="53" r="4"/><circle cx="101" cy="67" r="4"/><circle cx="132" cy="82" r="4"/>
+      <circle cx="163" cy="135" r="4"/><circle cx="194" cy="99" r="4"/><circle cx="225" cy="170" r="4"/>
+      <circle cx="256" cy="135" r="4"/><circle cx="287" cy="146" r="4"/><circle cx="318" cy="185" r="4"/>
+      <circle cx="349" cy="124" r="4"/><circle cx="380" cy="178" r="4"/><circle cx="442" cy="174" r="4"/>
+      <circle cx="473" cy="179" r="4"/><circle cx="504" cy="203" r="4"/><circle cx="535" cy="171" r="4"/>
+      <circle cx="566" cy="163" r="4"/><circle cx="597" cy="185" r="4"/><circle cx="628" cy="171" r="4"/>
+      <circle cx="659" cy="166" r="4"/><circle cx="690" cy="190" r="4"/>
+    </g>
+    <text x="78" y="45" font-size="11.5" font-weight="650" fill="var(--text-primary)">51.6%</text>
+    <text x="684" y="208" font-size="11.5" font-weight="650" fill="var(--text-primary)" text-anchor="end">15.8%</text>
+    <text x="466" y="86" font-size="11.5" fill="var(--muted)">r = −0.78 · t = −5.34</text>
+    <text x="62" y="268" font-size="10.5" fill="var(--muted)">R1</text>
+    <text x="380" y="268" font-size="10.5" fill="var(--muted)" text-anchor="middle">R11</text>
+    <text x="700" y="268" font-size="10.5" fill="var(--muted)" text-anchor="end">R21</text>
+    <text x="62" y="290" font-size="10.5" fill="var(--muted)">전반기(R1–11) 평균 32.8% → 후반기(R13–21) 18.8% → 최근 5경기 19.6%</text>
+  </svg>
+  <figcaption>시즌 초 절반이 넘던 후방 직결이 후반기에는 20% 안팎으로 내려왔다. 라운드와의 상관 <strong>−0.78</strong>은 이 프로젝트 전체에서 가장 강한 신호다.</figcaption>
+</figure>
+
+<div class="fixbox">
+  <p class="lab">정정 3</p>
+  <div class="before"><b>지난 글의 함의</b>후방 직결이 34%다 — 시선을 꺾지 않는 경로가 너무 많다. 여기를 고쳐야 한다.</div>
+  <p><strong>34%는 시즌 평균이고, 시즌 초 수치에 끌려 올라간 값이다.</strong> 팀은 이미 이 경로를 스스로 고쳐 왔다. 후반기 실제 값은 18.8%다.</p>
+</div>
+
+<p><strong>그런데 산출은 그만큼 좋아지지 않았다.</strong></p>
+
+<div class="tw">
+<table>
+  <thead><tr><th>구간</th><th>후방 직결</th><th>크로스</th><th>슛</th><th>득점</th><th>슛당 득점</th></tr></thead>
+  <tbody>
+    <tr><td>전반기 R1–11</td><td>32.8%</td><td>24.1</td><td>10.9</td><td>1.27</td><td>—</td></tr>
+    <tr><td>후반기 R13–21</td><td>18.8%</td><td>32.1</td><td>16.9</td><td>1.67</td><td>—</td></tr>
+    <tr class="hl"><td>최근 5경기</td><td>19.6%</td><td>35.6</td><td>18.8</td><td>1.60</td><td class="dn">0.099</td></tr>
+    <tr><td class="dim">전체 20경기</td><td class="dim">26.5%</td><td class="dim">27.7</td><td class="dim">13.6</td><td class="dim">1.45</td><td class="dim">0.113</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>경로를 고치자 크로스가 24.1 → 35.6으로, 슛이 10.9 → 18.8로 늘었다. <strong>그런데 슛당 득점은 0.113 → 0.099로 오히려 내려갔다.</strong> 더 많이 만들고 더 못 넣는다.</p>
+
+<p>곱셈 구조에서 이건 한 가지를 뜻한다. <strong>한 항을 올렸는데 전체가 안 늘었다면, 다른 항이 낮아서 그 효과를 삼키고 있다.</strong> 그리고 앞 절에서 그 항이 <em>위치</em>가 아니라는 것까지 확인했다. 남는 것은 도착 구성이다.</p>
+
+<h2><span class="num">06</span>세 번째 정정 — 554에 세트피스가 섞여 있었다</h2>
+
+<div class="fixbox">
+  <p class="lab">정정 4</p>
+  <div class="before"><b>지난 글</b>코너킥은 … 시즌 110회로 리그 2위 / <strong>오픈플레이 크로스는 시즌 554회로 리그 1위</strong>인데, 슛 전환은 49.1%</div>
+  <p><strong>554는 오픈플레이 크로스가 아니라 전체 크로스다.</strong></p>
+</div>
+
+<p>R7 김포전 기록판을 필터별로 다시 뽑아 세었다.</p>
+
+<div class="tw">
+<table>
+  <thead><tr><th>R7 김포전 · 수원</th><th>기록판에서 센 개수</th><th>팀 기록</th></tr></thead>
+  <tbody>
+    <tr><td>오픈 플레이 크로스</td><td>22</td><td class="dim">—</td></tr>
+    <tr><td>세트피스 크로스</td><td>5</td><td class="dim">—</td></tr>
+    <tr class="hl"><td>합</td><td>27</td><td>크로스 시도 29</td></tr>
+    <tr><td class="dim">참고 — 코너킥 + 프리킥 크로스</td><td class="dim">3</td><td class="dim">3 + 0</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>세트피스를 빼지 않으면 오픈만으로 29가 나와야 하는데 22다. <strong>크로스 총계에 세트피스가 포함된다.</strong> (27과 29의 차이 2개는 겹쳐 그려진 마커가 병합된 것으로 보인다.)</p>
+
+<p>그리고 하나 더. <strong>포털의 「세트피스 크로스」는 코너킥과 프리킥 크로스보다 넓다.</strong> 5개인데 코너킥은 3, 프리킥 크로스는 0이다. 좌표를 보면 둘이 <strong>터치라인 위</strong>에 찍혀 있다 — 그날 수원의 스로인이 24개였다. <strong>박스로 던진 롱 스로인이 세트피스 크로스로 잡힌다.</strong></p>
+
+<div class="callout">
+  <p class="lab">왜 이 정정이 논지를 강하게 만드는가</p>
+  <p>앞선 분석의 첫 장면은 <em>"코너킥(압박 없음)은 리그가 인정한 무기인데, 같은 선수가 올리는 오픈플레이 크로스는 가장 많고 가장 적게 슛이 된다"</em>였다. <strong>그런데 오픈플레이 쪽 숫자에 코너킥이 섞여 있으면 그 대비가 순환한다.</strong></p>
+  <p>제대로 분리하면 오픈플레이 전환율은 지금 적힌 49.1%보다 <strong>더 나빠진다.</strong> R7 기준 세트피스 비중은 <strong>17.2%</strong>였다(코너킥과 프리킥만 세면 10.3%). <strong>고치면 대비가 약해지는 게 아니라 선명해진다.</strong></p>
+  <p class="quiet">다만 한 경기 계수를 시즌 전체에 곱하지는 않는다. 스로인 수가 경기마다 크게 흔들리기 때문에, 오픈 크로스 기록판을 몇 경기 더 확보해 계수를 확정한 뒤 554와 49.1%를 다시 계산할 것이다. <strong>이 글은 그 전 단계까지만 말한다.</strong></p>
+</div>
+
+<h2><span class="num">07</span>그래서 처방이 어떻게 바뀌나</h2>
+
+<p>절단면이 두 개라면 처방도 두 개다. 그리고 둘의 성격이 다르다.</p>
+
+<div class="tw">
+<table>
+  <thead><tr><th></th><th>만성 결손</th><th>경기별 변동</th></tr></thead>
+  <tbody>
+    <tr><td>어디</td><td>크로스 → 슛</td><td>슛 → 유효슛</td></tr>
+    <tr><td>무엇과 비교해서</td><td>유럽 96팀·K리그</td><td>수원의 이긴 경기와 진 경기</td></tr>
+    <tr><td>성격</td><td>구조 — 시즌 내내 일정하다</td><td>상태 — 경기마다 흔들린다</td></tr>
+    <tr><td>바꿀 것</td><td>크로스가 나가기 <em>전</em>의 조건</td><td>크로스가 도착하는 <em>순간</em>의 박스</td></tr>
+    <tr><td class="dim">바꾸지 않을 것</td><td class="dim">크로스 총량 · 크로서의 킥 능력</td><td class="dim">슛 위치 · 박스 진입 자체</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>마지막 줄이 이 글에서 가장 실무적인 부분이다. <strong>세 가지가 처방 대상에서 빠진다.</strong></p>
+
+<ol>
+  <li><strong>크로스를 줄이는 것 —</strong> 유럽 96팀에서 크로스 총량과 득점은 무관하다(r = +0.03). 총량이 아니라 전환의 문제다</li>
+  <li><strong>크로서의 킥 능력 —</strong> 크로스 성공률이 이미 리그 5위(+0.67σ)다. 같은 선수들이 코너킥에서는 리그가 인정하는 크로스를 만든다. 능력이 아니라 조건이다</li>
+  <li><strong>박스에 더 많이 들어가는 것 —</strong> 슛이 박스 안에서 나오는 비율은 이긴 경기와 진 경기가 같다(0.638 vs 0.626). <strong>박스 진입 자체는 이 팀의 문제가 아니다</strong></li>
+</ol>
+
+<p>남는 것은 하나다. <strong>크로스가 도착하는 순간, 박스 안 선수가 어떤 상태로 서 있는가.</strong> 6m 이내 슛이 22경기에 일곱 번이라는 사실이 그 상태를 가장 직접적으로 말한다 — 박스에 들어가긴 하는데 깊이 들어가지 못하고, 그래서 좋은 자리가 아니라 <em>남는 자리</em>에서 쏜다.</p>
+
+<p>진 경기에서 크로스를 53% 더 올리고 박스 안에서 62% 더 쐈다. 그러고 47% 덜 넣었다. <strong>더 하는 것은 답이 아니다.</strong></p>
+
+<h2><span class="num">08</span>이 글의 한계</h2>
+
+<p>고친 글이므로 <strong>다음에 또 고칠 지점</strong>을 미리 적어둔다.</p>
+
+<ul>
+  <li><strong>표본.</strong> 20경기, 그중 패배가 4경기다. 승·무·패 비교는 방향만 읽고 크기는 읽지 않는다. 저전환 6경기 대 고전환 4경기의 대비도 마찬가지다</li>
+  <li><strong>다중 비교.</strong> 이 분석에서 상관을 스무 개 넘게 냈고 보정하지 않았다. 슛 → 유효슛의 t = 2.22는 단일 검정 기준으로만 유의하다. <strong>승·패 그룹 차이와 저·고전환 대비가 보조 근거로 함께 서야 성립한다</strong></li>
+  <li><strong>대리 지표.</strong> "슛 → 유효슛"은 도착 구성의 대리 지표일 뿐이다. 슛의 질이 낮은 이유가 박스 점유 때문인지, 마무리 능력 때문인지, 상대 수비 밀도 때문인지 이 데이터로는 가르지 못한다. <strong>진짜로 재려면 크로스 도착 순간의 박스 인원과 배치가 필요하고, 그건 포지셔널 데이터의 영역이다</strong></li>
+  <li><strong>좌표 추출 오차.</strong> 이미지에서 색으로 뽑은 값이다. 겹친 마커가 병합돼 20경기 중 2경기에서 3개씩 모자란다</li>
+  <li><strong>세트피스 계수 미확정.</strong> 06절의 17.2%는 한 경기다. 오픈 크로스 기록판이 몇 경기 더 필요하다</li>
+  <li><strong>상관은 인과가 아니다.</strong> 특히 "가까운 슛이 나쁘다"는 밀집도의 대리 신호로 읽어야지, 처방으로 뒤집으면 안 된다</li>
+  <li><strong>아직 못 연 것 — 선수 단위.</strong> 이 글은 전부 팀 단위다. "박스 안에서 쏘는데 골문을 못 향한다"까지 왔지만 <em>누가</em> 그러는지는 아직 모른다. 다음 글의 과제다</li>
+</ul>
+
+<h2><span class="num">09</span>왜 고쳐서 다시 쓰는가</h2>
+
+<p>지난 글의 결론은 틀리지 않았다. <strong>다만 한 층만 보고 그것이 전부라고 썼다.</strong> "유럽 평균과 같다"는 관찰을 "여기는 문제가 없다"로 옮겨 적은 것, 시즌 평균 34%를 현재 상태로 제시한 것, 세트피스가 섞인 숫자를 오픈플레이라고 부른 것 — 셋 다 데이터를 더 파고 나서야 보였다.</p>
+
+<p>그리고 <strong>고친 결과가 더 강하다.</strong> 절단면이 하나일 때보다 두 개일 때 처방이 정확해지고, 원인 후보 하나를 배제하니 모델이 좁아졌고, 내가 지목한 문제가 이미 개선되고 있었다는 사실은 이 팀이 스스로 움직이고 있다는 증거가 됐다.</p>
+
+<p class="lede">분석은 한 번에 끝나지 않는다. 결론을 내는 것보다 <strong>자기 결론을 다시 검증하는 것</strong>이 더 오래 걸리고, 대체로 더 값이 있다. 이 글은 그 두 번째 작업의 기록이다.</p>
+
+<p class="quiet">다음 검증은 선수 단위다. 같은 데이터에서 선수별 유효슛과 박스 안 슛을 열면, "박스 안에서 골문을 못 향한다"가 누구의 이야기인지가 나온다. 그때 이 글도 다시 고칠 것이다.</p>
+
+<footer>
+  <p><strong>데이터 출처 — 수원 삼성에 관한 이 글의 모든 수치는 한국프로축구연맹 K리그 데이터포털(data.kleague.com)의 공개 자료 하나에서만 가져왔다.</strong> 유료 데이터도, 비공개 자료도, 직접 태깅한 값도 쓰지 않았다. 포털의 경기 부가기록은 <strong>Bepro11</strong>이 공급한다. 대상 범위는 2026 K리그2 R1~R23이다.<br>
+  유럽 5대리그 96팀은 수원의 수치를 해석하기 위한 <em>외부 기준선</em>으로만 썼고, 그 출처는 FBref(Opta) 2025-26 시즌 합계다. 수원에 관한 어떤 계산에도 이 값은 들어가지 않는다.<br>
+  K리그2는 17팀 홀수 편성이라 매 라운드 한 팀이 휴식하며, R12는 수원의 휴식 라운드다.</p>
+  <p>추출·집계 — 포털에서 받은 패스 매트릭스 PDF 23건, 경기 기록판(chalk board) 22경기, 경기별 팀 기록 20경기를 직접 파싱했다. 파생 지표는 전부 이 세 가지에서 계산했다. 슛 좌표는 팀 기록의 슛 수·PA내 슛 수와 대조해 20경기 중 18경기가 오차 2개 이내임을 확인했다.</p>
+  <p>한혁진 · 2026.08 · 앞선 분석 「크로스에서 슈팅으로 — 결손 구간의 위치 확정」의 개정판</p>
+</footer>
+
+</div>
+<script>
+(function(){
+  var b=document.getElementById('tt'), r=document.documentElement;
+  b.addEventListener('click',function(){
+    var cur=r.getAttribute('data-theme');
+    if(!cur){cur=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+    r.setAttribute('data-theme', cur==='dark'?'light':'dark');
+  });
+})();
+</script>
+</body>
+</html>

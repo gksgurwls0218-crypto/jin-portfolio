@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Last month I narrowed Suwon Samsung's leak to a single phase — crosses that never become shots. Then I pulled 279 shot coordinates off the league's chalk boards and asked the same question again. The answer had a second half to it.">
+<title>Cross → shot was half of it — Suwon Samsung, re-examined</title>
+<style>
+:root{
+  --page:#f9f9f7; --surface-1:#fcfcfb;
+  --text-primary:#0b0b0b; --text-secondary:#52514e; --muted:#898781;
+  --grid:#e1e0d9; --axis:#c3c2b7; --border:rgba(11,11,11,0.10);
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a;
+  --good:#0ca30c; --critical:#d03b3b; --warning:#fab219;
+  --seq250:#86b6ef; --seq350:#5598e7; --seq450:#2a78d6; --seq600:#184f95;
+}
+:root[data-theme="dark"]{
+  --page:#0d0d0d; --surface-1:#1a1a19;
+  --text-primary:#ffffff; --text-secondary:#c3c2b7; --muted:#898781;
+  --grid:#2c2c2a; --axis:#383835; --border:rgba(255,255,255,0.10);
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+  --seq250:#184f95; --seq350:#256abf; --seq450:#3987e5; --seq600:#86b6ef;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --page:#0d0d0d; --surface-1:#1a1a19;
+    --text-primary:#ffffff; --text-secondary:#c3c2b7; --muted:#898781;
+    --grid:#2c2c2a; --axis:#383835; --border:rgba(255,255,255,0.10);
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+    --seq250:#184f95; --seq350:#256abf; --seq450:#3987e5; --seq600:#86b6ef;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--text-primary);
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.65;
+  -webkit-font-smoothing:antialiased;}
+.wrap{max-width:920px;margin:0 auto;padding:0 22px 90px}
+
+.themebtn{position:fixed;top:14px;right:16px;z-index:9;font:inherit;font-size:12.5px;
+  color:var(--text-secondary);background:var(--surface-1);border:1px solid var(--border);
+  border-radius:7px;padding:5px 11px;cursor:pointer}
+
+header.hero{padding:64px 0 34px;border-bottom:1px solid var(--border);margin-bottom:44px}
+.kicker{font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-weight:650}
+h1{font-size:clamp(28px,4.6vw,42px);line-height:1.22;margin:14px 0 12px;letter-spacing:-.02em;font-weight:720}
+.sub{font-size:clamp(15px,2vw,17.5px);color:var(--text-secondary);max-width:64ch;margin:0}
+.meta{margin-top:22px;font-size:12.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 20px}
+.meta b{color:var(--text-secondary);font-weight:600}
+
+h2{font-size:clamp(20px,2.7vw,25px);margin:60px 0 6px;letter-spacing:-.015em;font-weight:700}
+h2 .num{color:var(--muted);font-weight:600;margin-right:10px;font-variant-numeric:tabular-nums}
+h3{font-size:16.5px;margin:32px 0 8px;font-weight:670}
+p{margin:12px 0;max-width:68ch}
+ul,ol{max-width:68ch;padding-left:20px}
+li{margin:7px 0}
+a{color:var(--s1)}
+strong{font-weight:660}
+code{font-family:ui-monospace,Menlo,monospace;font-size:.88em;
+  background:color-mix(in srgb,var(--text-primary) 6%,transparent);padding:1px 5px;border-radius:4px}
+
+.lede{font-size:17px;color:var(--text-primary);border-left:3px solid var(--s2);
+  padding:2px 0 2px 18px;margin:22px 0 28px;max-width:66ch}
+.quiet{color:var(--text-secondary)}
+
+.statrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:26px 0 8px}
+.stat{background:var(--surface-1);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+.stat .k{font-size:11.5px;color:var(--muted);letter-spacing:.04em}
+.stat .v{font-size:23px;font-weight:700;margin-top:3px;font-variant-numeric:tabular-nums}
+.stat .n{font-size:11.5px;color:var(--text-secondary);margin-top:2px}
+
+figure{margin:30px 0 8px;background:var(--surface-1);border:1px solid var(--border);
+  border-radius:14px;padding:20px 20px 14px}
+figure svg{display:block;width:100%;height:auto}
+.figtitle{font-size:14px;font-weight:670;margin:0 0 2px}
+.fignote{font-size:12.5px;color:var(--muted);margin:0 0 14px}
+figcaption{font-size:13px;color:var(--text-secondary);margin-top:12px;padding-top:11px;
+  border-top:1px solid var(--grid)}
+
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:18px 0;min-width:480px}
+th,td{text-align:right;padding:8px 10px;border-bottom:1px solid var(--grid);font-variant-numeric:tabular-nums}
+th:first-child,td:first-child{text-align:left;font-variant-numeric:normal}
+th{font-size:11.5px;letter-spacing:.05em;color:var(--muted);font-weight:650;text-transform:uppercase}
+tr.hl td{background:color-mix(in srgb,var(--s2) 9%,transparent);font-weight:640}
+td.dim{color:var(--muted)}
+td.up{color:var(--s3);font-weight:640}
+td.dn{color:var(--s2);font-weight:640}
+
+.fixbox{background:var(--surface-1);border:1px solid var(--border);border-left:3px solid var(--critical);
+  border-radius:12px;padding:18px 20px;margin:24px 0}
+.fixbox .lab{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--critical);font-weight:680;margin-bottom:8px}
+.fixbox p{margin:8px 0}
+.fixbox p:last-child{margin-bottom:0}
+.before{font-size:14px;color:var(--muted);border-left:2px solid var(--grid);padding-left:14px;margin:10px 0}
+.before b{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-secondary);margin-bottom:3px}
+
+.callout{background:var(--surface-1);border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin:24px 0}
+.callout .lab{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:680;margin-bottom:8px}
+.callout > :last-child{margin-bottom:0}
+
+.glossary{font-size:13px;color:var(--text-secondary);background:color-mix(in srgb,var(--text-primary) 3.5%,transparent);
+  border-radius:10px;padding:14px 16px;margin:18px 0}
+.glossary dt{font-weight:670;color:var(--text-primary);display:inline}
+.glossary dd{display:inline;margin:0 0 0 6px}
+.glossary div{margin:6px 0}
+
+footer{margin-top:70px;padding-top:22px;border-top:1px solid var(--border);
+  font-size:12.5px;color:var(--muted);line-height:1.9}
+</style>
+</head>
+<body>
+<button class="themebtn" id="tt">◐ Theme</button>
+<div class="wrap">
+
+<header class="hero">
+  <p class="kicker">Match Analysis · K League 2 2026 · Re-examination</p>
+  <h1>Cross &rarr; shot was half of it</h1>
+  <p class="sub">Last month I narrowed Suwon Samsung's leak down to a single phase. Then I pulled <strong>279 shot coordinates</strong> off the league's chalk boards myself and put the same question again &mdash; and a second answer came back. The cause I had named, meanwhile, had already been fixing itself. This is the record of me correcting my own conclusion.</p>
+  <div class="meta">
+    <span>Hyuckjin Han · Tactical analysis</span>
+    <span><b>Aug 2026</b></span>
+    <span>Source: <b>K League Data Portal only</b> (supplied by Bepro11)</span>
+    <span><b>22 matches</b></span>
+    <span>Chalk board coordinates &mdash; <b>279 shots</b></span>
+    <span>Big 5 European leagues, <b>96 clubs</b></span>
+  </div>
+</header>
+
+<p class="lede">If this is your first piece of mine &mdash; it reads on its own, no prior article required. But <strong>what I got wrong and how I fixed it</strong> is the spine of the piece, so I start by summarising the earlier conclusion.</p>
+
+<h2><span class="num">00</span>Why I am reopening this</h2>
+
+<p>Suwon Samsung sit <strong>top of K League 2 in 2026 with the best defence in the division</strong>. And yet, among the clubs chasing promotion, <strong>they score the fewest goals</strong>. The earlier analysis asked where that shortfall is created, and answered it by setting 20 matches against 96 clubs from the Big 5 European leagues.</p>
+
+<div class="callout">
+  <p class="lab">The earlier conclusion</p>
+  <p>Split the road from cross to goal into three gates, and <strong>only «cross &rarr; shot»</strong> sits 22.5 percentage points below the European average. The two gates after it (shot &rarr; on target, on target &rarr; goal) match Europe to one decimal place. <strong>This is not a team that cannot finish. It is a team whose crosses do not become shots.</strong></p>
+</div>
+
+<p>That conclusion still stands. <strong>But three things in it were wrong or incomplete.</strong></p>
+
+<div class="tw">
+<table>
+  <thead><tr><th>What is corrected</th><th>Earlier piece</th><th>This piece</th></tr></thead>
+  <tbody>
+    <tr class="hl"><td>How many cut points</td><td>One &mdash; cross&rarr;shot</td><td><strong>Two.</strong> The chronic deficit and the match-to-match swing live in different cells</td></tr>
+    <tr><td>Cause candidate Z (position)</td><td>Left open as one of three terms</td><td><strong>Ruled out.</strong> The coordinates settled it</td></tr>
+    <tr><td>The route I blamed</td><td>Something to be fixed</td><td><strong>Already being fixed</strong> (r = &minus;0.78)</td></tr>
+    <tr><td>554 open-play crosses</td><td>Used as an open-play figure</td><td><strong>Set pieces were mixed into it</strong></td></tr>
+  </tbody>
+</table>
+</div>
+
+<p class="quiet">The order below: define the problem (01) &rarr; the basis of the earlier conclusion (02) &rarr; first correction (03) &rarr; asking again with coordinates (04) &rarr; second correction (05) &rarr; third correction (06) &rarr; the revised prescription (07) &rarr; the limits of this piece (08).</p>
+
+<h2><span class="num">01</span>The problem &mdash; 1st at creating, 6th at cashing in</h2>
+
+<p>First, does the problem exist at all? Place Suwon against the other 17 K League 2 clubs in standard-deviation units (z-scores) and the shape shows up at a glance.</p>
+
+<figure>
+  <p class="figtitle">Input · output · efficiency &mdash; against the league average (z-score)</p>
+  <p class="fignote">K League 2 2026, 17 clubs · through R21 · 0 = league average, one step = one standard deviation</p>
+  <svg viewBox="0 0 720 420" role="img" aria-label="Suwon Samsung's z-scores by metric. Every input metric, led by crosses attempted at plus 1.96, sits above plus 1.0, while the output, goals, stops at plus 0.22 and the efficiency measure, goals per shot, falls to minus 0.45.">
+    <line x1="250" y1="34" x2="250" y2="376" stroke="var(--axis)" stroke-width="1.5"/>
+    <line x1="380" y1="34" x2="380" y2="376" stroke="var(--grid)"/>
+    <line x1="510" y1="34" x2="510" y2="376" stroke="var(--grid)"/>
+    <line x1="120" y1="34" x2="120" y2="376" stroke="var(--grid)"/>
+    <text x="120" y="396" font-size="10.5" fill="var(--muted)" text-anchor="middle">&minus;1&sigma;</text>
+    <text x="250" y="396" font-size="10.5" fill="var(--muted)" text-anchor="middle">league average</text>
+    <text x="380" y="396" font-size="10.5" fill="var(--muted)" text-anchor="middle">+1&sigma;</text>
+    <text x="510" y="396" font-size="10.5" fill="var(--muted)" text-anchor="middle">+2&sigma;</text>
+
+    <text x="18" y="30" font-size="11.5" font-weight="650" fill="var(--muted)" letter-spacing="1.2">INPUT — how much was created</text>
+    <text x="240" y="52" font-size="13" fill="var(--text-primary)" text-anchor="end">Crosses attempted</text>
+    <rect x="250" y="41" width="255" height="14" rx="4" fill="var(--s1)"/>
+    <text x="513" y="52" font-size="11.5" fill="var(--text-primary)">+1.96</text>
+    <text x="240" y="80" font-size="13" fill="var(--text-primary)" text-anchor="end">Final-third passes</text>
+    <rect x="250" y="69" width="235" height="14" rx="4" fill="var(--s1)"/>
+    <text x="493" y="80" font-size="11.5" fill="var(--text-primary)">+1.81</text>
+    <text x="240" y="108" font-size="13" fill="var(--text-primary)" text-anchor="end">Shots in the box</text>
+    <rect x="250" y="97" width="198" height="14" rx="4" fill="var(--s1)"/>
+    <text x="456" y="108" font-size="11.5" fill="var(--text-primary)">+1.52</text>
+    <text x="240" y="136" font-size="13" fill="var(--text-primary)" text-anchor="end">Key passes</text>
+    <rect x="250" y="125" width="173" height="14" rx="4" fill="var(--s1)"/>
+    <text x="431" y="136" font-size="11.5" fill="var(--text-primary)">+1.33</text>
+    <text x="240" y="164" font-size="13" fill="var(--text-primary)" text-anchor="end">Shots</text>
+    <rect x="250" y="153" width="163" height="14" rx="4" fill="var(--s1)"/>
+    <text x="421" y="164" font-size="11.5" fill="var(--text-primary)">+1.25</text>
+    <text x="240" y="192" font-size="13" fill="var(--text-primary)" text-anchor="end">Shots on target</text>
+    <rect x="250" y="181" width="129" height="14" rx="4" fill="var(--s1)"/>
+    <text x="387" y="192" font-size="11.5" fill="var(--text-primary)">+0.99</text>
+
+    <text x="18" y="230" font-size="11.5" font-weight="650" fill="var(--muted)" letter-spacing="1.2">OUTPUT</text>
+    <text x="240" y="238" font-size="13" font-weight="660" fill="var(--text-primary)" text-anchor="end">Goals</text>
+    <rect x="250" y="227" width="29" height="14" rx="4" fill="var(--s2)"/>
+    <text x="287" y="238" font-size="11.5" font-weight="650" fill="var(--text-primary)">+0.22</text>
+    <text x="342" y="238" font-size="10.5" fill="var(--muted)">6th in the league</text>
+
+    <text x="18" y="276" font-size="11.5" font-weight="650" fill="var(--muted)" letter-spacing="1.2">EFFICIENCY</text>
+    <text x="240" y="284" font-size="13" fill="var(--text-primary)" text-anchor="end">Cross completion</text>
+    <rect x="250" y="273" width="87" height="14" rx="4" fill="var(--s2)"/>
+    <text x="345" y="284" font-size="11.5" fill="var(--text-primary)">+0.67</text>
+    <text x="394" y="284" font-size="10.5" fill="var(--muted)">&larr; delivery itself is 5th</text>
+    <text x="240" y="312" font-size="13" fill="var(--text-primary)" text-anchor="end">On target per shot</text>
+    <rect x="225" y="301" width="25" height="14" rx="4" fill="var(--s2)"/>
+    <text x="217" y="312" font-size="11.5" fill="var(--text-primary)" text-anchor="end">&minus;0.19</text>
+    <text x="240" y="340" font-size="13" font-weight="660" fill="var(--text-primary)" text-anchor="end">Goals per shot</text>
+    <rect x="192" y="329" width="58" height="14" rx="4" fill="var(--s2)"/>
+    <text x="184" y="340" font-size="11.5" font-weight="650" fill="var(--text-primary)" text-anchor="end">&minus;0.45</text>
+    <text x="394" y="340" font-size="10.5" fill="var(--muted)">10th in the league</text>
+  </svg>
+  <figcaption>All six inputs sit above +1.0&sigma;, yet the output &mdash; goals &mdash; stops at +0.22&sigma;, and goals per shot drops below average. The one exception is cross completion at +0.67&sigma;: <strong>the delivery itself ranks 5th in the league. Accuracy is not the problem.</strong></figcaption>
+</figure>
+
+<p><strong>The team that produces more crosses, more final-third passes and more key passes than anyone in the division ranks 6th for goals.</strong> The problem is real. The next question is which phase loses it.</p>
+
+<h2><span class="num">02</span>The earlier conclusion &mdash; locating the leak</h2>
+
+<p>I split the road from cross to goal into three gates and set each conversion rate beside the 96 Big 5 clubs, K League 1 and K League 2.</p>
+
+<div class="statrow">
+  <div class="stat"><div class="k">Cross &rarr; shot</div><div class="v" style="color:var(--s2)">49.1%</div><div class="n">Europe 71.6% · <strong>&minus;22.5pp</strong></div></div>
+  <div class="stat"><div class="k">Shot &rarr; on target</div><div class="v">34.9%</div><div class="n">Europe 34.3% · effectively identical</div></div>
+  <div class="stat"><div class="k">On target &rarr; goal</div><div class="v">30.5%</div><div class="n">Europe 30&ndash;34% · identical</div></div>
+</div>
+
+<p>The gap opens at the first gate only; the two behind it overlap. So I wrote: <em>"not a team that cannot finish, but a team whose crosses do not become shots."</em> Across the 96 European clubs I also confirmed that cross volume is unrelated to goals (r = +0.03), while the rate at which crosses turn into shots is strongly tied to them at <strong>r = &minus;0.68</strong>.</p>
+
+<p><strong>All of that still holds.</strong> The trouble was the sentence that came next.</p>
+
+<h2><span class="num">03</span>First correction &mdash; I read "same as the European average" as "no problem here"</h2>
+
+<div class="fixbox">
+  <p class="lab">Correction 1</p>
+  <div class="before"><b>Earlier piece</b>Everything after the shot is created &mdash; shot accuracy, finishing &mdash; is <strong>already at European level.</strong> What needs fixing narrows to one phase: crosses that do not convert into shots.</div>
+  <p><strong>An average that matches does not mean there is no problem.</strong> If the average matches but the number swings hard from match to match, that swing is what decides results.</p>
+</div>
+
+<p>So I took the same 20 matches and, this time, <strong>split them from the inside rather than comparing outward.</strong> Here are the gate conversions in matches won and matches lost.</p>
+
+<div class="tw">
+<table>
+  <thead><tr><th>Conversion</th><th>Won (12)</th><th>Drew (4)</th><th>Lost (4)</th><th>W &minus; L</th></tr></thead>
+  <tbody>
+    <tr><td>Cross &rarr; shot</td><td>0.601</td><td>0.378</td><td>0.464</td><td>+0.137</td></tr>
+    <tr><td>Shot &rarr; inside box</td><td class="dim">0.638</td><td class="dim">0.676</td><td class="dim">0.626</td><td class="dim">+0.012</td></tr>
+    <tr class="hl"><td>Shot &rarr; on target</td><td>0.399</td><td>0.379</td><td>0.261</td><td>+0.138</td></tr>
+    <tr><td class="dim">On target &rarr; goal &dagger;</td><td class="dim">0.408</td><td class="dim">0.071</td><td class="dim">0.169</td><td class="dim">+0.239</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p><strong>Look at the second row.</strong> The share of shots taken inside the box is essentially the same whether Suwon win or lose (0.638 vs 0.626). Its correlation with goals is <strong>&minus;0.02</strong> &mdash; nothing at all. Suwon rank 2nd in the league for shots in the box (+1.52&sigma;), and <strong>that metric explains none of their results.</strong></p>
+
+<p>What separates them is <strong>whether the shot goes towards the goal</strong>. Shot &rarr; on target splits 0.399 in wins against 0.261 in defeats, correlating with goals at <strong>+0.46</strong> (t = 2.22).</p>
+
+<p class="quiet">&dagger; I do not use the +0.81 on "on target &rarr; goal" as evidence. Goals are a subset of shots on target, so the measure is substantially tautological.</p>
+
+<p>In raw volume it is starker still. <strong>In the matches they lost, Suwon produced more crosses, more shots and more shots inside the box.</strong> The only column where the wins lead is shots on target.</p>
+
+<div class="tw">
+<table>
+  <thead><tr><th>Per match</th><th>Won (12)</th><th>Drew (4)</th><th>Lost (4)</th></tr></thead>
+  <tbody>
+    <tr><td>Crosses attempted</td><td>23.7</td><td>30.0</td><td class="dn">37.5</td></tr>
+    <tr><td>Shots</td><td>13.2</td><td>11.5</td><td class="dn">17.0</td></tr>
+    <tr><td>Shots in the box</td><td>8.4</td><td>8.0</td><td class="dn">11.3</td></tr>
+    <tr class="hl"><td>Shots on target</td><td class="up">5.0</td><td>4.8</td><td>4.0</td></tr>
+    <tr class="hl"><td>Goals</td><td class="up">2.00</td><td>0.50</td><td>0.75</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Which means there are two cut points, not one</h3>
+
+<figure>
+  <p class="figtitle">One funnel, two questions</p>
+  <p class="fignote">Above = compared with everyone else · below = comparing Suwon's wins with Suwon's defeats</p>
+  <svg viewBox="0 0 720 320" role="img" aria-label="The same funnel read in two directions. Against the European average only the cross-to-shot cell is 22.5 percentage points low; within Suwon's own 20 matches, it is the shot-to-on-target cell that separates wins from defeats.">
+    <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+
+    <text x="24" y="26" font-size="12.5" font-weight="670" fill="var(--muted)">CROSS-SECTION — against 96 European clubs and K League</text>
+    <rect x="118" y="44" width="164" height="34" rx="6" fill="color-mix(in srgb,var(--s2) 14%,transparent)" stroke="var(--s2)" stroke-width="1.5"/>
+    <text x="200" y="60" font-size="12.5" font-weight="700" fill="var(--s2)" text-anchor="middle">only here: &minus;22.5pp</text>
+    <text x="200" y="73" font-size="10.5" fill="var(--s2)" text-anchor="middle">Suwon 49.1% / Europe 71.6%</text>
+    <line x1="200" y1="80" x2="200" y2="126" stroke="var(--s2)" stroke-width="1.75" marker-end="url(#ar)" color="var(--s2)"/>
+
+    <text x="380" y="62" font-size="10.5" fill="var(--muted)" text-anchor="middle">34.9% &asymp; Europe 34.3%</text>
+    <text x="380" y="76" font-size="10.5" fill="var(--muted)" text-anchor="middle">no difference</text>
+    <line x1="380" y1="82" x2="380" y2="126" stroke="var(--axis)" stroke-dasharray="4 3" marker-end="url(#ar)" color="var(--axis)"/>
+
+    <rect x="24" y="132" width="112" height="48" rx="8" fill="var(--page)" stroke="var(--axis)"/>
+    <text x="80" y="152" font-size="13" font-weight="660" fill="var(--text-primary)" text-anchor="middle">crosses</text>
+    <text x="80" y="169" font-size="12" fill="var(--muted)" text-anchor="middle">554</text>
+    <line x1="140" y1="156" x2="260" y2="156" stroke="var(--axis)" marker-end="url(#ar)" color="var(--axis)"/>
+    <rect x="264" y="132" width="112" height="48" rx="8" fill="var(--page)" stroke="var(--axis)"/>
+    <text x="320" y="152" font-size="13" font-weight="660" fill="var(--text-primary)" text-anchor="middle">shots</text>
+    <text x="320" y="169" font-size="12" fill="var(--muted)" text-anchor="middle">272</text>
+    <line x1="380" y1="156" x2="440" y2="156" stroke="var(--axis)" marker-end="url(#ar)" color="var(--axis)"/>
+    <rect x="444" y="132" width="112" height="48" rx="8" fill="var(--page)" stroke="var(--axis)"/>
+    <text x="500" y="152" font-size="13" font-weight="660" fill="var(--text-primary)" text-anchor="middle">on target</text>
+    <text x="500" y="169" font-size="12" fill="var(--muted)" text-anchor="middle">95</text>
+    <line x1="560" y1="156" x2="620" y2="156" stroke="var(--axis)" marker-end="url(#ar)" color="var(--axis)"/>
+    <rect x="624" y="132" width="72" height="48" rx="8" fill="var(--page)" stroke="var(--axis)"/>
+    <text x="660" y="152" font-size="13" font-weight="660" fill="var(--text-primary)" text-anchor="middle">goals</text>
+    <text x="660" y="169" font-size="12" fill="var(--muted)" text-anchor="middle">29</text>
+
+    <line x1="380" y1="186" x2="380" y2="228" stroke="var(--s1)" stroke-width="1.75" marker-end="url(#ar)" color="var(--s1)"/>
+    <rect x="286" y="232" width="188" height="46" rx="6" fill="color-mix(in srgb,var(--s1) 13%,transparent)" stroke="var(--s1)" stroke-width="1.5"/>
+    <text x="380" y="250" font-size="12.5" font-weight="700" fill="var(--s1)" text-anchor="middle">this is what decides results</text>
+    <text x="380" y="264" font-size="10.5" fill="var(--s1)" text-anchor="middle">won 39.9% / lost 26.1%</text>
+    <text x="380" y="275" font-size="10" fill="var(--s1)" text-anchor="middle">the mean matches Europe; the variance is large</text>
+
+    <line x1="200" y1="186" x2="200" y2="228" stroke="var(--axis)" stroke-dasharray="4 3" marker-end="url(#ar)" color="var(--axis)"/>
+    <text x="200" y="250" font-size="10.5" fill="var(--muted)" text-anchor="middle">won 0.601 / lost 0.464</text>
+    <text x="200" y="264" font-size="10.5" fill="var(--muted)" text-anchor="middle">it splits, but weakly</text>
+
+    <text x="24" y="304" font-size="12.5" font-weight="670" fill="var(--muted)">LONGITUDINAL — wins against defeats within Suwon's 20 matches</text>
+  </svg>
+  <figcaption>Above asks <strong>"where is Suwon weaker than everyone else?"</strong> &mdash; the answer is cross&rarr;shot. Below asks <strong>"what is different when Suwon win and when they lose?"</strong> &mdash; the answer is shot&rarr;on target. The second cell's mean matches Europe, but its match-to-match variance tracks results. The earlier piece looked at the mean. This one looks at the variance.</figcaption>
+</figure>
+
+<div class="callout">
+  <p class="lab">The sentence, rewritten</p>
+  <p><strong>The chronic deficit sits at «cross &rarr; shot»; individual results are decided by the swing in «shot &rarr; on target».</strong></p>
+  <p class="quiet">The first calls for a change of structure, the second for a change of state. And in the end both point at the same place &mdash; how the box is filled at the moment the cross arrives.</p>
+</div>
+
+<h2><span class="num">04</span>Asking again with coordinates &mdash; position, or state?</h2>
+
+<p>We have reached "shots inside the box that do not go towards goal." There are two possible reasons.</p>
+
+<ul>
+  <li><strong>If it is a matter of position</strong> &mdash; the ball is arriving in bad places, and the shots in low-conversion matches should <em>actually be worse located</em></li>
+  <li><strong>If it is a matter of state</strong> &mdash; the locations are fine but the conditions at those locations are not, and shot positions should be <em>the same</em></li>
+</ul>
+
+<p>Until now there was no data to answer this. So I <strong>separated the shot markers on the portal's chalk boards by colour and extracted their coordinates.</strong> 22 matches, <strong>279 Suwon shots</strong>. Checked against the official team totals in 20 of those matches, <strong>18 come within two shots</strong>.</p>
+
+<div class="glossary">
+  <div><dt>Method</dt><dd>The chalk board is a raster image, not a vector. I found the marker blobs by colour (navy for the home side, orange for the away side) and converted their centroids onto a 105&times;68 pitch. Validation was the comparison against the official shot and in-box shot counts.</dd></div>
+  <div><dt>Limits</dt><dd>Overlapping markers merge, leaving 2 of the 20 matches three shots short. Coordinate error itself is on the order of 0.5 m.</dd></div>
+</div>
+
+<p>I split the matches by shot-on-target conversion and compared the shot locations.</p>
+
+<div class="tw">
+<table>
+  <thead><tr><th></th><th>Matches</th><th>Median dist.</th><th>Mean dist.</th><th>In-box share</th><th>Within 12 m</th><th>On target / shot</th><th>Goals</th></tr></thead>
+  <tbody>
+    <tr><td>Low conversion <span class="quiet">(&lt; 0.30)</span></td><td>6</td><td>16.0 m</td><td>16.7 m</td><td class="dim">62%</td><td class="dn">40%</td><td>0.197</td><td>0.83</td></tr>
+    <tr><td>High conversion <span class="quiet">(&ge; 0.45)</span></td><td>4</td><td>16.9 m</td><td>17.6 m</td><td class="dim">63%</td><td>27%</td><td class="up">0.561</td><td class="up">2.00</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p class="lede"><strong>The in-box share is 62% against 63% &mdash; the same.</strong> And the distances run the other way: <strong>shots in the low-conversion matches are closer to goal.</strong></p>
+
+<p>That is the opposite of what I expected. Conversion is <em>lower</em> in the matches where the shots are nearer (share of shots within 12 m against on-target conversion: <strong>&minus;0.48</strong>, t = &minus;2.32). And in-box share has no relationship with conversion at all (&minus;0.15).</p>
+
+<div class="fixbox">
+  <p class="lab">Correction 2 &mdash; one cause candidate is struck out</p>
+  <p>The earlier analysis modelled the value of a cross as the product <code>position &times; freedom &times; arrival</code>. <strong>The first term can now be deleted.</strong> The ball is not arriving in bad places &mdash; it arrives in good ones, closer ones even, and still fails to go towards goal.</p>
+  <p><strong>What remains is freedom and the composition of the arrival.</strong> One of three terms has been ruled out by data; that does not weaken the model, it narrows it.</p>
+</div>
+
+<p class="quiet">One caution: <strong>"closer shots are worse" must not be read as causation.</strong> A high share of close shots is better read as a signal that the opposition box was crowded &mdash; the more you hammer at a team that has dropped off, the closer and the more blocked your shots become. Read that way, the table does not say <em>"stop shooting from close range"</em>; it says <strong>"pushing more bodies into a packed box is not the answer."</strong> Which is the same story as 37.5 crosses in the defeats against 23.7 in the wins.</p>
+
+<h3>And then this number</h3>
+
+<figure>
+  <p class="figtitle">Where did the 279 shots come from &mdash; distance to goal</p>
+  <p class="fignote">K League 2 2026, 22 matches · Suwon Samsung · coordinates extracted from chalk boards</p>
+  <svg viewBox="0 0 720 240" role="img" aria-label="Distance distribution of Suwon's 279 shots. Only 7 shots, 2.5 percent of the total, came from within 6 metres, while 43 percent came from beyond 18 metres.">
+    <line x1="128" y1="24" x2="128" y2="212" stroke="var(--axis)" stroke-width="1.5"/>
+    <text x="118" y="46" font-size="12" fill="var(--text-primary)" text-anchor="end">&le; 6 m</text>
+    <rect x="128" y="34" width="45" height="22" rx="4" fill="var(--s2)"/>
+    <text x="183" y="50" font-size="12.5" font-weight="650" fill="var(--text-primary)">7 shots · 2.5%</text>
+    <text x="118" y="84" font-size="12" fill="var(--text-primary)" text-anchor="end">6&ndash;12 m</text>
+    <rect x="128" y="72" width="510" height="22" rx="4" fill="var(--seq450)"/>
+    <text x="628" y="88" font-size="12.5" fill="#fff" text-anchor="end">80 shots · 28.7%</text>
+    <text x="118" y="122" font-size="12" fill="var(--text-primary)" text-anchor="end">12&ndash;18 m</text>
+    <rect x="128" y="110" width="459" height="22" rx="4" fill="var(--seq450)"/>
+    <text x="577" y="126" font-size="12.5" fill="#fff" text-anchor="end">72 shots · 25.8%</text>
+    <text x="118" y="160" font-size="12" fill="var(--text-primary)" text-anchor="end">18&ndash;25 m</text>
+    <rect x="128" y="148" width="497" height="22" rx="4" fill="var(--seq350)"/>
+    <text x="615" y="164" font-size="12.5" fill="#fff" text-anchor="end">78 shots · 28.0%</text>
+    <text x="118" y="198" font-size="12" fill="var(--text-primary)" text-anchor="end">&gt; 25 m</text>
+    <rect x="128" y="186" width="268" height="22" rx="4" fill="var(--seq250)"/>
+    <text x="386" y="202" font-size="12.5" fill="var(--text-primary)" text-anchor="end">42 shots · 15.1%</text>
+    <text x="128" y="230" font-size="10.5" fill="var(--muted)">straight-line distance to the centre of the goal · the penalty spot is 11 m, the edge of the box 16.5 m</text>
+  </svg>
+  <figcaption><strong>Seven shots from inside 6 m in the entire season.</strong> Suwon delivered 554 crosses and took 178 shots inside the box, and produced seven shots from right in front of goal across twenty-two matches. At the other end, <strong>43% of shots came from beyond 18 m</strong>. They get into the box but never get <em>deep</em> into it &mdash; which is the most direct picture there is of an arrival that has broken down.</figcaption>
+</figure>
+
+<h2><span class="num">05</span>Second correction &mdash; the route I blamed was already being fixed</h2>
+
+<p>In the earlier analysis I blamed the <strong>delivery route</strong> for degrading cross quality. The argument was that when a lot of passes go straight from the back line to the flank without passing through midfield, the opposition defence never has to turn its head, which makes it easy to close down the crosser. In the measurements, that kind of route accounted for <strong>34% of the total</strong>.</p>
+
+<p>This time I rebuilt the 21 pass matrices in round order.</p>
+
+<figure>
+  <p class="figtitle">Share of back-line passes that skipped midfield &mdash; by round</p>
+  <p class="fignote">Of forward passes from the back (GK · DF), the share going direct to the front without passing through midfield · R12 is Suwon's bye, the league having an odd number of clubs</p>
+  <svg viewBox="0 0 720 300" role="img" aria-label="The direct-from-the-back share falls from 51.6 percent in round 1 to 15.8 percent in round 21 across the season. Its correlation with round number is minus 0.78.">
+    <line x1="62" y1="248" x2="700" y2="248" stroke="var(--axis)" stroke-width="1.25"/>
+    <line x1="62" y1="28" x2="62" y2="248" stroke="var(--axis)" stroke-width="1.25"/>
+    <line x1="62" y1="59" x2="700" y2="59" stroke="var(--grid)"/>
+    <line x1="62" y1="97" x2="700" y2="97" stroke="var(--grid)"/>
+    <line x1="62" y1="135" x2="700" y2="135" stroke="var(--grid)"/>
+    <line x1="62" y1="174" x2="700" y2="174" stroke="var(--grid)"/>
+    <line x1="62" y1="212" x2="700" y2="212" stroke="var(--grid)"/>
+    <text x="54" y="63" font-size="10.5" fill="var(--muted)" text-anchor="end">50%</text>
+    <text x="54" y="101" font-size="10.5" fill="var(--muted)" text-anchor="end">40%</text>
+    <text x="54" y="139" font-size="10.5" fill="var(--muted)" text-anchor="end">30%</text>
+    <text x="54" y="178" font-size="10.5" fill="var(--muted)" text-anchor="end">20%</text>
+    <text x="54" y="216" font-size="10.5" fill="var(--muted)" text-anchor="end">10%</text>
+
+    <line x1="70" y1="72" x2="690" y2="196" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="6 4" opacity=".6"/>
+    <polyline fill="none" stroke="var(--s1)" stroke-width="2" stroke-linejoin="round"
+      points="70,53 101,67 132,82 163,135 194,99 225,170 256,135 287,146 318,185 349,124 380,178 442,174 473,179 504,203 535,171 566,163 597,185 628,171 659,166 690,190"/>
+    <g fill="var(--s1)">
+      <circle cx="70" cy="53" r="4"/><circle cx="101" cy="67" r="4"/><circle cx="132" cy="82" r="4"/>
+      <circle cx="163" cy="135" r="4"/><circle cx="194" cy="99" r="4"/><circle cx="225" cy="170" r="4"/>
+      <circle cx="256" cy="135" r="4"/><circle cx="287" cy="146" r="4"/><circle cx="318" cy="185" r="4"/>
+      <circle cx="349" cy="124" r="4"/><circle cx="380" cy="178" r="4"/><circle cx="442" cy="174" r="4"/>
+      <circle cx="473" cy="179" r="4"/><circle cx="504" cy="203" r="4"/><circle cx="535" cy="171" r="4"/>
+      <circle cx="566" cy="163" r="4"/><circle cx="597" cy="185" r="4"/><circle cx="628" cy="171" r="4"/>
+      <circle cx="659" cy="166" r="4"/><circle cx="690" cy="190" r="4"/>
+    </g>
+    <text x="78" y="45" font-size="11.5" font-weight="650" fill="var(--text-primary)">51.6%</text>
+    <text x="684" y="208" font-size="11.5" font-weight="650" fill="var(--text-primary)" text-anchor="end">15.8%</text>
+    <text x="466" y="86" font-size="11.5" fill="var(--muted)">r = &minus;0.78 · t = &minus;5.34</text>
+    <text x="62" y="268" font-size="10.5" fill="var(--muted)">R1</text>
+    <text x="380" y="268" font-size="10.5" fill="var(--muted)" text-anchor="middle">R11</text>
+    <text x="700" y="268" font-size="10.5" fill="var(--muted)" text-anchor="end">R21</text>
+    <text x="62" y="290" font-size="10.5" fill="var(--muted)">first half (R1–11) mean 32.8% → second half (R13–21) 18.8% → last 5 matches 19.6%</text>
+  </svg>
+  <figcaption>What was over half of all back-line distribution early in the season is down to around 20% in the second half. The correlation with round number, <strong>&minus;0.78</strong>, is the strongest signal anywhere in this project.</figcaption>
+</figure>
+
+<div class="fixbox">
+  <p class="lab">Correction 3</p>
+  <div class="before"><b>What the earlier piece implied</b>Direct-from-the-back is 34% &mdash; far too many routes that never turn the defence's head. This is what has to change.</div>
+  <p><strong>34% is a season average, dragged upwards by the opening months.</strong> The team has already been fixing this route on its own. The actual second-half figure is 18.8%.</p>
+</div>
+
+<p><strong>And yet the output did not improve to match.</strong></p>
+
+<div class="tw">
+<table>
+  <thead><tr><th>Period</th><th>Direct from back</th><th>Crosses</th><th>Shots</th><th>Goals</th><th>Goals / shot</th></tr></thead>
+  <tbody>
+    <tr><td>First half R1–11</td><td>32.8%</td><td>24.1</td><td>10.9</td><td>1.27</td><td>&mdash;</td></tr>
+    <tr><td>Second half R13–21</td><td>18.8%</td><td>32.1</td><td>16.9</td><td>1.67</td><td>&mdash;</td></tr>
+    <tr class="hl"><td>Last 5 matches</td><td>19.6%</td><td>35.6</td><td>18.8</td><td>1.60</td><td class="dn">0.099</td></tr>
+    <tr><td class="dim">All 20 matches</td><td class="dim">26.5%</td><td class="dim">27.7</td><td class="dim">13.6</td><td class="dim">1.45</td><td class="dim">0.113</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>Fixing the route took crosses from 24.1 to 35.6 and shots from 10.9 to 18.8. <strong>But goals per shot went the other way, 0.113 to 0.099.</strong> They create more and convert less.</p>
+
+<p>In a multiplicative structure that means one thing. <strong>If you raise one term and the product does not rise, another term is low enough to swallow the gain.</strong> And the previous section established that the term in question is not <em>position</em>. What remains is the composition of the arrival.</p>
+
+<h2><span class="num">06</span>Third correction &mdash; set pieces were mixed into the 554</h2>
+
+<div class="fixbox">
+  <p class="lab">Correction 4</p>
+  <div class="before"><b>Earlier piece</b>Corners … 110 for the season, 2nd in the league / <strong>open-play crosses 554 for the season, 1st in the league</strong>, converting to shots at just 49.1%</div>
+  <p><strong>554 is not open-play crosses. It is all crosses.</strong></p>
+</div>
+
+<p>I went back to the R7 chalk board against Gimpo and re-counted it filter by filter.</p>
+
+<div class="tw">
+<table>
+  <thead><tr><th>R7 vs Gimpo · Suwon</th><th>Counted on the board</th><th>Official team stat</th></tr></thead>
+  <tbody>
+    <tr><td>Open-play crosses</td><td>22</td><td class="dim">&mdash;</td></tr>
+    <tr><td>Set-piece crosses</td><td>5</td><td class="dim">&mdash;</td></tr>
+    <tr class="hl"><td>Total</td><td>27</td><td>29 crosses attempted</td></tr>
+    <tr><td class="dim">For reference — corners + free-kick crosses</td><td class="dim">3</td><td class="dim">3 + 0</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>If set pieces were excluded, open play alone would have to reach 29; it reaches 22. <strong>Set pieces are inside the cross total.</strong> (The gap between 27 and 29 looks like overlapping markers merging.)</p>
+
+<p>And one more thing. <strong>The portal's "set-piece cross" is broader than corners plus free-kick crosses.</strong> There are 5 of them, against 3 corners and 0 free-kick crosses. The coordinates put the other two <strong>on the touchline</strong> &mdash; and Suwon took 24 throw-ins that day. <strong>Long throws into the box are being counted as set-piece crosses.</strong></p>
+
+<div class="callout">
+  <p class="lab">Why this correction strengthens the argument</p>
+  <p>The earlier analysis opened on this contrast: <em>"corners, taken unpressured, are a weapon the league respects; the open-play crosses delivered by the same players are the most numerous in the division and the least likely to become shots."</em> <strong>If corners are folded into the open-play number, that contrast becomes circular.</strong></p>
+  <p>Separate them properly and the open-play conversion rate comes out <strong>worse</strong> than the 49.1% currently on the page. On R7 the set-piece share was <strong>17.2%</strong> (10.3% counting only corners and free kicks). <strong>Fixing it does not soften the contrast &mdash; it sharpens it.</strong></p>
+  <p class="quiet">I will not, however, multiply a single match's coefficient across a season. Throw-in counts swing hard from match to match, so I will collect open-cross boards for several more matches, fix the coefficient, and only then recompute 554 and 49.1%. <strong>This piece stops one step short of that.</strong></p>
+</div>
+
+<h2><span class="num">07</span>So how does the prescription change</h2>
+
+<p>Two cut points mean two prescriptions. And they are different in kind.</p>
+
+<div class="tw">
+<table>
+  <thead><tr><th></th><th>Chronic deficit</th><th>Match-to-match swing</th></tr></thead>
+  <tbody>
+    <tr><td>Where</td><td>Cross &rarr; shot</td><td>Shot &rarr; on target</td></tr>
+    <tr><td>Compared with</td><td>96 European clubs, K League</td><td>Suwon's own wins and defeats</td></tr>
+    <tr><td>Kind</td><td>Structure &mdash; steady all season</td><td>State &mdash; swings match to match</td></tr>
+    <tr><td>What to change</td><td>The conditions <em>before</em> the cross goes out</td><td>The box at the <em>moment</em> the cross arrives</td></tr>
+    <tr><td class="dim">What not to change</td><td class="dim">Cross volume · the crossers' delivery</td><td class="dim">Shot locations · box entry itself</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>That last row is the most practical thing in this piece. <strong>Three items drop out of the prescription.</strong></p>
+
+<ol>
+  <li><strong>Crossing less &mdash;</strong> across the 96 European clubs, cross volume is unrelated to goals (r = +0.03). This is a conversion problem, not a volume one</li>
+  <li><strong>The crossers' technique &mdash;</strong> cross completion already ranks 5th in the league (+0.67&sigma;). The same players produce crosses from corners that the division respects. It is not ability, it is conditions</li>
+  <li><strong>Getting into the box more &mdash;</strong> the share of shots taken inside the box is identical in wins and defeats (0.638 vs 0.626). <strong>Box entry is not this team's problem</strong></li>
+</ol>
+
+<p>One thing is left. <strong>What state the players in the box are standing in at the moment the cross arrives.</strong> Seven shots from inside 6 m in twenty-two matches says it most directly &mdash; they get into the box but not deep into it, and so they shoot from whatever space is <em>left over</em> rather than from a good position.</p>
+
+<p>In the matches they lost, Suwon delivered 53% more crosses and took 62% more shots inside the box. And scored 47% fewer goals. <strong>Doing more is not the answer.</strong></p>
+
+<h2><span class="num">08</span>The limits of this piece</h2>
+
+<p>This is a corrected piece, so I will note in advance <strong>where it is likely to need correcting next</strong>.</p>
+
+<ul>
+  <li><strong>Sample.</strong> 20 matches, of which 4 are defeats. From the win/draw/loss comparison I read direction only, never magnitude. The same goes for the 6-versus-4 low/high conversion split</li>
+  <li><strong>Multiple comparisons.</strong> This analysis produced more than twenty correlations without correction. The t = 2.22 on shot &rarr; on target is significant only as a single test. <strong>It stands only because the win/loss group difference and the low/high conversion contrast stand beside it as supporting evidence</strong></li>
+  <li><strong>Proxy metric.</strong> "Shot &rarr; on target" is only a proxy for the composition of the arrival. Whether shot quality is low because of box occupation, finishing ability or opposition density, this data cannot separate. <strong>Measuring it properly needs the number and arrangement of players in the box at the moment the cross arrives &mdash; and that is positional-data territory</strong></li>
+  <li><strong>Coordinate extraction error.</strong> These values come from colour separation on images. Overlapping markers merge, leaving 2 of the 20 matches three shots short</li>
+  <li><strong>The set-piece coefficient is unfixed.</strong> The 17.2% in section 06 is one match. It needs several more open-cross boards</li>
+  <li><strong>Correlation is not causation.</strong> "Closer shots are worse" in particular should be read as a proxy signal for congestion, never inverted into a prescription</li>
+  <li><strong>Not opened yet &mdash; the player level.</strong> Everything here is team-level. I have reached "they shoot from inside the box and miss the target" without knowing <em>who</em> does it. That is the next piece</li>
+</ul>
+
+<h2><span class="num">09</span>Why rewrite rather than move on</h2>
+
+<p>The earlier conclusion was not wrong. <strong>It looked at one layer and wrote as though that layer was everything.</strong> Transcribing the observation "the same as the European average" into "no problem here"; presenting a season average of 34% as the current state; calling a number with set pieces in it an open-play figure &mdash; all three only became visible after digging further into the data.</p>
+
+<p>And <strong>the corrected version is stronger.</strong> Two cut points make the prescription more precise than one did; ruling out a cause candidate narrowed the model; and the fact that the problem I identified was already improving turned out to be evidence that this team is correcting itself.</p>
+
+<p class="lede">Analysis does not finish in one pass. Re-testing your own conclusion takes longer than reaching it, and is usually worth more. This piece is the record of that second pass.</p>
+
+<p class="quiet">The next test is at player level. Open up shots on target and shots in the box per player from the same data, and it becomes clear whose story "inside the box but not on target" actually is. When it does, I will correct this piece too.</p>
+
+<footer>
+  <p><strong>Data provenance &mdash; every figure in this piece that concerns Suwon Samsung comes from a single source: the public K League Data Portal (data.kleague.com), operated by the Korea Professional Football League.</strong> No paid feed, no private dataset, no hand-tagged event of my own. The portal's extended match data is <strong>supplied by Bepro11</strong>. Scope is K League 2 2026, R1&ndash;R23.<br>
+  The 96 Big 5 European clubs serve only as an <em>external benchmark</em> for interpreting Suwon's numbers; that reference is FBref (Opta), 2025&ndash;26 season totals, and it enters none of the calculations about Suwon.<br>
+  K League 2 runs with an odd 17 clubs, so one team rests each round; R12 is Suwon's bye.</p>
+  <p>Extraction and aggregation &mdash; 23 pass-matrix PDFs, chalk boards for 22 matches and per-match team records for 20 matches, all downloaded from the portal and parsed directly. Every derived metric is computed from those three. The shot coordinates were checked against the official shot and in-box shot counts: 18 of 20 matches come within two shots.</p>
+  <p>Hyuckjin Han · Aug 2026 · a revised edition of "From cross to shot &mdash; locating the leak"</p>
+</footer>
+
+</div>
+<script>
+(function(){
+  var b=document.getElementById('tt'), r=document.documentElement;
+  b.addEventListener('click',function(){
+    var cur=r.getAttribute('data-theme');
+    if(!cur){cur=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+    r.setAttribute('data-theme', cur==='dark'?'light':'dark');
+  });
+})();
+</script>
+</body>
+</html>
