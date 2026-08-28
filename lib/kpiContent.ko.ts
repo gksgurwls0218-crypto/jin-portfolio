@@ -134,6 +134,8 @@ export const LAB_TYPE_KO: Record<string, string> = {
   Combination: "결합",
   "Re-application": "재적용",
   "Theory-derived": "이론 도출",
+  Tool: "도구",
+  System: "시스템",
 };
 
 export const STATUS_LABEL_KO: Record<string, string> = { concept: "개념", draft: "초안", live: "적용중" };

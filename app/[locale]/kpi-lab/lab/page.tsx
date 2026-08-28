@@ -6,18 +6,18 @@ import { isLocale, type Locale } from "@/lib/i18n";
 const HEAD: Record<Locale, { eyebrow: string; title: string; accent: string; intro: string; backLabel: string }> = {
   en: {
     eyebrow: "03 / Data & KPI Lab",
-    title: "A Lab where new metrics",
-    accent: "born",
+    title: "A lab where new metrics",
+    accent: "and tools begin",
     intro:
-      "These are not certified KPIs. These are born to measure Variation Theory and sometimes off the beaten path. Revolutionary thoughts are sometimes originated from unusual creativity. Creativities are still on the way to establish a new thing. Newest first — the date on each card is when it was added, or when its write-up last changed.",
+      "These are not certified KPIs, and not finished products. Some are metrics born to measure Variation Theory; some are tools I want on the touchline, researched and written up before they are built. Revolutionary thoughts sometimes originate from unusual creativity, and creativity is still on its way to establishing a new thing. Each card says how far it has actually got. Newest first — the date is when it was added, or when its write-up last changed.",
     backLabel: "Advanced Data & KPI Lab",
   },
   ko: {
     eyebrow: "03 / 데이터 & KPI 랩",
-    title: "새로운 지표가 태어나는",
+    title: "새로운 지표와 도구가 태어나는",
     accent: "실험실",
     intro:
-      "이것들은 공인된 KPI가 아니라, 변이 이론을 측정하기 위해 때로는 정해진 길에서 벗어나 태어난 지표들이다. 남다른 창의성에서 나온 혁명적인 생각들이며, 아직 새로운 것을 정립해가는 길 위에 있다. 최신순으로 나열했고, 카드의 날짜는 추가된 날 또는 서술이 마지막으로 바뀐 날이다.",
+      "공인된 KPI도, 완성된 제품도 아니다. 변이 이론을 측정하려고 정해진 길에서 벗어나 태어난 지표가 있고, 현장에서 쓰고 싶어 만들기 전에 먼저 조사해 적어둔 도구가 있다. 남다른 창의성에서 나온 생각들이며 아직 정립해가는 길 위에 있다. 각 카드에 지금 어디까지 왔는지를 적었다. 최신순으로 나열했고, 날짜는 추가된 날 또는 서술이 마지막으로 바뀐 날이다.",
     backLabel: "Advanced Data & KPI 랩",
   },
 };
@@ -40,6 +40,39 @@ const JWC = {
     ko: "야구에는 WAR가 있고 축구에는 없다. 득점한 사람만 보상하지 않는 승리 기여도를 만든다.",
   },
 };
+
+/** Tool/system entries that live as their own standalone pages, like JWC.
+ *  They are not metrics, so they carry a Tool/System type and their own status. */
+const TOOLS = [
+  {
+    href: "/kpi-lab/hovi",
+    code: "HOVI",
+    type: "System",
+    status: "concept" as const,
+    added: "2026-08-28",
+    updated: "2026-08-28",
+    basedOn: ["IFAB Law 4.4", "EPTS", "Semantic layer", "LLM routing"],
+    name: { en: "The AI sitting next to the manager (HOVI)", ko: "감독 옆에 앉은 AI (HOVI)" },
+    short: {
+      en: "I wanted the Iron Man scene. The rules turned out to be already open — and most of the judgements I wanted to hand the AI were not the AI's to make.",
+      ko: "아이언맨의 그 장면을 원했다. 규정은 이미 열려 있었고, 내가 AI에게 시키려던 판단은 대부분 AI가 할 일이 아니었다.",
+    },
+  },
+  {
+    href: "/kpi-lab/dualview",
+    code: "Dual-View",
+    type: "Tool",
+    status: "draft" as const,
+    added: "2026-08-27",
+    updated: "2026-08-28",
+    basedOn: ["Multi-anchor sync", "In-play detection", "STT", "Tactical tagging"],
+    name: { en: "The manager speaks during the match (Dual-View)", ko: "감독은 경기 중에 말한다 (Dual-View)" },
+    short: {
+      en: "Hearing one line from the touchline and cutting the moment that just passed, from two angles. Six stages built, one verified — 8 ms sync error.",
+      ko: "사이드라인에서 나온 한 마디를 듣고 방금 지나간 장면을 두 각도로 자른다. 6단계 구현, 1단계 검증 — 동기화 오차 8ms.",
+    },
+  },
+];
 
 function dateNote(locale: Locale, added: string, updated: string): string {
   if (locale === "ko") return updated === added ? `${added} 추가` : `${updated} 갱신`;
@@ -64,6 +97,20 @@ export default async function LabIndexPage({ params }: { params: Promise<{ local
       added: JWC.added,
       updated: JWC.updated,
     },
+    ...TOOLS.map((t) => {
+      const badge = STATUS_BADGE[t.status];
+      return {
+        href: t.href,
+        title: t.name[locale],
+        sub: locale === "ko" ? `${t.code} · ${LAB_TYPE_KO[t.type] ?? t.type}` : `${t.code} · ${t.type}`,
+        short: t.short[locale],
+        badge: locale === "ko" ? { ...badge, label: STATUS_LABEL_KO[t.status] ?? badge.label } : badge,
+        tags: t.basedOn,
+        meta: dateNote(locale, t.added, t.updated),
+        added: t.added,
+        updated: t.updated,
+      };
+    }),
     ...LAB.map((k) => {
       const badge = STATUS_BADGE[k.status];
       return {
