@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="감독 옆에 앉아 같은 경기를 보며 대화하는 AI를 구상하고 조사했다. 규정은 이미 열려 있었고, 막힌 것은 할 말이 없다는 사실이었다. 교체·피로·평가·부상 예측의 근거를 문헌으로 확인한 기록.">
+<title>감독 옆에 앉은 AI — HOVI 구상과 조사</title>
+<style>
+:root{
+  --page:#f9f9f7; --surface-1:#fcfcfb;
+  --text-primary:#0b0b0b; --text-secondary:#52514e; --muted:#898781;
+  --grid:#e1e0d9; --axis:#c3c2b7; --border:rgba(11,11,11,0.10);
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a;
+  --good:#0ca30c; --critical:#d03b3b; --warning:#fab219;
+  --seq250:#86b6ef; --seq350:#5598e7; --seq450:#2a78d6; --seq600:#184f95;
+}
+:root[data-theme="dark"]{
+  --page:#0d0d0d; --surface-1:#1a1a19;
+  --text-primary:#ffffff; --text-secondary:#c3c2b7; --muted:#898781;
+  --grid:#2c2c2a; --axis:#383835; --border:rgba(255,255,255,0.10);
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+  --seq250:#184f95; --seq350:#256abf; --seq450:#3987e5; --seq600:#86b6ef;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --page:#0d0d0d; --surface-1:#1a1a19;
+    --text-primary:#ffffff; --text-secondary:#c3c2b7; --muted:#898781;
+    --grid:#2c2c2a; --axis:#383835; --border:rgba(255,255,255,0.10);
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+    --seq250:#184f95; --seq350:#256abf; --seq450:#3987e5; --seq600:#86b6ef;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--text-primary);
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.65;
+  -webkit-font-smoothing:antialiased;}
+.wrap{max-width:920px;margin:0 auto;padding:0 22px 90px}
+
+.themebtn{position:fixed;top:14px;right:16px;z-index:9;font:inherit;font-size:12.5px;
+  color:var(--text-secondary);background:var(--surface-1);border:1px solid var(--border);
+  border-radius:7px;padding:5px 11px;cursor:pointer}
+
+header.hero{padding:64px 0 34px;border-bottom:1px solid var(--border);margin-bottom:44px}
+.kicker{font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-weight:650}
+h1{font-size:clamp(28px,4.6vw,42px);line-height:1.22;margin:14px 0 12px;letter-spacing:-.02em;font-weight:720}
+.sub{font-size:clamp(15px,2vw,17.5px);color:var(--text-secondary);max-width:64ch;margin:0}
+.meta{margin-top:22px;font-size:12.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 20px}
+.meta b{color:var(--text-secondary);font-weight:600}
+
+h2{font-size:clamp(20px,2.7vw,25px);margin:60px 0 6px;letter-spacing:-.015em;font-weight:700}
+h2 .num{color:var(--muted);font-weight:600;margin-right:10px;font-variant-numeric:tabular-nums}
+h3{font-size:16.5px;margin:32px 0 8px;font-weight:670}
+p{margin:12px 0;max-width:68ch}
+ul,ol{max-width:68ch;padding-left:20px}
+li{margin:7px 0}
+a{color:var(--s1)}
+strong{font-weight:660}
+code{font-family:ui-monospace,Menlo,monospace;font-size:.88em;
+  background:color-mix(in srgb,var(--text-primary) 6%,transparent);padding:1px 5px;border-radius:4px}
+
+.lede{font-size:17px;color:var(--text-primary);border-left:3px solid var(--s2);
+  padding:2px 0 2px 18px;margin:22px 0 28px;max-width:66ch}
+.quiet{color:var(--text-secondary)}
+
+.statrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:26px 0 8px}
+.stat{background:var(--surface-1);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+.stat .k{font-size:11.5px;color:var(--muted);letter-spacing:.04em}
+.stat .v{font-size:23px;font-weight:700;margin-top:3px;font-variant-numeric:tabular-nums}
+.stat .n{font-size:11.5px;color:var(--text-secondary);margin-top:2px}
+
+figure{margin:30px 0 8px;background:var(--surface-1);border:1px solid var(--border);
+  border-radius:14px;padding:20px 20px 14px}
+figure svg{display:block;width:100%;height:auto}
+.figtitle{font-size:14px;font-weight:670;margin:0 0 2px}
+.fignote{font-size:12.5px;color:var(--muted);margin:0 0 14px}
+figcaption{font-size:13px;color:var(--text-secondary);margin-top:12px;padding-top:11px;
+  border-top:1px solid var(--grid)}
+
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:18px 0;min-width:480px}
+th,td{text-align:right;padding:8px 10px;border-bottom:1px solid var(--grid);font-variant-numeric:tabular-nums}
+th:first-child,td:first-child{text-align:left;font-variant-numeric:normal}
+th{font-size:11.5px;letter-spacing:.05em;color:var(--muted);font-weight:650;text-transform:uppercase}
+tr.hl td{background:color-mix(in srgb,var(--s2) 9%,transparent);font-weight:640}
+td.dim{color:var(--muted)}
+td.up{color:var(--s3);font-weight:640}
+td.dn{color:var(--s2);font-weight:640}
+
+.fixbox{background:var(--surface-1);border:1px solid var(--border);border-left:3px solid var(--critical);
+  border-radius:12px;padding:18px 20px;margin:24px 0}
+.fixbox .lab{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--critical);font-weight:680;margin-bottom:8px}
+.fixbox p{margin:8px 0}
+.fixbox p:last-child{margin-bottom:0}
+.before{font-size:14px;color:var(--muted);border-left:2px solid var(--grid);padding-left:14px;margin:10px 0}
+.before b{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-secondary);margin-bottom:3px}
+
+.callout{background:var(--surface-1);border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin:24px 0}
+.callout .lab{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:680;margin-bottom:8px}
+.callout > :last-child{margin-bottom:0}
+
+.glossary{font-size:13px;color:var(--text-secondary);background:color-mix(in srgb,var(--text-primary) 3.5%,transparent);
+  border-radius:10px;padding:14px 16px;margin:18px 0}
+.glossary dt{font-weight:670;color:var(--text-primary);display:inline}
+.glossary dd{display:inline;margin:0 0 0 6px}
+.glossary div{margin:6px 0}
+
+footer{margin-top:70px;padding-top:22px;border-top:1px solid var(--border);
+  font-size:12.5px;color:var(--muted);line-height:1.9}
+</style>
+</head>
+<body>
+<button class="themebtn" id="tt">◐ 테마</button>
+<div class="wrap">
+
+<header class="hero">
+  <p class="kicker">KPI Lab · 구상 · HOVI</p>
+  <h1>감독 옆에 앉은 AI</h1>
+  <p class="sub">나는 아이언맨이 자비스와 대화하며 일하는 장면을 원했다. 우리 팀의 전술 모델과 게임 플랜을 완전히 이해한 AI가 나와 <strong>같은 경기를 같이 보면서</strong>, 교체 타이밍과 대응책을 함께 따져보는 것. 그래서 조사했다. 결과는 예상과 달랐다 — <strong>규정은 이미 열려 있었고, 내가 AI에게 시키려던 판단은 대부분 AI가 할 일이 아니었다.</strong> 그걸 덜어내고 나니 남는 물건이 오히려 또렷해졌다 — <strong>판단하는 AI가 아니라, 근거를 주고받는 AI.</strong></p>
+  <div class="meta">
+    <span>한혁진 · 구상</span>
+    <span><b>2026.08</b></span>
+    <span>상태 <b>구상 · 조사 완료</b></span>
+    <span>구현 <b>없음</b></span>
+  </div>
+</header>
+
+<div class="callout" style="border-left:3px solid var(--warning)">
+  <p class="lab">이 글의 성격</p>
+  <p>이건 만든 것에 대한 글이 아니라 <strong>만들기 전에 조사한 것</strong>에 대한 글이다. 구현은 없다. 대신 이 구상이 가능한지, 어디가 막혀 있는지, 만든다면 어떻게 만들어야 하는지를 문헌과 규정으로 확인했다. <strong>내가 원했던 것 중 상당 부분은 조사 과정에서 스스로 접었다.</strong> 그 과정을 그대로 적는다.</p>
+</div>
+
+<h2><span class="num">01</span>이미 만들어졌다. 그리고 스스로 금지했다.</h2>
+
+<p>2026년 1월, Lenovo와 FIFA가 <strong>Football AI Pro</strong>를 발표했다. 2,000개가 넘는 축구 지표와 페타바이트급 트래킹 데이터 위에서 여러 에이전트를 조율하는 생성형 AI 어시스턴트. 텍스트·영상·그래프·3D로 답한다. 그리고 2026 월드컵에서 <strong>48개 참가국 전체</strong>에 지급됐다. 선수와 코칭스태프가 휴대폰으로 쓴다.</p>
+
+<p>내가 구상한 것과 거의 같다. 그런데 FIFA가 붙인 조건이 이거였다.</p>
+
+<div class="fixbox">
+  <p class="lab">FIFA 공식 발표</p>
+  <p>"이 도구는 <strong>경기 전과 후</strong>의 분석에는 쓸 수 있지만, <strong>라이브 플레이 중에는 쓸 수 없다.</strong>"</p>
+</div>
+
+<p>세계에서 가장 많은 자원을 들인 버전을, 가장 좋은 데이터 위에 얹어, 48개 팀에 나눠주고서 — <strong>정작 경기 중에는 못 쓰게 했다.</strong> 이유는 공개되지 않았다.</p>
+
+<p>그래서 첫 질문이 생겼다. <strong>규정 때문인가?</strong></p>
+
+<h2><span class="num">02</span>규정은 열려 있다 — 생각보다 훨씬</h2>
+
+<p>IFAB 경기규칙 제4조 4항을 직접 찾아봤다. 원문은 이렇다.</p>
+
+<div class="callout">
+  <p class="lab">Law 4.4 — 전자 통신 (발췌)</p>
+  <p>"팀 임원이 <strong>선수의 복지나 안전, 또는 전술/코칭 목적</strong>과 직접 관련하여 전자 통신을 사용하는 것은 허용된다. 다만 <strong>소형 휴대기기</strong>(예: 마이크, 헤드폰, 이어피스, 휴대전화/스마트폰, 스마트워치, <strong>태블릿, 노트북</strong>)만 사용할 수 있다."</p>
+  <p class="quiet">그리고 EPTS 조항에는 이런 문장이 있다 — <em>"경기 중 EPTS에서 <strong>테크니컬 에어리어로 전송되는</strong> 정보와 데이터"</em>의 정확성은 대회 주최자의 책임이다.</p>
+</div>
+
+<p>두 가지가 분명해진다.</p>
+
+<p><strong>첫째, 내용 제한이 없다.</strong> 허용 목록은 기기 형태에 대한 것이지 정보의 종류에 대한 것이 아니다. "전술/코칭 목적"은 정의되어 있지 않고 넓다. AI가 만든 전술 제안은 어떤 자연스러운 해석으로도 그 안에 들어간다.</p>
+
+<p><strong>둘째, 실시간 데이터의 벤치 유입을 규칙이 이미 전제하고 있다.</strong> "경기 중 테크니컬 에어리어로 전송되는"이라는 문구가 그 증거다. FIFA는 2022년 7월부터 트래킹 데이터의 <strong>실시간 전송</strong>을 검증 체계에 정식으로 포함시켰다. "라이브 경기 분석에 대한 축구계의 커지는 요구에 부응하여"라는 것이 FIFA 자신의 설명이다.</p>
+
+<p class="lede">그리고 결정적인 것 — <strong>IFAB 규칙에도, FIFA 규정에도, UEFA 규정에도, 프리미어리그 핸드북에도 「인공지능」이라는 단어가 없다.</strong> 팀의 AI 사용을 다루는 조항이 존재하지 않는다.</p>
+
+<p>즉 <strong>FIFA의 제한은 법이 아니라 판단이었다.</strong> 금지할 근거가 있어서가 아니라, 아직 이르다고 본 것이다.</p>
+
+<h3>다만 넘으면 안 되는 선이 넷 있다</h3>
+
+<div class="tw">
+<table>
+  <thead><tr><th>제약</th><th>근거</th><th>위반 시</th></tr></thead>
+  <tbody>
+    <tr><td>소형 휴대기기여야 한다</td><td>Law 4.4</td><td>대형 모니터·워크스테이션은 불가</td></tr>
+    <tr class="hl"><td><strong>선수에게 전달 금지</strong></td><td>Law 4.4 — 선수는 통신장비 착용·사용 자체가 금지</td><td>이어피스로 선수에게 지시하는 구상은 <strong>완전히 불법</strong></td></tr>
+    <tr class="hl"><td><strong>심판 판정에 관여 금지</strong></td><td>UEFA 제57.05조 — "어떠한 경우에도 심판 판정과 관련하여 사용될 수 없다"</td><td>팀 임원 <strong>퇴장</strong> (Law 12)</td></tr>
+    <tr><td>한 번에 한 명만 지시 전달</td><td>Law 1 — 테크니컬 에어리어</td><td>AI가 두 번째 목소리가 될 수 없다</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>두 번째 줄이 내 초기 구상 하나를 지웠다. <strong>선수 귀에 뭔가를 꽂는 방향은 생각할 필요조차 없다.</strong> 그리고 중계 영상을 쓰는 건 규정 문제가 아니라 <strong>중계권</strong> 문제인데, 실제 배포에서 벽에 부딪히는 곳은 대개 여기다.</p>
+
+<h2><span class="num">03</span>판단은 AI의 일이 아니다</h2>
+
+<p>규정이 열려 있다는 걸 확인하고 다음으로 물었다. <strong>그래서 AI가 무슨 말을 할 건가?</strong></p>
+
+<p>처음에는 이런 것들을 상상했다 — "지금 교체하세요", "저 선수 체력 떨어졌어요", "부상 위험이 있어요". 그래서 각각의 근거를 문헌에서 확인했다. <strong>전부 얇았다.</strong></p>
+
+<figure>
+  <p class="figtitle">관측값과 판단 사이의 선</p>
+  <p class="fignote">안쪽 = HOVI가 말해도 되는 것 · 바깥 = 사람이 판단할 것</p>
+  <svg viewBox="0 0 720 330" role="img" aria-label="규정이 허용하는 공간은 넓지만, 그 안에서 과학적 근거가 뒷받침하는 공간은 훨씬 좁다. 교체 타이밍, 실시간 피로 판정, 실시간 선수 평가, 부상 예측은 모두 근거가 부족한 영역에 있다.">
+    <rect x="24" y="24" width="672" height="272" rx="14" fill="color-mix(in srgb,var(--s3) 8%,transparent)" stroke="var(--s3)" stroke-width="2"/>
+    <text x="44" y="50" font-size="13" font-weight="700" fill="var(--s3)">규정상 합법인 영역 — 넓다</text>
+    <text x="44" y="68" font-size="11.5" fill="var(--text-secondary)">Law 4.4 · 전술/코칭 목적 · 내용 제한 없음 · AI 언급 없음</text>
+
+    <rect x="60" y="92" width="240" height="180" rx="12" fill="color-mix(in srgb,var(--s1) 12%,transparent)" stroke="var(--s1)" stroke-width="2"/>
+    <text x="80" y="118" font-size="12.5" font-weight="700" fill="var(--s1)">HOVI가 말한다 — 관측값</text>
+    <g font-size="11.5" fill="var(--text-primary)">
+      <text x="80" y="142">· 무슨 일이 있었는지 기술</text>
+      <text x="80" y="164">· 누적 고강도 주행량 보고</text>
+      <text x="80" y="186">· 공간 점유 · 압박 구조 시각화</text>
+      <text x="80" y="208">· 국면 · 포메이션 자동 검출</text>
+      <text x="80" y="230">· 세트피스 배치 최적화</text>
+      <text x="80" y="252">· 과거 사례 검색</text>
+    </g>
+
+    <text x="330" y="118" font-size="12.5" font-weight="700" fill="var(--s2)">HOVI가 말하지 않는다 — 판단</text>
+    <g font-size="12" fill="var(--text-primary)">
+      <text x="330" y="146">✕ "지금 교체하세요"　<tspan font-size="10.5" fill="var(--s3)">→ 감독</tspan></text>
+      <text x="352" y="164" font-size="10.5" fill="var(--muted)">Myers 규칙은 재현 실패 · 3명 교체 시대 연구</text>
+      <text x="330" y="192">✕ "저 선수 체력 떨어졌어요"　<tspan font-size="10.5" fill="var(--s3)">→ AT · Physio</tspan></text>
+      <text x="352" y="210" font-size="10.5" fill="var(--muted)">EPTS로 피로와 페이싱을 구분 못 한다</text>
+      <text x="330" y="238">✕ "저 선수 오늘 잘하고 있어요"　<tspan font-size="10.5" fill="var(--s3)">→ 전력분석관</tspan></text>
+      <text x="352" y="256" font-size="10.5" fill="var(--muted)">실시간 개인 평가의 검증된 방법 없음</text>
+      <text x="330" y="284">✕ "부상 위험이 있어요"　<tspan font-size="10.5" fill="var(--s3)">→ Physio</tspan></text>
+    </g>
+  </svg>
+  <figcaption>처음에는 이 그림을 좌절로 읽었다 — 지을 수 있는 땅은 넓은데 딛고 설 지반이 작다고. <strong>그런데 오른쪽 항목들은 애초에 AI가 할 일이 아니었다.</strong> 팀에는 이미 AT와 피지오와 전력분석관이 있고, 저 판단들은 그들의 전문 영역이다. 근거가 얇다는 건 <em>AI가 판단하면 안 된다</em>는 뜻이지, <em>이 도구가 쓸모없다</em>는 뜻이 아니다.</figcaption>
+</figure>
+
+<div class="tw">
+<table>
+  <thead><tr><th>하고 싶었던 말</th><th>문헌이 말하는 것</th></tr></thead>
+  <tbody>
+    <tr><td><strong>교체 타이밍</strong></td><td>유명한 58·73·79분 규칙(Myers, 2012)은 <strong>직접 재현에 실패했다.</strong> Silva &amp; Swartz가 4,226건으로 재분석한 결론 — <em>"후반에 교체로 이득을 보는 시점은 식별되지 않는다."</em> 게다가 원 연구는 <strong>교체 3명 시대</strong> 것이다</td></tr>
+    <tr><td><strong>실시간 피로 판정</strong></td><td>UCL 244명 연구: 후반 활동량 감소는 매우 크지만(d = 1.41~2.15) <strong>각 하프의 마지막 두 구간 사이에는 차이가 없었다.</strong> 저자들의 결론은 피로가 아니라 <strong>페이싱 전략</strong>. 활동량 하락은 피로의 식별된 신호가 아니다</td></tr>
+    <tr><td><strong>실시간 선수 평가</strong></td><td>한 경기에서 선수의 온볼 이벤트는 30~80개다. VAEP·xT는 시즌 단위 집계용으로 설계·검증됐고, <strong>경기 내 추정치는 대부분 분산이다.</strong> 외부 기준에 대해 검증된 실시간 평가법은 존재하지 않는다</td></tr>
+    <tr class="hl"><td><strong>부상 위험 예측</strong></td><td><strong>2026년 체계적 문헌고찰</strong>: 22개 연구 중 <strong>17개(77%)가 높은 편향 위험.</strong> AUC가 0.42~0.91로 흩어져 있다. 결론 — <em>"현재로서는 독립적 예방 시스템이 아니라 의사결정 보조 도구로 간주해야 한다"</em></td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>부상 예측은 특히 조심해야 한다. 업계 표준이던 <strong>ACWR(급성:만성 워크로드 비율)</strong>은 이미 무너졌다 — <strong>무작위로 만든 워크로드 비율이 실제 비율만큼이나 부상과 연관</strong>된다는 것이 밝혀졌다. 관계가 생리학적 신호가 아니라 비율 계산의 수학적 인공물이었다는 뜻이다. 그런데 이 지표는 여전히 여러 상용 제품에 들어가 있다.</p>
+
+<p>벤더 검증도 직접 읽어봤다. 한 업체의 자체 연구는 <strong>부상의 72.4%(306/423)를 1~7일 전에 사전 경고</strong>했다고 보고한다. 그런데 <strong>위양성률과 경고 발생 건수를 보고하지 않는다.</strong> 매일 전원에게 경고를 보내도 검출률은 100%가 된다. 그 숫자 없이는 72.4%를 해석할 방법이 없다.</p>
+
+<h2><span class="num">04</span>그래서 HOVI가 하는 일 — 판단이 아니라 보고</h2>
+
+<p>팀에는 이미 사람이 있다. AT가 있고, 피지오가 있고, 전력분석관이 있다. <strong>그들이 전문가고, 이미 데이터를 다루는 사람들이다.</strong> 각 분야에서 과부하가 오는 지점을 그들은 안다. 한 경기에 12km를 뛰면 많이 뛴 것이라는 감각은 AI가 아니라 그들에게 있다.</p>
+
+<p>그러면 AI가 할 일은 판단이 아니라 <strong>그들이 이미 아는 임계값을 대신 지켜보는 것</strong>이다.</p>
+
+<div class="callout">
+  <p class="lab">작동 방식</p>
+  <p>미리 설정해둔다 — <em>"경기 시작 후 8km 도달한 선수 알려줘."</em> 그러면 그 순간에 바로 알려준다. 고강도 주행 거리, 스프린트 횟수, 가감속 횟수처럼 체력 평가에 실제로 쓰는 값들을 함께 얹어서. <strong>그다음 판단은 AT와 피지오가 한다.</strong></p>
+  <p>주기 보고도 같다. 15분에 한 번씩 현황을 읽어준다. 주기도, 임계값도, 어떤 값을 함께 줄지도 <strong>쓰는 사람이 바꾼다.</strong></p>
+</div>
+
+<figure>
+  <p class="figtitle">HOVI의 자리</p>
+  <p class="fignote">임계값도 판단도 사람의 것이다 · 가운데만 HOVI가 맡는다</p>
+  <svg viewBox="0 0 720 240" role="img" aria-label="전문가가 임계값을 설정하고, HOVI는 실시간 감시와 음성 보고만 담당하며, 판단은 다시 전문가가 한다. HOVI는 파이프라인의 가운데 구간만 맡는다.">
+    <defs><marker id="rr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--axis)"/></marker></defs>
+
+    <rect x="14" y="60" width="150" height="92" rx="11" fill="var(--surface-1)" stroke="var(--s3)" stroke-width="1.75"/>
+    <text x="89" y="86" font-size="11" font-weight="700" fill="var(--s3)" text-anchor="middle">사람</text>
+    <text x="89" y="110" font-size="13" font-weight="700" fill="var(--text-primary)" text-anchor="middle">임계값 설정</text>
+    <text x="89" y="130" font-size="11" fill="var(--text-secondary)" text-anchor="middle">"8km 넘으면 알려줘"</text>
+    <line x1="168" y1="106" x2="200" y2="106" stroke="var(--axis)" stroke-width="1.5" marker-end="url(#rr)"/>
+
+    <rect x="204" y="44" width="300" height="124" rx="11" fill="color-mix(in srgb,var(--s1) 11%,transparent)" stroke="var(--s1)" stroke-width="2"/>
+    <text x="354" y="70" font-size="11" font-weight="700" fill="var(--s1)" text-anchor="middle">HOVI — 이 구간만</text>
+    <text x="354" y="96" font-size="13" font-weight="700" fill="var(--text-primary)" text-anchor="middle">실시간 감시 · 음성 보고</text>
+    <text x="354" y="118" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">임계 도달 시 즉시 · 15분마다 현황</text>
+    <text x="354" y="138" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">고강도 주행 · 스프린트 · 가감속 동봉</text>
+    <text x="354" y="158" font-size="10.5" font-weight="650" fill="var(--s1)" text-anchor="middle">추론 없음 · 판단 없음 · 숫자만</text>
+    <line x1="508" y1="106" x2="540" y2="106" stroke="var(--axis)" stroke-width="1.5" marker-end="url(#rr)"/>
+
+    <rect x="544" y="60" width="152" height="92" rx="11" fill="var(--surface-1)" stroke="var(--s3)" stroke-width="1.75"/>
+    <text x="620" y="86" font-size="11" font-weight="700" fill="var(--s3)" text-anchor="middle">사람</text>
+    <text x="620" y="110" font-size="13" font-weight="700" fill="var(--text-primary)" text-anchor="middle">판단</text>
+    <text x="620" y="130" font-size="11" fill="var(--text-secondary)" text-anchor="middle">AT · Physio · 분석관</text>
+
+    <path d="M620,156 L620,196 L89,196 L89,156" fill="none" stroke="var(--muted)" stroke-width="1.25" stroke-dasharray="4 4" marker-end="url(#rr)"/>
+    <text x="354" y="214" font-size="11.5" fill="var(--muted)" text-anchor="middle">쓰면서 임계값을 고친다 — 이 되먹임이 도구를 팀에 맞춘다</text>
+  </svg>
+  <figcaption>이렇게 자르면 <strong>03절의 문제가 HOVI의 문제가 아니게 된다.</strong> 피로인지 페이싱인지 판정하지 않는다. 8km를 뛰었다는 사실만 말한다. 그건 관측값이지 추론이 아니다. 그리고 <strong>추론하지 않는 시스템은 틀린 추론을 내놓을 수 없다.</strong></figcaption>
+</figure>
+
+<h3>그런데 왜 목소리인가</h3>
+
+<p>이게 이 구상에서 실제로 새로운 부분이다. 라이브 GPS 대시보드는 이미 있다. 문제는 <strong>그걸 보려면 화면을 봐야 한다</strong>는 것이다.</p>
+
+<p>경기 중 AT의 눈과 손은 이미 차 있다. 피치를 보고 있거나, 누군가를 처치하고 있거나, 벤치와 이야기하고 있다. 태블릿은 눈을 요구한다. <strong>귀는 비어 있다.</strong></p>
+
+<p class="lede">때로는 보는 것보다 <strong>듣고, 말로 명령하는 것</strong>이 편하다. 자동 보고 체계가 화면을 대신 봐주면, 그 사람은 현장에서 자기가 더 잘하는 일을 할 수 있다.</p>
+
+<p>그리고 이 구조에는 기술적 이점이 하나 더 있다. 음성 명령이 <strong>닫힌 어휘</strong>가 된다는 것. <em>"8km 도달한 선수 알려줘"</em>는 자유 대화가 아니라 정해진 문형이다. 경기장 소음 속 음성인식은 뒤에서 보듯 이 구상의 가장 약한 고리인데, 어휘가 닫혀 있으면 그 위험이 크게 줄어든다.</p>
+
+<h2><span class="num">05</span>여기서 어디로 가는가 — 보고에서 대화로</h2>
+
+<p>04절은 <strong>바닥</strong>이다. 임계값을 지켜보고 읽어주는 것. 그건 지금 기술로 만들 수 있고, 틀릴 여지도 거의 없다.</p>
+
+<p>그런데 내가 원래 원했던 건 그게 아니었다. <strong>대화하면서 근거를 주고받는 것</strong>이었다. 숫자를 통보받는 게 아니라, 물어보면 그에 맞는 근거가 나오고, 그걸 보고 다시 묻는 것. 그리고 언젠가는 AI가 <strong>내가 무엇을 궁금해하는 사람인지</strong>를 알아서, 묻기 전에 꺼내주는 것.</p>
+
+<figure>
+  <p class="figtitle">세 단계, 그리고 넘으면 안 되는 선</p>
+  <p class="fignote">각 단계에서 AI가 하는 일이 무엇으로 바뀌는가</p>
+  <svg viewBox="0 0 720 300" role="img" aria-label="1단계 보고는 임계값에 따라 알림을 준다. 2단계 대화는 질문에 근거를 붙여 답한다. 3단계 개인화는 사용자의 패턴을 학습해 묻기 전에 꺼내준다. 개인화가 검색에 적용되면 안전하지만 판단에 적용되면 선을 넘는다.">
+    <rect x="16" y="34" width="212" height="122" rx="11" fill="color-mix(in srgb,var(--s1) 12%,transparent)" stroke="var(--s1)" stroke-width="2"/>
+    <text x="34" y="58" font-size="11" font-weight="700" fill="var(--s1)">1단계 · 지금 만들 것</text>
+    <text x="122" y="84" font-size="14" font-weight="700" fill="var(--text-primary)" text-anchor="middle">보고</text>
+    <text x="122" y="108" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">임계값 → 알림</text>
+    <text x="122" y="128" font-size="11" fill="var(--muted)" text-anchor="middle">"8km 넘었습니다"</text>
+    <text x="122" y="146" font-size="10.5" font-weight="650" fill="var(--s3)" text-anchor="middle">추론 없음</text>
+
+    <rect x="254" y="34" width="212" height="122" rx="11" fill="color-mix(in srgb,var(--s1) 7%,transparent)" stroke="var(--s1)" stroke-width="1.5" stroke-dasharray="6 4"/>
+    <text x="272" y="58" font-size="11" font-weight="700" fill="var(--s1)">2단계 · 다음</text>
+    <text x="360" y="84" font-size="14" font-weight="700" fill="var(--text-primary)" text-anchor="middle">대화</text>
+    <text x="360" y="108" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">질문 → 근거</text>
+    <text x="360" y="128" font-size="11" fill="var(--muted)" text-anchor="middle">"왜? 지난 세 경기랑 비교해줘"</text>
+    <text x="360" y="146" font-size="10.5" font-weight="650" fill="var(--s3)" text-anchor="middle">검색과 서술만</text>
+
+    <rect x="492" y="34" width="212" height="122" rx="11" fill="var(--surface-1)" stroke="var(--border)" stroke-dasharray="4 5"/>
+    <text x="510" y="58" font-size="11" font-weight="650" fill="var(--muted)">3단계 · 나중</text>
+    <text x="598" y="84" font-size="14" font-weight="700" fill="var(--text-primary)" text-anchor="middle">개인화</text>
+    <text x="598" y="108" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">패턴 → 선제 제시</text>
+    <text x="598" y="128" font-size="11" fill="var(--muted)" text-anchor="middle">묻기 전에 꺼내준다</text>
+
+    <line x1="16" y1="196" x2="704" y2="196" stroke="var(--axis)" stroke-width="1.25"/>
+    <rect x="16" y="176" width="450" height="40" fill="color-mix(in srgb,var(--s3) 10%,transparent)"/>
+    <rect x="466" y="176" width="238" height="40" fill="color-mix(in srgb,var(--s2) 10%,transparent)"/>
+    <text x="30" y="192" font-size="11.5" font-weight="700" fill="var(--s3)">안전한 개인화 — 무엇을 보여줄지</text>
+    <text x="30" y="211" font-size="11" fill="var(--text-secondary)">이 사람은 거리 알림 뒤에 늘 고강도 주행을 묻는다 → 같이 준다</text>
+    <text x="480" y="192" font-size="11.5" font-weight="700" fill="var(--s2)">선을 넘는 개인화 — 무엇을 결정할지</text>
+    <text x="480" y="211" font-size="11" fill="var(--text-secondary)">이 사람은 이럴 때 늘 교체했다 → 교체를 권한다</text>
+
+    <text x="16" y="248" font-size="12" fill="var(--text-secondary)">왼쪽은 틀려도 <tspan font-weight="650">쓸데없는 걸 보여준 것</tspan>으로 끝난다. 오른쪽은 틀리면 <tspan font-weight="650" fill="var(--s2)">판단을 대신한 것</tspan>이 된다.</text>
+    <text x="16" y="276" font-size="12" fill="var(--text-secondary)">그리고 오른쪽에는 더 나쁜 함정이 있다 — <tspan font-weight="700" fill="var(--s2)">나에게 동의하는 법을 배운 AI는 두 번째 의견이 아니다.</tspan></text>
+  </svg>
+  <figcaption>3단계 자체가 문제인 게 아니라, <strong>3단계가 무엇에 적용되는가</strong>가 문제다. <em>어떤 근거를 원하는 사람인지</em>를 학습하는 건 검색의 개인화고, 최악의 경우 안 쓸 정보를 보여주는 데서 끝난다. <em>어떤 결정을 하는 사람인지</em>를 학습해 그 결정을 권하기 시작하면 03절의 근거 문제를 전부 그대로 물려받는다.</figcaption>
+</figure>
+
+<p><strong>2단계가 진짜 목적지다.</strong> 알림은 대화의 시작점이지 끝이 아니다. "8km 넘었습니다"를 듣고 <em>"왜? 지난 세 경기 같은 시점이랑 비교해줘"</em>라고 물으면 그 근거가 나오고, 그걸 보고 <em>"그럼 후반 20분에 어땠지"</em>로 이어지는 것. <strong>근거가 한 방향으로 통보되는 게 아니라 오가는 것</strong>이 내가 원한 그림이었다.</p>
+
+<p>그리고 이건 06절의 아키텍처와도 맞는다. 대화라고 해서 AI가 계산을 하는 게 아니다. <strong>질문을 미리 정의된 지표로 번역하고, 나온 값을 말로 옮기는 것</strong>까지가 AI의 일이다. 그 사이의 계산은 결정론적인 코드가 한다.</p>
+
+<h3>3단계에 대해 지금 말할 수 있는 것</h3>
+
+<p>사용자의 패턴을 학습한다는 건 축구를 학습하는 것보다 <strong>쉬운 문제다.</strong> 한 사람이 반복해서 같은 종류의 요청을 하고, 신호가 일관되며, 틀렸을 때 즉시 교정된다. 03절에서 본 부정적 결과 — 선수 임베딩을 넣어도 예측이 나아지지 않는다는 — 는 <em>선수</em>를 모델링한 이야기지 <em>사용자</em>를 모델링한 이야기가 아니다.</p>
+
+<p>다만 두 가지를 미리 적어둔다.</p>
+
+<ul>
+  <li><strong>자동화 편향.</strong> 시스템이 먼저 꺼내주기 시작하면 사람은 그것을 의심하지 않게 된다. 의료 의사결정 지원에서 잘 기록된 실패다. <strong>선제 제시는 편리함이자 동시에 사고의 축소다</strong></li>
+  <li><strong>되먹임 함정.</strong> 내 과거 결정을 학습해서 나에게 맞춘 판단을 내놓는 AI는, 결국 <strong>나에게 동의하는 법을 배운다.</strong> 그러면 09절에서 내가 원한 것 — 코치와 분석관과 AI가 각자 다른 논리를 들고 오는 것 — 이 무너진다. <strong>세 번째 의견이 아니라 내 의견의 메아리가 된다</strong></li>
+</ul>
+
+<p class="lede">그래서 개인화의 방향을 <strong>"무엇을 보여줄지"에는 걸고, "무엇을 결정할지"에는 걸지 않는다.</strong> 근거를 고르는 건 나에게 맞추되, 결론은 나에게 맞추지 않는 것. 이 선을 지키는 한 3단계는 두 번째 의견을 죽이지 않는다.</p>
+
+<h2><span class="num">06</span>그래서 질문을 바꿨다 — 정확도가 아니라 커버리지</h2>
+
+<p>여기서 막혔다가, 내가 이 도구를 원했던 이유를 다시 생각해봤다.</p>
+
+<p>나는 AI가 <strong>맞히기를</strong> 원했던 게 아니다. 교체와 전술 변경을 <strong>미리 돌려보고 들어가면 기대하는 바가 명확해지고</strong>, 선수에게 설명하기도 쉬워진다. 그리고 그게 안 나타나면 <strong>그다음 대응책을 동시에 준비</strong>하면 된다. 이게 원래 목적이었다.</p>
+
+<p>이 차이가 생각보다 크다.</p>
+
+<figure>
+  <p class="figtitle">예측으로 볼 때와, 준비로 볼 때</p>
+  <p class="fignote">같은 시뮬레이션 출력을 무엇으로 평가하는가</p>
+  <svg viewBox="0 0 720 300" role="img" aria-label="예측으로 보면 하나의 미래를 제시하고 맞았는지로 평가하므로 대부분 틀린다. 준비로 보면 여러 분기를 제시하고 실제가 그 안에 들어왔는지로 평가하므로 검증이 가능하다.">
+    <text x="24" y="28" font-size="12.5" font-weight="700" fill="var(--s2)">예측으로 볼 때 — 검증이 막힌다</text>
+    <circle cx="70" cy="76" r="9" fill="var(--text-primary)"/>
+    <text x="70" y="106" font-size="11" fill="var(--muted)" text-anchor="middle">지금</text>
+    <line x1="82" y1="76" x2="290" y2="76" stroke="var(--s2)" stroke-width="2.5" marker-end="url(#hh)"/>
+    <defs><marker id="hh" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+    <rect x="296" y="60" width="150" height="32" rx="6" fill="color-mix(in srgb,var(--s2) 14%,transparent)" stroke="var(--s2)"/>
+    <text x="371" y="81" font-size="12" font-weight="650" fill="var(--s2)" text-anchor="middle">"이렇게 될 겁니다"</text>
+    <text x="466" y="72" font-size="11.5" fill="var(--muted)">→ 맞았나로 평가</text>
+    <text x="466" y="90" font-size="11.5" font-weight="650" fill="var(--critical)">→ 반사실에는 정답이 없다</text>
+
+    <line x1="24" y1="130" x2="696" y2="130" stroke="var(--grid)"/>
+
+    <text x="24" y="162" font-size="12.5" font-weight="700" fill="var(--s1)">준비로 볼 때 — 검증이 가능해진다</text>
+    <circle cx="70" cy="216" r="9" fill="var(--text-primary)"/>
+    <text x="70" y="246" font-size="11" fill="var(--muted)" text-anchor="middle">지금</text>
+    <path d="M82,216 C170,216 200,182 288,182" fill="none" stroke="var(--s1)" stroke-width="2.5" marker-end="url(#hh)" color="var(--s1)"/>
+    <path d="M82,216 L288,216" fill="none" stroke="var(--s1)" stroke-width="2.5" marker-end="url(#hh)" color="var(--s1)"/>
+    <path d="M82,216 C170,216 200,250 288,250" fill="none" stroke="var(--s1)" stroke-width="2.5" marker-end="url(#hh)" color="var(--s1)"/>
+    <rect x="296" y="168" width="118" height="28" rx="6" fill="color-mix(in srgb,var(--s1) 12%,transparent)" stroke="var(--s1)"/>
+    <text x="355" y="187" font-size="11.5" fill="var(--s1)" text-anchor="middle">상대가 내려앉으면</text>
+    <rect x="296" y="202" width="118" height="28" rx="6" fill="color-mix(in srgb,var(--s1) 12%,transparent)" stroke="var(--s1)"/>
+    <text x="355" y="221" font-size="11.5" fill="var(--s1)" text-anchor="middle">그대로 유지하면</text>
+    <rect x="296" y="236" width="118" height="28" rx="6" fill="color-mix(in srgb,var(--s1) 12%,transparent)" stroke="var(--s1)"/>
+    <text x="355" y="255" font-size="11.5" fill="var(--s1)" text-anchor="middle">전방압박 올리면</text>
+    <text x="430" y="200" font-size="11.5" fill="var(--muted)">→ 실제가 이 안에</text>
+    <text x="430" y="218" font-size="11.5" fill="var(--muted)">들어왔나로 평가</text>
+    <text x="430" y="240" font-size="11.5" font-weight="700" fill="var(--s3)">→ 이건 셀 수 있다</text>
+  </svg>
+  <figcaption>모든 전술 반사실 연구가 "예측이 맞았는가"에서 막혀 있다. 정답이 없기 때문이다. 그래서 이 분야의 결과는 <strong>정확도가 아니라 전문가 선호도로 검증된다</strong> — 그리고 그 선호도조차 흔들린다. 한 연구는 코치 5명 중 90%가 AI 배치를 선호했다고 보고했고, 다른 연구는 실제 전문가만 따로 집계하니 <strong>34%</strong>로 떨어졌다. <strong>커버리지로 물으면 이 문제를 우회한다.</strong> 준비한 분기 안에 실제가 들어왔는지는 셀 수 있다.</figcaption>
+</figure>
+
+<div class="callout">
+  <p class="lab">바꾼 질문</p>
+  <p>❌ <strong>이 교체를 하면 어떻게 되는가</strong> — 답할 수 없다. 정답이 존재하지 않는다.<br>
+  ✅ <strong>이 교체를 하면 무엇을 준비해야 하는가</strong> — 답할 수 있고, 사후에 셀 수 있다.</p>
+  <p class="quiet">그리고 이 방향에는 실무적 이점이 하나 더 있다. 감독이 선수에게 <em>"이렇게 될 거야"</em> 대신 <em>"이 셋 중 하나가 나올 텐데 각각 이렇게 하자"</em>고 말할 수 있다. 설명이 쉬워지고, 예측이 빗나가도 팀이 무너지지 않는다.</p>
+</div>
+
+<h2><span class="num">07</span>만든다면 — LLM에게 계산을 시키면 안 된다</h2>
+
+<p>아키텍처도 조사했다. 여기는 답이 비교적 분명하게 나와 있었다.</p>
+
+<p>가장 자연스러운 구현은 "AI에게 경기 데이터를 주고 물어보는 것"이다. <strong>이게 실패한다.</strong></p>
+
+<figure>
+  <p class="figtitle">LLM에게 계산을 시켰을 때와, 도구에 맡겼을 때</p>
+  <p class="fignote">축구 질의응답 벤치마크(위)와 구조화 데이터 질의 벤치마크(아래)</p>
+  <svg viewBox="0 0 720 280" role="img" aria-label="SoccerNet 축구 질의응답에서 GPT-4o는 0.39, 도구 라우팅 전문 시스템은 0.91을 기록했다. 구조화 데이터 질의에서 원시 text-to-SQL은 51에서 90퍼센트, 시맨틱 레이어는 98에서 100퍼센트를 기록했다.">
+    <text x="20" y="26" font-size="11.5" font-weight="650" fill="var(--muted)" letter-spacing="1">축구 질의응답 · SoccerNet 2026</text>
+    <text x="196" y="60" font-size="13" fill="var(--text-primary)" text-anchor="end">범용 LLM에 직접 질문</text>
+    <rect x="206" y="46" width="164" height="22" rx="4" fill="var(--s2)"/>
+    <text x="382" y="63" font-size="14" font-weight="700" fill="var(--text-primary)">39%</text>
+    <text x="196" y="98" font-size="13" fill="var(--text-primary)" text-anchor="end">도구 라우팅 전문 시스템</text>
+    <rect x="206" y="84" width="382" height="22" rx="4" fill="var(--s1)"/>
+    <text x="600" y="101" font-size="14" font-weight="700" fill="var(--text-primary)">91%</text>
+
+    <line x1="20" y1="130" x2="700" y2="130" stroke="var(--grid)"/>
+
+    <text x="20" y="158" font-size="11.5" font-weight="650" fill="var(--muted)" letter-spacing="1">구조화 데이터 질의 · dbt 2026 벤치마크</text>
+    <text x="196" y="192" font-size="13" fill="var(--text-primary)" text-anchor="end">LLM이 직접 질의 작성</text>
+    <rect x="206" y="178" width="215" height="22" rx="4" fill="var(--s2)"/>
+    <text x="433" y="195" font-size="14" font-weight="700" fill="var(--text-primary)">51~90%</text>
+    <text x="196" y="230" font-size="13" fill="var(--text-primary)" text-anchor="end">시맨틱 레이어 경유</text>
+    <rect x="206" y="216" width="412" height="22" rx="4" fill="var(--s1)"/>
+    <text x="630" y="233" font-size="14" font-weight="700" fill="var(--text-primary)">98~100%</text>
+
+    <text x="20" y="266" font-size="11.5" fill="var(--muted)">표 데이터 집계 정확도는 <tspan font-weight="700" fill="var(--s2)">7~35%</tspan>. 문맥이 8K 토큰을 넘으면 <tspan font-weight="700" fill="var(--s2)">70~90%</tspan>의 성능을 잃는다.</text>
+  </svg>
+  <figcaption>같은 결론을 가리키는 증거가 네 갈래에서 나왔다 — 축구 에이전트 연구, 데이터 질의 벤치마크, 그리고 xG 모델 출력을 말로 옮기는 논문. <strong>LLM은 라우터와 화자로만 써야 하고, 계산기로 쓰면 안 된다.</strong></figcaption>
+</figure>
+
+<p><em>"우리 왼쪽 어때?"</em>는 필터가 걸린 집계 연산이다. 벤치마크에서 <strong>가장 못하는 항목</strong>이고, 문맥이 길어지고 결측치가 있는 실제 환경에서 성능이 무너지는 바로 그 조건이다.</p>
+
+<p class="lede">그리고 실패하는 방식이 최악이다. <strong>"틀린 숫자를 기꺼이, 조용히, 그럴듯하게 내놓는다."</strong> 30초 안에 교체를 결정하는 사람에게 이건 유일하게 치명적인 실패 모드다.</p>
+
+<p>반면 시맨틱 레이어를 거치면 <strong>모르는 것은 모른다고 답한다.</strong> 안전하게 실패한다. 대가는 커버리지다 — 범위 밖 질문에는 0%다. 답할 수 있는 질문의 목록을 좁히는 대신 그 안에서는 틀리지 않는 쪽을 택하는 것이고, 이 용도에서는 그게 맞는 교환이다.</p>
+
+<h3>참고로, LLM은 축구를 그렇게 잘 알지 못한다</h3>
+
+<div class="statrow">
+  <div class="stat"><div class="k">2026 월드컵 104경기 승패 예측</div><div class="v">68.4%</div><div class="n">최고 성능 LLM</div></div>
+  <div class="stat"><div class="k">같은 조건</div><div class="v">68.3%</div><div class="n">북메이커</div></div>
+  <div class="stat"><div class="k">같은 조건</div><div class="v" style="color:var(--s2)">69.7%</div><div class="n">일반 팬 — <strong>LLM보다 높다</strong></div></div>
+</div>
+
+<p>그리고 축구 규칙을 시각 근거에 결합하는 과제에서는 최고 모델도 <strong>파울 분류 44%, 시각적 지목 정확도 6%</strong> 수준이다. 연구자들의 결론은 <em>"진정한 추론이 아니라 표면적 패턴 매칭"</em>이었다. <strong>"백스리로 바꾸면 어떻게 될까"</strong>는 검색으로 답할 수 있는 질문이 아니다. 시뮬레이터나 적합된 모델이 계산하고 LLM은 그걸 말로 옮겨야 한다.</p>
+
+<h2><span class="num">08</span>두 개의 부품</h2>
+
+<p>HOVI는 하나의 물건이 아니라 두 기관이 필요하다. 각각을 따로 파고 있다.</p>
+
+<figure>
+  <p class="figtitle">HOVI의 구조</p>
+  <p class="fignote">허브 하나, 부품 둘 — 각각의 검증 상태가 다르다</p>
+  <svg viewBox="0 0 720 250" role="img" aria-label="HOVI 허브 아래에 두 부품이 있다. 왼쪽은 듀얼뷰 글라스로 프로토타입 단계이며 1단계 검증을 마쳤다. 오른쪽은 전술 시뮬레이터로 조사만 완료했고 구현은 없다.">
+    <rect x="216" y="20" width="288" height="66" rx="12" fill="color-mix(in srgb,var(--s1) 12%,transparent)" stroke="var(--s1)" stroke-width="2"/>
+    <text x="360" y="46" font-size="15" font-weight="720" fill="var(--text-primary)" text-anchor="middle">HOVI</text>
+    <text x="360" y="68" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">대화형 축구 AI 파트너 · 구상 단계</text>
+
+    <path d="M300,90 L300,110 L152,110 L152,132" fill="none" stroke="var(--axis)" stroke-width="1.5"/>
+    <path d="M420,90 L420,110 L568,110 L568,132" fill="none" stroke="var(--axis)" stroke-width="1.5"/>
+
+    <rect x="24" y="136" width="256" height="94" rx="12" fill="var(--surface-1)" stroke="var(--s3)" stroke-width="1.75"/>
+    <text x="44" y="160" font-size="11" font-weight="700" fill="var(--s3)">■ 프로토타입 · 1단계 검증 완료</text>
+    <text x="152" y="186" font-size="13.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">① 귀와 눈</text>
+    <text x="152" y="206" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">Dual-View 글라스</text>
+    <text x="152" y="222" font-size="11" fill="var(--muted)" text-anchor="middle">감독의 말과 시선을 데이터로</text>
+
+    <rect x="440" y="136" width="256" height="94" rx="12" fill="var(--surface-1)" stroke="var(--border)" stroke-dasharray="5 4"/>
+    <text x="460" y="160" font-size="11" font-weight="650" fill="var(--muted)">□ 조사만 완료 · 구현 없음</text>
+    <text x="568" y="186" font-size="13.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">② 만약에 엔진</text>
+    <text x="568" y="206" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">전술 시뮬레이터</text>
+    <text x="568" y="222" font-size="11" fill="var(--muted)" text-anchor="middle">분기를 준비하는 장치</text>
+  </svg>
+  <figcaption>① 은 감독의 발화와 시점을 붙잡아 데이터로 만드는 입력 기관이고, ② 는 "만약에"를 돌려보는 연산 기관이다. HOVI는 그 둘 위에서 대화하는 층이다. <strong>①만 실제로 만들어져 있고, 그중에서도 한 단계만 검증됐다.</strong></figcaption>
+</figure>
+
+<p>① 은 따로 쓴 글이 있다. 감독의 말을 듣고 방금 지나간 장면을 두 각도로 잘라내는 도구인데, 시간 동기화 한 단계만 검증을 마친 상태다.</p>
+
+<p style="margin:22px 0 8px"><a href="/ko/kpi-lab/dualview" target="_top" style="display:inline-block;padding:13px 20px;border:1px solid var(--s1);border-radius:11px;text-decoration:none;background:color-mix(in srgb,var(--s1) 7%,transparent)"><span style="display:block;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:650">부품 ①</span><span style="display:block;font-size:15px;font-weight:700;color:var(--text-primary);margin-top:3px">감독은 경기 중에 말한다 — Dual-View 글라스 →</span></a></p>
+
+<p class="quiet">② 는 조사만 마쳤다. 홀로그램으로 보여주려던 초기 구상은 물리적으로 막혀 있었고(부피형 디스플레이는 뒤를 가리지 못해서 밀집한 박스가 겹친 얼룩이 된다), 반사실 시뮬레이션은 검증 기준 자체가 비어 있었다. 06절의 커버리지가 그 조사에서 나온 결론이다. <strong>검증할 것이 생기면 그때 따로 쓴다.</strong></p>
+
+
+
+<h2><span class="num">09</span>무엇이 참이어야 하는가</h2>
+
+<p>보고로 범위를 좁히자 위험 목록도 바뀌었다. <strong>추론의 위험은 줄었고, 배관의 위험이 전면에 나왔다.</strong> 지금은 어느 것도 확인되지 않았다.</p>
+
+<ol>
+  <li><strong>실시간 EPTS 데이터를 실제로 받을 수 있다.</strong> 이게 이제 가장 단단한 전제다. 규칙은 허용하고(Law 4.4) FIFA는 2022년부터 실시간 전송을 검증하지만, <strong>훈련용 GPS 조끼를 갖는 것과 경기 중 벤치로 실시간 텔레메트리가 오는 것은 다른 제품 등급이다.</strong> 내가 접근할 수 있는 팀에서 이게 되는지부터 확인해야 한다. 안 되면 나머지는 전부 무의미하다</li>
+  <li><strong>경기장에서 음성이 작동한다.</strong> <strong>스포츠 현장의 음성인식 오류율은 공개된 수치가 하나도 없다.</strong> 산업 현장 기준 16~24%가 <em>바닥</em>이고 경기장은 그보다 시끄럽다. 다만 명령 어휘가 닫혀 있다는 점이 이 위험을 크게 줄인다 — 자유 대화가 아니라 정해진 문형 몇 개를 알아들으면 되고, 선수 이름과 숫자에 어휘 가중을 걸 수 있다. <strong>재보기 전에는 모른다</strong></li>
+  <li><strong>경보가 너무 자주 울리지 않는다.</strong> 임계값 경보 시스템의 고전적 실패 방식이다. 의료 현장에서 잘 기록된 문제이기도 하다 — 너무 자주 울리면 사람이 듣지 않게 된다. 앞에서 부상 예측 벤더에게 던진 위양성률 질문은 <strong>내 시스템에도 똑같이 돌아온다.</strong> 90분에 몇 번 울리는 것이 적정한지 나는 아직 모른다</li>
+  <li><strong>기본 임계값을 넣지 않는다.</strong> 제품이 "8km"를 기본값으로 갖고 있으면 그건 주장이 된다 — 근거 없는 주장. <strong>비워두고 전문가가 채우게 해야 한다.</strong> 이건 기술이 아니라 설계 원칙의 문제고, 지키기 쉽지 않을 것이다</li>
+  <li><strong>화면보다 귀가 실제로 낫다.</strong> 내 가정이지 측정한 사실이 아니다. AT 한 명에게 한 경기만 써보게 하면 바로 알 수 있다. <strong>가장 싸게 확인할 수 있는 가정</strong>이라서 제일 먼저 해야 한다</li>
+  <li><strong>답할 질문의 목록을 좁게 고정할 수 있다.</strong> 대화 층까지 간다면 시맨틱 레이어는 범위 안에서만 안전하다. 현장에서 실제로 나오는 질문 중 <em>미리 정의된 지표로 답할 수 있는 것</em>이 몇 퍼센트인지 — 아무도 세어본 적이 없다</li>
+  <li><strong>준비한 분기 안에 실제가 들어온다.</strong> 시뮬레이터 쪽 가정이다. 커버리지가 검증 기준이라면 그 값을 실제로 재야 한다</li>
+  <li><strong>개인화가 선을 넘지 않는다.</strong> 05절의 3단계는 <em>무엇을 보여줄지</em>에만 걸어야 한다. 이건 기술적 제약이 아니라 <strong>스스로 지켜야 하는 선</strong>이고, 쓸모가 늘어날수록 넘고 싶어질 것이다. 넘었는지 아닌지를 판별할 기준을 미리 정해둬야 한다 — <em>"이 출력이 근거인가 결론인가"</em></li>
+</ol>
+
+<div class="callout">
+  <p class="lab">가장 먼저 할 일</p>
+  <p>5번이다. <strong>AT 한 명, 한 경기, 15분마다 음성 보고.</strong> AI도 학습도 필요 없다 — 사람이 타이머를 보고 읽어줘도 된다. 화면 대신 귀로 받는 것이 실제로 나은지, 어떤 값을 원하는지, 얼마나 자주면 성가신지. <strong>그 한 경기가 위 목록의 절반을 정리해준다.</strong></p>
+</div>
+
+<h2><span class="num">10</span>내가 이 구상에서 지키려는 것</h2>
+
+<p>조사하면서 아이언맨 이미지의 상당 부분을 접었다. 홀로그램은 물리적으로 막혀 있었고, 선수 이어피스는 불법이었고, 내가 원한 판단들은 대부분 근거가 없었다.</p>
+
+<p>그런데 하나는 조사할수록 단단해졌다.</p>
+
+<p class="lede">감독은 <strong>결정하는 사람이 아니라 선택하는 사람</strong>이다. 코치의 의견, 분석관의 의견, 그리고 AI의 의견이 각자의 논리를 들고 올라오고, 감독이 그중에서 고른다. 이기려면 여러 시각과 접근이 필요하다고 나는 생각한다.</p>
+
+<p>이 관점은 조사 결과와도 맞아떨어졌다. AI 규제 공백을 다룬 한 법률 논평이 내린 유일한 원칙이 <em>"최종 책임은 명백히 감독 또는 심판에게 남는다"</em>였고, 실제 출시된 AI 어시스턴트들도 하나같이 <em>"실무자의 전문성을 대체하지 않는다"</em>는 단서를 단다.</p>
+
+<p><strong>AI를 답으로 놓으면 근거가 없어서 무너지고, 한 표로 놓으면 근거가 얇아도 쓸모가 있다.</strong> 코치와 분석관도 이 도구를 쓰면서 각자의 논리를 발전시켜 주장할 수 있다. 그러면 감독 앞에 놓이는 선택지의 질이 올라간다. 그게 내가 이 구상에서 실제로 원하는 것이다.</p>
+
+<p>그리고 이 문장이 05절의 선을 지키는 이유이기도 하다. <strong>AI가 나에게 맞춰 결론까지 내주기 시작하면, 그건 한 표가 아니라 내 표의 복사본이 된다.</strong> 여러 시각이 필요하다고 말하면서 나를 닮은 목소리를 하나 더 만드는 건 앞뒤가 맞지 않는다. 근거는 나에게 맞추되 결론은 맞추지 않는다 — 이건 기술적 제약이 아니라 내가 이 도구에 원하는 것 자체다.</p>
+
+<p class="quiet">다음 단계는 07절의 1번이다 — 감독이 경기 중에 실제로 던지는 질문을 모아서, 그중 몇 퍼센트가 미리 정의된 지표로 답할 수 있는지 세어보는 것. 그건 AI 없이도, 지금 당장 할 수 있다.</p>
+
+<footer>
+  <p>상태 — 구상 및 조사 단계. <strong>구현 없음.</strong> 이 글의 모든 수치는 공개된 규정·논문·벤더 발표에서 인용한 것이고, 내가 측정한 값은 하나도 없다.</p>
+  <p>주요 출처 — IFAB 경기규칙 Law 1·4·12, FIFA 월드컵 26 규정, UEFA 대회 규정, FIFA/Lenovo 발표, Myers(2012), Silva &amp; Swartz, UEFA 챔피언스리그 주행 성능 연구(2022), 부상 예측 체계적 문헌고찰(2026), SoccerNet 2026, dbt 시맨틱 레이어 벤치마크(2026), WorldCupArena(2026).</p>
+  <p>한혁진 · 2026.08 · 부품 ① Dual-View 글라스는 별도 글에 있다. 부품 ② 전술 시뮬레이터는 조사만 마쳤고, 검증할 것이 생기면 그때 따로 쓴다.</p>
+</footer>
+
+</div>
+<script>
+(function(){
+  var b=document.getElementById('tt'), r=document.documentElement;
+  b.addEventListener('click',function(){
+    var cur=r.getAttribute('data-theme');
+    if(!cur){cur=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+    r.setAttribute('data-theme', cur==='dark'?'light':'dark');
+  });
+})();
+</script>
+</body>
+</html>
