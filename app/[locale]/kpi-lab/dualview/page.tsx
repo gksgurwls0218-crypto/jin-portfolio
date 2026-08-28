@@ -19,13 +19,15 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return META[isLocale(locale) ? locale : "en"];
 }
 
-// Korean: /public/dualview.ko.html · English version not written yet — ko is served
-// for both locales until it is, so the route never 404s.
-export default async function DualViewPage() {
+// Korean: /public/dualview.ko.html · English: /public/dualview.html
+export default async function DualViewPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const src = locale === "ko" ? "/dualview.ko.html" : "/dualview.html";
+
   return (
     <div style={{ background: "var(--stage)", paddingTop: 62, minHeight: "100vh" }}>
       <iframe
-        src="/dualview.ko.html"
+        src={src}
         title="Dual-View — voice-triggered tactical clipping"
         style={{ width: "100%", height: "calc(100vh - 62px)", border: "none", display: "block" }}
       />

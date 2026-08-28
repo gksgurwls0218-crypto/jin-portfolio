@@ -21,13 +21,15 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
 // Self-contained HTML document with its own inline SVG figures, embedded the same
 // way /match-analysis/suwon-cross-shot is.
-// Korean: /public/hovi.ko.html · English version not written yet — ko is served for
-// both locales until it is, so the route never 404s.
-export default async function HoviPage() {
+// Korean: /public/hovi.ko.html · English: /public/hovi.html
+export default async function HoviPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const src = locale === "ko" ? "/hovi.ko.html" : "/hovi.html";
+
   return (
     <div style={{ background: "var(--stage)", paddingTop: 62, minHeight: "100vh" }}>
       <iframe
-        src="/hovi.ko.html"
+        src={src}
         title="HOVI — the AI sitting next to the manager"
         style={{ width: "100%", height: "calc(100vh - 62px)", border: "none", display: "block" }}
       />

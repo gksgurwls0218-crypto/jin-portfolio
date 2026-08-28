@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="I wanted the Iron Man scene. Researching it, the rules turned out to be already open — and most of the judgements I wanted to hand the AI were not the AI's to make. What is left is sharper: not an AI that decides, but one that trades evidence.">
+<title>The AI sitting next to the manager — HOVI</title>
+<style>
+:root{
+  --page:#f9f9f7; --surface-1:#fcfcfb;
+  --text-primary:#0b0b0b; --text-secondary:#52514e; --muted:#898781;
+  --grid:#e1e0d9; --axis:#c3c2b7; --border:rgba(11,11,11,0.10);
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a;
+  --good:#0ca30c; --critical:#d03b3b; --warning:#fab219;
+  --seq250:#86b6ef; --seq350:#5598e7; --seq450:#2a78d6; --seq600:#184f95;
+}
+:root[data-theme="dark"]{
+  --page:#0d0d0d; --surface-1:#1a1a19;
+  --text-primary:#ffffff; --text-secondary:#c3c2b7; --muted:#898781;
+  --grid:#2c2c2a; --axis:#383835; --border:rgba(255,255,255,0.10);
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+  --seq250:#184f95; --seq350:#256abf; --seq450:#3987e5; --seq600:#86b6ef;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --page:#0d0d0d; --surface-1:#1a1a19;
+    --text-primary:#ffffff; --text-secondary:#c3c2b7; --muted:#898781;
+    --grid:#2c2c2a; --axis:#383835; --border:rgba(255,255,255,0.10);
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+    --seq250:#184f95; --seq350:#256abf; --seq450:#3987e5; --seq600:#86b6ef;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--text-primary);
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.65;
+  -webkit-font-smoothing:antialiased;}
+.wrap{max-width:920px;margin:0 auto;padding:0 22px 90px}
+
+.themebtn{position:fixed;top:14px;right:16px;z-index:9;font:inherit;font-size:12.5px;
+  color:var(--text-secondary);background:var(--surface-1);border:1px solid var(--border);
+  border-radius:7px;padding:5px 11px;cursor:pointer}
+
+header.hero{padding:64px 0 34px;border-bottom:1px solid var(--border);margin-bottom:44px}
+.kicker{font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-weight:650}
+h1{font-size:clamp(28px,4.6vw,42px);line-height:1.22;margin:14px 0 12px;letter-spacing:-.02em;font-weight:720}
+.sub{font-size:clamp(15px,2vw,17.5px);color:var(--text-secondary);max-width:64ch;margin:0}
+.meta{margin-top:22px;font-size:12.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 20px}
+.meta b{color:var(--text-secondary);font-weight:600}
+
+h2{font-size:clamp(20px,2.7vw,25px);margin:60px 0 6px;letter-spacing:-.015em;font-weight:700}
+h2 .num{color:var(--muted);font-weight:600;margin-right:10px;font-variant-numeric:tabular-nums}
+h3{font-size:16.5px;margin:32px 0 8px;font-weight:670}
+p{margin:12px 0;max-width:68ch}
+ul,ol{max-width:68ch;padding-left:20px}
+li{margin:7px 0}
+a{color:var(--s1)}
+strong{font-weight:660}
+code{font-family:ui-monospace,Menlo,monospace;font-size:.88em;
+  background:color-mix(in srgb,var(--text-primary) 6%,transparent);padding:1px 5px;border-radius:4px}
+
+.lede{font-size:17px;color:var(--text-primary);border-left:3px solid var(--s2);
+  padding:2px 0 2px 18px;margin:22px 0 28px;max-width:66ch}
+.quiet{color:var(--text-secondary)}
+
+.statrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:26px 0 8px}
+.stat{background:var(--surface-1);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+.stat .k{font-size:11.5px;color:var(--muted);letter-spacing:.04em}
+.stat .v{font-size:23px;font-weight:700;margin-top:3px;font-variant-numeric:tabular-nums}
+.stat .n{font-size:11.5px;color:var(--text-secondary);margin-top:2px}
+
+figure{margin:30px 0 8px;background:var(--surface-1);border:1px solid var(--border);
+  border-radius:14px;padding:20px 20px 14px}
+figure svg{display:block;width:100%;height:auto}
+.figtitle{font-size:14px;font-weight:670;margin:0 0 2px}
+.fignote{font-size:12.5px;color:var(--muted);margin:0 0 14px}
+figcaption{font-size:13px;color:var(--text-secondary);margin-top:12px;padding-top:11px;
+  border-top:1px solid var(--grid)}
+
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:18px 0;min-width:480px}
+th,td{text-align:right;padding:8px 10px;border-bottom:1px solid var(--grid);font-variant-numeric:tabular-nums}
+th:first-child,td:first-child{text-align:left;font-variant-numeric:normal}
+th{font-size:11.5px;letter-spacing:.05em;color:var(--muted);font-weight:650;text-transform:uppercase}
+tr.hl td{background:color-mix(in srgb,var(--s2) 9%,transparent);font-weight:640}
+td.dim{color:var(--muted)}
+td.up{color:var(--s3);font-weight:640}
+td.dn{color:var(--s2);font-weight:640}
+
+.fixbox{background:var(--surface-1);border:1px solid var(--border);border-left:3px solid var(--critical);
+  border-radius:12px;padding:18px 20px;margin:24px 0}
+.fixbox .lab{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--critical);font-weight:680;margin-bottom:8px}
+.fixbox p{margin:8px 0}
+.fixbox p:last-child{margin-bottom:0}
+.before{font-size:14px;color:var(--muted);border-left:2px solid var(--grid);padding-left:14px;margin:10px 0}
+.before b{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-secondary);margin-bottom:3px}
+
+.callout{background:var(--surface-1);border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin:24px 0}
+.callout .lab{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:680;margin-bottom:8px}
+.callout > :last-child{margin-bottom:0}
+
+.glossary{font-size:13px;color:var(--text-secondary);background:color-mix(in srgb,var(--text-primary) 3.5%,transparent);
+  border-radius:10px;padding:14px 16px;margin:18px 0}
+.glossary dt{font-weight:670;color:var(--text-primary);display:inline}
+.glossary dd{display:inline;margin:0 0 0 6px}
+.glossary div{margin:6px 0}
+
+footer{margin-top:70px;padding-top:22px;border-top:1px solid var(--border);
+  font-size:12.5px;color:var(--muted);line-height:1.9}
+</style>
+</head>
+<body>
+<button class="themebtn" id="tt">◐ Theme</button>
+<div class="wrap">
+
+<header class="hero">
+  <p class="kicker">KPI Lab · Concept · HOVI</p>
+  <h1>The AI sitting next to the manager</h1>
+  <p class="sub">I wanted the scene where Tony Stark works while talking to JARVIS. An AI that fully understands our tactical model and game plan, <strong>watching the same match alongside me</strong>, weighing substitution timing and responses together. So I went and researched it. The result was not what I expected — <strong>the rules were already open, and most of the judgements I wanted to hand the AI were not the AI's to make.</strong> Stripping those away left something sharper: <strong>not an AI that decides, but one that trades evidence.</strong></p>
+  <div class="meta">
+    <span>Hyuckjin Han · Concept</span>
+    <span><b>2026.08</b></span>
+    <span>Status: <b>concept · research done</b></span>
+    <span>Built: <b>nothing</b></span>
+  </div>
+</header>
+
+<div class="callout" style="border-left:3px solid var(--warning)">
+  <p class="lab">What this piece is</p>
+  <p>This is not about something I built. It is about <strong>what I found before building anything</strong>. There is no implementation. Instead I checked, against the literature and the regulations, whether this idea is possible, where it is blocked, and how it would have to be built. <strong>A good part of what I wanted, I folded away during the research.</strong> That process is written down as it happened.</p>
+</div>
+
+<h2><span class="num">01</span>It has already been built. And then forbidden by its own maker.</h2>
+
+<p>In January 2026, Lenovo and FIFA announced <strong>Football AI Pro</strong> — a generative AI assistant orchestrating multiple agents over 2,000-plus football metrics and petabytes of tracking data, answering in text, video, graphs and 3D. At the 2026 World Cup it was issued to <strong>all 48 participating nations</strong>, used by players and coaching staff on their phones.</p>
+
+<p>Almost exactly what I had in mind. But FIFA attached one condition.</p>
+
+<div class="fixbox">
+  <p class="lab">FIFA's own wording</p>
+  <p>"The tool may be used for analysis <strong>before and after matches</strong>, but <strong>not during live play.</strong>"</p>
+</div>
+
+<p>The best-resourced version of this idea, sitting on the best data available, handed to 48 teams — and then <strong>barred from the match itself.</strong> No reason was published.</p>
+
+<p>Which raised the first question. <strong>Is it the rules?</strong></p>
+
+<h2><span class="num">02</span>The rules are open — far more than I expected</h2>
+
+<p>I went and read Law 4.4 of the IFAB Laws of the Game. It says this.</p>
+
+<div class="callout">
+  <p class="lab">Law 4.4 — Electronic communication (excerpt)</p>
+  <p>"The use of any form of electronic communication by team officials is permitted where it directly relates to <strong>player welfare or safety or for tactical/coaching reasons</strong> but only <strong>small, mobile, handheld equipment</strong> (e.g. microphone, headphone, earpiece, mobile phone/smartphone, smartwatch, <strong>tablet, laptop</strong>) may be used." </p>
+  <p class="quiet">And the EPTS clause contains this — the competition organiser is responsible for the accuracy of <em>"the information and data transmitted from EPTS <strong>to the technical area</strong> during matches."</em></p>
+</div>
+
+<p>Two things become clear.</p>
+
+<p><strong>First, there is no restriction on content.</strong> The permitted list governs the form factor of the device, not the kind of information on it. "Tactical/coaching reasons" is undefined and broad. An AI-generated tactical suggestion falls inside it on any natural reading.</p>
+
+<p><strong>Second, the Laws already presuppose live data reaching the bench.</strong> The phrase "transmitted to the technical area during matches" is the evidence. Since July 2022 FIFA has formally included <strong>real-time transmission</strong> of tracking data in its validation framework — in FIFA's own words, "in response to the growing desire of the football world for live match analysis."</p>
+
+<p class="lede">And the decisive part — <strong>the word "artificial intelligence" appears nowhere: not in the IFAB Laws, not in FIFA's regulations, not in UEFA's, not in the Premier League handbook.</strong> No provision governing a team's use of AI exists.</p>
+
+<p>So <strong>FIFA's restriction was a judgement, not a legal requirement.</strong> Not because grounds to forbid it existed, but because they thought it too early.</p>
+
+<h3>But there are four lines you cannot cross</h3>
+
+<div class="tw">
+<table>
+  <thead><tr><th>Constraint</th><th>Basis</th><th>If breached</th></tr></thead>
+  <tbody>
+    <tr><td>Must be small, handheld equipment</td><td>Law 4.4</td><td>No large monitors or workstations</td></tr>
+    <tr class="hl"><td><strong>Nothing may reach a player</strong></td><td>Law 4.4 — players may not wear or use communication equipment at all</td><td>Any earpiece-to-player idea is <strong>flatly illegal</strong></td></tr>
+    <tr class="hl"><td><strong>Nothing about refereeing decisions</strong></td><td>UEFA Art. 57.05 — "under no circumstances may any such systems be used in connection with any kind of refereeing decision"</td><td>Team official <strong>sent off</strong> (Law 12)</td></tr>
+    <tr><td>Only one person may convey instructions at a time</td><td>Law 1 — the technical area</td><td>The AI cannot become a second voice</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>The second row deleted one of my early ideas outright. <strong>Putting anything in a player's ear is not worth thinking about.</strong> And using broadcast video is not a Laws question but a <strong>rights</strong> question — which is usually where a real deployment hits the wall.</p>
+
+<h2><span class="num">03</span>Judgement is not the AI's job</h2>
+
+<p>Having established that the rules are open, the next question. <strong>So what is the AI going to say?</strong></p>
+
+<p>At first I imagined things like these — "substitute now", "that player's fitness is dropping", "there's an injury risk". So I went and checked the evidence for each. <strong>All of it was thin.</strong></p>
+
+<figure>
+  <p class="figtitle">The line between an observation and a judgement</p>
+  <p class="fignote">Inside = what HOVI may say · outside = what a person judges</p>
+  <svg viewBox="0 0 720 330" role="img" aria-label="The space the rules permit is wide, but the space the evidence supports inside it is much narrower. Substitution timing, live fatigue assessment, live player evaluation and injury prediction all sit outside the evidenced area.">
+    <rect x="24" y="24" width="672" height="272" rx="14" fill="color-mix(in srgb,var(--s3) 8%,transparent)" stroke="var(--s3)" stroke-width="2"/>
+    <text x="44" y="50" font-size="13" font-weight="700" fill="var(--s3)">Legal under the rules — wide</text>
+    <text x="44" y="68" font-size="11.5" fill="var(--text-secondary)">Law 4.4 · tactical/coaching purpose · no content limit · AI unmentioned</text>
+
+    <rect x="60" y="92" width="240" height="180" rx="12" fill="color-mix(in srgb,var(--s1) 12%,transparent)" stroke="var(--s1)" stroke-width="2"/>
+    <text x="80" y="118" font-size="12.5" font-weight="700" fill="var(--s1)">HOVI says these — observations</text>
+    <g font-size="11.5" fill="var(--text-primary)">
+      <text x="80" y="142">· what happened, described</text>
+      <text x="80" y="164">· accumulated high-intensity distance</text>
+      <text x="80" y="186">· space occupation, pressing shape</text>
+      <text x="80" y="208">· phase and formation detection</text>
+      <text x="80" y="230">· set-piece arrangement</text>
+      <text x="80" y="252">· retrieval of past cases</text>
+    </g>
+
+    <text x="330" y="118" font-size="12.5" font-weight="700" fill="var(--s2)">HOVI does not say these — judgements</text>
+    <g font-size="12" fill="var(--text-primary)">
+      <text x="330" y="146">✕ "substitute now"　<tspan font-size="10.5" fill="var(--s3)">→ the manager</tspan></text>
+      <text x="352" y="164" font-size="10.5" fill="var(--muted)">Myers rule failed replication · three-sub era</text>
+      <text x="330" y="192">✕ "his fitness is dropping"　<tspan font-size="10.5" fill="var(--s3)">→ AT · physio</tspan></text>
+      <text x="352" y="210" font-size="10.5" fill="var(--muted)">EPTS cannot separate fatigue from pacing</text>
+      <text x="330" y="238">✕ "he's playing well today"　<tspan font-size="10.5" fill="var(--s3)">→ the analyst</tspan></text>
+      <text x="352" y="256" font-size="10.5" fill="var(--muted)">no validated live individual evaluation</text>
+      <text x="330" y="284">✕ "there's an injury risk"　<tspan font-size="10.5" fill="var(--s3)">→ the physio</tspan></text>
+    </g>
+  </svg>
+  <figcaption>I first read this diagram as a defeat — plenty of land to build on, very little firm ground to stand on. <strong>But the items on the right were never the AI's job.</strong> A club already has an athletic trainer, a physio and a performance analyst, and those judgements are their professional territory. Thin evidence means <em>the AI must not judge</em> — not that <em>the tool is useless</em>.</figcaption>
+</figure>
+
+<div class="tw">
+<table>
+  <thead><tr><th>What I wanted it to say</th><th>What the literature says</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Substitution timing</strong></td><td>The famous 58/73/79-minute rule (Myers, 2012) <strong>failed direct replication.</strong> Silva &amp; Swartz re-analysed 4,226 observations and concluded — <em>"there is no discernible time during the second half when there is a benefit due to substitution."</em> And the original study predates five substitutions entirely</td></tr>
+    <tr><td><strong>Live fatigue assessment</strong></td><td>A Champions League study of 244 players: the decline in running output is very large (d = 1.41–2.15), but <strong>there is no difference between the final two 15-minute periods of each half.</strong> The authors attribute the pattern to <strong>pacing strategy</strong>, not fatigue. A drop in output is not an identified fatigue signal</td></tr>
+    <tr><td><strong>Live player evaluation</strong></td><td>A player has 30–80 on-ball events in a match. VAEP and xT were designed and validated for season-level aggregation, and <strong>a within-match estimate is mostly variance.</strong> No live evaluation method validated against an external criterion exists</td></tr>
+    <tr class="hl"><td><strong>Injury risk prediction</strong></td><td><strong>A 2026 systematic review</strong>: of 22 studies, <strong>17 (77%) at high risk of bias.</strong> Reported AUC scatters from 0.42 to 0.91. The conclusion — <em>"ML models should currently be considered decision-support tools rather than standalone injury-prevention systems"</em></td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>Injury prediction needs particular care. <strong>ACWR (acute:chronic workload ratio)</strong>, long the industry standard, has already collapsed — an <strong>acute-to-random workload ratio turns out to be as associated with injury as the real one</strong>. The relationship was a mathematical artefact of the ratio, not a physiological signal. And the metric is still embedded in several commercial products.</p>
+
+<p>I also read a vendor's validation directly. Their own study reports flagging <strong>72.4% of injuries (306/423) one to seven days in advance</strong>. But it <strong>reports neither the false-positive rate nor the number of alerts raised.</strong> Flag everyone every day and detection reaches 100%. Without that number, 72.4% cannot be interpreted.</p>
+
+<h2><span class="num">04</span>So what HOVI does — reporting, not judging</h2>
+
+<p>The people are already there. An athletic trainer, a physio, a performance analyst. <strong>They are the experts, and they already work with data.</strong> They know where overload begins in their own domain. The sense that 12 km in a match is a lot lives with them, not with an AI.</p>
+
+<p>So the AI's job is not to judge but to <strong>watch, on their behalf, the thresholds they already know</strong>.</p>
+
+<div class="callout">
+  <p class="lab">How it works</p>
+  <p>You set it beforehand — <em>"tell me when anyone passes 8 km."</em> The moment it happens, it tells you, with the values actually used in conditioning assessment attached: high-intensity distance, sprint count, accelerations and decelerations. <strong>The judgement after that belongs to the trainer and the physio.</strong></p>
+  <p>Periodic reporting works the same way — a status read-out every fifteen minutes. The interval, the thresholds and which values ride along are all <strong>changed by the person using it.</strong></p>
+</div>
+
+<figure>
+  <p class="figtitle">Where HOVI sits</p>
+  <p class="fignote">Thresholds and judgement both belong to people · HOVI takes only the middle</p>
+  <svg viewBox="0 0 720 240" role="img" aria-label="The expert sets the threshold, HOVI handles only live monitoring and spoken reporting, and the expert makes the judgement. HOVI takes only the middle of the chain.">
+    <defs><marker id="rr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--axis)"/></marker></defs>
+
+    <rect x="14" y="60" width="150" height="92" rx="11" fill="var(--surface-1)" stroke="var(--s3)" stroke-width="1.75"/>
+    <text x="89" y="86" font-size="11" font-weight="700" fill="var(--s3)" text-anchor="middle">Person</text>
+    <text x="89" y="110" font-size="13" font-weight="700" fill="var(--text-primary)" text-anchor="middle">Set the threshold</text>
+    <text x="89" y="130" font-size="11" fill="var(--text-secondary)" text-anchor="middle">"tell me past 8 km"</text>
+    <line x1="168" y1="106" x2="200" y2="106" stroke="var(--axis)" stroke-width="1.5" marker-end="url(#rr)"/>
+
+    <rect x="204" y="44" width="300" height="124" rx="11" fill="color-mix(in srgb,var(--s1) 11%,transparent)" stroke="var(--s1)" stroke-width="2"/>
+    <text x="354" y="70" font-size="11" font-weight="700" fill="var(--s1)" text-anchor="middle">HOVI — this span only</text>
+    <text x="354" y="96" font-size="13" font-weight="700" fill="var(--text-primary)" text-anchor="middle">Live monitoring · spoken report</text>
+    <text x="354" y="118" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">on threshold, and every 15 min</text>
+    <text x="354" y="138" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">high-intensity, sprints, accel/decel attached</text>
+    <text x="354" y="158" font-size="10.5" font-weight="650" fill="var(--s1)" text-anchor="middle">No inference · no judgement · numbers only</text>
+    <line x1="508" y1="106" x2="540" y2="106" stroke="var(--axis)" stroke-width="1.5" marker-end="url(#rr)"/>
+
+    <rect x="544" y="60" width="152" height="92" rx="11" fill="var(--surface-1)" stroke="var(--s3)" stroke-width="1.75"/>
+    <text x="620" y="86" font-size="11" font-weight="700" fill="var(--s3)" text-anchor="middle">Person</text>
+    <text x="620" y="110" font-size="13" font-weight="700" fill="var(--text-primary)" text-anchor="middle">Judgement</text>
+    <text x="620" y="130" font-size="11" fill="var(--text-secondary)" text-anchor="middle">Trainer · physio · analyst</text>
+
+    <path d="M620,156 L620,196 L89,196 L89,156" fill="none" stroke="var(--muted)" stroke-width="1.25" stroke-dasharray="4 4" marker-end="url(#rr)"/>
+    <text x="354" y="214" font-size="11.5" fill="var(--muted)" text-anchor="middle">They adjust thresholds as they use it — this loop fits the tool to the club</text>
+  </svg>
+  <figcaption>Cut this way, <strong>the problem in §03 stops being HOVI's problem.</strong> It does not adjudicate fatigue versus pacing. It states that a player has covered 8 km. That is an observation, not an inference. And <strong>a system that does not infer cannot produce a wrong inference.</strong></figcaption>
+</figure>
+
+<h3>But why voice</h3>
+
+<p>This is the part of the idea that is actually new. Live GPS dashboards already exist. The problem is that <strong>seeing one requires looking at a screen.</strong></p>
+
+<p>During a match the trainer's eyes and hands are already occupied — watching the pitch, treating someone, talking to the bench. A tablet demands eyes. <strong>The ears are free.</strong></p>
+
+<p class="lede">Sometimes <strong>hearing it and speaking back</strong> is easier than looking. If an automatic reporting system watches the screen on your behalf, you get to do the thing you are better at.</p>
+
+<p>There is a technical benefit too: the voice commands become a <strong>closed vocabulary</strong>. <em>"Tell me who passes 8 km"</em> is a fixed sentence pattern, not open dialogue. Speech recognition in stadium noise is, as we will see, the weakest link in this whole idea — and a closed vocabulary shrinks that risk considerably.</p>
+
+<h2><span class="num">05</span>Where this goes next — from reporting to conversation</h2>
+
+<p>§04 is the <strong>floor</strong> — watching thresholds and reading them out. That can be built with today's technology and leaves almost no room to be wrong.</p>
+
+<p>But that is not what I originally wanted. I wanted <strong>a conversation in which evidence moves both ways</strong>. Not being notified of a number, but asking and getting the evidence for it, then asking again from what you see. And eventually an AI that knows <strong>what kind of thing I tend to want to know</strong>, and puts it up before I ask.</p>
+
+<figure>
+  <p class="figtitle">Three stages, and the line not to cross</p>
+  <p class="fignote">What the AI's job becomes at each stage</p>
+  <svg viewBox="0 0 720 300" role="img" aria-label="Stage one reports against thresholds. Stage two answers questions with evidence attached. Stage three learns the user's patterns and surfaces things before being asked. Personalising retrieval is safe; personalising judgement crosses the line.">
+    <rect x="16" y="34" width="212" height="122" rx="11" fill="color-mix(in srgb,var(--s1) 12%,transparent)" stroke="var(--s1)" stroke-width="2"/>
+    <text x="34" y="58" font-size="11" font-weight="700" fill="var(--s1)">Stage 1 · build now</text>
+    <text x="122" y="84" font-size="14" font-weight="700" fill="var(--text-primary)" text-anchor="middle">Reporting</text>
+    <text x="122" y="108" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">threshold → alert</text>
+    <text x="122" y="128" font-size="11" fill="var(--muted)" text-anchor="middle">"past 8 km"</text>
+    <text x="122" y="146" font-size="10.5" font-weight="650" fill="var(--s3)" text-anchor="middle">no inference</text>
+
+    <rect x="254" y="34" width="212" height="122" rx="11" fill="color-mix(in srgb,var(--s1) 7%,transparent)" stroke="var(--s1)" stroke-width="1.5" stroke-dasharray="6 4"/>
+    <text x="272" y="58" font-size="11" font-weight="700" fill="var(--s1)">Stage 2 · next</text>
+    <text x="360" y="84" font-size="14" font-weight="700" fill="var(--text-primary)" text-anchor="middle">Conversation</text>
+    <text x="360" y="108" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">question → evidence</text>
+    <text x="360" y="128" font-size="11" fill="var(--muted)" text-anchor="middle">"why? compare the last three"</text>
+    <text x="360" y="146" font-size="10.5" font-weight="650" fill="var(--s3)" text-anchor="middle">retrieval and narration only</text>
+
+    <rect x="492" y="34" width="212" height="122" rx="11" fill="var(--surface-1)" stroke="var(--border)" stroke-dasharray="4 5"/>
+    <text x="510" y="58" font-size="11" font-weight="650" fill="var(--muted)">Stage 3 · later</text>
+    <text x="598" y="84" font-size="14" font-weight="700" fill="var(--text-primary)" text-anchor="middle">Personalisation</text>
+    <text x="598" y="108" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">patterns → surfaced first</text>
+    <text x="598" y="128" font-size="11" fill="var(--muted)" text-anchor="middle">offered before you ask</text>
+
+    <line x1="16" y1="196" x2="704" y2="196" stroke="var(--axis)" stroke-width="1.25"/>
+    <rect x="16" y="176" width="450" height="40" fill="color-mix(in srgb,var(--s3) 10%,transparent)"/>
+    <rect x="466" y="176" width="238" height="40" fill="color-mix(in srgb,var(--s2) 10%,transparent)"/>
+    <text x="30" y="192" font-size="11.5" font-weight="700" fill="var(--s3)">Safe personalisation — what to show</text>
+    <text x="30" y="211" font-size="11" fill="var(--text-secondary)">he always asks for high-intensity after a distance alert → include it</text>
+    <text x="480" y="192" font-size="11.5" font-weight="700" fill="var(--s2)">Personalisation that crosses the line — what to decide</text>
+    <text x="480" y="211" font-size="11" fill="var(--text-secondary)">he always substitutes in this situation → recommend the substitution</text>
+
+    <text x="16" y="248" font-size="12" fill="var(--text-secondary)">Wrong on the left is <tspan font-weight="650">showing something useless</tspan>. Wrong on the right is <tspan font-weight="650" fill="var(--s2)">having made the decision for you</tspan>.</text>
+    <text x="16" y="276" font-size="12" fill="var(--text-secondary)">And the right has a worse trap — <tspan font-weight="700" fill="var(--s2)">an AI that has learned to agree with me is not a second opinion.</tspan></text>
+  </svg>
+  <figcaption>Stage three is not the problem; <strong>what stage three is applied to</strong> is. Learning <em>which evidence a person wants</em> is personalised retrieval, and at worst it shows you something you will not use. Learning <em>which decisions a person makes</em> and then recommending them inherits every evidence problem from §03 intact.</figcaption>
+</figure>
+
+<p><strong>Stage two is the real destination.</strong> An alert is the opening of a conversation, not the end of one. You hear "past 8 km", ask <em>"why? compare it with the same point in the last three matches"</em>, get that evidence, and from it ask <em>"and what about the last twenty minutes"</em>. <strong>Evidence moving both ways rather than being announced in one direction</strong> — that was the picture I wanted.</p>
+
+<p>And this fits the architecture in §07. Conversation does not mean the AI does the arithmetic. Its job runs from <strong>translating the question into predefined metrics to putting the resulting value into words.</strong> Everything between is done by deterministic code.</p>
+
+<h3>What can be said about stage three now</h3>
+
+<p>Learning a user's patterns is an <strong>easier problem</strong> than learning football. One person makes the same kinds of request repeatedly, the signal is consistent, and errors are corrected immediately. The negative result in §03 — that player embeddings do not improve prediction — is about modelling <em>players</em>, not about modelling <em>users</em>.</p>
+
+<p>Two cautions, written down in advance.</p>
+
+<ul>
+  <li><strong>Automation bias.</strong> Once a system starts surfacing things first, people stop questioning them. This is a well-documented failure in clinical decision support. <strong>Surfacing things pre-emptively is convenience and a narrowing of thought at the same time</strong></li>
+  <li><strong>The feedback trap.</strong> An AI that learns my past decisions and returns judgements tailored to me eventually <strong>learns to agree with me.</strong> That destroys what I actually want in §10 — a coach, an analyst and an AI each arriving with different reasoning. <strong>It stops being a third opinion and becomes an echo of my own</strong></li>
+</ul>
+
+<p class="lede">So personalisation points at <strong>"what to show" and never at "what to decide".</strong> Tailor the choice of evidence to me; do not tailor the conclusion. Hold that line and stage three does not kill the second opinion.</p>
+
+<h2><span class="num">06</span>So I changed the question — coverage, not accuracy</h2>
+
+<p>Stuck here, I went back to why I wanted this tool in the first place.</p>
+
+<p>I never wanted the AI to <strong>be right</strong>. Running a substitution or a tactical change through beforehand <strong>makes what you expect explicit</strong>, and makes it easier to explain to the players. And if it does not appear, you <strong>have the next response ready at the same time</strong>. That was the point.</p>
+
+<p>That difference turns out to be large.</p>
+
+<figure>
+  <p class="figtitle">Read as prediction, read as preparation</p>
+  <p class="fignote">What you evaluate the same simulation output against</p>
+  <svg viewBox="0 0 720 300" role="img" aria-label="Read as prediction it offers one future and is judged on whether it was right, so it is mostly wrong. Read as preparation it offers several branches and is judged on whether reality landed inside them, which can be verified.">
+    <text x="24" y="28" font-size="12.5" font-weight="700" fill="var(--s2)">As prediction — verification is blocked</text>
+    <circle cx="70" cy="76" r="9" fill="var(--text-primary)"/>
+    <text x="70" y="106" font-size="11" fill="var(--muted)" text-anchor="middle">now</text>
+    <line x1="82" y1="76" x2="290" y2="76" stroke="var(--s2)" stroke-width="2.5" marker-end="url(#hh)"/>
+    <defs><marker id="hh" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+    <rect x="296" y="60" width="150" height="32" rx="6" fill="color-mix(in srgb,var(--s2) 14%,transparent)" stroke="var(--s2)"/>
+    <text x="371" y="81" font-size="12" font-weight="650" fill="var(--s2)" text-anchor="middle">"this is what will happen"</text>
+    <text x="466" y="72" font-size="11.5" fill="var(--muted)">→ judged on being right</text>
+    <text x="466" y="90" font-size="11.5" font-weight="650" fill="var(--critical)">→ counterfactuals have no ground truth</text>
+
+    <line x1="24" y1="130" x2="696" y2="130" stroke="var(--grid)"/>
+
+    <text x="24" y="162" font-size="12.5" font-weight="700" fill="var(--s1)">As preparation — verification becomes possible</text>
+    <circle cx="70" cy="216" r="9" fill="var(--text-primary)"/>
+    <text x="70" y="246" font-size="11" fill="var(--muted)" text-anchor="middle">now</text>
+    <path d="M82,216 C170,216 200,182 288,182" fill="none" stroke="var(--s1)" stroke-width="2.5" marker-end="url(#hh)" color="var(--s1)"/>
+    <path d="M82,216 L288,216" fill="none" stroke="var(--s1)" stroke-width="2.5" marker-end="url(#hh)" color="var(--s1)"/>
+    <path d="M82,216 C170,216 200,250 288,250" fill="none" stroke="var(--s1)" stroke-width="2.5" marker-end="url(#hh)" color="var(--s1)"/>
+    <rect x="296" y="168" width="118" height="28" rx="6" fill="color-mix(in srgb,var(--s1) 12%,transparent)" stroke="var(--s1)"/>
+    <text x="355" y="187" font-size="11.5" fill="var(--s1)" text-anchor="middle">if they drop off</text>
+    <rect x="296" y="202" width="118" height="28" rx="6" fill="color-mix(in srgb,var(--s1) 12%,transparent)" stroke="var(--s1)"/>
+    <text x="355" y="221" font-size="11.5" fill="var(--s1)" text-anchor="middle">if nothing changes</text>
+    <rect x="296" y="236" width="118" height="28" rx="6" fill="color-mix(in srgb,var(--s1) 12%,transparent)" stroke="var(--s1)"/>
+    <text x="355" y="255" font-size="11.5" fill="var(--s1)" text-anchor="middle">if we press higher</text>
+    <text x="430" y="200" font-size="11.5" fill="var(--muted)">→ judged on whether</text>
+    <text x="430" y="218" font-size="11.5" fill="var(--muted)">reality landed inside</text>
+    <text x="430" y="240" font-size="11.5" font-weight="700" fill="var(--s3)">→ this can be counted</text>
+  </svg>
+  <figcaption>Every tactical counterfactual study is stuck at "was the prediction right", because there is no ground truth. So results in this field are <strong>validated by expert preference rather than accuracy</strong> — and that preference <strong>moves a great deal depending on whom you ask and what you ask them.</strong> The widely quoted "90%" means that five people at Liverpool FC (three data scientists, one video analyst, one coaching assistant) assessed <strong>50 scenarios</strong>, and in 45 of them the majority favoured TacticAI's version. Another study asked 36 people (3 club experts, 9 coaches, 24 players): overall 44% judged the AI's version better, but <strong>among the three club experts it was 34%</strong> — and on multi-step scenarios those same experts rose to <strong>41%</strong>. <strong>Asking for coverage sidesteps the problem.</strong> Whether reality landed inside the branches you prepared can be counted independently of anyone's taste.</figcaption>
+</figure>
+
+<div class="callout">
+  <p class="lab">The question, changed</p>
+  <p>❌ <strong>What happens if I make this substitution</strong> — unanswerable. No ground truth exists.<br>
+  ✅ <strong>What should I prepare for if I make this substitution</strong> — answerable, and countable afterwards.</p>
+  <p class="quiet">There is a practical benefit too. Instead of telling the players <em>"this is what will happen"</em>, a manager can say <em>"one of these three will come, and here is what we do in each"</em>. It is easier to explain, and when the prediction misses, the team does not fall apart.</p>
+</div>
+
+<h2><span class="num">07</span>If you build it — never let the LLM do the arithmetic</h2>
+
+<p>I researched the architecture too. Here the answer is comparatively clear.</p>
+
+<p>The most natural implementation is "hand the AI the match data and ask it". <strong>That fails.</strong></p>
+
+<figure>
+  <p class="figtitle">LLM doing the arithmetic versus tools doing it</p>
+  <p class="fignote">A football question-answering benchmark (top) and a structured-data query benchmark (bottom)</p>
+  <svg viewBox="0 0 720 280" role="img" aria-label="On SoccerNet football question answering, a general LLM scored 0.39 and a tool-routing specialist system 0.91. On structured-data queries, raw text-to-SQL scored 51 to 90 percent and a semantic layer 98 to 100 percent.">
+    <text x="20" y="26" font-size="11.5" font-weight="650" fill="var(--muted)" letter-spacing="1">Football QA · SoccerNet 2026</text>
+    <text x="196" y="60" font-size="13" fill="var(--text-primary)" text-anchor="end">Asking a general LLM directly</text>
+    <rect x="206" y="46" width="164" height="22" rx="4" fill="var(--s2)"/>
+    <text x="382" y="63" font-size="14" font-weight="700" fill="var(--text-primary)">39%</text>
+    <text x="196" y="98" font-size="13" fill="var(--text-primary)" text-anchor="end">Tool-routing specialist system</text>
+    <rect x="206" y="84" width="382" height="22" rx="4" fill="var(--s1)"/>
+    <text x="600" y="101" font-size="14" font-weight="700" fill="var(--text-primary)">91%</text>
+
+    <line x1="20" y1="130" x2="700" y2="130" stroke="var(--grid)"/>
+
+    <text x="20" y="158" font-size="11.5" font-weight="650" fill="var(--muted)" letter-spacing="1">Structured-data queries · dbt 2026 benchmark</text>
+    <text x="196" y="192" font-size="13" fill="var(--text-primary)" text-anchor="end">LLM writes the query itself</text>
+    <rect x="206" y="178" width="215" height="22" rx="4" fill="var(--s2)"/>
+    <text x="433" y="195" font-size="14" font-weight="700" fill="var(--text-primary)">51~90%</text>
+    <text x="196" y="230" font-size="13" fill="var(--text-primary)" text-anchor="end">Through a semantic layer</text>
+    <rect x="206" y="216" width="412" height="22" rx="4" fill="var(--s1)"/>
+    <text x="630" y="233" font-size="14" font-weight="700" fill="var(--text-primary)">98~100%</text>
+
+    <text x="20" y="266" font-size="11.5" fill="var(--muted)">Aggregation accuracy over tabular data is <tspan font-weight="700" fill="var(--s2)">7–35%</tspan>. Past 8K tokens of context, <tspan font-weight="700" fill="var(--s2)">70–90%</tspan> of performance is lost.</text>
+  </svg>
+  <figcaption>Four independent lines of evidence point the same way — football agent research, data-query benchmarks, and a paper that has an LLM narrate the output of an xG model. <strong>Use the LLM as a router and a narrator. Never as a calculator.</strong></figcaption>
+</figure>
+
+<p><em>"How's our left side doing?"</em> is a filtered aggregation. It is <strong>the weakest item</strong> in these benchmarks, and long context with missing values — real conditions — is exactly where performance collapses.</p>
+
+<p class="lede">And the way it fails is the worst possible. <strong>It will willingly, quietly, plausibly hand you the wrong number.</strong> For someone deciding a substitution inside thirty seconds, that is the one fatal failure mode.</p>
+
+<p>Through a semantic layer, by contrast, <strong>it says it does not know when it does not know.</strong> It fails safe. The price is coverage — zero on questions outside its scope. You narrow the list of answerable questions in exchange for not being wrong inside it, and for this use that is the right trade.</p>
+
+<h3>For reference, LLMs do not know football that well</h3>
+
+<div class="statrow">
+  <div class="stat"><div class="k">2026 World Cup, 104 matches</div><div class="v">68.4%</div><div class="n">best-performing LLM</div></div>
+  <div class="stat"><div class="k">same conditions</div><div class="v">68.3%</div><div class="n">bookmakers</div></div>
+  <div class="stat"><div class="k">same conditions</div><div class="v" style="color:var(--s2)">69.7%</div><div class="n">ordinary fans — <strong>above the LLM</strong></div></div>
+</div>
+
+<p>And on tasks that combine the Laws of the Game with visual evidence, the best models manage <strong>44% on foul classification and 6% on visual grounding.</strong> The researchers' conclusion was <em>"superficial pattern matching rather than genuine reasoning."</em> <strong>"What happens if we switch to a back three"</strong> is not a question retrieval can answer. A simulator or a fitted model computes it; the LLM puts it into words.</p>
+
+<h2><span class="num">08</span>Two components</h2>
+
+<p>HOVI is not one object. It needs two organs, and I am working on each separately.</p>
+
+<figure>
+  <p class="figtitle">The structure of HOVI</p>
+  <p class="fignote">One hub, two components — each at a different stage of verification</p>
+  <svg viewBox="0 0 720 250" role="img" aria-label="Two components sit under the HOVI hub. On the left, the Dual-View glasses: a prototype with one stage verified. On the right, the tactical simulator: researched only, nothing built.">
+    <rect x="216" y="20" width="288" height="66" rx="12" fill="color-mix(in srgb,var(--s1) 12%,transparent)" stroke="var(--s1)" stroke-width="2"/>
+    <text x="360" y="46" font-size="15" font-weight="720" fill="var(--text-primary)" text-anchor="middle">HOVI</text>
+    <text x="360" y="68" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">Conversational football AI partner · concept stage</text>
+
+    <path d="M300,90 L300,110 L152,110 L152,132" fill="none" stroke="var(--axis)" stroke-width="1.5"/>
+    <path d="M420,90 L420,110 L568,110 L568,132" fill="none" stroke="var(--axis)" stroke-width="1.5"/>
+
+    <rect x="24" y="136" width="256" height="94" rx="12" fill="var(--surface-1)" stroke="var(--s3)" stroke-width="1.75"/>
+    <text x="44" y="160" font-size="11" font-weight="700" fill="var(--s3)">■ prototype · stage 1 verified</text>
+    <text x="152" y="186" font-size="13.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">① Ears and eyes</text>
+    <text x="152" y="206" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">Dual-View glasses</text>
+    <text x="152" y="222" font-size="11" fill="var(--muted)" text-anchor="middle">turning speech and gaze into data</text>
+
+    <rect x="440" y="136" width="256" height="94" rx="12" fill="var(--surface-1)" stroke="var(--border)" stroke-dasharray="5 4"/>
+    <text x="460" y="160" font-size="11" font-weight="650" fill="var(--muted)">□ researched only · nothing built</text>
+    <text x="568" y="186" font-size="13.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">② The what-if engine</text>
+    <text x="568" y="206" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">Tactical simulator</text>
+    <text x="568" y="222" font-size="11" fill="var(--muted)" text-anchor="middle">a device for preparing branches</text>
+  </svg>
+  <figcaption>① is the input organ that captures what the manager says and sees and turns it into data; ② is the computational organ that runs the "what if". HOVI is the conversational layer on top of both. <strong>Only ① actually exists, and within it only one stage is verified.</strong></figcaption>
+</figure>
+
+<p>① has a piece of its own — the tool that hears the manager and cuts the passage that just went by, from two angles, with only its time-synchronisation stage verified.</p>
+
+<p style="margin:22px 0 8px"><a href="/en/kpi-lab/dualview" target="_top" style="display:inline-block;padding:13px 20px;border:1px solid var(--s1);border-radius:11px;text-decoration:none;background:color-mix(in srgb,var(--s1) 7%,transparent)"><span style="display:block;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:650">Component ①</span><span style="display:block;font-size:15px;font-weight:700;color:var(--text-primary);margin-top:3px">The manager speaks during the match — Dual-View →</span></a></p>
+
+<p class="quiet">② is researched only. The early idea of showing it as a hologram is physically blocked — volumetric displays are additive and cannot occlude what is behind, so a crowded penalty box renders as an overlapping smear — and counterfactual simulation has no validation criterion to begin with. The coverage argument in §06 is what came out of that research. <strong>When there is something to verify, it gets its own piece.</strong></p>
+
+
+
+<h2><span class="num">09</span>What would have to be true</h2>
+
+<p>Narrowing the scope to reporting changed the risk list. <strong>Inference risk fell; plumbing risk moved to the front.</strong> None of the following is confirmed.</p>
+
+<ol>
+  <li><strong>Live EPTS data can actually be received.</strong> This is now the hardest premise. The Laws permit it and FIFA has validated real-time transmission since 2022, but <strong>owning GPS vests for training and having live telemetry arrive at the bench mid-match are different product tiers.</strong> Whether this works at a club I can reach has to be checked first. If it does not, nothing else matters</li>
+  <li><strong>Voice works in a stadium.</strong> <strong>Not a single published error rate exists for speech recognition in live sport.</strong> Industrial settings put 16–24% as the <em>floor</em>, and a stadium is louder. A closed command vocabulary shrinks the risk substantially — a handful of fixed patterns rather than open dialogue, with keyword boosting on player names and numbers. <strong>Until it is measured, I do not know</strong></li>
+  <li><strong>Alerts do not fire too often.</strong> The classic failure of threshold alerting, well documented in clinical settings — fire too often and people stop listening. The false-positive question I put to the injury-prediction vendor earlier <strong>comes straight back at my own system.</strong> How many alerts in ninety minutes is right, I do not yet know</li>
+  <li><strong>No default thresholds are shipped.</strong> If the product arrives with "8 km" pre-filled, that is a claim — an unevidenced one. <strong>Leave it empty and let the expert fill it.</strong> This is a design principle rather than a technical constraint, and it will not be easy to hold</li>
+  <li><strong>Ears really are better than a screen.</strong> My assumption, not a measured fact. One trainer, one match, and you would know. It is <strong>the cheapest assumption to test</strong>, so it goes first</li>
+  <li><strong>The list of answerable questions can be pinned down narrowly.</strong> If it reaches the conversational layer, a semantic layer is only safe inside its scope. What share of the questions actually asked on a touchline <em>can be answered from predefined metrics</em> — nobody has counted</li>
+  <li><strong>Reality lands inside the branches prepared.</strong> The simulator-side assumption. If coverage is the validation criterion, the number has to be measured</li>
+  <li><strong>Personalisation does not cross the line.</strong> Stage three in §05 must attach only to <em>what to show</em>. This is a line I have to hold myself, not one the technology enforces, and the more useful it gets the more tempting crossing it becomes. The test for whether it has been crossed needs setting in advance — <em>"is this output evidence or a conclusion?"</em></li>
+</ol>
+
+<div class="callout">
+  <p class="lab">The first thing to do</p>
+  <p>Number five. <strong>One trainer, one match, a spoken report every fifteen minutes.</strong> No AI and no learning required — a person with a timer reading it out will do. Whether receiving it by ear beats a screen, which values they want, how often becomes annoying. <strong>That single match settles half the list above.</strong></p>
+</div>
+
+<h2><span class="num">10</span>What I am holding onto in this idea</h2>
+
+<p>Researching this folded away much of the Iron Man image. The hologram is physically blocked, the player earpiece is illegal, and most of the judgements I wanted had no evidence behind them.</p>
+
+<p>But one thing got firmer the more I looked.</p>
+
+<p class="lede">A manager is <strong>not someone who decides but someone who chooses</strong>. The coach's view, the analyst's view and the AI's view each arrive carrying their own reasoning, and the manager picks among them. To win, I think you need several perspectives and several approaches.</p>
+
+<p>That view lines up with the research. A legal commentary on the regulatory vacuum around AI landed on a single principle — <em>"ultimate responsibility clearly remains with the coach or the referee"</em> — and every shipped AI assistant attaches the same caveat: <em>"it does not replace practitioner expertise."</em></p>
+
+<p><strong>Put the AI forward as the answer and it collapses for want of evidence; put it forward as one vote and it is useful even on thin evidence.</strong> The coach and the analyst can use the same tool to develop and argue their own reasoning. The quality of the options placed in front of the manager goes up. That is what I actually want from this.</p>
+
+<p>And this is also why the line in §05 matters. <strong>Once the AI starts tailoring conclusions to me, it is not one vote but a copy of my own.</strong> Saying you need several perspectives while manufacturing one more voice that sounds like you does not hold together. Tailor the evidence to me, never the conclusion — that is not a technical constraint but the thing I want from the tool.</p>
+
+<p class="quiet">The next step is item six in §09 — collect the questions a manager actually asks during a match and count what share can be answered from predefined metrics. That can be done right now, with no AI at all.</p>
+
+<footer>
+  <p>Status — concept and research. <strong>Nothing built.</strong> Every figure here is quoted from published regulations, papers or vendor announcements. None of them is a measurement of mine.</p>
+  <p>Principal sources — IFAB Laws of the Game 1, 4 and 12; FIFA World Cup 26 Regulations; UEFA competition regulations; the FIFA/Lenovo announcement; Myers (2012); Silva &amp; Swartz; the UEFA Champions League running-performance study (2022); the systematic review of injury prediction (2026); SoccerNet 2026; the dbt semantic-layer benchmark (2026); WorldCupArena (2026).</p>
+  <p>Hyuckjin Han · Aug 2026 · Component ① Dual-View has a piece of its own. Component ② the tactical simulator is researched only, and gets written up when there is something to verify.</p>
+</footer>
+
+</div>
+<script>
+(function(){
+  var b=document.getElementById('tt'), r=document.documentElement;
+  b.addEventListener('click',function(){
+    var cur=r.getAttribute('data-theme');
+    if(!cur){cur=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+    r.setAttribute('data-theme', cur==='dark'?'light':'dark');
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="A tool that hears what a manager shouts from the touchline and cuts the moment that just passed, from two angles. The design notes, the one thing verified so far — 8 ms sync error — and everything that is not.">
+<title>The manager speaks during the match — Dual-View design notes</title>
+<style>
+:root{
+  --page:#f9f9f7; --surface-1:#fcfcfb;
+  --text-primary:#0b0b0b; --text-secondary:#52514e; --muted:#898781;
+  --grid:#e1e0d9; --axis:#c3c2b7; --border:rgba(11,11,11,0.10);
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a;
+  --good:#0ca30c; --critical:#d03b3b; --warning:#fab219;
+  --seq250:#86b6ef; --seq350:#5598e7; --seq450:#2a78d6; --seq600:#184f95;
+}
+:root[data-theme="dark"]{
+  --page:#0d0d0d; --surface-1:#1a1a19;
+  --text-primary:#ffffff; --text-secondary:#c3c2b7; --muted:#898781;
+  --grid:#2c2c2a; --axis:#383835; --border:rgba(255,255,255,0.10);
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+  --seq250:#184f95; --seq350:#256abf; --seq450:#3987e5; --seq600:#86b6ef;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --page:#0d0d0d; --surface-1:#1a1a19;
+    --text-primary:#ffffff; --text-secondary:#c3c2b7; --muted:#898781;
+    --grid:#2c2c2a; --axis:#383835; --border:rgba(255,255,255,0.10);
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+    --seq250:#184f95; --seq350:#256abf; --seq450:#3987e5; --seq600:#86b6ef;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--text-primary);
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.65;
+  -webkit-font-smoothing:antialiased;}
+.wrap{max-width:920px;margin:0 auto;padding:0 22px 90px}
+
+.themebtn{position:fixed;top:14px;right:16px;z-index:9;font:inherit;font-size:12.5px;
+  color:var(--text-secondary);background:var(--surface-1);border:1px solid var(--border);
+  border-radius:7px;padding:5px 11px;cursor:pointer}
+
+header.hero{padding:64px 0 34px;border-bottom:1px solid var(--border);margin-bottom:44px}
+.kicker{font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-weight:650}
+h1{font-size:clamp(28px,4.6vw,42px);line-height:1.22;margin:14px 0 12px;letter-spacing:-.02em;font-weight:720}
+.sub{font-size:clamp(15px,2vw,17.5px);color:var(--text-secondary);max-width:64ch;margin:0}
+.meta{margin-top:22px;font-size:12.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 20px}
+.meta b{color:var(--text-secondary);font-weight:600}
+
+h2{font-size:clamp(20px,2.7vw,25px);margin:60px 0 6px;letter-spacing:-.015em;font-weight:700}
+h2 .num{color:var(--muted);font-weight:600;margin-right:10px;font-variant-numeric:tabular-nums}
+h3{font-size:16.5px;margin:32px 0 8px;font-weight:670}
+p{margin:12px 0;max-width:68ch}
+ul,ol{max-width:68ch;padding-left:20px}
+li{margin:7px 0}
+a{color:var(--s1)}
+strong{font-weight:660}
+code{font-family:ui-monospace,Menlo,monospace;font-size:.88em;
+  background:color-mix(in srgb,var(--text-primary) 6%,transparent);padding:1px 5px;border-radius:4px}
+
+.lede{font-size:17px;color:var(--text-primary);border-left:3px solid var(--s2);
+  padding:2px 0 2px 18px;margin:22px 0 28px;max-width:66ch}
+.quiet{color:var(--text-secondary)}
+
+.statrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:26px 0 8px}
+.stat{background:var(--surface-1);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+.stat .k{font-size:11.5px;color:var(--muted);letter-spacing:.04em}
+.stat .v{font-size:23px;font-weight:700;margin-top:3px;font-variant-numeric:tabular-nums}
+.stat .n{font-size:11.5px;color:var(--text-secondary);margin-top:2px}
+
+figure{margin:30px 0 8px;background:var(--surface-1);border:1px solid var(--border);
+  border-radius:14px;padding:20px 20px 14px}
+figure svg{display:block;width:100%;height:auto}
+.figtitle{font-size:14px;font-weight:670;margin:0 0 2px}
+.fignote{font-size:12.5px;color:var(--muted);margin:0 0 14px}
+figcaption{font-size:13px;color:var(--text-secondary);margin-top:12px;padding-top:11px;
+  border-top:1px solid var(--grid)}
+
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:18px 0;min-width:480px}
+th,td{text-align:right;padding:8px 10px;border-bottom:1px solid var(--grid);font-variant-numeric:tabular-nums}
+th:first-child,td:first-child{text-align:left;font-variant-numeric:normal}
+th{font-size:11.5px;letter-spacing:.05em;color:var(--muted);font-weight:650;text-transform:uppercase}
+tr.hl td{background:color-mix(in srgb,var(--s2) 9%,transparent);font-weight:640}
+td.dim{color:var(--muted)}
+td.up{color:var(--s3);font-weight:640}
+td.dn{color:var(--s2);font-weight:640}
+
+.fixbox{background:var(--surface-1);border:1px solid var(--border);border-left:3px solid var(--critical);
+  border-radius:12px;padding:18px 20px;margin:24px 0}
+.fixbox .lab{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--critical);font-weight:680;margin-bottom:8px}
+.fixbox p{margin:8px 0}
+.fixbox p:last-child{margin-bottom:0}
+.before{font-size:14px;color:var(--muted);border-left:2px solid var(--grid);padding-left:14px;margin:10px 0}
+.before b{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-secondary);margin-bottom:3px}
+
+.callout{background:var(--surface-1);border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin:24px 0}
+.callout .lab{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:680;margin-bottom:8px}
+.callout > :last-child{margin-bottom:0}
+
+.glossary{font-size:13px;color:var(--text-secondary);background:color-mix(in srgb,var(--text-primary) 3.5%,transparent);
+  border-radius:10px;padding:14px 16px;margin:18px 0}
+.glossary dt{font-weight:670;color:var(--text-primary);display:inline}
+.glossary dd{display:inline;margin:0 0 0 6px}
+.glossary div{margin:6px 0}
+
+footer{margin-top:70px;padding-top:22px;border-top:1px solid var(--border);
+  font-size:12.5px;color:var(--muted);line-height:1.9}
+</style>
+</head>
+<body>
+<button class="themebtn" id="tt">◐ Theme</button>
+<div class="wrap">
+
+<header class="hero">
+  <p class="kicker">KPI Lab · Tool in design · Prototype</p>
+  <h1>The manager speaks during the match.<br>And what he says disappears.</h1>
+  <p class="sub">A tool I have been designing and building: it hears one line shouted from the touchline and cuts <strong>the moment that just passed</strong> from two angles — the tactical view and the manager's own — saving it with a tactical tag. Nothing is operated during the match. <strong>Four claps</strong> is the whole procedure. This is a record of that design process, and of the one thing I have actually proved so far.</p>
+  <div class="meta">
+    <span>Hyuckjin Han · Tool design</span>
+    <span><b>2026.08</b></span>
+    <span>Status: <b>prototype</b> — designed and built</span>
+    <span><b>Not yet field-tested</b></span>
+  </div>
+</header>
+
+<div class="callout" style="border-left:3px solid var(--warning)">
+  <p class="lab">Stated up front</p>
+  <p>This tool <strong>has never processed a single real match.</strong> All six pipeline stages are built, and <strong>exactly one of them has been verified.</strong> Below, each stage is marked for what is proved and what is still a claim. This is not a product page. It is a <strong>design note</strong>.</p>
+</div>
+
+<h2><span class="num">01</span>The problem on the touchline — that moment does not come twice</h2>
+
+<p>Most of what a manager says during a match is about <strong>something that just happened</strong>. "Why didn't you close there." "You should have switched then." "Next time go a beat later." These sentences only mean anything to someone who is watching that exact moment.</p>
+
+<p>And when the match ends, what remains is one ninety-minute video and a few lines of notes written from memory. The analyst takes those notes and searches through ninety minutes again. <strong>What the manager actually saw</strong> is already gone.</p>
+
+<div class="glossary">
+  <div><dt>Why not just record it</dt><dd>A manager cannot touch equipment during a match. The instant he presses a button he misses the passage. And in practice he speaks <strong>after the event is over</strong> — the cross goes in, the header comes, and only then does the shout arrive.</dd></div>
+  <div><dt>Why notes don't work</dt><dd>There are dozens of instructions across ninety minutes. There is no time to write them, and even when written, the <em>minute and second</em> is not. Without that timecode you cannot find it in the video.</dd></div>
+</div>
+
+<p class="lede">So I inverted it. <strong>Nothing is done during the match.</strong> Three sources simply run for the full ninety minutes, and everything else happens after the final whistle.</p>
+
+<div class="statrow">
+  <div class="stat"><div class="k">Source ①</div><div class="v" style="font-size:17px">Tactical camera</div><div class="n">Tripod · the whole match</div></div>
+  <div class="stat"><div class="k">Source ②</div><div class="v" style="font-size:17px">Glasses (POV)</div><div class="n">What the manager actually saw</div></div>
+  <div class="stat"><div class="k">Source ③</div><div class="v" style="font-size:17px">Audio</div><div class="n">His voice · the reference clock</div></div>
+</div>
+
+<h2><span class="num">02</span>The hard part isn't the cameras. It's having three clocks.</h2>
+
+<p>Here a problem appears. The three devices keep different time. Each crystal oscillator runs at a fractionally different frequency, so even if you start all three at kick-off, they drift apart as the match goes on.</p>
+
+<p>Why that is fatal: <strong>the error grows the further into the match you go.</strong> Align only the start and your first-half clips land while your second-half clips slide off. And the second half is exactly when the instructions come thickest.</p>
+
+<figure>
+  <p class="figtitle">One clap versus four</p>
+  <p class="fignote">Vertical = drift from the reference clock (audio) · horizontal = elapsed time</p>
+  <svg viewBox="0 0 720 380" role="img" aria-label="With a single clap the error accumulates in proportion to time and reaches 6.5 seconds by the final whistle. With four claps the error resets to zero at each one and stays within 0.2 seconds all match.">
+    <!-- grid -->
+    <g stroke="var(--grid)" stroke-width="1">
+      <line x1="74" y1="296" x2="690" y2="296"/>
+      <line x1="74" y1="233" x2="690" y2="233"/>
+      <line x1="74" y1="170" x2="690" y2="170"/>
+      <line x1="74" y1="107" x2="690" y2="107"/>
+      <line x1="74" y1="44"  x2="690" y2="44"/>
+    </g>
+    <g font-size="11" fill="var(--muted)" text-anchor="end">
+      <text x="64" y="300">0s</text><text x="64" y="237">2s</text>
+      <text x="64" y="174">4s</text><text x="64" y="111">6s</text><text x="64" y="48">8s</text>
+    </g>
+    <line x1="74" y1="34" x2="74" y2="310" stroke="var(--axis)" stroke-width="1.5"/>
+
+    <!-- tolerance band -->
+    <rect x="74" y="264" width="616" height="32" fill="var(--s3)" opacity=".10"/>
+    <line x1="74" y1="264" x2="690" y2="264" stroke="var(--s3)" stroke-width="1.25" stroke-dasharray="5 4"/>
+    <text x="684" y="279" font-size="11" fill="var(--s3)" text-anchor="end" font-weight="640">Within 1s — the passage doesn't slide</text>
+
+    <!-- anchors -->
+    <g stroke="var(--muted)" stroke-width="1" stroke-dasharray="3 4" opacity=".6">
+      <line x1="369" y1="34" x2="369" y2="296"/>
+      <line x1="388" y1="34" x2="388" y2="296"/>
+    </g>
+
+    <!-- 1 clap -->
+    <line x1="74" y1="296" x2="690" y2="91" stroke="var(--s2)" stroke-width="2.5" stroke-dasharray="7 5"/>
+    <circle cx="690" cy="91" r="5" fill="var(--s2)"/>
+    <text x="684" y="82" font-size="12.5" font-weight="700" fill="var(--s2)" text-anchor="end">One clap → 6.5s</text>
+    <text x="684" y="68" font-size="10.5" fill="var(--s2)" text-anchor="end">First half lands, second half slides</text>
+
+    <!-- 4 claps -->
+    <polyline fill="none" stroke="var(--s1)" stroke-width="2.5" stroke-linejoin="round"
+      points="74,296 222,290 369,296 379,294 388,296 539,290 690,296"/>
+    <g fill="var(--s1)">
+      <circle cx="74" cy="296" r="5"/><circle cx="369" cy="296" r="5"/>
+      <circle cx="388" cy="296" r="5"/><circle cx="690" cy="296" r="5"/>
+    </g>
+    <text x="300" y="326" font-size="12.5" font-weight="700" fill="var(--s1)">Four claps → within 0.2s</text>
+
+    <g font-size="10.5" fill="var(--muted)">
+      <text x="74" y="348">👏 KO</text>
+      <text x="378" y="348" text-anchor="middle">👏👏</text>
+      <text x="378" y="362" text-anchor="middle">half-time</text>
+      <text x="690" y="348" text-anchor="end">👏 FT</text>
+    </g>
+  </svg>
+  <figcaption>A clap is <strong>an anchor that ties the three clocks back together</strong>. Clap once and you fix the offset but not the slope, so the error keeps accumulating. Clap four times and the slope is corrected segment by segment, so the error stays inside tolerance for the whole match. <span class="quiet">Note: 6.5 seconds comes from the drift injected into the synthetic test (1,200 ppm). It is <strong>not a value measured on real devices.</strong> It is the first number to measure in a real shoot.</span></figcaption>
+</figure>
+
+<div class="callout">
+  <p class="lab">What this design asks of the user</p>
+  <p>All it asks of the manager is <strong>four claps</strong>: first-half kick-off, half-time whistle, second-half kick-off, full time. No equipment to touch, no sequence to memorise. The number was chosen by asking whether the procedure would actually survive a real touchline.</p>
+</div>
+
+<h2><span class="num">03</span>Six stages — and how far each has actually got</h2>
+
+<p>After the match you hand it three files and the tool does the rest. Each stage is <strong>marked with its current verification status</strong>.</p>
+
+<figure>
+  <p class="figtitle">The six stages · verification status</p>
+  <p class="fignote">■ verified &nbsp; □ built but unverified</p>
+  <svg viewBox="0 0 720 300" role="img" aria-label="Six pipeline stages. Only stage one, time synchronisation, is verified. In-play detection, transcription, tactical tagging, clip boundaries and export are built but unverified.">
+    <defs><marker id="pa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--axis)"/></marker></defs>
+
+    <rect x="14" y="34" width="118" height="62" rx="9" fill="var(--page)" stroke="var(--axis)"/>
+    <text x="73" y="60" font-size="12.5" font-weight="670" fill="var(--text-primary)" text-anchor="middle">3 recordings</text>
+    <text x="73" y="78" font-size="11" fill="var(--muted)" text-anchor="middle">just run for 90 min</text>
+    <line x1="136" y1="65" x2="166" y2="65" stroke="var(--axis)" marker-end="url(#pa)"/>
+
+    <!-- step 1 : verified -->
+    <rect x="170" y="26" width="140" height="78" rx="9" fill="color-mix(in srgb,var(--s3) 12%,transparent)" stroke="var(--s3)" stroke-width="2"/>
+    <text x="184" y="47" font-size="11" font-weight="700" fill="var(--s3)">■ verified</text>
+    <text x="240" y="72" font-size="13.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">① Time sync</text>
+    <text x="240" y="90" font-size="11" fill="var(--text-secondary)" text-anchor="middle">4 claps align 3 clocks</text>
+    <line x1="314" y1="65" x2="344" y2="65" stroke="var(--axis)" marker-end="url(#pa)"/>
+
+    <rect x="348" y="26" width="140" height="78" rx="9" fill="var(--surface-1)" stroke="var(--border)" stroke-dasharray="5 4"/>
+    <text x="362" y="47" font-size="11" font-weight="650" fill="var(--muted)">□ unverified</text>
+    <text x="418" y="72" font-size="13.5" font-weight="670" fill="var(--text-primary)" text-anchor="middle">② In-play detection</text>
+    <text x="418" y="90" font-size="11" fill="var(--text-secondary)" text-anchor="middle">whistle + motion energy</text>
+    <line x1="492" y1="65" x2="522" y2="65" stroke="var(--axis)" marker-end="url(#pa)"/>
+
+    <rect x="526" y="26" width="140" height="78" rx="9" fill="var(--surface-1)" stroke="var(--border)" stroke-dasharray="5 4"/>
+    <text x="540" y="47" font-size="11" font-weight="650" fill="var(--muted)">□ unverified</text>
+    <text x="596" y="72" font-size="13.5" font-weight="670" fill="var(--text-primary)" text-anchor="middle">③ Transcription</text>
+    <text x="596" y="90" font-size="11" fill="var(--text-secondary)" text-anchor="middle">squad vocabulary injection</text>
+
+    <path d="M666,104 L666,126 L54,126 L54,152" fill="none" stroke="var(--axis)" marker-end="url(#pa)"/>
+
+    <rect x="14" y="158" width="140" height="78" rx="9" fill="var(--surface-1)" stroke="var(--border)" stroke-dasharray="5 4"/>
+    <text x="28" y="179" font-size="11" font-weight="650" fill="var(--muted)">□ unverified</text>
+    <text x="84" y="204" font-size="13.5" font-weight="670" fill="var(--text-primary)" text-anchor="middle">④ Tactical tagging</text>
+    <text x="84" y="222" font-size="11" fill="var(--text-secondary)" text-anchor="middle">speech → structure</text>
+    <line x1="158" y1="197" x2="188" y2="197" stroke="var(--axis)" marker-end="url(#pa)"/>
+
+    <rect x="192" y="158" width="140" height="78" rx="9" fill="var(--surface-1)" stroke="var(--border)" stroke-dasharray="5 4"/>
+    <text x="206" y="179" font-size="11" font-weight="650" fill="var(--muted)">□ unverified</text>
+    <text x="262" y="204" font-size="13.5" font-weight="670" fill="var(--text-primary)" text-anchor="middle">⑤ Clip boundaries</text>
+    <text x="262" y="222" font-size="11" fill="var(--text-secondary)" text-anchor="middle">where to cut</text>
+    <line x1="336" y1="197" x2="366" y2="197" stroke="var(--axis)" marker-end="url(#pa)"/>
+
+    <rect x="370" y="158" width="140" height="78" rx="9" fill="var(--surface-1)" stroke="var(--border)" stroke-dasharray="5 4"/>
+    <text x="384" y="179" font-size="11" font-weight="650" fill="var(--muted)">□ unverified</text>
+    <text x="440" y="204" font-size="13.5" font-weight="670" fill="var(--text-primary)" text-anchor="middle">⑥ Two-angle playback</text>
+    <text x="440" y="222" font-size="11" fill="var(--text-secondary)" text-anchor="middle">synced, never re-encoded</text>
+    <line x1="514" y1="197" x2="544" y2="197" stroke="var(--axis)" marker-end="url(#pa)"/>
+
+    <rect x="548" y="166" width="126" height="62" rx="9" fill="var(--page)" stroke="var(--axis)"/>
+    <text x="611" y="192" font-size="12.5" font-weight="670" fill="var(--text-primary)" text-anchor="middle">Tagged clips</text>
+    <text x="611" y="210" font-size="11" fill="var(--muted)" text-anchor="middle">phase · concept · subject</text>
+
+    <text x="14" y="272" font-size="12" fill="var(--muted)"><tspan font-weight="700" fill="var(--text-secondary)">One</tspan> of six stages is verified. For the rest I have confirmed the code runs — never that the output is right.</text>
+  </svg>
+  <figcaption>What matters in this diagram is not the shape of the pipeline but <strong>that there is only one ■</strong>. Designed and working are different words, and this tool is still at the first one.</figcaption>
+</figure>
+
+<h2><span class="num">04</span>What is proved so far — 8 milliseconds</h2>
+
+<p>The way to verify stage one is this: <strong>build a problem whose answer you already know, then show the pipeline recovers it.</strong></p>
+
+<p>I generated three synthetic recordings. Into one I deliberately injected <strong>exactly 3.4 s of offset</strong> and <strong>1,200 ppm of drift</strong>. Then I checked whether the pipeline could find those values again.</p>
+
+<figure>
+  <p class="figtitle">Injected error and recovered value</p>
+  <p class="fignote">Synthetic data · 4-minute sample · four claps</p>
+  <svg viewBox="0 0 720 250" role="img" aria-label="An injected offset of 3.4 s was recovered as 3.41 s and an injected drift of 1200 ppm as 1181 ppm. The 8-millisecond error is half the 16-millisecond analysis grid — the theoretical floor for this design.">
+    <text x="20" y="30" font-size="11.5" font-weight="650" fill="var(--muted)" letter-spacing="1.1">OFFSET</text>
+    <text x="150" y="66" font-size="13" fill="var(--text-secondary)" text-anchor="end">injected</text>
+    <rect x="160" y="52" width="300" height="20" rx="4" fill="var(--axis)"/>
+    <text x="470" y="67" font-size="14" font-weight="650" fill="var(--text-primary)">3.400s</text>
+    <text x="150" y="100" font-size="13" fill="var(--text-secondary)" text-anchor="end">recovered</text>
+    <rect x="160" y="86" width="300.7" height="20" rx="4" fill="var(--s1)"/>
+    <text x="471" y="101" font-size="14" font-weight="700" fill="var(--text-primary)">3.408s</text>
+    <text x="566" y="101" font-size="13.5" font-weight="700" fill="var(--s3)">error 8 ms</text>
+
+    <text x="20" y="152" font-size="11.5" font-weight="650" fill="var(--muted)" letter-spacing="1.1">DRIFT</text>
+    <text x="150" y="166" font-size="13" fill="var(--text-secondary)" text-anchor="end">injected</text>
+    <rect x="160" y="152" width="300" height="20" rx="4" fill="var(--axis)"/>
+    <text x="470" y="167" font-size="14" font-weight="650" fill="var(--text-primary)">1,200 ppm</text>
+    <text x="150" y="200" font-size="13" fill="var(--text-secondary)" text-anchor="end">recovered</text>
+    <rect x="160" y="186" width="295.3" height="20" rx="4" fill="var(--s1)"/>
+    <text x="466" y="201" font-size="14" font-weight="700" fill="var(--text-primary)">1,181 ppm</text>
+    <text x="566" y="201" font-size="13.5" font-weight="700" fill="var(--s3)">error 19 ppm</text>
+
+    <line x1="20" y1="226" x2="700" y2="226" stroke="var(--grid)"/>
+    <text x="20" y="244" font-size="11.5" fill="var(--muted)">The analysis grid is 16 ms. 8 ms is half of it — <tspan font-weight="700" fill="var(--text-secondary)">the smallest error this design can produce</tspan>, not a lucky number.</text>
+  </svg>
+  <figcaption>This is <strong>the only thing proved</strong> in the project. And it is a narrow result — it says the algorithm is mathematically correct on a clean synthetic signal, and nothing more. What happens once a real stadium's noise, reverberation and microphone auto-gain are layered on top, <strong>I do not yet know.</strong></figcaption>
+</figure>
+
+<h2><span class="num">05</span>Redrawing the operating model — on the touchline, only mark</h2>
+
+<p>That was the original design. Looking again, one thing bothered me. <strong>Even processing after the match, the amount to process is still the full ninety minutes.</strong> To find what the manager said you must push ninety minutes of audio through transcription, and on a laptop that takes a while.</p>
+
+<p>So I changed the order. <strong>On the touchline it only marks "here". Everything heavy is deferred.</strong></p>
+
+<figure>
+  <p class="figtitle">Separating marking from processing</p>
+  <p class="fignote">During the match, no network and no processing</p>
+  <svg viewBox="0 0 720 320" role="img" aria-label="During the match the device only marks speech segments on-board. Afterwards, on wifi, pressing start sends just the marked segments through transcription and tagging and out as clips.">
+    <text x="20" y="26" font-size="11.5" font-weight="700" fill="var(--s3)" letter-spacing=".8">DURING · 90 min — mark only</text>
+    <rect x="20" y="40" width="676" height="52" rx="9" fill="color-mix(in srgb,var(--s3) 8%,transparent)" stroke="var(--s3)" stroke-width="1.5"/>
+    <line x1="40" y1="66" x2="676" y2="66" stroke="var(--axis)" stroke-width="1.5"/>
+    <g fill="var(--s2)">
+      <rect x="86" y="56" width="5" height="20" rx="2"/><rect x="142" y="56" width="5" height="20" rx="2"/>
+      <rect x="158" y="56" width="5" height="20" rx="2"/><rect x="246" y="56" width="5" height="20" rx="2"/>
+      <rect x="310" y="56" width="5" height="20" rx="2"/><rect x="326" y="56" width="5" height="20" rx="2"/>
+      <rect x="404" y="56" width="5" height="20" rx="2"/><rect x="470" y="56" width="5" height="20" rx="2"/>
+      <rect x="486" y="56" width="5" height="20" rx="2"/><rect x="556" y="56" width="5" height="20" rx="2"/>
+      <rect x="612" y="56" width="5" height="20" rx="2"/><rect x="644" y="56" width="5" height="20" rx="2"/>
+    </g>
+    <text x="20" y="108" font-size="11.5" fill="var(--text-secondary)">Speech-segment detection on the device · <tspan font-weight="650">no network · no upload · almost no battery cost</tspan></text>
+
+    <path d="M358,120 L358,148" stroke="var(--axis)" stroke-width="1.75" marker-end="url(#dm)"/>
+    <defs><marker id="dm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--axis)"/></marker></defs>
+    <text x="372" y="140" font-size="11.5" fill="var(--muted)">Full time · hotel or office</text>
+
+    <text x="20" y="176" font-size="11.5" font-weight="700" fill="var(--s1)" letter-spacing=".8">AFTER · on wifi — one button</text>
+    <rect x="20" y="190" width="132" height="52" rx="9" fill="var(--page)" stroke="var(--s1)" stroke-width="2"/>
+    <text x="86" y="213" font-size="13" font-weight="700" fill="var(--s1)" text-anchor="middle">▶ Start</text>
+    <text x="86" y="231" font-size="11" fill="var(--muted)" text-anchor="middle">the user presses it</text>
+    <line x1="156" y1="216" x2="184" y2="216" stroke="var(--axis)" marker-end="url(#dm)"/>
+
+    <rect x="188" y="190" width="150" height="52" rx="9" fill="var(--surface-1)" stroke="var(--border)"/>
+    <text x="263" y="212" font-size="12.5" font-weight="670" fill="var(--text-primary)" text-anchor="middle">Marked segments only</text>
+    <text x="263" y="230" font-size="11" fill="var(--text-secondary)" text-anchor="middle">transcription</text>
+    <line x1="342" y1="216" x2="370" y2="216" stroke="var(--axis)" marker-end="url(#dm)"/>
+
+    <rect x="374" y="190" width="140" height="52" rx="9" fill="var(--surface-1)" stroke="var(--border)"/>
+    <text x="444" y="212" font-size="12.5" font-weight="670" fill="var(--text-primary)" text-anchor="middle">Tactical tagging</text>
+    <text x="444" y="230" font-size="11" fill="var(--text-secondary)" text-anchor="middle">keep the instructions</text>
+    <line x1="518" y1="216" x2="546" y2="216" stroke="var(--axis)" marker-end="url(#dm)"/>
+
+    <rect x="550" y="190" width="146" height="52" rx="9" fill="color-mix(in srgb,var(--s1) 11%,transparent)" stroke="var(--s1)" stroke-width="1.75"/>
+    <text x="623" y="212" font-size="12.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">Clips, two angles</text>
+    <text x="623" y="230" font-size="11" fill="var(--text-secondary)" text-anchor="middle">with their tags</text>
+
+    <rect x="20" y="262" width="676" height="42" rx="9" fill="color-mix(in srgb,var(--s2) 8%,transparent)"/>
+    <text x="36" y="280" font-size="12" font-weight="700" fill="var(--s2)">Transcription shrinks from 90 minutes to the marked segments</text>
+    <text x="36" y="297" font-size="11.5" fill="var(--text-secondary)">A manager speaks for only part of a match. Processing time and cost fall with it.</text>
+  </svg>
+  <figcaption>All that is needed during the match is <strong>detecting speech segments and writing down the time</strong>. That is a very small computation running on the device — no network, no server, almost no battery headroom required. The manager talks as he always does, and afterwards presses one button.</figcaption>
+</figure>
+
+<h3>Does this remove the clock problem? It depends.</h3>
+
+<p>This has to be split precisely. The answer depends on <strong>where the mark can be written</strong>.</p>
+
+<div class="tw">
+<table>
+  <thead><tr><th></th><th>Mark in all three streams</th><th>Mark in the audio only</th></tr></thead>
+  <tbody>
+    <tr><td>Requires</td><td>Three devices driven by one app, or cameras that accept markers while recording</td><td>Off-the-shelf glasses and cameras that take no external signal</td></tr>
+    <tr class="hl"><td><strong>Clock problem</strong></td><td><strong>Gone.</strong> Each device wrote the same instant in its own clock, so no conversion is needed</td><td><strong>Remains.</strong> Audio time must still be mapped onto video time — which is what the four claps were for</td></tr>
+    <tr><td>Drift exposure</td><td>None</td><td>Only inside the clip window (~20 s) → <strong>far smaller than across 90 min</strong></td></tr>
+    <tr><td>Everything else</td><td colspan="2" style="text-align:center"><strong>Identical in both cases</strong> — nothing processed on site · no network · far less to transcribe</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p class="lede">So the substance of this change is not the clock. It is <strong>making it unnecessary to process anything on site</strong>; the clock problem dissolving is a bonus that arrives when the hardware allows. The synchronisation work in the previous section is not discarded — it remains <strong>the bridge for the case where the mark can only go into the audio</strong>.</p>
+
+<h3>What gets harder instead</h3>
+
+<ul>
+  <li><strong>A manager does not only talk tactics.</strong> He encourages, argues with the referee, makes small talk. Mark every speech segment and a sizeable share of the match gets marked. <strong>This is not fatal</strong> — the tagging stage already filters for "is this an instruction", and it is still far less than ninety minutes. <em>Under-filtering</em> is the safe direction here</li>
+  <li><strong>A missed mark means that passage is gone.</strong> Until now the full recording remained, so you could always search it again. Mark-driven, a missed utterance simply falls out of scope. The answer is to <strong>keep the originals intact and treat marks purely as an index</strong> — then you can change the criteria and re-run later</li>
+  <li><strong>I have not checked whether the devices accept markers.</strong> Whether the left column above holds can only be found out on real hardware. <strong>For now I assume the right column</strong></li>
+</ul>
+
+<div class="callout">
+  <p class="lab">The first shoot just got easier</p>
+  <p>A side effect of this change. In a real field test, <strong>the only thing that must succeed on the day is the marking.</strong> Everything else can be re-run later, as many times as needed. That is a much smaller surface for the first attempt to break on.</p>
+</div>
+
+<h2><span class="num">06</span>The three things I thought hardest about</h2>
+
+<h3>① The manager speaks after the event</h3>
+
+<p>The first idea was "record when the manager speaks". <strong>That does not work.</strong> People react after the event is over. The cross goes in, the header comes, it is cleared — and only then does "why didn't you close!" arrive. Start recording at the moment of speech and the passage he is talking about has already gone.</p>
+
+<figure>
+  <p class="figtitle">What you miss if recording starts at the utterance</p>
+  <p class="fignote">Horizontal = time, with the utterance at zero</p>
+  <svg viewBox="0 0 720 230" role="img" aria-label="The event happens about three seconds before the manager speaks. Recording from the utterance drops the event entirely; you must reach back fifteen seconds for it to fall inside the clip.">
+    <line x1="40" y1="118" x2="700" y2="118" stroke="var(--axis)" stroke-width="1.5"/>
+
+    <!-- event window -->
+    <rect x="150" y="60" width="170" height="34" rx="6" fill="color-mix(in srgb,var(--s2) 16%,transparent)" stroke="var(--s2)" stroke-width="1.5"/>
+    <text x="235" y="82" font-size="12.5" font-weight="700" fill="var(--s2)" text-anchor="middle">the passage he means</text>
+    <line x1="150" y1="94" x2="150" y2="118" stroke="var(--s2)" stroke-dasharray="3 3"/>
+    <line x1="320" y1="94" x2="320" y2="118" stroke="var(--s2)" stroke-dasharray="3 3"/>
+
+    <!-- speech moment -->
+    <line x1="400" y1="46" x2="400" y2="150" stroke="var(--text-primary)" stroke-width="2"/>
+    <circle cx="400" cy="118" r="6" fill="var(--text-primary)"/>
+    <text x="400" y="38" font-size="13" font-weight="700" fill="var(--text-primary)" text-anchor="middle">utterance</text>
+    <text x="400" y="168" font-size="11" fill="var(--muted)" text-anchor="middle">0s</text>
+    <text x="320" y="168" font-size="11" fill="var(--muted)" text-anchor="middle">−3s</text>
+    <text x="150" y="168" font-size="11" fill="var(--muted)" text-anchor="middle">−10s</text>
+    <text x="40" y="168" font-size="11" fill="var(--muted)">−15s</text>
+
+    <!-- naive -->
+    <rect x="400" y="182" width="256" height="24" rx="5" fill="var(--surface-1)" stroke="var(--critical)" stroke-width="1.5"/>
+    <text x="412" y="199" font-size="12" font-weight="650" fill="var(--critical)">✕ record from the utterance — the passage is lost</text>
+
+    <!-- retroactive -->
+    <rect x="40" y="182" width="352" height="24" rx="5" fill="color-mix(in srgb,var(--s3) 12%,transparent)" stroke="var(--s3)" stroke-width="1.5"/>
+    <text x="52" y="199" font-size="12" font-weight="650" fill="var(--s3)">✓ cut backwards from the utterance</text>
+  </svg>
+  <figcaption>The fix is simple. <strong>Do not control the recording at all — film continuously, then cut backwards from the utterance.</strong> That is why I dropped the early idea of "the glasses switch themselves on and off". There was a practical reason (cheap glasses have no remote-control interface), but the bigger one was that <strong>even if they had, it would have been too late</strong>.</figcaption>
+</figure>
+
+<h3>② "this time" must not become "number two"</h3>
+
+<p>At the transcription stage, shirt numbers come up constantly. Korean has two number systems, so "chil-beon" and "ilgop-beon" both mean "number seven" and both must normalise to <code>7</code> before a player can be identified downstream.</p>
+
+<p>But Korean sets a trap. <strong>"i-beon" means "this time", not "number two"</strong> — even though "i" is also the numeral two. Convert "that overlap this time was good" into "number two's overlap was good" and the sentence inverts. The same holds for "once more", "like last time", "late every time".</p>
+
+<div class="callout">
+  <p class="lab">This part is proved</p>
+  <p>I keep a blocklist of everyday expressions and convert <strong>only numbers actually on the team sheet</strong> — two independent guards. Then I pinned the rule down with <strong>33 unit tests</strong>. Removing the guard on purpose made exactly those tests fail, and nothing else — which is how you know the tests have teeth rather than being decoration.</p>
+  <p class="quiet">This sits outside the six stages, but vocabulary handling governs the accuracy of stages ③ and ④. Being pure functions, it can be verified with no external dependency, so I nailed it down first.</p>
+</div>
+
+<h3>③ A clip that opens on a dead ball is useless</h3>
+
+<p>Reach fifteen seconds back from the utterance and you sometimes land in <strong>a passage where the ball is out</strong>. A clip that opens on players waiting for a throw-in is no use to anyone.</p>
+
+<p>So whistle sounds and total on-screen motion are used to estimate <strong>in-play segments</strong>. If a clip's start lands in a dead segment it is pulled forward to the restart, and the end is cut at the next stoppage.</p>
+
+<div class="fixbox">
+  <p class="lab">But this one I do not trust yet</p>
+  <p>The accuracy of this detector <strong>has never been measured.</strong> It has been run on synthetic data, but that test is <strong>circular</strong> — the still segments in the synthetic sample are a flat colour, so their frame difference is exactly zero. It cannot fail to separate them.</p>
+  <p>Measuring it on a real match means hand-labelling ground-truth segments and comparing. <strong>I have not done that.</strong></p>
+</div>
+
+<h2><span class="num">07</span>What is not proved</h2>
+
+<p>There is <strong>no accuracy figure</strong> I can currently state about this tool. The means to measure it are built; the measurement has not been made.</p>
+
+<div class="tw">
+<table>
+  <thead><tr><th>Stage</th><th>Built</th><th>Synthetic</th><th>Real match</th><th>Accuracy measured</th></tr></thead>
+  <tbody>
+    <tr class="hl"><td>① Time sync</td><td class="up">yes</td><td class="up">verified</td><td class="dim">—</td><td class="dim">—</td></tr>
+    <tr class="hl"><td>Squad vocabulary</td><td class="up">yes</td><td class="up">33 tests</td><td class="dim">—</td><td class="dim">—</td></tr>
+    <tr><td>② In-play detection</td><td class="up">yes</td><td class="dn">circular</td><td class="dim">—</td><td class="dim">—</td></tr>
+    <tr><td>③ Transcription</td><td class="up">yes</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td></tr>
+    <tr><td>④ Tactical tagging</td><td class="up">yes</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td></tr>
+    <tr><td>⑤ Clip boundaries</td><td class="up">yes</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td></tr>
+    <tr><td>⑥ Two-angle playback</td><td class="up">yes</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td></tr>
+    <tr><td>On-site marking (§05 revision)</td><td class="dn">not built</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>What the next test will measure</h3>
+
+<p>A single real shoot fills in much of the table above. Four things to measure.</p>
+
+<ol>
+  <li><strong>Utterance detection rate</strong> — the share of actual instructions the transcription caught, checked by listening back to the recording</li>
+  <li><strong>Tag conversion accuracy</strong> — of the utterances caught, the share where phase, concept and subject are all correct</li>
+  <li><strong>Player identification accuracy</strong> — the share where number and name are attached correctly, measured <strong>with and without the squad list injected</strong>. Vocabulary injection is the central claim of this design and has no evidence behind it yet, so this comparison comes first</li>
+  <li><strong>Clip validity</strong> — the share where the passage the manager meant actually falls inside the clip</li>
+</ol>
+
+<p>And <strong>the 6.5 seconds in §02</strong>. That is a value I put into the synthetic test, not one measured on real hardware. Running two devices for ninety minutes and measuring how far they actually drift is — given that it is the starting point of this whole design — the first number to confirm.</p>
+
+<h2><span class="num">08</span>Why publish it in this state</h2>
+
+<p>The convention is to publish when it is finished. But <strong>the interesting part of building a tool usually happens before it is.</strong> Why the auto-recording glasses were dropped, why four claps and not one, why "this time" must not be touched — none of these judgements survive into a finished product page.</p>
+
+<p>And writing down the current state precisely means <strong>I can check later what actually changed.</strong> When the field test is done I will update the table in §07, and this piece will be revised. Whether my predictions held will be visible in that table.</p>
+
+<p class="lede">Designed and working are different words. This is a record written <strong>with its own position stated</strong> — near the beginning.</p>
+
+<h3>Where this tool is heading</h3>
+
+<p>This is not a standalone tool but <strong>one component of a larger idea</strong>: an AI sitting beside the manager, watching the same match and trading evidence with him. In that idea this tool is the <strong>ears and eyes</strong> — the input organ that captures what he says and what he looks at, and turns it into data.</p>
+
+<p>That piece sets out what the Laws of the Game actually permit, and what such an AI may and may not say.</p>
+
+<p style="margin:22px 0 8px"><a href="/en/kpi-lab/hovi" target="_top" style="display:inline-block;padding:13px 20px;border:1px solid var(--s1);border-radius:11px;text-decoration:none;background:color-mix(in srgb,var(--s1) 7%,transparent)"><span style="display:block;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:650">The idea this belongs to</span><span style="display:block;font-size:15px;font-weight:700;color:var(--text-primary);margin-top:3px">The AI sitting next to the manager — HOVI →</span></a></p>
+
+<footer>
+  <p>Status — prototype. All six pipeline stages built, one verified, no field test yet. The operating-model revision in §05 is <strong>designed but not implemented.</strong> Source code is not published.</p>
+  <p>The numbers here — 8 ms, 19 ppm and 33 tests are reproducible run outputs. The 6.5 seconds is a synthetic test setting, not a measurement. No other accuracy figure <strong>exists.</strong></p>
+  <p>Hyuckjin Han · Aug 2026 · to be updated after the first field test</p>
+</footer>
+
+</div>
+<script>
+(function(){
+  var b=document.getElementById('tt'), r=document.documentElement;
+  b.addEventListener('click',function(){
+    var cur=r.getAttribute('data-theme');
+    if(!cur){cur=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+    r.setAttribute('data-theme', cur==='dark'?'light':'dark');
+  });
+})();
+</script>
+</body>
+</html>

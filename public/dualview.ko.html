@@ -309,7 +309,92 @@ footer{margin-top:70px;padding-top:22px;border-top:1px solid var(--border);
   <figcaption>이게 이 프로젝트에서 <strong>유일하게 증명된 것</strong>이다. 그리고 좁은 결과다 — 깨끗한 합성 신호에서 알고리즘이 수학적으로 맞게 동작한다는 것까지만 말한다. 실제 경기장의 함성, 반향, 마이크 자동 이득 조절이 얹히면 어떻게 되는지는 <strong>아직 모른다.</strong></figcaption>
 </figure>
 
-<h2><span class="num">05</span>설계에서 가장 오래 고민한 세 가지</h2>
+<h2><span class="num">05</span>운영 방식을 다시 그렸다 — 현장에서는 표시만 한다</h2>
+
+<p>여기까지가 원래 설계였다. 그런데 다시 보니 한 가지가 걸렸다. <strong>경기가 끝난 뒤에 처리한다고 해도, 처리할 양이 여전히 90분 전체다.</strong> 감독의 말을 찾으려면 90분치 오디오를 전부 받아쓰기에 넣어야 하고, 그건 노트북에서 꽤 오래 걸린다.</p>
+
+<p>그래서 순서를 바꿨다. <strong>현장에서는 「여기」라고 표시만 하고, 무거운 일은 전부 나중으로 미룬다.</strong></p>
+
+<figure>
+  <p class="figtitle">표시와 처리를 떼어놓는다</p>
+  <p class="fignote">경기 중에는 네트워크도 처리도 필요 없다</p>
+  <svg viewBox="0 0 720 320" role="img" aria-label="경기 중에는 기기 안에서 발화 구간을 표시만 하고, 경기 후 와이파이가 있는 곳에서 시작 버튼을 누르면 표시된 구간만 받아쓰기와 태깅을 거쳐 클립으로 나온다.">
+    <text x="20" y="26" font-size="11.5" font-weight="700" fill="var(--s3)" letter-spacing=".8">경기 중 · 90분 — 표시만</text>
+    <rect x="20" y="40" width="676" height="52" rx="9" fill="color-mix(in srgb,var(--s3) 8%,transparent)" stroke="var(--s3)" stroke-width="1.5"/>
+    <line x1="40" y1="66" x2="676" y2="66" stroke="var(--axis)" stroke-width="1.5"/>
+    <g fill="var(--s2)">
+      <rect x="86" y="56" width="5" height="20" rx="2"/><rect x="142" y="56" width="5" height="20" rx="2"/>
+      <rect x="158" y="56" width="5" height="20" rx="2"/><rect x="246" y="56" width="5" height="20" rx="2"/>
+      <rect x="310" y="56" width="5" height="20" rx="2"/><rect x="326" y="56" width="5" height="20" rx="2"/>
+      <rect x="404" y="56" width="5" height="20" rx="2"/><rect x="470" y="56" width="5" height="20" rx="2"/>
+      <rect x="486" y="56" width="5" height="20" rx="2"/><rect x="556" y="56" width="5" height="20" rx="2"/>
+      <rect x="612" y="56" width="5" height="20" rx="2"/><rect x="644" y="56" width="5" height="20" rx="2"/>
+    </g>
+    <text x="20" y="108" font-size="11.5" fill="var(--text-secondary)">기기 안에서 음성 구간 검출 · <tspan font-weight="650">네트워크 불필요 · 업로드 없음 · 배터리 부담 거의 없음</tspan></text>
+
+    <path d="M358,120 L358,148" stroke="var(--axis)" stroke-width="1.75" marker-end="url(#dm)"/>
+    <defs><marker id="dm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--axis)"/></marker></defs>
+    <text x="372" y="140" font-size="11.5" fill="var(--muted)">경기 종료 · 숙소나 사무실</text>
+
+    <text x="20" y="176" font-size="11.5" font-weight="700" fill="var(--s1)" letter-spacing=".8">경기 후 · 와이파이 — 버튼 한 번</text>
+    <rect x="20" y="190" width="132" height="52" rx="9" fill="var(--page)" stroke="var(--s1)" stroke-width="2"/>
+    <text x="86" y="213" font-size="13" font-weight="700" fill="var(--s1)" text-anchor="middle">▶ 시작</text>
+    <text x="86" y="231" font-size="11" fill="var(--muted)" text-anchor="middle">사용자가 누른다</text>
+    <line x1="156" y1="216" x2="184" y2="216" stroke="var(--axis)" marker-end="url(#dm)"/>
+
+    <rect x="188" y="190" width="150" height="52" rx="9" fill="var(--surface-1)" stroke="var(--border)"/>
+    <text x="263" y="212" font-size="12.5" font-weight="670" fill="var(--text-primary)" text-anchor="middle">표시된 구간만</text>
+    <text x="263" y="230" font-size="11" fill="var(--text-secondary)" text-anchor="middle">받아쓰기</text>
+    <line x1="342" y1="216" x2="370" y2="216" stroke="var(--axis)" marker-end="url(#dm)"/>
+
+    <rect x="374" y="190" width="140" height="52" rx="9" fill="var(--surface-1)" stroke="var(--border)"/>
+    <text x="444" y="212" font-size="12.5" font-weight="670" fill="var(--text-primary)" text-anchor="middle">전술 태깅</text>
+    <text x="444" y="230" font-size="11" fill="var(--text-secondary)" text-anchor="middle">지시만 남긴다</text>
+    <line x1="518" y1="216" x2="546" y2="216" stroke="var(--axis)" marker-end="url(#dm)"/>
+
+    <rect x="550" y="190" width="146" height="52" rx="9" fill="color-mix(in srgb,var(--s1) 11%,transparent)" stroke="var(--s1)" stroke-width="1.75"/>
+    <text x="623" y="212" font-size="12.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">클립 두 각도</text>
+    <text x="623" y="230" font-size="11" fill="var(--text-secondary)" text-anchor="middle">태그와 함께</text>
+
+    <rect x="20" y="262" width="676" height="42" rx="9" fill="color-mix(in srgb,var(--s2) 8%,transparent)"/>
+    <text x="36" y="280" font-size="12" font-weight="700" fill="var(--s2)">받아쓰기 대상이 90분에서 표시된 구간으로 줄어든다</text>
+    <text x="36" y="297" font-size="11.5" fill="var(--text-secondary)">감독이 실제로 말하는 시간은 경기의 일부다. 그만큼 처리 시간과 비용이 같이 줄어든다.</text>
+  </svg>
+  <figcaption>경기 중에 필요한 건 <strong>음성 구간을 검출해 시각을 적어두는 것</strong>뿐이다. 이건 기기 안에서 도는 아주 작은 연산이라 네트워크도, 서버도, 배터리 여유도 거의 요구하지 않는다. 감독은 평소처럼 말하고, 끝나고 버튼 하나를 누른다.</figcaption>
+</figure>
+
+<h3>이게 시계 문제를 없애주는가 — 경우에 따라 다르다</h3>
+
+<p>여기는 정확히 갈라서 적어야 한다. <strong>표시를 어디에 남길 수 있느냐</strong>에 따라 결과가 다르다.</p>
+
+<div class="tw">
+<table>
+  <thead><tr><th></th><th>표시를 세 스트림 모두에</th><th>표시를 오디오에만</th></tr></thead>
+  <tbody>
+    <tr><td>조건</td><td>세 기기가 한 앱으로 묶여 있거나, 촬영 중 마커 기록을 지원</td><td>글라스·카메라가 외부 신호를 못 받는 일반 기기</td></tr>
+    <tr class="hl"><td><strong>시계 문제</strong></td><td><strong>사라진다.</strong> 같은 순간을 각 기기가 자기 시계로 직접 적었으므로 환산이 필요 없다</td><td><strong>남는다.</strong> 오디오 시각을 영상 시각으로 옮겨야 하고, 그건 손뼉 4회가 하던 일이다</td></tr>
+    <tr><td>드리프트 영향</td><td>없음</td><td>클립 창(약 20초) 안에서만 문제 → <strong>90분일 때보다 훨씬 작다</strong></td></tr>
+    <tr><td>나머지 이점</td><td colspan="2" style="text-align:center"><strong>둘 다 동일하게 얻는다</strong> — 현장 처리 없음 · 네트워크 없음 · 받아쓰기 대상 축소</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p class="lede">그러니까 이 변경의 본체는 시계가 아니다. <strong>현장에서 아무것도 처리하지 않아도 되게 만드는 것</strong>이고, 시계 문제 해소는 조건이 맞을 때 따라오는 덤이다. 앞 절의 동기화 작업은 버려지지 않는다 — <strong>표시를 오디오에만 남길 수 있을 때의 다리 역할</strong>로 남는다.</p>
+
+<h3>그럼 무엇이 새로 어려워지나</h3>
+
+<ul>
+  <li><strong>감독은 전술 얘기만 하지 않는다.</strong> 격려도 하고, 심판에게 항의도 하고, 잡담도 한다. 음성 구간을 전부 표시하면 경기의 상당 부분이 표시될 수 있다. <strong>다만 이건 치명적이지 않다</strong> — 뒤의 태깅 단계가 이미 "이게 지시인가"를 거르게 되어 있고, 90분 전체보다는 여전히 훨씬 적다. <em>덜 거르고 넘기는 쪽</em>이 안전한 방향이다</li>
+  <li><strong>표시가 빠지면 그 장면은 영영 없다.</strong> 지금까지는 원본이 통째로 남아 있으니 나중에 다시 뒤질 수 있었다. 표시 기반으로 가면 놓친 발화는 처리 대상에서 빠진다. <strong>원본은 그대로 두고 표시는 색인으로만 쓰는 것</strong>이 해법이고, 그러면 나중에 기준을 바꿔 다시 돌릴 수 있다</li>
+  <li><strong>기기가 마커를 받아주는지는 확인하지 않았다.</strong> 위 표의 왼쪽 칸이 성립하는지는 실제 기기로 시험해봐야 안다. <strong>지금은 오른쪽 칸을 기본으로 가정한다</strong></li>
+</ul>
+
+<div class="callout">
+  <p class="lab">첫 촬영이 쉬워졌다</p>
+  <p>이 변경의 부수 효과 하나. 실제 촬영 검증에서 <strong>현장에서 반드시 성공해야 하는 것이 「표시」 하나로 줄었다.</strong> 나머지는 전부 나중에, 다시, 얼마든지 돌려볼 수 있다. 첫 시험에서 깨질 수 있는 지점이 그만큼 적어졌다.</p>
+</div>
+
+<h2><span class="num">06</span>설계에서 가장 오래 고민한 세 가지</h2>
 
 <h3>① 감독은 사건보다 늦게 말한다</h3>
 
@@ -371,7 +456,7 @@ footer{margin-top:70px;padding-top:22px;border-top:1px solid var(--border);
   <p>실제 경기에서 재려면 영상에 구간 정답을 손으로 달고 대조해야 한다. <strong>아직 하지 않았다.</strong></p>
 </div>
 
-<h2><span class="num">06</span>아직 증명하지 못한 것</h2>
+<h2><span class="num">07</span>아직 증명하지 못한 것</h2>
 
 <p>이 도구에 대해 지금 말할 수 있는 정확도 수치는 <strong>없다.</strong> 측정할 도구는 만들어두었지만 측정을 하지 않았다.</p>
 
@@ -386,6 +471,7 @@ footer{margin-top:70px;padding-top:22px;border-top:1px solid var(--border);
     <tr><td>④ 전술 태깅</td><td class="up">완료</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td></tr>
     <tr><td>⑤ 클립 경계</td><td class="up">완료</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td></tr>
     <tr><td>⑥ 두 각도 재생</td><td class="up">완료</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td></tr>
+    <tr><td>현장 표시 (05절 개정)</td><td class="dn">미구현</td><td class="dim">—</td><td class="dim">—</td><td class="dim">—</td></tr>
   </tbody>
 </table>
 </div>
@@ -403,7 +489,7 @@ footer{margin-top:70px;padding-top:22px;border-top:1px solid var(--border);
 
 <p>그리고 <strong>02절의 6.5초</strong>. 그건 합성 테스트에 넣은 값이지 실제 기기에서 잰 값이 아니다. 두 기기를 90분 돌려서 진짜로 얼마나 벌어지는지 재는 것이 — 이 설계 전체의 출발점이었던 만큼 — 가장 먼저 확인해야 할 숫자다.</p>
 
-<h2><span class="num">07</span>왜 이 상태로 공개하는가</h2>
+<h2><span class="num">08</span>왜 이 상태로 공개하는가</h2>
 
 <p>완성되면 올리는 게 보통이다. 그런데 <strong>도구를 만드는 일에서 흥미로운 부분은 대개 완성 전에 일어난다.</strong> 왜 글라스 자동 녹화를 버렸는지, 왜 손뼉이 한 번이 아니라 네 번인지, 왜 "이번"을 건드리면 안 되는지 — 이건 완성품 소개서에는 남지 않는 판단들이다.</p>
 
@@ -420,7 +506,7 @@ footer{margin-top:70px;padding-top:22px;border-top:1px solid var(--border);
 <p style="margin:22px 0 8px"><a href="/ko/kpi-lab/hovi" target="_top" style="display:inline-block;padding:13px 20px;border:1px solid var(--s1);border-radius:11px;text-decoration:none;background:color-mix(in srgb,var(--s1) 7%,transparent)"><span style="display:block;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:650">이 도구가 속한 구상</span><span style="display:block;font-size:15px;font-weight:700;color:var(--text-primary);margin-top:3px">감독 옆에 앉은 AI — HOVI →</span></a></p>
 
 <footer>
-  <p>상태 — 프로토타입. 파이프라인 6단계 구현 완료, 1단계 검증 완료, 현장 검증 전. 소스 코드는 공개하지 않는다.</p>
+  <p>상태 — 프로토타입. 파이프라인 6단계 구현 완료, 1단계 검증 완료, 현장 검증 전. 05절의 운영 방식 개정은 <strong>설계만 되어 있고 구현되지 않았다.</strong> 소스 코드는 공개하지 않는다.</p>
   <p>이 글의 수치 — 8ms · 19ppm · 테스트 33건은 재현 가능한 실행 결과다. 6.5초는 합성 테스트의 설정값이지 실측이 아니다. 그 외 정확도 수치는 <strong>존재하지 않는다.</strong></p>
   <p>한혁진 · 2026.08 · 실촬영 이후 갱신 예정</p>
 </footer>
