@@ -1,0 +1,479 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Everyone gets the ball to the same place &mdash; FC Seoul 2026 attacking phase</title><meta name="description" content="FC Seoul 2026, 25 matches, 34,518 events. Where the public data stops explaining."><style>
+:root{color-scheme:light;
+ --page:#f9f9f7;--surface:#fcfcfb;--surface-2:#f1f0ec;--fg:#0b0b0b;--fg2:#3a3936;--muted:#7b7973;
+ --grid:#e1e0d9;--axis:#c3c2b7;--border:rgba(11,11,11,.11);
+ --s-win:#1baf7a;--s-draw:#2a78d6;--s-loss:#d03b3b;--acc:#2a78d6}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;
+ --page:#141312;--surface:#1c1b19;--surface-2:#232120;--fg:#f0eeea;--fg2:#c8c5be;--muted:#94918a;
+ --grid:#2f2c28;--axis:#413e39;--border:rgba(255,255,255,.11);
+ --s-win:#2cc78d;--s-draw:#4b95e8;--s-loss:#e66767;--acc:#4b95e8}}
+:root[data-theme="dark"]{color-scheme:dark;
+ --page:#141312;--surface:#1c1b19;--surface-2:#232120;--fg:#f0eeea;--fg2:#c8c5be;--muted:#94918a;
+ --grid:#2f2c28;--axis:#413e39;--border:rgba(255,255,255,.11);
+ --s-win:#2cc78d;--s-draw:#4b95e8;--s-loss:#e66767;--acc:#4b95e8}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--fg);
+ font:16px/1.78 -apple-system,BlinkMacSystemFont,'Inter','Helvetica Neue',Arial,sans-serif;
+ -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+main{max-width:750px;margin:0 auto;padding:56px 22px 90px}
+header{border-bottom:1px solid var(--border);padding-bottom:28px;margin-bottom:38px}
+.kick{font-size:12px;letter-spacing:.13em;color:var(--muted);font-weight:600;margin-bottom:16px}
+h1{font-size:clamp(26px,5vw,37px);line-height:1.28;letter-spacing:-.022em;margin:0 0 16px;font-weight:800}
+.sub{font-size:16.5px;color:var(--fg2);margin:0 0 22px;line-height:1.72}
+.meta{font-size:12.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 16px}
+h2{font-size:20.5px;margin:64px 0 5px;letter-spacing:-.015em;font-weight:750}
+h2 .num{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:10px;font-weight:600;font-size:16px}
+h2+.dek{color:var(--muted);font-size:14.5px;margin:0 0 24px}
+h3{font-size:16.5px;margin:36px 0 10px;font-weight:700}
+p{margin:0 0 17px}
+.lead{font-size:17px;color:var(--fg2)}
+b,strong{font-weight:700;color:var(--fg)}
+.tldr{border:1px solid var(--border);border-radius:8px;padding:22px 24px;margin:0 0 44px;background:var(--surface)}
+.tldr h4{margin:0 0 13px;font-size:12px;letter-spacing:.12em;color:var(--muted);font-weight:650}
+.tldr ol{margin:0;padding-left:20px}.tldr li{margin-bottom:9px;font-size:15px;color:var(--fg2)}
+.tldr li:last-child{margin-bottom:0}
+.fig{margin:30px 0 32px;border:1px solid var(--border);border-radius:8px;padding:14px 14px 2px;background:var(--surface)}
+.fig svg{width:100%;height:auto;display:block;overflow:visible}
+figcaption{color:var(--muted);font-size:13px;line-height:1.66;margin:12px 2px 12px}
+figcaption b{color:var(--fg2);font-weight:650}
+.tip{color:var(--acc)}
+text{font-family:-apple-system,'Inter','Helvetica Neue',Arial,sans-serif}
+.lb{font-size:11px;font-weight:700;fill:var(--fg2)}
+.lb2{font-size:13px;fill:var(--fg2);font-weight:500}
+.lb3{font-size:12.5px;fill:var(--muted)}
+.lg{font-size:11.5px;fill:var(--muted);font-weight:500}
+.vl{font-size:12.5px;font-weight:700;fill:var(--fg);font-variant-numeric:tabular-nums}
+.zl{font-size:13px;font-weight:800;letter-spacing:.04em}
+.hd{font-size:14px;font-weight:750;fill:var(--fg)}
+.big{font-size:22px;font-weight:800;font-variant-numeric:tabular-nums}
+.mid{font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;fill:var(--fg2)}
+.an{font-size:11.5px;fill:var(--muted);font-weight:600}
+.em{font-size:12.5px;font-weight:700;fill:var(--s-loss)}
+.mt{font-size:12.5px;font-weight:750;fill:var(--fg)}
+.ms{font-size:11px;fill:var(--muted)}
+.ms2{font-size:12px;fill:var(--fg2)}
+.stp{font-size:9.5px;font-weight:800}
+.stpl{font-size:11px;fill:var(--muted)}
+.xgv{font-size:12.5px;font-weight:700;fill:var(--fg2);font-variant-numeric:tabular-nums}
+.hp{cursor:pointer}
+#tt{position:fixed;z-index:99;pointer-events:none;opacity:0;transition:opacity .12s;
+ background:var(--fg);color:var(--page);padding:8px 11px;border-radius:6px;font-size:12.5px;
+ line-height:1.5;max-width:280px;box-shadow:0 4px 16px rgba(0,0,0,.22)}
+#tt b{display:block;color:var(--page);font-weight:750;margin-bottom:2px}
+#tt span{opacity:.78}
+.clips{display:flex;flex-direction:column;gap:20px;margin-top:18px}
+.clip{border:1px solid var(--border);border-radius:7px;overflow:hidden;background:var(--surface-2)}
+.clip video{width:100%;display:block;background:#000;aspect-ratio:16/9}
+.clip .cap{padding:11px 14px;font-size:13.5px;color:var(--fg2);line-height:1.55}
+.clip .cap b{display:block;font-size:12.5px;color:var(--muted);font-weight:650;margin-bottom:3px}
+.tw{overflow-x:auto;margin:22px 0 24px}
+table{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+th,td{padding:9px 10px;text-align:right;border-bottom:1px solid var(--border);vertical-align:top}
+th:first-child,td:first-child{text-align:left}
+thead th{color:var(--muted);font-weight:600;font-size:12.5px;border-bottom:1.5px solid var(--border);white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+td.n{white-space:nowrap}
+td.w{color:var(--s-win);font-weight:700;white-space:nowrap}
+td.l{color:var(--s-loss);font-weight:700;white-space:nowrap}
+tr.hl td{background:var(--surface-2)}
+.vid{border:1px solid var(--border);border-left:2px solid var(--acc);border-radius:0 8px 8px 0;
+ padding:19px 22px;margin:30px 0;background:var(--surface)}
+.vid .tag{font-size:11px;letter-spacing:.11em;color:var(--acc);font-weight:700;margin-bottom:9px}
+.vid h4{margin:0 0 7px;font-size:16px;font-weight:750}
+.vid .rule{font-size:13px;color:var(--muted);margin:0 0 13px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.vid ol{margin:0;padding-left:19px;font-size:14px;color:var(--fg2)}
+.vid li{margin-bottom:6px}.vid li:last-child{margin-bottom:0}
+.vid .ph{margin-top:14px;border:1px dashed var(--axis);border-radius:6px;padding:24px;text-align:center;
+ color:var(--muted);font-size:12.5px}
+.note{border:1px solid var(--border);border-radius:8px;padding:15px 18px;margin:24px 0;font-size:14px;color:var(--fg2);background:var(--surface)}
+.note b{color:var(--fg)}
+.caveat{border-left:2px solid var(--s-loss);padding:4px 0 4px 18px;margin:24px 0;font-size:14px;color:var(--fg2)}
+.q{font-size:18.5px;line-height:1.64;color:var(--fg);border-left:2px solid var(--acc);
+ padding:5px 0 5px 20px;margin:32px 0;font-weight:600}
+hr{border:none;border-top:1px solid var(--border);margin:54px 0}
+.app{font-size:13.5px;color:var(--fg2)}
+.app h2{font-size:18px;margin-top:38px}
+.app table{font-size:12.8px}
+.app ul{padding-left:19px}.app li{margin-bottom:7px}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;
+ background:var(--surface-2);padding:1.5px 5px;border-radius:4px}
+footer{margin-top:60px;padding-top:24px;border-top:1px solid var(--border);
+ color:var(--muted);font-size:13px;line-height:1.75}
+@media(max-width:620px){.fig{padding:10px 10px 2px}main{padding:38px 16px 70px}}
+</style></head><body><main>
+<header>
+<div class="kick">FC SEOUL 2026 &middot; ROUNDS 1&ndash;25 &middot; ATTACKING PHASE</div>
+<h1>Everyone gets the ball<br>to the same place</h1>
+<p class="sub">FC Seoul are a team of five-goal days and no-goal days. But getting the ball into the central area in front
+of goal looked the same on both. The difference came after that, and
+<b>the public data could not explain it.</b>
+This is a record of how far the numbers go, where they stop, and what should be measured at the point where they stop.</p>
+<div class="meta"><span>Hyukjin Han</span><span>August 2026</span><span>34,518 events across 25 matches</span><span>Source: K League Data Portal</span></div>
+</header>
+
+<div class="tldr">
+<h4>THE SHORT VERSION</h4>
+<ol>
+<li>Of the 43 goals scored by Seoul players themselves, <b>40 came from one cell &mdash; the centre of the box (zone 17)</b>. But the share of box entries reaching that cell is <b>72% for Seoul and 69% for the eleven opponents</b>. Nothing distinguishes Seoul up to that point.</li>
+<li>The difference is what happens after arrival. Ranking all 25 matches by the xG each delivery produced, the <b>top ten went 10W 0D 0L</b> and the bottom ten 3W 5D 2L.</li>
+<li>And <b>the side that delivered more scored one fifth as many goals</b> &mdash; 20.7 deliveries and 33 goals against 30.0 deliveries and 6 goals.</li>
+<li>I tested every attribute the event data holds: where the cross came from, where it landed, its type, the structure preceding it. <b>Top and bottom matches look nearly identical.</b> Only the outcome differs, fourfold.</li>
+<li>The remaining variable exists <b>only on video</b> &mdash; whether the player was free at the moment of delivery. The piece closes with a way to measure it.</li>
+</ol>
+</div>
+
+<h2><span class="num">01</span>The question</h2>
+<p class="dek">Why does the same team score five one week and none the next?</p>
+
+<p>FC Seoul scored 47 goals through round 25: <b>43 from open play, 2 from free-kicks, 1 penalty and 1 opposition own goal</b>.
+The spread between matches is wide. A side that won 7-0 at Anyang (R24) and 5-0 at home to Gwangju (R05) also failed to score in four matches
+against Jeonbuk, Gangwon, Gimcheon and Anyang.</p>
+
+<p>In the 16 matches where they scored first, Seoul went <b>15W 1D 0L</b>. In the five where they conceded first, 1W 4L.
+All four goalless matches were draws. <b>This team wins whenever it scores.</b> So the question narrows to one thing:
+what is different about the days they score?</p>
+
+<div class="note">
+This piece covers <b>the attacking phase only</b>. I also tested the defensive transition, but once match status is
+controlled for, matches with more crosses actually <b>conceded fewer</b> goals (r = &minus;0.298).
+The problem was not conceding; it was scoring. That is why the scope was narrowed. The verification is documented separately.
+</div>
+
+<h2><span class="num">02</span>A first hypothesis, and its rejection</h2>
+<p class="dek">"Seoul use the middle of the box well" &mdash; the data said no</p>
+
+<p>Watching the matches, my first read was this: <b>Seoul get bodies into the middle of the box well.</b>
+R09, the 3-0 win over Bucheon, was the clearest case &mdash; four players arriving in front of goal at once in the 84th minute.</p>
+
+<p>To test that, "the middle of the box" has to become a coordinate. On the standard 18-zone grid &mdash; six columns
+by three rows &mdash; the central cell in front of goal is called <b>zone 17</b>: X &ge; 83.3, Y between 33.3 and 66.7.</p>
+
+<figure class="fig "><svg viewBox="0 0 680 415" role="img"><rect x="55" y="11" width="570" height="393" fill="var(--surface)" rx="4"/><g stroke="var(--axis)" stroke-width="1" fill="none"><rect x="60" y="16" width="560" height="383"/><line x1="340.0" y1="16" x2="340.0" y2="399"/><circle cx="340.0" cy="207.5" r="49.79"/><rect x="532.0799999999999" y="94.13199999999999" width="87.92" height="226.736"/><rect x="590.88" y="150.04999999999998" width="29.119999999999997" height="114.89999999999999"/><rect x="60" y="94.13199999999999" width="87.92" height="226.736"/><rect x="60" y="150.04999999999998" width="29.119999999999997" height="114.89999999999999"/></g><line x1="153.3" y1="16.0" x2="153.3" y2="399.0" stroke="var(--grid)" stroke-width=".8" stroke-dasharray="3 4"/><line x1="246.7" y1="16.0" x2="246.7" y2="399.0" stroke="var(--grid)" stroke-width=".8" stroke-dasharray="3 4"/><line x1="340.0" y1="16.0" x2="340.0" y2="399.0" stroke="var(--grid)" stroke-width=".8" stroke-dasharray="3 4"/><line x1="433.3" y1="16.0" x2="433.3" y2="399.0" stroke="var(--grid)" stroke-width=".8" stroke-dasharray="3 4"/><line x1="526.7" y1="16.0" x2="526.7" y2="399.0" stroke="var(--grid)" stroke-width=".8" stroke-dasharray="3 4"/><line x1="60.0" y1="143.7" x2="620.0" y2="143.7" stroke="var(--grid)" stroke-width=".8" stroke-dasharray="3 4"/><line x1="60.0" y1="271.3" x2="620.0" y2="271.3" stroke="var(--grid)" stroke-width=".8" stroke-dasharray="3 4"/><rect x="526.6" y="143.7" width="93.39999999999998" height="127.60000000000002" fill="var(--s-win)" fill-opacity=".08" stroke="var(--s-win)" stroke-width="1.8"/><circle cx="569.0" cy="198.7" r="4.5" fill="var(--s-win)" fill-opacity=".8" stroke="var(--surface)" stroke-width="1"/><circle cx="547.2" cy="225.9" r="4.5" fill="var(--s-win)" fill-opacity=".8" stroke="var(--surface)" stroke-width="1"/><circle cx="535.4" cy="155.0" r="4.5" fill="var(--s-win)" fill-opacity=".8" stroke="var(--surface)" stroke-width="1"/><circle cx="541.6" cy="207.1" r="4.5" fill="var(--s-win)" fill-opacity=".8" stroke="var(--surface)" stroke-width="1"/><circle cx="607.1" cy="217.8" r="4.5" fill="var(--s-win)" fill-opacity=".8" stroke="var(--surface)" stroke-width="1"/><circle cx="595.4" cy="221.7" r="4.5" fill="var(--s-win)" fill-opacity=".8" stroke="var(--surface)" stroke-width="1"/><circle cx="602.6" cy="204.8" r="4.5" fill="var(--s-win)" fill-opacity=".8" stroke="var(--surface)" stroke-width="1"/><circle cx="561.8" cy="238.5" r="4.5" fill="var(--s-win)" fill-opacity=".8" stroke="var(--surface)" stroke-width="1"/><circle cx="603.8" cy="260.0" r="4.5" fill="var(--s-win)" fill-opacity=".8" stroke="var(--surface)" stroke-width="1"/><circle cx="604.3" cy="187.2" r="4.5" fill="var(--s-win)" fill-opacity=".8" stroke="var(--surface)" stroke-width="1"/><circle cx="600.4" cy="148.9" r="4.5" fill="var(--s-win)" fill-opacity=".8" stroke="var(--surface)" stroke-width="1"/><circle cx="587.5" cy="202.9" r="4.5" fill="var(--s-win)" fill-opacity=".8" stroke="var(--surface)" stroke-width="1"/><circle cx="585.8" cy="202.5" r="4.5" fill="var(--s-win)" fill-opacity=".8" stroke="var(--surface)" stroke-width="1"/><circle cx="553.9" cy="126.3" r="4" fill="var(--muted)" fill-opacity=".5" stroke="var(--surface)" stroke-width="1"/><circle cx="601.5" cy="204.8" r="4.5" fill="var(--s-win)" fill-opacity=".8" stroke="var(--surface)" stroke-width="1"/><circle cx="511.4" cy="219.0" r="4" fill="var(--muted)" fill-opacity=".5" stroke="var(--surface)" stroke-width="1"/><circle cx="612.2" cy="181.8" r="4.5" fill="var(--s-win)" fill-opacity=".8" stroke="var(--surface)" stroke-width="1"/><circle cx="560.6" cy="209.8" r="4.5" fill="var(--s-win)" fill-opacity=".8" stroke="var(--surface)" stroke-width="1"/><circle cx="557.8" cy="255.4" r="4.5" fill="var(--s-win)" fill-opacity=".8" stroke="var(--surface)" stroke-width="1"/><circle cx="587.0" cy="230.1" r="4.5" fill="var(--s-win)" fill-opacity=".8" stroke="var(--surface)" stroke-width="1"/><circle cx="593.7" cy="156.2" r="4.5" fill="var(--s-win)" fill-opacity=".8" stroke="var(--surface)" stroke-width="1"/><circle cx="504.1" cy="231.2" r="4" fill="var(--muted)" fill-opacity=".5" stroke="var(--surface)" stroke-width="1"/><circle cx="584.2" cy="176.1" r="4.5" fill="var(--s-win)" fill-opacity=".8" stroke="var(--surface)" stroke-width="1"/><circle cx="591.4" cy="224.0" r="4.5" fill="var(--s-win)" fill-opacity=".8" stroke="var(--surface)" stroke-width="1"/><circle cx="604.3" cy="171.5" r="4.5" fill="var(--s-win)" fill-opacity=".8" stroke="var(--surface)" stroke-width="1"/><circle cx="585.8" cy="241.6" r="4.5" fill="var(--s-win)" fill-opacity=".8" stroke="var(--surface)" stroke-width="1"/><circle cx="547.8" cy="267.2" r="4.5" fill="var(--s-win)" fill-opacity=".8" stroke="var(--surface)" stroke-width="1"/><circle cx="573.5" cy="203.3" r="4.5" fill="var(--s-win)" fill-opacity=".8" stroke="var(--surface)" stroke-width="1"/><circle cx="585.8" cy="187.6" r="4.5" fill="var(--s-win)" fill-opacity=".8" stroke="var(--surface)" stroke-width="1"/><circle cx="569.0" cy="163.5" r="4.5" fill="var(--s-win)" fill-opacity=".8" stroke="var(--surface)" stroke-width="1"/><circle cx="586.4" cy="212.9" r="4.5" fill="var(--s-win)" fill-opacity=".8" stroke="var(--surface)" stroke-width="1"/><circle cx="556.2" cy="200.2" r="4.5" fill="var(--s-win)" fill-opacity=".8" stroke="var(--surface)" stroke-width="1"/><circle cx="565.1" cy="180.3" r="4.5" fill="var(--s-win)" fill-opacity=".8" stroke="var(--surface)" stroke-width="1"/><circle cx="558.4" cy="216.3" r="4.5" fill="var(--s-win)" fill-opacity=".8" stroke="var(--surface)" stroke-width="1"/><circle cx="575.8" cy="233.9" r="4.5" fill="var(--s-win)" fill-opacity=".8" stroke="var(--surface)" stroke-width="1"/><circle cx="529.8" cy="181.5" r="4.5" fill="var(--s-win)" fill-opacity=".8" stroke="var(--surface)" stroke-width="1"/><circle cx="598.2" cy="216.7" r="4.5" fill="var(--s-win)" fill-opacity=".8" stroke="var(--surface)" stroke-width="1"/><circle cx="592.6" cy="226.7" r="4.5" fill="var(--s-win)" fill-opacity=".8" stroke="var(--surface)" stroke-width="1"/><circle cx="571.8" cy="176.9" r="4.5" fill="var(--s-win)" fill-opacity=".8" stroke="var(--surface)" stroke-width="1"/><circle cx="591.4" cy="246.9" r="4.5" fill="var(--s-win)" fill-opacity=".8" stroke="var(--surface)" stroke-width="1"/><circle cx="541.0" cy="255.0" r="4.5" fill="var(--s-win)" fill-opacity=".8" stroke="var(--surface)" stroke-width="1"/><circle cx="542.2" cy="183.0" r="4.5" fill="var(--s-win)" fill-opacity=".8" stroke="var(--surface)" stroke-width="1"/><circle cx="616.1" cy="174.9" r="4.5" fill="var(--s-win)" fill-opacity=".8" stroke="var(--surface)" stroke-width="1"/><circle cx="569.0" cy="198.7" r="9" fill="transparent" class="hp" data-t="R1 · Incheon (A) 2-1 · 2H 46&#x27;" data-s="Song Min-kyu · inside zone 17 · xG 0.39"/><circle cx="547.2" cy="225.9" r="9" fill="transparent" class="hp" data-t="R1 · Incheon (A) 2-1 · 2H 60&#x27;" data-s="Cho Young-wook · inside zone 17 · xG 0.08"/><circle cx="535.4" cy="155.0" r="9" fill="transparent" class="hp" data-t="R2 · Ulsan (A) 4-1 · 1H 29&#x27;" data-s="Song Min-kyu · inside zone 17 · xG 0.08"/><circle cx="541.6" cy="207.1" r="9" fill="transparent" class="hp" data-t="R2 · Ulsan (A) 4-1 · 2H 52&#x27;" data-s="Song Min-kyu · inside zone 17 · xG 0.19"/><circle cx="607.1" cy="217.8" r="9" fill="transparent" class="hp" data-t="R2 · Ulsan (A) 4-1 · 1H 3&#x27;" data-s="Ruiz · inside zone 17 · xG 0.87"/><circle cx="595.4" cy="221.7" r="9" fill="transparent" class="hp" data-t="R3 · Jeju (A) 2-1 · 2H 93&#x27;" data-s="Lee Seung-mo · inside zone 17 · xG 0.33"/><circle cx="602.6" cy="204.8" r="9" fill="transparent" class="hp" data-t="R3 · Jeju (A) 2-1 · 2H 52&#x27;" data-s="Ross · inside zone 17 · xG 0.80"/><circle cx="561.8" cy="238.5" r="9" fill="transparent" class="hp" data-t="R4 · Pohang (A) 1-0 · 1H 3&#x27;" data-s="Cho Young-wook · inside zone 17 · xG 0.31"/><circle cx="603.8" cy="260.0" r="9" fill="transparent" class="hp" data-t="R5 · Gwangju (H) 5-0 · 2H 81&#x27;" data-s="Lee Seung-mo · inside zone 17 · xG 0.33"/><circle cx="604.3" cy="187.2" r="9" fill="transparent" class="hp" data-t="R5 · Gwangju (H) 5-0 · 2H 46&#x27;" data-s="Klimala · inside zone 17 · xG 0.65"/><circle cx="600.4" cy="148.9" r="9" fill="transparent" class="hp" data-t="R5 · Gwangju (H) 5-0 · 2H 72&#x27;" data-s="Klimala · inside zone 17 · xG 0.19"/><circle cx="587.5" cy="202.9" r="9" fill="transparent" class="hp" data-t="R5 · Gwangju (H) 5-0 · 2H 58&#x27;" data-s="Ross · inside zone 17 · xG 0.24"/><circle cx="585.8" cy="202.5" r="9" fill="transparent" class="hp" data-t="R5 · Gwangju (H) 5-0 · 1H 8&#x27;" data-s="Son Jung-beom · inside zone 17 · xG 0.23"/><circle cx="553.9" cy="126.3" r="9" fill="transparent" class="hp" data-t="R6 · Anyang (A) 1-1 · 1H 44&#x27;" data-s="Klimala · outside zone 17 · xG 0.04"/><circle cx="601.5" cy="204.8" r="9" fill="transparent" class="hp" data-t="R7 · Jeonbuk (H) 1-0 · 2H 94&#x27;" data-s="Klimala · inside zone 17 · xG 0.78"/><circle cx="511.4" cy="219.0" r="9" fill="transparent" class="hp" data-t="R9 · Bucheon (H) 3-0 · 1H 52&#x27;" data-s="Moon Seon-min · outside zone 17 · xG 0.40"/><circle cx="612.2" cy="181.8" r="9" fill="transparent" class="hp" data-t="R9 · Bucheon (H) 3-0 · 2H 67&#x27;" data-s="Hwang Do-yun · inside zone 17 · xG 0.46"/><circle cx="560.6" cy="209.8" r="9" fill="transparent" class="hp" data-t="R9 · Bucheon (H) 3-0 · 1H 30&#x27;" data-s="Klimala · inside zone 17 · xG 0.78"/><circle cx="557.8" cy="255.4" r="9" fill="transparent" class="hp" data-t="R10 · Gangwon (A) 2-1 · 2H 80&#x27;" data-s="Lee Seung-mo · inside zone 17 · xG 0.26"/><circle cx="587.0" cy="230.1" r="9" fill="transparent" class="hp" data-t="R10 · Gangwon (A) 2-1 · 1H 41&#x27;" data-s="Babec · inside zone 17 · xG 0.20"/><circle cx="593.7" cy="156.2" r="9" fill="transparent" class="hp" data-t="R11 · Gimcheon (H) 2-3 · 1H 36&#x27;" data-s="Yazan · inside zone 17 · xG 0.12"/><circle cx="504.1" cy="231.2" r="9" fill="transparent" class="hp" data-t="R11 · Gimcheon (H) 2-3 · 2H 59&#x27;" data-s="Babec · outside zone 17 · xG 0.03"/><circle cx="584.2" cy="176.1" r="9" fill="transparent" class="hp" data-t="R13 · Jeju (A) 1-2 · 2H 56&#x27;" data-s="Ruiz · inside zone 17 · xG 0.19"/><circle cx="591.4" cy="224.0" r="9" fill="transparent" class="hp" data-t="R14 · Gwangju (A) 1-0 · 2H 48&#x27;" data-s="Ruiz · inside zone 17 · xG 0.31"/><circle cx="604.3" cy="171.5" r="9" fill="transparent" class="hp" data-t="R15 · Daejeon (A) 2-1 · 2H 87&#x27;" data-s="Lee Seung-mo · inside zone 17 · xG 0.16"/><circle cx="585.8" cy="241.6" r="9" fill="transparent" class="hp" data-t="R15 · Daejeon (A) 2-1 · 1H 23&#x27;" data-s="Andersson · inside zone 17 · xG 0.18"/><circle cx="547.8" cy="267.2" r="9" fill="transparent" class="hp" data-t="R16 · Incheon (H) 1-0 · 2H 80&#x27;" data-s="Jung Seung-won · inside zone 17 · xG 0.06"/><circle cx="573.5" cy="203.3" r="9" fill="transparent" class="hp" data-t="R18 · Bucheon (A) 3-1 · 2H 53&#x27;" data-s="Jung Seung-won · inside zone 17 · xG 0.54"/><circle cx="585.8" cy="187.6" r="9" fill="transparent" class="hp" data-t="R18 · Bucheon (A) 3-1 · 1H 41&#x27;" data-s="Cho Young-wook · inside zone 17 · xG 0.26"/><circle cx="569.0" cy="163.5" r="9" fill="transparent" class="hp" data-t="R18 · Bucheon (A) 3-1 · 2H 101&#x27;" data-s="Klimala · inside zone 17 · xG 0.27"/><circle cx="586.4" cy="212.9" r="9" fill="transparent" class="hp" data-t="R19 · Pohang (H) 3-1 · 2H 68&#x27;" data-s="Jung Seung-won · inside zone 17 · xG 0.38"/><circle cx="556.2" cy="200.2" r="9" fill="transparent" class="hp" data-t="R19 · Pohang (H) 3-1 · 2H 87&#x27;" data-s="Jung Seung-won · inside zone 17 · xG 0.13"/><circle cx="565.1" cy="180.3" r="9" fill="transparent" class="hp" data-t="R19 · Pohang (H) 3-1 · 1H 35&#x27;" data-s="Klimala · inside zone 17 · xG 0.17"/><circle cx="558.4" cy="216.3" r="9" fill="transparent" class="hp" data-t="R20 · Ulsan (H) 1-3 · 2H 60&#x27;" data-s="Jung Seung-won · inside zone 17 · xG 0.12"/><circle cx="575.8" cy="233.9" r="9" fill="transparent" class="hp" data-t="R23 · Daejeon (H) 4-2 · 2H 92&#x27;" data-s="Jung Seung-won · inside zone 17 · xG 0.16"/><circle cx="529.8" cy="181.5" r="9" fill="transparent" class="hp" data-t="R23 · Daejeon (H) 4-2 · 2H 82&#x27;" data-s="Song Min-kyu · inside zone 17 · xG 0.07"/><circle cx="598.2" cy="216.7" r="9" fill="transparent" class="hp" data-t="R23 · Daejeon (H) 4-2 · 2H 47&#x27;" data-s="Klimala · inside zone 17 · xG 0.68"/><circle cx="592.6" cy="226.7" r="9" fill="transparent" class="hp" data-t="R24 · Anyang (A) 7-0 · 1H 6&#x27;" data-s="Jung Seung-won · inside zone 17 · xG 0.31"/><circle cx="571.8" cy="176.9" r="9" fill="transparent" class="hp" data-t="R24 · Anyang (A) 7-0 · 2H 52&#x27;" data-s="Jung Seung-won · inside zone 17 · xG 0.36"/><circle cx="591.4" cy="246.9" r="9" fill="transparent" class="hp" data-t="R24 · Anyang (A) 7-0 · 2H 57&#x27;" data-s="Lee Seung-mo · inside zone 17 · xG 0.24"/><circle cx="541.0" cy="255.0" r="9" fill="transparent" class="hp" data-t="R24 · Anyang (A) 7-0 · 1H 30&#x27;" data-s="Moon Seon-min · inside zone 17 · xG 0.07"/><circle cx="542.2" cy="183.0" r="9" fill="transparent" class="hp" data-t="R24 · Anyang (A) 7-0 · 1H 34&#x27;" data-s="Klimala · inside zone 17 · xG 0.11"/><circle cx="616.1" cy="174.9" r="9" fill="transparent" class="hp" data-t="R24 · Anyang (A) 7-0 · 1H 12&#x27;" data-s="Babec · inside zone 17 · xG 0.25"/><text x="573.0" y="212.5" class="zl" fill="var(--s-win)" text-anchor="middle">zone 17</text><text x="340.0" y="387.5" class="lg" text-anchor="middle">Own half &#8592;  attacking direction  &#8594; opposition goal</text><circle cx="72" cy="401" r="5" fill="var(--s-win)"/><text x="83" y="405" class="lg">40 goals inside zone 17</text><circle cx="292" cy="401" r="5" fill="var(--muted)"/><text x="303" y="405" class="lg">3 outside</text></svg><figcaption>Fig 1 &middot; The standard 18-zone grid &mdash; six columns by three rows. The central cell in front of goal is <b>zone 17</b>. Of the 43 goals scored by Seoul players themselves, <b>40 (93%)</b> came from this one cell. <span class="tip">Hover a dot for match details.</span></figcaption></figure>
+
+<p>Seoul's goals do cluster in that one cell: <b>40 of 43 (93%)</b>. So do Seoul use it better than others?</p>
+
+<figure class="fig "><svg viewBox="0 0 680 292" role="img"><text x="16" y="31" class="lb2">Balls played into the box</text><rect x="168" y="31" width="292.3" height="14" rx="3" fill="var(--s-win)" fill-opacity=".92"/><text x="162" y="42" class="lg" text-anchor="end">FC Seoul</text><text x="467.3" y="42" class="vl">834</text><rect x="168" y="53" width="222.9" height="14" rx="3" fill="var(--muted)" fill-opacity=".4"/><text x="162" y="64" class="lg" text-anchor="end">11 opponents</text><text x="397.9" y="64" class="vl">636</text><text x="16" y="93" class="lb2">Of those, landing in zone 17</text><rect x="168" y="93" width="292.3" height="14" rx="3" fill="var(--s-win)" fill-opacity=".92"/><text x="162" y="104" class="lg" text-anchor="end">FC Seoul</text><text x="467.3" y="104" class="vl">602</text><rect x="168" y="115" width="212.7" height="14" rx="3" fill="var(--muted)" fill-opacity=".4"/><text x="162" y="126" class="lg" text-anchor="end">11 opponents</text><text x="387.7" y="126" class="vl">438</text><text x="16" y="155" class="lb2">Share landing in zone 17</text><rect x="168" y="155" width="292.3" height="14" rx="3" fill="var(--s-win)" fill-opacity=".92"/><text x="162" y="166" class="lg" text-anchor="end">FC Seoul</text><text x="467.3" y="166" class="vl">72%</text><rect x="168" y="177" width="278.9" height="14" rx="3" fill="var(--muted)" fill-opacity=".4"/><text x="162" y="188" class="lg" text-anchor="end">11 opponents</text><text x="453.9" y="188" class="vl">69%</text><text x="16" y="217" class="lb2">xG per delivery</text><rect x="168" y="217" width="292.3" height="14" rx="3" fill="var(--s-win)" fill-opacity=".92"/><text x="162" y="228" class="lg" text-anchor="end">FC Seoul</text><text x="467.3" y="228" class="vl">0.050</text><rect x="168" y="239" width="290.4" height="14" rx="3" fill="var(--muted)" fill-opacity=".4"/><text x="162" y="250" class="lg" text-anchor="end">11 opponents</text><text x="465.4" y="250" class="vl">0.050</text></svg><figcaption>Fig 2 &middot; Seoul against the 11 opponents faced, 25 matches pooled. The share of box entries reaching the central cell, and the xG each delivery generates, are effectively identical. <b>Up to this point nothing distinguishes Seoul.</b></figcaption></figure>
+
+<p><b>No.</b> Of 834 balls Seoul played into the box, 602 (72%) landed in zone 17. The eleven opponents managed
+438 of 636 (69%). Computed team by team rather than pooled, the opposition average is 68.6% &mdash; the same.
+<b>The xG generated per delivery matches to three decimal places: 0.050 against 0.050.</b></p>
+
+<p>Getting the ball into the centre of the box is not a distinguishing act in this league. The first hypothesis fails here.
+And yet the outcomes are not the same &mdash; from that cell Seoul took <b>163 shots for 40 goals</b>, their opponents
+<b>122 shots for 16</b>.</p>
+
+<div class="q">If everyone gets the ball there, the difference is in what happens next.</div>
+
+<h2><span class="num">03</span>Ranking the 25 matches</h2>
+<p class="dek">xG per delivery &mdash; the top ten won every match, the bottom ten scored six goals in ten</p>
+
+<p>One metric. <b>xG per delivery</b> = the xG created from zone 17 in that match, divided by the number of balls
+delivered into it. It asks <b>how dangerous each individual delivery into the centre of the box was</b>,
+rather than how many there were.</p>
+
+<figure class="fig "><svg viewBox="0 0 680 424" role="img"><rect width="680" height="424" fill="var(--surface)" rx="6"/><line x1="64.0" y1="44" x2="64.0" y2="368" stroke="var(--grid)" stroke-width=".8"/><text x="64.0" y="386" class="lg" text-anchor="middle">10</text><line x1="196.4" y1="44" x2="196.4" y2="368" stroke="var(--grid)" stroke-width=".8"/><text x="196.4" y="386" class="lg" text-anchor="middle">20</text><line x1="328.9" y1="44" x2="328.9" y2="368" stroke="var(--grid)" stroke-width=".8"/><text x="328.9" y="386" class="lg" text-anchor="middle">30</text><line x1="461.3" y1="44" x2="461.3" y2="368" stroke="var(--grid)" stroke-width=".8"/><text x="461.3" y="386" class="lg" text-anchor="middle">40</text><line x1="593.8" y1="44" x2="593.8" y2="368" stroke="var(--grid)" stroke-width=".8"/><text x="593.8" y="386" class="lg" text-anchor="middle">50</text><line x1="64" y1="368.0" x2="660" y2="368.0" stroke="var(--grid)" stroke-width=".8"/><text x="56" y="372.0" class="lg" text-anchor="end">0.00</text><line x1="64" y1="272.7" x2="660" y2="272.7" stroke="var(--grid)" stroke-width=".8"/><text x="56" y="276.7" class="lg" text-anchor="end">0.05</text><line x1="64" y1="177.4" x2="660" y2="177.4" stroke="var(--grid)" stroke-width=".8"/><text x="56" y="181.4" class="lg" text-anchor="end">0.10</text><line x1="64" y1="82.1" x2="660" y2="82.1" stroke="var(--grid)" stroke-width=".8"/><text x="56" y="86.1" class="lg" text-anchor="end">0.15</text><text x="362.0" y="406" class="lg" text-anchor="middle">Deliveries into zone 17 (per match)</text><text x="14" y="20" class="lg">xG per delivery</text><text x="70" y="20" class="an" text-anchor="start">↖ fewer deliveries, more threat</text><text x="660" y="20" class="an" text-anchor="end">more deliveries, less threat ↘</text><circle cx="143.5" cy="275.0" r="4.4" fill="var(--s-win)" fill-opacity=".5"/><circle cx="170.0" cy="91.0" r="6.5" fill="var(--s-win)" fill-opacity=".92"/><text x="170.0" y="77.5" class="lb" text-anchor="middle">R02 Ulsan (A)</text><circle cx="262.7" cy="210.9" r="4.4" fill="var(--s-win)" fill-opacity=".5"/><circle cx="143.5" cy="224.0" r="4.4" fill="var(--s-win)" fill-opacity=".5"/><circle cx="156.7" cy="163.5" r="6.5" fill="var(--s-win)" fill-opacity=".92"/><text x="156.7" y="150.0" class="lb" text-anchor="middle">R05 Gwangju (H)</text><rect x="284.8" y="353.40000000000003" width="8.8" height="8.8" transform="rotate(45 289.2 357.8)" fill="var(--s-draw)" fill-opacity=".5"/><circle cx="143.5" cy="230.5" r="4.4" fill="var(--s-win)" fill-opacity=".5"/><rect x="258.3" y="270.1" width="8.8" height="8.8" fill="var(--s-loss)" fill-opacity=".5"/><circle cx="143.5" cy="70.3" r="6.5" fill="var(--s-win)" fill-opacity=".92"/><text x="143.5" y="56.8" class="lb" text-anchor="middle">R09 Bucheon (H)</text><circle cx="117.0" cy="258.0" r="4.4" fill="var(--s-win)" fill-opacity=".5"/><rect x="245.0" y="292.5" width="8.8" height="8.8" fill="var(--s-loss)" fill-opacity=".5"/><rect x="298.0" y="321.40000000000003" width="8.8" height="8.8" transform="rotate(45 302.4 325.8)" fill="var(--s-draw)" fill-opacity=".5"/><rect x="600.5" y="310.3" width="13.0" height="13.0" fill="var(--s-loss)" fill-opacity=".92"/><text x="607.0" y="303.3" class="lb" text-anchor="middle">R13 Jeju (A)</text><circle cx="448.1" cy="312.6" r="4.4" fill="var(--s-win)" fill-opacity=".5"/><circle cx="143.5" cy="293.4" r="4.4" fill="var(--s-win)" fill-opacity=".5"/><circle cx="170.0" cy="334.6" r="4.4" fill="var(--s-win)" fill-opacity=".5"/><rect x="258.3" y="330.6" width="8.8" height="8.8" transform="rotate(45 262.7 335.0)" fill="var(--s-draw)" fill-opacity=".5"/><circle cx="183.2" cy="181.4" r="4.4" fill="var(--s-win)" fill-opacity=".5"/><circle cx="328.9" cy="223.9" r="4.4" fill="var(--s-win)" fill-opacity=".5"/><rect x="587.3" y="313.5" width="13.0" height="13.0" fill="var(--s-loss)" fill-opacity=".92"/><text x="593.8" y="306.5" class="lb" text-anchor="middle">R20 Ulsan (H)</text><rect x="99.3" y="363.6" width="8.8" height="8.8" transform="rotate(45 103.7 368.0)" fill="var(--s-draw)" fill-opacity=".5"/><rect x="125.79999999999998" y="299.0" width="8.8" height="8.8" transform="rotate(45 130.2 303.4)" fill="var(--s-draw)" fill-opacity=".5"/><circle cx="262.7" cy="219.8" r="4.4" fill="var(--s-win)" fill-opacity=".5"/><circle cx="262.7" cy="227.3" r="6.5" fill="var(--s-win)" fill-opacity=".92"/><text x="262.7" y="213.8" class="lb" text-anchor="middle">R24 Anyang (A)</text><circle cx="408.4" cy="332.0" r="4.4" fill="var(--s-win)" fill-opacity=".5"/><circle cx="143.5" cy="275.0" r="11" fill="transparent" class="hp" data-t="R1 · Incheon (A) 2-1" data-s="16 deliveries · 5 shots · 0.78 xG · 0.049 per delivery"/><circle cx="170.0" cy="91.0" r="11" fill="transparent" class="hp" data-t="R2 · Ulsan (A) 4-1" data-s="18 deliveries · 11 shots · 2.62 xG · 0.145 per delivery"/><circle cx="262.7" cy="210.9" r="11" fill="transparent" class="hp" data-t="R3 · Jeju (A) 2-1" data-s="25 deliveries · 8 shots · 2.06 xG · 0.082 per delivery"/><circle cx="143.5" cy="224.0" r="11" fill="transparent" class="hp" data-t="R4 · Pohang (A) 1-0" data-s="16 deliveries · 6 shots · 1.21 xG · 0.076 per delivery"/><circle cx="156.7" cy="163.5" r="11" fill="transparent" class="hp" data-t="R5 · Gwangju (H) 5-0" data-s="17 deliveries · 6 shots · 1.82 xG · 0.107 per delivery"/><circle cx="289.2" cy="357.8" r="11" fill="transparent" class="hp" data-t="R6 · Anyang (A) 1-1" data-s="27 deliveries · 2 shots · 0.14 xG · 0.005 per delivery"/><circle cx="143.5" cy="230.5" r="11" fill="transparent" class="hp" data-t="R7 · Jeonbuk (H) 1-0" data-s="16 deliveries · 3 shots · 1.15 xG · 0.072 per delivery"/><circle cx="262.7" cy="274.5" r="11" fill="transparent" class="hp" data-t="R8 · Daejeon (H) 0-1" data-s="25 deliveries · 6 shots · 1.23 xG · 0.049 per delivery"/><circle cx="143.5" cy="70.3" r="11" fill="transparent" class="hp" data-t="R9 · Bucheon (H) 3-0" data-s="16 deliveries · 9 shots · 2.50 xG · 0.156 per delivery"/><circle cx="117.0" cy="258.0" r="11" fill="transparent" class="hp" data-t="R10 · Gangwon (A) 2-1" data-s="14 deliveries · 4 shots · 0.81 xG · 0.058 per delivery"/><circle cx="249.4" cy="296.9" r="11" fill="transparent" class="hp" data-t="R11 · Gimcheon (H) 2-3" data-s="24 deliveries · 10 shots · 0.90 xG · 0.037 per delivery"/><circle cx="302.4" cy="325.8" r="11" fill="transparent" class="hp" data-t="R12 · Anyang (H) 0-0" data-s="28 deliveries · 5 shots · 0.62 xG · 0.022 per delivery"/><circle cx="607.0" cy="316.8" r="11" fill="transparent" class="hp" data-t="R13 · Jeju (A) 1-2" data-s="51 deliveries · 10 shots · 1.37 xG · 0.027 per delivery"/><circle cx="448.1" cy="312.6" r="11" fill="transparent" class="hp" data-t="R14 · Gwangju (A) 1-0" data-s="39 deliveries · 9 shots · 1.13 xG · 0.029 per delivery"/><circle cx="143.5" cy="293.4" r="11" fill="transparent" class="hp" data-t="R15 · Daejeon (A) 2-1" data-s="16 deliveries · 5 shots · 0.63 xG · 0.039 per delivery"/><circle cx="170.0" cy="334.6" r="11" fill="transparent" class="hp" data-t="R16 · Incheon (H) 1-0" data-s="18 deliveries · 3 shots · 0.32 xG · 0.018 per delivery"/><circle cx="262.7" cy="335.0" r="11" fill="transparent" class="hp" data-t="R17 · Gangwon (H) 0-0" data-s="25 deliveries · 4 shots · 0.43 xG · 0.017 per delivery"/><circle cx="183.2" cy="181.4" r="11" fill="transparent" class="hp" data-t="R18 · Bucheon (A) 3-1" data-s="19 deliveries · 8 shots · 1.86 xG · 0.098 per delivery"/><circle cx="328.9" cy="223.9" r="11" fill="transparent" class="hp" data-t="R19 · Pohang (H) 3-1" data-s="30 deliveries · 11 shots · 2.27 xG · 0.076 per delivery"/><circle cx="593.8" cy="320.0" r="11" fill="transparent" class="hp" data-t="R20 · Ulsan (H) 1-3" data-s="50 deliveries · 11 shots · 1.26 xG · 0.025 per delivery"/><circle cx="103.7" cy="368.0" r="11" fill="transparent" class="hp" data-t="R21 · Jeonbuk (A) 0-0" data-s="13 deliveries · 0 shots · 0.00 xG · 0.000 per delivery"/><circle cx="130.2" cy="303.4" r="11" fill="transparent" class="hp" data-t="R22 · Gimcheon (A) 0-0" data-s="15 deliveries · 4 shots · 0.51 xG · 0.034 per delivery"/><circle cx="262.7" cy="219.8" r="11" fill="transparent" class="hp" data-t="R23 · Daejeon (H) 4-2" data-s="25 deliveries · 10 shots · 1.94 xG · 0.078 per delivery"/><circle cx="262.7" cy="227.3" r="11" fill="transparent" class="hp" data-t="R24 · Anyang (A) 7-0" data-s="25 deliveries · 9 shots · 1.85 xG · 0.074 per delivery"/><circle cx="408.4" cy="332.0" r="11" fill="transparent" class="hp" data-t="R25 · Bucheon (H) 1-0" data-s="36 deliveries · 4 shots · 0.68 xG · 0.019 per delivery"/><circle cx="77.2" cy="410" r="5" fill="var(--s-win)"/><text x="88.2" y="414" class="lg">Win</text><rect x="130.7" y="405.5" width="9" height="9" transform="rotate(45 135.2 410)" fill="var(--s-draw)"/><text x="146.2" y="414" class="lg">Draw</text><rect x="188.7" y="405.5" width="9" height="9" fill="var(--s-loss)"/><text x="204.2" y="414" class="lg">Loss</text></svg><figcaption>Fig 3 &middot; All 25 matches. Horizontal: how often the ball was delivered into zone 17. Vertical: the xG each of those deliveries produced. <b>The top-left is entirely wins; draws and losses cluster bottom-right.</b> <span class="tip">Hover a point for match details.</span></figcaption></figure>
+
+<p>The plot separates top-left from bottom-right, and it separates in the direction opposite to intuition.</p>
+
+<div class="tw"><table>
+<thead><tr><th>Rank</th><th>Rd</th><th>Match</th><th>Score</th><th>Deliveries</th><th>Shots</th><th>xG per delivery</th></tr></thead>
+<tbody>
+<tr><td class="n">1</td><td class="n">R09</td><td class="n">Bucheon (H)</td><td class="w">3-0</td><td>16</td><td>9</td><td>0.156</td></tr>
+<tr><td class="n">2</td><td class="n">R02</td><td class="n">Ulsan (A)</td><td class="w">4-1</td><td>18</td><td>11</td><td>0.145</td></tr>
+<tr class="hl"><td class="n">3</td><td class="n">R05</td><td class="n">Gwangju (H)</td><td class="w">5-0</td><td>17</td><td>6</td><td>0.107</td></tr>
+<tr><td class="n">&hellip;</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td class="n">17</td><td class="n">R14</td><td class="n">Gwangju (A)</td><td class="w">1-0</td><td>39</td><td>9</td><td>0.029</td></tr>
+<tr><td class="n">18</td><td class="n">R13</td><td class="n">Jeju (A)</td><td class="l">1-2</td><td>51</td><td>10</td><td>0.027</td></tr>
+<tr class="hl"><td class="n">19</td><td class="n">R20</td><td class="n">Ulsan (H)</td><td class="l">1-3</td><td>50</td><td>11</td><td>0.025</td></tr>
+<tr><td class="n">25</td><td class="n">R21</td><td class="n">Jeonbuk (A)</td><td class="n">0-0</td><td>13</td><td>0</td><td>0.000</td></tr>
+</tbody>
+</table></div>
+
+<p>R05, the 5-0 against Gwangju, put the ball into the centre of the box <b>17 times</b>. R20, the 1-3 against Ulsan, did it
+<b>50 times</b> &mdash; nearly three times as often, for one fifth of the goals.</p>
+
+<figure class="fig "><svg viewBox="0 0 680 306" role="img"><rect width="680" height="306" fill="var(--surface)" rx="6"/><text x="300" y="26" class="hd" fill="var(--s-win)" text-anchor="middle">Top 10 matches</text><text x="300" y="44" class="lg" text-anchor="middle">10W 0D 0L</text><text x="530" y="26" class="hd" fill="var(--s-loss)" text-anchor="middle">Bottom 10 matches</text><text x="530" y="44" class="lg" text-anchor="middle">3W 5D 2L</text><text x="18" y="87" class="lb2">Goals per match</text><text x="300" y="90" class="big" fill="var(--s-win)" text-anchor="middle">3.30</text><text x="530" y="90" class="big" fill="var(--s-loss)" text-anchor="middle">0.60</text><line x1="18" y1="106" x2="662" y2="106" stroke="var(--grid)" stroke-width=".8"/><text x="18" y="141" class="lb2">Deliveries into zone 17 per match</text><text x="300" y="144" class="big" fill="var(--s-win)" text-anchor="middle">20.7</text><text x="530" y="144" class="big" fill="var(--s-loss)" text-anchor="middle">30.2</text><line x1="18" y1="160" x2="662" y2="160" stroke="var(--grid)" stroke-width=".8"/><text x="18" y="195" class="lb2">Deliveries within one attack</text><text x="300" y="198" class="big" fill="var(--s-win)" text-anchor="middle">1.25</text><text x="530" y="198" class="big" fill="var(--s-loss)" text-anchor="middle">1.49</text><line x1="18" y1="214" x2="662" y2="214" stroke="var(--grid)" stroke-width=".8"/><text x="18" y="249" class="lb2">High-quality shots (xG 0.20+)</text><text x="300" y="252" class="big" fill="var(--s-win)" text-anchor="middle">47%</text><text x="530" y="252" class="big" fill="var(--s-loss)" text-anchor="middle">12%</text><line x1="18" y1="268" x2="662" y2="268" stroke="var(--grid)" stroke-width=".8"/></svg><figcaption>Fig 4 &middot; The top ten matches by xG per delivery against the bottom ten. <b>The side that delivered more scored one fifth as many goals.</b> Repeating the delivery 1.49 times within a single attack means the ball goes in, gets cleared, is won back, and goes in again.</figcaption></figure>
+
+<p>The third row is the reason. <b>How many times the ball is delivered within a single attack</b> is what differs.</p>
+
+<p>On the good days one delivery ends the attack &mdash; a shot, or a turnover. On the bad days it goes in, gets cleared,
+is picked up and goes in again, and is cleared again. The cycle repeats inside the same possession.
+The delivery count accumulates while shots do not, and the shots that do come are taken from <b>poor angles</b>.
+The share of shots with at least a 20% chance of going in is <b>47% against 12%</b> &mdash; four times apart.</p>
+
+<figure class="fig "><svg viewBox="0 0 680 486" role="img"><defs><marker id="a5y" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#1baf7a"/></marker><marker id="a5n" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#8c8981"/></marker></defs><rect x="55" y="9" width="570" height="354" fill="var(--surface)" rx="4"/><g stroke="var(--axis)" stroke-width="1" fill="none"><rect x="60" y="14" width="560" height="344"/><line x1="340.0" y1="14" x2="340.0" y2="358"/><circle cx="340.0" cy="186.0" r="44.72"/><rect x="532.0799999999999" y="84.176" width="87.92" height="203.648"/><rect x="590.88" y="134.39999999999998" width="29.119999999999997" height="103.2"/><rect x="60" y="84.176" width="87.92" height="203.648"/><rect x="60" y="134.39999999999998" width="29.119999999999997" height="103.2"/></g><rect x="526.648" y="128.65519999999998" width="93.35199999999999" height="114.68959999999998" fill="var(--s-win)" fill-opacity=".07"/><line x1="618.9" y1="18.8" x2="607.7" y2="183.9" stroke="var(--muted)" stroke-width="2.1" stroke-opacity=".92" marker-end="url(#a5n)" stroke-dasharray="4 3"/><circle cx="618.9" cy="18.8" r="8.5" fill="var(--surface)" stroke="var(--muted)" stroke-width="2"/><text x="618.9" y="22.2" class="stp" fill="var(--muted)" text-anchor="middle">①</text><text x="631.9" y="22.8" class="lb" fill="var(--muted)" text-anchor="start">Jung Seung-won</text><line x1="613.8" y1="351.5" x2="595.9" y2="225.2" stroke="var(--muted)" stroke-width="2.1" stroke-opacity=".92" marker-end="url(#a5n)" stroke-dasharray="4 3"/><circle cx="613.8" cy="351.5" r="8.5" fill="var(--surface)" stroke="var(--muted)" stroke-width="2"/><text x="613.8" y="354.9" class="stp" fill="var(--muted)" text-anchor="middle">②</text><text x="600.8" y="355.5" class="lb" fill="var(--muted)" text-anchor="end">Jung Seung-won</text><line x1="467.1" y1="209.7" x2="391.5" y2="249.3" stroke="var(--s-win)" stroke-width="2.1" stroke-opacity=".92" marker-end="url(#a5y)"/><circle cx="467.1" cy="209.7" r="4" fill="var(--s-win)"/><line x1="391.5" y1="249.3" x2="322.1" y2="227.3" stroke="var(--s-win)" stroke-width="2.1" stroke-opacity=".92" marker-end="url(#a5y)"/><circle cx="391.5" cy="249.3" r="4" fill="var(--s-win)"/><line x1="322.1" y1="227.3" x2="407.2" y2="264.8" stroke="var(--s-win)" stroke-width="2.1" stroke-opacity=".92" marker-end="url(#a5y)"/><circle cx="322.1" cy="227.3" r="4" fill="var(--s-win)"/><line x1="407.2" y1="264.8" x2="457.0" y2="348.4" stroke="var(--s-win)" stroke-width="2.1" stroke-opacity=".92" marker-end="url(#a5y)"/><circle cx="407.2" cy="264.8" r="4" fill="var(--s-win)"/><circle cx="457.0" cy="348.4" r="5.5" fill="var(--surface)" stroke="var(--s-win)" stroke-width="1.8"/><text x="448.0" y="352.4" class="lb" fill="var(--s-win)" text-anchor="end">Jung Seung-won</text><circle cx="476.1" cy="293.0" r="5.5" fill="var(--surface)" stroke="var(--s-win)" stroke-width="1.8"/><text x="467.1" y="297.0" class="lb" fill="var(--s-win)" text-anchor="end">Lee Seung-mo</text><line x1="588.1" y1="260.6" x2="547.8" y2="194.9" stroke="var(--s-win)" stroke-width="2.1" stroke-opacity=".92" marker-end="url(#a5y)"/><circle cx="588.1" cy="260.6" r="8.5" fill="var(--surface)" stroke="var(--s-win)" stroke-width="2"/><text x="588.1" y="264.0" class="stp" fill="var(--s-win)" text-anchor="middle">③</text><text x="575.1" y="264.6" class="lb" fill="var(--s-win)" text-anchor="end">Lee Seung-mo</text><circle cx="556.2" cy="179.5" r="7" fill="var(--s-win)" stroke="var(--surface)" stroke-width="2"/><text x="567.2" y="183.5" class="lb" fill="var(--s-win)">Goal · Jung Seung-won</text><line x1="476.1" y1="293.0" x2="588.1" y2="260.6" stroke="var(--s-win)" stroke-width="2.6" stroke-opacity=".55" stroke-dasharray="1 5" stroke-linecap="round" marker-end="url(#a5y)"/><text x="532.1" y="267.8" class="lb" fill="var(--s-win)" text-anchor="middle">Lee carries 20m</text><path d="M595.2,169.4 l7,7 M602.2,169.4 l-7,7" stroke="var(--s-loss)" stroke-width="2.2" stroke-linecap="round"/><text x="611.7" y="176.9" class="lb" fill="var(--s-loss)">Park Chan-yong clears</text><path d="M585.1,208.3 l7,7 M592.1,208.3 l-7,7" stroke="var(--s-loss)" stroke-width="2.2" stroke-linecap="round"/><text x="601.6" y="215.8" class="lb" fill="var(--s-loss)">Lee Ho-jae clears</text><circle cx="618.9" cy="18.8" r="10" fill="transparent" class="hp" data-t="86:12 Jung Seung-won · Cross ①" data-s="From the left by-line — cleared"/><circle cx="613.8" cy="351.5" r="10" fill="transparent" class="hp" data-t="86:58 Jung Seung-won · Cross ②" data-s="From the right by-line — cleared"/><circle cx="467.1" cy="209.7" r="10" fill="transparent" class="hp" data-t="87:02 Kim Jin-su · Second ball won" data-s="Seoul recover their own cleared cross"/><circle cx="391.5" cy="249.3" r="10" fill="transparent" class="hp" data-t="87:04 Moon Seon-min · Recycle" data-s="Played back to rebuild"/><circle cx="322.1" cy="227.3" r="10" fill="transparent" class="hp" data-t="87:06 Choi Jun · Recycle" data-s="in the highlight"/><circle cx="407.2" cy="264.8" r="10" fill="transparent" class="hp" data-t="87:08 Ross · Out to the right" data-s="To Jung Seung-won"/><circle cx="457.0" cy="348.4" r="10" fill="transparent" class="hp" data-t="87:09 Jung Seung-won · Aerial won" data-s="Won near the touchline"/><circle cx="476.1" cy="293.0" r="10" fill="transparent" class="hp" data-t="87:11 Lee Seung-mo · Ball won" data-s="Picks up the loose ball and drives"/><circle cx="588.1" cy="260.6" r="10" fill="transparent" class="hp" data-t="87:14 Lee Seung-mo · Cross ③" data-s="Carried to the by-line, third delivery"/><circle cx="556.2" cy="179.5" r="10" fill="transparent" class="hp" data-t="87:16 Jung Seung-won · Goal" data-s="in the highlight"/><text x="60" y="394" class="lb2">The whole attack — 64 seconds</text><rect x="60" y="406" width="560" height="16" rx="4" fill="var(--surface-2)"/><rect x="488.8" y="406" width="131.2" height="16" rx="4" fill="var(--s-win)" fill-opacity=".25"/><line x1="60.0" y1="406" x2="60.0" y2="422" stroke="var(--axis)" stroke-width="1"/><text x="60.0" y="436" class="lg" text-anchor="middle">①</text><line x1="462.5" y1="406" x2="462.5" y2="422" stroke="var(--axis)" stroke-width="1"/><text x="462.5" y="436" class="lg" text-anchor="middle">②</text><line x1="488.8" y1="406" x2="488.8" y2="422" stroke="var(--axis)" stroke-width="1"/><text x="488.8" y="436" class="lg" text-anchor="middle">won</text><line x1="602.5" y1="406" x2="602.5" y2="422" stroke="var(--axis)" stroke-width="1"/><text x="602.5" y="436" class="lg" text-anchor="middle">③</text><line x1="620.0" y1="406" x2="620.0" y2="422" stroke="var(--axis)" stroke-width="1"/><text x="620.0" y="436" class="lg" text-anchor="middle">goal</text><text x="60.0" y="402" class="lg" text-anchor="middle">86:12</text><text x="620.0" y="402" class="lg" text-anchor="middle">87:16</text><text x="554.4" y="456" class="em" text-anchor="middle">15 seconds kept in the highlight (from 87:01)</text><text x="270.0" y="456" class="lg" text-anchor="middle">49 seconds cut — two crosses, two clearances</text></svg><figcaption>Fig 5 &middot; R19 Pohang at home, 3-1 &mdash; one attack in the 87th minute, end to end. <b>The ball was played into the same place three times, and cleared twice.</b> Green is what survives in the official highlight (from 87:01); the grey dotted section was cut. Watching only the highlight, this reads as <b>"defend, then cross, then score"</b>. Knowing the preceding 49 seconds makes it <b>"scored at the third attempt"</b>. <span class="tip">Hover a point for that moment.</span></figcaption></figure>
+
+<p>One attack from the Pohang match shows the shape of it. The ball was played into the same place
+<b>three times</b>, and cleared twice. Kim Jin-su won the second ball, four players moved it round,
+and Lee Seung-mo delivered a third time for the goal. Sixty-four seconds in all.</p>
+
+<p>But <b>the official highlight keeps only the last fifteen seconds.</b>
+The two earlier crosses and the two clearances are gone, so on video the sequence reads as
+<b>"defend, break out, cross, score"</b>. Knowing the preceding 49 seconds makes it
+<b>"scored at the third attempt"</b>.</p>
+
+<div class="vid">
+<div class="tag">VIDEO 1</div>
+<h4>The same footage, meaning something else once you know what came before</h4>
+<p class="rule">This one is built by laying the match footage over the data. A highlight clip on its own cannot carry it.</p>
+<div class="clips"><div class="clip"><video controls preload="metadata" playsinline src="/videos/fcseoul/v1-1-r19-pohang-87.mp4"></video><div class="cap"><b>R19 Pohang (H) 3-1 &middot; 87'</b>The official highlight, starting at 87:01 with Kim Jin-su winning the second ball. The 49 seconds before it — two crosses and two clearances — are cut.</div></div></div>
+<ol style="margin-top:14px">
+<li><b>Left pane</b> &mdash; the highlight above, as broadcast.</li>
+<li><b>Right pane</b> &mdash; the pitch diagram on the same clock, starting <b>49 seconds earlier</b>, so crosses ① and ② and both clearances pass first.</li>
+<li><b>Where they meet</b> &mdash; at 87:01 the footage begins, and the delivery counter already reads <b>2</b>.</li>
+</ol>
+<p style="margin:13px 0 0;font-size:13.5px;color:var(--muted)">
+Repetition does not always fail: this one went in at the third attempt.
+But across 25 matches the days with more repetition were the days with fewer goals (Fig 4).
+<b>And a repetition that ends in failure survives in no highlight at all</b> &mdash;
+I went looking for the repeated sequences from R13 Jeju away and R20 Ulsan at home, and in all three matches
+that passage had been cut. Highlights keep the last action and discard what came before.
+<b>From public video alone there is no way to show a failed repetition.</b></p>
+</div>
+
+<h2><span class="num">04</span>The best of them &mdash; R05, Gwangju at home, 5-0</h2>
+<p class="dek">17 deliveries, 6 shots, 5 goals. And all five arrived by a different route</p>
+
+<p>R05, the Gwangju match on 22 March, ranks third by xG per delivery and <b>second in the season for xG per shot, at 0.304</b>.
+Yet its 17 deliveries put it level with the lower-ranked matches. <b>This was not a win built on volume.</b></p>
+
+<figure class="fig "><svg viewBox="0 0 680 780" role="img"><defs><marker id="am" markerWidth="6" markerHeight="6" refX="5.2" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#1baf7a"/></marker></defs><rect x="10" y="14" width="368" height="128" fill="var(--surface)" rx="4"/><g stroke="var(--axis)" stroke-width="1" fill="none"><rect x="15" y="19" width="358" height="118"/><line x1="194.0" y1="19" x2="194.0" y2="137"/><circle cx="194.0" cy="78.0" r="15.34"/><rect x="316.794" y="43.072" width="56.206" height="69.856"/><rect x="354.38399999999996" y="60.3" width="18.616" height="35.4"/><rect x="15" y="43.072" width="56.206" height="69.856"/><rect x="15" y="60.3" width="18.616" height="35.4"/></g><rect x="313.3" y="58.3" width="59.69999999999999" height="39.400000000000006" fill="var(--s-win)" fill-opacity=".08"/><circle cx="238.8" cy="29.9" r="7.5" fill="var(--surface)" stroke="var(--s-win)" stroke-width="1.5"/><text x="238.8" y="33.3" class="stp" fill="var(--s-win)" text-anchor="middle">1</text><line x1="238.8" y1="29.9" x2="256.6" y2="45.2" stroke="var(--muted)" stroke-width="1.1" stroke-dasharray="2 3" stroke-opacity=".75"/><line x1="256.6" y1="45.2" x2="337.9" y2="87.4" stroke="var(--s-win)" stroke-width="1.8" marker-end="url(#am)"/><circle cx="256.6" cy="45.2" r="7.5" fill="var(--surface)" stroke="var(--s-win)" stroke-width="1.5"/><text x="256.6" y="48.6" class="stp" fill="var(--s-win)" text-anchor="middle">2</text><line x1="337.9" y1="87.4" x2="351.2" y2="76.5" stroke="var(--s-win)" stroke-width="1.8" marker-end="url(#am)"/><circle cx="337.9" cy="87.4" r="7.5" fill="var(--surface)" stroke="var(--s-win)" stroke-width="1.5"/><text x="337.9" y="90.80000000000001" class="stp" fill="var(--s-win)" text-anchor="middle">3</text><circle cx="351.2" cy="76.5" r="6" fill="var(--s-win)" stroke="var(--surface)" stroke-width="1.6"/><circle cx="238.8" cy="29.9" r="10" fill="transparent" class="hp" data-t="1. Kim Jin-su" data-s="Kim Jin-su rolls the free-kick"/><circle cx="256.6" cy="45.2" r="10" fill="transparent" class="hp" data-t="2. Jung Seung-won" data-s="Jung Seung-won crosses from the left"/><circle cx="337.9" cy="87.4" r="10" fill="transparent" class="hp" data-t="3. Babec" data-s="Babec heads it down to the centre"/><circle cx="351.2" cy="76.5" r="10" fill="transparent" class="hp" data-t="Goal · Son Jung-beom" data-s="Son Jung-beom finishes"/><text x="396" y="30" class="mt">8' &middot; Son Jung-beom</text><text x="670" y="30" class="xgv" text-anchor="end">xG 0.23</text><text x="396" y="52" class="ms2">A low free-kick rolled short on the left,</text><text x="396" y="69" class="ms2">crossed by Jung Seung-won. Babec nodded it</text><text x="396" y="86" class="ms2">back into the centre for Son to finish.</text><text x="396" y="111" class="stpl">1 Kim Jin-su rolls the free-kick</text><text x="396" y="125" class="stpl">2 Jung Seung-won crosses from the left</text><text x="396" y="139" class="stpl">3 Babec heads it down to the centre</text><line x1="10" y1="158" x2="670" y2="158" stroke="var(--border)" stroke-width="1"/><rect x="10" y="168" width="368" height="128" fill="var(--surface)" rx="4"/><g stroke="var(--axis)" stroke-width="1" fill="none"><rect x="15" y="173" width="358" height="118"/><line x1="194.0" y1="173" x2="194.0" y2="291"/><circle cx="194.0" cy="232.0" r="15.34"/><rect x="316.794" y="197.072" width="56.206" height="69.856"/><rect x="354.38399999999996" y="214.3" width="18.616" height="35.4"/><rect x="15" y="197.072" width="56.206" height="69.856"/><rect x="15" y="214.3" width="18.616" height="35.4"/></g><rect x="313.3" y="212.3" width="59.69999999999999" height="39.39999999999998" fill="var(--s-win)" fill-opacity=".08"/><line x1="280.3" y1="186.2" x2="331.5" y2="237.2" stroke="var(--s-win)" stroke-width="1.8" marker-end="url(#am)"/><circle cx="280.3" cy="186.2" r="7.5" fill="var(--surface)" stroke="var(--s-win)" stroke-width="1.5"/><text x="280.3" y="189.6" class="stp" fill="var(--s-win)" text-anchor="middle">1</text><line x1="331.5" y1="237.2" x2="330.0" y2="269.6" stroke="var(--muted)" stroke-width="1.1" stroke-dasharray="2 3" stroke-opacity=".75"/><circle cx="330.0" cy="269.6" r="7.5" fill="var(--surface)" stroke="var(--s-win)" stroke-width="1.5"/><text x="330.0" y="273.0" class="stp" fill="var(--s-win)" text-anchor="middle">2</text><line x1="330.0" y1="269.6" x2="319.3" y2="265.6" stroke="var(--muted)" stroke-width="1.1" stroke-dasharray="2 3" stroke-opacity=".75"/><line x1="319.3" y1="265.6" x2="340.8" y2="243.1" stroke="var(--s-win)" stroke-width="1.8" marker-end="url(#am)"/><circle cx="319.3" cy="265.6" r="7.5" fill="var(--surface)" stroke="var(--s-win)" stroke-width="1.5"/><text x="319.3" y="269.0" class="stp" fill="var(--s-win)" text-anchor="middle">3</text><line x1="340.8" y1="243.1" x2="363.0" y2="225.7" stroke="var(--muted)" stroke-width="1.1" stroke-dasharray="2 3" stroke-opacity=".75"/><circle cx="363.0" cy="225.7" r="6" fill="var(--s-win)" stroke="var(--surface)" stroke-width="1.6"/><circle cx="280.3" cy="186.2" r="10" fill="transparent" class="hp" data-t="1. Kim Jin-su" data-s="Kim Jin-su crosses, cleared"/><circle cx="330.0" cy="269.6" r="10" fill="transparent" class="hp" data-t="2. Jung Seung-won" data-s="Jung Seung-won recovers on the far side"/><circle cx="319.3" cy="265.6" r="10" fill="transparent" class="hp" data-t="3. Jung Seung-won" data-s="Jung Seung-won inswinging cross"/><circle cx="363.0" cy="225.7" r="10" fill="transparent" class="hp" data-t="Goal · Klimala" data-s="Deflects off Moon Min-seo, finished"/><text x="396" y="184" class="mt">46' &middot; Klimala</text><text x="670" y="184" class="xgv" text-anchor="end">xG 0.65</text><text x="396" y="206" class="ms2">A left-sided cross was cleared, then won</text><text x="396" y="223" class="ms2">back on the right. The inswinger deflected</text><text x="396" y="240" class="ms2">off a defender and ran loose.</text><text x="396" y="265" class="stpl">1 Kim Jin-su crosses, cleared</text><text x="396" y="279" class="stpl">2 Jung Seung-won recovers on the far side</text><text x="396" y="293" class="stpl">3 Jung Seung-won inswinging cross</text><line x1="10" y1="312" x2="670" y2="312" stroke="var(--border)" stroke-width="1"/><rect x="10" y="322" width="368" height="128" fill="var(--surface)" rx="4"/><g stroke="var(--axis)" stroke-width="1" fill="none"><rect x="15" y="327" width="358" height="118"/><line x1="194.0" y1="327" x2="194.0" y2="445"/><circle cx="194.0" cy="386.0" r="15.34"/><rect x="316.794" y="351.072" width="56.206" height="69.856"/><rect x="354.38399999999996" y="368.3" width="18.616" height="35.4"/><rect x="15" y="351.072" width="56.206" height="69.856"/><rect x="15" y="368.3" width="18.616" height="35.4"/></g><rect x="313.3" y="366.3" width="59.69999999999999" height="39.39999999999998" fill="var(--s-win)" fill-opacity=".08"/><line x1="289.6" y1="414.0" x2="328.2" y2="428.2" stroke="var(--s-win)" stroke-width="1.8" marker-end="url(#am)"/><circle cx="289.6" cy="414.0" r="7.5" fill="var(--surface)" stroke="var(--s-win)" stroke-width="1.5"/><text x="289.6" y="417.4" class="stp" fill="var(--s-win)" text-anchor="middle">1</text><line x1="328.2" y1="428.2" x2="357.2" y2="441.5" stroke="var(--muted)" stroke-width="1.1" stroke-dasharray="2 3" stroke-opacity=".75"/><circle cx="357.2" cy="441.5" r="7.5" fill="var(--surface)" stroke="var(--s-win)" stroke-width="1.5"/><text x="357.2" y="444.9" class="stp" fill="var(--s-win)" text-anchor="middle">2</text><line x1="351.5" y1="442.2" x2="352.2" y2="384.6" stroke="var(--s-win)" stroke-width="1.8" marker-end="url(#am)"/><circle cx="351.5" cy="442.2" r="7.5" fill="var(--surface)" stroke="var(--s-win)" stroke-width="1.5"/><text x="351.5" y="445.59999999999997" class="stp" fill="var(--s-win)" text-anchor="middle">3</text><circle cx="352.2" cy="384.6" r="6" fill="var(--s-win)" stroke="var(--surface)" stroke-width="1.6"/><circle cx="289.6" cy="414.0" r="10" fill="transparent" class="hp" data-t="1. Klimala" data-s="Klimala works it wide right"/><circle cx="357.2" cy="441.5" r="10" fill="transparent" class="hp" data-t="2. Jung Seung-won" data-s="Jung Seung-won wins the foul"/><circle cx="351.5" cy="442.2" r="10" fill="transparent" class="hp" data-t="3. Kim Jin-su" data-s="Kim Jin-su inswinging set piece"/><circle cx="352.2" cy="384.6" r="10" fill="transparent" class="hp" data-t="Goal · Ross" data-s="Ross wins the duel, heads in"/><text x="396" y="338" class="mt">59' &middot; Ross</text><text x="670" y="338" class="xgv" text-anchor="end">xG 0.24</text><text x="396" y="360" class="ms2">A free-kick won in the right wide area.</text><text x="396" y="377" class="ms2">Kim Jin-su’s inswinger was met by Ross,</text><text x="396" y="394" class="ms2">who beat Moon Min-seo in the air.</text><text x="396" y="419" class="stpl">1 Klimala works it wide right</text><text x="396" y="433" class="stpl">2 Jung Seung-won wins the foul</text><text x="396" y="447" class="stpl">3 Kim Jin-su inswinging set piece</text><line x1="10" y1="466" x2="670" y2="466" stroke="var(--border)" stroke-width="1"/><rect x="10" y="476" width="368" height="128" fill="var(--surface)" rx="4"/><g stroke="var(--axis)" stroke-width="1" fill="none"><rect x="15" y="481" width="358" height="118"/><line x1="194.0" y1="481" x2="194.0" y2="599"/><circle cx="194.0" cy="540.0" r="15.34"/><rect x="316.794" y="505.072" width="56.206" height="69.856"/><rect x="354.38399999999996" y="522.3" width="18.616" height="35.4"/><rect x="15" y="505.072" width="56.206" height="69.856"/><rect x="15" y="522.3" width="18.616" height="35.4"/></g><rect x="313.3" y="520.3" width="59.69999999999999" height="39.40000000000009" fill="var(--s-win)" fill-opacity=".08"/><line x1="93.8" y1="481.0" x2="171.4" y2="486.9" stroke="var(--s-win)" stroke-width="1.8" marker-end="url(#am)"/><circle cx="93.8" cy="481.0" r="7.5" fill="var(--surface)" stroke="var(--s-win)" stroke-width="1.5"/><text x="93.8" y="484.4" class="stp" fill="var(--s-win)" text-anchor="middle">1</text><line x1="171.4" y1="486.9" x2="180.0" y2="481.0" stroke="var(--muted)" stroke-width="1.1" stroke-dasharray="2 3" stroke-opacity=".75"/><line x1="180.0" y1="481.0" x2="305.0" y2="486.8" stroke="var(--s-win)" stroke-width="1.8" marker-end="url(#am)"/><circle cx="180.0" cy="481.0" r="7.5" fill="var(--surface)" stroke="var(--s-win)" stroke-width="1.5"/><text x="180.0" y="484.4" class="stp" fill="var(--s-win)" text-anchor="middle">2</text><line x1="303.5" y1="488.1" x2="299.3" y2="499.8" stroke="var(--s-win)" stroke-width="1.8" marker-end="url(#am)"/><circle cx="303.5" cy="488.1" r="7.5" fill="var(--surface)" stroke="var(--s-win)" stroke-width="1.5"/><text x="303.5" y="491.5" class="stp" fill="var(--s-win)" text-anchor="middle">3</text><line x1="299.3" y1="499.8" x2="360.5" y2="521.9" stroke="var(--muted)" stroke-width="1.1" stroke-dasharray="2 3" stroke-opacity=".75"/><circle cx="360.5" cy="521.9" r="6" fill="var(--s-win)" stroke="var(--surface)" stroke-width="1.6"/><circle cx="93.8" cy="481.0" r="10" fill="transparent" class="hp" data-t="1. Kim Jin-su" data-s="Kim Jin-su builds from the back"/><circle cx="180.0" cy="481.0" r="10" fill="transparent" class="hp" data-t="2. Kim Jin-su" data-s="Kim Jin-su long throw-in"/><circle cx="303.5" cy="488.1" r="10" fill="transparent" class="hp" data-t="3. Moon Seon-min" data-s="Moon Seon-min holds off three"/><circle cx="360.5" cy="521.9" r="10" fill="transparent" class="hp" data-t="Goal · Klimala" data-s="Klimala runs in, one-on-one"/><text x="396" y="492" class="mt">72' &middot; Klimala</text><text x="670" y="492" class="xgv" text-anchor="end">xG 0.19</text><text x="396" y="514" class="ms2">A long throw on the left. With three players</text><text x="396" y="531" class="ms2">drawn to Moon Seon-min, Klimala ran into the</text><text x="396" y="548" class="ms2">half-space and went one-on-one with the keeper.</text><text x="396" y="573" class="stpl">1 Kim Jin-su builds from the back</text><text x="396" y="587" class="stpl">2 Kim Jin-su long throw-in</text><text x="396" y="601" class="stpl">3 Moon Seon-min holds off three</text><line x1="10" y1="620" x2="670" y2="620" stroke="var(--border)" stroke-width="1"/><rect x="10" y="630" width="368" height="128" fill="var(--surface)" rx="4"/><g stroke="var(--axis)" stroke-width="1" fill="none"><rect x="15" y="635" width="358" height="118"/><line x1="194.0" y1="635" x2="194.0" y2="753"/><circle cx="194.0" cy="694.0" r="15.34"/><rect x="316.794" y="659.072" width="56.206" height="69.856"/><rect x="354.38399999999996" y="676.3" width="18.616" height="35.4"/><rect x="15" y="659.072" width="56.206" height="69.856"/><rect x="15" y="676.3" width="18.616" height="35.4"/></g><rect x="313.3" y="674.3" width="59.69999999999999" height="39.40000000000009" fill="var(--s-win)" fill-opacity=".08"/><line x1="89.1" y1="635.0" x2="177.9" y2="640.7" stroke="var(--s-win)" stroke-width="1.8" marker-end="url(#am)"/><circle cx="89.1" cy="635.0" r="7.5" fill="var(--surface)" stroke="var(--s-win)" stroke-width="1.5"/><text x="89.1" y="638.4" class="stp" fill="var(--s-win)" text-anchor="middle">1</text><line x1="177.9" y1="640.7" x2="140.7" y2="704.0" stroke="var(--muted)" stroke-width="1.1" stroke-dasharray="2 3" stroke-opacity=".75"/><line x1="140.7" y1="704.0" x2="203.7" y2="741.8" stroke="var(--s-win)" stroke-width="1.8" marker-end="url(#am)"/><circle cx="140.7" cy="704.0" r="7.5" fill="var(--surface)" stroke="var(--s-win)" stroke-width="1.5"/><text x="140.7" y="707.4" class="stp" fill="var(--s-win)" text-anchor="middle">2</text><line x1="203.7" y1="741.8" x2="279.2" y2="736.2" stroke="var(--muted)" stroke-width="1.1" stroke-dasharray="2 3" stroke-opacity=".75"/><line x1="279.2" y1="736.2" x2="322.9" y2="739.9" stroke="var(--s-win)" stroke-width="1.8" marker-end="url(#am)"/><circle cx="279.2" cy="736.2" r="7.5" fill="var(--surface)" stroke="var(--s-win)" stroke-width="1.5"/><text x="279.2" y="739.6" class="stp" fill="var(--s-win)" text-anchor="middle">3</text><line x1="322.9" y1="739.9" x2="346.9" y2="736.2" stroke="var(--muted)" stroke-width="1.1" stroke-dasharray="2 3" stroke-opacity=".75"/><line x1="346.9" y1="736.2" x2="362.6" y2="710.2" stroke="var(--s-win)" stroke-width="1.8" marker-end="url(#am)"/><circle cx="346.9" cy="736.2" r="7.5" fill="var(--surface)" stroke="var(--s-win)" stroke-width="1.5"/><text x="346.9" y="739.6" class="stp" fill="var(--s-win)" text-anchor="middle">4</text><circle cx="362.6" cy="710.2" r="6" fill="var(--s-win)" stroke="var(--surface)" stroke-width="1.6"/><circle cx="89.1" cy="635.0" r="10" fill="transparent" class="hp" data-t="1. Kim Jin-su" data-s="Kim Jin-su builds from the back"/><circle cx="140.7" cy="704.0" r="10" fill="transparent" class="hp" data-t="2. Choi Jun" data-s="Choi Jun switches to the far side"/><circle cx="279.2" cy="736.2" r="10" fill="transparent" class="hp" data-t="3. Jung Seung-won" data-s="Jung Seung-won advances on the right"/><circle cx="346.9" cy="736.2" r="10" fill="transparent" class="hp" data-t="4. Moon Seon-min" data-s="Moon Seon-min running cross"/><circle cx="362.6" cy="710.2" r="10" fill="transparent" class="hp" data-t="Goal · Lee Seung-mo" data-s="Lee Seung-mo, first time"/><text x="396" y="646" class="mt">81' &middot; Lee Seung-mo</text><text x="670" y="646" class="xgv" text-anchor="end">xG 0.33</text><text x="396" y="668" class="ms2">Moon Seon-min ran to the right by-line and</text><text x="396" y="685" class="ms2">pulled it back first time for Lee Seung-mo,</text><text x="396" y="702" class="ms2">who finished without a touch to control.</text><text x="396" y="727" class="stpl">1 Kim Jin-su builds from the back</text><text x="396" y="741" class="stpl">2 Choi Jun switches to the far side</text><text x="396" y="755" class="stpl">3 Jung Seung-won advances on the right</text><text x="396" y="769" class="stpl">4 Moon Seon-min running cross</text></svg><figcaption>Fig 6 &middot; R05, the 5-0 win over Gwangju at home &mdash; all five goals. Each row traces the route to that goal. Green arrows are actual deliveries; <b>dotted lines mark build-up that has been compressed</b>. Numbers give the order, the solid dot is the shot. <b>The destination was zone 17 all five times; the way there was different every time.</b> <span class="tip">Hover a number for that moment.</span></figcaption></figure>
+
+<p>All five goals finished in the same cell. The way there was different each time.
+Classifying the final delivery gives four types &mdash; <b>short pass, open cross, set-piece cross, long throw-in</b>.
+<b>This is the only match in the 25 to use all four.</b> R24, the 7-0 at Anyang, used three, and five of its six goals came from open crosses.</p>
+
+<div class="q">Not a match won by delivering into the centre <b>often</b>, but one that arrived there <b>five different ways</b>.</div>
+
+<div class="vid">
+<div class="tag">VIDEO 2</div>
+<h4>R05 Gwangju (H) 5-0 &mdash; five ways to reach the same place</h4>
+<p class="rule">Held constant &mdash; the destination is fixed to zone 17 and only the route varies. All five goals are in the official highlights.</p>
+<ol>
+<li>8' Son Jung-beom &mdash; <b>left wide</b>, restart cross, headed down</li>
+<li>46' Klimala &mdash; <b>right wide</b> inswinger (deflected)</li>
+<li>59' Ross &mdash; <b>right wide</b> set piece</li>
+<li>72' Klimala &mdash; <b>left half-space</b> run</li>
+<li>81' Lee Seung-mo &mdash; <b>right by-line</b> running cross, first time</li>
+</ol>
+<div class="clips"><div class="clip"><video controls preload="metadata" playsinline src="/videos/fcseoul/v2-all-r05-gwangju-5goals.mp4"></video><div class="cap"><b>All five goals</b>8' Son Jung-beom · 46' Klimala · 59' Ross · 72' Klimala · 81' Lee Seung-mo. The arrival point is the same cell every time.</div></div><div class="clip"><video controls preload="metadata" playsinline src="/videos/fcseoul/v2-5-r05-gwangju-81.mp4"></video><div class="cap"><span class="xg">xG 0.33</span><b>81' &middot; Lee Seung-mo</b>Moon Seon-min carries to the right by-line and pulls it back; finished first time.</div></div></div>
+</div>
+
+<div class="caveat">
+<b>Two things only the video showed.</b><br>
+&#9312; The 46th-minute goal came off Jung Seung-won's cross <b>deflecting from Moon Min-seo's head</b>.
+The data records only "block", which does not separate a deflection from a clearance. It was not a designed pattern,
+so it is not cited as one.<br>
+&#9313; There was a <b>disallowed goal</b> in the 15th minute, ruled out for a foul by Song Min-kyu. The event data holds
+only a failed cross and a foul committed &mdash; <b>the goal event does not exist at all.</b>
+Without the video I would not have known the moment happened.
+</div>
+
+<h2><span class="num">05</span>But why it happened is not explained</h2>
+<p class="dek">I put in every attribute the data holds, and they all came back the same</p>
+
+<p>So far, <b>what</b> differed. The next question is <b>why</b>. I tested each attribute the event data carries
+for anything separating the good crosses from the rest.</p>
+
+<p>First, the three structures that are supposed to create freedom, each tagged individually:
+a <b>switch</b> (a cross played straight after a large change of side), a <b>three-player combination</b>
+(the previous three passes involving three different players), and an <b>individual beat</b>
+(a cross straight after the crosser's own successful dribble). All 483 open-play crosses were classified.</p>
+
+<div class="tw"><table>
+<thead><tr><th>Structure</th><th>Count</th><th>xG per cross</th><th></th></tr></thead>
+<tbody>
+<tr><td class="n">After a switch</td><td>101</td><td>0.0307</td><td class="n">no effect</td></tr>
+<tr><td class="n">No switch</td><td>382</td><td>0.0345</td><td></td></tr>
+<tr><td class="n">Three-player combination</td><td>95</td><td>0.0412</td><td class="n">+29%</td></tr>
+<tr><td class="n">No combination</td><td>388</td><td>0.0319</td><td></td></tr>
+<tr><td class="n">After a dribble</td><td>10</td><td>&mdash;</td><td class="n">too few</td></tr>
+</tbody>
+</table></div>
+
+<p>Only the three-player combination points weakly in the expected direction. The real problem came next.</p>
+
+<figure class="fig "><svg viewBox="0 0 680 330" role="img"><rect width="680" height="330" fill="var(--surface)" rx="6"/><text x="400" y="26" class="hd" fill="var(--s-win)" text-anchor="middle">Top 10 matches</text><text x="552" y="26" class="hd" fill="var(--s-loss)" text-anchor="middle">Bottom 10 matches</text><text x="22" y="66" class="lb2">Preceded by a structure (switch / 3-player combination)</text><text x="400" y="67" class="mid" fill="var(--s-win)" text-anchor="middle">36%</text><text x="552" y="67" class="mid" fill="var(--s-loss)" text-anchor="middle">35%</text><text x="662" y="66" class="lg" text-anchor="end">about the same</text><text x="22" y="119" class="lb2">Cut-backs from near the by-line</text><text x="400" y="120" class="mid" fill="var(--s-win)" text-anchor="middle">22%</text><text x="552" y="120" class="mid" fill="var(--s-loss)" text-anchor="middle">22%</text><text x="662" y="119" class="lg" text-anchor="end">about the same</text><text x="22" y="172" class="lb2">Landing accurately in zone 17</text><text x="400" y="173" class="mid" fill="var(--s-win)" text-anchor="middle">83%</text><text x="552" y="173" class="mid" fill="var(--s-loss)" text-anchor="middle">78%</text><text x="662" y="172" class="lg" text-anchor="end">about the same</text><text x="22" y="225" class="lb2">Average position the cross came from (by-line = 100)</text><text x="400" y="226" class="mid" fill="var(--s-win)" text-anchor="middle">88.4</text><text x="552" y="226" class="mid" fill="var(--s-loss)" text-anchor="middle">87.4</text><text x="662" y="225" class="lg" text-anchor="end">about the same</text><rect x="10" y="249" width="660" height="46" rx="6" fill="var(--surface-2)"/><text x="22" y="278" class="lb2">xG per cross</text><text x="400" y="279" class="big" fill="var(--s-win)" text-anchor="middle">0.0663</text><text x="552" y="279" class="big" fill="var(--s-loss)" text-anchor="middle">0.0162</text><text x="662" y="278" class="em" text-anchor="end">4&times; apart</text></svg><figcaption>Fig 7 &middot; All 483 open-play crosses, classified on every attribute the event data holds. <b>The crosses from the top matches and the bottom matches cannot be told apart by coordinates. Yet the outcome differs fourfold.</b></figcaption></figure>
+
+<p><b>The crosses from the top and bottom matches cannot be told apart.</b>
+The share preceded by structure, the share of cut-backs, the accuracy of arrival, the position they were played from &mdash;
+all effectively equal. And yet the xG each cross generates is <b>0.0663 against 0.0162, a factor of four</b>.</p>
+
+<p>There is one case that makes this unmistakable.</p>
+
+<figure class="fig "><svg viewBox="0 0 680 415" role="img"><rect x="55" y="11" width="570" height="393" fill="var(--surface)" rx="4"/><g stroke="var(--axis)" stroke-width="1" fill="none"><rect x="60" y="16" width="560" height="383"/><line x1="340.0" y1="16" x2="340.0" y2="399"/><circle cx="340.0" cy="207.5" r="49.79"/><rect x="532.0799999999999" y="94.13199999999999" width="87.92" height="226.736"/><rect x="590.88" y="150.04999999999998" width="29.119999999999997" height="114.89999999999999"/><rect x="60" y="94.13199999999999" width="87.92" height="226.736"/><rect x="60" y="150.04999999999998" width="29.119999999999997" height="114.89999999999999"/></g><defs><marker id="a83" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#1baf7a"/></marker><marker id="a89" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#1baf7a"/></marker><marker id="a817" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#d03b3b"/></marker><marker id="a812" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#d03b3b"/></marker></defs><rect x="526.6" y="143.7" width="93.39999999999998" height="127.60000000000002" fill="var(--s-win)" fill-opacity=".07"/><line x1="501.8" y1="357.6" x2="553.4" y2="237.0" stroke="var(--s-win)" stroke-width="2" stroke-opacity=".85" marker-end="url(#a83)"/><circle cx="501.8" cy="357.6" r="4.5" fill="var(--s-win)"/><circle cx="599.8" cy="251.5" r="6.5" fill="var(--s-win)" fill-opacity=".28" stroke="var(--s-win)" stroke-width="1.7"/><text x="609.8" y="255.5" class="lb">R03 Jeju · xG 0.27</text><line x1="534.9" y1="374.9" x2="560.6" y2="219.0" stroke="var(--s-win)" stroke-width="2" stroke-opacity=".85" marker-end="url(#a89)"/><circle cx="534.9" cy="374.9" r="4.5" fill="var(--s-win)"/><circle cx="560.6" cy="219.0" r="6.5" fill="var(--s-win)" fill-opacity=".28" stroke="var(--s-win)" stroke-width="1.7"/><text x="570.6" y="223.0" class="lb">R09 Bucheon · xG 0.16</text><line x1="494.0" y1="337.0" x2="581.4" y2="192.9" stroke="var(--s-loss)" stroke-width="2" stroke-opacity=".85" marker-end="url(#a817)"/><circle cx="494.0" cy="337.0" r="4.5" fill="var(--s-loss)"/><circle cx="581.4" cy="192.9" r="6.5" fill="var(--s-loss)" fill-opacity=".28" stroke="var(--s-loss)" stroke-width="1.7"/><text x="591.4" y="196.9" class="lb">R17 Gangwon · xG 0.18</text><line x1="508.6" y1="343.8" x2="578.6" y2="197.5" stroke="var(--s-loss)" stroke-width="2" stroke-opacity=".85" marker-end="url(#a812)"/><circle cx="508.6" cy="343.8" r="4.5" fill="var(--s-loss)"/><circle cx="578.6" cy="197.5" r="6.5" fill="var(--s-loss)" fill-opacity=".28" stroke="var(--s-loss)" stroke-width="1.7"/><text x="588.6" y="201.5" class="lb">R12 Anyang · xG 0.11</text><circle cx="599.8" cy="251.5" r="11" fill="transparent" class="hp" data-t="R3 · Jeju (A) 2-1" data-s="1H 31&#x27; · Choi Jun cross → Klimala, xG 0.27"/><circle cx="560.6" cy="219.0" r="11" fill="transparent" class="hp" data-t="R9 · Bucheon (H) 3-0" data-s="1H 6&#x27; · Choi Jun cross → Klimala, xG 0.16"/><circle cx="581.4" cy="192.9" r="11" fill="transparent" class="hp" data-t="R17 · Gangwon (H) 0-0" data-s="1H 40&#x27; · Choi Jun cross → Klimala, xG 0.18"/><circle cx="578.6" cy="197.5" r="11" fill="transparent" class="hp" data-t="R12 · Anyang (H) 0-0" data-s="1H 7&#x27; · Choi Jun cross → Klimala, xG 0.11"/><circle cx="80" cy="401" r="5" fill="var(--s-win)"/><text x="91" y="405" class="lg">Won · R03 Jeju (A) · R09 Bucheon (H)</text><circle cx="370" cy="401" r="5" fill="var(--s-loss)"/><text x="381" y="405" class="lg">Not won · R17 Gangwon (H) · R12 Anyang (H)</text></svg><figcaption>Fig 8 &middot; <b>Four crosses Choi Jun played to Klimala from the same spot on the right.</b> Same deliverer, same receiver, same origin, same space. Two of those matches were won and two were not. <b>Coordinates cannot separate these four.</b></figcaption></figure>
+
+<p><b>Four crosses Choi Jun played to Klimala from the same place on the right.</b>
+Same deliverer, same receiver, same origin coordinate, same side, same space.
+Two came in matches Seoul won (R03 Jeju away 2-1, R09 Bucheon home 3-0) and two in matches they did not
+(R17 Gangwon home 0-0, R12 Anyang home 0-0). <b>The event data offers no way to separate them.</b></p>
+
+<div class="vid">
+<div class="tag">VIDEO 3 &mdash; SUPPLEMENT</div>
+<h4>Fixing the deliverer and the receiver as well</h4>
+<p class="rule">Two of the four above (Gangwon, Anyang) were Choi Jun to Klimala. Adding the other two of that same pairing gives <b>four crosses with all six attributes fixed</b> &mdash; and the results still do not separate.</p>
+<div class="clips"><div class="clip"><video controls preload="metadata" playsinline src="/videos/fcseoul/v4-1-r03-jeju-31.mp4"></video><div class="cap"><span class="xg">xG 0.27</span><b>R03 Jeju (A) 2-1 &middot; 31'</b>Choi Jun → Klimala · on target</div></div><div class="clip"><video controls preload="metadata" playsinline src="/videos/fcseoul/v4-2-r09-bucheon-6.mp4"></video><div class="cap"><span class="xg">xG 0.16</span><b>R09 Bucheon (H) 3-0 &middot; 6'</b>Choi Jun → Klimala · on target</div></div></div>
+<p style="margin:13px 0 0;font-size:13.5px;color:var(--muted)">
+0.27 and 0.16 from the matches Seoul won; 0.18 and 0.11 from the ones they did not. <b>The four values overlap.</b>
+Same player, same spot, same target &mdash; and the cross alone cannot tell you whether the team won that day.</p>
+</div>
+
+<div class="q">How many crosses a player put in is already recorded.<br>Whether he was free when he put them in is recorded by nobody.</div>
+
+<div class="vid">
+<div class="tag">VIDEO 3</div>
+<h4>Four crosses played from the same place, in the same shape</h4>
+<p class="rule">Held constant &mdash; open-play crosses from the deep right wide area, curling toward the by-line and landing in zone 17. Side, space, depth, cross shape, phase and destination are all fixed. Two are goals and two are shots on target, so all four appear in the highlights.</p>
+<ol>
+<li><b>R02 Ulsan (A) 4-1 &middot; 2'</b> &mdash; Son Jung-beom &rarr; Ruiz &middot; goal &middot; <b>xG 0.87</b></li>
+<li><b>R03 Jeju (A) 2-1 &middot; 92'</b> &mdash; Choi Jun &rarr; Lee Seung-mo &middot; goal &middot; <b>xG 0.33</b></li>
+<li><b>R17 Gangwon (H) 0-0 &middot; 40'</b> &mdash; Choi Jun &rarr; Klimala &middot; on target &middot; xG 0.18</li>
+<li><b>R12 Anyang (H) 0-0 &middot; 7'</b> &mdash; Choi Jun &rarr; Klimala &middot; on target &middot; xG 0.11</li>
+</ol>
+<p style="margin:13px 0 0;font-size:13.5px;color:var(--muted)">
+Three of the four are <b>Choi Jun crossing from the same spot</b>, so the gap is not down to a different deliverer.
+As Fig 8 shows, isolating the four he played to Klimala leaves them equally indistinguishable by coordinates.
+What to watch is not the cross but <b>the second before it</b> &mdash; how many opponents were around the crosser,
+and which shoulder the runner in the box was going off.</p>
+<div class="clips"><div class="clip"><video controls preload="metadata" playsinline src="/videos/fcseoul/v3-1-r02-ulsan-2.mp4"></video><div class="cap"><span class="xg">xG 0.87</span><b>R02 Ulsan (A) 4-1 &middot; 2'</b>Son Jung-beom → Ruiz · goal</div></div><div class="clip"><video controls preload="metadata" playsinline src="/videos/fcseoul/v3-2-r03-jeju-93.mp4"></video><div class="cap"><span class="xg">xG 0.33</span><b>R03 Jeju (A) 2-1 &middot; 92'</b>Choi Jun → Lee Seung-mo · goal</div></div><div class="clip"><video controls preload="metadata" playsinline src="/videos/fcseoul/v3-3-r17-gangwon-40.mp4"></video><div class="cap"><span class="xg">xG 0.18</span><b>R17 Gangwon (H) 0-0 &middot; 40'</b>Choi Jun → Klimala · on target</div></div><div class="clip"><video controls preload="metadata" playsinline src="/videos/fcseoul/v3-4-r12-anyang-7.mp4"></video><div class="cap"><span class="xg">xG 0.11</span><b>R12 Anyang (H) 0-0 &middot; 7'</b>Choi Jun → Klimala · on target</div></div></div>
+</div>
+
+<h2><span class="num">06</span>So what should be measured</h2>
+<p class="dek">Recording the quality of a cross as the freedom the player had when he played it</p>
+
+<p>There are three metrics for crossing: attempted, completed, completion rate.
+But completion rate asks only <b>"did it reach a teammate"</b>, never <b>"did reaching him create danger"</b>.
+Adding coordinates changed nothing. A fourth axis is needed.</p>
+
+<p>The proposal is to tag <b>the room the player had at the moment of delivery</b> on three axes.</p>
+
+<div class="tw"><table>
+<thead><tr><th>Axis</th><th>2 points</th><th>1 point</th><th>0 points</th></tr></thead>
+<tbody>
+<tr><td class="n"><b>F1 Pressure</b></td><td>No opponent within 3m</td><td>Opponent 3&ndash;7m and closing</td><td>Opponent within 3m, or contact</td></tr>
+<tr><td class="n"><b>F2 Time</b></td><td>Two touches or from a standstill</td><td>One touch first</td><td>First time / off a loose ball</td></tr>
+<tr><td class="n"><b>F3 Range of options</b></td><td>Cut-back, cut inside and recycle all available</td><td>One alternative</td><td>No option other than the cross</td></tr>
+</tbody>
+</table></div>
+
+<div class="note">
+<b>A note on F3.</b> This axis measures <b>the range of options, not the quality of the choice</b>.
+A zero does not mean the cross was a bad decision. It means there was no alternative, and a cross may well be the best
+thing to do in that situation. The score therefore <b>describes the situation rather than judging the player</b>.
+A well-struck forced cross stays on record as F3 zero with a good outcome, and that is itself information.
+</div>
+
+<p>Five or six points is a <b>free cross</b>, zero to two a <b>pressured cross</b>.
+Corners and free-kicks are structurally unpressured and must be counted separately.
+The 3m and 7m thresholds on F1 fill a box that FIFA's Football Language leaves at
+<span style="white-space:nowrap">"appropriate distance"</span> without a number;
+<b>the analyst sets it</b>, and it is labelled as such.</p>
+
+<h3>And the tagging leads to a prescription</h3>
+
+<figure class="fig "><svg viewBox="0 0 680 380" role="img"><rect width="680" height="380" fill="var(--surface)" rx="6"/><rect x="176" y="58" width="240" height="114" rx="6" fill="var(--surface-2)"/><rect x="176" y="58" width="3" height="114" rx="1.5" fill="var(--s-loss)"/><text x="194" y="88" class="hd">Freedom wasted</text><text x="194" y="114" class="lb2">Structure works, the choice does not</text><text x="194" y="140" class="lb3">→ Crossing technique &amp; decision work</text><rect x="426" y="58" width="240" height="114" rx="6" fill="var(--surface-2)"/><rect x="426" y="58" width="3" height="114" rx="1.5" fill="var(--s-win)"/><text x="444" y="88" class="hd">Target state</text><text x="444" y="114" class="lb2">Structure and execution both working</text><rect x="176" y="182" width="240" height="114" rx="6" fill="var(--surface-2)"/><rect x="176" y="182" width="3" height="114" rx="1.5" fill="var(--s-loss)"/><text x="194" y="212" class="hd">Both failing</text><text x="194" y="238" class="lb2">Neither structure nor execution</text><text x="194" y="264" class="lb3">→ Redesign the build-up</text><rect x="426" y="182" width="240" height="114" rx="6" fill="var(--surface-2)"/><rect x="426" y="182" width="3" height="114" rx="1.5" fill="var(--s-draw)"/><text x="444" y="212" class="hd">Individual-dependent</text><text x="444" y="238" class="lb2">Solved by the player under pressure</text><text x="444" y="264" class="lb3">→ Not sustainable; support structurally</text><text x="296.0" y="44" class="lg" text-anchor="middle">Low xG per cross</text><text x="546.0" y="44" class="lg" text-anchor="middle">High xG per cross</text><text x="164" y="111.0" class="lg" text-anchor="end">Free-cross share</text><text x="164" y="129.0" class="lg" text-anchor="end">high</text><text x="164" y="235.0" class="lg" text-anchor="end">Free-cross share</text><text x="164" y="253.0" class="lg" text-anchor="end">low</text><rect x="176" y="314" width="490" height="56" rx="6" fill="var(--surface-2)"/><text x="194" y="338" class="lb2">The vertical axis is computed: 0.0162 xG per cross in the bottom ten.</text><text x="194" y="358" class="em">The horizontal axis cannot be obtained without video tagging.</text></svg><figcaption>Fig 9 &middot; A diagnostic matrix. Which cell a team sits in <b>reverses the prescription</b> &mdash; drill crossing technique, or rebuild the build-up. The axis needed to decide that is the one currently missing.</figcaption></figure>
+
+<p>For Seoul's bottom ten matches the <b>vertical axis already exists</b> &mdash; 0.0162 xG per cross.
+The horizontal axis is empty, so the cell cannot be identified. Top-left (freedom wasted) prescribes
+<b>crossing technique and decision work</b>; bottom-left (both failing) prescribes <b>rebuilding the build-up</b>.
+They are opposites.</p>
+
+<p>The framework also defines the condition that would kill it.
+<b>If the shot-conversion rate of free crosses and pressured crosses turns out to be the same, the concept is wrong</b>
+and another axis has to be found.</p>
+
+<div class="note">
+<b>Cost.</b> A match averages 19.3 open-play crosses. At roughly 40 seconds per cross across three axes,
+that is about 15 minutes per match &mdash; a single day to re-tag all 25. <b>It needs video and a recording sheet, nothing else.</b>
+</div>
+
+<hr>
+
+<p class="lead">Every number here comes from public data, and I watched and recorded the matches myself.
+The one constraint was that <b>the video work could only be done from YouTube highlights</b>, since full-match footage
+was not available to me. That limited the moments I can cite to goals and shots on target, and the clip selection
+reflects that limit.</p>
+
+<p class="lead" style="color:var(--fg);font-weight:650">How many crosses a player put in is already recorded.
+Whether he was free when he put them in is recorded by nobody.
+I believe that record could become data that helps a team play better.</p>
+
+<hr>
+<div class="app">
+<h2>Appendix &middot; Sources and verification</h2>
+
+<p>Every number is collected directly from the official records of the <b>K League Data Portal</b>.
+SHA-256 hashes of the eight source files (21MB) are recorded, and every table and figure is rendered
+by script from the original CSVs &mdash; no figure was transcribed by hand.</p>
+
+<div class="tw"><table>
+<thead><tr><th>Item</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td class="n">Raw events</td><td>34,518 rows &times; 33 columns (both teams, 25 matches, 100% coordinate coverage)</td></tr>
+<tr><td class="n">Primary source</td><td><code>05_events_chalkboard.json</code> &middot; 14,310,821 B &middot; <code>88da5555a40fa9c8&hellip;</code></td></tr>
+<tr><td class="n">Coordinate normalisation</td><td>Attacking direction determined per round, team and half from shot coordinates, then unified. Validated by opponent-duel X sums averaging 99.9</td></tr>
+<tr><td class="n">Grading</td><td>A verbatim from the portal &middot; B derived from it &middot; <b>C the analyst's operational definition</b></td></tr>
+</tbody>
+</table></div>
+
+<p><b>Grade C &mdash; defined by the analyst</b>: the coordinate boundaries of zone 17;
+"box entry" (including passes not tagged as crosses that travel 8m or more from outside the box to inside);
+the boundary of a single attack; the 8-second window from cross to shot; and the 3m / 7m thresholds on the
+free-cross axes. All are stated in the text.</p>
+
+<h2>Corrections</h2>
+<p>I got seven things wrong and fixed seven.</p>
+<div class="tw"><table>
+<thead><tr><th>#</th><th>What was wrong</th><th>How it was fixed</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Aerial duels pooled across the whole pitch, reported as "Seoul on top"</td><td>Split by zone, situation and period &mdash; inside the box in crossing situations Seoul were 1&ndash;10</td></tr>
+<tr><td>2</td><td>First-contact rate in the box under-counted at 9%</td><td>Headers that become shots are never tagged as duels &mdash; corrected to 15%</td></tr>
+<tr><td>3</td><td>The goal-conceded code (GC) misread as a goal kick, breaking attacks apart</td><td>All 9 instances checked and recomputed; a dropped goal restored</td></tr>
+<tr><td>4</td><td>Reported shot totals as "an exact match with the portal"</td><td>Actual figures 295 against 293 &mdash; the verification row was withdrawn</td></tr>
+<tr><td>5</td><td>A penalty included in the per-attack xG for the Bucheon match</td><td>Excluded: 0.089 &rarr; 0.052</td></tr>
+<tr><td>6</td><td>"PK point" in the goal text read as a penalty kick</td><td>It is a shot-zone label (the penalty spot). Seoul took one penalty all season; the 47-goal breakdown was recomputed</td></tr>
+<tr><td><b>7</b></td><td><b>Kim Jin-su's own goal against Daejeon counted as a Seoul goal</b></td><td><b>The event feed records own goals under the scorer's own team. Removed: 44 &rarr; 43 open-play goals</b></td></tr>
+</tbody>
+</table></div>
+
+<h2>Open discrepancies and limits</h2>
+<ul>
+<li>The portal's on-screen shot totals (299 &middot; 293) disagree with the event-data counts (295 &middot; 282). The cause is unidentified, so only the event-data figures are used here.</li>
+<li><b>Set-piece cross tagging (STCS / STCU) is absent from round 19 through 25.</b> Rounds 1&ndash;18 carry 178 instances. Corners certainly occurred, so this appears to be a stoppage in the portal's coding, and set-piece analysis is impossible over that stretch.</li>
+<li>Disallowed goals are erased from the event data without trace.</li>
+<li><b>Official highlights keep only the five to ten seconds before a shot.</b> Sequences of 29 to 56 seconds in which deliveries repeat within one attack survive in no match, so one of this piece's central findings could not be shown on video.</li>
+<li>The position of any player not touching the ball is not recorded. Numbers in the box, off-ball movement and defensive shape <b>cannot be known from this data.</b></li>
+<li>The correlations here rest on a 25-match sample. Shot- and goal-based metrics are treated as observation rather than as a test until at least a full season is available.</li>
+</ul>
+
+<h2>Observation log</h2>
+<p>Four matches &mdash; R05 Gwangju home, R02 Ulsan away, R20 Ulsan home and R09 Bucheon home &mdash; were watched in full or over
+specified passages, and each observation was checked one-to-one against the event data.
+For R05: <b>11 confirmed &middot; 5 revised &middot; 0 rejected &middot; 7 unverifiable</b>.
+All seven unverifiable items concern the position of players not touching the ball.</p>
+</div>
+
+<footer>
+Hyukjin Han &middot; August 2026<br>
+Collection, normalisation, aggregation and visualisation are all reproducible scripts; source hashes and the
+correction log are published alongside.
+</footer>
+</main><script>
+(function(){var t=document.createElement('div');t.id='tt';document.body.appendChild(t);
+function show(e){var el=e.target.closest('.hp');if(!el)return;
+ t.innerHTML='<b>'+el.dataset.t+'</b><span>'+(el.dataset.s||'')+'</span>';t.style.opacity=1;move(e);}
+function move(e){var r=t.getBoundingClientRect();var x=e.clientX+14,y=e.clientY+14;
+ if(x+r.width>innerWidth-8)x=e.clientX-r.width-14;
+ if(y+r.height>innerHeight-8)y=e.clientY-r.height-14;
+ t.style.left=x+'px';t.style.top=y+'px';}
+function hide(){t.style.opacity=0;}
+document.addEventListener('mouseover',show);document.addEventListener('mousemove',function(e){
+ if(e.target.closest('.hp'))move(e);else hide();});
+document.addEventListener('mouseout',function(e){if(e.target.closest('.hp'))hide();});
+document.addEventListener('touchstart',function(e){var el=e.target.closest('.hp');
+ if(el){t.innerHTML='<b>'+el.dataset.t+'</b><span>'+(el.dataset.s||'')+'</span>';t.style.opacity=1;
+ var r=t.getBoundingClientRect(),tc=e.touches[0];
+ t.style.left=Math.max(8,Math.min(tc.clientX-r.width/2,innerWidth-r.width-8))+'px';
+ t.style.top=Math.max(8,tc.clientY-r.height-18)+'px';}else hide();},{passive:true});
+})();
+</script></body></html>
