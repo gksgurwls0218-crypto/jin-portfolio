@@ -43,6 +43,7 @@ const STANDALONE: CardEntry[] = [
   { kind: "report", key: "wc2022-2026-champions", publishedAt: "2026-08-19" },
   { kind: "report", key: "suwon-proposal-visuals", publishedAt: "2026-08-23" },
   { kind: "report", key: "suwon-revision", publishedAt: "2026-08-27" },
+  { kind: "report", key: "fcseoul-attacking-phases", publishedAt: "2026-09-02" },
 ];
 
 const GALLERY_CARDS: CardEntry[] = [
@@ -222,7 +223,20 @@ type ReportCopy = {
   stats: Record<Locale, readonly ReportStat[]>;
 };
 
-const REPORTS: Record<"korea-jordan" | "suwon-cross-shot" | "wc2022-2026-champions" | "suwon-proposal-visuals" | "suwon-revision", ReportCopy> = {
+const REPORTS: Record<"korea-jordan" | "suwon-cross-shot" | "wc2022-2026-champions" | "suwon-proposal-visuals" | "suwon-revision" | "fcseoul-attacking-phases", ReportCopy> = {
+  "fcseoul-attacking-phases": {
+    tag: { en: "ATTACKING PHASE", ko: "공격 국면 분석" },
+    competition: { en: "K League 1 2026 · FC Seoul · 25 matches, 34,518 events", ko: "K리그1 2026 · FC서울 · 25경기 · 이벤트 34,518건" },
+    title: { en: "Everyone gets the ball to the same place", ko: "골문 앞 중앙까지는 똑같이 간다" },
+    sub: {
+      en: "Seoul deliver into the central cell in front of goal 72% of the time; their opponents 69%. The xG each delivery produces is identical to three decimals. Yet ranking the 25 matches by that value puts ten straight wins at the top and six goals in ten matches at the bottom — and the side that delivered more scored less. I tested every attribute the event data holds and none of them separates the two groups. The piece ends where the data stops, with a way to measure what is missing.",
+      ko: "서울이 골문 앞 중앙에 공을 넣는 비율은 72%, 상대 11개 팀은 69%다. 도착 한 번이 만드는 기대득점은 소수점 셋째 자리까지 같다. 그런데 그 값으로 25경기를 줄 세우면 상위 열 경기가 전승, 하위 열 경기가 열 경기에 여섯 골이고 — 배달을 더 많이 한 쪽이 골은 더 적었다. 이벤트 데이터의 모든 속성을 넣어봤지만 그 차이를 설명하는 것은 없었다. 데이터가 멈춘 지점에서 글을 닫고, 무엇을 더 재야 하는지를 적었다.",
+    },
+    stats: {
+      en: [["72% / 69%", "Seoul vs opponents into zone 17"], ["10-0-0", "top ten by xG per delivery"], ["4×", "outcome gap, attributes identical"], ["7", "of my own errors corrected"]],
+      ko: [["72% / 69%", "서울 대 상대 · zone 17 도착률"], ["10승 0무 0패", "배달당 xG 상위 10경기"], ["4배", "속성은 같고 결과만 다름"], ["7건", "스스로 고친 내 오류"]],
+    },
+  },
   "suwon-revision": {
     tag: { en: "REVISION", ko: "정정 · 재검증 리포트" },
     competition: { en: "K League 2 2026 · Suwon Samsung · 279 shot coordinates, 23 pass matrices", ko: "K리그2 2026 · 수원 삼성 · 슛 좌표 279개 · 패스 매트릭스 23경기" },
