@@ -44,6 +44,7 @@ const STANDALONE: CardEntry[] = [
   { kind: "report", key: "suwon-proposal-visuals", publishedAt: "2026-08-23" },
   { kind: "report", key: "suwon-revision", publishedAt: "2026-08-27" },
   { kind: "report", key: "fcseoul-attacking-phases", publishedAt: "2026-09-02" },
+  { kind: "report", key: "fcseoul-league-response", publishedAt: "2026-09-04" },
 ];
 
 const GALLERY_CARDS: CardEntry[] = [
@@ -223,7 +224,20 @@ type ReportCopy = {
   stats: Record<Locale, readonly ReportStat[]>;
 };
 
-const REPORTS: Record<"korea-jordan" | "suwon-cross-shot" | "wc2022-2026-champions" | "suwon-proposal-visuals" | "suwon-revision" | "fcseoul-attacking-phases", ReportCopy> = {
+const REPORTS: Record<"korea-jordan" | "suwon-cross-shot" | "wc2022-2026-champions" | "suwon-proposal-visuals" | "suwon-revision" | "fcseoul-attacking-phases" | "fcseoul-league-response", ReportCopy> = {
+  "fcseoul-league-response": {
+    tag: { en: "OPPOSITION RESPONSE", ko: "상대 응수 분석" },
+    competition: { en: "K League 1 2026 · FC Seoul · 25 matches, 11 opponents", ko: "K리그1 2026 · FC서울 25경기 · 상대 11개 팀" },
+    title: { en: "How the league learned to play FC Seoul", ko: "리그가 서울을 학습한 25경기" },
+    sub: {
+      en: "This began as an attempt to sort Seoul's opponents into high, mid and low blocks, and it failed — across 17 rematches the within-team correlation of block height is negative. Ulsan set the second-highest block in the league in March and one of the lowest in August. What survives the failure is a direction: 8 of 11 teams dropped their block for the return fixture, the expected goal Seoul get from each ball played into the centre of the box fell 30% over the second half of the season, and their points per game went up anyway.",
+      ko: "상대를 하이·미들·로우 블록으로 분류하려다 실패한 기록이다 — 재대결 17쌍의 팀 내 상관이 음수로 나왔다. 울산은 3월에 리그에서 두 번째로 높은 블록을 섰고 8월에 리그 최저에 가까운 블록을 섰다. 실패에서 남은 것은 방향이다. 11팀 중 8팀이 재대결에서 블록을 낮췄고, 서울이 골문 앞 중앙에 공을 한 번 보낼 때 얻는 기대득점은 시즌 후반에 30% 줄었고, 그런데도 경기당 승점은 오히려 올랐다.",
+    },
+    stats: {
+      en: [["r = −0.280", "within-team, across rematches"], ["8 of 11", "teams dropped their block"], ["−30%", "xG per delivery, R14-25"], ["2.00 → 2.08", "points per game"]],
+      ko: [["r = −0.280", "재대결 팀 내 상관"], ["11팀 중 8팀", "블록을 낮췄다"], ["−30%", "배달당 xG · R14~25"], ["2.00 → 2.08", "경기당 승점"]],
+    },
+  },
   "fcseoul-attacking-phases": {
     tag: { en: "ATTACKING PHASE", ko: "공격 국면 분석" },
     competition: { en: "K League 1 2026 · FC Seoul · 25 matches, 34,518 events", ko: "K리그1 2026 · FC서울 · 25경기 · 이벤트 34,518건" },
