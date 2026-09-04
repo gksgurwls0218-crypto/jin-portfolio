@@ -8,6 +8,8 @@ export type Door = { href: string; n: string; label: string; title: string; desc
 export default function DoorLanding({
   eyebrow, title, accent, intro, doors,
 }: { eyebrow: string; title: string; accent: string; intro: string; doors: Door[] }) {
+  // 문이 3개 이상이면 한 줄에 3개로 깔고 카드를 그만큼 줄인다 (2개일 때는 종전 그대로).
+  const wide = doors.length >= 3;
   return (
     <section className="relative px-6 md:px-10 pt-32 sm:pt-40 md:pt-44 pb-24 md:pb-40" style={{ background: "var(--stage)" }}>
       <div className="max-w-[1120px] mx-auto">
@@ -20,25 +22,25 @@ export default function DoorLanding({
           <p className="mb-12 md:mb-20" style={{ color: "var(--ink-2)", fontSize: "clamp(16px,1.6vw,19px)", lineHeight: 1.6, maxWidth: 660 }}>{intro}</p>
         </Reveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-7">
+        <div className={`grid grid-cols-1 md:grid-cols-2 ${wide ? "lg:grid-cols-3" : ""} gap-6 md:gap-7`}>
           {doors.map((d, i) => (
             <Reveal key={d.href} delay={i * 110}>
               <Link
                 href={d.href}
-                className="group flex flex-col justify-between rounded-[24px] p-8 sm:p-10 md:p-12 h-full"
-                style={{ background: "var(--stage-3)", border: "0.5px solid var(--edge)", minHeight: 300, transition: "transform .45s var(--ease-out), border-color .45s var(--ease-out), box-shadow .45s var(--ease-out)" }}
+                className={`group flex flex-col justify-between rounded-[24px] h-full ${wide ? "p-7 sm:p-8 md:p-9" : "p-8 sm:p-10 md:p-12"}`}
+                style={{ background: "var(--stage-3)", border: "0.5px solid var(--edge)", minHeight: wide ? 244 : 300, transition: "transform .45s var(--ease-out), border-color .45s var(--ease-out), box-shadow .45s var(--ease-out)" }}
                 onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.transform = "translateY(-6px)"; el.style.borderColor = "var(--green-line)"; el.style.boxShadow = "var(--lift), var(--glow)"; }}
                 onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.transform = "translateY(0)"; el.style.borderColor = "var(--edge)"; el.style.boxShadow = "none"; }}
               >
                 <div>
-                  <div className="flex items-baseline gap-2.5 mb-8">
+                  <div className={`flex items-baseline gap-2.5 ${wide ? "mb-6" : "mb-8"}`}>
                     <span className="display" style={{ fontSize: 17, color: "var(--green-bright)" }}>{d.n}</span>
                     <span className="mono" style={{ fontSize: 12.5, fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--green-mid)" }}>{d.label}</span>
                   </div>
-                  <h2 className="display mb-4" style={{ fontSize: "clamp(24px,2.6vw,32px)", lineHeight: 1.08, color: "var(--ink)", letterSpacing: "-0.02em" }}>{d.title}</h2>
+                  <h2 className="display mb-4" style={{ fontSize: wide ? "clamp(21px,2.0vw,26px)" : "clamp(24px,2.6vw,32px)", lineHeight: 1.08, color: "var(--ink)", letterSpacing: "-0.02em" }}>{d.title}</h2>
                   {d.desc && <p style={{ fontSize: 15, lineHeight: 1.65, color: "var(--ink-2)", maxWidth: 420 }}>{d.desc}</p>}
                 </div>
-                <div className="mt-10 pt-6" style={{ borderTop: "0.5px solid var(--edge)" }}>
+                <div className={wide ? "mt-8 pt-5" : "mt-10 pt-6"} style={{ borderTop: "0.5px solid var(--edge)" }}>
                   <EnterTag />
                 </div>
               </Link>
