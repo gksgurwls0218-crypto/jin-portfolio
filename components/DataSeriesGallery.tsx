@@ -20,6 +20,8 @@ type Episode = {
   slug: string;
   no: string;
   publishedAt: string;
+  /** 국문판만 나온 편이면 true. 영문 HTML을 추가하면 항목에서 지운다. */
+  koOnly?: boolean;
   competition: Record<Locale, string>;
   title: Record<Locale, string>;
   sub: Record<Locale, string>;
@@ -27,6 +29,27 @@ type Episode = {
 };
 
 const EPISODES: Episode[] = [
+  {
+    slug: "fcseoul",
+    no: "02",
+    publishedAt: "2026-09-05",
+    competition: {
+      en: "K League 1 2026 · FC Seoul · 25 matches, 34,518 events",
+      ko: "하나은행 K리그1 2026 · FC서울 · 25경기 · 이벤트 34,518건",
+    },
+    title: {
+      en: "Seoul do not do more. They score more.",
+      ko: "서울은 더 많이 하지 않는다. 더 많이 넣는다.",
+    },
+    sub: {
+      en: "They are a possession side — 56.0%, short out of the back. But the further forward they go the wider they are pushed: 82% of their entries into the final third come down a channel, 66% of their box entries are crosses, and 46.5% of those crosses are cleared or blocked before they become anything. The volume of chances they build is level with the 2nd and 3rd best in the league. The points are 15 clear. The difference is made at the last touch — and whether that is skill or variance is the one question this piece refuses to settle.",
+      ko: "공을 갖는 팀이 맞다 — 점유율 56.0%, 뒤에서는 짧게 나간다. 그런데 앞으로 갈수록 옆으로 밀린다. 파이널서드 진입의 82%가 좌우 채널이고, 박스 투입의 66%가 크로스이며, 그 크로스의 46.5%는 슈팅이 되기 전에 잘린다. 만들어낸 기회의 양은 리그 2·3위와 거의 같다. 승점은 15점 앞선다. 차이는 마지막 한 번에서 났다 — 그것이 실력인지 우연인지만은 이 글이 끝까지 결론 내리지 않는다.",
+    },
+    stats: {
+      en: [["18%", "final-third entries through the middle"], ["46.5%", "crosses cleared or blocked"], ["43.5%", "shots on target → goals (1st)"], ["+0.41", "xG difference per match"]],
+      ko: [["18%", "파이널서드 진입 중 중앙"], ["46.5%", "잘려나간 크로스"], ["43.5%", "유효슛당 득점 (리그 1위)"], ["+0.41", "경기당 xG 차이"]],
+    },
+  },
   {
     slug: "hwaseong",
     no: "01",
@@ -89,6 +112,11 @@ function EpisodeRow({ ep }: { ep: Episode }) {
           <span className="mono" style={{ fontSize: 11, color: "var(--ink-3)", letterSpacing: "0.06em" }}>
             {ep.competition[locale]}
           </span>
+          {ep.koOnly && locale === "en" && (
+            <span className="mono px-2 py-0.5 rounded-full" style={{ fontSize: 9, letterSpacing: ".12em", border: "0.5px solid var(--edge)", color: "var(--ink-3)" }}>
+              KOREAN EDITION
+            </span>
+          )}
         </div>
         <h2 className="display mb-4" style={{ fontSize: "clamp(26px,3.4vw,40px)", lineHeight: 1.1, letterSpacing: "-0.035em", color: "var(--ink)" }}>
           {ep.title[locale]}
