@@ -30,6 +30,27 @@ type Episode = {
 
 const EPISODES: Episode[] = [
   {
+    slug: "ulsan",
+    no: "03",
+    publishedAt: "2026-09-05",
+    competition: {
+      en: "K League 1 2026 · Ulsan HD · 26 matches, 38,593 events",
+      ko: "하나은행 K리그1 2026 · 울산 HD · 26경기 · 이벤트 38,593건",
+    },
+    title: {
+      en: "Ulsan create the most in the league, and the latest.",
+      ko: "울산은 가장 많이 만들고, 가장 늦게 만든다.",
+    },
+    sub: {
+      en: "A team second on points has a goal difference of +4. That single number started this. Ulsan lead K League 1 for key passes and shots on target, they take half their shots within three passes of winning the ball, and they create 1.7× as much after the break as before it — whatever the half-time score. Yet they have never won from behind at half-time: 0 wins in 7. They score at 0.95 of expected and concede at 1.09, and the leak is at the edge of the box. The first two answers this piece found — “they win with less of the ball”, “fewer entries, more shots” — both turned out to be artefacts of the scoreline, and the wrong turns are left in.",
+      ko: "승점 2위 팀의 득실차가 +4다. 그 숫자 하나에서 시작했다. 키패스와 유효슈팅이 리그 1위이고, 슛의 절반이 공을 되찾은 뒤 3패스 안에 나오며, 하프타임 스코어와 무관하게 후반에 전반의 1.7배를 만든다. 그런데 전반에 뒤진 7경기에서 한 번도 이기지 못했다. 골은 기대의 0.95배, 실점은 1.09배 — 새는 곳은 페널티 박스 언저리다. 이 글이 처음 찾은 두 개의 답, “점유율이 낮을 때 이긴다”와 “적게 들어가고 많이 쏜다”는 둘 다 스코어보드가 만든 착시였고, 틀린 과정을 지우지 않고 그대로 남겼다.",
+    },
+    stats: {
+      en: [["1st / 1st", "key passes / shots on target"], ["1.7×", "second-half xG vs first"], ["0 in 7", "wins from behind at half-time"], ["1.45×", "conceded vs xG at the box edge"]],
+      ko: [["1위 / 1위", "키패스 / 유효슈팅"], ["1.7배", "전반 대비 후반 xG"], ["7경기 0승", "전반에 뒤진 경기"], ["1.45배", "박스 언저리 실점/피xG"]],
+    },
+  },
+  {
     slug: "fcseoul",
     no: "02",
     publishedAt: "2026-09-05",
