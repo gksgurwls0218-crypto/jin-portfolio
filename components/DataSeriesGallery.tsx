@@ -30,6 +30,27 @@ type Episode = {
 
 const EPISODES: Episode[] = [
   {
+    slug: "pohang",
+    no: "05",
+    publishedAt: "2026-09-07",
+    competition: {
+      en: "K League 1 2026 \u00b7 Pohang Steelers \u00b7 27 matches, 38,362 events",
+      ko: "\ud558\ub098\uc740\ud589 K\ub9ac\uadf81 2026 \u00b7 \ud3ec\ud56d \uc2a4\ud2f8\ub7ec\uc2a4 \u00b7 27\uacbd\uae30 \u00b7 \uc774\ubca4\ud2b8 38,362\uac74",
+    },
+    title: {
+      en: "Pohang get to the final third. Then they stop.",
+      ko: "\ud3ec\ud56d\uc740 final third\uae4c\uc9c0 \uac04\ub2e4. \uadf8\ub9ac\uace0 \uac70\uae30\uc11c \uba48\ucd98\ub2e4.",
+    },
+    sub: {
+      en: "Twenty-four goals is 11th in K League 1, and this team is 7th. Two answers came first and both were wrong \u2014 \u201cthe goals vanish at home\u201d is really \u201cthey played no home games during the good spell\u201d, and \u201copponents sit deeper at the Steelyard\u201d disappears the moment you cut to the window before the first goal. On the time axis the season splits in three: blocks 1 and 2 created the same amount (1.44 and 1.41 xG a match) and only the finishing differed, so the early drought was a number waiting to come back. Block 3 is a different kind of thing \u2014 creation itself fell 34%. Lee Ho-jae left for Darmstadt on 29 July, and since then shots (10.3 \u2192 10.6) and final third passes (118 \u2192 131) have both risen while the share of shots taken inside the box collapsed from 71% to 58%. He had 24.2% of the team's box shots and the second name on that list is a centre-back, 32% of whose shots follow a set piece. The crosses went up 15% and the aerial duels fell 30%. 109 corners have produced one goal all season \u2014 with a 191cm target man in the side. The transfer did not create the problem; it published it.",
+      ko: "24\ub4dd\uc810\uc740 \ub9ac\uadf8 11\uc704\uc778\ub370 \uc21c\uc704\ub294 7\uc704\ub2e4. \uba3c\uc800 \ub098\uc628 \ub450 \uac1c\uc758 \ub2f5\uc740 \ub458 \ub2e4 \ud2c0\ub838\ub2e4 \u2014 \u201c\ud648\uc5d0\uc11c \uace8\uc774 \uc0ac\ub77c\uc9c4\ub2e4\u201d\ub294 \uc0ac\uc2e4 \u201c\uc798\ud558\ub358 \uc2dc\uae30\uc5d0 \ud648 \uacbd\uae30\uac00 \ud558\ub098\ub3c4 \uc5c6\uc5c8\ub2e4\u201d\uc600\uace0, \u201c\ud648\uc5d0\uc11c \uc0c1\ub300\uac00 \ub0b4\ub824\uc549\ub294\ub2e4\u201d\ub294 \uccab \uace8 \uc774\uc804 \uad6c\uac04\ub9cc \uc790\ub974\uba74 \uc0ac\ub77c\uc84c\ub2e4. \uc2dc\uac04\ucd95\uc73c\ub85c \ubcf4\uba74 \uc2dc\uc98c\uc740 \uc138 \uad6c\uac04\uc774\ub2e4. 1\u00b72\uad6c\uac04\uc740 \uacbd\uae30\ub2f9 xG 1.44\uc640 1.41\ub85c \uac19\uc740 \uc591\uc744 \ub9cc\ub4e4\uc5c8\uace0 \uacb0\uacfc\ub9cc \ub2ec\ub790\ub2e4 \u2014 \ucd08\ubc18\uc758 \ubd80\uc9c4\uc740 \ub418\ub3cc\uc544\uc62c \uac12\uc774\uc5c8\ub2e4. 3\uad6c\uac04\uc740 \uc885\ub958\uac00 \ub2e4\ub974\ub2e4 \u2014 \ub9cc\ub4dc\ub294 \uc591 \uc790\uccb4\uac00 34% \ubb34\ub108\uc84c\ub2e4. 7\uc6d4 29\uc77c \uc774\ud638\uc7ac\uac00 \ub2e4\ub984\uc288\ud0c0\ud2b8\ub85c \ub5a0\ub09c \ub4a4, \uc219(10.3 \u2192 10.6)\ub3c4 final third \ud328\uc2a4(118 \u2192 131)\ub3c4 \ub298\uc5c8\ub294\ub370 box \uc548 \uc219 \ube44\uc911\ub9cc 71%\uc5d0\uc11c 58%\ub85c \ubb34\ub108\uc84c\ub2e4. \uadf8\uac00 \ud300\uc758 box \uc548 \uc219 24.2%\ub97c \uac00\uc84c\uace0, \ub450 \ubc88\uc9f8 \uc774\ub984\uc740 \uc0ac\uc2e4\uc0c1 set piece \uc804\uc6a9\uc778 \uc13c\ud130\ubc31\uc774\ub2e4. \ud06c\ub85c\uc2a4\ub294 15% \ub298\uace0 aerial duel\uc740 30% \uc904\uc5c8\ub2e4. \ucf54\ub108\ud0b9 109\uac1c\uc5d0\uc11c \ub098\uc628 \uace8\uc740 \ud55c \uac1c\ub2e4 \u2014 191cm target man\uc744 \ub370\ub9ac\uace0. \uc774\uc801\uc740 \ubb38\uc81c\ub97c \ub9cc\ub4e0 \uac8c \uc544\ub2c8\ub77c \ub4dc\ub7ec\ub0c8\ub2e4.",
+    },
+    stats: {
+      en: [["71% \u2192 58%", "share of shots taken inside the box"], ["1.44 / 1.41 / 0.93", "xG per match, three blocks"], ["24.2%", "one player's share of box shots"], ["109 \u2192 1", "corners to goals, all season"]],
+      ko: [["71% \u2192 58%", "box \uc548 \uc219 \ube44\uc911"], ["1.44 / 1.41 / 0.93", "\uacbd\uae30\ub2f9 xG, \uc138 \uad6c\uac04"], ["24.2%", "\ud55c \uba85\uc774 \uac00\uc9c4 box \uc548 \uc219 \uc9c0\ubd84"], ["109 \u2192 1", "\ucf54\ub108\ud0b9\uacfc \uadf8\uc5d0\uc11c \ub098\uc628 \uace8"]],
+    },
+  },
+  {
     slug: "jeonbuk",
     no: "04",
     publishedAt: "2026-09-07",
