@@ -30,6 +30,27 @@ type Episode = {
 
 const EPISODES: Episode[] = [
   {
+    slug: "jeonbuk",
+    no: "04",
+    publishedAt: "2026-09-07",
+    competition: {
+      en: "K League 1 2026 · Jeonbuk Hyundai · 27 matches, 38,079 events",
+      ko: "하나은행 K리그1 2026 · 전북 현대 · 27경기 · 이벤트 38,079건",
+    },
+    title: {
+      en: "Jeonbuk defend with possession. The same possession works against them going forward.",
+      ko: "전북은 소유로 수비한다. 그 소유가 공격에서는 반대로 작동한다.",
+    },
+    sub: {
+      en: "Jeonbuk make fewer defensive actions than almost anyone in K League 1 and concede the second fewest goals. That is not bad-team arithmetic — divide by exposure and their defensive volume is third in the league, with a lower PPDA than their opponents. There is simply less to defend. But the same possession inverts at the other end. Split the season into possession phases and Jeonbuk are two teams: fast breaks return 1.90× their expected goals — better than Ulsan's 1.60× — while slow build returns 0.37× against Ulsan's 0.78×. The share of shots reaching the target is identical; only the share that goes in is halved. All 12.2 of the goals they have lost are in slow build, and the loss is attached to the phase, not the player — Mota and Lee Dong-jun have 36 shots and no goals from slow build, and score to expectation on the break. The first answer this piece found, \u201cthey win with less of the ball\u201d, was a scoreboard artefact, and the wrong turn is left in.",
+      ko: "수비 행위는 리그 최하위권인데 실점은 두 번째로 적다. 못하는 팀의 산술이 아니다 \u2014 노출로 나누면 수비량은 리그 3위이고 PPDA는 상대보다 낮다. 수비할 일이 적을 뿐이다. 그런데 같은 소유가 반대편에서는 거꾸로 작동한다. 시즌을 소유 국면으로 쪼개면 전북은 두 팀이다. 역습 국면은 기대의 1.90배를 넣어 울산(1.60배)보다도 좋고, 지공 국면은 0.37배다(울산 0.78배). 유효슛을 만드는 비율은 같고 골이 되는 비율만 절반이다. 잃은 골 12.2개가 전부 지공에 있으며, 그 손실은 선수가 아니라 국면에 붙어 있다 \u2014 모따와 이동준은 지공에서 36슛 0골이지만 역습에서는 기대대로 넣는다. 이 글이 처음 찾은 답 \u201c볼을 많이 가지면 못 이긴다\u201d는 스코어보드가 만든 착시였고, 틀린 과정을 지우지 않고 남겼다.",
+    },
+    stats: {
+      en: [["11th → 3rd", "defensive volume, per opponent pass"], ["1.90× / 0.37×", "fast break vs slow build, goals ÷ xG"], ["12.1% / 23.7%", "on-target → goal, slow build vs Ulsan"], ["12.2 goals", "all of the shortfall, in slow build"]],
+      ko: [["11위 → 3위", "노출로 나눈 수비량"], ["1.90배 / 0.37배", "역습 대 지공, 골 ÷ xG"], ["12.1% / 23.7%", "유효슛→골, 지공 대 울산 지공"], ["12.2골", "잃은 골 전부가 지공에"]],
+    },
+  },
+  {
     slug: "ulsan",
     no: "03",
     publishedAt: "2026-09-05",
