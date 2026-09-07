@@ -5,12 +5,12 @@ const META: Record<Locale, Metadata> = {
   en: {
     title: "What the data says about Jeonbuk Hyundai | Jin",
     description:
-      "Jeonbuk make almost the fewest defensive actions in K League 1 and concede the second fewest goals — because there is less to defend: third in the league once divided by exposure, with a lower PPDA than their opponents. But the same possession inverts going forward. Slow build-up returns 0.37× its expected goals against Ulsan's 0.78×, and all 12.2 of the goals they have lost sit there.",
+      "Jeonbuk make almost the fewest defensive actions in K League 1 and concede the second fewest goals — because there is less to defend: third in the league once divided by exposure, with a lower PPDA than their opponents. But the same possession inverts going forward. Slow build-up returns 0.37× its expected goals against Ulsan's 0.78×, and the entire 12.2-goal shortfall in front of goal sits there.",
   },
   ko: {
     title: "데이터가 말하는 전북 현대 | Jin",
     description:
-      "수비 행위는 리그 최하위권인데 실점은 두 번째로 적다. 수비를 못해서가 아니라 수비할 일이 적어서다 — 노출로 나누면 수비량 리그 3위, PPDA는 상대보다 낮다. 그런데 같은 소유가 공격에서는 반대로 작동한다. 지공 국면은 기대의 0.37배만 넣고(울산 0.78배), 잃은 골 12.2개가 전부 거기 있다.",
+      "수비 행위는 리그 최하위권인데 실점은 두 번째로 적다. 수비를 못해서가 아니라 수비할 일이 적어서다 — 노출로 나누면 수비량 리그 3위, PPDA는 상대보다 낮다. 그런데 같은 소유가 공격에서는 반대로 작동한다. 지공 국면은 기대의 0.37배만 넣고(울산 0.78배), 기대에 못 미친 12.2골이 전부 거기서 나온다.",
   },
 };
 
