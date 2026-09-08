@@ -45,6 +45,20 @@ const JWC = {
  *  They are not metrics, so they carry a Tool/System type and their own status. */
 const TOOLS = [
   {
+    href: "/kpi-lab/simulator",
+    code: "SIM",
+    type: "System",
+    status: "concept" as const,
+    added: "2026-09-08",
+    updated: "2026-09-08",
+    basedOn: ["Event data", "Split-half reliability", "LEM", "Plan adherence"],
+    name: { en: "A tool that evaluates the plan (Simulator)", ko: "계획을 평가하는 도구 (시뮬레이터)" },
+    short: {
+      en: "Four measurements on 48 matches fixed the buildable scope: not predicting what a substitution will do, but scoring whether the declared plan was carried out.",
+      ko: "48경기 측정 4종이 구현 범위를 확정했다. 교체의 결과를 예측하는 것이 아니라, 선언한 계획이 실행됐는지를 채점하는 것.",
+    },
+  },
+  {
     href: "/kpi-lab/hovi",
     code: "HOVI",
     type: "System",

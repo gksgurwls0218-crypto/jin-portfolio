@@ -1,0 +1,872 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Four preliminary measurements on K League event data, and the design decisions that follow: what a tactical simulator can and cannot do today, and why the buildable scope is plan evaluation rather than prediction.">
+<title>A tool that evaluates the plan — AI tactical simulator</title>
+<style>
+:root{
+  --page:#f9f9f7; --surface-1:#fcfcfb;
+  --text-primary:#0b0b0b; --text-secondary:#52514e; --muted:#898781;
+  --grid:#e1e0d9; --axis:#c3c2b7; --border:rgba(11,11,11,0.10);
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a;
+  --good:#0ca30c; --critical:#d03b3b; --warning:#fab219;
+  --seq250:#86b6ef; --seq350:#5598e7; --seq450:#2a78d6; --seq600:#184f95;
+}
+:root[data-theme="dark"]{
+  --page:#0d0d0d; --surface-1:#1a1a19;
+  --text-primary:#ffffff; --text-secondary:#c3c2b7; --muted:#898781;
+  --grid:#2c2c2a; --axis:#383835; --border:rgba(255,255,255,0.10);
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+  --seq250:#184f95; --seq350:#256abf; --seq450:#3987e5; --seq600:#86b6ef;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --page:#0d0d0d; --surface-1:#1a1a19;
+    --text-primary:#ffffff; --text-secondary:#c3c2b7; --muted:#898781;
+    --grid:#2c2c2a; --axis:#383835; --border:rgba(255,255,255,0.10);
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+    --seq250:#184f95; --seq350:#256abf; --seq450:#3987e5; --seq600:#86b6ef;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--text-primary);
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.65;
+  -webkit-font-smoothing:antialiased;}
+.wrap{max-width:920px;margin:0 auto;padding:0 22px 90px}
+.themebtn{position:fixed;top:14px;right:16px;z-index:9;font:inherit;font-size:12.5px;
+  color:var(--text-secondary);background:var(--surface-1);border:1px solid var(--border);
+  border-radius:7px;padding:5px 11px;cursor:pointer}
+header.hero{padding:64px 0 34px;border-bottom:1px solid var(--border);margin-bottom:44px}
+.kicker{font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-weight:650}
+h1{font-size:clamp(28px,4.6vw,42px);line-height:1.22;margin:14px 0 12px;letter-spacing:-.02em;font-weight:720}
+.sub{font-size:clamp(15px,2vw,17.5px);color:var(--text-secondary);max-width:64ch;margin:0}
+.meta{margin-top:22px;font-size:12.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 20px}
+.meta b{color:var(--text-secondary);font-weight:600}
+h2{font-size:clamp(20px,2.7vw,25px);margin:60px 0 6px;letter-spacing:-.015em;font-weight:700}
+h2 .num{color:var(--muted);font-weight:600;margin-right:10px;font-variant-numeric:tabular-nums}
+h3{font-size:16.5px;margin:32px 0 8px;font-weight:670}
+p{margin:12px 0;max-width:68ch}
+ul,ol{max-width:68ch;padding-left:20px}
+li{margin:7px 0}
+a{color:var(--s1)}
+strong{font-weight:660}
+code{font-family:ui-monospace,Menlo,monospace;font-size:.88em;
+  background:color-mix(in srgb,var(--text-primary) 6%,transparent);padding:1px 5px;border-radius:4px}
+.lede{font-size:17px;color:var(--text-primary);border-left:3px solid var(--s2);
+  padding:2px 0 2px 18px;margin:22px 0 28px;max-width:66ch}
+.quiet{color:var(--text-secondary)}
+.statrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:26px 0 8px}
+.stat{background:var(--surface-1);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+.stat .k{font-size:11.5px;color:var(--muted);letter-spacing:.04em}
+.stat .v{font-size:23px;font-weight:700;margin-top:3px;font-variant-numeric:tabular-nums}
+.stat .n{font-size:11.5px;color:var(--text-secondary);margin-top:2px}
+figure{margin:30px 0 8px;background:var(--surface-1);border:1px solid var(--border);
+  border-radius:14px;padding:20px 20px 14px}
+figure svg{display:block;width:100%;height:auto}
+.figtitle{font-size:14px;font-weight:670;margin:0 0 2px}
+.fignote{font-size:12.5px;color:var(--muted);margin:0 0 14px}
+figcaption{font-size:13px;color:var(--text-secondary);margin-top:12px;padding-top:11px;
+  border-top:1px solid var(--grid)}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:18px 0;min-width:480px}
+th,td{text-align:right;padding:8px 10px;border-bottom:1px solid var(--grid);font-variant-numeric:tabular-nums}
+th:first-child,td:first-child{text-align:left;font-variant-numeric:normal}
+th{font-size:11.5px;letter-spacing:.05em;color:var(--muted);font-weight:650;text-transform:uppercase}
+tr.hl td{background:color-mix(in srgb,var(--s2) 9%,transparent);font-weight:640}
+td.dim{color:var(--muted)}
+td.up{color:var(--s3);font-weight:640}
+td.dn{color:var(--s2);font-weight:640}
+.fixbox{background:var(--surface-1);border:1px solid var(--border);border-left:3px solid var(--critical);
+  border-radius:12px;padding:18px 20px;margin:24px 0}
+.fixbox .lab{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--critical);font-weight:680;margin-bottom:8px}
+.fixbox p{margin:8px 0}
+.fixbox p:last-child{margin-bottom:0}
+.callout{background:var(--surface-1);border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin:24px 0}
+.callout .lab{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:680;margin-bottom:8px}
+.callout > :last-child{margin-bottom:0}
+footer{margin-top:70px;padding-top:22px;border-top:1px solid var(--border);
+  font-size:12.5px;color:var(--muted);line-height:1.9}
+</style>
+</head>
+<body>
+<button class="themebtn" id="tt">◐ Theme</button>
+<div class="wrap">
+
+<header class="hero">
+  <p class="kicker">KPI Lab · Concept · Component ② Tactical Simulator</p>
+  <h1>A tool that evaluates the plan</h1>
+  <p class="sub">The final goal is to watch the same match together, talk about it, and have that conversation feed the manager's decisions. Working towards it I ran <strong>four preliminary measurements</strong>, and on their results fixed the <strong>currently buildable scope as plan evaluation rather than prediction</strong>. Below: the measurement data, the verdicts, the design decisions that follow, and what remains out of reach.</p>
+  <div class="meta">
+    <span>Hyuckjin Han</span>
+    <span><b>Sept 2026</b></span>
+    <span>Status <b>Concept · 4 preliminary measurements</b></span>
+    <span>Implementation <b>None</b></span>
+  </div>
+</header>
+
+<div class="statrow">
+  <div class="stat"><div class="k">Measurement data</div><div class="v">48 matches</div><div class="n">FC Seoul (K League 1, 25R) · Hwaseong FC (K League 2, 23R)</div></div>
+  <div class="stat"><div class="k">Events analysed</div><div class="v">34,518</div><div class="n">445 substitutions · 519 player-matches</div></div>
+  <div class="stat"><div class="k">Outcome</div><div class="v">2 / 4</div><div class="n">2 hypotheses unsupported · 2 measurement errors corrected</div></div>
+  <div class="stat"><div class="k">Scope fixed</div><div class="v">Plan evaluation</div><div class="n">Prediction excluded at this stage</div></div>
+</div>
+
+<div class="callout" style="border-left:3px solid var(--warning)">
+  <p class="lab">Scope of this write-up</p>
+  <p>There is no implementation. This is the design document for <strong>component ②, the tactical simulator</strong>, promised at the end of the <a href="/kpi-lab/hovi">HOVI write-up</a>. Its purpose is to establish, through literature review and my own measurements, <strong>what is and is not possible</strong>. Figures from the literature are cited; measurements are my own; the interface in §06 is a mockup.</p>
+</div>
+
+<h2><span class="num">01</span>The problem — substitutions</h2>
+
+<p>Permitted substitutions went from three to five. Actual usage is <strong>4.4 per team per match at FC Seoul and 4.9 at Hwaseong FC</strong>, or 8.84 per match across both sides. It is the largest single variable a manager controls directly during a match.</p>
+
+<div class="statrow">
+  <div class="stat"><div class="k">Substitutions per match (both teams)</div><div class="v">8.84</div><div class="n">FC Seoul, 25 matches · 221 total</div></div>
+  <div class="stat"><div class="k">Median timing</div><div class="v">66.2'</div><div class="n">IQR 58.2 – 77.7</div></div>
+  <div class="stat"><div class="k">Second-half share</div><div class="v">97%</div><div class="n">Hwaseong FC, 23 matches · 218 of 224</div></div>
+</div>
+
+<figure>
+  <p class="figtitle">Ten cards per match</p>
+  <p class="fignote">FC Seoul, 25 K League 1 matches, 2026 · timing of all 221 substitutions, both teams</p>
+  <svg viewBox="0 0 720 266" role="img" aria-label="Substitutions cluster in the second half. Each side may use up to five, so as many as ten cards are played in a single match.">
+    <line x1="60" y1="176" x2="690" y2="176" stroke="var(--axis)" stroke-width="1.5"/>
+    <g font-size="10.5" fill="var(--muted)" text-anchor="middle">
+      <text x="60" y="196">0'</text><text x="270" y="196">45'</text>
+      <text x="480" y="196">70'</text><text x="690" y="196">90'</text>
+    </g>
+    <rect x="270" y="30" width="420" height="146" fill="color-mix(in srgb,var(--s1) 4%,transparent)"/>
+    <text x="278" y="46" font-size="10.5" fill="var(--muted)">97% of substitutions fall here</text>
+
+    <rect x="331" y="60" width="163" height="26" rx="6" fill="color-mix(in srgb,var(--s1) 18%,transparent)"/>
+    <line x1="405" y1="52" x2="405" y2="94" stroke="var(--s1)" stroke-width="2.5"/>
+    <text x="502" y="78" font-size="11.5" fill="var(--text-secondary)">Median 66.2' · IQR 58–78'</text>
+
+    <g font-size="11.5">
+      <text x="24" y="78" fill="var(--muted)">Distribution</text>
+      <text x="24" y="122" fill="var(--text-primary)" font-weight="660">Us</text>
+      <text x="24" y="150" fill="var(--text-primary)" font-weight="660">Them</text>
+    </g>
+    <g>
+      <circle cx="330" cy="118" r="9" fill="var(--s1)"/><circle cx="378" cy="118" r="9" fill="var(--s1)"/>
+      <circle cx="426" cy="118" r="9" fill="var(--s1)"/><circle cx="474" cy="118" r="9" fill="var(--s1)"/>
+      <circle cx="522" cy="118" r="9" fill="var(--s1)"/>
+      <circle cx="330" cy="146" r="9" fill="var(--s2)"/><circle cx="378" cy="146" r="9" fill="var(--s2)"/>
+      <circle cx="426" cy="146" r="9" fill="var(--s2)"/><circle cx="474" cy="146" r="9" fill="var(--s2)"/>
+      <circle cx="522" cy="146" r="9" fill="var(--s2)"/>
+    </g>
+    <text x="546" y="122" font-size="11.5" fill="var(--s1)" font-weight="640">Us — 5</text>
+    <text x="546" y="150" font-size="11.5" fill="var(--s2)" font-weight="640">Them — 5</text>
+
+    <rect x="24" y="208" width="666" height="48" rx="8" fill="color-mix(in srgb,var(--s3) 10%,transparent)"/>
+    <text x="40" y="228" font-size="12.5" font-weight="660" fill="var(--text-primary)">Up to ten cards are played inside 30 minutes</text>
+    <text x="40" y="246" font-size="11.5" fill="var(--text-secondary)">— yet the first is usually chosen without accounting for the other nine</text>
+  </svg>
+  <figcaption>The aim is not the effect of the first substitution but <strong>preparing the second and third on the branches the first creates.</strong> If ten cards interact, that initiative is worth taking.</figcaption>
+</figure>
+
+<h2><span class="num">02</span>State of the field</h2>
+
+<p>As of September 2026, generating match continuations from event data is already published and in some cases open-sourced. The table lists what the review turned up.</p>
+
+<div class="tw">
+<table>
+  <thead><tr><th>System</th><th>What it does</th><th>Data required</th><th>Substitutions</th><th>Opponent response</th></tr></thead>
+  <tbody>
+    <tr><td><strong>TacticAI</strong> → Palmeiras<br><span class="quiet" style="font-size:12px">June 2026</span></td><td style="text-align:left">Drag a player and <strong>both teams rearrange</strong>. Extended from corners to open play</td><td>Broadcast tracking</td><td class="dim">✕</td><td class="up">positions ○</td></tr>
+    <tr><td><strong>TacticGen</strong><br><span class="quiet" style="font-size:12px">April 2026</span></td><td style="text-align:left"><em>Generates</em> tactics, conditioned on rules or natural language</td><td>3.3M events<br>+ 100M tracking frames</td><td class="dim">✕</td><td>included in generation</td></tr>
+    <tr><td><strong>LEM</strong> (Large Events Model)<br><span class="quiet" style="font-size:12px">2024–2025 · <strong>code released</strong></span></td><td style="text-align:left">Learns events as a language and <strong>continues a match from any point</strong>. Monte Carlo outcome distributions<br><span class="quiet" style="font-size:12px">A derivative fine-tunes per team to answer "this player in this squad"</span></td><td>Event data<br><span class="quiet" style="font-size:12px">1.72M events</span></td><td class="dim">✕<br><span class="quiet" style="font-size:12px">no player identity</span></td><td class="dim">✕</td></tr>
+    <tr class="hl"><td><strong>ScoutGPT</strong><br><span class="quiet" style="font-size:12px">2026</span></td><td style="text-align:left"><strong>From event data alone</strong>, swaps a player in and continues the match</td><td>Event data</td><td>player swap ○<br><span class="quiet" style="font-size:12px">in-game ✕</span></td><td class="dn">✕ not addressed</td></tr>
+    <tr><td>Fuzzy-logic substitution priority<br><span class="quiet" style="font-size:12px">2025</span></td><td style="text-align:left">Audits "who should come off now" by rule</td><td>Events + minutes</td><td>removals ○</td><td class="dim">✕</td></tr>
+    <tr><td>KU Leuven substitution analysis<br><span class="quiet" style="font-size:12px">2020/21–2021/22 · 6 leagues</span></td><td style="text-align:left">Type and timing classification, 74% xGD-based prediction</td><td>Shot data</td><td>post-hoc ○</td><td class="dim">✕</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>Both generative lines — LEM and ScoutGPT — <strong>swap players in the starting line-up</strong>. Neither covers in-game substitutions or the opponent's adjustment to them. No study in the reviewed literature treats substitutions as a <strong>sequence exchanged between the two sides</strong>.</p>
+
+<p>The absence of prior work does not vouch for the direction. The possibility that no signal exists has to be ruled out first. §03 and §04 are that check.</p>
+
+<h2><span class="num">03</span>Measurement ① — interaction in substitution timing</h2>
+
+<p><strong>Hypothesis</strong> — opponent substitutions respond to ours.<br>
+<strong>Data</strong> — Hwaseong FC, 2026 season, 23 matches, 224 substitutions across both sides. For each of our 114 substitutions, the share of opponent responses within N minutes.<br>
+<strong>Null model</strong> — the opponent's set of substitution times replaced with another match's, 3,000 times (each side's timing distribution preserved; only the fact of being the same match removed).</p>
+
+<figure>
+  <p class="figtitle">Opponent response rate after our substitution</p>
+  <p class="fignote">● observed · ▬ 95% interval of the shuffled null (Hwaseong FC, 23 matches · 224 substitutions)</p>
+  <svg viewBox="0 0 720 264" role="img" aria-label="In all four windows the observed rate falls inside the 95% interval of the shuffled null. There is no evidence that opponent substitutions respond to ours in time.">
+    <g stroke="var(--grid)" stroke-width="1">
+      <line x1="150" y1="30" x2="150" y2="212"/><line x1="285" y1="30" x2="285" y2="212"/>
+      <line x1="420" y1="30" x2="420" y2="212"/><line x1="555" y1="30" x2="555" y2="212"/>
+      <line x1="690" y1="30" x2="690" y2="212"/>
+    </g>
+    <g font-size="10.5" fill="var(--muted)" text-anchor="middle">
+      <text x="150" y="230">0%</text><text x="285" y="230">20%</text><text x="420" y="230">40%</text>
+      <text x="555" y="230">60%</text><text x="690" y="230">80%</text>
+    </g>
+
+    <g font-size="12" fill="var(--text-primary)">
+      <text x="24" y="58" font-weight="620">0–3 min</text>
+      <text x="24" y="102" font-weight="620">0–5 min</text>
+      <text x="24" y="146" font-weight="620">0–10 min</text>
+      <text x="24" y="190" font-weight="620">±1 min</text>
+    </g>
+
+    <rect x="233" y="46" width="118" height="16" rx="8" fill="color-mix(in srgb,var(--text-primary) 12%,transparent)"/>
+    <circle cx="316" cy="54" r="7.5" fill="var(--s1)"/>
+    <text x="360" y="58" font-size="11.5" fill="var(--muted)">obs 24.6% · null 12.3–29.8</text>
+
+    <rect x="304" y="90" width="136" height="16" rx="8" fill="color-mix(in srgb,var(--text-primary) 12%,transparent)"/>
+    <circle cx="375" cy="98" r="7.5" fill="var(--s1)"/>
+    <text x="460" y="102" font-size="11.5" fill="var(--muted)">obs 33.3% · null 22.8–43.0</text>
+
+    <rect x="470" y="134" width="136" height="16" rx="8" fill="color-mix(in srgb,var(--text-primary) 12%,transparent)"/>
+    <circle cx="547" cy="142" r="7.5" fill="var(--s1)"/>
+    <text x="456" y="146" font-size="11.5" fill="var(--muted)" text-anchor="end">obs 58.8% · null 47.4–67.5</text>
+
+    <rect x="197" y="178" width="107" height="16" rx="8" fill="color-mix(in srgb,var(--text-primary) 12%,transparent)"/>
+    <circle cx="274" cy="186" r="7.5" fill="var(--s1)"/>
+    <text x="326" y="190" font-size="11.5" fill="var(--muted)">obs 18.4% · null 7.0–22.8</text>
+
+    <rect x="24" y="246" width="666" height="0.1" fill="none"/>
+    <text x="24" y="20" font-size="12" font-weight="680" fill="var(--s2)">All four inside the null interval — no response signal</text>
+  </svg>
+  <figcaption>All four windows sit inside the null interval. <strong>No signal was detected that opponent substitutions respond to ours in time.</strong></figcaption>
+</figure>
+
+<p><strong>Verdict — unsupported.</strong> In all four windows the observed value sits inside the null 95% interval. The two sides' median timings are also close, at 71′ and 68.5′. <strong>Prediction of opponent substitution timing is removed from the design.</strong></p>
+
+<p class="quiet">Limitation — one team, one season, one league. This is "no signal detected", not proof that no interaction exists.</p>
+
+<h2><span class="num">04</span>Measurement ② — substitution type</h2>
+
+<p><strong>Hypothesis</strong> — the response is in type rather than timing; an attacking change is answered with a defensive one.<br>
+<strong>Data</strong> — FC Seoul, 25 K League 1 matches, 221 substitutions across both sides. Classified attacking / like-for-like / defensive by the difference in positional rank (GK 0 · DF 1 · MF 2 · FW 3).</p>
+
+<p class="quiet">Hwaseong FC data was excluded here: K League 2 has no league-wide player file, leaving 46% of incoming players without a confirmed position.</p>
+
+<h3>Secondary result — score state governs substitution type</h3>
+
+<figure>
+  <p class="figtitle">Substitution type by score state</p>
+  <p class="fignote">FC Seoul, 25 K League 1 matches, 2026 · 221 substitutions, both teams</p>
+  <svg viewBox="0 0 720 268" role="img" aria-label="Attacking substitutions make up 22.9 percent when trailing versus 4.3 percent when leading.">
+    <g font-size="12" fill="var(--text-primary)" font-weight="640">
+      <text x="24" y="60">Leading</text><text x="24" y="126">Level</text><text x="24" y="192">Trailing</text>
+    </g>
+    <g font-size="10.5" fill="var(--muted)">
+      <text x="24" y="76">n=70</text><text x="24" y="142">n=68</text><text x="24" y="208">n=83</text>
+    </g>
+
+    <g>
+      <rect x="110" y="38" width="25" height="34" rx="3" fill="var(--s2)"/>
+      <rect x="135" y="38" width="399" height="34" rx="3" fill="color-mix(in srgb,var(--text-primary) 13%,transparent)"/>
+      <rect x="534" y="38" width="157" height="34" rx="3" fill="var(--s1)"/>
+      <text x="122" y="30" font-size="11.5" font-weight="700" fill="var(--s2)" text-anchor="middle">4.3%</text>
+    </g>
+    <g>
+      <rect x="110" y="104" width="60" height="34" rx="3" fill="var(--s2)"/>
+      <rect x="170" y="104" width="444" height="34" rx="3" fill="color-mix(in srgb,var(--text-primary) 13%,transparent)"/>
+      <rect x="614" y="104" width="77" height="34" rx="3" fill="var(--s1)"/>
+      <text x="140" y="96" font-size="11.5" font-weight="700" fill="var(--s2)" text-anchor="middle">10.3%</text>
+    </g>
+    <g>
+      <rect x="110" y="170" width="133" height="34" rx="3" fill="var(--s2)"/>
+      <rect x="243" y="170" width="329" height="34" rx="3" fill="color-mix(in srgb,var(--text-primary) 13%,transparent)"/>
+      <rect x="572" y="170" width="119" height="34" rx="3" fill="var(--s1)"/>
+      <text x="176" y="162" font-size="11.5" font-weight="700" fill="var(--s2)" text-anchor="middle">22.9%</text>
+    </g>
+
+    <g font-size="11.5">
+      <rect x="110" y="228" width="12" height="12" rx="2" fill="var(--s2)"/><text x="128" y="239" fill="var(--text-secondary)">Attacking</text>
+      <rect x="200" y="228" width="12" height="12" rx="2" fill="color-mix(in srgb,var(--text-primary) 13%,transparent)"/><text x="218" y="239" fill="var(--text-secondary)">Like-for-like</text>
+      <rect x="320" y="228" width="12" height="12" rx="2" fill="var(--s1)"/><text x="338" y="239" fill="var(--text-secondary)">Defensive</text>
+      <text x="690" y="239" fill="var(--muted)" text-anchor="end">4.3% → 10.3% → 22.9% — more than fivefold</text>
+    </g>
+  </svg>
+  <figcaption>Attacking substitutions rise monotonically: leading 4.3% → level 10.3% → trailing 22.9%. <strong>Score state alone shifts the prior on the opponent's substitution type substantially.</strong> This is the first value the simulator can compute about an opponent.</figcaption>
+</figure>
+
+<h3>Primary result — no type-level response detected</h3>
+
+<p>Rank correlation between the actor's substitution type and the responder's, over pairs where a response occurred:</p>
+
+<div class="statrow">
+  <div class="stat"><div class="k">5-min window (n=97)</div><div class="v">−0.011</div><div class="n">p = 0.915</div></div>
+  <div class="stat"><div class="k">10-min window (n=136)</div><div class="v">−0.017</div><div class="n">p = 0.851</div></div>
+  <div class="stat"><div class="k">15-min window (n=158)</div><div class="v">−0.017</div><div class="n">p = 0.830</div></div>
+</div>
+
+<p>One subgroup showed direction. Where an attacking card was played while trailing, defensive responses ran at 21.1 / 26.3 / 36.8% against 4.7 / 6.2 / 10.9% otherwise — three to four times higher. However, <strong>the minimum p across 3 states × 3 windows = 9 tests is 0.014, which corrects to 0.126 and is not significant.</strong> The five responses concerned came from four matches. <strong>Retained as a hypothesis only.</strong></p>
+
+<h3>Limits of the instrument</h3>
+
+<figure>
+  <p class="figtitle">By positional rank, two-thirds of substitutions register as "no change"</p>
+  <p class="fignote">FC Seoul, 25 matches · classification of 221 substitutions</p>
+  <svg viewBox="0 0 720 262" role="img" aria-label="147 of 221 substitutions, 66.5 percent, are classified as like-for-like: 76 midfielder-for-midfielder, 45 forward-for-forward, 25 defender-for-defender.">
+    <rect x="24" y="34" width="443" height="46" rx="6" fill="color-mix(in srgb,var(--text-primary) 13%,transparent)"/>
+    <rect x="467" y="34" width="136" height="46" rx="6" fill="var(--s1)"/>
+    <rect x="603" y="34" width="88" height="46" rx="6" fill="var(--s2)"/>
+    <text x="245" y="63" font-size="14" font-weight="700" fill="var(--text-primary)" text-anchor="middle">Like-for-like — 147 · 66.5%</text>
+    <text x="535" y="63" font-size="12.5" font-weight="660" fill="#fff" text-anchor="middle">Defensive 45</text>
+    <text x="647" y="63" font-size="11.5" font-weight="660" fill="#fff" text-anchor="middle">Attacking 29</text>
+
+    <path d="M 24 84 L 24 106 M 467 84 L 467 106 M 24 106 L 467 106" stroke="var(--axis)" stroke-width="1" fill="none"/>
+    <text x="245" y="126" font-size="11.5" fill="var(--muted)" text-anchor="middle">What is inside that block</text>
+
+    <g>
+      <rect x="60" y="140" width="240" height="26" rx="5" fill="color-mix(in srgb,var(--s1) 20%,transparent)"/>
+      <text x="72" y="158" font-size="12.5" font-weight="640" fill="var(--text-primary)">MF → MF</text>
+      <text x="330" y="158" font-size="12.5" font-weight="700" fill="var(--text-primary)" text-anchor="end">76</text>
+
+      <rect x="60" y="172" width="142" height="26" rx="5" fill="color-mix(in srgb,var(--s1) 20%,transparent)"/>
+      <text x="72" y="190" font-size="12.5" font-weight="640" fill="var(--text-primary)">FW → FW</text>
+      <text x="330" y="190" font-size="12.5" font-weight="700" fill="var(--text-primary)" text-anchor="end">45</text>
+
+      <rect x="60" y="204" width="79" height="26" rx="5" fill="color-mix(in srgb,var(--s1) 20%,transparent)"/>
+      <text x="72" y="222" font-size="12.5" font-weight="640" fill="var(--text-primary)">DF → DF</text>
+      <text x="330" y="222" font-size="12.5" font-weight="700" fill="var(--muted)" text-anchor="end">25</text>
+    </g>
+
+    <g>
+      <rect x="360" y="140" width="331" height="90" rx="10" fill="color-mix(in srgb,var(--s2) 8%,transparent)" stroke="var(--s2)" stroke-width="1.4"/>
+      <text x="378" y="164" font-size="12.5" font-weight="700" fill="var(--s2)">Managers change matches with these 76</text>
+      <g font-size="11.5" fill="var(--text-primary)">
+        <text x="378" y="186">Holding midfielder off, box-to-box on</text>
+        <text x="378" y="206">Inverted full-back swapped for a classic one</text>
+      </g>
+      <text x="378" y="224" font-size="11.5" font-weight="640" fill="var(--s2)">— all register as zero change</text>
+    </g>
+  </svg>
+  <figcaption>147 of 221 (66.5%) classify as like-for-like. The 76 midfielder-for-midfielder changes include both holding-for-box-to-box swaps and inverted-for-classic full-backs; both register as zero. <strong>A correlation of zero computed with an instrument blind to 66.5% of cases cannot be used as evidence of absence.</strong></figcaption>
+</figure>
+
+<p><strong>Verdict</strong> — type-level response prediction is <strong>held</strong>. Absence of signal cannot be separated from insufficient resolution in the instrument. What is required is not a positional label but a <strong>role label</strong>.</p>
+
+<h2><span class="num">05</span>Measurement ③ — the variance structure of usage</h2>
+
+<p><strong>Question</strong> — does "using the same player differently" exist in the data?<br>
+<strong>Data</strong> — 519 player-matches drawn from 34,518 raw events across FC Seoul's 25 matches (20+ minutes played, 24+ events, goalkeepers excluded). Variance decomposed on the 261 player-matches from the 17 players with four or more appearances.<br>
+<strong>Variables</strong> — nine describing <em>how a player was used</em> rather than how well (2 positional · 5 action mix · 2 pass character).</p>
+
+<p class="quiet">Coordinate handling — raw event coordinates are not normalised to attacking direction; they flip with home/away × half. The rule was confirmed against goalkeeper mean X and corrected (after correction: GK 8–9 · DF 40 · MF 50–56 · FW 58–61). Existing FC Seoul analysis scripts already apply this correction, so published reports are unaffected.</p>
+
+<h3>Result ① — role is fixed, task varies</h3>
+
+<p>ICC 0.69 for advancement and 0.69 for width. <strong>About 70% of variance is explained by player identity.</strong> Regulars play in the same place.</p>
+
+<p>Reading a low ICC as "instructions change from match to match" is an error. Variation has three sources — changed instruction, opponent and situation, and measurement error. To separate them, <strong>events within a single match were split into odd and even halves, measured separately and compared</strong> (split-half reliability, Spearman-Brown corrected). Within one match the task is constant, so any discrepancy between the two halves is measurement error.</p>
+
+<figure>
+  <p class="figtitle">What each variable's variance is made of</p>
+  <p class="fignote">FC Seoul, 25 matches · 17 players with 4+ appearances · 261 player-matches · variance decomposition + within-match split-half reliability</p>
+  <svg viewBox="0 0 720 392" role="img" aria-label="Variance of nine usage variables split into player-specific, real match-level variation, and measurement noise. Advancement and width carry only 6 to 8 percent noise, while dribble share is 66 percent noise with zero reproducible variation.">
+    <g font-size="11">
+      <rect x="150" y="8" width="11" height="11" rx="2" fill="var(--seq450)"/><text x="167" y="18" fill="var(--text-secondary)">Player-specific (role)</text>
+      <rect x="316" y="8" width="11" height="11" rx="2" fill="var(--s3)"/><text x="333" y="18" fill="var(--text-secondary)">Match-level variation (task)</text>
+      <rect x="528" y="8" width="11" height="11" rx="2" fill="color-mix(in srgb,var(--critical) 45%,transparent)"/><text x="545" y="18" fill="var(--text-secondary)">Noise</text>
+      <text x="690" y="18" fill="var(--muted)" text-anchor="end" font-size="10.5">Split-half</text>
+    </g>
+
+    <g font-size="12" fill="var(--text-primary)">
+      <text x="24" y="57">Advancement (X)</text>
+      <text x="24" y="87">Width (|Y−50|)</text>
+      <text x="24" y="117">Pass share</text>
+      <text x="24" y="147">Forward-pass share</text>
+    </g>
+    <g>
+      <rect x="170" y="44" width="326" height="18" rx="3" fill="var(--seq450)"/><rect x="496" y="44" width="117" height="18" fill="var(--s3)"/><rect x="613" y="44" width="27" height="18" rx="3" fill="color-mix(in srgb,var(--critical) 45%,transparent)"/>
+      <text x="690" y="57" font-size="11.5" font-weight="700" fill="var(--s3)" text-anchor="end">0.81</text>
+      <rect x="170" y="74" width="323" height="18" rx="3" fill="var(--seq450)"/><rect x="493" y="74" width="111" height="18" fill="var(--s3)"/><rect x="604" y="74" width="36" height="18" rx="3" fill="color-mix(in srgb,var(--critical) 45%,transparent)"/>
+      <text x="690" y="87" font-size="11.5" font-weight="700" fill="var(--s3)" text-anchor="end">0.75</text>
+      <rect x="170" y="104" width="261" height="18" rx="3" fill="var(--seq450)"/><rect x="431" y="104" width="88" height="18" fill="var(--s3)"/><rect x="519" y="104" width="121" height="18" rx="3" fill="color-mix(in srgb,var(--critical) 45%,transparent)"/>
+      <text x="690" y="117" font-size="11.5" fill="var(--text-secondary)" text-anchor="end">0.42</text>
+      <rect x="170" y="134" width="195" height="18" rx="3" fill="var(--seq450)"/><rect x="365" y="134" width="95" height="18" fill="var(--s3)"/><rect x="460" y="134" width="180" height="18" rx="3" fill="color-mix(in srgb,var(--critical) 45%,transparent)"/>
+      <text x="690" y="147" font-size="11.5" fill="var(--text-secondary)" text-anchor="end">0.35</text>
+    </g>
+
+    <line x1="24" y1="166" x2="690" y2="166" stroke="var(--critical)" stroke-width="1.2" stroke-dasharray="5 4"/>
+    <text x="24" y="182" font-size="11.5" font-weight="680" fill="var(--critical)">Below: not measurable with this instrument — values do not reproduce even within one match</text>
+
+    <g font-size="12" fill="var(--muted)">
+      <text x="24" y="205">Long-pass share</text>
+      <text x="24" y="235">Defensive-action share</text>
+      <text x="24" y="265">Duel share</text>
+      <text x="24" y="295">Shot share</text>
+      <text x="24" y="325">Dribble share</text>
+    </g>
+    <g opacity="0.85">
+      <rect x="170" y="192" width="203" height="18" rx="3" fill="var(--seq450)"/><rect x="373" y="192" width="66" height="18" fill="var(--s3)"/><rect x="439" y="192" width="201" height="18" rx="3" fill="color-mix(in srgb,var(--critical) 45%,transparent)"/>
+      <text x="690" y="205" font-size="11.5" fill="var(--muted)" text-anchor="end">0.25</text>
+      <rect x="170" y="222" width="86" height="18" rx="3" fill="var(--seq450)"/><rect x="256" y="222" width="91" height="18" fill="var(--s3)"/><rect x="347" y="222" width="293" height="18" rx="3" fill="color-mix(in srgb,var(--critical) 45%,transparent)"/>
+      <text x="690" y="235" font-size="11.5" fill="var(--muted)" text-anchor="end">0.24</text>
+      <rect x="170" y="252" width="287" height="18" rx="3" fill="var(--seq450)"/><rect x="457" y="252" width="7" height="18" fill="var(--s3)"/><rect x="464" y="252" width="176" height="18" rx="3" fill="color-mix(in srgb,var(--critical) 45%,transparent)"/>
+      <text x="690" y="265" font-size="11.5" fill="var(--muted)" text-anchor="end">0.04</text>
+      <rect x="170" y="282" width="204" height="18" rx="3" fill="var(--seq450)"/><rect x="374" y="282" width="7" height="18" fill="var(--s3)"/><rect x="381" y="282" width="259" height="18" rx="3" fill="color-mix(in srgb,var(--critical) 45%,transparent)"/>
+      <text x="690" y="295" font-size="11.5" fill="var(--muted)" text-anchor="end">0.02</text>
+      <rect x="170" y="312" width="160" height="18" rx="3" fill="var(--seq450)"/><rect x="330" y="312" width="310" height="18" rx="3" fill="color-mix(in srgb,var(--critical) 45%,transparent)"/>
+      <text x="690" y="325" font-size="11.5" font-weight="700" fill="var(--critical)" text-anchor="end">0.00</text>
+    </g>
+
+    <rect x="24" y="348" width="666" height="34" rx="8" fill="color-mix(in srgb,var(--s3) 10%,transparent)"/>
+    <text x="40" y="363" font-size="12.5" font-weight="660" fill="var(--text-primary)">The positional axis survives — 6–8% noise, 81% / 75% of the variation is real</text>
+    <text x="40" y="377" font-size="11.5" fill="var(--text-secondary)">A match contains a handful of dribbles and one or two shots. Turned into a share, that is noise, not instruction</text>
+  </svg>
+  <figcaption>By ICC alone the lower variables look like "things that change match to match." But their values do not reproduce even within a single match. <strong>That is sampling noise from thin event counts, not variation driven by instruction.</strong></figcaption>
+</figure>
+
+<p><strong>Split-half reliability is 0.00 for dribble share, 0.04 for duels, 0.02 for shots and 0.24 for defensive actions.</strong> A match contains only a handful of these events, so the share is unstable. These four variables are unusable under the current measurement scheme.</p>
+
+<h3>Result ② — measured amplitude on the positional axis</h3>
+
+<p>81% of the match-to-match variation in advancement reproduces within the same match (75% for width). About 25% of total variance is real match-level variation.</p>
+
+<div class="statrow">
+  <div class="stat"><div class="k">Match-to-match amplitude</div><div class="v">± 8.3 m</div><div class="n">median SD 7.9 pp</div></div>
+  <div class="stat"><div class="k">Max − min range</div><div class="v">27 m</div><div class="n">median · maximum 45 m</div></div>
+  <div class="stat"><div class="k">Explained by home/away</div><div class="v">3–9%</div><div class="n">lower bound on context effects</div></div>
+</div>
+
+<p><strong>Role is fixed across a season; within that role the position taken up moves by about 8 m per match and as much as 27 m across matches.</strong> That variation is what "task" refers to.</p>
+
+<h3>Result ③ — the link between task and output was not established</h3>
+
+<p>In a within-player cross-validation with player identity removed, usage explained individual attacking output at <strong>R² 0.117</strong>. Restricted to variables with confirmed reliability, this falls to <strong>R² 0.035</strong>.</p>
+
+<p class="quiet">The 0.117 was driven mainly by shot share and dribble share, while the output metric itself contains penalty-area shots and completed dribbles. The same events appear on both sides of the equation, and both variables are unusable by the reliability criterion above. <strong>The valid figure is 0.035.</strong> For context, a 2026 study reports that adding player and team embeddings does not significantly improve next-event prediction, while noting that those embeddings do carry meaningful patterns about role and team style.</p>
+
+<p><strong>Verdict</strong> — no evidence was obtained that a change of task changes outcomes. The choice of output metric may be responsible: the effect of an inverted winger appears not in that player's numbers but in <strong>the space the full-back gains</strong>. Re-measurement against team-phase output is required and is constructible from event data.</p>
+
+<h3>Result ④ — coming on as a substitute does not itself change usage</h3>
+
+<p>For the 11 players with at least three starts and two substitute appearances, compared on the reliable variables: advancement increased in 5 of 11 and width in 3, with mean changes of −0.28 pp and −0.77 pp. <strong>The act of being introduced does not determine how a player is used.</strong></p>
+
+<h2><span class="num">06</span>Design decision ① — the task is declared by a person</h2>
+
+<p>§04 showed the absence of role labels; §05 showed that only the positional axis is measurable. Both converge on one design. <strong>Do not infer the role from data; have the user declare it.</strong></p>
+
+<p>What is declared is not the role but the <strong>task</strong>. Within a season a regular's role is fixed (ICC 0.69), and it is rare to declare a change of position at the moment of a substitution. What is actually instructed is a task inside the role — <em>"cutting inside from the right"</em> — and that corresponds to the ±8.3 m positional variation measured in §05.</p>
+
+<p>The query changes shape, from <code>P(outcome | player)</code> to <code>P(outcome | player, declared task, context)</code>. The same design is supported by a limitation stated in the prior literature.</p>
+
+<div class="callout">
+  <p class="lab">Fine-tuned LEM (2024) — the authors' stated limitation</p>
+  <p>"The model <strong>cannot reason about the changes a player may bring to a team's play model.</strong> It reproduces the current playing style."</p>
+</div>
+
+<p>A generative model reproduces observed usage; newly instructed usage lies outside the training distribution. <strong>This design supplies that input from a person.</strong></p>
+
+<p>The opponent side follows the same principle. An opponent substitution is not an object of prediction but an <strong>observed event</strong>. The system looks up the incoming player after the fact and opens response branches, so it does not require the timing prediction removed in §03.</p>
+
+<figure>
+  <p class="figtitle">68 minutes, touchline</p>
+  <p class="fignote">⚠️ Interface mockup — the figures on screen illustrate behaviour and are not measurements</p>
+  <svg viewBox="0 0 720 418" role="img" aria-label="Touchline interface mockup. The manager declares a substitution and the task for the incoming player; the system confirms the task, states its evidence tier, and returns three prepared branches with the cards remaining under each, plus a declared expected effect and falsifier.">
+    <rect x="10" y="8" width="700" height="402" rx="16" fill="color-mix(in srgb,var(--text-primary) 4%,transparent)" stroke="var(--border)" stroke-width="1.4"/>
+
+    <rect x="26" y="24" width="668" height="34" rx="9" fill="color-mix(in srgb,var(--text-primary) 6%,transparent)"/>
+    <text x="42" y="46" font-size="14" font-weight="720" fill="var(--text-primary)" font-family="ui-monospace,Menlo,monospace">68:12</text>
+    <text x="116" y="46" font-size="12.5" fill="var(--text-secondary)">1 − 1 · away</text>
+    <text x="330" y="45" font-size="11" fill="var(--muted)">Cards left</text>
+    <text x="458" y="45" font-size="11" fill="var(--s1)" font-weight="640" text-anchor="end">Us</text>
+    <g><circle cx="476" cy="41" r="5" fill="var(--s1)"/><circle cx="492" cy="41" r="5" fill="var(--s1)"/><circle cx="508" cy="41" r="5" fill="var(--s1)"/><circle cx="524" cy="41" r="5" fill="none" stroke="var(--axis)" stroke-width="1.2"/><circle cx="540" cy="41" r="5" fill="none" stroke="var(--axis)" stroke-width="1.2"/></g>
+    <text x="596" y="45" font-size="11" fill="var(--s2)" font-weight="640" text-anchor="end">Them</text>
+    <g><circle cx="610" cy="41" r="5" fill="var(--s2)"/><circle cx="626" cy="41" r="5" fill="var(--s2)"/><circle cx="642" cy="41" r="5" fill="none" stroke="var(--axis)" stroke-width="1.2"/><circle cx="658" cy="41" r="5" fill="none" stroke="var(--axis)" stroke-width="1.2"/><circle cx="674" cy="41" r="5" fill="none" stroke="var(--axis)" stroke-width="1.2"/></g>
+
+    <rect x="196" y="70" width="498" height="46" rx="12" fill="color-mix(in srgb,var(--s1) 14%,transparent)"/>
+    <text x="212" y="90" font-size="11" fill="var(--muted)">Manager</text>
+    <text x="212" y="107" font-size="13" font-weight="640" fill="var(--text-primary)">"Seven off, 22 on — cutting inside from the right."</text>
+
+    <rect x="26" y="128" width="518" height="62" rx="12" fill="color-mix(in srgb,var(--s3) 12%,transparent)" stroke="var(--s3)" stroke-width="1.2"/>
+    <text x="42" y="148" font-size="11" fill="var(--s3)" font-weight="660">HOVI</text>
+    <text x="42" y="165" font-size="12.5" fill="var(--text-primary)">Task registered — inverted winger, half-space entry.</text>
+    <text x="42" y="182" font-size="12.5" fill="var(--text-primary)">This player, this task: <tspan font-weight="700">4 matches</tspan>. <tspan font-weight="700" fill="var(--s3)">Tier 1 — our own data.</tspan></text>
+
+    <text x="26" y="212" font-size="11.5" font-weight="680" fill="var(--muted)" letter-spacing="1">Three prepared branches</text>
+
+    <g>
+      <rect x="26" y="222" width="216" height="116" rx="11" fill="var(--surface-1)" stroke="var(--border)" stroke-width="1.2"/>
+      <text x="42" y="244" font-size="12.5" font-weight="700" fill="var(--text-primary)">A · No response</text>
+      <text x="42" y="262" font-size="11" fill="var(--muted)">Past rate here — 24%</text>
+      <line x1="42" y1="272" x2="226" y2="272" stroke="var(--grid)"/>
+      <text x="42" y="291" font-size="11.5" fill="var(--text-primary)">Right-side 1v1 holds</text>
+      <text x="42" y="313" font-size="11" fill="var(--muted)">Cards remaining</text>
+      <text x="42" y="329" font-size="11.5" font-weight="620" fill="var(--s1)">Left width · third line</text>
+    </g>
+    <g>
+      <rect x="254" y="222" width="216" height="116" rx="11" fill="var(--surface-1)" stroke="var(--s2)" stroke-width="1.6"/>
+      <text x="270" y="244" font-size="12.5" font-weight="700" fill="var(--text-primary)">B · Defensive card</text>
+      <text x="270" y="262" font-size="11" fill="var(--s2)" font-weight="620">Past rate here — 62%</text>
+      <line x1="270" y1="272" x2="454" y2="272" stroke="var(--grid)"/>
+      <text x="270" y="291" font-size="11.5" fill="var(--text-primary)">Front of the box locks up</text>
+      <text x="270" y="313" font-size="11" fill="var(--muted)">Cards remaining</text>
+      <text x="270" y="329" font-size="11.5" font-weight="620" fill="var(--s1)">Cut-back · second ball</text>
+    </g>
+    <g>
+      <rect x="482" y="222" width="212" height="116" rx="11" fill="var(--surface-1)" stroke="var(--border)" stroke-width="1.2"/>
+      <text x="498" y="244" font-size="12.5" font-weight="700" fill="var(--text-primary)">C · They attack too</text>
+      <text x="498" y="262" font-size="11" fill="var(--muted)">Past rate here — 14%</text>
+      <line x1="498" y1="272" x2="678" y2="272" stroke="var(--grid)"/>
+      <text x="498" y="291" font-size="11.5" fill="var(--text-primary)">Space in behind opens</text>
+      <text x="498" y="313" font-size="11" fill="var(--muted)">Cards remaining</text>
+      <text x="498" y="329" font-size="11.5" font-weight="620" fill="var(--s1)">Sprinter · back three</text>
+    </g>
+
+    <rect x="26" y="350" width="668" height="44" rx="10" fill="color-mix(in srgb,var(--warning) 14%,transparent)"/>
+    <text x="42" y="368" font-size="11.5" font-weight="680" fill="var(--text-primary)">Expected effect — 3+ box entries within 15 minutes</text>
+    <text x="42" y="386" font-size="11.5" fill="var(--text-secondary)">Falsifier — if the right-side cross share rises instead, the change missed its intent</text>
+  </svg>
+  <figcaption>Interface mockup for declaration, lookup and branch display. The system does not recommend who to bring on. <strong>The player and the way he will be used are specified by the user; the system returns the branches and evidence that correspond to that usage.</strong> Declaring a falsifier alongside the expected effect is what makes post-match scoring possible.</figcaption>
+</figure>
+
+<h2><span class="num">07</span>Design decision ② — evaluation, not prediction</h2>
+
+<p>Matching the four measurement results against the two candidate feature sets:</p>
+
+<div class="tw">
+<table>
+  <thead><tr><th>Measurement result</th><th>Prediction</th><th>Evaluation</th></tr></thead>
+  <tbody>
+    <tr><td>Timing interaction not detected <span class="quiet">(§03)</span></td><td style="text-align:left">required</td><td class="up">not required</td></tr>
+    <tr><td>Type-level response not detected <span class="quiet">(§04)</span></td><td style="text-align:left">required</td><td class="up">not required</td></tr>
+    <tr><td>Task → outcome link unconfirmed <span class="quiet">(§05)</span></td><td style="text-align:left">required</td><td class="up">not required</td></tr>
+    <tr class="hl"><td>Action-tendency axis unmeasurable <span class="quiet">(§05)</span></td><td style="text-align:left">required</td><td>partial — replaced by positional axis</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p class="lede">Prediction depends on four unverified premises. <strong>Evaluation depends on zero or one.</strong> "What this substitution will produce" has no ground truth and cannot be validated, whereas <strong>"was the declared plan carried out" is an observation.</strong> Returning references is retrieval. Neither involves inference.</p>
+
+<figure>
+  <p class="figtitle">The loop</p>
+  <p class="fignote">Declared midweek · measured in the match · scored afterwards · accumulated</p>
+  <svg viewBox="0 0 720 300" role="img" aria-label="Declared midweek, measured during the match, scored afterwards, and accumulated so that the record becomes the reference for the next plan.">
+    <g>
+      <rect x="20" y="30" width="158" height="120" rx="12" fill="color-mix(in srgb,var(--s1) 12%,transparent)" stroke="var(--s1)" stroke-width="1.4"/>
+      <text x="36" y="52" font-size="11.5" font-weight="700" fill="var(--s1)">Midweek — declare</text>
+      <g font-size="11" fill="var(--text-primary)">
+        <text x="36" y="76">"The right winger</text>
+        <text x="36" y="92">cuts inside"</text>
+      </g>
+      <text x="36" y="114" font-size="10.5" fill="var(--muted)">Effect · falsifier</text>
+      <text x="36" y="132" font-size="10.5" fill="var(--s1)" font-weight="640">in positional language</text>
+    </g>
+    <path d="M 186 90 L 206 90" stroke="var(--axis)" stroke-width="2" marker-end="url(#a13)"/>
+    <defs><marker id="a13" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="var(--axis)"/></marker></defs>
+    <g>
+      <rect x="212" y="30" width="158" height="120" rx="12" fill="color-mix(in srgb,var(--text-primary) 6%,transparent)"/>
+      <text x="228" y="52" font-size="11.5" font-weight="700" fill="var(--text-secondary)">Match — measure</text>
+      <g font-size="11" fill="var(--text-primary)">
+        <text x="228" y="76">Adherence is computed</text>
+        <text x="228" y="92">from the declared rule</text>
+      </g>
+      <text x="228" y="118" font-size="10.5" fill="var(--muted)">Half-time:</text>
+      <text x="228" y="134" font-size="10.5" fill="var(--text-primary)">"It breaks down after 62′"</text>
+    </g>
+    <path d="M 378 90 L 398 90" stroke="var(--axis)" stroke-width="2" marker-end="url(#a13)"/>
+    <g>
+      <rect x="404" y="30" width="158" height="120" rx="12" fill="color-mix(in srgb,var(--s3) 12%,transparent)" stroke="var(--s3)" stroke-width="1.4"/>
+      <text x="420" y="52" font-size="11.5" font-weight="700" fill="var(--s3)">After — score</text>
+      <g font-size="11" fill="var(--text-primary)">
+        <text x="420" y="76">Falsifier auto-scored</text>
+        <text x="420" y="94">Three similar cases</text>
+      </g>
+      <text x="420" y="118" font-size="10.5" fill="var(--muted)">Our past · wiki · clips</text>
+      <text x="420" y="134" font-size="10.5" fill="var(--muted)">Opponent's past moves</text>
+    </g>
+    <path d="M 570 90 L 590 90" stroke="var(--axis)" stroke-width="2" marker-end="url(#a13)"/>
+    <g>
+      <rect x="596" y="30" width="104" height="120" rx="12" fill="color-mix(in srgb,var(--warning) 15%,transparent)"/>
+      <text x="612" y="52" font-size="11.5" font-weight="700" fill="var(--text-primary)">Accumulates</text>
+      <text x="612" y="78" font-size="11" fill="var(--text-primary)">~100 / season</text>
+      <text x="612" y="98" font-size="10.5" fill="var(--muted)">Record of when</text>
+      <text x="612" y="114" font-size="10.5" fill="var(--muted)">plans actually</text>
+      <text x="612" y="130" font-size="10.5" fill="var(--muted)">worked</text>
+    </g>
+    <path d="M 648 156 L 648 176 L 99 176 L 99 156" stroke="var(--warning)" stroke-width="1.6" fill="none" stroke-dasharray="5 4" marker-end="url(#a13)"/>
+    <text x="374" y="194" font-size="11" fill="var(--muted)" text-anchor="middle">The accumulated record becomes the reference for the next plan</text>
+
+    <rect x="20" y="212" width="680" height="72" rx="10" fill="color-mix(in srgb,var(--s3) 9%,transparent)"/>
+    <text x="38" y="234" font-size="12.5" font-weight="700" fill="var(--text-primary)">This loop rests on none of the four unverified findings above</text>
+    <text x="38" y="254" font-size="11.5" fill="var(--text-secondary)">It does not need to know when the opponent will change, or with what card.</text>
+    <text x="38" y="272" font-size="11.5" fill="var(--text-secondary)">It does not need proof that a task changes outcomes — it only counts whether the plan was carried out.</text>
+  </svg>
+  <figcaption>Declare midweek, compute adherence during the match, score and retrieve references afterwards, accumulate the record. <strong>This structure does not depend on any of the unverified items in §03–§05.</strong> It works without knowing when or how the opponent will respond, and without a proven link between task and outcome.</figcaption>
+</figure>
+
+<h2><span class="num">08</span>Which instructions are measurable</h2>
+
+<p>The split-half reliabilities from §05 define the feature range directly.</p>
+
+<div class="tw">
+<table>
+  <thead><tr><th>Axis</th><th>Split-half</th><th>Verdict</th><th>Corresponding instruction</th></tr></thead>
+  <tbody>
+    <tr><td>Advancement (X)</td><td>0.81</td><td class="up">○ measurable</td><td style="text-align:left"><em>"Push further up" · "Drop in to receive"</em></td></tr>
+    <tr><td>Width (|Y−50|)</td><td>0.75</td><td class="up">○ measurable</td><td style="text-align:left"><em>"Cut inside" · "Stay wide"</em></td></tr>
+    <tr><td>Pass share</td><td>0.42</td><td class="dim">△ partial</td><td style="text-align:left"><em>"Keep it short"</em></td></tr>
+    <tr><td>Forward-pass share</td><td>0.35</td><td class="dim">△ partial</td><td style="text-align:left"><em>"Play it forward"</em></td></tr>
+    <tr><td>Long-pass share</td><td>0.25</td><td class="dn">✕ not measurable</td><td style="text-align:left"><em>"Go long"</em></td></tr>
+    <tr><td>Defensive-action share</td><td>0.24</td><td class="dn">✕ not measurable</td><td style="text-align:left"><em>"Press harder"</em></td></tr>
+    <tr><td>Duel share</td><td>0.04</td><td class="dn">✕ not measurable</td><td style="text-align:left"><em>"Win the second ball"</em></td></tr>
+    <tr><td>Dribble share</td><td>0.00</td><td class="dn">✕ not measurable</td><td style="text-align:left"><em>"Take him on"</em></td></tr>
+  </tbody>
+</table>
+</div>
+
+<p class="lede">A game plan written in the <strong>language of position and direction</strong> can be evaluated. A game plan written in the <strong>language of intensity and frequency</strong> cannot, at this stage.</p>
+
+<p>One response therefore has to exist on the input side — <strong>"That instruction cannot be quantified under the current measurement scheme. Please state it in positional terms."</strong> It is the Tier discipline of §09 applied to input.</p>
+
+<p>Match phase (build-up, transition, defending) is not detected automatically. Accuracy from events alone is insufficient, and the user already holds the information. <strong>It becomes a declared field.</strong></p>
+
+<h2><span class="num">09</span>Tier discipline — stating the thickness of the evidence</h2>
+
+<p>Data support for a declared task is not uniform. Across the same 17 players as §05, those with three or more matches in each of two distinct usage modes number <strong>41–59%</strong>, depending on how finely usage is partitioned. The remainder is extrapolation.</p>
+
+<p>Answering without distinguishing support means <strong>returning unsupported values in the same format as supported ones</strong>. For a user deciding within thirty seconds, that is the critical failure mode.</p>
+
+<figure>
+  <p class="figtitle">Tier discipline — the thickness of the evidence travels with the answer</p>
+  <p class="fignote">The same question must be answered differently depending on data support</p>
+  <svg viewBox="0 0 720 216" role="img" aria-label="Three tiers. Tier 1 answers from the player's own record, tier 2 from a task-level prior over similar players, tier 3 declines to answer and states what could be looked at instead.">
+    <g>
+      <rect x="24" y="20" width="216" height="150" rx="12" fill="color-mix(in srgb,var(--s3) 13%,transparent)" stroke="var(--s3)" stroke-width="1.6"/>
+      <text x="42" y="46" font-size="13" font-weight="720" fill="var(--s3)">Tier 1</text>
+      <text x="42" y="70" font-size="11.5" fill="var(--muted)">This player in this task,</text>
+      <text x="42" y="87" font-size="11.5" fill="var(--muted)">observed 3+ matches</text>
+      <line x1="42" y1="99" x2="222" y2="99" stroke="var(--grid)"/>
+      <text x="42" y="122" font-size="12.5" font-weight="640" fill="var(--text-primary)">"Answered from our</text>
+      <text x="42" y="140" font-size="12.5" font-weight="640" fill="var(--text-primary)">own data — n = 5 matches"</text>
+    </g>
+    <g>
+      <rect x="252" y="20" width="216" height="150" rx="12" fill="color-mix(in srgb,var(--warning) 15%,transparent)" stroke="var(--warning)" stroke-width="1.6"/>
+      <text x="270" y="46" font-size="13" font-weight="720" fill="var(--text-primary)">Tier 2</text>
+      <text x="270" y="70" font-size="11.5" fill="var(--muted)">Not this player, but</text>
+      <text x="270" y="87" font-size="11.5" fill="var(--muted)">similar players in this task</text>
+      <line x1="270" y1="99" x2="450" y2="99" stroke="var(--grid)"/>
+      <text x="270" y="122" font-size="12.5" font-weight="640" fill="var(--text-primary)">"This is a task-level prior,</text>
+      <text x="270" y="140" font-size="12.5" font-weight="640" fill="var(--text-primary)">not his own record"</text>
+    </g>
+    <g>
+      <rect x="480" y="20" width="214" height="150" rx="12" fill="color-mix(in srgb,var(--critical) 12%,transparent)" stroke="var(--critical)" stroke-width="1.6"/>
+      <text x="498" y="46" font-size="13" font-weight="720" fill="var(--critical)">Tier 3</text>
+      <text x="498" y="70" font-size="11.5" fill="var(--muted)">Neither available</text>
+      <text x="498" y="87" font-size="11.5" fill="var(--muted)">— no support</text>
+      <line x1="498" y1="99" x2="676" y2="99" stroke="var(--grid)"/>
+      <text x="498" y="122" font-size="12.5" font-weight="700" fill="var(--text-primary)">"I will not answer.</text>
+      <text x="498" y="140" font-size="12.5" font-weight="640" fill="var(--text-primary)">Here is what you</text>
+      <text x="498" y="158" font-size="12.5" font-weight="640" fill="var(--text-primary)">could look at instead"</text>
+    </g>
+    <rect x="24" y="182" width="670" height="28" rx="8" fill="color-mix(in srgb,var(--text-primary) 5%,transparent)"/>
+    <text x="359" y="201" font-size="12.5" font-weight="660" fill="var(--text-primary)" text-anchor="middle">Stating the tier is part of the answer — outside its range the system fails safely</text>
+  </svg>
+  <figcaption>Making <code>tier</code> and <code>support_n</code> required fields in the response schema enforces the discipline at the design level. The answerable range narrows; within it, wrong answers do not occur.</figcaption>
+</figure>
+
+<h2><span class="num">10</span>Data constraint — the opponent</h2>
+
+<p>Conditioning on an opponent's usage requires repeated observations of that player.</p>
+
+<figure>
+  <p class="figtitle">Observation depth: our players vs opponents</p>
+  <p class="fignote">FC Seoul, 25 matches · 519 player-matches (same filter as §05)</p>
+  <svg viewBox="0 0 720 246" role="img" aria-label="Our own players average about 15 observed matches each, while opponents average 1.6. All 17 players with four or more observations are ours.">
+    <g>
+      <text x="24" y="40" font-size="13" font-weight="700" fill="var(--s1)">Our players</text>
+      <text x="24" y="60" font-size="11.5" fill="var(--muted)">18 players · 262</text>
+      <rect x="150" y="26" width="410" height="40" rx="8" fill="color-mix(in srgb,var(--s1) 18%,transparent)"/>
+      <text x="170" y="52" font-size="14" font-weight="700" fill="var(--text-primary)">~15 matches per player</text>
+      <text x="690" y="52" font-size="12" font-weight="700" fill="var(--s1)" text-anchor="end">Conditionable</text>
+    </g>
+    <g>
+      <text x="24" y="112" font-size="13" font-weight="700" fill="var(--s2)">Opponents</text>
+      <text x="24" y="132" font-size="11.5" fill="var(--muted)">165 players · 257</text>
+      <rect x="150" y="98" width="42" height="40" rx="8" fill="color-mix(in srgb,var(--s2) 22%,transparent)"/>
+      <text x="206" y="124" font-size="14" font-weight="700" fill="var(--text-primary)">1.6 matches per player</text>
+      <text x="690" y="124" font-size="12" font-weight="700" fill="var(--s2)" text-anchor="end">Not conditionable</text>
+    </g>
+    <rect x="24" y="158" width="666" height="34" rx="9" fill="color-mix(in srgb,var(--critical) 12%,transparent)"/>
+    <text x="42" y="180" font-size="13" font-weight="700" fill="var(--text-primary)">All 17 players with 4+ observations are ours. Zero opponents.</text>
+    <rect x="24" y="202" width="666" height="34" rx="9" fill="color-mix(in srgb,var(--s3) 11%,transparent)"/>
+    <text x="42" y="224" font-size="12.5" fill="var(--text-primary)">The fix is clear — <tspan font-weight="700">league-wide event collection</tspan>. The pipeline exists; what remains is time.</text>
+  </svg>
+  <figcaption>Opponents are met once or twice a season, so repeated observation does not accumulate. <strong>Conditioning on an opponent's substitute is not possible with current data; league-wide event collection is the precondition.</strong> The collection pipeline exists and what remains is time.</figcaption>
+</figure>
+
+<h2><span class="num">11</span>Operating structure — compute midweek, retrieve in-match</h2>
+
+<p>There is no time in-match to run a counterfactual generative model through hundreds of Monte Carlo samples, and by the principle set out in the <a href="/kpi-lab/hovi">HOVI write-up</a> the computation cannot be delegated to the LLM either. Moving computation into the training week removes the constraint.</p>
+
+<figure>
+  <p class="figtitle">Compute midweek, retrieve during the match</p>
+  <p class="fignote">When the tool is used determines what it costs to run</p>
+  <svg viewBox="0 0 720 230" role="img" aria-label="Plans are declared and branches computed during the training week; during the match the system only retrieves a stored branch.">
+    <rect x="24" y="24" width="320" height="120" rx="12" fill="color-mix(in srgb,var(--s1) 10%,transparent)"/>
+    <text x="44" y="48" font-size="12.5" font-weight="720" fill="var(--s1)">Midweek · training</text>
+    <g font-size="12" fill="var(--text-primary)">
+      <text x="44" y="76">① Declare the plan for this opponent</text>
+      <text x="44" y="100">② Compute the branches in advance</text>
+      <text x="44" y="124">③ Store them</text>
+    </g>
+    <path d="M 356 84 L 388 84" stroke="var(--axis)" stroke-width="2" marker-end="url(#ar)"/>
+    <defs><marker id="ar" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="var(--axis)"/></marker></defs>
+
+    <rect x="400" y="24" width="294" height="120" rx="12" fill="color-mix(in srgb,var(--s3) 12%,transparent)" stroke="var(--s3)" stroke-width="1.4"/>
+    <text x="420" y="48" font-size="12.5" font-weight="720" fill="var(--s3)">During the match</text>
+    <g font-size="12" fill="var(--text-primary)">
+      <text x="420" y="76">① Trigger fires (observed)</text>
+      <text x="420" y="100">② Stored branch retrieved</text>
+    </g>
+    <text x="420" y="126" font-size="12.5" font-weight="700" fill="var(--s3)">Retrieval, not computation</text>
+
+    <rect x="24" y="158" width="670" height="30" rx="8" fill="color-mix(in srgb,var(--text-primary) 5%,transparent)"/>
+    <text x="42" y="178" font-size="11.5" fill="var(--text-primary)">Side effect one — predefined branches form a <tspan font-weight="700">closed response set</tspan>, easing speech recognition in stadium noise.</text>
+    <rect x="24" y="194" width="670" height="30" rx="8" fill="color-mix(in srgb,var(--s3) 10%,transparent)"/>
+    <text x="42" y="214" font-size="11.5" fill="var(--text-primary)">Side effect two — <tspan font-weight="700">coverage is measured for free</tspan> — how many prepared branches were used.</text>
+  </svg>
+  <figcaption>During the match the system retrieves rather than computes. Two side effects — predefined branches form a closed response set, which reduces speech-recognition risk, and the share of prepared branches actually used <strong>accumulates as a coverage metric</strong> without a separate experiment.</figcaption>
+</figure>
+
+<p>A declared task with its expected effect and falsifier is <strong>a labelled prediction</strong>, and can therefore be scored after the match. At roughly 100 per season, the role and task labels whose absence §04 identified accumulate without a separate collection effort.</p>
+
+<p class="quiet">Risk — declaring only the expected effect invites confirmation bias. The falsifier has to be declared alongside it for the record to carry verification value.</p>
+
+<h2><span class="num">12</span>The final goal and the current boundary</h2>
+
+<p class="lede">The final goal is <strong>to watch the same match together, exchange football conversation, and have that conversation used in the manager's decisions</strong>. This write-up does not reduce that goal. It fixes the point reachable now.</p>
+
+<figure>
+  <p class="figtitle">The staircase to the final goal</p>
+  <p class="fignote">Scope at each stage, and what blocks the next</p>
+  <svg viewBox="0 0 720 330" role="img" aria-label="Three stages. Stage one is the plan-evaluation tool buildable now, stage two adds opponents after league-wide collection, stage three is the final goal of watching and talking through a match together, blocked by six constraints of which two are solvable directly.">
+    <rect x="24" y="196" width="212" height="104" rx="12" fill="color-mix(in srgb,var(--s3) 14%,transparent)" stroke="var(--s3)" stroke-width="2"/>
+    <text x="44" y="220" font-size="11" font-weight="700" fill="var(--s3)">1 — now · here</text>
+    <text x="44" y="243" font-size="12.5" font-weight="700" fill="var(--text-primary)">A tool that evaluates</text>
+    <text x="44" y="261" font-size="12.5" font-weight="700" fill="var(--text-primary)">plans, returns references</text>
+    <text x="44" y="283" font-size="10.5" fill="var(--text-secondary)">No new data · positional axis</text>
+
+    <rect x="254" y="116" width="212" height="184" rx="12" fill="color-mix(in srgb,var(--s1) 10%,transparent)" stroke="var(--border)" stroke-width="1.4"/>
+    <text x="274" y="140" font-size="11" font-weight="700" fill="var(--s1)">2 — after collection</text>
+    <text x="274" y="163" font-size="13" font-weight="700" fill="var(--text-primary)">Opponents included</text>
+    <g font-size="10.5" fill="var(--text-secondary)">
+      <text x="274" y="186">· Opponent response lookup</text>
+      <text x="274" y="204">· Substitution branch catalogue</text>
+      <text x="274" y="222">· Task-conditioned simulation</text>
+    </g>
+    <text x="274" y="250" font-size="10.5" fill="var(--muted)">Blocked by —</text>
+    <text x="274" y="266" font-size="10.5" fill="var(--text-secondary)">League-wide, multi-season data</text>
+    <text x="274" y="284" font-size="10.5" fill="var(--text-secondary)">Opponent observation: 1.6 matches</text>
+
+    <rect x="484" y="24" width="212" height="276" rx="12" fill="color-mix(in srgb,var(--warning) 12%,transparent)" stroke="var(--border)" stroke-width="1.4" stroke-dasharray="6 4"/>
+    <text x="504" y="48" font-size="11" font-weight="700" fill="var(--text-primary)">3 — final goal</text>
+    <text x="504" y="71" font-size="12.5" font-weight="700" fill="var(--text-primary)">Watching the same match</text>
+    <text x="504" y="89" font-size="12.5" font-weight="700" fill="var(--text-primary)">and talking about it</text>
+    <text x="504" y="112" font-size="10.5" fill="var(--text-secondary)">conversation used in decisions</text>
+    <text x="504" y="140" font-size="10.5" fill="var(--muted)">Blocked by —</text>
+    <g font-size="10.5" fill="var(--text-secondary)">
+      <text x="504" y="160">· No off-ball data</text>
+      <text x="504" y="178">· Intensity words unmeasurable</text>
+      <text x="504" y="196">· No live feed to the bench</text>
+      <text x="504" y="214">· Stadium ASR unverified</text>
+      <text x="504" y="232">· Broadcast rights</text>
+      <text x="504" y="250">· Task→outcome link unproven</text>
+    </g>
+    <text x="504" y="278" font-size="10.5" fill="var(--critical)" font-weight="640">Two of the six are mine to solve</text>
+
+    <path d="M 236 248 L 254 248" stroke="var(--axis)" stroke-width="2" marker-end="url(#a15)"/>
+    <path d="M 466 208 L 484 208" stroke="var(--axis)" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#a15)"/>
+    <defs><marker id="a15" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="var(--axis)"/></marker></defs>
+  </svg>
+  <figcaption>Setting stage 3 as the target leaves four of six constraints outside my control, so the work stays unfinished for a long time. <strong>Setting stage 1 as the target completes with current data.</strong> The components are the same; only the target differs.</figcaption>
+</figure>
+
+<h3>What blocks stage 3</h3>
+
+<div class="tw">
+<table>
+  <thead><tr><th>Constraint</th><th>Why</th><th>Solvable by me</th></tr></thead>
+  <tbody>
+    <tr><td>No off-ball data</td><td style="text-align:left">Event data records only moments on the ball. Shape-change simulation stops here</td><td class="dim">after broadcast tracking is validated</td></tr>
+    <tr><td>Intensity and frequency language</td><td style="text-align:left">Pressing, duels and dribbles have split-half reliability of 0.24 or below</td><td class="dim">requires a different instrument</td></tr>
+    <tr><td>Live data</td><td style="text-align:left">Holding training GPS and receiving telemetry at the bench during a match are different product tiers</td><td class="dn">no — the club's domain</td></tr>
+    <tr><td>Stadium speech recognition</td><td style="text-align:left">No published error rates exist for sports environments</td><td class="dim">measurable</td></tr>
+    <tr><td>Broadcast rights</td><td style="text-align:left">Not a regulatory question but a rights question</td><td class="dn">no</td></tr>
+    <tr><td>Task → outcome proof</td><td style="text-align:left">R² 0.035 on individual output. Re-measurement against team-phase output required</td><td class="dim">next task</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p><strong>Two of the six are solvable directly.</strong> The rest require access inside a club or progress elsewhere. The scope of this stage is therefore limited to stage 1.</p>
+
+<div class="callout" style="border-left:3px solid var(--s3)">
+  <p class="lab">Scope at this stage</p>
+  <p><strong>A tool that takes a game plan declared midweek in the language of position and direction, reports where that plan held and where it broke down after the match, and returns the relevant references alongside.</strong></p>
+  <p class="quiet">The reference sources are my own accumulation — past match events for our team, clips segmented by Dual-View, and a wiki built by connecting tactical literature to my own framework (453 documents · 9.3 MB · 12,142 internal links).</p>
+</div>
+
+<p>Stage 1 is also a precondition for stage 3. Repeating declaration and scoring across a season accumulates the task labels whose absence §05 identified, and those labels become the training data for task-conditioned simulation. <strong>Stage 2 opens on top of stage 1's output.</strong></p>
+
+<h2><span class="num">13</span>What has to be verified</h2>
+
+<p>Nothing is confirmed yet. In order of verification:</p>
+
+<ol>
+  <li><strong>The share of a manager's instructions expressible in positional language.</strong> §08 pinned the feature range to this. A full match of instructions has to be transcribed and the share expressible as a measurement formula counted. <strong>A low share halves the feature range</strong> — the first item to check, and it needs one match and one sheet of paper</li>
+  <li><strong>Whether declaration is sustained in practice.</strong> Writing a task, expected effect and falsifier for every substitution is a question of operating habit, not technology</li>
+  <li><strong>Whether team-phase output detects the task effect.</strong> Individual output gave R² 0.035. This is the route to the open question in §05</li>
+  <li><strong>Whether league-wide events can be collected across multiple seasons.</strong> The constraint in §10 is resolved here</li>
+  <li><strong>Whether Tier 3 discipline holds.</strong> "Do not answer" is a rule whose violation becomes more tempting as the tool becomes more useful. The criterion for detecting a violation has to be defined in advance</li>
+  <li><strong>Testing the trailing-and-attacking hypothesis.</strong> It currently rests on eight matches and needs multi-season expansion</li>
+  <li><strong>How §04's result changes under role labels.</strong> The figure was computed with an instrument blind to 66.5% of cases. A different instrument may change it — or may not</li>
+</ol>
+
+<figure>
+  <p class="figtitle">Three write-ups, one system</p>
+  <p class="fignote">HOVI is the conversational layer; two organs sit beneath it</p>
+  <svg viewBox="0 0 720 236" role="img" aria-label="HOVI is the conversational layer. Component one, the Dual-View glasses, is the input organ; component two, the tactical simulator, is the compute organ.">
+    <rect x="230" y="16" width="260" height="62" rx="12" fill="color-mix(in srgb,var(--s1) 14%,transparent)" stroke="var(--s1)" stroke-width="1.6"/>
+    <text x="360" y="42" font-size="14" font-weight="720" fill="var(--text-primary)" text-anchor="middle">HOVI — conversational layer</text>
+    <text x="360" y="62" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">Translates questions into metrics and metrics back into words</text>
+    <path d="M 300 82 L 190 112 M 420 82 L 530 112" stroke="var(--axis)" stroke-width="1.6" fill="none"/>
+    <rect x="40" y="116" width="270" height="86" rx="12" fill="var(--surface-1)" stroke="var(--border)" stroke-width="1.4"/>
+    <text x="60" y="140" font-size="11.5" font-weight="680" fill="var(--muted)">Component ①  input organ</text>
+    <text x="60" y="162" font-size="12.5" font-weight="700" fill="var(--text-primary)">Dual-View glasses</text>
+    <text x="60" y="182" font-size="10.5" fill="var(--text-secondary)">Captures the manager's words with a timestamp</text>
+    <text x="60" y="197" font-size="11" fill="var(--s3)" font-weight="640">6 stages built · 1 verified (8 ms sync)</text>
+    <rect x="410" y="116" width="270" height="86" rx="12" fill="var(--surface-1)" stroke="var(--s3)" stroke-width="1.8"/>
+    <text x="430" y="140" font-size="11.5" font-weight="680" fill="var(--muted)">Component ②  compute organ</text>
+    <text x="430" y="162" font-size="12.5" font-weight="700" fill="var(--text-primary)">Tactical simulator ← this write-up</text>
+    <text x="430" y="182" font-size="11.5" fill="var(--text-secondary)">Evaluates plans and opens references</text>
+    <text x="430" y="197" font-size="10.5" fill="var(--s3)" font-weight="640">No implementation · 4 measurements</text>
+    <text x="360" y="226" font-size="11.5" fill="var(--muted)" text-anchor="middle">The measurements here established that what ① captures is the input ② needs</text>
+  </svg>
+  <figcaption>Fixing in §06 that plans are declared <strong>in speech</strong> made component ①'s function — capturing the manager's words with their timestamp — the input device for component ②. Two separately designed pieces turned out to be required at the same point.</figcaption>
+</figure>
+
+<p>The answer range of this tool ends at <strong>"was the plan carried out"</strong> and does not include <strong>"was the plan right"</strong>. The latter is judgement, and sits on the other side of the line drawn in the HOVI write-up.</p>
+
+<footer>
+  <p>Status — concept stage. <strong>No implementation.</strong> The four measurements are my own (Hwaseong FC 23 matches · FC Seoul 25 matches); figures from the literature are cited from published papers and announcements. <strong>The interface in §06 is a mockup and the values on screen are illustrative.</strong></p>
+  <p>Principal sources — TacticAI (Nature Communications 2024 · Palmeiras open-play extension June 2026), TacticGen (April 2026), <strong>LEM — Towards a foundation large events model for soccer (Machine Learning 2024) · A Scalable Approach for Unified LEM (2025) · Estimating Player Performance in Different Contexts Using Fine-tuned LEM (2024)</strong>, ScoutGPT / Modeling Matches as Language (2026), Next-Event Prediction in Soccer: Impact of Team and Player Information (2026), TreeSoc (July 2026), AI-Assisted Game Management: Fuzzy Logic for Real-Time Substitutions (2025), KU Leuven DTAI substitution analysis, substitution rule-change study (2025), K League data portal.</p>
+  <p>Hyuckjin Han · Sept 2026 · Component ① <a href="/kpi-lab/dualview">Dual-View glasses</a> · conversational layer <a href="/kpi-lab/hovi">HOVI</a></p>
+</footer>
+
+</div>
+<script>
+(function(){
+  var b=document.getElementById('tt'), r=document.documentElement;
+  b.addEventListener('click',function(){
+    var cur=r.getAttribute('data-theme');
+    if(!cur){cur=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+    r.setAttribute('data-theme', cur==='dark'?'light':'dark');
+  });
+})();
+</script>
+</body>
+</html>
