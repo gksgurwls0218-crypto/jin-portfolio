@@ -30,6 +30,27 @@ type Episode = {
 
 const EPISODES: Episode[] = [
   {
+    slug: "jeju",
+    no: "06",
+    publishedAt: "2026-09-09",
+    competition: {
+      en: "K League 1 2026 · Jeju SK · 27 matches, 38,432 events",
+      ko: "하나은행 K리그1 2026 · 제주SK · 27경기 · 이벤트 38,432건",
+    },
+    title: {
+      en: "The risk they never bought, the chances they never got",
+      ko: "사지 않은 위험, 사지 못한 기회",
+    },
+    sub: {
+      en: "Jeju absorb organised attacks better than anyone in the league — they allowed 140 shots and 15.80 xG from opponents' slow build and conceded seven, 0.44× the expected rate. What beats them is the counter: 42% of goals conceded, at 1.88× expected. The first draft blamed the goalkeeper, and it was wrong twice over. Wrong once because the definition of \u201closing the ball\u201d had included lost duels — 118 of 129 duel losses in their own last third happened while the opponent already had the ball, and stripping them out cut the danger of a deep turnover from 5.1% to 1.5%, level with every other zone. Wrong again because Kim Dong-jun completes 45.1% of his passes over 30m, fourth of 11 keepers in a merged 73-match benchmark, and his 221 losses produced zero goals. The counters begin somewhere specific: a short forward pass in the defensive third, where Jeju fail 30.0% against opponents' 17.9% — and in the two box corners, more than half the time. Adjust for location across 18 cells and one man is cleared while four are not. Going long costs nothing and returns 0.061 shots per phase. That is what nine draws are made of.",
+      ko: "제주는 상대가 조립해 들어오는 공격을 리그에서 가장 잘 막는다 — 상대 지공에서 슛 140개와 xG 15.80을 허용하고 7골만 먹었다. 기대의 0.44배다. 뚫리는 건 역습뿐이고, 실점의 42%가 거기서 기대의 1.88배로 나왔다. 1차 초안은 골키퍼를 지목했고 두 번 틀렸다. 한 번은 ‘볼 상실’의 정의에 경합 패배를 넣었기 때문이다 — 최후방 경합 상실 129회 중 118회는 이미 상대 공격 중이었고, 그걸 빼면 깊은 상실의 위험도가 5.1%에서 1.5%로 떨어져 다른 구간과 같아진다. 또 한 번은 김동준의 30m 이상 패스 성공률이 45.1%로 병합 73경기 벤치마크에서 11명 중 4위이고, 그가 잃은 221회에서 나온 실점이 0이기 때문이다. 역습의 기점은 따로 있다 — 디펜시브 서드에서 앞으로 붙이는 짧은 패스다. 제주 30.0%, 상대 17.9%. 박스 양옆 구석에서는 절반 넘게 끊긴다. 18칸으로 자리를 보정하면 한 명은 누명을 벗고 네 명이 남는다. 길게 차는 건 공짜이고, 그리고 국면당 0.061슛을 낳는다. 그게 무승부 아홉 번의 정체다.",
+    },
+    stats: {
+      en: [["0.44×", "goals conceded vs xG from opponents' slow build"], ["0 of 11", "counter goals originated by the goalkeeper"], ["30.0% vs 17.9%", "short forward pass failure, defensive third"], ["0.061", "shots per fast-break phase"]],
+      ko: [["0.44배", "상대 지공 기대 대비 실점"], ["11중 0", "골키퍼가 기점인 역습 실점"], ["30.0% vs 17.9%", "디펜시브 서드 전진 패스 실패율"], ["0.061", "역습형 국면당 슛"]],
+    },
+  },
+  {
     slug: "pohang",
     no: "05",
     publishedAt: "2026-09-07",
