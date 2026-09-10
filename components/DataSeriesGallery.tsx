@@ -30,6 +30,27 @@ type Episode = {
 
 const EPISODES: Episode[] = [
   {
+    slug: "gwangju",
+    no: "07",
+    publishedAt: "2026-09-10",
+    competition: {
+      en: "K League 1 2026 · Gwangju FC · 27 matches, 38,899 events",
+      ko: "하나은행 K리그1 2026 · 광주FC · 27경기 · 이벤트 38,899건",
+    },
+    title: {
+      en: "Gwangju When Behind",
+      ko: "지고 있을 때의 광주",
+    },
+    sub: {
+      en: "The sentence you hear is \u201cthey survived on teenagers, then signed heavily and still can\u2019t win\u201d. The first half checks out \u2014 a FIFA registration ban ran from September 2025 to June 2026, and Gwangju alone used 53.3% of every under-19 minute played in the league. The second half is wrong. Against the ten clubs they met in both halves of the season, shots rose 26%, xG 49% and goals conceded fell 28%; box shots went up 67% and expected points 33%. Actual points went 0.47 to 0.50. Exactly one number never moved: middle-third possession converted into final-third entries, 0.11 both before and after twelve new players debuted. Their progression rate of 10.4% is 12th of 12 \u2014 while their volume of middle-third passing is 7th. Defender share of the middle third is not the cause; Incheon, Seoul and Pohang all give their defenders as much of it. What separates them is that Gwangju\u2019s defenders progress at 8.7% against Gangwon\u2019s 16.4%. And the decisive split is score state: league defenders raise their progression rate by 3.6 points when losing, Gwangju\u2019s drop 2.6, and seven of their nine defenders move the same way. Match the distance and the lane and Gwangju\u2019s defenders equal the league or beat it \u2014 so this is a choice about direction, not a limit of technique. Where it stops is off the ball: a player who never touches it does not exist in this data.",
+      ko: "가장 많이 쓰이는 문장은 \u201c어린 선수로 버티다 여름에 보강했는데도 안 된다\u201d이다. 앞의 절반은 맞다 \u2014 FIFA 선수등록 금지가 2025년 9월부터 2026년 6월까지 이어졌고, 리그 전체 U19 출전 지분의 53.3%를 광주 혼자 썼다. 뒤의 절반은 틀렸다. 전·후반기 모두 만난 10개 팀 기준으로 슛 +26%, xG +49%, 실점 −28%였고 박스 안 슛은 +67%, 기대 승점은 +33%였다. 실제 승점은 0.47에서 0.50으로 갔다. 27경기 내내 한 번도 안 움직인 숫자는 하나다 \u2014 중앙 지역 진입당 전달 0.11, 선수 12명이 데뷔한 전후가 소수점 둘째 자리까지 같다. 전달률 10.4%는 리그 12위인데 중앙 지역 패스 총량은 7위다. 수비수가 중앙을 점유해서가 아니다. 인천\u00b7서울\u00b7포항도 똑같이 점유한다. 갈리는 건 그 수비수의 전달률이고, 광주 8.7% 대 강원 16.4%다. 결정적인 건 스코어 상태다 \u2014 리그 수비수는 지고 있을 때 전달률을 3.6%p 올리는데 광주 수비수는 2.6%p 내리고, 아홉 명 중 일곱 명이 같은 방향으로 움직인다. 같은 거리\u00b7같은 레인으로 맞추면 광주 수비수도 리그와 같거나 낫다 \u2014 기술이 아니라 방향의 선택이다. 데이터가 멈추는 곳은 오프더볼이다. 볼을 만지지 않은 선수는 이 데이터에 존재하지 않는다.",
+    },
+    stats: {
+      en: [["+33% vs +0.03", "gain in expected points vs actual points"], ["0.11 \u2192 0.11", "middle-third progression per entry, unchanged"], ["8.7%", "defender progression rate, 12th of 12"], ["+3.6 vs \u22122.6", "change when losing, league vs Gwangju defenders"]],
+      ko: [["+33% vs +0.03", "기대 승점 상승분과 실제 승점 상승분"], ["0.11 \u2192 0.11", "중앙 지역 진입당 전달, 27경기 불변"], ["8.7%", "수비수 전달률, 리그 12위"], ["+3.6 vs \u22122.6", "지고 있을 때, 리그와 광주 수비수"]],
+    },
+  },
+  {
     slug: "jeju",
     no: "06",
     publishedAt: "2026-09-09",

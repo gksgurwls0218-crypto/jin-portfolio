@@ -1,0 +1,856 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="데이터가 말하는 · 광주FC — 여름 보강은 박스 안을 바꿨지만, 박스까지 가는 길은 지고 있을 때 더 좁아졌다.">
+<style>*{box-sizing:border-box}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>지고 있을 때의 광주</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --page:#f6f4ee; --surface:#fffefb; --surface-2:#edeae1; --raise:#faf8f2;
+  --ink:#14130f; --ink-2:#3d3a33; --muted:#756f5f;
+  --border:rgba(20,19,15,.13); --border-2:rgba(20,19,15,.07); --grid:#e2ded1; --axis:#c6c0ae;
+  --gj:#b8690b; --lg:#3068b8; --top:#0f7f5e;
+  --gj-soft:rgba(184,105,11,.13); --lg-soft:rgba(48,104,184,.12); --top-soft:rgba(15,127,94,.12);
+  --bad:#a3272f; --bad-soft:rgba(163,39,47,.10);
+  --sp:clamp(16px,4vw,28px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  color-scheme:dark;
+  --page:#14130f; --surface:#1c1a16; --surface-2:#24211c; --raise:#211e19;
+  --ink:#f2efe6; --ink-2:#cbc6b8; --muted:#918b7b;
+  --border:rgba(255,255,255,.14); --border-2:rgba(255,255,255,.07); --grid:#2e2a23; --axis:#443f36;
+  --gj:#c47d0a; --lg:#4a8ace; --top:#159876;
+  --gj-soft:rgba(196,125,10,.17); --lg-soft:rgba(74,138,206,.16); --top-soft:rgba(21,152,118,.16);
+  --bad:#e0656d; --bad-soft:rgba(224,101,109,.13);
+}}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --page:#14130f; --surface:#1c1a16; --surface-2:#24211c; --raise:#211e19;
+  --ink:#f2efe6; --ink-2:#cbc6b8; --muted:#918b7b;
+  --border:rgba(255,255,255,.14); --border-2:rgba(255,255,255,.07); --grid:#2e2a23; --axis:#443f36;
+  --gj:#c47d0a; --lg:#4a8ace; --top:#159876;
+  --gj-soft:rgba(196,125,10,.17); --lg-soft:rgba(74,138,206,.16); --top-soft:rgba(21,152,118,.16);
+  --bad:#e0656d; --bad-soft:rgba(224,101,109,.13);
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--page); color:var(--ink);
+  font:400 16px/1.75 "IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+  font-feature-settings:"tnum" 0;
+}
+.wrap{max-width:820px; margin:0 auto; padding-inline:var(--sp); padding-block:clamp(34px,7vw,64px) 96px}
+h1,h2,h3{font-family:"Gowun Batang","Apple SD Gothic Neo",serif; text-wrap:balance; margin:0}
+h1{font-size:clamp(30px,6.4vw,46px); line-height:1.24; letter-spacing:-.01em; font-weight:700}
+h2{font-size:clamp(21px,3.5vw,27px); line-height:1.34; font-weight:700}
+h3{font-size:17px; line-height:1.45; font-weight:700}
+p{margin:0}
+a{color:var(--gj)}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace; font-variant-numeric:tabular-nums}
+.eyebrow{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.19em; text-transform:uppercase; color:var(--muted); font-weight:500}
+
+/* ── header ─────────────────────────── */
+header{border-bottom:2px solid var(--ink); padding-bottom:26px; display:flex; flex-direction:column; gap:18px}
+.badge{align-self:flex-start; display:inline-flex; align-items:center; gap:8px;
+  font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.15em; font-weight:600;
+  color:var(--gj); border:1px solid var(--gj); border-radius:2px; padding:5px 10px}
+.sub{font-size:clamp(15px,2.4vw,17px); line-height:1.65; color:var(--ink-2); max-width:60ch}
+.meta{display:flex; flex-wrap:wrap; gap:6px 26px; font-size:12.5px; color:var(--muted);
+  border-top:1px solid var(--border-2); padding-top:16px}
+.meta b{color:var(--ink-2); font-weight:600}
+
+/* ── sections ───────────────────────── */
+section{margin-top:clamp(44px,7vw,68px); display:flex; flex-direction:column; gap:20px}
+.secnum{display:flex; align-items:baseline; gap:12px}
+.secnum .n{font-family:"IBM Plex Mono",monospace; font-size:12px; font-weight:600; color:var(--gj);
+  border-bottom:2px solid var(--gj); padding-bottom:2px; flex:none}
+.lede{font-size:17.5px; line-height:1.7; color:var(--ink-2)}
+.body{display:flex; flex-direction:column; gap:16px; max-width:66ch}
+.body p{font-size:15.5px; line-height:1.78}
+strong{font-weight:600}
+.hl{background:var(--gj-soft); padding:1px 4px; border-radius:2px; font-weight:600}
+
+/* ── stat row ───────────────────────── */
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(148px,1fr)); gap:1px;
+  background:var(--border); border:1px solid var(--border)}
+.stat{background:var(--surface); padding:16px 15px 15px; display:flex; flex-direction:column; gap:5px}
+.stat .k{font-size:11.5px; color:var(--muted); line-height:1.4}
+.stat .v{font-family:"IBM Plex Mono",monospace; font-size:26px; font-weight:600; line-height:1;
+  font-variant-numeric:tabular-nums; letter-spacing:-.02em}
+.stat .n{font-size:11.5px; color:var(--muted); line-height:1.4}
+.v.a{color:var(--gj)} .v.b{color:var(--bad)} .v.g{color:var(--top)}
+
+/* ── figure ─────────────────────────── */
+figure{margin:0; background:var(--surface); border:1px solid var(--border);
+  padding:20px clamp(14px,3vw,22px) 16px; display:flex; flex-direction:column; gap:14px}
+figcaption{display:flex; flex-direction:column; gap:5px}
+.figtitle{font-size:14.5px; font-weight:600; line-height:1.45}
+.fignote{font-size:12.5px; color:var(--muted); line-height:1.6}
+.chartbox{overflow-x:auto}
+svg{display:block; max-width:100%; height:auto}
+.legend{display:flex; flex-wrap:wrap; gap:7px 18px; font-size:12.5px; color:var(--ink-2)}
+.legend i{display:inline-block; width:11px; height:11px; border-radius:2px; margin-right:6px;
+  vertical-align:-1px}
+text{font-family:"IBM Plex Sans KR",sans-serif}
+.tk{font-family:"IBM Plex Mono",monospace; font-size:11px; fill:var(--muted)}
+.lb{font-size:12px; fill:var(--ink-2)}
+.vl{font-family:"IBM Plex Mono",monospace; font-size:11.5px; font-weight:600; fill:var(--ink)}
+.em{font-weight:700; fill:var(--ink)}
+
+/* ── table ──────────────────────────── */
+.tablebox{overflow-x:auto; border:1px solid var(--border); background:var(--surface)}
+table{border-collapse:collapse; width:100%; min-width:440px; font-size:13.5px}
+th,td{padding:9px 13px; text-align:right; border-bottom:1px solid var(--border-2); white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+thead th{font-size:11.5px; color:var(--muted); font-weight:600; background:var(--surface-2);
+  border-bottom:1px solid var(--border); position:sticky; top:0}
+tbody td{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums}
+tbody td:first-child{font-family:"IBM Plex Sans KR",sans-serif}
+tr.mark td{background:var(--gj-soft); font-weight:600}
+tbody tr:last-child td{border-bottom:none}
+
+/* ── callout ────────────────────────── */
+.call{border-left:3px solid var(--gj); background:var(--raise); padding:16px 18px;
+  display:flex; flex-direction:column; gap:8px}
+.call .t{font-family:"Gowun Batang",serif; font-size:17px; font-weight:700; line-height:1.5}
+.call p{font-size:14.5px; line-height:1.72; color:var(--ink-2)}
+.warn{border-left-color:var(--muted)}
+.warn .t{color:var(--ink-2)}
+
+/* ── proposal cards ─────────────────── */
+.props{display:flex; flex-direction:column; gap:1px; background:var(--border); border:1px solid var(--border)}
+.prop{background:var(--surface); padding:18px 18px 17px; display:grid;
+  grid-template-columns:auto 1fr; gap:6px 15px; align-items:baseline}
+.prop .tag{font-family:"IBM Plex Mono",monospace; font-size:11px; font-weight:600; color:var(--gj);
+  border:1px solid var(--gj); border-radius:2px; padding:3px 7px; grid-row:span 2; align-self:start}
+.prop h3{grid-column:2}
+.prop .d{grid-column:2; font-size:14px; line-height:1.7; color:var(--ink-2)}
+.prop .d em{font-style:normal; font-family:"IBM Plex Mono",monospace; font-weight:600; color:var(--ink)}
+
+/* ── kpi list ───────────────────────── */
+.kpi{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:1px;
+  background:var(--border); border:1px solid var(--border)}
+.kpi>div{background:var(--surface); padding:15px; display:flex; flex-direction:column; gap:6px}
+.kpi .name{font-size:13.5px; font-weight:600; line-height:1.4}
+.kpi .now{font-family:"IBM Plex Mono",monospace; font-size:12.5px; color:var(--muted)}
+.kpi .now b{color:var(--gj); font-weight:600}
+
+ul{margin:0; padding-left:19px; display:flex; flex-direction:column; gap:9px}
+li{font-size:15px; line-height:1.72; color:var(--ink-2)}
+li::marker{color:var(--muted)}
+footer{margin-top:64px; padding-top:22px; border-top:1px solid var(--border);
+  font-size:12.5px; color:var(--muted); line-height:1.75; display:flex; flex-direction:column; gap:10px}
+hr.rule{border:none; border-top:1px solid var(--border); margin:0}
+@media (prefers-reduced-motion:no-preference){
+  .chartbox svg .grow{transform-origin:left center}
+}
+:focus-visible{outline:2px solid var(--gj); outline-offset:2px}
+</style>
+
+<div class="wrap">
+
+<header>
+  <span class="badge">데이터가 말하는 · 광주FC</span>
+  <h1>지고 있을 때의 광주</h1>
+  <p class="sub">K리그1 2026 광주FC 27경기의 이벤트 38,899건과 리그 110경기를 대조했다.
+    여름 보강은 <strong>박스 안</strong>을 실제로 바꿨다. 바뀌지 않은 것은 <strong>박스까지 가는 길</strong>이었고,
+    그 길은 팀이 <strong>지고 있을 때 더 좁아졌다.</strong></p>
+  <div class="meta">
+    <span><b>분석 범위</b> 하나은행 K리그1 2026 R1–R27</span>
+    <span><b>데이터</b> 원시 이벤트 38,899건 · 리그 풀링 110경기</span>
+    <span><b>출처</b> K리그 데이터포털 직접 파싱</span>
+    <span><b>표기</b> 선수 이름 옆 괄호는 등번호</span>
+  </div>
+</header>
+
+<section>
+  <p class="lede">광주에 관해 가장 많이 쓰이는 문장은 <em>“어린 선수로 버티다 여름에 보강했는데도 안 된다”</em>이다.
+    앞의 절반은 데이터가 확인해 준다. 뒤의 절반은 <strong>틀렸다.</strong>
+    보강은 작동했고 경기력은 실제로 올라갔다. 올라가지 않은 것은 딱 하나다.</p>
+
+  <div class="stats">
+    <div class="stat"><span class="k">기대 승점 (경기당)</span><span class="v g">+33%</span><span class="n">0.72 → 0.96 · 여름 이후</span></div>
+    <div class="stat"><span class="k">실제 승점 (경기당)</span><span class="v b">+0.03</span><span class="n">0.47 → 0.50 · 사실상 제자리</span></div>
+    <div class="stat"><span class="k">파이널서드 도달 (경기당)</span><span class="v">56.3 → 56.9</span><span class="n">27경기 내내 불변</span></div>
+    <div class="stat"><span class="k">중앙 → 전방 전달률</span><span class="v a">10.4%</span><span class="n">리그 12개 구단 중 12위</span></div>
+  </div>
+
+  <div class="body">
+    <p>이 글은 그 <strong>하나</strong>를 찾아가는 과정이다. 일곱 번 좁혀 들어간다 —
+      시즌 전에 이미 정해져 있던 조건에서 출발해, 여름에 무엇이 실제로 바뀌었는지 확인하고,
+      바뀐 것이 왜 승점이 되지 못했는지 분해한 뒤,
+      27경기 동안 한 번도 움직이지 않은 숫자 하나에 도달한다.
+      그리고 그 숫자가 <strong>기술이 아니라 선택</strong>이라는 것을 보여주는 증거에서 멈춘다.
+      마지막은 이 데이터가 <strong>답할 수 없는 지점</strong>이다.</p>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section>
+  <div class="secnum"><span class="n">01</span><h2>시즌이 시작되기 전에 이미 결정된 것</h2></div>
+  <div class="body">
+    <p>광주는 2025년 9월 FIFA로부터 <strong>선수등록 금지 1년</strong> 징계를 받았고, 해제는 2026년 6월이었다.
+      계약은 되지만 뛰지 못하는 선수들이 반년을 기다렸다.
+      1월 2일 영입된 박원재(33)의 <strong>첫 출전은 7월 11일(R17)</strong>이었다.</p>
+    <p>그 공백을 메운 것이 10대였다. 만 16세 박성현(28)은 <strong>준프로 계약 이틀 뒤</strong> 그라운드에 섰고,
+      K리그1·2 통합 역대 최연소 출전 기록(16세 8개월 21일)을 남겼다.
+      만 18세 센터백 공배현(26)은 개막 2라운드에 풀타임을 뛰었다.</p>
+  </div>
+
+  <figure>
+    <figcaption>
+      <span class="figtitle">만 19세 이하 출전 지분 — 광주는 리그 평균의 8.5배를 썼다</span>
+    </figcaption>
+    <div class="chartbox">
+      <svg viewBox="0 0 700 268" role="img" aria-label="구단별 U19 출전 지분 막대그래프. 광주 7.68퍼센트로 1위, 서울 5.30퍼센트, 포항 3.01퍼센트, 나머지 구단은 1.2퍼센트 이하.">
+        <g class="tk">
+          <text x="112" y="252">0</text><text x="255" y="252">2%</text>
+          <text x="398" y="252">4%</text><text x="541" y="252">6%</text><text x="684" y="252">8%</text>
+        </g>
+        <g stroke="var(--grid)" stroke-width="1">
+          <line x1="255.5" y1="12" x2="255.5" y2="236"/><line x1="398.5" y1="12" x2="398.5" y2="236"/>
+          <line x1="541.5" y1="12" x2="541.5" y2="236"/><line x1="684.5" y1="12" x2="684.5" y2="236"/>
+        </g>
+        <line x1="112.5" y1="12" x2="112.5" y2="236" stroke="var(--axis)" stroke-width="1"/>
+        <!-- rows: name, value, y -->
+        <g>
+          <text class="lb em" x="104" y="27" text-anchor="end">광주</text>
+          <rect class="grow" x="112" y="16" width="549" height="16" rx="4" fill="var(--gj)"><title>광주 7.68%</title></rect>
+          <text class="vl" x="669" y="28">7.68%</text>
+        </g>
+        <g>
+          <text class="lb" x="104" y="50" text-anchor="end">서울</text>
+          <rect x="112" y="39" width="379" height="16" rx="4" fill="var(--lg)"><title>서울 5.30%</title></rect>
+          <text class="vl" x="499" y="51">5.30%</text>
+        </g>
+        <g>
+          <text class="lb" x="104" y="73" text-anchor="end">포항</text>
+          <rect x="112" y="62" width="215" height="16" rx="4" fill="var(--lg)"><title>포항 3.01%</title></rect>
+          <text class="vl" x="335" y="74">3.01%</text>
+        </g>
+        <g>
+          <text class="lb" x="104" y="96" text-anchor="end">전북</text>
+          <rect x="112" y="85" width="84" height="16" rx="4" fill="var(--lg)"><title>전북 1.17%</title></rect>
+          <text class="vl" x="204" y="97">1.17%</text>
+        </g>
+        <g>
+          <text class="lb" x="104" y="119" text-anchor="end">안양</text>
+          <rect x="112" y="108" width="19" height="16" rx="4" fill="var(--lg)"><title>안양 0.26%</title></rect>
+          <text class="vl" x="139" y="120">0.26%</text>
+        </g>
+        <g>
+          <text class="lb" x="104" y="142" text-anchor="end">울산</text>
+          <rect x="112" y="131" width="12" height="16" rx="4" fill="var(--lg)"><title>울산 0.16%</title></rect>
+          <text class="vl" x="132" y="143">0.16%</text>
+        </g>
+        <g>
+          <text class="lb" x="104" y="165" text-anchor="end">제주</text>
+          <rect x="112" y="154" width="5" height="16" rx="2" fill="var(--lg)"><title>제주 0.07%</title></rect>
+          <text class="vl" x="125" y="166">0.07%</text>
+        </g>
+        <g>
+          <text class="lb" x="104" y="188" text-anchor="end">부천</text>
+          <rect x="112" y="177" width="3" height="16" rx="1.5" fill="var(--lg)"><title>부천 0.04%</title></rect>
+          <text class="vl" x="123" y="189">0.04%</text>
+        </g>
+        <g>
+          <text class="lb" x="104" y="211" text-anchor="end">인천·김천</text>
+          <rect x="112" y="200" width="2" height="16" rx="1" fill="var(--lg)"><title>인천·김천·강원·대전 0.00%</title></rect>
+          <text class="vl" x="122" y="212">0.00%</text>
+        </g>
+        <g>
+          <text class="lb" x="104" y="234" text-anchor="end">강원·대전</text>
+          <rect x="112" y="223" width="2" height="16" rx="1" fill="var(--lg)"><title>강원·대전 0.00%</title></rect>
+          <text class="vl" x="122" y="235">0.00%</text>
+        </g>
+      </svg>
+    </div>
+    <p class="fignote">출전 지분 = 팀 총 출전 시간 중 해당 연령대가 차지한 비율. 리그 풀링 110경기 기준(구단별 커버 11–27경기).
+      리그 전체에서 U19 이하로 뛴 선수는 12명이고 그중 4명이 광주다.
+      <strong>U19 이하 총 출전 지분의 53.3%를 광주 혼자 썼다.</strong></p>
+  </figure>
+
+  <div class="call">
+    <span class="t">그리고 징계가 풀리자 10대가 사라졌다</span>
+    <p>U19 출전 지분은 징계 기간 <span class="mono">12.98%</span>에서 해제 후 <span class="mono">1.05%</span>로 <strong>12.4배 줄었다.</strong>
+      R17부터 R24까지 <strong>8경기 연속 0.0%</strong>였고, 공배현(26)과 김윤호(25)는 R16 이후 남은 11경기에서 한 번도 뛰지 않았다.
+      대체 자원이 도착한 그 주에 사라졌다는 사실이, 그 기용이 <strong>선택이 아니라 결핍</strong>이었음을 말한다.</p>
+  </div>
+  <p class="fignote">⚠ 이것은 정황이다. 부상·상대 특성·컨디션은 데이터에 없다. 데이터가 말하는 것은 <em>타이밍이 정확히 일치한다</em>까지다.</p>
+</section>
+
+<hr class="rule">
+
+<section>
+  <div class="secnum"><span class="n">02</span><h2>여름 영입은 작동했다 — 다만 사람들이 생각한 방식은 아니다</h2></div>
+  <div class="body">
+    <p>흔한 추측은 <em>“승점이 급하니 큰 선수를 사서 타깃맨으로 갔다”</em>이다.
+      프리드욘슨(11) 196cm, 반 흐룬스벤(4) 194cm, 아이데일(18) 188cm — 그림은 맞다.
+      데이터는 <strong>정반대</strong>를 가리킨다.</p>
+    <p>여름 이후 광주는 공중 경합을 <strong>25% 줄였고</strong>(경기당 29.2 → 21.8),
+      페널티박스 안 슛 중 <strong>크로스 직후에 나온 비율을 35.2%에서 19.4%로 절반 가까이 낮췄다.</strong>
+      팀 패스 평균 길이(17.8 → 18.2m)와 롱볼 비중(11.4 → 11.6%)은 거의 그대로다.
+      다이렉트로 간 것이 아니라 <strong>박스 안에서 짧게 만들어 쏘는 쪽</strong>으로 갔다.</p>
+    <p>실제 역할도 그렇다. 진짜 공중 타깃은 프리드욘슨(11) 한 명(공중 경합 111회·승률 59%)인데
+      <strong>그는 여름 영입이 아니라 개막부터 있던 선수</strong>이고, 후반기에는 오히려 출전이 줄었다.
+      아이데일(18)의 공중 경합 승률은 32%로 타깃형이 아니고, 바 루아(50)는 크로스 29회·공중 경합 4회의 <strong>윙어</strong>다.</p>
+  </div>
+
+  <figure>
+    <figcaption>
+      <span class="figtitle">같은 상대와 다시 붙었을 때 무엇이 달라졌나</span>
+    </figcaption>
+    <div class="chartbox">
+      <svg viewBox="0 0 700 232" role="img" aria-label="전후반기 같은 상대 비교. 슛 26퍼센트 증가, xG 49퍼센트 증가, 실점 28퍼센트 감소, 파이널서드 도달 변화 없음.">
+        <line x1="350.5" y1="14" x2="350.5" y2="196" stroke="var(--axis)" stroke-width="1"/>
+        <text class="tk" x="350" y="212" text-anchor="middle">변화 없음</text>
+        <g class="tk"><text x="180" y="212" text-anchor="middle">−50%</text><text x="520" y="212" text-anchor="middle">+50%</text></g>
+        <g stroke="var(--grid)" stroke-width="1" stroke-dasharray="2 3">
+          <line x1="180.5" y1="14" x2="180.5" y2="196"/><line x1="520.5" y1="14" x2="520.5" y2="196"/>
+        </g>
+        <!-- 슛 +26 -->
+        <g>
+          <text class="lb" x="164" y="34" text-anchor="end">슛</text>
+          <rect x="350" y="22" width="177" height="18" rx="4" fill="var(--top)"><title>슛 경기당 7.5 → 9.5, +26%</title></rect>
+          <text class="vl" x="535" y="35">+26%</text>
+          <text class="tk" x="358" y="35" fill="var(--surface)">7.5 → 9.5</text>
+        </g>
+        <!-- xG +49 -->
+        <g>
+          <text class="lb" x="164" y="76" text-anchor="end">기대 득점(xG)</text>
+          <rect x="350" y="64" width="333" height="18" rx="4" fill="var(--top)"><title>xG 경기당 0.70 → 1.05, +49%</title></rect>
+          <text class="vl" x="336" y="77" text-anchor="end">0.70 → 1.05</text>
+          <text class="vl" x="643" y="77" fill="var(--surface)">+49%</text>
+        </g>
+        <!-- 실점 -28 -->
+        <g>
+          <text class="lb" x="164" y="118" text-anchor="end">실점</text>
+          <rect x="160" y="106" width="190" height="18" rx="4" fill="var(--top)"><title>실점 경기당 2.54 → 1.83, -28%</title></rect>
+          <text class="vl" x="168" y="119" fill="var(--surface)">−28%</text>
+          <text class="vl" x="364" y="119">2.54 → 1.83</text>
+        </g>
+        <!-- 도달 0 -->
+        <g>
+          <text class="lb em" x="164" y="160" text-anchor="end">파이널서드 도달</text>
+          <rect x="347" y="148" width="7" height="18" rx="2" fill="var(--gj)"><title>파이널서드 도달 경기당 57.0 → 56.9, 변화 없음</title></rect>
+          <text class="vl em" x="364" y="161">57.0 → 56.9 &#160;&#160;±0%</text>
+        </g>
+        <g>
+          <text class="lb" x="164" y="188" text-anchor="end">중앙→전방 전달/진입</text>
+          <rect x="347" y="176" width="7" height="18" rx="2" fill="var(--gj)"><title>중앙3 전달/진입 비율 0.11 → 0.11</title></rect>
+          <text class="vl em" x="364" y="189">0.11 → 0.11 &#160;&#160;±0%</text>
+        </g>
+      </svg>
+    </div>
+    <p class="fignote">전·후반기 모두 만난 10개 팀, 25경기만 추려 상대 정체성을 통제한 비교.
+      ⚠ 상대의 시기별 컨디션과 홈·원정 균형은 통제되지 않았다.</p>
+  </figure>
+
+  <div class="call">
+    <span class="t">보강의 방향은 정확했다</span>
+    <p>페널티박스 안 슛이 경기당 <span class="mono">3.6 → 6.0(+67%)</span>,
+      슛 하나당 기대 득점이 <span class="mono">0.091 → 0.110(+21%)</span>,
+      유효슈팅 비율이 <span class="mono">32.4% → 40.4%</span>로 올랐다.
+      <strong>측면 크로서 + 박스 안 마무리 + 빌드업형 센터백</strong>이라는 조합은 지표상 제 몫을 했다.</p>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section>
+  <div class="secnum"><span class="n">03</span><h2>그런데 승점은 오지 않았다</h2></div>
+  <div class="body">
+    <p>경기당 기대 승점은 <strong>0.72에서 0.96으로 33% 올랐다.</strong>
+      실제 승점은 0.47에서 0.50으로 갔다. 기대와 실제의 간극이 <strong>−0.25에서 −0.46으로 오히려 커졌다.</strong></p>
+    <p>이 간극이 단순한 불운인지 확인하기 위해, 리그 10개 팀에서 <strong>12경기 연속 구간 88개</strong>를 만들어 같은 간극을 계산했다.
+      광주의 후반기 −0.46은 그 88개 중 <strong>하위 4.5%</strong>였고,
+      더 중요하게는 <strong>가장 나쁜 8개 구간 중 7개가 광주였다.</strong>
+      짧은 불운이라면 여러 팀에 흩어져야 한다.</p>
+  </div>
+
+  <figure>
+    <figcaption>
+      <span class="figtitle">손해는 “못한 경기”가 아니라 “잘한 경기”에서 났다</span>
+    </figcaption>
+    <div class="chartbox">
+      <svg viewBox="0 0 700 226" role="img" aria-label="경기 유형별 기대 승점과 실제 승점 비교. xG 우세 3경기는 기대 1.85 대비 실제 0.67, 대등 4경기는 1.35 대비 0.50, 열세 20경기는 0.57 대비 0.45.">
+        <g class="tk">
+          <text x="196" y="206">0</text><text x="326" y="206">1.0</text><text x="456" y="206">2.0</text>
+        </g>
+        <g stroke="var(--grid)" stroke-width="1">
+          <line x1="326.5" y1="16" x2="326.5" y2="190"/><line x1="456.5" y1="16" x2="456.5" y2="190"/>
+        </g>
+        <line x1="196.5" y1="16" x2="196.5" y2="190" stroke="var(--axis)" stroke-width="1"/>
+        <!-- group 1 -->
+        <g>
+          <text class="lb em" x="188" y="34" text-anchor="end">xG 우세</text>
+          <text class="tk" x="188" y="48" text-anchor="end">3경기 · 0승 2무 1패</text>
+          <rect x="196" y="22" width="240" height="14" rx="4" fill="var(--lg)"><title>기대 승점 1.85</title></rect>
+          <text class="vl" x="444" y="33">1.85</text>
+          <rect x="196" y="40" width="87" height="14" rx="4" fill="var(--gj)"><title>실제 승점 0.67</title></rect>
+          <text class="vl" x="291" y="51">0.67</text>
+          <text class="vl" x="530" y="43" fill="var(--bad)">−1.18</text>
+        </g>
+        <!-- group 2 -->
+        <g>
+          <text class="lb em" x="188" y="90" text-anchor="end">대등</text>
+          <text class="tk" x="188" y="104" text-anchor="end">4경기 · 0승 2무 2패</text>
+          <rect x="196" y="78" width="176" height="14" rx="4" fill="var(--lg)"><title>기대 승점 1.35</title></rect>
+          <text class="vl" x="380" y="89">1.35</text>
+          <rect x="196" y="96" width="65" height="14" rx="4" fill="var(--gj)"><title>실제 승점 0.50</title></rect>
+          <text class="vl" x="269" y="107">0.50</text>
+          <text class="vl" x="530" y="99" fill="var(--bad)">−0.85</text>
+        </g>
+        <!-- group 3 -->
+        <g>
+          <text class="lb em" x="188" y="146" text-anchor="end">열세</text>
+          <text class="tk" x="188" y="160" text-anchor="end">20경기 · 1승 6무 13패</text>
+          <rect x="196" y="134" width="74" height="14" rx="4" fill="var(--lg)"><title>기대 승점 0.57</title></rect>
+          <text class="vl" x="278" y="145">0.57</text>
+          <rect x="196" y="152" width="59" height="14" rx="4" fill="var(--gj)"><title>실제 승점 0.45</title></rect>
+          <text class="vl" x="263" y="163">0.45</text>
+          <text class="vl" x="530" y="155">−0.12</text>
+        </g>
+        <text class="tk" x="530" y="181">기대 대비 차이</text>
+      </svg>
+    </div>
+    <div class="legend">
+      <span><i style="background:var(--lg)"></i>기대 승점 (xG 기반)</span>
+      <span><i style="background:var(--gj)"></i>실제 승점</span>
+    </div>
+    <p class="fignote">경기별 xG로 포아송 시뮬레이션한 기대 승점. 실제 득실은 경기기록부 재합산(공식) 기준.
+      밀린 경기에서는 기대만큼 받았고, <strong>앞서거나 대등했던 7경기에서만 통째로 잃었다.</strong></p>
+  </figure>
+
+  <div class="body">
+    <p>간극이 난 곳은 세 군데로 좁혀진다.</p>
+    <ul>
+      <li><strong>마무리</strong> — 유효슈팅이 골이 되는 비율 <span class="mono">21.0%</span>로 리그 최하위(리그 평균 29.6%). 유효슈팅 하나당 기대 득점 0.135는 <em>리그 중간</em>이므로 슛의 질이 아니라 전환의 문제다. 특히 <strong>골에어리어권 유효슈팅 14개 중 1골(7.1%)</strong>, 같은 자리 리그 평균은 49.3%다.</li>
+      <li><strong>박스 수비</strong> — 페널티박스 중앙에서 유효슈팅을 허용했을 때 골이 되는 비율 <span class="mono">57.1%</span>로 리그 1위(평균 34.8%). 슛 직전에 수비가 개입한 비율은 16.8%로 리그(22.8%)보다 6%p 낮다.</li>
+      <li><strong>리드 상실</strong> — 앞서다 따라잡힌 경기 5번, 지켰다면 최대 12점. R25 강원전은 2-0을 후반 87·88분 <strong>90초 만에</strong> 잃었다.</li>
+    </ul>
+    <p>반면 <strong>퇴장은 원인이 아니다.</strong> 3장이 두 경기(R20·R26)에 몰려 있고, 그 두 경기를 빼도 나머지 25경기의 경기당 승점은 0.52다.</p>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section>
+  <div class="secnum"><span class="n">04</span><h2>27경기 내내 움직이지 않은 한 숫자</h2></div>
+  <div class="body">
+    <p>여기까지가 <em>결과</em>다. 이제 <em>구조</em>로 들어간다.</p>
+    <p>선수 12명이 데뷔하고, 공격 지문이 바뀌고, 박스 안이 개선되는 동안
+      <strong>파이널서드에 닿는 양은 경기당 56.3에서 56.9로 그대로였다.</strong>
+      중앙 지역에 들어온 볼이 전방으로 나가는 비율은 <span class="mono">0.11 → 0.11</span>,
+      소수점 둘째 자리까지 같다.</p>
+  </div>
+
+  <figure>
+    <figcaption><span class="figtitle">경기당 볼이 흐르는 경로 — 병목은 한 곳이다</span></figcaption>
+    <div class="chartbox">
+      <svg viewBox="0 0 700 216" role="img" aria-label="피치를 3등분한 흐름도. 중앙 지역 진입 179.9회 중 전방으로 나가는 것은 19.5회, 상실 32.4회.">
+        <rect x="8" y="14" width="684" height="150" fill="none" stroke="var(--axis)" stroke-width="1.5"/>
+        <line x1="236" y1="14" x2="236" y2="164" stroke="var(--axis)" stroke-width="1" stroke-dasharray="4 4"/>
+        <line x1="464" y1="14" x2="464" y2="164" stroke="var(--axis)" stroke-width="1" stroke-dasharray="4 4"/>
+        <circle cx="350" cy="89" r="26" fill="none" stroke="var(--axis)" stroke-width="1"/>
+        <rect x="8" y="54" width="42" height="70" fill="none" stroke="var(--axis)" stroke-width="1"/>
+        <rect x="650" y="54" width="42" height="70" fill="none" stroke="var(--axis)" stroke-width="1"/>
+        <text class="tk" x="122" y="32" text-anchor="middle">수비 3분면</text>
+        <text class="tk" x="350" y="32" text-anchor="middle">중앙 3분면</text>
+        <text class="tk" x="578" y="32" text-anchor="middle">공격 3분면</text>
+        <!-- inflow -->
+        <path d="M108 89 L226 89" stroke="var(--lg)" stroke-width="14" stroke-linecap="round" opacity=".85"/>
+        <text class="vl" x="167" y="80" text-anchor="middle">179.9</text>
+        <text class="tk" x="167" y="112" text-anchor="middle">중앙 진입</text>
+        <!-- outflow forward -->
+        <path d="M474 89 L560 89" stroke="var(--gj)" stroke-width="4" stroke-linecap="round"/>
+        <text class="vl em" x="517" y="80" text-anchor="middle">19.5</text>
+        <text class="tk" x="517" y="112" text-anchor="middle">전방 전달</text>
+        <!-- loss -->
+        <path d="M350 108 L350 152" stroke="var(--bad)" stroke-width="7" stroke-linecap="round" opacity=".85"/>
+        <text class="vl" x="362" y="150" fill="var(--bad)">32.4 상실</text>
+        <!-- ratio badge -->
+        <text class="vl em" x="350" y="93" text-anchor="middle" font-size="15">0.11</text>
+        <text class="tk" x="350" y="64" text-anchor="middle">전달 / 진입</text>
+        <text class="lb" x="8" y="196">징계 기간(R1–R15) 0.11 &#160;·&#160; 해제 후(R16–R27) 0.11 &#160;— 선수 12명을 바꾼 뒤에도 같다</text>
+      </svg>
+    </div>
+    <p class="fignote">3분면은 피치를 길이 방향으로 3등분한 좌표(공격 방향 정규화 완료). 값은 R16–R27 경기당.</p>
+  </figure>
+</section>
+
+<hr class="rule">
+
+<section>
+  <div class="secnum"><span class="n">05</span><h2>그 숫자의 정체</h2></div>
+  <div class="body">
+    <p>중앙 지역에서 출발한 성공 패스가 파이널서드에 닿는 비율 —
+      <strong>광주 10.4%는 리그 12개 구단 중 12위</strong>다.
+      그런데 중앙 지역 패스 <em>총량</em>은 경기당 198.3회로 <strong>리그 7위</strong>다.
+      볼은 충분히 만진다. 나가지 않을 뿐이다.</p>
+  </div>
+
+  <figure>
+    <figcaption><span class="figtitle">중앙 → 파이널서드 전달률 (리그 12개 구단)</span></figcaption>
+    <div class="chartbox">
+      <svg viewBox="0 0 700 300" role="img" aria-label="구단별 중앙 지역에서 파이널서드로 전달되는 패스 비율. 강원 17.2퍼센트 1위, 광주 10.4퍼센트 최하위.">
+        <g class="tk">
+          <text x="96" y="286">0</text><text x="234" y="286">5%</text><text x="372" y="286">10%</text>
+          <text x="510" y="286">15%</text><text x="648" y="286">20%</text>
+        </g>
+        <g stroke="var(--grid)" stroke-width="1">
+          <line x1="234.5" y1="10" x2="234.5" y2="270"/><line x1="372.5" y1="10" x2="372.5" y2="270"/>
+          <line x1="510.5" y1="10" x2="510.5" y2="270"/><line x1="648.5" y1="10" x2="648.5" y2="270"/>
+        </g>
+        <line x1="96.5" y1="10" x2="96.5" y2="270" stroke="var(--axis)" stroke-width="1"/>
+        <line x1="466.5" y1="4" x2="466.5" y2="276" stroke="var(--ink-2)" stroke-width="1" stroke-dasharray="3 3"/>
+        <text class="tk" x="470" y="10" fill="var(--ink-2)">리그 평균 13.4%</text>
+        <g>
+          <text class="lb" x="88" y="26" text-anchor="end">강원</text><rect x="96" y="15" width="475" height="15" rx="4" fill="var(--top)"><title>강원 17.2%</title></rect><text class="vl" x="579" y="27">17.2%</text>
+        </g>
+        <g>
+          <text class="lb" x="88" y="47" text-anchor="end">서울</text><rect x="96" y="36" width="455" height="15" rx="4" fill="var(--top)"><title>서울 16.5%</title></rect><text class="vl" x="559" y="48">16.5%</text>
+        </g>
+        <g>
+          <text class="lb" x="88" y="68" text-anchor="end">제주</text><rect x="96" y="57" width="386" height="15" rx="4" fill="var(--lg)"><title>제주 14.0%</title></rect><text class="vl" x="490" y="69">14.0%</text>
+        </g>
+        <g>
+          <text class="lb" x="88" y="89" text-anchor="end">인천</text><rect x="96" y="78" width="386" height="15" rx="4" fill="var(--lg)"><title>인천 14.0%</title></rect><text class="vl" x="490" y="90">14.0%</text>
+        </g>
+        <g>
+          <text class="lb" x="88" y="110" text-anchor="end">울산</text><rect x="96" y="99" width="375" height="15" rx="4" fill="var(--lg)"><title>울산 13.6%</title></rect><text class="vl" x="479" y="111">13.6%</text>
+        </g>
+        <g>
+          <text class="lb" x="88" y="131" text-anchor="end">대전</text><rect x="96" y="120" width="353" height="15" rx="4" fill="var(--lg)"><title>대전 12.8%</title></rect><text class="vl" x="457" y="132">12.8%</text>
+        </g>
+        <g>
+          <text class="lb" x="88" y="152" text-anchor="end">부천</text><rect x="96" y="141" width="351" height="15" rx="4" fill="var(--lg)"><title>부천 12.7%</title></rect><text class="vl" x="455" y="153">12.7%</text>
+        </g>
+        <g>
+          <text class="lb" x="88" y="173" text-anchor="end">안양</text><rect x="96" y="162" width="331" height="15" rx="4" fill="var(--lg)"><title>안양 12.0%</title></rect><text class="vl" x="435" y="174">12.0%</text>
+        </g>
+        <g>
+          <text class="lb" x="88" y="194" text-anchor="end">김천</text><rect x="96" y="183" width="329" height="15" rx="4" fill="var(--lg)"><title>김천 11.9%</title></rect><text class="vl" x="433" y="195">11.9%</text>
+        </g>
+        <g>
+          <text class="lb" x="88" y="215" text-anchor="end">전북</text><rect x="96" y="204" width="323" height="15" rx="4" fill="var(--lg)"><title>전북 11.7%</title></rect><text class="vl" x="427" y="216">11.7%</text>
+        </g>
+        <g>
+          <text class="lb" x="88" y="236" text-anchor="end">포항</text><rect x="96" y="225" width="298" height="15" rx="4" fill="var(--lg)"><title>포항 10.8%</title></rect><text class="vl" x="402" y="237">10.8%</text>
+        </g>
+        <g>
+          <text class="lb em" x="88" y="257" text-anchor="end">광주</text><rect x="96" y="246" width="287" height="15" rx="4" fill="var(--gj)"><title>광주 10.4%</title></rect><text class="vl em" x="391" y="258">10.4%</text>
+        </g>
+      </svg>
+    </div>
+    <p class="fignote">리그 풀링 110경기. 구단별 커버 경기 수는 11–27경기로 다르며, 소표본 구단(11–14경기)의 값은 더 흔들린다.</p>
+  </figure>
+
+  <div class="body">
+    <p>흔한 진단 하나를 먼저 지운다. <em>“수비수가 중앙을 점유해서 못 나간다”</em>는 성립하지 않는다.
+      인천(56.4%)·서울(55.8%)·포항(56.1%) 모두 광주(54.8%)와 같은 수준으로 수비수가 중앙을 점유한다.
+      <strong>수비수 점유율과 팀 전달률의 상관은 r=+0.20으로 사실상 없다.</strong></p>
+    <p>갈리는 것은 <strong>그 수비수가 앞으로 보내느냐</strong>다.</p>
+  </div>
+
+  <div class="tablebox">
+    <table>
+      <caption class="fignote" style="text-align:left;padding:11px 13px 0">수비수의 중앙 지역 패스 — 점유는 같고 전달만 다르다</caption>
+      <thead><tr><th>구단</th><th>수비수 점유</th><th>수비수 전달률</th><th>팀 전달률</th></tr></thead>
+      <tbody>
+        <tr><td>강원</td><td>53.2%</td><td>16.4%</td><td>17.2%</td></tr>
+        <tr><td>서울</td><td>55.8%</td><td>16.2%</td><td>16.5%</td></tr>
+        <tr><td>인천</td><td>56.4%</td><td>13.6%</td><td>14.0%</td></tr>
+        <tr><td>울산</td><td>50.3%</td><td>13.2%</td><td>13.6%</td></tr>
+        <tr><td>제주</td><td>51.6%</td><td>12.9%</td><td>14.0%</td></tr>
+        <tr><td>전북</td><td>48.6%</td><td>9.9%</td><td>11.7%</td></tr>
+        <tr><td>포항</td><td>56.1%</td><td>9.8%</td><td>10.8%</td></tr>
+        <tr class="mark"><td>광주</td><td>54.8%</td><td>8.7%</td><td>10.4%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="call">
+    <span class="t">그리고 광주에는 축이 없다</span>
+    <p>중앙 지역 점유 상위 3명이 차지하는 비중은 서울 43.3%, 인천 41.6%, 강원 37.9%인데
+      <strong>광주는 25.7%로 리그에서 가장 분산되어 있다.</strong>
+      정작 광주 상위 3명의 전달률 13.8%는 리그 4위다.
+      <strong>잘 보내는 소수에게 볼이 모이지 않고, 나머지 74%가 9%대에서 돈다.</strong>
+      (점유 집중도 ↔ 팀 전달률 r=+0.58)</p>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section>
+  <div class="secnum"><span class="n">06</span><h2>결정적 증거 — 지고 있을 때 무슨 일이 벌어지나</h2></div>
+  <div class="body">
+    <p>여기서 검증을 하나 해야 했다. 광주는 <strong>중앙 지역 패스의 46.7%를 지고 있는 상태에서</strong> 한다(리그 25.8%).
+      앞서는 시간은 3.7%뿐이다(리그 18.8%).
+      상황 구성이 이렇게 다르면 어떤 평균값이든 왜곡된다. 그래서 <strong>스코어 상태별로 나눠 다시 쟀다.</strong></p>
+    <p>결과는 예상 밖이었다. 리그 팀들은 <strong>지고 있으면 전달률을 올린다.</strong>
+      수비수 기준 동점 10.6% → 열세 14.2%, <strong>+3.6%p</strong>.
+      광주 미드필더도 12.2% → 15.0%로 정상적으로 올린다.
+      <strong>광주 수비수만 10.0% → 7.4%로 내려간다.</strong></p>
+  </div>
+
+  <figure>
+    <figcaption><span class="figtitle">동점일 때 → 지고 있을 때, 중앙에서 전방으로 보내는 비율</span></figcaption>
+    <div class="chartbox">
+      <svg viewBox="0 0 700 292" role="img" aria-label="기울기 그래프. 리그 수비수는 10.6에서 14.2퍼센트로 상승, 광주 미드필더는 12.2에서 15.0으로 상승, 광주 수비수는 10.0에서 7.4퍼센트로 하락.">
+        <g stroke="var(--grid)" stroke-width="1">
+          <line x1="200" y1="40" x2="500" y2="40"/><line x1="200" y1="100" x2="500" y2="100"/>
+          <line x1="200" y1="160" x2="500" y2="160"/><line x1="200" y1="220" x2="500" y2="220"/>
+        </g>
+        <g class="tk" text-anchor="end">
+          <text x="192" y="44">16%</text><text x="192" y="104">13%</text>
+          <text x="192" y="164">10%</text><text x="192" y="224">7%</text>
+        </g>
+        <line x1="200.5" y1="26" x2="200.5" y2="238" stroke="var(--axis)" stroke-width="1"/>
+        <line x1="499.5" y1="26" x2="499.5" y2="238" stroke="var(--axis)" stroke-width="1"/>
+        <text class="lb" x="200" y="262" text-anchor="middle">동점</text>
+        <text class="lb" x="500" y="262" text-anchor="middle">지고 있을 때</text>
+
+        <!-- 리그 DF: 10.6 -> 14.2  (y = 160 - (v-10)*20) -->
+        <line x1="200" y1="148" x2="500" y2="76" stroke="var(--lg)" stroke-width="2.5"/>
+        <circle cx="200" cy="148" r="5.5" fill="var(--lg)" stroke="var(--surface)" stroke-width="2"><title>리그 수비수 동점 10.6%</title></circle>
+        <circle cx="500" cy="76" r="5.5" fill="var(--lg)" stroke="var(--surface)" stroke-width="2"><title>리그 수비수 열세 14.2%</title></circle>
+        <text class="vl" x="190" y="152" text-anchor="end" fill="var(--lg)">10.6</text>
+        <text class="vl" x="512" y="72" fill="var(--lg)">14.2%</text>
+        <text class="lb" x="512" y="88" fill="var(--lg)">리그 수비수 &#160;+3.6%p</text>
+
+        <!-- 광주 MF: 12.2 -> 15.0 -->
+        <line x1="200" y1="116" x2="500" y2="60" stroke="var(--top)" stroke-width="2.5" stroke-dasharray="6 4"/>
+        <circle cx="200" cy="116" r="5.5" fill="var(--top)" stroke="var(--surface)" stroke-width="2"><title>광주 미드필더 동점 12.2%</title></circle>
+        <circle cx="500" cy="60" r="5.5" fill="var(--top)" stroke="var(--surface)" stroke-width="2"><title>광주 미드필더 열세 15.0%</title></circle>
+        <text class="vl" x="190" y="120" text-anchor="end" fill="var(--top)">12.2</text>
+        <text class="vl" x="512" y="56" fill="var(--top)">15.0%</text>
+        <text class="lb" x="512" y="44" fill="var(--top)">광주 미드필더 &#160;+2.8%p</text>
+
+        <!-- 광주 DF: 10.0 -> 7.4 -->
+        <line x1="200" y1="160" x2="500" y2="212" stroke="var(--gj)" stroke-width="3.5"/>
+        <circle cx="200" cy="160" r="6.5" fill="var(--gj)" stroke="var(--surface)" stroke-width="2"><title>광주 수비수 동점 10.0%</title></circle>
+        <circle cx="500" cy="212" r="6.5" fill="var(--gj)" stroke="var(--surface)" stroke-width="2"><title>광주 수비수 열세 7.4%</title></circle>
+        <text class="vl" x="190" y="164" text-anchor="end" fill="var(--gj)">10.0</text>
+        <text class="vl em" x="512" y="210" fill="var(--gj)">7.4%</text>
+        <text class="lb em" x="512" y="226" fill="var(--gj)">광주 수비수 &#160;−2.6%p</text>
+      </svg>
+    </div>
+    <p class="fignote">표본: 리그 수비수 동점 11,024회 / 열세 5,378회, 광주 수비수 동점 1,426회 / 열세 1,419회.
+      스코어 상태는 각 패스 시점의 득실차로 판정.</p>
+  </figure>
+
+  <div class="call">
+    <span class="t">이것은 한 선수의 습관이 아니다</span>
+    <p>광주 수비수 9명 중 <strong>7명이 지고 있을 때 전달률을 내린다.</strong>
+      김진호(27) −7.5%p, 주앙 페드로(17) −5.5%p, 하승운(9) −2.8%p, 반 흐룬스벤(4) −2.8%p,
+      민상기(39) −2.1%p, 김용혁(24) −2.1%p, 공배현(26) −1.4%p. 올린 사람은 권성윤(22)(+7.1%p)과 안영규(6)(+0.5%p) 둘뿐이다.
+      <strong>개인 성향이라면 이렇게 한 방향으로 모이지 않는다.</strong></p>
+  </div>
+
+  <div class="body">
+    <p>그리고 이 발견은 다른 곳에서 본 얼굴과 같다.
+      광주는 <strong>지고 있는 상태의 후반 시작 15분</strong>에 실점률이 열세 상태 평균의 <strong>2.07배</strong>로 뛴다.
+      쫓아가야 하는 국면에서, 앞으로는 못 나가고 뒤로는 열린다.
+      <strong>점수를 쫓는 국면의 설계가 비어 있다</strong>는 하나의 현상이 두 지표에 동시에 찍힌 것으로 읽힌다.</p>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section>
+  <div class="secnum"><span class="n">07</span><h2>능력이 아니라 선택이다</h2></div>
+  <div class="body">
+    <p>마지막 확인이다. 광주 수비수가 <strong>못 보내는</strong> 것인지, <strong>안 보내는</strong> 것인지.</p>
+    <p>같은 거리·같은 레인에서 시도한 패스만 골라 비교하면 <strong>광주 수비수도 리그와 비슷하거나 오히려 높다.</strong>
+      25–35m 중앙 레인에서 광주 27.1% vs 리그 18.0%.
+      기술의 문제가 아니다. 차이는 <strong>어느 방향으로 차기로 선택하는가</strong>에 있다.</p>
+  </div>
+
+  <figure>
+    <figcaption><span class="figtitle">수비수의 15–25m 패스가 향하는 방향</span></figcaption>
+    <div class="chartbox">
+      <svg viewBox="0 0 700 234" role="img" aria-label="15에서 25미터 수비수 패스의 방향 구성 누적 막대. 서울은 전진 54.5퍼센트, 강원 48.9, 울산 48.7, 광주 40.8퍼센트로 가장 낮고 후진은 43.8퍼센트로 가장 높다.">
+        <g class="tk">
+          <text x="150" y="222">0</text><text x="270" y="222">25%</text><text x="390" y="222">50%</text>
+          <text x="510" y="222">75%</text><text x="630" y="222">100%</text>
+        </g>
+        <line x1="150.5" y1="14" x2="150.5" y2="206" stroke="var(--axis)" stroke-width="1"/>
+        <!-- 서울 33.6 / 11.9 / 54.5 -->
+        <g>
+          <text class="lb" x="142" y="34" text-anchor="end">서울</text>
+          <rect x="150" y="20" width="161" height="24" rx="4" fill="var(--lg-soft)" stroke="var(--lg)" stroke-width="1"><title>서울 후진 33.6%</title></rect>
+          <rect x="315" y="20" width="57" height="24" rx="4" fill="var(--surface-2)" stroke="var(--axis)" stroke-width="1"><title>서울 횡 11.9%</title></rect>
+          <rect x="376" y="20" width="262" height="24" rx="4" fill="var(--top)"><title>서울 전진 54.5%</title></rect>
+          <text class="vl" x="507" y="37" text-anchor="middle" fill="var(--surface)">54.5%</text>
+          <text class="tk" x="230" y="37" text-anchor="middle">33.6%</text>
+        </g>
+        <!-- 강원 38.6 / 12.5 / 48.9 -->
+        <g>
+          <text class="lb" x="142" y="70" text-anchor="end">강원</text>
+          <rect x="150" y="56" width="185" height="24" rx="4" fill="var(--lg-soft)" stroke="var(--lg)" stroke-width="1"><title>강원 후진 38.6%</title></rect>
+          <rect x="339" y="56" width="60" height="24" rx="4" fill="var(--surface-2)" stroke="var(--axis)" stroke-width="1"><title>강원 횡 12.5%</title></rect>
+          <rect x="403" y="56" width="235" height="24" rx="4" fill="var(--top)"><title>강원 전진 48.9%</title></rect>
+          <text class="vl" x="520" y="73" text-anchor="middle" fill="var(--surface)">48.9%</text>
+          <text class="tk" x="242" y="73" text-anchor="middle">38.6%</text>
+        </g>
+        <!-- 울산 40.1 / 11.2 / 48.7 -->
+        <g>
+          <text class="lb" x="142" y="106" text-anchor="end">울산</text>
+          <rect x="150" y="92" width="192" height="24" rx="4" fill="var(--lg-soft)" stroke="var(--lg)" stroke-width="1"><title>울산 후진 40.1%</title></rect>
+          <rect x="346" y="92" width="54" height="24" rx="4" fill="var(--surface-2)" stroke="var(--axis)" stroke-width="1"><title>울산 횡 11.2%</title></rect>
+          <rect x="404" y="92" width="234" height="24" rx="4" fill="var(--top)"><title>울산 전진 48.7%</title></rect>
+          <text class="vl" x="521" y="109" text-anchor="middle" fill="var(--surface)">48.7%</text>
+          <text class="tk" x="246" y="109" text-anchor="middle">40.1%</text>
+        </g>
+        <!-- 광주 43.8 / 15.4 / 40.8 -->
+        <g>
+          <text class="lb em" x="142" y="142" text-anchor="end">광주</text>
+          <rect x="150" y="128" width="210" height="24" rx="4" fill="var(--gj-soft)" stroke="var(--gj)" stroke-width="1.5"><title>광주 후진 43.8%</title></rect>
+          <rect x="364" y="128" width="74" height="24" rx="4" fill="var(--surface-2)" stroke="var(--axis)" stroke-width="1"><title>광주 횡 15.4%</title></rect>
+          <rect x="442" y="128" width="196" height="24" rx="4" fill="var(--gj)"><title>광주 전진 40.8%</title></rect>
+          <text class="vl em" x="540" y="145" text-anchor="middle" fill="var(--surface)">40.8%</text>
+          <text class="vl em" x="255" y="145" text-anchor="middle" fill="var(--gj)">43.8%</text>
+        </g>
+        <text class="lb" x="150" y="182">패스 1회당 전진 거리 &#160;서울 <tspan class="vl">+2.63</tspan>&#160;·&#160;울산 <tspan class="vl">+1.55</tspan>&#160;·&#160;강원 <tspan class="vl">+1.36</tspan>&#160;·&#160;광주 <tspan class="vl em" fill="var(--gj)">+0.24</tspan></text>
+        <text class="tk" x="150" y="200">전달률 &#160;서울 14.8% · 강원 14.7% · 울산 11.1% · 광주 8.4%</text>
+      </svg>
+    </div>
+    <div class="legend">
+      <span><i style="background:var(--lg-soft);border:1px solid var(--lg)"></i>뒤로 (전진 −2m 미만)</span>
+      <span><i style="background:var(--surface-2);border:1px solid var(--axis)"></i>옆으로 (±2m)</span>
+      <span><i style="background:var(--top)"></i>앞으로 (+2m 초과)</span>
+    </div>
+    <p class="fignote">수비수가 중앙 지역에서 시도한 15–25m 패스만. 광주 n=1,130 · 울산 932 · 서울 453 · 강원 409.
+      이 거리대는 수비수 패스의 약 39%를 차지한다.</p>
+  </figure>
+
+  <div class="call">
+    <span class="t">그리고 리그는 지고 있을 때 “다른 패스”를 차지 않는다</span>
+    <p>리그 팀들이 열세에서 전달률을 올릴 때, 패스 길이(16.2 → 16.4m)도 길이 구성도 종착 레인도 거의 그대로다.
+      바뀌는 것은 <strong>같은 패스가 통하는 비율</strong>이다 — 15–25m 구간 10.7% → 14.7%, 35m 이상 59.3% → 73.4%.
+      패스 1회당 전진 거리는 <span class="mono">+0.62 → +1.81</span>로 세 배가 된다.
+      즉 <strong>앞의 선수들이 나가서 받아준다는 뜻</strong>이다. 광주는 이 구간에서 오히려 5.6% → 5.0%로 내려간다.</p>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section>
+  <div class="secnum"><span class="n">08</span><h2>이 차이는 얼마나 큰가</h2></div>
+  <div class="body">
+    <p>지표 하나가 얼마나 무거운지는 그것만 바꿔 보면 대충 잰다.
+      다른 조건을 전부 고정하고 <strong>수비수의 전달률만</strong> 리그 평균으로 옮겨 보면 이렇게 된다.</p>
+  </div>
+
+  <figure>
+    <figcaption><span class="figtitle">수비수 전달률만 움직였을 때 — 경기당 파이널서드 도달 추정</span></figcaption>
+    <div class="chartbox">
+      <svg viewBox="0 0 700 182" role="img" aria-label="수비수 전달률 시나리오별 경기당 파이널서드 도달 추정. 현재 20.7, 리그 평균 적용 25.0, 리그 최상위 적용 32.7.">
+        <g class="tk">
+          <text x="176" y="168">0</text><text x="316" y="168">10</text><text x="456" y="168">20</text><text x="596" y="168">30</text>
+        </g>
+        <g stroke="var(--grid)" stroke-width="1">
+          <line x1="316.5" y1="14" x2="316.5" y2="152"/><line x1="456.5" y1="14" x2="456.5" y2="152"/><line x1="596.5" y1="14" x2="596.5" y2="152"/>
+        </g>
+        <line x1="176.5" y1="14" x2="176.5" y2="152" stroke="var(--axis)" stroke-width="1"/>
+        <g>
+          <text class="lb em" x="168" y="36" text-anchor="end">현재</text>
+          <text class="tk" x="168" y="50" text-anchor="end">수비수 전달률 8.7%</text>
+          <rect x="176" y="24" width="290" height="22" rx="4" fill="var(--gj)"><title>현재 경기당 20.7회</title></rect>
+          <text class="vl" x="474" y="40">20.7</text>
+        </g>
+        <g>
+          <text class="lb" x="168" y="88" text-anchor="end">리그 평균 수준</text>
+          <text class="tk" x="168" y="102" text-anchor="end">수비수 전달률 12.0%</text>
+          <rect x="176" y="76" width="350" height="22" rx="4" fill="var(--lg)"><title>리그 평균 적용 시 경기당 25.0회</title></rect>
+          <text class="vl" x="534" y="92">25.0 &#160;<tspan fill="var(--top)">+21%</tspan></text>
+        </g>
+        <g>
+          <text class="lb" x="168" y="140" text-anchor="end">리그 최상위 수준</text>
+          <text class="tk" x="168" y="154" text-anchor="end">수비수 전달률 16.4%</text>
+          <rect x="176" y="128" width="458" height="22" rx="4" fill="var(--top)"><title>리그 최상위 수준 적용 시 경기당 32.7회</title></rect>
+          <text class="vl" x="642" y="144" text-anchor="end" fill="var(--surface)">32.7 &#160;+58%</text>
+        </g>
+      </svg>
+    </div>
+    <p class="fignote">⚠ 전달률만 갈아끼운 <strong>산술 시나리오</strong>다. 상대의 반응과 구조 변화는 반영되어 있지 않다.
+      “이만큼 오른다”가 아니라 <strong>“이 지표 하나가 가진 지렛대의 크기”</strong>로만 읽어야 한다.</p>
+  </figure>
+
+  <div class="body">
+    <p>같은 이유로, 광주의 현재 상위 지표는 개선 지표로 쓰기 어렵다.
+      <strong>블록이 경기당 17.19회로 리그 1위</strong>라는 것은 좋은 신호가 아니라
+      <strong>그만큼 슛을 허용했다</strong>는 신호다. 클리어링도 마찬가지다.
+      이 팀에서 위로 가야 하는 숫자는 막은 횟수가 아니라 <strong>내보낸 횟수</strong>다.</p>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section>
+  <div class="secnum"><span class="n">09</span><h2>여기서부터는 데이터가 답하지 못한다</h2></div>
+  <div class="body">
+    <p>일곱 번 좁힌 끝에 남는 질문은 하나다.</p>
+  </div>
+
+  <div class="call">
+    <span class="t">받을 사람이 없었나, 있는데 안 보냈나</span>
+    <p>광주 수비수가 중앙 지역에서 볼을 잡은 그 3–5초.
+      앞에 설 사람이 없어서 뒤로 돌린 것이라면 <strong>오프더볼의 문제</strong>이고,
+      있는데 안 보낸 것이라면 <strong>판단과 지시의 문제</strong>다. 처방이 완전히 갈린다.
+      <strong>그리고 이벤트 데이터로는 가를 수 없다.</strong>
+      볼을 만지지 않은 선수는 이 데이터에 존재하지 않기 때문이다.</p>
+  </div>
+
+  <div class="body">
+    <p>다만 <strong>어디를 봐야 하는지는 특정됐다.</strong>
+      전 경기를 다시 볼 필요가 없다. 수비수가 중앙 3분면에서 볼을 잡은 순간의 전방 3–5초,
+      그중에서도 <strong>지고 있는 상태</strong>부터 보면 된다 — 그 표본만 1,419회다.
+      데이터 분석의 역할은 답을 주는 것이 아니라 <strong>봐야 할 곳을 좁히는 것</strong>이라고 생각한다.</p>
+    <p>그 외에 이 분석이 말하지 못하는 것들.</p>
+    <ul>
+      <li><strong>xG는 포털 모델값이다.</strong> 그리고 광주 경기에서 양방향으로 어긋난다 —
+        광주가 쏘면 유효슛의 21.0%가 골, 광주에게 쏘면 39.4%가 골(리그 29.6%).
+        <em>광주 경기에 모델이 못 잡는 요소가 실재</em>하거나 <em>모델이 광주를 잘못 재고</em> 있거나 둘 중 하나이고, 데이터로는 못 가른다.</li>
+      <li><strong>마무리 21.0%는 통계적으로 유의하지 않다</strong>(z=−1.70). 리그 12팀 중 유의한 팀은 서울 하나뿐이다.
+        운의 성분을 인정해야 한다.</li>
+      <li><strong>후반기는 12경기다.</strong> 기대 승점 간극도 전환율도 12경기짜리 숫자다.</li>
+      <li><strong>상관은 인과가 아니다.</strong> 특히 팀 간 비교는 전력·스타일·상대 분포가 통제되지 않았다.</li>
+      <li><strong>R28(9/9 제주전)은 빠져 있다.</strong> 포털의 이벤트 처리가 최근 두 라운드 분량 지연 중이다
+        (9/5 이후 <em>리그 전 경기</em>가 같은 상태). 공개되면 병합해 재계산한다.</li>
+    </ul>
+  </div>
+
+  <div class="call warn">
+    <span class="t">한 문장으로</span>
+    <p>여름 영입은 <strong>박스 안</strong>을 개선했고 그것은 데이터로 확인된다.
+      개선되지 않은 것은 <strong>박스까지 가는 길</strong>이고,
+      그 길은 수비수가 중앙에서 볼을 잡은 3초 안에서 닫힌다.
+      그리고 <strong>지고 있을 때 더 닫힌다.</strong></p>
+  </div>
+</section>
+
+<footer>
+  <p><strong>데이터 출처</strong> · K리그 데이터포털(portal.kleague.com) 내부 응답 직접 파싱. 스크린샷·수기입력 없음.
+    광주FC 27경기 원시 이벤트 38,899건(좌표·xG 포함), 경기기록부 27경기, 선수 부가지표 1,074행.
+    리그 비교는 광주·제주·전북·울산·포항 5개 데이터셋을 경기번호로 중복 제거해 풀링한 <strong>고유 110경기·이벤트 158,043건</strong>(12개 구단 전부 포함).</p>
+  <p><strong>검증</strong> · 순위표 ↔ 경기기록부 재합산 완전 일치. 이벤트 ↔ 종합검색 슈팅·유효슈팅·파울·태클·인터셉트·클리어링·크로스·키패스·코너킥 완전 일치.
+    좌표 정규화 검증 통과(슈팅 종료 X 평균 양팀 100.0). 포털의 <span class="mono">ST/RCV</span> 오태깅 3건은 분·초까지 특정해 복원했다.</p>
+  <p><strong>표기</strong> · 피치 좌표는 5레인·3분면 프레임. 실제 득실은 이벤트가 아니라 경기기록부 재합산(공식) 기준.
+    ‘전달률’은 중앙 3분면에서 출발한 성공 패스 중 파이널서드에 종착한 비율.</p>
+</footer>
+
+</div>
+
+</body>
+</html>

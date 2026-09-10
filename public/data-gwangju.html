@@ -1,0 +1,731 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="What the data says · Gwangju FC — the summer signings changed the box, but never the road to it.">
+<style>*{box-sizing:border-box}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Gwangju When Behind</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600;6..72,700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --page:#f6f4ee; --surface:#fffefb; --surface-2:#edeae1; --raise:#faf8f2;
+  --ink:#14130f; --ink-2:#3d3a33; --muted:#756f5f;
+  --border:rgba(20,19,15,.13); --border-2:rgba(20,19,15,.07); --grid:#e2ded1; --axis:#c6c0ae;
+  --gj:#b8690b; --lg:#3068b8; --top:#0f7f5e;
+  --gj-soft:rgba(184,105,11,.13); --lg-soft:rgba(48,104,184,.12); --top-soft:rgba(15,127,94,.12);
+  --bad:#a3272f; --bad-soft:rgba(163,39,47,.10);
+  --sp:clamp(16px,4vw,28px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  color-scheme:dark;
+  --page:#14130f; --surface:#1c1a16; --surface-2:#24211c; --raise:#211e19;
+  --ink:#f2efe6; --ink-2:#cbc6b8; --muted:#918b7b;
+  --border:rgba(255,255,255,.14); --border-2:rgba(255,255,255,.07); --grid:#2e2a23; --axis:#443f36;
+  --gj:#c47d0a; --lg:#4a8ace; --top:#159876;
+  --gj-soft:rgba(196,125,10,.17); --lg-soft:rgba(74,138,206,.16); --top-soft:rgba(21,152,118,.16);
+  --bad:#e0656d; --bad-soft:rgba(224,101,109,.13);
+}}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --page:#14130f; --surface:#1c1a16; --surface-2:#24211c; --raise:#211e19;
+  --ink:#f2efe6; --ink-2:#cbc6b8; --muted:#918b7b;
+  --border:rgba(255,255,255,.14); --border-2:rgba(255,255,255,.07); --grid:#2e2a23; --axis:#443f36;
+  --gj:#c47d0a; --lg:#4a8ace; --top:#159876;
+  --gj-soft:rgba(196,125,10,.17); --lg-soft:rgba(74,138,206,.16); --top-soft:rgba(21,152,118,.16);
+  --bad:#e0656d; --bad-soft:rgba(224,101,109,.13);
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--page); color:var(--ink);
+  font:400 16.5px/1.7 "IBM Plex Sans",-apple-system,BlinkMacSystemFont,sans-serif;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+}
+.wrap{max-width:820px; margin:0 auto; padding-inline:var(--sp); padding-block:clamp(34px,7vw,64px) 96px}
+h1,h2,h3{font-family:"Newsreader",Georgia,serif; text-wrap:balance; margin:0}
+h1{font-size:clamp(32px,6.6vw,50px); line-height:1.14; letter-spacing:-.015em; font-weight:600}
+h2{font-size:clamp(22px,3.6vw,29px); line-height:1.26; font-weight:600; letter-spacing:-.01em}
+h3{font-size:18px; line-height:1.4; font-weight:600}
+p{margin:0}
+a{color:var(--gj)}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace; font-variant-numeric:tabular-nums}
+header{border-bottom:2px solid var(--ink); padding-bottom:26px; display:flex; flex-direction:column; gap:18px}
+.badge{align-self:flex-start; display:inline-flex; align-items:center; gap:8px;
+  font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.15em; font-weight:600;
+  text-transform:uppercase; color:var(--gj); border:1px solid var(--gj); border-radius:2px; padding:5px 10px}
+.sub{font-size:clamp(16px,2.4vw,18px); line-height:1.6; color:var(--ink-2); max-width:58ch}
+.meta{display:flex; flex-wrap:wrap; gap:6px 26px; font-size:12.5px; color:var(--muted);
+  border-top:1px solid var(--border-2); padding-top:16px}
+.meta b{color:var(--ink-2); font-weight:600}
+section{margin-top:clamp(44px,7vw,68px); display:flex; flex-direction:column; gap:20px}
+.secnum{display:flex; align-items:baseline; gap:12px}
+.secnum .n{font-family:"IBM Plex Mono",monospace; font-size:12px; font-weight:600; color:var(--gj);
+  border-bottom:2px solid var(--gj); padding-bottom:2px; flex:none}
+.lede{font-size:18px; line-height:1.62; color:var(--ink-2)}
+.body{display:flex; flex-direction:column; gap:16px; max-width:64ch}
+.body p{font-size:16px; line-height:1.72}
+strong{font-weight:600}
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(158px,1fr)); gap:1px;
+  background:var(--border); border:1px solid var(--border)}
+.stat{background:var(--surface); padding:16px 15px 15px; display:flex; flex-direction:column; gap:5px}
+.stat .k{font-size:11.5px; color:var(--muted); line-height:1.4}
+.stat .v{font-family:"IBM Plex Mono",monospace; font-size:26px; font-weight:600; line-height:1;
+  font-variant-numeric:tabular-nums; letter-spacing:-.02em}
+.stat .n{font-size:11.5px; color:var(--muted); line-height:1.4}
+.v.a{color:var(--gj)} .v.b{color:var(--bad)} .v.g{color:var(--top)}
+figure{margin:0; background:var(--surface); border:1px solid var(--border);
+  padding:20px clamp(14px,3vw,22px) 16px; display:flex; flex-direction:column; gap:14px}
+figcaption{display:flex; flex-direction:column; gap:5px}
+.figtitle{font-size:14.5px; font-weight:600; line-height:1.45}
+.fignote{font-size:12.5px; color:var(--muted); line-height:1.6}
+.chartbox{overflow-x:auto}
+svg{display:block; max-width:100%; height:auto}
+.legend{display:flex; flex-wrap:wrap; gap:7px 18px; font-size:12.5px; color:var(--ink-2)}
+.legend i{display:inline-block; width:11px; height:11px; border-radius:2px; margin-right:6px; vertical-align:-1px}
+text{font-family:"IBM Plex Sans",sans-serif}
+.tk{font-family:"IBM Plex Mono",monospace; font-size:11px; fill:var(--muted)}
+.lb{font-size:12px; fill:var(--ink-2)}
+.vl{font-family:"IBM Plex Mono",monospace; font-size:11.5px; font-weight:600; fill:var(--ink)}
+.em{font-weight:700; fill:var(--ink)}
+.tablebox{overflow-x:auto; border:1px solid var(--border); background:var(--surface)}
+table{border-collapse:collapse; width:100%; min-width:460px; font-size:13.5px}
+th,td{padding:9px 13px; text-align:right; border-bottom:1px solid var(--border-2); white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+thead th{font-size:11.5px; color:var(--muted); font-weight:600; background:var(--surface-2);
+  border-bottom:1px solid var(--border)}
+tbody td{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums}
+tbody td:first-child{font-family:"IBM Plex Sans",sans-serif}
+tr.mark td{background:var(--gj-soft); font-weight:600}
+tbody tr:last-child td{border-bottom:none}
+.call{border-left:3px solid var(--gj); background:var(--raise); padding:16px 18px;
+  display:flex; flex-direction:column; gap:8px}
+.call .t{font-family:"Newsreader",Georgia,serif; font-size:19px; font-weight:600; line-height:1.35}
+.call p{font-size:15px; line-height:1.66; color:var(--ink-2)}
+.warn{border-left-color:var(--muted)}
+.warn .t{color:var(--ink-2)}
+ul{margin:0; padding-left:19px; display:flex; flex-direction:column; gap:9px}
+li{font-size:15.5px; line-height:1.68; color:var(--ink-2)}
+li::marker{color:var(--muted)}
+footer{margin-top:64px; padding-top:22px; border-top:1px solid var(--border);
+  font-size:12.5px; color:var(--muted); line-height:1.72; display:flex; flex-direction:column; gap:10px}
+hr.rule{border:none; border-top:1px solid var(--border); margin:0}
+:focus-visible{outline:2px solid var(--gj); outline-offset:2px}
+</style>
+
+<div class="wrap">
+
+<header>
+  <span class="badge">What the data says · Gwangju FC</span>
+  <h1>Gwangju When Behind</h1>
+  <p class="sub">38,899 on-ball events from Gwangju's 27 matches, checked against 110 K League 1 matches.
+    The summer signings really did change what happens <strong>inside the box</strong>.
+    What never changed was <strong>the road to the box</strong> — and it narrowed further whenever the team fell behind.</p>
+  <div class="meta">
+    <span><b>Scope</b> Hana Bank K League 1 2026, rounds 1–27</span>
+    <span><b>Data</b> 38,899 raw events · 110-match league pool</span>
+    <span><b>Source</b> K League Data Portal, parsed directly</span>
+    <span><b>Notation</b> numbers in brackets are shirt numbers</span>
+  </div>
+</header>
+
+<section>
+  <p class="lede">The sentence you hear most about Gwangju is <em>“they survived on teenagers, then signed heavily in
+    summer and still can't win.”</em> The first half of that is confirmed by the data. The second half is
+    <strong>wrong.</strong> The signings worked, and performance genuinely improved. Exactly one thing did not.</p>
+
+  <div class="stats">
+    <div class="stat"><span class="k">Expected points / match</span><span class="v g">+33%</span><span class="n">0.72 → 0.96 after summer</span></div>
+    <div class="stat"><span class="k">Actual points / match</span><span class="v b">+0.03</span><span class="n">0.47 → 0.50 · flat</span></div>
+    <div class="stat"><span class="k">Final-third entries / match</span><span class="v">56.3 → 56.9</span><span class="n">unmoved across 27 matches</span></div>
+    <div class="stat"><span class="k">Middle-third progression</span><span class="v a">10.4%</span><span class="n">12th of 12 clubs</span></div>
+  </div>
+
+  <div class="body">
+    <p>This piece narrows in on that one thing, seven times. It starts with the conditions that were already
+      fixed before a ball was kicked, confirms what actually changed in July, breaks down why the change never
+      became points, and arrives at a single number that did not move once in twenty-seven matches.
+      It ends where the evidence shows that number is <strong>a choice, not a limitation</strong> — and then at the
+      point where this data can no longer answer.</p>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section>
+  <div class="secnum"><span class="n">01</span><h2>Decided before the season began</h2></div>
+  <div class="body">
+    <p>In September 2025 FIFA imposed a <strong>one-year registration ban</strong> on Gwangju; it lifted in June 2026.
+      Players could be signed but not fielded, and several waited half a season.
+      Park Won-jae (33), signed on 2 January, <strong>made his debut on 11 July</strong>.</p>
+    <p>Teenagers filled the gap. Park Seong-hyeon (28), 16, was on the pitch <strong>two days after signing a semi-pro
+      contract</strong>, setting the all-time K League 1 &amp; 2 record for youngest appearance (16 years, 8 months, 21 days).
+      Gong Bae-hyeon (26), an 18-year-old centre-back, played a full 90 in round 2.</p>
+  </div>
+
+  <figure>
+    <figcaption><span class="figtitle">Share of minutes given to under-19s — Gwangju used 8.5× the league average</span></figcaption>
+    <div class="chartbox">
+      <svg viewBox="0 0 700 268" role="img" aria-label="Bar chart of under-19 minutes share by club. Gwangju 7.68 percent, Seoul 5.30, Pohang 3.01, all others at or below 1.2 percent.">
+        <g class="tk">
+          <text x="112" y="252">0</text><text x="255" y="252">2%</text>
+          <text x="398" y="252">4%</text><text x="541" y="252">6%</text><text x="684" y="252">8%</text>
+        </g>
+        <g stroke="var(--grid)" stroke-width="1">
+          <line x1="255.5" y1="12" x2="255.5" y2="236"/><line x1="398.5" y1="12" x2="398.5" y2="236"/>
+          <line x1="541.5" y1="12" x2="541.5" y2="236"/><line x1="684.5" y1="12" x2="684.5" y2="236"/>
+        </g>
+        <line x1="112.5" y1="12" x2="112.5" y2="236" stroke="var(--axis)" stroke-width="1"/>
+        <g><text class="lb em" x="104" y="27" text-anchor="end">Gwangju</text>
+          <rect x="112" y="16" width="549" height="16" rx="4" fill="var(--gj)"><title>Gwangju 7.68%</title></rect>
+          <text class="vl" x="669" y="28">7.68%</text></g>
+        <g><text class="lb" x="104" y="50" text-anchor="end">Seoul</text>
+          <rect x="112" y="39" width="379" height="16" rx="4" fill="var(--lg)"><title>Seoul 5.30%</title></rect>
+          <text class="vl" x="499" y="51">5.30%</text></g>
+        <g><text class="lb" x="104" y="73" text-anchor="end">Pohang</text>
+          <rect x="112" y="62" width="215" height="16" rx="4" fill="var(--lg)"><title>Pohang 3.01%</title></rect>
+          <text class="vl" x="335" y="74">3.01%</text></g>
+        <g><text class="lb" x="104" y="96" text-anchor="end">Jeonbuk</text>
+          <rect x="112" y="85" width="84" height="16" rx="4" fill="var(--lg)"><title>Jeonbuk 1.17%</title></rect>
+          <text class="vl" x="204" y="97">1.17%</text></g>
+        <g><text class="lb" x="104" y="119" text-anchor="end">Anyang</text>
+          <rect x="112" y="108" width="19" height="16" rx="4" fill="var(--lg)"><title>Anyang 0.26%</title></rect>
+          <text class="vl" x="139" y="120">0.26%</text></g>
+        <g><text class="lb" x="104" y="142" text-anchor="end">Ulsan</text>
+          <rect x="112" y="131" width="12" height="16" rx="4" fill="var(--lg)"><title>Ulsan 0.16%</title></rect>
+          <text class="vl" x="132" y="143">0.16%</text></g>
+        <g><text class="lb" x="104" y="165" text-anchor="end">Jeju</text>
+          <rect x="112" y="154" width="5" height="16" rx="2" fill="var(--lg)"><title>Jeju 0.07%</title></rect>
+          <text class="vl" x="125" y="166">0.07%</text></g>
+        <g><text class="lb" x="104" y="188" text-anchor="end">Bucheon</text>
+          <rect x="112" y="177" width="3" height="16" rx="1.5" fill="var(--lg)"><title>Bucheon 0.04%</title></rect>
+          <text class="vl" x="123" y="189">0.04%</text></g>
+        <g><text class="lb" x="104" y="211" text-anchor="end">Incheon · Gimcheon</text>
+          <rect x="112" y="200" width="2" height="16" rx="1" fill="var(--lg)"><title>Incheon and Gimcheon 0.00%</title></rect>
+          <text class="vl" x="122" y="212">0.00%</text></g>
+        <g><text class="lb" x="104" y="234" text-anchor="end">Gangwon · Daejeon</text>
+          <rect x="112" y="223" width="2" height="16" rx="1" fill="var(--lg)"><title>Gangwon and Daejeon 0.00%</title></rect>
+          <text class="vl" x="122" y="235">0.00%</text></g>
+      </svg>
+    </div>
+    <p class="fignote">Minutes share = a club's total playing time taken by that age band. League pool of 110 matches
+      (11–27 matches covered per club). Twelve players aged 19 or under appeared in the league all season;
+      four of them were Gwangju's, and <strong>Gwangju alone accounted for 53.3% of all under-19 minutes played in the league.</strong></p>
+  </figure>
+
+  <div class="call">
+    <span class="t">Then the ban lifted, and the teenagers vanished</span>
+    <p>Under-19 minutes share fell from <span class="mono">12.98%</span> during the ban to <span class="mono">1.05%</span> after it —
+      a <strong>12.4-fold drop</strong>. Rounds 17 through 24 were <strong>eight consecutive matches at 0.0%</strong>,
+      and neither Gong Bae-hyeon (26) nor Kim Yun-ho (25) played a single minute across the final eleven fixtures.
+      That they disappeared the same week replacements arrived says the selection was
+      <strong>scarcity, not policy.</strong></p>
+  </div>
+  <p class="fignote">⚠ This is circumstantial. Injuries, opponent profiles and fitness are not in the data.
+    What the data shows is that <em>the timing lines up exactly</em>.</p>
+</section>
+
+<hr class="rule">
+
+<section>
+  <div class="secnum"><span class="n">02</span><h2>The signings worked — but not the way people assume</h2></div>
+  <div class="body">
+    <p>The common read is <em>“desperate for points, so they bought big men and went direct.”</em>
+      Fridjonsson (11) is 196cm, van Groonsven (4) 194cm, Aidyl (18) 188cm. The picture fits. The data says the opposite.</p>
+    <p>After July, Gwangju <strong>cut aerial duels by 25%</strong> (29.2 → 21.8 per match) and roughly halved the
+      share of box shots that came straight off a cross, from <strong>35.2% to 19.4%</strong>.
+      Average pass length (17.8 → 18.2m) and long-ball share (11.4 → 11.6%) barely moved.
+      They did not go direct — they went <strong>shorter, inside the box</strong>.</p>
+    <p>The roles bear this out. The only genuine aerial target is Fridjonsson (111 aerial duels, 59% won),
+      and he <strong>was not a summer signing</strong> — he had been there since round 1, and his minutes
+      actually fell afterwards. Aidyl (18) wins 32% of his aerials, which is not a target man's number.
+      Ba Loua (50), with 29 crosses and 4 aerial duels, is <strong>a winger</strong>.</p>
+  </div>
+
+  <figure>
+    <figcaption><span class="figtitle">What changed when the same opponents came round again</span></figcaption>
+    <div class="chartbox">
+      <svg viewBox="0 0 700 232" role="img" aria-label="Change chart. Shots up 26 percent, expected goals up 49 percent, goals conceded down 28 percent, final-third entries unchanged.">
+        <line x1="350.5" y1="14" x2="350.5" y2="196" stroke="var(--axis)" stroke-width="1"/>
+        <text class="tk" x="350" y="212" text-anchor="middle">no change</text>
+        <g class="tk"><text x="180" y="212" text-anchor="middle">−50%</text><text x="520" y="212" text-anchor="middle">+50%</text></g>
+        <g stroke="var(--grid)" stroke-width="1" stroke-dasharray="2 3">
+          <line x1="180.5" y1="14" x2="180.5" y2="196"/><line x1="520.5" y1="14" x2="520.5" y2="196"/>
+        </g>
+        <g><text class="lb" x="164" y="34" text-anchor="end">Shots</text>
+          <rect x="350" y="22" width="177" height="18" rx="4" fill="var(--top)"><title>Shots 7.5 to 9.5 per match, +26%</title></rect>
+          <text class="vl" x="535" y="35">+26%</text>
+          <text class="tk" x="358" y="35" fill="var(--surface)">7.5 → 9.5</text></g>
+        <g><text class="lb" x="164" y="76" text-anchor="end">Expected goals</text>
+          <rect x="350" y="64" width="333" height="18" rx="4" fill="var(--top)"><title>xG 0.70 to 1.05 per match, +49%</title></rect>
+          <text class="vl" x="336" y="77" text-anchor="end">0.70 → 1.05</text>
+          <text class="vl" x="643" y="77" fill="var(--surface)">+49%</text></g>
+        <g><text class="lb" x="164" y="118" text-anchor="end">Goals conceded</text>
+          <rect x="160" y="106" width="190" height="18" rx="4" fill="var(--top)"><title>Goals conceded 2.54 to 1.83 per match, -28%</title></rect>
+          <text class="vl" x="168" y="119" fill="var(--surface)">−28%</text>
+          <text class="vl" x="364" y="119">2.54 → 1.83</text></g>
+        <g><text class="lb em" x="164" y="160" text-anchor="end">Final-third entries</text>
+          <rect x="347" y="148" width="7" height="18" rx="2" fill="var(--gj)"><title>Final-third entries 57.0 to 56.9, unchanged</title></rect>
+          <text class="vl em" x="364" y="161">57.0 → 56.9 &#160;&#160;±0%</text></g>
+        <g><text class="lb" x="164" y="188" text-anchor="end">Progression / entry ratio</text>
+          <rect x="347" y="176" width="7" height="18" rx="2" fill="var(--gj)"><title>Middle-third progression per entry, 0.11 to 0.11</title></rect>
+          <text class="vl em" x="364" y="189">0.11 → 0.11 &#160;&#160;±0%</text></g>
+      </svg>
+    </div>
+    <p class="fignote">Restricted to the 10 clubs Gwangju played in both halves of the season — 25 matches — so opponent
+      identity is held constant. ⚠ Opponent form and home/away balance are not controlled.</p>
+  </figure>
+
+  <div class="call">
+    <span class="t">The direction of the recruitment was right</span>
+    <p>Shots inside the box rose from <span class="mono">3.6 to 6.0 per match (+67%)</span>,
+      expected goals per shot from <span class="mono">0.091 to 0.110 (+21%)</span>,
+      and the share of shots on target from <span class="mono">32.4% to 40.4%</span>.
+      <strong>A wide crosser, a box finisher and a ball-playing centre-back</strong> did what that combination should do.</p>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section>
+  <div class="secnum"><span class="n">03</span><h2>And the points never came</h2></div>
+  <div class="body">
+    <p>Expected points per match rose <strong>from 0.72 to 0.96, up 33%.</strong>
+      Actual points went from 0.47 to 0.50. The gap between the two <strong>widened, from −0.25 to −0.46.</strong></p>
+    <p>To test whether that is simply bad luck, I built <strong>88 rolling 12-match windows</strong> across ten clubs
+      and computed the same gap for each. Gwangju's second-half figure of −0.46 sat in the
+      <strong>bottom 4.5%</strong> — and more tellingly, <strong>seven of the eight worst windows in the entire league were Gwangju's.</strong>
+      Short-run misfortune scatters across teams. This does not.</p>
+  </div>
+
+  <figure>
+    <figcaption><span class="figtitle">The losses came in the good matches, not the bad ones</span></figcaption>
+    <div class="chartbox">
+      <svg viewBox="0 0 700 226" role="img" aria-label="Expected versus actual points by match type. When ahead on xG, 1.85 expected against 0.67 actual across three matches.">
+        <g class="tk"><text x="196" y="206">0</text><text x="326" y="206">1.0</text><text x="456" y="206">2.0</text></g>
+        <g stroke="var(--grid)" stroke-width="1">
+          <line x1="326.5" y1="16" x2="326.5" y2="190"/><line x1="456.5" y1="16" x2="456.5" y2="190"/>
+        </g>
+        <line x1="196.5" y1="16" x2="196.5" y2="190" stroke="var(--axis)" stroke-width="1"/>
+        <g><text class="lb em" x="188" y="34" text-anchor="end">Ahead on xG</text>
+          <text class="tk" x="188" y="48" text-anchor="end">3 matches · 0W 2D 1L</text>
+          <rect x="196" y="22" width="240" height="14" rx="4" fill="var(--lg)"><title>Expected points 1.85</title></rect>
+          <text class="vl" x="444" y="33">1.85</text>
+          <rect x="196" y="40" width="87" height="14" rx="4" fill="var(--gj)"><title>Actual points 0.67</title></rect>
+          <text class="vl" x="291" y="51">0.67</text>
+          <text class="vl" x="530" y="43" fill="var(--bad)">−1.18</text></g>
+        <g><text class="lb em" x="188" y="90" text-anchor="end">Even</text>
+          <text class="tk" x="188" y="104" text-anchor="end">4 matches · 0W 2D 2L</text>
+          <rect x="196" y="78" width="176" height="14" rx="4" fill="var(--lg)"><title>Expected points 1.35</title></rect>
+          <text class="vl" x="380" y="89">1.35</text>
+          <rect x="196" y="96" width="65" height="14" rx="4" fill="var(--gj)"><title>Actual points 0.50</title></rect>
+          <text class="vl" x="269" y="107">0.50</text>
+          <text class="vl" x="530" y="99" fill="var(--bad)">−0.85</text></g>
+        <g><text class="lb em" x="188" y="146" text-anchor="end">Behind on xG</text>
+          <text class="tk" x="188" y="160" text-anchor="end">20 matches · 1W 6D 13L</text>
+          <rect x="196" y="134" width="74" height="14" rx="4" fill="var(--lg)"><title>Expected points 0.57</title></rect>
+          <text class="vl" x="278" y="145">0.57</text>
+          <rect x="196" y="152" width="59" height="14" rx="4" fill="var(--gj)"><title>Actual points 0.45</title></rect>
+          <text class="vl" x="263" y="163">0.45</text>
+          <text class="vl" x="530" y="155">−0.12</text></g>
+        <text class="tk" x="530" y="181">gap vs expected</text>
+      </svg>
+    </div>
+    <div class="legend">
+      <span><i style="background:var(--lg)"></i>Expected points (from xG)</span>
+      <span><i style="background:var(--gj)"></i>Actual points</span>
+    </div>
+    <p class="fignote">Expected points from a Poisson simulation on each match's xG. Actual results taken from official
+      match reports, not from event data. <strong>In the matches they were outplayed, they got roughly what they deserved.
+      Everything was lost in the seven matches they were level or on top.</strong></p>
+  </figure>
+
+  <div class="body">
+    <p>The leakage narrows to three places.</p>
+    <ul>
+      <li><strong>Finishing</strong> — <span class="mono">21.0%</span> of Gwangju's shots on target became goals, last in the
+        league (average 29.6%). Expected goals per shot on target, 0.135, sits <em>mid-table</em>, so this is conversion,
+        not shot quality. The hole is specific: <strong>one goal from fourteen shots on target inside the six-yard area (7.1%)</strong>,
+        where the league converts 49.3%.</li>
+      <li><strong>Box defending</strong> — when an opponent got a shot on target from central penalty area,
+        <span class="mono">57.1%</span> went in, the worst rate in the league (average 34.8%).
+        A defender intervened in the moment before the shot in only 16.8% of cases, against 22.8% league-wide.</li>
+      <li><strong>Leads dropped</strong> — five matches, worth up to twelve points.
+        Against Gangwon in round 25, a 2–0 lead was lost <strong>in ninety seconds</strong>, in the 87th and 88th minutes.</li>
+    </ul>
+    <p>Red cards, by contrast, <strong>are not the explanation.</strong> All three came in two matches, and the other
+      25 matches still yield only 0.52 points per game.</p>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section>
+  <div class="secnum"><span class="n">04</span><h2>The one number that never moved</h2></div>
+  <div class="body">
+    <p>That is the <em>result</em>. Now the <em>structure</em>.</p>
+    <p>While twelve players debuted, the attacking signature changed and the box improved,
+      <strong>final-third entries stayed at 56.3 then 56.9 per match.</strong>
+      The share of middle-third possession that gets pushed forward went
+      <span class="mono">0.11 → 0.11</span> — identical to two decimal places.</p>
+  </div>
+
+  <figure>
+    <figcaption><span class="figtitle">Where the ball goes in an average match — the bottleneck is one place</span></figcaption>
+    <div class="chartbox">
+      <svg viewBox="0 0 700 216" role="img" aria-label="Pitch diagram split into thirds. 179.9 passes enter the middle third per match, 19.5 progress to the final third, 32.4 are lost.">
+        <rect x="8" y="14" width="684" height="150" fill="none" stroke="var(--axis)" stroke-width="1.5"/>
+        <line x1="236" y1="14" x2="236" y2="164" stroke="var(--axis)" stroke-width="1" stroke-dasharray="4 4"/>
+        <line x1="464" y1="14" x2="464" y2="164" stroke="var(--axis)" stroke-width="1" stroke-dasharray="4 4"/>
+        <circle cx="350" cy="89" r="26" fill="none" stroke="var(--axis)" stroke-width="1"/>
+        <rect x="8" y="54" width="42" height="70" fill="none" stroke="var(--axis)" stroke-width="1"/>
+        <rect x="650" y="54" width="42" height="70" fill="none" stroke="var(--axis)" stroke-width="1"/>
+        <text class="tk" x="122" y="32" text-anchor="middle">defensive third</text>
+        <text class="tk" x="350" y="32" text-anchor="middle">middle third</text>
+        <text class="tk" x="578" y="32" text-anchor="middle">final third</text>
+        <path d="M108 89 L226 89" stroke="var(--lg)" stroke-width="14" stroke-linecap="round" opacity=".85"/>
+        <text class="vl" x="167" y="80" text-anchor="middle">179.9</text>
+        <text class="tk" x="167" y="112" text-anchor="middle">entries</text>
+        <path d="M474 89 L560 89" stroke="var(--gj)" stroke-width="4" stroke-linecap="round"/>
+        <text class="vl em" x="517" y="80" text-anchor="middle">19.5</text>
+        <text class="tk" x="517" y="112" text-anchor="middle">progressions</text>
+        <path d="M350 108 L350 152" stroke="var(--bad)" stroke-width="7" stroke-linecap="round" opacity=".85"/>
+        <text class="vl" x="362" y="150" fill="var(--bad)">32.4 lost</text>
+        <text class="vl em" x="350" y="93" text-anchor="middle" font-size="15">0.11</text>
+        <text class="tk" x="350" y="64" text-anchor="middle">out / in</text>
+        <text class="lb" x="8" y="196">During the ban (R1–15) 0.11 &#160;·&#160; after it (R16–27) 0.11 — unchanged after twelve new players</text>
+      </svg>
+    </div>
+    <p class="fignote">Thirds are the pitch divided lengthwise into three, with attacking direction normalised.
+      Figures are per match, rounds 16–27.</p>
+  </figure>
+</section>
+
+<hr class="rule">
+
+<section>
+  <div class="secnum"><span class="n">05</span><h2>What that number is</h2></div>
+  <div class="body">
+    <p>The share of successful middle-third passes that reach the final third —
+      <strong>Gwangju's 10.4% ranks 12th of 12.</strong>
+      Yet their <em>volume</em> of middle-third passing, 198.3 per match, ranks <strong>7th</strong>.
+      They touch the ball plenty. It just doesn't go forward.</p>
+  </div>
+
+  <figure>
+    <figcaption><span class="figtitle">Middle third to final third: progression rate, all twelve clubs</span></figcaption>
+    <div class="chartbox">
+      <svg viewBox="0 0 700 300" role="img" aria-label="Bar chart of middle-third progression rate by club. Gangwon 17.2 percent highest, Gwangju 10.4 percent lowest.">
+        <g class="tk">
+          <text x="96" y="286">0</text><text x="234" y="286">5%</text><text x="372" y="286">10%</text>
+          <text x="510" y="286">15%</text><text x="648" y="286">20%</text>
+        </g>
+        <g stroke="var(--grid)" stroke-width="1">
+          <line x1="234.5" y1="10" x2="234.5" y2="270"/><line x1="372.5" y1="10" x2="372.5" y2="270"/>
+          <line x1="510.5" y1="10" x2="510.5" y2="270"/><line x1="648.5" y1="10" x2="648.5" y2="270"/>
+        </g>
+        <line x1="96.5" y1="10" x2="96.5" y2="270" stroke="var(--axis)" stroke-width="1"/>
+        <line x1="466.5" y1="4" x2="466.5" y2="276" stroke="var(--ink-2)" stroke-width="1" stroke-dasharray="3 3"/>
+        <text class="tk" x="470" y="10" fill="var(--ink-2)">league average 13.4%</text>
+        <g><text class="lb" x="88" y="26" text-anchor="end">Gangwon</text><rect x="96" y="15" width="475" height="15" rx="4" fill="var(--top)"><title>Gangwon 17.2%</title></rect><text class="vl" x="579" y="27">17.2%</text></g>
+        <g><text class="lb" x="88" y="47" text-anchor="end">Seoul</text><rect x="96" y="36" width="455" height="15" rx="4" fill="var(--top)"><title>Seoul 16.5%</title></rect><text class="vl" x="559" y="48">16.5%</text></g>
+        <g><text class="lb" x="88" y="68" text-anchor="end">Jeju</text><rect x="96" y="57" width="386" height="15" rx="4" fill="var(--lg)"><title>Jeju 14.0%</title></rect><text class="vl" x="490" y="69">14.0%</text></g>
+        <g><text class="lb" x="88" y="89" text-anchor="end">Incheon</text><rect x="96" y="78" width="386" height="15" rx="4" fill="var(--lg)"><title>Incheon 14.0%</title></rect><text class="vl" x="490" y="90">14.0%</text></g>
+        <g><text class="lb" x="88" y="110" text-anchor="end">Ulsan</text><rect x="96" y="99" width="375" height="15" rx="4" fill="var(--lg)"><title>Ulsan 13.6%</title></rect><text class="vl" x="479" y="111">13.6%</text></g>
+        <g><text class="lb" x="88" y="131" text-anchor="end">Daejeon</text><rect x="96" y="120" width="353" height="15" rx="4" fill="var(--lg)"><title>Daejeon 12.8%</title></rect><text class="vl" x="457" y="132">12.8%</text></g>
+        <g><text class="lb" x="88" y="152" text-anchor="end">Bucheon</text><rect x="96" y="141" width="351" height="15" rx="4" fill="var(--lg)"><title>Bucheon 12.7%</title></rect><text class="vl" x="455" y="153">12.7%</text></g>
+        <g><text class="lb" x="88" y="173" text-anchor="end">Anyang</text><rect x="96" y="162" width="331" height="15" rx="4" fill="var(--lg)"><title>Anyang 12.0%</title></rect><text class="vl" x="435" y="174">12.0%</text></g>
+        <g><text class="lb" x="88" y="194" text-anchor="end">Gimcheon</text><rect x="96" y="183" width="329" height="15" rx="4" fill="var(--lg)"><title>Gimcheon 11.9%</title></rect><text class="vl" x="433" y="195">11.9%</text></g>
+        <g><text class="lb" x="88" y="215" text-anchor="end">Jeonbuk</text><rect x="96" y="204" width="323" height="15" rx="4" fill="var(--lg)"><title>Jeonbuk 11.7%</title></rect><text class="vl" x="427" y="216">11.7%</text></g>
+        <g><text class="lb" x="88" y="236" text-anchor="end">Pohang</text><rect x="96" y="225" width="298" height="15" rx="4" fill="var(--lg)"><title>Pohang 10.8%</title></rect><text class="vl" x="402" y="237">10.8%</text></g>
+        <g><text class="lb em" x="88" y="257" text-anchor="end">Gwangju</text><rect x="96" y="246" width="287" height="15" rx="4" fill="var(--gj)"><title>Gwangju 10.4%</title></rect><text class="vl em" x="391" y="258">10.4%</text></g>
+      </svg>
+    </div>
+    <p class="fignote">110-match league pool. Coverage per club ranges from 11 to 27 matches; the small-sample clubs move around more.</p>
+  </figure>
+
+  <div class="body">
+    <p>One popular diagnosis can be dismissed first. <em>“The centre-backs hog the middle third, so nothing goes forward”</em>
+      does not hold. Incheon (56.4%), Seoul (55.8%) and Pohang (56.1%) all give their defenders as much of the middle third
+      as Gwangju do (54.8%). <strong>The correlation between defender share and team progression rate is r = +0.20 — effectively none.</strong></p>
+    <p>What separates the clubs is <strong>whether those defenders play forward.</strong></p>
+  </div>
+
+  <div class="tablebox">
+    <table>
+      <caption class="fignote" style="text-align:left;padding:11px 13px 0">Defenders in the middle third — same share of the ball, different use of it</caption>
+      <thead><tr><th>Club</th><th>Defender share</th><th>Defender progression</th><th>Team progression</th></tr></thead>
+      <tbody>
+        <tr><td>Gangwon</td><td>53.2%</td><td>16.4%</td><td>17.2%</td></tr>
+        <tr><td>Seoul</td><td>55.8%</td><td>16.2%</td><td>16.5%</td></tr>
+        <tr><td>Incheon</td><td>56.4%</td><td>13.6%</td><td>14.0%</td></tr>
+        <tr><td>Ulsan</td><td>50.3%</td><td>13.2%</td><td>13.6%</td></tr>
+        <tr><td>Jeju</td><td>51.6%</td><td>12.9%</td><td>14.0%</td></tr>
+        <tr><td>Jeonbuk</td><td>48.6%</td><td>9.9%</td><td>11.7%</td></tr>
+        <tr><td>Pohang</td><td>56.1%</td><td>9.8%</td><td>10.8%</td></tr>
+        <tr class="mark"><td>Gwangju</td><td>54.8%</td><td>8.7%</td><td>10.4%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="call">
+    <span class="t">And Gwangju have no axis</span>
+    <p>The top three ball-users in the middle third account for 43.3% of it at Seoul, 41.6% at Incheon and 37.9% at Gangwon.
+      <strong>At Gwangju it is 25.7% — the most dispersed in the league.</strong>
+      Yet those three Gwangju players progress at 13.8%, which is fourth-best in the division.
+      <strong>The ball never concentrates on the people who move it forward; the other 74% of it circulates at around 9%.</strong>
+      (Concentration vs team progression rate: r = +0.58.)</p>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section>
+  <div class="secnum"><span class="n">06</span><h2>The decisive evidence: what happens when they go behind</h2></div>
+  <div class="body">
+    <p>One check was needed first. Gwangju play <strong>46.7% of their middle-third passes while losing</strong>
+      (league: 25.8%), and only 3.7% while ahead (league: 18.8%).
+      With a distribution that skewed, any average is distorted. So I recomputed everything
+      <strong>split by score state.</strong></p>
+    <p>The result was not what I expected. League teams <strong>raise</strong> their progression rate when behind —
+      defenders go from 10.6% at level to 14.2% when losing, <strong>+3.6 points</strong>.
+      Gwangju's midfielders behave normally, 12.2% to 15.0%.
+      <strong>Only Gwangju's defenders go the other way: 10.0% down to 7.4%.</strong></p>
+  </div>
+
+  <figure>
+    <figcaption><span class="figtitle">Progression from the middle third: level score versus losing</span></figcaption>
+    <div class="chartbox">
+      <svg viewBox="0 0 700 292" role="img" aria-label="Slope chart. League defenders rise from 10.6 to 14.2 percent, Gwangju midfielders rise from 12.2 to 15.0, Gwangju defenders fall from 10.0 to 7.4 percent.">
+        <g stroke="var(--grid)" stroke-width="1">
+          <line x1="200" y1="40" x2="500" y2="40"/><line x1="200" y1="100" x2="500" y2="100"/>
+          <line x1="200" y1="160" x2="500" y2="160"/><line x1="200" y1="220" x2="500" y2="220"/>
+        </g>
+        <g class="tk" text-anchor="end">
+          <text x="192" y="44">16%</text><text x="192" y="104">13%</text>
+          <text x="192" y="164">10%</text><text x="192" y="224">7%</text>
+        </g>
+        <line x1="200.5" y1="26" x2="200.5" y2="238" stroke="var(--axis)" stroke-width="1"/>
+        <line x1="499.5" y1="26" x2="499.5" y2="238" stroke="var(--axis)" stroke-width="1"/>
+        <text class="lb" x="200" y="262" text-anchor="middle">level</text>
+        <text class="lb" x="500" y="262" text-anchor="middle">losing</text>
+        <line x1="200" y1="148" x2="500" y2="76" stroke="var(--lg)" stroke-width="2.5"/>
+        <circle cx="200" cy="148" r="5.5" fill="var(--lg)" stroke="var(--surface)" stroke-width="2"><title>League defenders, level, 10.6%</title></circle>
+        <circle cx="500" cy="76" r="5.5" fill="var(--lg)" stroke="var(--surface)" stroke-width="2"><title>League defenders, losing, 14.2%</title></circle>
+        <text class="vl" x="190" y="152" text-anchor="end" fill="var(--lg)">10.6</text>
+        <text class="vl" x="512" y="72" fill="var(--lg)">14.2%</text>
+        <text class="lb" x="512" y="88" fill="var(--lg)">League defenders &#160;+3.6</text>
+        <line x1="200" y1="116" x2="500" y2="60" stroke="var(--top)" stroke-width="2.5" stroke-dasharray="6 4"/>
+        <circle cx="200" cy="116" r="5.5" fill="var(--top)" stroke="var(--surface)" stroke-width="2"><title>Gwangju midfielders, level, 12.2%</title></circle>
+        <circle cx="500" cy="60" r="5.5" fill="var(--top)" stroke="var(--surface)" stroke-width="2"><title>Gwangju midfielders, losing, 15.0%</title></circle>
+        <text class="vl" x="190" y="120" text-anchor="end" fill="var(--top)">12.2</text>
+        <text class="vl" x="512" y="56" fill="var(--top)">15.0%</text>
+        <text class="lb" x="512" y="44" fill="var(--top)">Gwangju midfielders &#160;+2.8</text>
+        <line x1="200" y1="160" x2="500" y2="212" stroke="var(--gj)" stroke-width="3.5"/>
+        <circle cx="200" cy="160" r="6.5" fill="var(--gj)" stroke="var(--surface)" stroke-width="2"><title>Gwangju defenders, level, 10.0%</title></circle>
+        <circle cx="500" cy="212" r="6.5" fill="var(--gj)" stroke="var(--surface)" stroke-width="2"><title>Gwangju defenders, losing, 7.4%</title></circle>
+        <text class="vl" x="190" y="164" text-anchor="end" fill="var(--gj)">10.0</text>
+        <text class="vl em" x="512" y="210" fill="var(--gj)">7.4%</text>
+        <text class="lb em" x="512" y="226" fill="var(--gj)">Gwangju defenders &#160;−2.6</text>
+      </svg>
+    </div>
+    <p class="fignote">Sample: league defenders 11,024 passes level and 5,378 behind; Gwangju defenders 1,426 and 1,419.
+      Score state evaluated at the moment of each pass.</p>
+  </figure>
+
+  <div class="call">
+    <span class="t">This is not one player's habit</span>
+    <p><strong>Seven of Gwangju's nine defenders progress less when the team is losing.</strong>
+      Kim Jin-ho (27) −7.5, João Pedro (17) −5.5, Ha Seung-un (9) −2.8, van Groonsven (4) −2.8,
+      Min Sang-gi (39) −2.1, Kim Yong-hyeok (24) −2.1, Gong Bae-hyeon (26) −1.4 percentage points.
+      Only Kwon Seong-yun (22) (+7.1) and An Yeong-gyu (6) (+0.5) go the other way.
+      <strong>Individual temperament does not line up in one direction like that.</strong></p>
+  </div>
+
+  <div class="body">
+    <p>And this has a familiar face elsewhere in the season. In the first fifteen minutes after half-time
+      <em>while already losing</em>, Gwangju concede at <strong>2.07 times</strong> their own losing-state average.
+      In the phase where they have to chase, they cannot get forward and they open up behind.
+      Both numbers look like one thing: <strong>there is no plan for the chasing phase.</strong></p>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section>
+  <div class="secnum"><span class="n">07</span><h2>A choice, not a limitation</h2></div>
+  <div class="body">
+    <p>One last check: are Gwangju's defenders <strong>unable</strong> to play forward, or do they <strong>choose not to</strong>?</p>
+    <p>Compare only passes attempted at the same distance from the same lane and
+      <strong>Gwangju's defenders match the league or beat it</strong> — 27.1% against 18.0% for 25–35m passes started centrally.
+      The technique is not the problem. The difference is in <strong>which direction they decide to hit.</strong></p>
+  </div>
+
+  <figure>
+    <figcaption><span class="figtitle">Where a defender's 15–25m pass goes</span></figcaption>
+    <div class="chartbox">
+      <svg viewBox="0 0 700 234" role="img" aria-label="Stacked bars of pass direction. Seoul plays forward 54.5 percent, Gangwon 48.9, Ulsan 48.7, Gwangju 40.8 percent with 43.8 percent backwards.">
+        <g class="tk">
+          <text x="150" y="222">0</text><text x="270" y="222">25%</text><text x="390" y="222">50%</text>
+          <text x="510" y="222">75%</text><text x="630" y="222">100%</text>
+        </g>
+        <line x1="150.5" y1="14" x2="150.5" y2="206" stroke="var(--axis)" stroke-width="1"/>
+        <g><text class="lb" x="142" y="34" text-anchor="end">Seoul</text>
+          <rect x="150" y="20" width="161" height="24" rx="4" fill="var(--lg-soft)" stroke="var(--lg)" stroke-width="1"><title>Seoul backwards 33.6%</title></rect>
+          <rect x="315" y="20" width="57" height="24" rx="4" fill="var(--surface-2)" stroke="var(--axis)" stroke-width="1"><title>Seoul sideways 11.9%</title></rect>
+          <rect x="376" y="20" width="262" height="24" rx="4" fill="var(--top)"><title>Seoul forwards 54.5%</title></rect>
+          <text class="vl" x="507" y="37" text-anchor="middle" fill="var(--surface)">54.5%</text>
+          <text class="tk" x="230" y="37" text-anchor="middle">33.6%</text></g>
+        <g><text class="lb" x="142" y="70" text-anchor="end">Gangwon</text>
+          <rect x="150" y="56" width="185" height="24" rx="4" fill="var(--lg-soft)" stroke="var(--lg)" stroke-width="1"><title>Gangwon backwards 38.6%</title></rect>
+          <rect x="339" y="56" width="60" height="24" rx="4" fill="var(--surface-2)" stroke="var(--axis)" stroke-width="1"><title>Gangwon sideways 12.5%</title></rect>
+          <rect x="403" y="56" width="235" height="24" rx="4" fill="var(--top)"><title>Gangwon forwards 48.9%</title></rect>
+          <text class="vl" x="520" y="73" text-anchor="middle" fill="var(--surface)">48.9%</text>
+          <text class="tk" x="242" y="73" text-anchor="middle">38.6%</text></g>
+        <g><text class="lb" x="142" y="106" text-anchor="end">Ulsan</text>
+          <rect x="150" y="92" width="192" height="24" rx="4" fill="var(--lg-soft)" stroke="var(--lg)" stroke-width="1"><title>Ulsan backwards 40.1%</title></rect>
+          <rect x="346" y="92" width="54" height="24" rx="4" fill="var(--surface-2)" stroke="var(--axis)" stroke-width="1"><title>Ulsan sideways 11.2%</title></rect>
+          <rect x="404" y="92" width="234" height="24" rx="4" fill="var(--top)"><title>Ulsan forwards 48.7%</title></rect>
+          <text class="vl" x="521" y="109" text-anchor="middle" fill="var(--surface)">48.7%</text>
+          <text class="tk" x="246" y="109" text-anchor="middle">40.1%</text></g>
+        <g><text class="lb em" x="142" y="142" text-anchor="end">Gwangju</text>
+          <rect x="150" y="128" width="210" height="24" rx="4" fill="var(--gj-soft)" stroke="var(--gj)" stroke-width="1.5"><title>Gwangju backwards 43.8%</title></rect>
+          <rect x="364" y="128" width="74" height="24" rx="4" fill="var(--surface-2)" stroke="var(--axis)" stroke-width="1"><title>Gwangju sideways 15.4%</title></rect>
+          <rect x="442" y="128" width="196" height="24" rx="4" fill="var(--gj)"><title>Gwangju forwards 40.8%</title></rect>
+          <text class="vl em" x="540" y="145" text-anchor="middle" fill="var(--surface)">40.8%</text>
+          <text class="vl em" x="255" y="145" text-anchor="middle" fill="var(--gj)">43.8%</text></g>
+        <text class="lb" x="150" y="182">Metres gained per pass &#160;Seoul <tspan class="vl">+2.63</tspan>&#160;·&#160;Ulsan <tspan class="vl">+1.55</tspan>&#160;·&#160;Gangwon <tspan class="vl">+1.36</tspan>&#160;·&#160;Gwangju <tspan class="vl em" fill="var(--gj)">+0.24</tspan></text>
+        <text class="tk" x="150" y="200">Progression rate &#160;Seoul 14.8% · Gangwon 14.7% · Ulsan 11.1% · Gwangju 8.4%</text>
+      </svg>
+    </div>
+    <div class="legend">
+      <span><i style="background:var(--lg-soft);border:1px solid var(--lg)"></i>backwards (more than 2m lost)</span>
+      <span><i style="background:var(--surface-2);border:1px solid var(--axis)"></i>sideways (within ±2m)</span>
+      <span><i style="background:var(--top)"></i>forwards (more than 2m gained)</span>
+    </div>
+    <p class="fignote">Defenders' 15–25m passes started in the middle third. Gwangju n = 1,130 · Ulsan 932 · Seoul 453 · Gangwon 409.
+      This distance band is roughly 39% of all defender passing.</p>
+  </figure>
+
+  <div class="call">
+    <span class="t">And when the league goes behind, it doesn't play different passes</span>
+    <p>When league teams lift their progression rate while losing, pass length (16.2 → 16.4m), the mix of distances
+      and the target lanes all stay essentially the same.
+      What changes is <strong>how often the same pass gets through</strong> — 10.7% to 14.7% at 15–25m,
+      59.3% to 73.4% beyond 35m. Metres gained per pass triples, <span class="mono">+0.62 → +1.81</span>.
+      In other words, <strong>the players ahead of the ball push up and offer.</strong>
+      In that same band Gwangju go the other way, 5.6% down to 5.0%.</p>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section>
+  <div class="secnum"><span class="n">08</span><h2>How big is the gap</h2></div>
+  <div class="body">
+    <p>The weight of a single metric is easiest to judge by moving only that metric.
+      Hold everything else fixed and shift <strong>only the defenders' progression rate</strong> to the league average.</p>
+  </div>
+
+  <figure>
+    <figcaption><span class="figtitle">Moving defender progression alone — estimated final-third entries per match</span></figcaption>
+    <div class="chartbox">
+      <svg viewBox="0 0 700 182" role="img" aria-label="Scenario bars. Current 20.7 entries per match, league-average defender progression 25.0, top-of-league 32.7.">
+        <g class="tk"><text x="176" y="168">0</text><text x="316" y="168">10</text><text x="456" y="168">20</text><text x="596" y="168">30</text></g>
+        <g stroke="var(--grid)" stroke-width="1">
+          <line x1="316.5" y1="14" x2="316.5" y2="152"/><line x1="456.5" y1="14" x2="456.5" y2="152"/><line x1="596.5" y1="14" x2="596.5" y2="152"/>
+        </g>
+        <line x1="176.5" y1="14" x2="176.5" y2="152" stroke="var(--axis)" stroke-width="1"/>
+        <g><text class="lb em" x="168" y="36" text-anchor="end">Current</text>
+          <text class="tk" x="168" y="50" text-anchor="end">defender progression 8.7%</text>
+          <rect x="176" y="24" width="290" height="22" rx="4" fill="var(--gj)"><title>Current 20.7 entries per match</title></rect>
+          <text class="vl" x="474" y="40">20.7</text></g>
+        <g><text class="lb" x="168" y="88" text-anchor="end">League average</text>
+          <text class="tk" x="168" y="102" text-anchor="end">defender progression 12.0%</text>
+          <rect x="176" y="76" width="350" height="22" rx="4" fill="var(--lg)"><title>League average scenario, 25.0 entries per match</title></rect>
+          <text class="vl" x="534" y="92">25.0 &#160;<tspan fill="var(--top)">+21%</tspan></text></g>
+        <g><text class="lb" x="168" y="140" text-anchor="end">Top of the league</text>
+          <text class="tk" x="168" y="154" text-anchor="end">defender progression 16.4%</text>
+          <rect x="176" y="128" width="458" height="22" rx="4" fill="var(--top)"><title>Top-of-league scenario, 32.7 entries per match</title></rect>
+          <text class="vl" x="642" y="144" text-anchor="end" fill="var(--surface)">32.7 &#160;+58%</text></g>
+      </svg>
+    </div>
+    <p class="fignote">⚠ This is <strong>arithmetic, not a projection</strong>. Opponent response and structural knock-on effects are not
+      modelled. Read it as <strong>the leverage this one metric carries</strong>, not as “this is how much they would improve”.</p>
+  </figure>
+
+  <div class="body">
+    <p>By the same logic, Gwangju's current strengths make poor improvement targets.
+      <strong>Leading the league in blocks at 17.19 per match</strong> is not a good sign —
+      it means that many shots were allowed. Clearances say the same thing.
+      At this club the number that has to rise is not how much they stop, but <strong>how much they send.</strong></p>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section>
+  <div class="secnum"><span class="n">09</span><h2>Where the data stops</h2></div>
+  <div class="body">
+    <p>Seven narrowings later, one question remains.</p>
+  </div>
+
+  <div class="call">
+    <span class="t">Was there no one to pass to, or was there and they didn't?</span>
+    <p>Those three to five seconds after a Gwangju defender takes the ball in the middle third.
+      If nobody was ahead of him, it is <strong>an off-ball problem</strong>.
+      If somebody was and the ball still went sideways, it is <strong>a decision-and-instruction problem</strong>.
+      The remedies are completely different — and <strong>event data cannot tell them apart</strong>,
+      because a player who never touches the ball does not exist in this dataset.</p>
+  </div>
+
+  <div class="body">
+    <p>What the analysis <em>has</em> done is <strong>fix where to look.</strong>
+      Nobody needs to rewatch twenty-seven matches: the moment a defender receives in the middle third,
+      three to five seconds forward, and <strong>starting with the losing-state passes</strong> — 1,419 of them.
+      The job of analysis is not to hand over an answer. It is to narrow the search.</p>
+    <p>Other things this piece cannot claim.</p>
+    <ul>
+      <li><strong>The xG is the portal's model</strong>, and it misses in both directions in Gwangju's matches —
+        21.0% of their shots on target become goals, while 39.4% of shots on target against them do (league: 29.6%).
+        Either <em>something real in these matches escapes the model</em> or <em>the model mismeasures this team</em>,
+        and the data cannot separate the two.</li>
+      <li><strong>The 21.0% finishing rate is not statistically significant</strong> (z = −1.70).
+        Of twelve clubs only Seoul clears the bar. Some of this is luck and should be called luck.</li>
+      <li><strong>The post-summer sample is twelve matches.</strong> The expected-points gap and the conversion rates are all twelve-match numbers.</li>
+      <li><strong>Correlation is not causation.</strong> The between-club comparisons control for neither squad strength, style nor schedule.</li>
+      <li><strong>Round 28 (9 September, vs Jeju) is missing.</strong> The portal's event processing is running about two rounds behind —
+        every league fixture since 5 September is in the same state. It will be merged and recomputed when published.</li>
+    </ul>
+  </div>
+
+  <div class="call warn">
+    <span class="t">In one sentence</span>
+    <p>The summer signings improved <strong>what happens inside the box</strong>, and the data confirms it.
+      What did not improve is <strong>the road to the box</strong>.
+      That road closes in the three seconds after a defender receives in the middle third —
+      and <strong>it closes further when the team is behind.</strong></p>
+  </div>
+</section>
+
+<footer>
+  <p><strong>Data</strong> · Parsed directly from the K League Data Portal's own responses (portal.kleague.com); no screenshots, no manual entry.
+    27 Gwangju matches, 38,899 raw events with coordinates and xG, 27 official match reports, 1,074 player-match rows.
+    League comparisons use five club datasets — Gwangju, Jeju, Jeonbuk, Ulsan, Pohang — deduplicated by match ID into
+    <strong>110 unique matches and 158,043 events</strong>, covering all twelve clubs.</p>
+  <p><strong>Validation</strong> · League table reconciles exactly with re-summed official match reports.
+    Event counts match the portal's own season aggregates for shots, shots on target, fouls, tackles, interceptions,
+    clearances, crosses, key passes and corners. Attacking-direction normalisation verified (mean shot end-X of 100.0 for both sides).
+    Three goals mis-tagged as <span class="mono">ST/RCV</span> by the portal were identified to the second and restored.</p>
+  <p><strong>Definitions</strong> · Pitch coordinates use a five-lane, three-thirds frame. Results are taken from official match reports
+    rather than event data. “Progression rate” is the share of successful middle-third passes that end in the final third.</p>
+</footer>
+
+</div>
+
+</body>
+</html>
