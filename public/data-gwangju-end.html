@@ -1,0 +1,675 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>No One at the End</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --page:#eef0ec; --surface:#fafbf9; --surface-2:#e2e6e0; --raise:#f4f6f3;
+  --ink:#12150f; --ink-2:#3a4036; --muted:#6d7568;
+  --line:rgba(18,21,15,.14); --line-2:rgba(18,21,15,.07);
+  --grid:#dde2da; --axis:#bfc7bb;
+  --gj:#b8690b; --lg:#3068b8; --top:#0f7f5e; --bad:#a3272f;
+  --gj-soft:rgba(184,105,11,.13); --lg-soft:rgba(48,104,184,.11);
+  --top-soft:rgba(15,127,94,.11); --bad-soft:rgba(163,39,47,.10);
+  --sp:clamp(18px,4.5vw,30px);
+  --disp:"Hahmlet",'Nanum Myeongjo',serif;
+  --body:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,'SFMono-Regular',monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --page:#101310; --surface:#171a16; --surface-2:#232720; --raise:#1d211c;
+    --ink:#e9ece5; --ink-2:#b9c0b4; --muted:#8b9386;
+    --line:rgba(233,236,229,.16); --line-2:rgba(233,236,229,.08);
+    --grid:#2b302a; --axis:#464c43;
+    --gj:#c47d0a; --lg:#4a8ace; --top:#159876; --bad:#d4565e;
+    --gj-soft:rgba(196,125,10,.17); --lg-soft:rgba(74,138,206,.15);
+    --top-soft:rgba(21,152,118,.15); --bad-soft:rgba(212,86,94,.14);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --page:#101310; --surface:#171a16; --surface-2:#232720; --raise:#1d211c;
+  --ink:#e9ece5; --ink-2:#b9c0b4; --muted:#8b9386;
+  --line:rgba(233,236,229,.16); --line-2:rgba(233,236,229,.08);
+  --grid:#2b302a; --axis:#464c43;
+  --gj:#c47d0a; --lg:#4a8ace; --top:#159876; --bad:#d4565e;
+  --gj-soft:rgba(196,125,10,.17); --lg-soft:rgba(74,138,206,.15);
+  --top-soft:rgba(21,152,118,.15); --bad-soft:rgba(212,86,94,.14);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font-family:var(--body);
+  overflow-wrap:break-word;hyphens:manual;
+  font-weight:400;font-size:16px;line-height:1.72;-webkit-font-smoothing:antialiased}
+.wrap{max-width:940px;margin:0 auto;padding-inline:var(--sp);padding-block:0}
+p{margin:0 0 1.05em}
+strong{font-weight:600;color:var(--ink)}
+em{font-style:normal;background:var(--gj-soft);padding:.06em .3em;border-radius:2px;font-weight:500}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums;font-weight:500;letter-spacing:-.01em}
+
+/* ── header ── */
+header{padding-block:clamp(48px,9vw,88px) clamp(30px,5vw,44px);border-bottom:1px solid var(--line)}
+.badge{display:inline-flex;align-items:center;gap:.55em;font-family:var(--mono);font-size:11px;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--gj);font-weight:500}
+.badge::before{content:"";width:22px;height:2px;background:var(--gj)}
+h1{font-family:var(--disp);font-weight:600;font-size:clamp(38px,8.6vw,68px);line-height:1.06;
+  letter-spacing:-.025em;margin:.34em 0 .3em;text-wrap:balance}
+.dek{font-family:var(--disp);font-weight:400;font-size:clamp(17px,2.5vw,21px);line-height:1.55;
+  color:var(--ink-2);max-width:34em;margin:0 0 1.5em}
+.meta{display:flex;flex-wrap:wrap;gap:.5em 0;font-family:var(--mono);font-size:11.5px;
+  color:var(--muted);letter-spacing:.02em}
+.meta span+span::before{content:"|";padding:0 .85em;color:var(--axis)}
+
+/* ── tiles ── */
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line-2);
+  border-block:1px solid var(--line);margin-block:0}
+@media(max-width:760px){.tiles{grid-template-columns:repeat(2,1fr)}}
+.tile{background:var(--page);padding:clamp(16px,3vw,24px) clamp(12px,2.4vw,20px);display:flex;
+  flex-direction:column;gap:.3em}
+.tile .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.tile .v{font-family:var(--disp);font-weight:600;font-size:clamp(26px,4.6vw,38px);line-height:1;
+  letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.tile .v.gj{color:var(--gj)} .tile .v.bad{color:var(--bad)}
+.tile .s{font-size:12.5px;line-height:1.45;color:var(--ink-2)}
+
+/* ── sections ── */
+section{padding-block:clamp(40px,7vw,68px);border-bottom:1px solid var(--line-2)}
+section:last-of-type{border-bottom:none}
+.eyebrow{display:flex;align-items:baseline;gap:.9em;margin-bottom:.9em}
+.eyebrow .role{font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--page);background:var(--ink-2);padding:.35em .7em;border-radius:2px;white-space:nowrap}
+.eyebrow .cap{font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--muted)}
+h2{font-family:var(--disp);font-weight:600;font-size:clamp(25px,4.4vw,37px);line-height:1.2;
+  letter-spacing:-.022em;margin:0 0 .6em;text-wrap:balance;max-width:19em}
+h3{font-family:var(--disp);font-weight:600;font-size:clamp(17px,2.4vw,21px);line-height:1.35;
+  letter-spacing:-.012em;margin:2.1em 0 .7em}
+.lede{font-size:clamp(16.5px,2.1vw,18.5px);line-height:1.68;color:var(--ink-2);max-width:33em;margin-bottom:1.6em}
+.body{max-width:35em}
+.body.wide{max-width:40em}
+
+/* ── pull ── */
+.pull{border-left:3px solid var(--gj);padding:.1em 0 .1em 1.15em;margin:1.9em 0;
+  font-family:var(--disp);font-weight:500;font-size:clamp(18px,2.7vw,23px);line-height:1.45;
+  letter-spacing:-.014em;color:var(--ink);max-width:24em;text-wrap:balance}
+
+/* ── figure ── */
+figure{margin:2em 0;padding:clamp(16px,3vw,26px);background:var(--surface);
+  border:1px solid var(--line);border-radius:3px}
+figcaption{font-family:var(--mono);font-size:11px;line-height:1.6;color:var(--muted);
+  margin-top:1.15em;padding-top:.85em;border-top:1px solid var(--line-2)}
+.figtitle{font-family:var(--body);font-weight:600;font-size:14px;line-height:1.4;color:var(--ink);
+  margin-bottom:.3em;letter-spacing:-.005em}
+.figsub{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:1.35em;letter-spacing:.01em}
+.legend{display:flex;flex-wrap:wrap;gap:.5em 1.3em;font-family:var(--mono);font-size:11px;
+  color:var(--ink-2);margin-bottom:1.1em}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:1px;margin-right:.45em;vertical-align:-1px}
+
+/* ── bar rows ── */
+.bars{display:flex;flex-direction:column;gap:7px}
+.br{display:grid;grid-template-columns:74px 1fr 62px;align-items:center;gap:10px}
+@media(max-width:560px){.br{grid-template-columns:60px 1fr 54px;gap:7px}}
+.br .lb{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);text-align:right;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.br .tk{height:17px;background:var(--surface-2);border-radius:1px;overflow:hidden}
+.br .fl{height:100%;background:var(--lg);border-radius:1px}
+.br .vl{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;
+  color:var(--ink-2);text-align:right}
+.br.hi .lb{color:var(--gj);font-weight:600}
+.br.hi .fl{background:var(--gj)}
+.br.hi .vl{color:var(--gj);font-weight:600}
+.br.ref .fl{background:var(--top)}
+.br.ref .lb,.br.ref .vl{color:var(--top)}
+
+/* ── grouped pair bars ── */
+.pair{display:flex;flex-direction:column;gap:16px}
+.pg{display:grid;grid-template-columns:96px 1fr;gap:12px;align-items:center}
+@media(max-width:560px){.pg{grid-template-columns:1fr;gap:5px}}
+.pg .pn{font-family:var(--body);font-size:13px;font-weight:600;color:var(--ink)}
+.pg .pn small{display:block;font-family:var(--mono);font-weight:400;font-size:10.5px;color:var(--muted)}
+.pgb{display:flex;flex-direction:column;gap:5px}
+.pgr{display:grid;grid-template-columns:1fr 54px;gap:9px;align-items:center}
+.pgr .tk{height:15px;background:var(--surface-2);border-radius:1px;overflow:hidden}
+.pgr .fl{height:100%;border-radius:1px}
+.pgr .vl{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;text-align:right}
+
+/* ── table ── */
+.tbl{overflow-x:auto;margin:1.8em 0;border:1px solid var(--line);border-radius:3px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:13px}
+th,td{padding:9px 13px;text-align:left;border-bottom:1px solid var(--line-2);vertical-align:baseline}
+th{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;background:var(--raise);white-space:nowrap}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+td .nm{font-weight:600}
+td .no{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.up{color:var(--top);font-weight:600} .dn{color:var(--bad);font-weight:600}
+.dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:.5em;vertical-align:1px}
+.dot.on{background:var(--top)} .dot.mid{background:var(--axis)} .dot.off{background:transparent;
+  border:1px solid var(--axis)}
+
+/* ── slope svg ── */
+svg{display:block;max-width:100%;height:auto;overflow:visible}
+.sv-lb{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:var(--muted)}
+.sv-vl{font-family:"IBM Plex Mono",monospace;font-size:11.5px;font-weight:500}
+.sv-nm{font-family:"IBM Plex Sans",sans-serif;font-size:11.5px;font-weight:600;fill:var(--ink-2)}
+
+/* ── callout ── */
+.note{background:var(--raise);border:1px solid var(--line);border-left:3px solid var(--axis);
+  border-radius:3px;padding:clamp(14px,2.6vw,20px);margin:1.9em 0;font-size:14px;line-height:1.65;
+  color:var(--ink-2)}
+.note b{color:var(--ink);font-weight:600}
+.note.warn{border-left-color:var(--bad)}
+.note.key{border-left-color:var(--gj);background:var(--gj-soft);border-color:var(--line)}
+
+/* ── stat strip ── */
+.strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-2);
+  border:1px solid var(--line);border-radius:3px;overflow:hidden;margin:1.9em 0}
+@media(max-width:620px){.strip{grid-template-columns:1fr}}
+.strip>div{background:var(--surface);padding:clamp(13px,2.4vw,18px)}
+.strip .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:.4em}
+.strip .v{font-family:var(--disp);font-weight:600;font-size:clamp(20px,3.4vw,27px);line-height:1.1;
+  font-variant-numeric:tabular-nums;letter-spacing:-.018em}
+.strip .s{font-size:12px;color:var(--ink-2);margin-top:.35em;line-height:1.45}
+
+/* ── list ── */
+ul.clean{list-style:none;padding:0;margin:1.3em 0;display:flex;flex-direction:column;gap:.85em;max-width:35em}
+ul.clean li{padding-left:1.5em;position:relative;font-size:14.5px;line-height:1.62;color:var(--ink-2)}
+ul.clean li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:1.5px;background:var(--axis)}
+ul.clean li b{color:var(--ink);font-weight:600}
+
+footer{padding-block:clamp(34px,6vw,54px) clamp(46px,8vw,74px);border-top:1px solid var(--line);
+  font-family:var(--mono);font-size:11.5px;line-height:1.85;color:var(--muted)}
+footer b{color:var(--ink-2);font-weight:500}
+@media(prefers-reduced-motion:no-preference){
+  section{animation:fi .5s ease-out both}
+  @keyframes fi{from{opacity:.55}to{opacity:1}}
+}
+</style>
+<style>*{box-sizing:border-box}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+
+
+<div class="wrap">
+<header>
+  <div class="badge">Performance analysis · 10 Sep 2026 · K League 1, R1–R27</div>
+  <h1>No One at<br>the End</h1>
+  <p class="dek">Gwangju are the only side in the division who shift their weight backwards when they go behind. It is not that the defenders cannot play forward — there is nobody ahead of them to find. And the players who could stand there are already in this squad.</p>
+  <div class="meta">
+    <span>K League Data Portal event feed</span>
+    <span>League pool: 110 matches · 158,043 events</span>
+    <span>Gwangju 27 matches · 1,061 min behind</span>
+    <span>Numbers in brackets are shirt numbers</span>
+  </div>
+</header>
+</div>
+
+<div class="wrap">
+<div class="tiles">
+  <div class="tile">
+    <div class="k">Final-third activity when behind</div>
+    <div class="v gj">116</div>
+    <div class="s">Per 90. <b>12th of 12</b>. 11th-placed Bucheon 180, league average 220</div>
+  </div>
+  <div class="tile">
+    <div class="k">Weight shift (level → behind)</div>
+    <div class="v bad">+1.1<span style="font-size:.5em">pp</span></div>
+    <div class="s">League average <b>+6.7pp</b>. 12th of 12</div>
+  </div>
+  <div class="tile">
+    <div class="k">Final third : middle third</div>
+    <div class="v gj">0.360</div>
+    <div class="s">It <b>falls</b> when they go behind. The league raises it, 0.495→0.607</div>
+  </div>
+  <div class="tile">
+    <div class="k">Of the gap, the share from distribution</div>
+    <div class="v">+0.06<span style="font-size:.5em">pp</span></div>
+    <div class="s">Effectively <b>all</b> of the −4.6pp gap is something else</div>
+  </div>
+</div>
+</div>
+
+<div class="wrap">
+
+<section>
+  <div class="eyebrow"><span class="role">What this document does</span></div>
+  <h2>Which area, if improved, changes this team</h2>
+  <div class="body">
+    <p class="lede">This document does not propose training methods or ways of running the team. That is the coaching staff's ground. It does one thing: identify <strong>a single area for improvement</strong>, open up every piece of reasoning behind that judgement, and check whether the players to do it are already in the squad.</p>
+    <p>The previous analysis asked why Gwangju's channel had closed, and the answer pointed at the defenders. The share of passes carried from the middle third into the final third was the lowest in the league, and the shortfall was concentrated in the defensive line. The observation was correct, but it was <strong>a symptom, not an answer.</strong></p>
+    <p>This time the analysis controls for score state. Gwangju have spent <span class="num">1,061</span> minutes behind, far more than anyone else (second: Pohang, <span class="num">647</span>). What this team does while losing is the season itself. Isolate that phase and the picture inverts.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">Decompose</span><span class="cap">where the gap sits</span></div>
+  <h2>The midfield is already at league level</h2>
+  <div class="body">
+    <p>While behind, the share of middle-third passes that reach the final third is <span class="num">14.5%</span> for Gwangju and <span class="num">19.1%</span> for the league — a gap of <span class="num">−4.6pp</span>. That gap splits in two: <strong>who receives the ball</strong> (distribution) and <strong>how much the receiver moves it on</strong> (execution).</p>
+  </div>
+
+  <div class="strip">
+    <div><div class="k">Distribution effect</div><div class="v" style="color:var(--muted)">+0.06pp</div><div class="s">From differences in positional share of possession</div></div>
+    <div><div class="k">Execution effect</div><div class="v" style="color:var(--bad)">−4.18pp</div><div class="s">From how much each position actually progresses</div></div>
+    <div><div class="k">Interaction</div><div class="v" style="color:var(--muted)">−0.10pp</div><div class="s">The cross-term of the two</div></div>
+  </div>
+
+  <div class="body">
+    <p>The distribution effect is <strong>effectively zero</strong>. Changing who is given the ball will not move this gap. It sits entirely in execution — and broken out by position, it sits in one place.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">Progression rate, middle third → final third, while behind</div>
+    <div class="figsub">Gwangju 27 matches / the other 11 clubs · middle-third passes in the behind state only</div>
+    <div class="legend">
+      <span><i style="background:var(--gj)"></i>Gwangju</span>
+      <span><i style="background:var(--lg)"></i>League (excl. Gwangju)</span>
+    </div>
+    <div class="pair">
+      <div class="pg">
+        <div class="pn">Defenders<small>55.8% share</small></div>
+        <div class="pgb">
+          <div class="pgr"><div class="tk"><div class="fl" style="width:44.8%;background:var(--gj)"></div></div><div class="vl" style="color:var(--gj)">11.2%</div></div>
+          <div class="pgr"><div class="tk"><div class="fl" style="width:71.6%;background:var(--lg)"></div></div><div class="vl" style="color:var(--lg)">17.9%</div></div>
+        </div>
+      </div>
+      <div class="pg">
+        <div class="pn">Midfielders<small>37.1% share</small></div>
+        <div class="pgb">
+          <div class="pgr"><div class="tk"><div class="fl" style="width:80.4%;background:var(--gj)"></div></div><div class="vl" style="color:var(--gj)">20.1%</div></div>
+          <div class="pgr"><div class="tk"><div class="fl" style="width:81.2%;background:var(--lg)"></div></div><div class="vl" style="color:var(--lg)">20.3%</div></div>
+        </div>
+      </div>
+      <div class="pg">
+        <div class="pn">Forwards<small>6.4% share</small></div>
+        <div class="pgb">
+          <div class="pgr"><div class="tk"><div class="fl" style="width:44.4%;background:var(--gj)"></div></div><div class="vl" style="color:var(--gj)">11.1%</div></div>
+          <div class="pgr"><div class="tk"><div class="fl" style="width:72.0%;background:var(--lg)"></div></div><div class="vl" style="color:var(--lg)">18.0%</div></div>
+        </div>
+      </div>
+    </div>
+    <figcaption>Axis maximum 25%. Gwangju n=2,818 middle-third passes while behind / league n=11,250. Shares are Gwangju's.</figcaption>
+  </figure>
+
+  <div class="body">
+    <p class="pull">Gwangju's midfielders progress at 20.1%. The league's do it at 20.3%. Within noise, they are the same.</p>
+    <p>That matters twice over. It says the midfield rebuilt in the summer window is doing its job — and it says <strong>there is almost nothing left to gain by working on the midfield again.</strong> The forwards show a wide gap but hold only <span class="num">6.4%</span> of the ball in this zone, so their effect on the total is small. One place remains.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">Rule out</span><span class="cap">but are the defenders the cause</span></div>
+  <h2>In the same situation the league finds it easier and Gwangju find it harder</h2>
+  <div class="body">
+    <p>A gap concentrated in the defensive line does not mean the defenders caused it. There is a clean way to separate the two. When a team goes behind, the opponent sits off to protect the lead — which is why, <strong>across the league as a whole, playing forward gets easier the further behind you are.</strong> The test is whether that holds at Gwangju.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">Defenders' passes into the final third — the change from level to behind</div>
+    <div class="figsub">Left point is level, right point is behind. The slope of the line is the whole message</div>
+    <svg viewBox="0 0 620 300" role="img" aria-label="Attempt rate and completion rate of defenders' passes into the final third">
+      <line x1="60" y1="248" x2="600" y2="248" stroke="var(--axis)" stroke-width="1"/>
+      <line x1="60" y1="34" x2="60" y2="248" stroke="var(--axis)" stroke-width="1"/>
+      <text class="sv-lb" x="105" y="268" text-anchor="middle">level</text>
+      <text class="sv-lb" x="195" y="268" text-anchor="middle">behind</text>
+      <text class="sv-lb" x="465" y="268" text-anchor="middle">level</text>
+      <text class="sv-lb" x="555" y="268" text-anchor="middle">behind</text>
+      <line x1="330" y1="34" x2="330" y2="258" stroke="var(--grid)" stroke-width="1" stroke-dasharray="3 4"/>
+      <text class="sv-nm" x="150" y="24" text-anchor="middle">Attempt rate</text>
+      <text class="sv-nm" x="510" y="24" text-anchor="middle">Completion of those attempts</text>
+      <g>
+        <line x1="105" y1="164" x2="195" y2="128" stroke="var(--lg)" stroke-width="2.2"/>
+        <circle cx="105" cy="164" r="4.6" fill="var(--lg)"/><circle cx="195" cy="128" r="4.6" fill="var(--lg)"/>
+        <text class="sv-vl" x="97" y="160" text-anchor="end" fill="var(--lg)">15.4%</text>
+        <text class="sv-vl" x="203" y="124" fill="var(--lg)">17.9%</text>
+        <line x1="105" y1="182" x2="195" y2="224" stroke="var(--gj)" stroke-width="2.2"/>
+        <circle cx="105" cy="182" r="4.6" fill="var(--gj)"/><circle cx="195" cy="224" r="4.6" fill="var(--gj)"/>
+        <text class="sv-vl" x="97" y="196" text-anchor="end" fill="var(--gj)">14.1%</text>
+        <text class="sv-vl" x="203" y="238" fill="var(--gj)">11.2%</text>
+      </g>
+      <g>
+        <line x1="465" y1="150" x2="555" y2="70" stroke="var(--lg)" stroke-width="2.2"/>
+        <circle cx="465" cy="150" r="4.6" fill="var(--lg)"/><circle cx="555" cy="70" r="4.6" fill="var(--lg)"/>
+        <text class="sv-vl" x="457" y="146" text-anchor="end" fill="var(--lg)">61.5%</text>
+        <text class="sv-vl" x="563" y="66" fill="var(--lg)">72.5%</text>
+        <line x1="465" y1="134" x2="555" y2="164" stroke="var(--gj)" stroke-width="2.2"/>
+        <circle cx="465" cy="134" r="4.6" fill="var(--gj)"/><circle cx="555" cy="164" r="4.6" fill="var(--gj)"/>
+        <text class="sv-vl" x="457" y="128" text-anchor="end" fill="var(--gj)">63.7%</text>
+        <text class="sv-vl" x="563" y="178" fill="var(--gj)">59.7%</text>
+      </g>
+      <text class="sv-lb" x="330" y="292" text-anchor="middle">amber = Gwangju · blue = league (excl. Gwangju)</text>
+    </svg>
+    <figcaption>The two panels use different vertical scales (left 10–20%, right 55–80%). This chart is about direction.</figcaption>
+  </figure>
+
+  <div class="body">
+    <p>League defenders, once behind, go into the final third <strong>more often</strong> (15.4→17.9%) and <strong>more successfully</strong> (61.5→72.5%). The opponent has dropped off, so the space is there. Gwangju's defenders do the exact opposite — fewer attempts (14.1→11.2%), and the attempts they do make come off less often (63.7→59.7%).</p>
+    <p class="pull">If technique were the problem, completion would move the same way. It moved the opposite way, so the problem is not the pass. It is where the pass has to arrive.</p>
+    <p>At level score, Gwangju defenders complete <span class="num">63.7%</span> of their passes into the final third — <strong>higher</strong> than the league's <span class="num">61.5%</span>. The same players, with the same technique, invert relative to the league the moment they fall behind. Only one explanation is left.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">Find</span><span class="cap">what is up ahead</span></div>
+  <h2>The final third is empty</h2>
+  <div class="body">
+    <p>While behind, Gwangju record <span class="num">116.1</span> final-third events per 90. That is last in the league, and the gap to 11th-placed Bucheon (<span class="num">179.5</span>) is larger than the gap from Bucheon all the way up to Seoul in first.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">Final-third activity while behind — events per 90</div>
+    <div class="figsub">Only the minutes each team spent trailing, converted to a per-90 rate</div>
+    <div class="bars">
+      <div class="br"><div class="lb">Seoul</div><div class="tk"><div class="fl" style="width:100%"></div></div><div class="vl">300.2</div></div>
+      <div class="br"><div class="lb">Gangwon</div><div class="tk"><div class="fl" style="width:83.4%"></div></div><div class="vl">250.5</div></div>
+      <div class="br"><div class="lb">Incheon</div><div class="tk"><div class="fl" style="width:79.9%"></div></div><div class="vl">240.0</div></div>
+      <div class="br"><div class="lb">Anyang</div><div class="tk"><div class="fl" style="width:73.2%"></div></div><div class="vl">219.6</div></div>
+      <div class="br"><div class="lb">Daejeon</div><div class="tk"><div class="fl" style="width:71.9%"></div></div><div class="vl">215.9</div></div>
+      <div class="br"><div class="lb">Gimcheon</div><div class="tk"><div class="fl" style="width:71.4%"></div></div><div class="vl">214.4</div></div>
+      <div class="br"><div class="lb">Jeonbuk</div><div class="tk"><div class="fl" style="width:69.8%"></div></div><div class="vl">209.4</div></div>
+      <div class="br"><div class="lb">Jeju</div><div class="tk"><div class="fl" style="width:69.5%"></div></div><div class="vl">208.5</div></div>
+      <div class="br"><div class="lb">Pohang</div><div class="tk"><div class="fl" style="width:63.1%"></div></div><div class="vl">189.4</div></div>
+      <div class="br"><div class="lb">Ulsan</div><div class="tk"><div class="fl" style="width:62.7%"></div></div><div class="vl">188.3</div></div>
+      <div class="br"><div class="lb">Bucheon</div><div class="tk"><div class="fl" style="width:59.8%"></div></div><div class="vl">179.5</div></div>
+      <div class="br hi"><div class="lb">Gwangju</div><div class="tk"><div class="fl" style="width:38.7%"></div></div><div class="vl">116.1</div></div>
+    </div>
+    <figcaption>Based on Gwangju's 1,061 minutes behind. The club with by far the largest sample finishing last is hard to read as noise.</figcaption>
+  </figure>
+
+  <div class="body">
+    <h3>It is not a shortage of the ball</h3>
+    <p>The first thing to suspect is that Gwangju simply have less of the ball. They do not. In the same phase, <strong>middle-third</strong> activity is <span class="num">323.0</span> per 90 against a league average of <span class="num">348.2</span> — a difference of <span class="num">7%</span>. The ball arrives in the middle third at close to league rate, and only beyond it does the number halve.</p>
+  </div>
+
+  <div class="strip">
+    <div><div class="k">Middle third (behind)</div><div class="v">323 <span style="font-size:.55em;color:var(--muted)">vs 348</span></div><div class="s">−7% vs league. Effectively the same</div></div>
+    <div><div class="k">Final third (behind)</div><div class="v" style="color:var(--gj)">116 <span style="font-size:.55em;color:var(--muted)">vs 220</span></div><div class="s">−47% vs league. Half</div></div>
+    <div><div class="k">Final : middle</div><div class="v" style="color:var(--gj)">0.360</div><div class="s">League 0.637. 12th of 12</div></div>
+  </div>
+
+  <div class="body">
+    <p>And decisively, that ratio <strong>falls when Gwangju go behind</strong> — <span class="num">0.372</span> at level to <span class="num">0.360</span> trailing. Over the same transition the league lifts it from <span class="num">0.495</span> to <span class="num">0.607</span>.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">Verify</span><span class="cap">breaking the circularity</span></div>
+  <h2>Measured again with a ruler our own passing cannot bend</h2>
+  <div class="body">
+    <p>There is a trap here. Final-third activity is partly the <strong>result</strong> of the passes we complete. If activity is low because progression is low, the previous chart says the same thing twice.</p>
+    <p>So the measurement was rebuilt from events that occur independently of our passing: <strong>pressing and interceptions in the final third, aerial and ground duels, and fouls won.</strong> Every one of them happens while the opponent has the ball or the ball is loose, and none is recorded unless one of our players is standing there. Even with a progression rate of zero, these events occur as long as someone is up the pitch.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">Final-third occupancy ↔ progression rate while behind</div>
+    <div class="figsub">x: pressing, duels and fouls won per 90 · y: middle→final third progression rate while behind · 12 clubs</div>
+    <svg viewBox="0 0 620 352" role="img" aria-label="Scatter plot of final-third occupancy against progression rate while behind">
+      <g stroke="var(--grid)" stroke-width="1">
+        <line x1="78" y1="290" x2="590" y2="290"/><line x1="78" y1="234.9" x2="590" y2="234.9"/>
+        <line x1="78" y1="179.7" x2="590" y2="179.7"/><line x1="78" y1="124.5" x2="590" y2="124.5"/>
+        <line x1="78" y1="69.4" x2="590" y2="69.4"/>
+      </g>
+      <line x1="78" y1="42" x2="78" y2="290" stroke="var(--axis)" stroke-width="1"/>
+      <line x1="78" y1="290" x2="590" y2="290" stroke="var(--axis)" stroke-width="1"/>
+      <text class="sv-lb" x="70" y="294" text-anchor="end">14%</text>
+      <text class="sv-lb" x="70" y="238.9" text-anchor="end">16%</text>
+      <text class="sv-lb" x="70" y="183.7" text-anchor="end">18%</text>
+      <text class="sv-lb" x="70" y="128.5" text-anchor="end">20%</text>
+      <text class="sv-lb" x="70" y="73.4" text-anchor="end">22%</text>
+      <text class="sv-lb" x="96.3" y="308" text-anchor="middle">20</text>
+      <text class="sv-lb" x="187.7" y="308" text-anchor="middle">25</text>
+      <text class="sv-lb" x="279.1" y="308" text-anchor="middle">30</text>
+      <text class="sv-lb" x="370.6" y="308" text-anchor="middle">35</text>
+      <text class="sv-lb" x="462.0" y="308" text-anchor="middle">40</text>
+      <text class="sv-lb" x="553.4" y="308" text-anchor="middle">45</text>
+      <text class="sv-lb" x="334" y="332" text-anchor="middle">Final-third occupancy index (per 90)</text>
+      <line x1="96.3" y1="234.6" x2="571.8" y2="49.1" stroke="var(--top)" stroke-width="1.7" stroke-dasharray="6 4"/>
+      <text class="sv-lb" x="470" y="212" fill="var(--top)">fit, r = +0.68</text>
+      <g fill="var(--lg)">
+        <circle cx="248.1" cy="141.2" r="5"/><circle cx="264.5" cy="141.2" r="5"/>
+        <circle cx="257.2" cy="212.8" r="5"/><circle cx="264.5" cy="88.8" r="5"/>
+        <circle cx="330.3" cy="237.6" r="5"/><circle cx="352.3" cy="138.4" r="5"/>
+        <circle cx="359.6" cy="108.1" r="5"/><circle cx="370.6" cy="138.4" r="5"/>
+        <circle cx="412.7" cy="83.3" r="5"/><circle cx="436.5" cy="61.3" r="5"/>
+        <circle cx="566.4" cy="94.3" r="5"/>
+      </g>
+      <g fill="var(--lg)">
+        <text class="sv-lb" x="240" y="145" text-anchor="end">Bucheon</text>
+        <text class="sv-lb" x="273" y="145">Ulsan</text>
+        <text class="sv-lb" x="257.2" y="229" text-anchor="middle">Jeonbuk</text>
+        <text class="sv-lb" x="264.5" y="79" text-anchor="middle">Jeju</text>
+        <text class="sv-lb" x="339" y="241">Pohang</text>
+        <text class="sv-lb" x="344" y="134" text-anchor="end">Gimcheon</text>
+        <text class="sv-lb" x="359.6" y="98" text-anchor="middle">Incheon</text>
+        <text class="sv-lb" x="379" y="134">Daejeon</text>
+        <text class="sv-lb" x="412.7" y="73" text-anchor="middle">Seoul</text>
+        <text class="sv-lb" x="436.5" y="51" text-anchor="middle">Gangwon</text>
+        <text class="sv-lb" x="566.4" y="84" text-anchor="middle">Anyang</text>
+      </g>
+      <circle cx="109.1" cy="276.2" r="7" fill="var(--gj)"/>
+      <text class="sv-nm" x="122" y="280" fill="var(--gj)">Gwangju · 20.7 / 14.5%</text>
+    </svg>
+    <figcaption>Fit: progression = 0.259 × occupancy + 10.83. The relationship holds on the 11 clubs with Gwangju removed. Overlapping labels omitted.</figcaption>
+  </figure>
+
+  <div class="body">
+    <p>The answer is unchanged. Gwangju sit at <span class="num">20.7</span> per 90, <strong>last of 12</strong>, <span class="num">37%</span> below the league average of <span class="num">32.8</span>. Because this index is not generated by our own passing, "the final third only looks empty because we never get there" does not explain it.</p>
+    <p>Across the 12 clubs, the index correlates with progression rate while behind at <span class="num">r = +0.68</span>. The teams with people up there are the teams that play forward.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">Conclude</span><span class="cap">the area to improve</span></div>
+  <h2>The league moves forward when it falls behind. Gwangju move back</h2>
+  <div class="body">
+    <p>Take the share of a team's total events that occur in the final third, and measure how that share changes from level to behind. Gwangju's position in this season's K League 1 is unambiguous.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">Level → behind: change in the share of play in the final third</div>
+    <div class="figsub">Change, in percentage points, in the proportion of a team's events occurring in the final third</div>
+    <div class="bars">
+      <div class="br"><div class="lb">Seoul</div><div class="tk"><div class="fl" style="width:100%"></div></div><div class="vl">+13.0</div></div>
+      <div class="br"><div class="lb">Anyang</div><div class="tk"><div class="fl" style="width:75.4%"></div></div><div class="vl">+9.8</div></div>
+      <div class="br"><div class="lb">Bucheon</div><div class="tk"><div class="fl" style="width:72.3%"></div></div><div class="vl">+9.4</div></div>
+      <div class="br"><div class="lb">Incheon</div><div class="tk"><div class="fl" style="width:63.1%"></div></div><div class="vl">+8.2</div></div>
+      <div class="br"><div class="lb">Jeju</div><div class="tk"><div class="fl" style="width:62.3%"></div></div><div class="vl">+8.1</div></div>
+      <div class="br"><div class="lb">Pohang</div><div class="tk"><div class="fl" style="width:57.7%"></div></div><div class="vl">+7.5</div></div>
+      <div class="br ref"><div class="lb">League avg</div><div class="tk"><div class="fl" style="width:51.5%"></div></div><div class="vl">+6.7</div></div>
+      <div class="br"><div class="lb">Gimcheon</div><div class="tk"><div class="fl" style="width:42.3%"></div></div><div class="vl">+5.5</div></div>
+      <div class="br"><div class="lb">Ulsan</div><div class="tk"><div class="fl" style="width:30.0%"></div></div><div class="vl">+3.9</div></div>
+      <div class="br"><div class="lb">Daejeon</div><div class="tk"><div class="fl" style="width:26.9%"></div></div><div class="vl">+3.5</div></div>
+      <div class="br"><div class="lb">Jeonbuk</div><div class="tk"><div class="fl" style="width:23.1%"></div></div><div class="vl">+3.0</div></div>
+      <div class="br"><div class="lb">Gangwon</div><div class="tk"><div class="fl" style="width:14.6%"></div></div><div class="vl">+1.9</div></div>
+      <div class="br hi"><div class="lb">Gwangju</div><div class="tk"><div class="fl" style="width:8.5%"></div></div><div class="vl">+1.1</div></div>
+    </div>
+    <figcaption>Gangwon start from 30.4% at level, already the league's highest, which is why their change is small. Gwangju go from 16.4% to 17.5%.</figcaption>
+  </figure>
+
+  <div class="body">
+    <p>More precisely, Gwangju move backwards. The final-third-to-middle-third ratio above is the other face of the same fact — <strong>the league shifts its weight forward while losing; Gwangju hold the ball longer in the middle third.</strong> With the centre of gravity unmoved, the only thing that rises is how often the defenders have the ball.</p>
+    <p>At player level it is sharper still. Take every player in the league who, at level score, does <span class="num">30%</span> or more of his work in the final third — the players who already stand high. There are <span class="num">28</span>. <strong><span class="num">23</span> of them (<span class="num">82%</span>) go higher when their team falls behind</strong>, from an average of <span class="num">40.4%</span> to <span class="num">48.6%</span>.</p>
+  </div>
+
+  <div class="note key">
+    <b>The same group at Gwangju</b><br>
+    Shin Chang-mu (40) 39.5% → 33.8% <span class="dn">−5.7pp</span> · Jeong Ji-hun (16) 35.4% → 29.9% <span class="dn">−5.6pp</span> · Fridjonsson (11) 41.7% → 42.9% <span class="up">+1.2pp</span> · An Hyeok-ju (19) 34.4% → 41.1% <span class="up">+6.7pp</span><br>
+    <span style="font-size:13px;color:var(--muted)">The two who have started regularly over the last six rounds (40 and 16) <b>drop deeper</b> when the team is losing. An Hyeok-ju (19) moves the right way but has not appeared since R21.</span>
+  </div>
+
+  <div class="body">
+    <p class="pull">The area to improve is not the defenders' forward pass. It is where the team puts its weight when it is losing.</p>
+    <p>That is the conclusion. Gwangju's channel is closed not because of the people opening it, but because <strong>nobody is standing at the far end of it</strong> — and right now this team sends <strong>fewer</strong> players there when it goes behind, not more.</p>
+    <p>The target converts through the fit. Lifting the final-third occupancy index from <span class="num">20.7</span> to <span class="num">28.3</span>, the level of 11th-placed Bucheon, predicts a progression rate of <span class="num">18.1%</span> against today's <span class="num">14.5%</span>; reaching the league average of <span class="num">32.8</span> predicts <span class="num">19.3%</span>. That is mid-table.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">Squad</span><span class="cap">are the players here</span></div>
+  <h2>The passers are already among the league's best</h2>
+  <div class="body">
+    <p>Once the area is set, one question follows: <strong>can it be done with the players already at the club?</strong></p>
+    <p>Start with the end that opens the channel. Group the five Gwangju players with the highest middle-third progression rate while behind and they come to <span class="num">24.6%</span>. The league average for midfielders in that state is <span class="num">20.3%</span>. <strong>They are better than league average</strong>, and most of them are playing now.</p>
+  </div>
+
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Player</th><th>Pos</th><th class="n">Level</th><th class="n">Behind</th><th class="n">Change</th><th class="n">Mid-3rd passes</th><th>Last 6 rds</th></tr></thead>
+      <tbody>
+        <tr><td><span class="nm">Ba Loua</span> <span class="no">(50)</span></td><td>MF</td><td class="n">12.1%</td><td class="n">25.0%</td><td class="n up">+12.9pp</td><td class="n">80</td><td><span class="dot on"></span>6 apps</td></tr>
+        <tr><td><span class="nm">Ri Yeong-jik</span> <span class="no">(37)</span></td><td>MF</td><td class="n">16.9%</td><td class="n">27.3%</td><td class="n up">+10.4pp</td><td class="n">144</td><td><span class="dot on"></span>5 apps</td></tr>
+        <tr><td><span class="nm">Mun Min-seo</span> <span class="no">(88)</span></td><td>MF</td><td class="n">14.3%</td><td class="n">23.1%</td><td class="n up">+8.9pp</td><td class="n">478</td><td><span class="dot on"></span>5 apps</td></tr>
+        <tr><td><span class="nm">Shin Chang-mu</span> <span class="no">(40)</span></td><td>MF</td><td class="n">19.3%</td><td class="n">25.0%</td><td class="n up">+5.7pp</td><td class="n">193</td><td><span class="dot on"></span>5 apps</td></tr>
+        <tr><td><span class="nm">Ju Se-jong</span> <span class="no">(8)</span></td><td>MF</td><td class="n">25.2%</td><td class="n">25.3%</td><td class="n">+0.1pp</td><td class="n">485</td><td><span class="dot mid"></span>2 apps</td></tr>
+        <tr><td colspan="7" style="background:var(--raise);font-size:12px;color:var(--muted);font-family:var(--mono)">Five combined: 24.6% while behind · league midfielders behind: 20.3% · 22.9% of Gwangju's middle-third passes while behind</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="body">
+    <p>The share is the point. These five account for <span class="num">22.9%</span> of Gwangju's middle-third passes while behind — effectively identical to their <span class="num">22.7%</span> at level. The extra volume that arrives when the team goes behind <strong>flows to the defenders instead.</strong> Gwangju's defenders make <span class="num">+27.0%</span> more middle-third passes per 90 once behind while the midfielders gain only <span class="num">+10.0%</span>; across the league the split is a far more even <span class="num">+23.6%</span> and <span class="num">+17.0%</span>.</p>
+
+    <h3>The defenders' ability is on the record too</h3>
+    <p>João Pedro (17) progresses <span class="num">20.0%</span> of his middle-third passes at level score. The league average for defenders is <span class="num">15.4%</span>. His fall to <span class="num">9.2%</span> while behind cannot be explained by his ability. He has started all six of the last six rounds.</p>
+  </div>
+
+  <h3>Who goes higher when losing, and who drops</h3>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Player</th><th>Pos</th><th class="n">Height, level</th><th class="n">Height, behind</th><th class="n">Change</th><th>Last 6 rds</th></tr></thead>
+      <tbody>
+        <tr><td><span class="nm">Kwon Seong-yun</span> <span class="no">(22)</span></td><td>DF</td><td class="n">20.1%</td><td class="n">30.9%</td><td class="n up">+10.8pp</td><td><span class="dot on"></span>5 apps</td></tr>
+        <tr><td><span class="nm">Mun Min-seo</span> <span class="no">(88)</span></td><td>MF</td><td class="n">25.0%</td><td class="n">28.2%</td><td class="n up">+3.2pp</td><td><span class="dot on"></span>5 apps</td></tr>
+        <tr><td><span class="nm">Choi Kyoung-rok</span> <span class="no">(10)</span></td><td>MF</td><td class="n">25.6%</td><td class="n">27.3%</td><td class="n up">+1.7pp</td><td><span class="dot on"></span>4 apps</td></tr>
+        <tr><td><span class="nm">Fridjonsson</span> <span class="no">(11)</span></td><td>FW</td><td class="n">41.7%</td><td class="n">42.9%</td><td class="n up">+1.2pp</td><td><span class="dot on"></span>5 apps</td></tr>
+        <tr><td><span class="nm">Yu Je-ho</span> <span class="no">(14)</span></td><td>MF</td><td class="n">10.2%</td><td class="n">10.0%</td><td class="n">−0.2pp</td><td><span class="dot on"></span>5 apps</td></tr>
+        <tr><td><span class="nm">João Pedro</span> <span class="no">(17)</span></td><td>DF</td><td class="n">12.9%</td><td class="n">11.7%</td><td class="n dn">−1.2pp</td><td><span class="dot on"></span>6 apps</td></tr>
+        <tr><td><span class="nm">Jeong Ji-hun</span> <span class="no">(16)</span></td><td>MF</td><td class="n">35.4%</td><td class="n">29.9%</td><td class="n dn">−5.6pp</td><td><span class="dot on"></span>4 apps</td></tr>
+        <tr><td><span class="nm">Shin Chang-mu</span> <span class="no">(40)</span></td><td>MF</td><td class="n">39.5%</td><td class="n">33.8%</td><td class="n dn">−5.7pp</td><td><span class="dot on"></span>5 apps</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="body">
+    <p><strong>Height</strong> is the share of a player's own events that occur in the final third. Because it is normalised within the player, it is independent of minutes played and simply says where he worked.</p>
+    <p>Two things show at once. Gwangju do have players who climb when losing — Kwon Seong-yun (22) is a defender and moves up more than anyone at the club (<span class="num">+10.8pp</span>), and Mun Min-seo (88) is the only player who raises <strong>both</strong> his progression rate and his height. And the two who normally stand highest, Shin Chang-mu (40) and Jeong Ji-hun (16), come down. Shin progresses well from deep once he drops (<span class="num">25.0%</span> while behind) — but every time he drops, one destination disappears.</p>
+  </div>
+
+  <div class="note warn">
+    <b>A resource already lost — and one that returns</b><br>
+    Kim Jin-ho (27) progressed <span class="num">22.3%</span> of his middle-third passes at level score against a league defender average of <span class="num">15.4%</span> — the highest figure of any Gwangju defender. He left after R15 for <b>military service with Gimcheon Sangmu</b>. That absence is plausibly part of why the defensive line's ability to play forward fell away in the second half of the season, and for the same reason <b>his discharge date belongs in this club's planning calendar.</b>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">Precedent</span><span class="cap">they have already done it</span></div>
+  <h2>R14 at Seoul: the 48 minutes after the 48th minute</h2>
+  <div class="body">
+    <p>The strongest evidence that this is achievable is not a league benchmark. It is one of Gwangju's own matches.</p>
+    <p>Away at Seoul in R14, the goal went in at <span class="num">48:11</span> of the second half and the match ran to <span class="num">96.2</span> minutes. That leaves <span class="num">48.2</span> minutes before and <span class="num">48.1</span> after — almost exactly half and half. Same match, same squad, same evening.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">R14 at Seoul — the 48 minutes before conceding vs the 48 after</div>
+    <div class="figsub">All figures are per-90 rates or ratios</div>
+    <div class="pair">
+      <div class="pg">
+        <div class="pn">Final third<small>per 90</small></div>
+        <div class="pgb">
+          <div class="pgr"><div class="tk"><div class="fl" style="width:13.6%;background:var(--axis)"></div></div><div class="vl" style="color:var(--muted)">29.9</div></div>
+          <div class="pgr"><div class="tk"><div class="fl" style="width:59.6%;background:var(--gj)"></div></div><div class="vl" style="color:var(--gj)">131.1</div></div>
+        </div>
+      </div>
+      <div class="pg">
+        <div class="pn">Final : middle<small>ratio</small></div>
+        <div class="pgb">
+          <div class="pgr"><div class="tk"><div class="fl" style="width:20.5%;background:var(--axis)"></div></div><div class="vl" style="color:var(--muted)">0.205</div></div>
+          <div class="pgr"><div class="tk"><div class="fl" style="width:63.6%;background:var(--gj)"></div></div><div class="vl" style="color:var(--gj)">0.636</div></div>
+        </div>
+      </div>
+      <div class="pg">
+        <div class="pn">Occupancy index<small>per 90 · pass-independent</small></div>
+        <div class="pgb">
+          <div class="pgr"><div class="tk"><div class="fl" style="width:20.4%;background:var(--axis)"></div></div><div class="vl" style="color:var(--muted)">9.3</div></div>
+          <div class="pgr"><div class="tk"><div class="fl" style="width:65.6%;background:var(--gj)"></div></div><div class="vl" style="color:var(--gj)">30.0</div></div>
+        </div>
+      </div>
+      <div class="pg">
+        <div class="pn">Progression<small>middle → final third</small></div>
+        <div class="pgb">
+          <div class="pgr"><div class="tk"><div class="fl" style="width:42.7%;background:var(--axis)"></div></div><div class="vl" style="color:var(--muted)">12.8%</div></div>
+          <div class="pgr"><div class="tk"><div class="fl" style="width:95.3%;background:var(--gj)"></div></div><div class="vl" style="color:var(--gj)">28.6%</div></div>
+        </div>
+      </div>
+    </div>
+    <figcaption>Grey bar above is before conceding, amber below is after. Each metric uses its own scale. Progression n=47 / n=70.</figcaption>
+  </figure>
+
+  <div class="body">
+    <p>Over those <span class="num">48</span> minutes Gwangju's final-to-middle ratio was <span class="num">0.636</span> — <strong>above the league's behind-state average of <span class="num">0.607</span></strong>. Their progression rate of <span class="num">28.6%</span> was higher than Gangwon's league-leading <span class="num">22.3%</span>. The pass-independent occupancy index tripled from <span class="num">9.3</span> to <span class="num">30.0</span>, close to the league average of <span class="num">32.5</span>.</p>
+    <p>Honesty requires the other half: the absolute volume fell short. <span class="num">131.1</span> final-third events per 90 is <span class="num">62%</span> of the league's behind-state <span class="num">211.2</span>. But <strong>the ratios and the progression rate cleared league average.</strong> And this was the match with the season's highest U23 minutes share (<span class="num">64.5%</span>).</p>
+    <p class="pull">In 42 minutes they produced a league-average centre of gravity. There is no stronger evidence that ability is not the constraint.</p>
+    <p>The order matters. <strong>The goal came first, the weight shift second, the rise in progression last.</strong> They did not go forward because the passing worked; the passing worked because they went forward.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">Rule out</span><span class="cap">directions the data does not support</span></div>
+  <h2>Four things that would not pay here</h2>
+  <div class="body">
+    <p>Half of deciding what to improve is deciding what not to. The four below look reasonable and are not supported by this data.</p>
+  </div>
+
+  <div class="tbl">
+    <table>
+      <thead><tr><th style="width:26%">Direction</th><th>What the data says</th></tr></thead>
+      <tbody>
+        <tr><td><b>Change who distributes</b></td><td>Of the −4.6pp progression gap while behind, the distribution effect is <span class="num">+0.06pp</span>. Changing who receives the ball does not move it.</td></tr>
+        <tr><td><b>Work on build-up alone</b></td><td>At level score Gwangju's defenders complete <span class="num">63.7%</span> of passes into the final third against the league's <span class="num">61.5%</span>. Something that only collapses while behind is not explained by technique.</td></tr>
+        <tr><td><b>Sign a target man</b></td><td>Since the summer, aerial duels are down <span class="num">25%</span> and the share of box shots created from crosses has fallen from <span class="num">35.2%</span> to <span class="num">19.4%</span>. The team is already not built that way, and there is no evidence for reversing it.</td></tr>
+        <tr><td><b>Drill final-third patterns</b></td><td>Shots per final-third entry are <span class="num">0.147</span>, <b>5th of 12</b>. What happens after arrival is not the problem; arriving is.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="body">
+    <p>They share a trait. All four try to fix the moment the ball is at someone's feet. What this analysis points at is the other side of it — how many players are standing in the final third while the team is losing.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">Limits</span><span class="cap">where this could be wrong</span></div>
+  <h2>Five things to check</h2>
+  <ul class="clean">
+    <li><b>Event data records only the player who touched the ball.</b> It cannot count how many players were in the final third. Pressing, duels and fouls won are a proxy, and a player who was up there but never near the ball leaves no trace. Video is what would settle it.</li>
+    <li><b>Causal direction is not fully closed.</b> Is the final third empty because progression fails, or does progression fail because it is empty? The time order within R14 and the pass-independent index both favour the latter, but a single match and a cross-sectional correlation are not proof.</li>
+    <li><b>Gwangju's behind-state sample is the largest in the league.</b> 1,061 minutes is 1.6× the next club. A large sample means stable estimates, but it also means more of those minutes come against opponents sitting on a lead than for any other team.</li>
+    <li><b>The "high player" group differs in size by club.</b> Gwangju's long time behind means more of their players clear the threshold (120 events in each state). For that reason the argument rests on the <b>direction</b> of change, not on the head count.</li>
+    <li><b>R28 onwards is not included.</b> The portal's event processing runs roughly two rounds behind and matches after 5 September are still empty. Every figure will be recomputed when R28 is published.</li>
+  </ul>
+
+  <div class="body">
+    <p style="margin-top:2.4em">In one sentence: <strong>Gwangju's channel is not blocked — there is simply nobody standing at the end of it.</strong> And the players who could stand there are already in this squad. For 48 minutes at Seoul, they did.</p>
+  </div>
+</section>
+
+<footer>
+  <b>Data</b> K League Data Portal event feed · 2026 K League 1, R1–R27<br>
+  <b>League comparison set</b> Five collected datasets (Gwangju, Jeju, Jeonbuk, Ulsan, Pohang) de-duplicated by match ID · 110 matches, 158,043 events · all 12 clubs represented<br>
+  <b>Score state</b> Classified as ahead / level / behind from the goal difference at each event's timestamp · time denominators recomputed on a cumulative clock measured from kick-off<br>
+  <b>Validation</b> Nine team-season metrics reconciled exactly against the portal's aggregate search · the progression gap is separated by standardisation into distribution, execution and interaction<br>
+  <b>Notation</b> Numbers in brackets after a player's name are shirt numbers · <b>progression rate</b> the share of passes starting in the middle third that reach the final third · <b>final-third entries</b> the count of those arrivals · <b>height</b> the share of a player's own events occurring in the final third
+</footer>
+
+</div>
+
+</body>
+</html>

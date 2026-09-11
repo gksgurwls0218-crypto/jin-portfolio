@@ -1,0 +1,676 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>통로 끝에 아무도 없다</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@400;500;600;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --page:#eef0ec; --surface:#fafbf9; --surface-2:#e2e6e0; --raise:#f4f6f3;
+  --ink:#12150f; --ink-2:#3a4036; --muted:#6d7568;
+  --line:rgba(18,21,15,.14); --line-2:rgba(18,21,15,.07);
+  --grid:#dde2da; --axis:#bfc7bb;
+  --gj:#b8690b; --lg:#3068b8; --top:#0f7f5e; --bad:#a3272f;
+  --gj-soft:rgba(184,105,11,.13); --lg-soft:rgba(48,104,184,.11);
+  --top-soft:rgba(15,127,94,.11); --bad-soft:rgba(163,39,47,.10);
+  --sp:clamp(18px,4.5vw,30px);
+  --disp:"Hahmlet",'Nanum Myeongjo',serif;
+  --body:"IBM Plex Sans KR",-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,'SFMono-Regular',monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --page:#101310; --surface:#171a16; --surface-2:#232720; --raise:#1d211c;
+    --ink:#e9ece5; --ink-2:#b9c0b4; --muted:#8b9386;
+    --line:rgba(233,236,229,.16); --line-2:rgba(233,236,229,.08);
+    --grid:#2b302a; --axis:#464c43;
+    --gj:#c47d0a; --lg:#4a8ace; --top:#159876; --bad:#d4565e;
+    --gj-soft:rgba(196,125,10,.17); --lg-soft:rgba(74,138,206,.15);
+    --top-soft:rgba(21,152,118,.15); --bad-soft:rgba(212,86,94,.14);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --page:#101310; --surface:#171a16; --surface-2:#232720; --raise:#1d211c;
+  --ink:#e9ece5; --ink-2:#b9c0b4; --muted:#8b9386;
+  --line:rgba(233,236,229,.16); --line-2:rgba(233,236,229,.08);
+  --grid:#2b302a; --axis:#464c43;
+  --gj:#c47d0a; --lg:#4a8ace; --top:#159876; --bad:#d4565e;
+  --gj-soft:rgba(196,125,10,.17); --lg-soft:rgba(74,138,206,.15);
+  --top-soft:rgba(21,152,118,.15); --bad-soft:rgba(212,86,94,.14);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font-family:var(--body);
+  word-break:keep-all;overflow-wrap:break-word;
+  font-weight:400;font-size:16px;line-height:1.72;-webkit-font-smoothing:antialiased}
+.wrap{max-width:940px;margin:0 auto;padding-inline:var(--sp);padding-block:0}
+p{margin:0 0 1.05em}
+strong{font-weight:600;color:var(--ink)}
+em{font-style:normal;background:var(--gj-soft);padding:.06em .3em;border-radius:2px;font-weight:500}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums;font-weight:500;letter-spacing:-.01em}
+
+/* ── header ── */
+header{padding-block:clamp(48px,9vw,88px) clamp(30px,5vw,44px);border-bottom:1px solid var(--line)}
+.badge{display:inline-flex;align-items:center;gap:.55em;font-family:var(--mono);font-size:11px;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--gj);font-weight:500}
+.badge::before{content:"";width:22px;height:2px;background:var(--gj)}
+h1{font-family:var(--disp);font-weight:600;font-size:clamp(38px,8.6vw,68px);line-height:1.06;
+  letter-spacing:-.025em;margin:.34em 0 .3em;text-wrap:balance}
+.dek{font-family:var(--disp);font-weight:400;font-size:clamp(17px,2.5vw,21px);line-height:1.55;
+  color:var(--ink-2);max-width:34em;margin:0 0 1.5em}
+.meta{display:flex;flex-wrap:wrap;gap:.5em 0;font-family:var(--mono);font-size:11.5px;
+  color:var(--muted);letter-spacing:.02em}
+.meta span+span::before{content:"|";padding:0 .85em;color:var(--axis)}
+
+/* ── tiles ── */
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line-2);
+  border-block:1px solid var(--line);margin-block:0}
+@media(max-width:760px){.tiles{grid-template-columns:repeat(2,1fr)}}
+.tile{background:var(--page);padding:clamp(16px,3vw,24px) clamp(12px,2.4vw,20px);display:flex;
+  flex-direction:column;gap:.3em}
+.tile .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.tile .v{font-family:var(--disp);font-weight:600;font-size:clamp(26px,4.6vw,38px);line-height:1;
+  letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.tile .v.gj{color:var(--gj)} .tile .v.bad{color:var(--bad)}
+.tile .s{font-size:12.5px;line-height:1.45;color:var(--ink-2)}
+
+/* ── sections ── */
+section{padding-block:clamp(40px,7vw,68px);border-bottom:1px solid var(--line-2)}
+section:last-of-type{border-bottom:none}
+.eyebrow{display:flex;align-items:baseline;gap:.9em;margin-bottom:.9em}
+.eyebrow .role{font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--page);background:var(--ink-2);padding:.35em .7em;border-radius:2px;white-space:nowrap}
+.eyebrow .cap{font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--muted)}
+h2{font-family:var(--disp);font-weight:600;font-size:clamp(25px,4.4vw,37px);line-height:1.2;
+  letter-spacing:-.022em;margin:0 0 .6em;text-wrap:balance;max-width:19em}
+h3{font-family:var(--disp);font-weight:600;font-size:clamp(17px,2.4vw,21px);line-height:1.35;
+  letter-spacing:-.012em;margin:2.1em 0 .7em}
+.lede{font-size:clamp(16.5px,2.1vw,18.5px);line-height:1.68;color:var(--ink-2);max-width:33em;margin-bottom:1.6em}
+.body{max-width:35em}
+.body.wide{max-width:40em}
+
+/* ── pull ── */
+.pull{border-left:3px solid var(--gj);padding:.1em 0 .1em 1.15em;margin:1.9em 0;
+  font-family:var(--disp);font-weight:500;font-size:clamp(18px,2.7vw,23px);line-height:1.45;
+  letter-spacing:-.014em;color:var(--ink);max-width:24em;text-wrap:balance}
+
+/* ── figure ── */
+figure{margin:2em 0;padding:clamp(16px,3vw,26px);background:var(--surface);
+  border:1px solid var(--line);border-radius:3px}
+figcaption{font-family:var(--mono);font-size:11px;line-height:1.6;color:var(--muted);
+  margin-top:1.15em;padding-top:.85em;border-top:1px solid var(--line-2)}
+.figtitle{font-family:var(--body);font-weight:600;font-size:14px;line-height:1.4;color:var(--ink);
+  margin-bottom:.3em;letter-spacing:-.005em}
+.figsub{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:1.35em;letter-spacing:.01em}
+.legend{display:flex;flex-wrap:wrap;gap:.5em 1.3em;font-family:var(--mono);font-size:11px;
+  color:var(--ink-2);margin-bottom:1.1em}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:1px;margin-right:.45em;vertical-align:-1px}
+
+/* ── bar rows ── */
+.bars{display:flex;flex-direction:column;gap:7px}
+.br{display:grid;grid-template-columns:74px 1fr 62px;align-items:center;gap:10px}
+@media(max-width:560px){.br{grid-template-columns:60px 1fr 54px;gap:7px}}
+.br .lb{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);text-align:right;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.br .tk{height:17px;background:var(--surface-2);border-radius:1px;overflow:hidden}
+.br .fl{height:100%;background:var(--lg);border-radius:1px}
+.br .vl{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;
+  color:var(--ink-2);text-align:right}
+.br.hi .lb{color:var(--gj);font-weight:600}
+.br.hi .fl{background:var(--gj)}
+.br.hi .vl{color:var(--gj);font-weight:600}
+.br.ref .fl{background:var(--top)}
+.br.ref .lb,.br.ref .vl{color:var(--top)}
+
+/* ── grouped pair bars ── */
+.pair{display:flex;flex-direction:column;gap:16px}
+.pg{display:grid;grid-template-columns:96px 1fr;gap:12px;align-items:center}
+@media(max-width:560px){.pg{grid-template-columns:1fr;gap:5px}}
+.pg .pn{font-family:var(--body);font-size:13px;font-weight:600;color:var(--ink)}
+.pg .pn small{display:block;font-family:var(--mono);font-weight:400;font-size:10.5px;color:var(--muted)}
+.pgb{display:flex;flex-direction:column;gap:5px}
+.pgr{display:grid;grid-template-columns:1fr 54px;gap:9px;align-items:center}
+.pgr .tk{height:15px;background:var(--surface-2);border-radius:1px;overflow:hidden}
+.pgr .fl{height:100%;border-radius:1px}
+.pgr .vl{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;text-align:right}
+
+/* ── table ── */
+.tbl{overflow-x:auto;margin:1.8em 0;border:1px solid var(--line);border-radius:3px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:13px}
+th,td{padding:9px 13px;text-align:left;border-bottom:1px solid var(--line-2);vertical-align:baseline}
+th{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;background:var(--raise);white-space:nowrap}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+td .nm{font-weight:600}
+td .no{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.up{color:var(--top);font-weight:600} .dn{color:var(--bad);font-weight:600}
+.dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:.5em;vertical-align:1px}
+.dot.on{background:var(--top)} .dot.mid{background:var(--axis)} .dot.off{background:transparent;
+  border:1px solid var(--axis)}
+
+/* ── slope svg ── */
+svg{display:block;max-width:100%;height:auto;overflow:visible}
+.sv-lb{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:var(--muted)}
+.sv-vl{font-family:"IBM Plex Mono",monospace;font-size:11.5px;font-weight:500}
+.sv-nm{font-family:"IBM Plex Sans KR",sans-serif;font-size:11.5px;font-weight:600;fill:var(--ink-2)}
+
+/* ── callout ── */
+.note{background:var(--raise);border:1px solid var(--line);border-left:3px solid var(--axis);
+  border-radius:3px;padding:clamp(14px,2.6vw,20px);margin:1.9em 0;font-size:14px;line-height:1.65;
+  color:var(--ink-2)}
+.note b{color:var(--ink);font-weight:600}
+.note.warn{border-left-color:var(--bad)}
+.note.key{border-left-color:var(--gj);background:var(--gj-soft);border-color:var(--line)}
+
+/* ── stat strip ── */
+.strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-2);
+  border:1px solid var(--line);border-radius:3px;overflow:hidden;margin:1.9em 0}
+@media(max-width:620px){.strip{grid-template-columns:1fr}}
+.strip>div{background:var(--surface);padding:clamp(13px,2.4vw,18px)}
+.strip .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:.4em}
+.strip .v{font-family:var(--disp);font-weight:600;font-size:clamp(20px,3.4vw,27px);line-height:1.1;
+  font-variant-numeric:tabular-nums;letter-spacing:-.018em}
+.strip .s{font-size:12px;color:var(--ink-2);margin-top:.35em;line-height:1.45}
+
+/* ── list ── */
+ul.clean{list-style:none;padding:0;margin:1.3em 0;display:flex;flex-direction:column;gap:.85em;max-width:35em}
+ul.clean li{padding-left:1.5em;position:relative;font-size:14.5px;line-height:1.62;color:var(--ink-2)}
+ul.clean li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:1.5px;background:var(--axis)}
+ul.clean li b{color:var(--ink);font-weight:600}
+
+footer{padding-block:clamp(34px,6vw,54px) clamp(46px,8vw,74px);border-top:1px solid var(--line);
+  font-family:var(--mono);font-size:11.5px;line-height:1.85;color:var(--muted)}
+footer b{color:var(--ink-2);font-weight:500}
+@media(prefers-reduced-motion:no-preference){
+  section{animation:fi .5s ease-out both}
+  @keyframes fi{from{opacity:.55}to{opacity:1}}
+}
+</style>
+<style>*{box-sizing:border-box}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+
+
+<div class="wrap">
+<header>
+  <div class="badge">전력분석 보고 · 2026-09-10 · K리그1 R1–R27</div>
+  <h1>통로 끝에<br>아무도 없다</h1>
+  <p class="dek">광주는 지고 있을 때 무게중심을 뒤로 옮기는 유일한 팀이다. 수비수가 앞으로 못 보내는 것이 아니라, 앞에 받을 사람이 없다. 그리고 거기 설 수 있는 선수들은 이미 이 명단 안에 있다.</p>
+  <div class="meta">
+    <span>K리그 데이터포털 이벤트 원본</span>
+    <span>리그 풀링 110경기 · 158,043이벤트</span>
+    <span>광주 27경기 · 열세 1,061분</span>
+    <span>선수명 옆 괄호는 등번호</span>
+  </div>
+</header>
+</div>
+
+<div class="wrap">
+<div class="tiles">
+  <div class="tile">
+    <div class="k">열세 국면 final third 활동</div>
+    <div class="v gj">116</div>
+    <div class="s">90분당. 12팀 중 <b>12위</b>. 11위 부천 180, 리그 평균 220</div>
+  </div>
+  <div class="tile">
+    <div class="k">무게중심 이동 (동점→열세)</div>
+    <div class="v bad">+1.1<span style="font-size:.5em">pp</span></div>
+    <div class="s">리그 평균 <b>+6.7pp</b>. 12팀 중 12위</div>
+  </div>
+  <div class="tile">
+    <div class="k">final third : middle third</div>
+    <div class="v gj">0.360</div>
+    <div class="s">열세에서 <b>더 낮아진다</b>. 리그는 0.495→0.607로 올린다</div>
+  </div>
+  <div class="tile">
+    <div class="k">전달률 격차 중 배분 탓</div>
+    <div class="v">+0.06<span style="font-size:.5em">pp</span></div>
+    <div class="s">−4.6pp 격차의 <b>사실상 전부</b>가 배분이 아닌 다른 것</div>
+  </div>
+</div>
+</div>
+
+<div class="wrap">
+
+<section>
+  <div class="eyebrow"><span class="role">이 문서가 하는 일</span></div>
+  <h2>어디를 키우면 이 팀이 달라지는가</h2>
+  <div class="body">
+    <p class="lede">이 문서는 훈련 방법이나 팀 운영 방식을 제안하지 않는다. 그건 현장의 영역이다. 여기서 하는 일은 하나다 — 데이터가 가리키는 <strong>향상 지점 한 곳</strong>을 특정하고, 그 판단의 근거를 남김없이 열어 보이고, 그 일을 할 자원이 지금 명단 안에 있는지를 확인하는 것.</p>
+    <p>지난 분석은 「왜 광주의 통로가 닫혔는가」를 물었고, 답은 수비수를 가리켰다. middle third에서 final third로 넘기는 비율이 리그 최하위였고, 그 저조함은 수비수 구간에 몰려 있었다. 맞는 관찰이었지만 <strong>답이 아니라 증상이었다.</strong></p>
+    <p>이번에는 스코어 상태를 통제하고 다시 들어갔다. 광주는 열세 시간이 <span class="num">1,061</span>분으로 리그에서 압도적으로 길다(2위 포항 <span class="num">647</span>분). 지고 있을 때 무엇을 하는가가 이 팀의 시즌 그 자체다. 그 국면만 떼어 보니 그림이 뒤집혔다.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">분해</span><span class="cap">격차는 어디에 있나</span></div>
+  <h2>미드필더는 이미 리그 수준이다</h2>
+  <div class="body">
+    <p>지고 있을 때 middle third에서 final third로 넘기는 비율은 광주 <span class="num">14.5%</span>, 리그 <span class="num">19.1%</span>. 격차는 <span class="num">−4.6pp</span>다. 이 격차를 둘로 쪼갰다. <strong>누가 공을 잡는가</strong>(배분)와 <strong>잡은 사람이 얼마나 넘기는가</strong>(수행)로.</p>
+  </div>
+
+  <div class="strip">
+    <div><div class="k">배분 효과</div><div class="v" style="color:var(--muted)">+0.06pp</div><div class="s">포지션별 점유 구성 차이가 만든 몫</div></div>
+    <div><div class="k">수행 효과</div><div class="v" style="color:var(--bad)">−4.18pp</div><div class="s">같은 포지션이 얼마나 넘기는가의 차이</div></div>
+    <div><div class="k">교호작용</div><div class="v" style="color:var(--muted)">−0.10pp</div><div class="s">둘의 상호작용</div></div>
+  </div>
+
+  <div class="body">
+    <p>배분 효과가 <strong>사실상 0</strong>이다. 공을 누구에게 쥐여줄지를 바꾸는 것으로는 이 격차가 움직이지 않는다는 뜻이다. 격차는 전부 수행 쪽에 있고, 수행을 포지션별로 열어 보면 한 곳에만 몰려 있다.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">열세 국면 middle third→final third 전달률, 포지션별</div>
+    <div class="figsub">광주 27경기 / 리그 나머지 11팀 · 열세 상태 middle third 패스만</div>
+    <div class="legend">
+      <span><i style="background:var(--gj)"></i>광주</span>
+      <span><i style="background:var(--lg)"></i>리그(광주 제외)</span>
+    </div>
+    <div class="pair">
+      <div class="pg">
+        <div class="pn">수비수<small>지분 55.8%</small></div>
+        <div class="pgb">
+          <div class="pgr"><div class="tk"><div class="fl" style="width:44.8%;background:var(--gj)"></div></div><div class="vl" style="color:var(--gj)">11.2%</div></div>
+          <div class="pgr"><div class="tk"><div class="fl" style="width:71.6%;background:var(--lg)"></div></div><div class="vl" style="color:var(--lg)">17.9%</div></div>
+        </div>
+      </div>
+      <div class="pg">
+        <div class="pn">미드필더<small>지분 37.1%</small></div>
+        <div class="pgb">
+          <div class="pgr"><div class="tk"><div class="fl" style="width:80.4%;background:var(--gj)"></div></div><div class="vl" style="color:var(--gj)">20.1%</div></div>
+          <div class="pgr"><div class="tk"><div class="fl" style="width:81.2%;background:var(--lg)"></div></div><div class="vl" style="color:var(--lg)">20.3%</div></div>
+        </div>
+      </div>
+      <div class="pg">
+        <div class="pn">공격수<small>지분 6.4%</small></div>
+        <div class="pgb">
+          <div class="pgr"><div class="tk"><div class="fl" style="width:44.4%;background:var(--gj)"></div></div><div class="vl" style="color:var(--gj)">11.1%</div></div>
+          <div class="pgr"><div class="tk"><div class="fl" style="width:72.0%;background:var(--lg)"></div></div><div class="vl" style="color:var(--lg)">18.0%</div></div>
+        </div>
+      </div>
+    </div>
+    <figcaption>축 최대 25%. 광주 열세 middle third 패스 n=2,818 / 리그 n=11,250. 지분은 광주 기준.</figcaption>
+  </figure>
+
+  <div class="body">
+    <p class="pull">광주 미드필더는 20.1%, 리그 미드필더는 20.3%. 오차 범위 안에서 같다.</p>
+    <p>이건 중요한 결과다. 여름에 보강한 중원이 제 몫을 하고 있다는 뜻이고, 동시에 <strong>중원을 더 손보는 방향으로는 얻을 것이 거의 없다</strong>는 뜻이기도 하다. 공격수는 격차가 크지만 지분이 <span class="num">6.4%</span>라 전체에 미치는 영향이 작다. 남는 것은 수비수 한 곳이다.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">배제</span><span class="cap">그런데 수비수가 원인인가</span></div>
+  <h2>같은 상황에서 리그는 쉬워지고 광주는 어려워진다</h2>
+  <div class="body">
+    <p>수비수 구간에 격차가 몰려 있다고 해서 원인이 수비수인 것은 아니다. 이걸 가르는 방법이 하나 있다. 열세가 되면 상대는 리드를 지키려고 물러선다. 그래서 <strong>리그 전체에서 앞으로 보내기는 열세일수록 쉬워진다.</strong> 광주에서도 그런지 보면 된다.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">수비수의 final third행 패스 — 동점에서 열세로 갈 때의 변화</div>
+    <div class="figsub">왼쪽 점이 동점, 오른쪽 점이 열세. 선의 기울기가 곧 방향</div>
+    <svg viewBox="0 0 620 300" role="img" aria-label="수비수 final third행 패스의 시도율과 성공률 변화">
+      <line x1="60" y1="248" x2="600" y2="248" stroke="var(--axis)" stroke-width="1"/>
+      <line x1="60" y1="34" x2="60" y2="248" stroke="var(--axis)" stroke-width="1"/>
+      <text class="sv-lb" x="105" y="268" text-anchor="middle">동점</text>
+      <text class="sv-lb" x="195" y="268" text-anchor="middle">열세</text>
+      <text class="sv-lb" x="465" y="268" text-anchor="middle">동점</text>
+      <text class="sv-lb" x="555" y="268" text-anchor="middle">열세</text>
+      <line x1="330" y1="34" x2="330" y2="258" stroke="var(--grid)" stroke-width="1" stroke-dasharray="3 4"/>
+      <text class="sv-nm" x="150" y="24" text-anchor="middle">시도율</text>
+      <text class="sv-nm" x="510" y="24" text-anchor="middle">시도한 것의 성공률</text>
+      <g>
+        <line x1="105" y1="164" x2="195" y2="128" stroke="var(--lg)" stroke-width="2.2"/>
+        <circle cx="105" cy="164" r="4.6" fill="var(--lg)"/><circle cx="195" cy="128" r="4.6" fill="var(--lg)"/>
+        <text class="sv-vl" x="97" y="160" text-anchor="end" fill="var(--lg)">15.4%</text>
+        <text class="sv-vl" x="203" y="124" fill="var(--lg)">17.9%</text>
+        <line x1="105" y1="182" x2="195" y2="224" stroke="var(--gj)" stroke-width="2.2"/>
+        <circle cx="105" cy="182" r="4.6" fill="var(--gj)"/><circle cx="195" cy="224" r="4.6" fill="var(--gj)"/>
+        <text class="sv-vl" x="97" y="196" text-anchor="end" fill="var(--gj)">14.1%</text>
+        <text class="sv-vl" x="203" y="238" fill="var(--gj)">11.2%</text>
+      </g>
+      <g>
+        <line x1="465" y1="150" x2="555" y2="70" stroke="var(--lg)" stroke-width="2.2"/>
+        <circle cx="465" cy="150" r="4.6" fill="var(--lg)"/><circle cx="555" cy="70" r="4.6" fill="var(--lg)"/>
+        <text class="sv-vl" x="457" y="146" text-anchor="end" fill="var(--lg)">61.5%</text>
+        <text class="sv-vl" x="563" y="66" fill="var(--lg)">72.5%</text>
+        <line x1="465" y1="134" x2="555" y2="164" stroke="var(--gj)" stroke-width="2.2"/>
+        <circle cx="465" cy="134" r="4.6" fill="var(--gj)"/><circle cx="555" cy="164" r="4.6" fill="var(--gj)"/>
+        <text class="sv-vl" x="457" y="128" text-anchor="end" fill="var(--gj)">63.7%</text>
+        <text class="sv-vl" x="563" y="178" fill="var(--gj)">59.7%</text>
+      </g>
+      <text class="sv-lb" x="330" y="292" text-anchor="middle">주황 = 광주 · 파랑 = 리그(광주 제외)</text>
+    </svg>
+    <figcaption>두 패널의 세로 축척은 각기 다르다(왼쪽 10–20%, 오른쪽 55–80%). 방향을 읽는 그림이다.</figcaption>
+  </figure>
+
+  <div class="body">
+    <p>리그 수비수는 열세가 되면 final third로 <strong>더 자주 시도하고</strong>(15.4→17.9%) <strong>더 잘 통한다</strong>(61.5→72.5%). 상대가 물러선 만큼 앞이 열리기 때문이다. 광주 수비수는 정확히 반대다 — 덜 시도하고(14.1→11.2%), 시도한 것마저 덜 통한다(63.7→59.7%).</p>
+    <p class="pull">기술이 문제라면 성공률이 같은 방향으로 움직여야 한다. 반대로 움직였다면 문제는 패스가 아니라 그 패스가 도착할 곳이다.</p>
+    <p>동점일 때 광주 수비수의 final third행 성공률은 <span class="num">63.7%</span>로 리그(<span class="num">61.5%</span>)보다 <strong>높다.</strong> 같은 선수들이 같은 기술로, 열세가 되는 순간 리그와 반대 방향으로 간다. 남은 설명은 하나뿐이다.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">발견</span><span class="cap">앞에 무엇이 있나</span></div>
+  <h2>final third가 비어 있다</h2>
+  <div class="body">
+    <p>지고 있을 때 광주의 final third 활동은 90분당 <span class="num">116.1</span>회다. 리그 최하위이고, 11위 부천(<span class="num">179.5</span>)과의 격차가 부천부터 1위 서울까지의 격차보다 크다.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">열세 국면 final third 활동 — 90분당 이벤트</div>
+    <div class="figsub">스코어가 뒤진 시간만 추출해 90분으로 환산</div>
+    <div class="bars">
+      <div class="br"><div class="lb">서울</div><div class="tk"><div class="fl" style="width:100%"></div></div><div class="vl">300.2</div></div>
+      <div class="br"><div class="lb">강원</div><div class="tk"><div class="fl" style="width:83.4%"></div></div><div class="vl">250.5</div></div>
+      <div class="br"><div class="lb">인천</div><div class="tk"><div class="fl" style="width:79.9%"></div></div><div class="vl">240.0</div></div>
+      <div class="br"><div class="lb">안양</div><div class="tk"><div class="fl" style="width:73.2%"></div></div><div class="vl">219.6</div></div>
+      <div class="br"><div class="lb">대전</div><div class="tk"><div class="fl" style="width:71.9%"></div></div><div class="vl">215.9</div></div>
+      <div class="br"><div class="lb">김천</div><div class="tk"><div class="fl" style="width:71.4%"></div></div><div class="vl">214.4</div></div>
+      <div class="br"><div class="lb">전북</div><div class="tk"><div class="fl" style="width:69.8%"></div></div><div class="vl">209.4</div></div>
+      <div class="br"><div class="lb">제주</div><div class="tk"><div class="fl" style="width:69.5%"></div></div><div class="vl">208.5</div></div>
+      <div class="br"><div class="lb">포항</div><div class="tk"><div class="fl" style="width:63.1%"></div></div><div class="vl">189.4</div></div>
+      <div class="br"><div class="lb">울산</div><div class="tk"><div class="fl" style="width:62.7%"></div></div><div class="vl">188.3</div></div>
+      <div class="br"><div class="lb">부천</div><div class="tk"><div class="fl" style="width:59.8%"></div></div><div class="vl">179.5</div></div>
+      <div class="br hi"><div class="lb">광주</div><div class="tk"><div class="fl" style="width:38.7%"></div></div><div class="vl">116.1</div></div>
+    </div>
+    <figcaption>광주 열세 1,061분 기준. 표본이 가장 큰 팀이 최하위라는 점에서 우연으로 보기 어렵다.</figcaption>
+  </figure>
+
+  <div class="body">
+    <h3>점유가 부족해서가 아니다</h3>
+    <p>이 숫자를 볼 때 가장 먼저 의심할 것은 "광주가 공을 덜 가져서"다. 그렇지 않다. 같은 열세 국면에서 <strong>middle third</strong> 활동은 광주 <span class="num">323.0</span>회/90분, 리그 평균 <span class="num">348.2</span>회로 <span class="num">7%</span> 차이에 불과하다. middle third까지는 리그와 비슷하게 오고, 그 앞에서만 절반이 된다.</p>
+  </div>
+
+  <div class="strip">
+    <div><div class="k">middle third 활동 (열세)</div><div class="v">323 <span style="font-size:.55em;color:var(--muted)">vs 348</span></div><div class="s">리그 대비 −7%. 사실상 같다</div></div>
+    <div><div class="k">final third 활동 (열세)</div><div class="v" style="color:var(--gj)">116 <span style="font-size:.55em;color:var(--muted)">vs 220</span></div><div class="s">리그 대비 −47%. 절반이다</div></div>
+    <div><div class="k">final third : middle third</div><div class="v" style="color:var(--gj)">0.360</div><div class="s">리그 0.637. 12팀 중 12위</div></div>
+  </div>
+
+  <div class="body">
+    <p>그리고 결정적으로, 이 비율은 광주가 <strong>지고 있을 때 오히려 내려간다.</strong> 동점일 때 <span class="num">0.372</span>에서 열세일 때 <span class="num">0.360</span>. 리그는 같은 구간에서 <span class="num">0.495</span>에서 <span class="num">0.607</span>로 올린다.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">검증</span><span class="cap">순환논리를 끊는다</span></div>
+  <h2>우리 패스와 무관한 자로 다시 쟀다</h2>
+  <div class="body">
+    <p>여기에는 함정이 있다. final third 활동은 우리가 넘긴 패스의 <strong>결과</strong>이기도 하다. 전달률이 낮으니 final third 활동이 적은 것이라면, 앞의 그림은 같은 말을 두 번 한 것에 지나지 않는다.</p>
+    <p>그래서 우리 패스와 무관하게 발생하는 것만 골라 다시 쟀다. <strong>final third에서의 압박·차단, 공중볼과 지상 경합, 파울 획득</strong> — 모두 상대가 공을 가졌거나 공중에 뜬 상태에서 일어나는 일이고, 그 자리에 우리 선수가 서 있어야만 기록된다. 우리 전달률이 0이어도 앞에 사람만 있으면 발생하는 지표다.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">final third 점유 지표 ↔ 열세 전달률</div>
+    <div class="figsub">가로: 압박·경합·파울획득 90분당 · 세로: 열세 middle third→final third 전달률 · 12팀</div>
+    <svg viewBox="0 0 620 352" role="img" aria-label="final third 점유 지표와 열세 전달률의 산점도">
+      <g stroke="var(--grid)" stroke-width="1">
+        <line x1="78" y1="290" x2="590" y2="290"/><line x1="78" y1="234.9" x2="590" y2="234.9"/>
+        <line x1="78" y1="179.7" x2="590" y2="179.7"/><line x1="78" y1="124.5" x2="590" y2="124.5"/>
+        <line x1="78" y1="69.4" x2="590" y2="69.4"/>
+      </g>
+      <line x1="78" y1="42" x2="78" y2="290" stroke="var(--axis)" stroke-width="1"/>
+      <line x1="78" y1="290" x2="590" y2="290" stroke="var(--axis)" stroke-width="1"/>
+      <text class="sv-lb" x="70" y="294" text-anchor="end">14%</text>
+      <text class="sv-lb" x="70" y="238.9" text-anchor="end">16%</text>
+      <text class="sv-lb" x="70" y="183.7" text-anchor="end">18%</text>
+      <text class="sv-lb" x="70" y="128.5" text-anchor="end">20%</text>
+      <text class="sv-lb" x="70" y="73.4" text-anchor="end">22%</text>
+      <text class="sv-lb" x="96.3" y="308" text-anchor="middle">20</text>
+      <text class="sv-lb" x="187.7" y="308" text-anchor="middle">25</text>
+      <text class="sv-lb" x="279.1" y="308" text-anchor="middle">30</text>
+      <text class="sv-lb" x="370.6" y="308" text-anchor="middle">35</text>
+      <text class="sv-lb" x="462.0" y="308" text-anchor="middle">40</text>
+      <text class="sv-lb" x="553.4" y="308" text-anchor="middle">45</text>
+      <text class="sv-lb" x="334" y="332" text-anchor="middle">final third 점유 지표 (90분당)</text>
+      <line x1="96.3" y1="234.6" x2="571.8" y2="49.1" stroke="var(--top)" stroke-width="1.7" stroke-dasharray="6 4"/>
+      <text class="sv-lb" x="470" y="212" fill="var(--top)">회귀 r = +0.68</text>
+      <g fill="var(--lg)">
+        <circle cx="248.1" cy="141.2" r="5"/><circle cx="264.5" cy="141.2" r="5"/>
+        <circle cx="257.2" cy="212.8" r="5"/><circle cx="264.5" cy="88.8" r="5"/>
+        <circle cx="330.3" cy="237.6" r="5"/><circle cx="352.3" cy="138.4" r="5"/>
+        <circle cx="359.6" cy="108.1" r="5"/><circle cx="370.6" cy="138.4" r="5"/>
+        <circle cx="412.7" cy="83.3" r="5"/><circle cx="436.5" cy="61.3" r="5"/>
+        <circle cx="566.4" cy="94.3" r="5"/>
+      </g>
+      <g fill="var(--lg)">
+        <text class="sv-lb" x="240" y="145" text-anchor="end">부천</text>
+        <text class="sv-lb" x="273" y="145">울산</text>
+        <text class="sv-lb" x="257.2" y="229" text-anchor="middle">전북</text>
+        <text class="sv-lb" x="264.5" y="79" text-anchor="middle">제주</text>
+        <text class="sv-lb" x="339" y="241">포항</text>
+        <text class="sv-lb" x="344" y="134" text-anchor="end">김천</text>
+        <text class="sv-lb" x="359.6" y="98" text-anchor="middle">인천</text>
+        <text class="sv-lb" x="379" y="134">대전</text>
+        <text class="sv-lb" x="412.7" y="73" text-anchor="middle">서울</text>
+        <text class="sv-lb" x="436.5" y="51" text-anchor="middle">강원</text>
+        <text class="sv-lb" x="566.4" y="84" text-anchor="middle">안양</text>
+      </g>
+      <circle cx="109.1" cy="276.2" r="7" fill="var(--gj)"/>
+      <text class="sv-nm" x="122" y="280" fill="var(--gj)">광주 · 20.7 / 14.5%</text>
+    </svg>
+    <figcaption>회귀식 전달률 = 0.259 × 점유 + 10.83. 광주를 뺀 11팀만으로도 관계는 유지된다. 겹치는 라벨은 생략했다.</figcaption>
+  </figure>
+
+  <div class="body">
+    <p>결과는 같다. 광주 <span class="num">20.7</span>회/90분으로 <strong>12팀 중 최하위</strong>, 리그 평균(<span class="num">32.8</span>) 대비 <span class="num">−37%</span>다. 이 지표는 우리 패스가 만들어낸 것이 아니므로, "전달이 안 돼서 앞이 비어 보인다"로는 설명되지 않는다.</p>
+    <p>그리고 12팀 횡단면에서 이 지표와 열세 전달률의 상관은 <span class="num">r = +0.68</span>이다. 앞에 사람이 있는 팀이 앞으로 넘긴다.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">결론</span><span class="cap">향상 지점</span></div>
+  <h2>리그는 지면 앞으로 간다. 광주는 뒤로 간다</h2>
+  <div class="body">
+    <p>팀 전체 이벤트 중 final third에서 일어난 비율이 동점에서 열세로 갈 때 얼마나 변하는지를 보면, 이 시즌 K리그1에서 광주의 자리가 드러난다.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">동점 → 열세, final third 비중의 변화</div>
+    <div class="figsub">팀 전체 이벤트 중 final third에서 발생한 비율의 변화폭(pp)</div>
+    <div class="bars">
+      <div class="br"><div class="lb">서울</div><div class="tk"><div class="fl" style="width:100%"></div></div><div class="vl">+13.0</div></div>
+      <div class="br"><div class="lb">안양</div><div class="tk"><div class="fl" style="width:75.4%"></div></div><div class="vl">+9.8</div></div>
+      <div class="br"><div class="lb">부천</div><div class="tk"><div class="fl" style="width:72.3%"></div></div><div class="vl">+9.4</div></div>
+      <div class="br"><div class="lb">인천</div><div class="tk"><div class="fl" style="width:63.1%"></div></div><div class="vl">+8.2</div></div>
+      <div class="br"><div class="lb">제주</div><div class="tk"><div class="fl" style="width:62.3%"></div></div><div class="vl">+8.1</div></div>
+      <div class="br"><div class="lb">포항</div><div class="tk"><div class="fl" style="width:57.7%"></div></div><div class="vl">+7.5</div></div>
+      <div class="br ref"><div class="lb">리그 평균</div><div class="tk"><div class="fl" style="width:51.5%"></div></div><div class="vl">+6.7</div></div>
+      <div class="br"><div class="lb">김천</div><div class="tk"><div class="fl" style="width:42.3%"></div></div><div class="vl">+5.5</div></div>
+      <div class="br"><div class="lb">울산</div><div class="tk"><div class="fl" style="width:30.0%"></div></div><div class="vl">+3.9</div></div>
+      <div class="br"><div class="lb">대전</div><div class="tk"><div class="fl" style="width:26.9%"></div></div><div class="vl">+3.5</div></div>
+      <div class="br"><div class="lb">전북</div><div class="tk"><div class="fl" style="width:23.1%"></div></div><div class="vl">+3.0</div></div>
+      <div class="br"><div class="lb">강원</div><div class="tk"><div class="fl" style="width:14.6%"></div></div><div class="vl">+1.9</div></div>
+      <div class="br hi"><div class="lb">광주</div><div class="tk"><div class="fl" style="width:8.5%"></div></div><div class="vl">+1.1</div></div>
+    </div>
+    <figcaption>강원은 동점 시점의 비중이 이미 30.4%로 리그 최고여서 변화폭이 작다. 광주는 16.4%에서 시작해 17.5%로 끝난다.</figcaption>
+  </figure>
+
+  <div class="body">
+    <p>더 정확히 말하면 광주는 뒤로 간다. 앞에서 본 final third : middle third 비율이 이것의 다른 얼굴이다 — <strong>리그는 지고 있을 때 무게를 앞으로 옮기고, 광주는 볼을 middle third에 더 오래 붙잡아 둔다.</strong> 무게중심이 이동하지 않으니 수비수가 공을 잡는 횟수만 늘어난다.</p>
+    <p>선수 단위로 보면 더 분명하다. 동점일 때 자기 활동의 <span class="num">30%</span> 이상을 final third에서 하던 선수 — 즉 원래 높이 서는 선수 — 를 리그 전체에서 추리면 <span class="num">28</span>명이다. 그중 <strong><span class="num">23</span>명(<span class="num">82%</span>)이 열세가 되면 더 올라간다.</strong> 평균 <span class="num">40.4%</span>에서 <span class="num">48.6%</span>로.</p>
+  </div>
+
+  <div class="note key">
+    <b>광주의 같은 선수들</b><br>
+    신창무(40) 39.5% → 33.8% <span class="dn">−5.7pp</span> · 정지훈(16) 35.4% → 29.9% <span class="dn">−5.6pp</span> · 프리드욘슨(11) 41.7% → 42.9% <span class="up">+1.2pp</span> · 안혁주(19) 34.4% → 41.1% <span class="up">+6.7pp</span><br>
+    <span style="font-size:13px;color:var(--muted)">최근 6라운드를 꾸준히 뛰는 두 명(40·16)이 지고 있을 때 <b>내려온다.</b> 안혁주(19)는 방향이 맞지만 R21 이후 출전이 없다.</span>
+  </div>
+
+  <div class="body">
+    <p class="pull">향상 지점은 수비수의 전진 패스가 아니다. 지고 있을 때의 무게중심이다.</p>
+    <p>이것이 이 문서의 결론이다. 광주의 통로가 닫힌 이유는 통로를 여는 사람의 문제가 아니라 <strong>통로 끝에 아무도 서 있지 않기 때문</strong>이고, 지금 광주는 지고 있을 때 그 끝에 사람을 <strong>덜</strong> 보낸다.</p>
+    <p>목표치는 회귀식으로 환산할 수 있다. final third 점유 지표를 <span class="num">20.7</span>에서 11위 부천 수준인 <span class="num">28.3</span>까지 올리면 열세 전달률은 <span class="num">14.5%</span>에서 <span class="num">18.1%</span>로, 리그 평균 <span class="num">32.8</span>까지면 <span class="num">19.3%</span>로 예측된다. 리그 중위권이다.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">자원</span><span class="cap">그 일을 할 사람이 있는가</span></div>
+  <h2>전달할 사람은 이미 리그 최상급이다</h2>
+  <div class="body">
+    <p>향상 지점을 정했으면 다음 질문은 하나다. <strong>지금 있는 선수로 되는가.</strong></p>
+    <p>먼저 통로를 여는 쪽. 열세에서 middle third 전달률이 높은 광주 선수 다섯을 묶으면 <span class="num">24.6%</span>다. 리그 미드필더의 열세 평균이 <span class="num">20.3%</span>다. <strong>이들은 리그 평균보다 잘한다.</strong> 그리고 대부분 지금 뛰고 있다.</p>
+  </div>
+
+  <div class="tbl">
+    <table>
+      <thead><tr><th>선수</th><th>포지션</th><th class="n">동점</th><th class="n">열세</th><th class="n">기울기</th><th class="n">middle third 패스</th><th>최근 6R</th></tr></thead>
+      <tbody>
+        <tr><td><span class="nm">바 루아</span> <span class="no">(50)</span></td><td>MF</td><td class="n">12.1%</td><td class="n">25.0%</td><td class="n up">+12.9pp</td><td class="n">80</td><td><span class="dot on"></span>6경기</td></tr>
+        <tr><td><span class="nm">리영직</span> <span class="no">(37)</span></td><td>MF</td><td class="n">16.9%</td><td class="n">27.3%</td><td class="n up">+10.4pp</td><td class="n">144</td><td><span class="dot on"></span>5경기</td></tr>
+        <tr><td><span class="nm">문민서</span> <span class="no">(88)</span></td><td>MF</td><td class="n">14.3%</td><td class="n">23.1%</td><td class="n up">+8.9pp</td><td class="n">478</td><td><span class="dot on"></span>5경기</td></tr>
+        <tr><td><span class="nm">신창무</span> <span class="no">(40)</span></td><td>MF</td><td class="n">19.3%</td><td class="n">25.0%</td><td class="n up">+5.7pp</td><td class="n">193</td><td><span class="dot on"></span>5경기</td></tr>
+        <tr><td><span class="nm">주세종</span> <span class="no">(8)</span></td><td>MF</td><td class="n">25.2%</td><td class="n">25.3%</td><td class="n">+0.1pp</td><td class="n">485</td><td><span class="dot mid"></span>2경기</td></tr>
+        <tr><td colspan="7" style="background:var(--raise);font-size:12px;color:var(--muted);font-family:var(--mono)">다섯 명 합계 열세 전달률 24.6% · 리그 미드필더 열세 평균 20.3% · 광주 열세 middle third 패스 중 지분 22.9%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="body">
+    <p>주목할 것은 지분이다. 이 다섯 명이 광주의 열세 middle third 패스에서 차지하는 몫은 <span class="num">22.9%</span>로, 동점일 때(<span class="num">22.7%</span>)와 사실상 같다. 지고 있을 때 늘어난 볼륨이 <strong>수비수 쪽으로 쏠린다.</strong> 열세가 되면 광주 수비수의 middle third 패스는 90분당 <span class="num">+27.0%</span> 늘지만 미드필더는 <span class="num">+10.0%</span>에 그친다. 리그는 각각 <span class="num">+23.6%</span>와 <span class="num">+17.0%</span>로 훨씬 고르게 나눈다.</p>
+
+    <h3>수비수의 능력도 이미 증명되어 있다</h3>
+    <p>주앙 페드로(17)는 동점일 때 middle third 전달률이 <span class="num">20.0%</span>다. 리그 수비수 평균이 <span class="num">15.4%</span>다. 그가 열세에서 <span class="num">9.2%</span>로 떨어지는 것을 그의 능력으로 설명할 수는 없다. 최근 6라운드를 전 경기 소화하고 있다.</p>
+  </div>
+
+  <h3>열세가 되면 누가 올라가고 누가 내려오는가</h3>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>선수</th><th>포지션</th><th class="n">동점 높이</th><th class="n">열세 높이</th><th class="n">변화</th><th>최근 6R</th></tr></thead>
+      <tbody>
+        <tr><td><span class="nm">권성윤</span> <span class="no">(22)</span></td><td>DF</td><td class="n">20.1%</td><td class="n">30.9%</td><td class="n up">+10.8pp</td><td><span class="dot on"></span>5경기</td></tr>
+        <tr><td><span class="nm">문민서</span> <span class="no">(88)</span></td><td>MF</td><td class="n">25.0%</td><td class="n">28.2%</td><td class="n up">+3.2pp</td><td><span class="dot on"></span>5경기</td></tr>
+        <tr><td><span class="nm">최경록</span> <span class="no">(10)</span></td><td>MF</td><td class="n">25.6%</td><td class="n">27.3%</td><td class="n up">+1.7pp</td><td><span class="dot on"></span>4경기</td></tr>
+        <tr><td><span class="nm">프리드욘슨</span> <span class="no">(11)</span></td><td>FW</td><td class="n">41.7%</td><td class="n">42.9%</td><td class="n up">+1.2pp</td><td><span class="dot on"></span>5경기</td></tr>
+        <tr><td><span class="nm">유제호</span> <span class="no">(14)</span></td><td>MF</td><td class="n">10.2%</td><td class="n">10.0%</td><td class="n">−0.2pp</td><td><span class="dot on"></span>5경기</td></tr>
+        <tr><td><span class="nm">주앙 페드로</span> <span class="no">(17)</span></td><td>DF</td><td class="n">12.9%</td><td class="n">11.7%</td><td class="n dn">−1.2pp</td><td><span class="dot on"></span>6경기</td></tr>
+        <tr><td><span class="nm">정지훈</span> <span class="no">(16)</span></td><td>MF</td><td class="n">35.4%</td><td class="n">29.9%</td><td class="n dn">−5.6pp</td><td><span class="dot on"></span>4경기</td></tr>
+        <tr><td><span class="nm">신창무</span> <span class="no">(40)</span></td><td>MF</td><td class="n">39.5%</td><td class="n">33.8%</td><td class="n dn">−5.7pp</td><td><span class="dot on"></span>5경기</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="body">
+    <p><strong>높이</strong>는 그 선수 자신의 전체 이벤트 중 final third에서 일어난 비율이다. 출전 시간과 무관하게 그 선수가 어디서 일했는지를 나타낸다.</p>
+    <p>여기서 두 가지가 동시에 보인다. 광주에도 열세에서 올라가는 선수가 있다 — 권성윤(22)은 수비수이면서 <span class="num">+10.8pp</span>로 팀에서 가장 크게 전진하고, 문민서(88)는 전달률과 높이를 <strong>동시에</strong> 올리는 유일한 선수다. 반대로 원래 가장 높이 서던 신창무(40)와 정지훈(16)이 지고 있을 때 내려온다. 신창무(40)는 내려와서 전달을 잘한다(열세 <span class="num">25.0%</span>) — 그러나 그가 내려오면 도착지가 하나 줄어든다.</p>
+  </div>
+
+  <div class="note warn">
+    <b>이미 잃은 자원 — 그리고 돌아올 자원</b><br>
+    김진호(27)는 동점 상태 middle third 전달률 <span class="num">22.3%</span>로 리그 수비수 평균(<span class="num">15.4%</span>)을 크게 웃돌았다. 광주 수비수 중 가장 높은 수치다. <b>R15를 끝으로 김천상무 입대</b>로 이탈했다. 후반기 수비 라인의 전진 능력이 떨어진 데에는 이 공백이 섞여 있을 가능성이 높고, 같은 이유로 <b>전역 시점은 이 팀의 전력 계획에 들어가야 할 날짜</b>다.
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">반례</span><span class="cap">이미 한 번 했다</span></div>
+  <h2>R14 서울전, 후반 48분 이후의 48분</h2>
+  <div class="body">
+    <p>이 문서의 주장이 실현 가능한지를 증명하는 가장 강한 근거는 리그 벤치마크가 아니라 광주 자신의 경기다.</p>
+    <p>R14 서울 원정, 후반 <span class="num">48</span>분 <span class="num">11</span>초에 실점했다. 경기는 <span class="num">96.2</span>분까지 갔다. 실점 전 <span class="num">48.2</span>분과 실점 후 <span class="num">48.1</span>분, 거의 정확히 반으로 나뉜다. 같은 경기, 같은 선수단, 같은 저녁이다.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">R14 서울전 — 실점 전 48분 vs 실점 후 48분</div>
+    <div class="figsub">모든 수치는 90분 환산 또는 비율</div>
+    <div class="pair">
+      <div class="pg">
+        <div class="pn">final third<small>90분당</small></div>
+        <div class="pgb">
+          <div class="pgr"><div class="tk"><div class="fl" style="width:13.6%;background:var(--axis)"></div></div><div class="vl" style="color:var(--muted)">29.9</div></div>
+          <div class="pgr"><div class="tk"><div class="fl" style="width:59.6%;background:var(--gj)"></div></div><div class="vl" style="color:var(--gj)">131.1</div></div>
+        </div>
+      </div>
+      <div class="pg">
+        <div class="pn">final third : middle third<small>비율</small></div>
+        <div class="pgb">
+          <div class="pgr"><div class="tk"><div class="fl" style="width:20.5%;background:var(--axis)"></div></div><div class="vl" style="color:var(--muted)">0.205</div></div>
+          <div class="pgr"><div class="tk"><div class="fl" style="width:63.6%;background:var(--gj)"></div></div><div class="vl" style="color:var(--gj)">0.636</div></div>
+        </div>
+      </div>
+      <div class="pg">
+        <div class="pn">점유 지표<small>90분당 · 패스 무관</small></div>
+        <div class="pgb">
+          <div class="pgr"><div class="tk"><div class="fl" style="width:20.4%;background:var(--axis)"></div></div><div class="vl" style="color:var(--muted)">9.3</div></div>
+          <div class="pgr"><div class="tk"><div class="fl" style="width:65.6%;background:var(--gj)"></div></div><div class="vl" style="color:var(--gj)">30.0</div></div>
+        </div>
+      </div>
+      <div class="pg">
+        <div class="pn">전달률<small>middle third→final third</small></div>
+        <div class="pgb">
+          <div class="pgr"><div class="tk"><div class="fl" style="width:42.7%;background:var(--axis)"></div></div><div class="vl" style="color:var(--muted)">12.8%</div></div>
+          <div class="pgr"><div class="tk"><div class="fl" style="width:95.3%;background:var(--gj)"></div></div><div class="vl" style="color:var(--gj)">28.6%</div></div>
+        </div>
+      </div>
+    </div>
+    <figcaption>위 회색 막대가 실점 전, 아래 주황이 실점 후. 각 지표의 축척은 서로 다르다. 전달률 n=47 / n=70.</figcaption>
+  </figure>
+
+  <div class="body">
+    <p>실점 후 <span class="num">48</span>분 동안 광주의 final third : middle third 비율은 <span class="num">0.636</span>이었다. <strong>리그 열세 평균 <span class="num">0.607</span>보다 높다.</strong> 전달률 <span class="num">28.6%</span>는 리그 1위 강원의 열세 평균(<span class="num">22.3%</span>)보다 높다. 패스와 무관한 점유 지표는 <span class="num">9.3</span>에서 <span class="num">30.0</span>으로 세 배가 됐고, 이는 리그 평균(<span class="num">32.5</span>)에 근접한다.</p>
+    <p>정직하게 덧붙이면 절대량은 리그에 못 미쳤다 — final third 활동 <span class="num">131.1</span>회/90분은 리그 열세 평균 <span class="num">211.2</span>회의 <span class="num">62%</span>다. 하지만 <strong>비율과 전달률은 리그 평균을 넘겼다.</strong> 그리고 이 경기는 시즌 최고 U23 출전 지분(<span class="num">64.5%</span>)을 기록한 경기였다.</p>
+    <p class="pull">42분 만에 리그 평균 수준의 무게중심을 만들어냈다. 능력의 문제가 아니라는 증거로 이보다 강한 것은 없다.</p>
+    <p>그리고 순서가 중요하다. <strong>실점이 먼저, 무게중심 이동이 다음, 전달률 상승이 마지막</strong>이었다. 전달이 잘 돼서 앞으로 간 것이 아니라, 앞으로 갔더니 전달이 됐다.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">배제</span><span class="cap">데이터가 지지하지 않는 방향</span></div>
+  <h2>여기에 쓰면 효과가 없는 네 가지</h2>
+  <div class="body">
+    <p>어디를 키울지를 정하는 일의 절반은 어디를 키우지 않을지를 정하는 일이다. 아래 넷은 합리적으로 보이지만 이 데이터가 지지하지 않는다.</p>
+  </div>
+
+  <div class="tbl">
+    <table>
+      <thead><tr><th style="width:26%">방향</th><th>데이터가 말하는 것</th></tr></thead>
+      <tbody>
+        <tr><td><b>볼 배급 역할자 교체</b></td><td>열세 전달률 격차 −4.6pp 중 배분 효과는 <span class="num">+0.06pp</span>. 누가 잡느냐를 바꾸는 것으로는 움직이지 않는다.</td></tr>
+        <tr><td><b>후방 빌드업 단독 강화</b></td><td>동점 상태 광주 수비수의 final third행 성공률은 <span class="num">63.7%</span>로 리그(<span class="num">61.5%</span>)보다 높다. 열세에서만 무너지는 것을 기술로 설명할 수 없다.</td></tr>
+        <tr><td><b>타깃맨 유형 보강</b></td><td>여름 이후 공중볼 경합은 <span class="num">−25%</span>, 크로스에서 파생된 박스 슛 비중은 <span class="num">35.2% → 19.4%</span>. 이미 그 방향이 아니고, 되돌릴 근거도 없다.</td></tr>
+        <tr><td><b>final third 패턴 훈련</b></td><td>final third 도달 1회당 슛은 <span class="num">0.147</span>회로 <b>12팀 중 5위</b>. 도착한 뒤가 문제가 아니라 도착 자체가 문제다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="body">
+    <p>공통점이 있다. 넷 다 <strong>볼을 가진 순간</strong>을 고치려 한다. 이 분석이 가리키는 곳은 볼이 없는 쪽, 지고 있을 때 final third에 몇 명이 서 있는가다.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">한계</span><span class="cap">이 분석이 틀릴 수 있는 지점</span></div>
+  <h2>확인해야 할 다섯 가지</h2>
+  <ul class="clean">
+    <li><b>이벤트 데이터는 볼을 건드린 선수만 기록한다.</b> "final third에 몇 명이 있었나"를 직접 세지 못한다. 압박·경합·파울획득은 대리지표이고, 그 자리에 있었지만 볼과 무관했던 선수는 잡히지 않는다. 영상으로 확인해야 확정된다.</li>
+    <li><b>인과 방향은 완전히 닫히지 않았다.</b> 앞이 비어서 전달이 안 되는 것인지, 전달이 안 되어 앞이 비는 것인지. R14의 시간 순서와 패스에 무관한 점유 지표가 전자를 지지하지만, 단일 경기와 횡단면 상관은 인과의 증명이 아니다.</li>
+    <li><b>광주의 열세 표본이 리그에서 가장 크다.</b> 1,061분은 2위의 1.6배다. 표본이 크다는 것은 추정이 안정적이라는 뜻이지만, 동시에 상대가 리드를 굳히려 물러선 국면이 다른 팀보다 많이 섞여 있다는 뜻이기도 하다.</li>
+    <li><b>"높은 선수" 집단의 크기가 팀마다 다르다.</b> 광주는 열세 시간이 길어 기준(양쪽 상태 각 120이벤트)을 통과한 인원이 상대적으로 많다. 그래서 인원 수가 아니라 변화의 <b>방향</b>만 근거로 삼았다.</li>
+    <li><b>R28 이후가 반영되지 않았다.</b> 데이터포털의 이벤트 처리가 약 2라운드 지연되고 있어 9월 5일 이후 경기는 아직 비어 있다. R28이 공개되면 모든 수치를 다시 계산한다.</li>
+  </ul>
+
+  <div class="body">
+    <p style="margin-top:2.4em">한 문장으로 남긴다면 이렇다. <strong>광주의 통로는 막힌 것이 아니라, 통로 끝에 아무도 서 있지 않다.</strong> 그리고 거기 설 수 있는 선수들은 이미 이 명단 안에 있다 — R14에 한 번, 48분 동안 그렇게 했다.</p>
+  </div>
+</section>
+
+<footer>
+  <b>데이터</b> K리그 데이터포털 이벤트 원본 · 2026 K리그1 R1–R27<br>
+  <b>리그 비교군</b> 광주·제주·전북·울산·포항 5개 수집분을 경기번호로 중복 제거 · 110경기 158,043이벤트 · 12개 구단 전부 포함<br>
+  <b>스코어 상태</b> 이벤트 시각의 득실차로 리드 / 동점 / 열세 분류 · 시간 분모는 킥오프 기준 누적 분으로 재계산<br>
+  <b>검증</b> 팀 시즌 지표 9개 항목을 데이터포털 종합검색과 대조해 정확히 일치 · 전달률 격차 분해는 표준화(구성·수행·교호)로 분리<br>
+  <b>표기</b> 선수 이름 옆 괄호는 등번호 · 피치 구역은 영문 표기로 통일 — defensive third / middle third / final third (각각 수비·중앙·공격 3분의 1 구역)<br>
+  <b>전달률</b> middle third에서 시작한 패스 중 final third에 도달한 비율 (progression rate) · <b>도달</b> final third에 도달한 횟수 (final-third entries)
+</footer>
+
+</div>
+
+</body>
+</html>

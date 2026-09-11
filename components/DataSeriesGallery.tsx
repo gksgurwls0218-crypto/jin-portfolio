@@ -30,6 +30,27 @@ type Episode = {
 
 const EPISODES: Episode[] = [
   {
+    slug: "gwangju-end",
+    no: "08",
+    publishedAt: "2026-09-11",
+    competition: {
+      en: "K League 1 2026 · Gwangju FC · score state controlled · league pool 110 matches, 158,043 events",
+      ko: "하나은행 K리그1 2026 · 광주FC · 스코어 상태 통제 · 리그 풀링 110경기 · 이벤트 158,043건",
+    },
+    title: {
+      en: "No One at the End",
+      ko: "통로 끝에 아무도 없다",
+    },
+    sub: {
+      en: "Episode 7 pointed at the defenders. That was a symptom, not an answer. Control for score state and the picture inverts. Split the −4.6pp progression gap while behind by standardisation and the distribution effect is +0.06pp — effectively zero, meaning changing who receives the ball will not move it. The gap sits entirely in execution, and the midfielders are at 20.1% against the league’s 20.3%. That leaves the defenders, and they are not the cause either. League defenders, once behind, play into the final third more often (15.4→17.9%) and more successfully (61.5→72.5%), because the opponent drops off. Gwangju attempt fewer (14.1→11.2%) and complete fewer of those (63.7→59.7%) — yet at level score they complete 63.7% against the league’s 61.5%. If technique were the constraint, completion would move the same way. It is empty ahead of them: 116 final-third events per 90 while behind is last of 12, and the gap to 11th-placed Bucheon on 180 is wider than Bucheon to Seoul in first. Middle-third activity in the same phase is 323 against 348, a 7% difference, so it is not a shortage of the ball. Rebuild the measure from events our own passing cannot create — pressing, duels and fouls won in the final third — and Gwangju are still last, 20.7 against 32.8, correlating with progression at +0.68 across the 12 clubs. They are the only side whose share of play in the final third fails to rise when they fall behind: +1.1pp against a league average of +6.7pp. The passers are already here — five of them progress at 24.6% while behind, above the league midfield average of 20.3%, and most are playing now. At Seoul in R14, over the 48 minutes after conceding in the 48th, the final-to-middle ratio went from 0.205 to 0.636, clearing the league’s behind-state average of 0.607. Same evening, same squad. Where the data stops is headcount: a player who never touches the ball still does not exist in it.",
+      ko: "7편은 광주의 통로가 닫힌 이유로 수비수를 지목했다. 그건 답이 아니라 증상이었다. 스코어 상태를 통제하고 다시 들어가면 그림이 뒤집힌다. 열세 국면 전달률 격차 −4.6pp를 표준화로 쪼개면 배분 효과는 +0.06pp, 사실상 0이다 — 공을 누구에게 쥐여줄지 바꿔도 움직이지 않는다는 뜻이다. 격차는 전부 수행 쪽이고, 미드필더는 20.1%로 리그 20.3%와 같다. 남는 건 수비수인데 그들도 원인이 아니다. 리그 수비수는 지고 있을 때 final third로 더 자주 넣고(15.4→17.9%) 더 잘 통한다(61.5→72.5%). 상대가 물러서기 때문이다. 광주는 덜 넣고(14.1→11.2%) 시도한 것마저 덜 통한다(63.7→59.7%). 그런데 동점일 때 광주의 성공률은 63.7%로 리그 61.5%보다 높다. 기술이 문제라면 성공률이 같은 방향으로 움직여야 한다. 앞이 비어 있기 때문이다 — 열세 국면 final third 활동 116회/90분은 리그 최하위이고, 11위 부천 180과의 거리가 부천부터 1위 서울까지의 거리보다 멀다. 같은 국면 middle third는 323 대 348로 7% 차이뿐이니 점유 부족이 아니다. 우리 패스와 무관한 지표(final third에서의 압박·경합·파울획득)로 다시 재도 20.7 대 32.8로 최하위이고, 12팀 횡단면 상관은 +0.68이다. 지고 있을 때 무게를 앞으로 옮기지 않는 팀은 리그에서 광주뿐이다 — final third 비중 변화 +1.1pp, 리그 평균 +6.7pp. 그리고 전달할 선수는 이미 있다. 다섯 명이 열세에서 24.6%로 리그 미드필더 평균 20.3%를 넘고, 대부분 지금 뛴다. R14 서울전 후반 48분에 실점한 뒤 48분 동안 final third : middle third 비율이 0.205에서 0.636으로 올라 리그 열세 평균 0.607을 넘겼다. 같은 저녁, 같은 선수단이다. 데이터가 멈추는 곳은 인원이다 — 볼을 만지지 않은 선수는 여전히 이 데이터에 없다.",
+    },
+    stats: {
+      en: [["+0.06pp", "of the \u22124.6pp progression gap that distribution explains"], ["20.1% vs 20.3%", "midfield progression while behind, Gwangju vs league"], ["116 vs 220", "final-third events per 90 while behind, 12th of 12"], ["0.205 \u2192 0.636", "final : middle ratio after conceding, R14 at Seoul"]],
+      ko: [["+0.06pp", "\u22124.6pp 전달률 격차 중 배분 효과"], ["20.1% vs 20.3%", "열세 국면 미드필더 전달률, 광주와 리그"], ["116 vs 220", "열세 국면 final third 활동 90분당, 리그 12위"], ["0.205 \u2192 0.636", "R14 서울전 실점 후 final : middle 비율"]],
+    },
+  },
+  {
     slug: "gwangju",
     no: "07",
     publishedAt: "2026-09-10",
