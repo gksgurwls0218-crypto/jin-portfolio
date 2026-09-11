@@ -30,6 +30,27 @@ type Episode = {
 
 const EPISODES: Episode[] = [
   {
+    slug: "daejeon",
+    no: "09",
+    publishedAt: "2026-09-11",
+    competition: {
+      en: "K League 1 2026 · Daejeon Hana Citizen · 27 matches, 40,130 events",
+      ko: "하나은행 K리그1 2026 · 대전하나시티즌 · 27경기 · 이벤트 40,130건",
+    },
+    title: {
+      en: "Nine Silences",
+      ko: "아홉 번의 침묵",
+    },
+    sub: {
+      en: "Third in the league for entering the final third, sixth for shooting. The problem was never arriving but what followed. Nine of 27 matches ended goalless and all nine fall before R19 — and opponents did not lock the game: the height of their defensive actions was 67.4 in those matches against 68.6 in the rest. Control for the time confound and for the circularity of comparing a 0-0 phase that ends when the goal goes in, and a fixed opening 15-minute window says the same thing. Passes differ by 11%, entries by 11%, and left-side key passes run 0.67 against 6.00. The silences had begun by the fifteenth minute. After R20 there was never another. Restricted to the seven clubs played in both halves, goals went 1.36 to 2.12 and xG per shot 0.114 to 0.144 — while the number of shots barely moved, 11.45 to 11.75. What changed was location: shots inside 12m rose 81%, from 2.69 to 4.87, while shots beyond 25m actually increased. They did not stop shooting from range; they gained shots from close in. Nobody was signed. Every second-half regular was already there in R1. Lee Myung-jae (16) went from 42% to 88% full matches, the left-side key passes gathered from five players into his 42%, and the people standing in the box settled with them. But the obvious explanation — continuity restores sharpness — does not survive testing: across 24,894 player-matches in three seasons, 493 within-player cases give +0.04pp and p = 0.75. Form attached to the connection, not to the players.",
+      ko: "파이널서드에 리그 3위로 들어가면서 슛은 6위다. 들어가는 능력이 아니라 도착한 뒤가 문제인 팀이다. 27경기 중 9경기가 무득점이고, 그 아홉 번이 전부 R19 이전에 몰려 있다. 상대가 잠근 것이 아니다 — 상대 수비 액션의 높이는 무득점 67.4, 득점 68.6으로 사실상 같았다. 시기 교란과 순환을 모두 통제하고 경기 시작 15분 고정창으로 다시 재도 결과는 같다. 패스는 11%, 진입도 11%밖에 차이나지 않는데 왼쪽 키패스가 0.67 대 6.00이다. 아홉 번의 침묵은 킥오프 15분부터 이미 시작돼 있었다. R20 이후에는 한 번도 없었다. 전·후반기에 모두 만난 7개 팀으로 좁혀도 득점 1.36→2.12, 슛당 xG 0.114→0.144다. 그런데 슛 개수는 11.45→11.75로 거의 그대로다. 바뀐 것은 자리다 — 12m 안쪽 슛이 2.69→4.87회로 81% 늘고, 25m 밖은 오히려 늘었다. 먼 슛을 참은 게 아니라 가까운 슛이 생겼다. 그 사이 영입은 0명이고 후반기 주전은 전원 R1부터 있던 선수다. 이명재(16)의 풀타임 비율이 42%에서 88%로 오르며 왼쪽 키패스가 다섯 명 분산에서 그 한 명 42%로 모였고, 박스 안에 서는 사람도 같이 고정됐다. 다만 「꾸준히 뛰면 폼이 오른다」는 설명은 2024~2026 세 시즌 12개 구단 24,894행에서 검정하면 사라진다(493건, +0.04%p, p=0.75). 폼은 개인이 아니라 연결에 붙었다.",
+    },
+    stats: {
+      en: [["0.059", "shots per final-third action, 11th of 12"], ["0.67 vs 6.00", "left-side key passes, first 15 minutes"], ["+81%", "shots from inside 12m, second half of the season"], ["p = 0.75", "continuity effect on passing, 493 within-player cases"]],
+      ko: [["0.059", "파이널서드 활동 1회당 슛, 12팀 중 11위"], ["0.67 vs 6.00", "경기 시작 15분 왼쪽 키패스"], ["+81%", "후반기 12m 안쪽 슛"], ["p = 0.75", "연속 출전 효과, 선수 고정효과 493건"]],
+    },
+  },
+  {
     slug: "gwangju-end",
     no: "08",
     publishedAt: "2026-09-11",

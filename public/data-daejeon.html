@@ -1,0 +1,744 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nine Silences</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --page:#eef0ec; --surface:#fafbf9; --surface-2:#e2e6e0; --raise:#f4f6f3;
+  --ink:#12150f; --ink-2:#3a4036; --muted:#6d7568;
+  --line:rgba(18,21,15,.14); --line-2:rgba(18,21,15,.07);
+  --grid:#dde2da; --axis:#bfc7bb;
+  --dj:#b8690b; --lg:#3068b8; --top:#0f7f5e; --bad:#a3272f;
+  --dj-soft:rgba(184,105,11,.13); --top-soft:rgba(15,127,94,.11);
+  --sp:clamp(18px,4.5vw,30px);
+  --disp:"Hahmlet",'Nanum Myeongjo',serif;
+  --body:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,'SFMono-Regular',monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --page:#101310; --surface:#171a16; --surface-2:#232720; --raise:#1d211c;
+    --ink:#e9ece5; --ink-2:#b9c0b4; --muted:#8b9386;
+    --line:rgba(233,236,229,.16); --line-2:rgba(233,236,229,.08);
+    --grid:#2b302a; --axis:#464c43;
+    --dj:#c47d0a; --lg:#4a8ace; --top:#159876; --bad:#d4565e;
+    --dj-soft:rgba(196,125,10,.17); --top-soft:rgba(21,152,118,.15);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --page:#101310; --surface:#171a16; --surface-2:#232720; --raise:#1d211c;
+  --ink:#e9ece5; --ink-2:#b9c0b4; --muted:#8b9386;
+  --line:rgba(233,236,229,.16); --line-2:rgba(233,236,229,.08);
+  --grid:#2b302a; --axis:#464c43;
+  --dj:#c47d0a; --lg:#4a8ace; --top:#159876; --bad:#d4565e;
+  --dj-soft:rgba(196,125,10,.17); --top-soft:rgba(21,152,118,.15);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font-family:var(--body);
+  overflow-wrap:break-word;
+  font-weight:400;font-size:16px;line-height:1.72;-webkit-font-smoothing:antialiased}
+.wrap{max-width:940px;margin:0 auto;padding-inline:var(--sp);padding-block:0}
+p{margin:0 0 1.05em}
+strong{font-weight:600;color:var(--ink)}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums;font-weight:500;letter-spacing:-.01em}
+
+header{padding-block:clamp(48px,9vw,88px) clamp(30px,5vw,44px);border-bottom:1px solid var(--line)}
+.badge{display:inline-flex;align-items:center;gap:.55em;font-family:var(--mono);font-size:11px;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--dj);font-weight:500}
+.badge::before{content:"";width:22px;height:2px;background:var(--dj)}
+h1{font-family:var(--disp);font-weight:600;font-size:clamp(38px,8.6vw,68px);line-height:1.06;
+  letter-spacing:-.025em;margin:.34em 0 .3em;text-wrap:balance}
+.dek{font-family:var(--disp);font-weight:400;font-size:clamp(17px,2.5vw,21px);line-height:1.55;
+  color:var(--ink-2);max-width:34em;margin:0 0 1.5em}
+.meta{display:flex;flex-wrap:wrap;gap:.5em 0;font-family:var(--mono);font-size:11.5px;
+  color:var(--muted);letter-spacing:.02em}
+.meta span+span::before{content:"|";padding:0 .85em;color:var(--axis)}
+
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line-2);
+  border-block:1px solid var(--line)}
+@media(max-width:760px){.tiles{grid-template-columns:repeat(2,1fr)}}
+.tile{background:var(--page);padding:clamp(16px,3vw,24px) clamp(12px,2.4vw,20px);display:flex;
+  flex-direction:column;gap:.3em}
+.tile .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.tile .v{font-family:var(--disp);font-weight:600;font-size:clamp(23px,4.1vw,34px);line-height:1;
+  letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.tile .v.dj{color:var(--dj)} .tile .v.up{color:var(--top)}
+.tile .s{font-size:12.5px;line-height:1.45;color:var(--ink-2)}
+
+section{padding-block:clamp(40px,7vw,68px);border-bottom:1px solid var(--line-2)}
+section:last-of-type{border-bottom:none}
+.eyebrow{display:flex;align-items:baseline;gap:.9em;margin-bottom:.9em}
+.eyebrow .role{font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--page);background:var(--ink-2);padding:.35em .7em;border-radius:2px;white-space:nowrap}
+.eyebrow .cap{font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--muted)}
+h2{font-family:var(--disp);font-weight:600;font-size:clamp(25px,4.4vw,37px);line-height:1.2;
+  letter-spacing:-.022em;margin:0 0 .6em;text-wrap:balance;max-width:19em}
+h3{font-family:var(--disp);font-weight:600;font-size:clamp(17px,2.4vw,21px);line-height:1.35;
+  letter-spacing:-.012em;margin:2.1em 0 .7em}
+.lede{font-size:clamp(16.5px,2.1vw,18.5px);line-height:1.68;color:var(--ink-2);max-width:33em;margin-bottom:1.6em}
+.body{max-width:35em}
+.pull{border-left:3px solid var(--dj);padding:.1em 0 .1em 1.15em;margin:1.9em 0;
+  font-family:var(--disp);font-weight:500;font-size:clamp(18px,2.7vw,23px);line-height:1.45;
+  letter-spacing:-.014em;color:var(--ink);max-width:24em;text-wrap:balance}
+
+figure{margin:2em 0;padding:clamp(16px,3vw,26px);background:var(--surface);
+  border:1px solid var(--line);border-radius:3px}
+figcaption{font-family:var(--mono);font-size:11px;line-height:1.6;color:var(--muted);
+  margin-top:1.15em;padding-top:.85em;border-top:1px solid var(--line-2)}
+.figtitle{font-family:var(--body);font-weight:600;font-size:14px;line-height:1.4;color:var(--ink);
+  margin-bottom:.3em;letter-spacing:-.005em}
+.figsub{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:1.35em;letter-spacing:.01em}
+.legend{display:flex;flex-wrap:wrap;gap:.5em 1.3em;font-family:var(--mono);font-size:11px;
+  color:var(--ink-2);margin-bottom:1.1em}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:1px;margin-right:.45em;vertical-align:-1px}
+
+.bars{display:flex;flex-direction:column;gap:7px}
+.br{display:grid;grid-template-columns:74px 1fr 62px;align-items:center;gap:10px}
+@media(max-width:560px){.br{grid-template-columns:58px 1fr 52px;gap:7px}}
+.br .lb{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.br .tk{height:17px;background:var(--surface-2);border-radius:1px;overflow:hidden}
+.br .fl{height:100%;background:var(--lg);border-radius:1px}
+.br .vl{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;color:var(--ink-2);text-align:right}
+.br.hi .lb,.br.hi .vl{color:var(--dj);font-weight:600} .br.hi .fl{background:var(--dj)}
+
+.pair{display:flex;flex-direction:column;gap:16px}
+.pg{display:grid;grid-template-columns:118px 1fr;gap:12px;align-items:center}
+@media(max-width:560px){.pg{grid-template-columns:1fr;gap:5px}}
+.pg .pn{font-family:var(--body);font-size:13px;font-weight:600;color:var(--ink)}
+.pg .pn small{display:block;font-family:var(--mono);font-weight:400;font-size:10.5px;color:var(--muted)}
+.pgb{display:flex;flex-direction:column;gap:5px}
+.pgr{display:grid;grid-template-columns:1fr 58px;gap:9px;align-items:center}
+.pgr .tk{height:15px;background:var(--surface-2);border-radius:1px;overflow:hidden}
+.pgr .fl{height:100%;border-radius:1px}
+.pgr .vl{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;text-align:right}
+
+.tbl{overflow-x:auto;margin:1.8em 0;border:1px solid var(--line);border-radius:3px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:500px;font-size:13px}
+th,td{padding:9px 13px;text-align:left;border-bottom:1px solid var(--line-2);vertical-align:baseline}
+th{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:500;background:var(--raise);white-space:nowrap}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+td .nm{font-weight:600} td .no{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.up{color:var(--top);font-weight:600} .dn{color:var(--bad);font-weight:600}
+
+.note{background:var(--raise);border:1px solid var(--line);border-left:3px solid var(--axis);
+  border-radius:3px;padding:clamp(14px,2.6vw,20px);margin:1.9em 0;font-size:14px;line-height:1.65;color:var(--ink-2)}
+.note b{color:var(--ink);font-weight:600}
+.note.key{border-left-color:var(--dj);background:var(--dj-soft);border-color:var(--line)}
+
+.chain{display:flex;flex-direction:column;gap:0;margin:1.9em 0}
+.step{display:grid;grid-template-columns:26px 1fr;gap:14px;padding:14px 0;border-top:1px solid var(--line-2)}
+.step:first-child{border-top:none}
+.step .n{font-family:var(--mono);font-size:11px;color:var(--page);background:var(--dj);
+  width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600}
+.step .t{font-weight:600;font-size:14.5px;color:var(--ink);margin-bottom:.15em}
+.step .d{font-size:13.5px;color:var(--ink-2);line-height:1.6}
+.step .d b{font-family:var(--mono);font-variant-numeric:tabular-nums;color:var(--dj);font-weight:600}
+
+ul.clean{list-style:none;padding:0;margin:1.3em 0;display:flex;flex-direction:column;gap:.85em;max-width:35em}
+ul.clean li{padding-left:1.5em;position:relative;font-size:14.5px;line-height:1.62;color:var(--ink-2)}
+ul.clean li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:1.5px;background:var(--axis)}
+ul.clean li b{color:var(--ink);font-weight:600}
+
+footer{padding-block:clamp(34px,6vw,54px) clamp(46px,8vw,74px);border-top:1px solid var(--line);
+  font-family:var(--mono);font-size:11.5px;line-height:1.85;color:var(--muted)}
+footer b{color:var(--ink-2);font-weight:500}
+</style><style>
+/* ── 추가 컴포넌트 ── */
+.heat{display:grid;grid-template-columns:64px repeat(5,1fr);gap:3px;font-family:var(--mono);font-size:11px}
+.heat .rl{display:flex;align-items:center;justify-content:flex-end;color:var(--muted);padding-right:6px;font-size:10.5px}
+.heat .cl{text-align:center;color:var(--muted);font-size:10px;padding-bottom:3px}
+.heat .c{aspect-ratio:1.7;display:flex;align-items:center;justify-content:center;border-radius:2px;
+  color:var(--ink);font-variant-numeric:tabular-nums;font-weight:500;border:1px solid var(--line-2)}
+.heatwrap{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,3vw,26px)}
+@media(max-width:640px){.heatwrap{grid-template-columns:1fr}}
+.heatwrap h4{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--muted);
+  margin:0 0 .7em;font-weight:500;text-transform:uppercase}
+.goalline{display:flex;align-items:flex-end;gap:2px;height:120px;margin-bottom:6px}
+.gl-col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:3px;position:relative}
+.gl-bar{width:100%;background:var(--dj);border-radius:1px 1px 0 0;min-height:2px}
+.gl-bar.zero{background:var(--bad);height:3px!important;opacity:.85}
+.gl-lb{display:flex;gap:2px;font-family:var(--mono);font-size:8.5px;color:var(--muted)}
+.gl-lb span{flex:1;text-align:center}
+.split{position:absolute;top:-118px;bottom:0;width:1px;background:var(--top);opacity:.85}
+.dist{display:flex;flex-direction:column;gap:9px}
+.dr{display:grid;grid-template-columns:56px 1fr 1fr;gap:8px;align-items:center}
+.dr .dl{font-family:var(--mono);font-size:11px;color:var(--ink-2);text-align:right}
+.dr .db{display:flex;flex-direction:column;gap:3px}
+.dr .bar{height:13px;border-radius:1px;display:flex;align-items:center;padding-left:5px;
+  font-family:var(--mono);font-size:9.5px;color:var(--page);font-variant-numeric:tabular-nums}
+.stackrow{display:flex;height:30px;border-radius:2px;overflow:hidden;margin-bottom:5px}
+.stackrow div{display:flex;align-items:center;justify-content:center;font-family:var(--mono);
+  font-size:9.5px;color:#fff;white-space:nowrap;overflow:hidden}
+.stacklb{font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-bottom:.5em}
+</style>
+<style>
+svg{display:block;max-width:100%;height:auto;overflow:visible}
+.sv-lb{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:var(--muted)}
+.sv-nm{font-family:"IBM Plex Sans",sans-serif;font-size:11.5px;font-weight:600;fill:var(--ink-2)}
+</style>
+<style>
+.mcards{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line-2);
+  border:1px solid var(--line);border-radius:3px;overflow:hidden;margin:1.9em 0}
+@media(max-width:680px){.mcards{grid-template-columns:1fr}}
+.mc{background:var(--surface);padding:clamp(15px,2.7vw,20px);display:flex;flex-direction:column;gap:.55em}
+.mc .hd{display:flex;align-items:baseline;gap:.6em;flex-wrap:wrap}
+.mc .rd{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--page);
+  background:var(--dj);padding:.25em .55em;border-radius:2px;font-weight:600}
+.mc .op{font-family:var(--disp);font-weight:600;font-size:17px;color:var(--ink);letter-spacing:-.01em}
+.mc .sc{font-family:var(--mono);font-size:13px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.mc .why{font-size:13.5px;line-height:1.6;color:var(--ink-2)}
+.mc .why b{color:var(--ink);font-weight:600}
+.mc .kv{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line-2);
+  border:1px solid var(--line-2);border-radius:2px;margin-top:.3em}
+.mc .kv div{background:var(--raise);padding:7px 9px}
+.mc .kv .k2{font-family:var(--mono);font-size:9.5px;letter-spacing:.05em;color:var(--muted);display:block}
+.mc .kv .v2{font-family:var(--mono);font-size:13px;font-variant-numeric:tabular-nums;color:var(--dj);font-weight:600}
+.mc .kv .v2.mute{color:var(--ink-2);font-weight:500}
+</style>
+<style>*{box-sizing:border-box}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+
+<div class="wrap">
+<header>
+  <div class="badge">What the data says · No. 09 · K League 1 2026, R1–R28</div>
+  <h1>Nine<br>Silences</h1>
+  <p class="dek">Daejeon enter the final third more than all but two clubs in the division and finish sixth for shots. Nine of their 27 matches ended goalless, and all nine fall before R19. This is their 2026 attack read from one end to the other.</p>
+  <div class="meta">
+    <span>K League Data Portal event feed</span>
+    <span>Daejeon 27 matches · 40,130 events</span>
+    <span>League pool 125 matches · 180,359 events</span>
+    <span>Brackets are shirt numbers</span>
+  </div>
+</header>
+</div>
+
+<div class="wrap">
+<div class="tiles">
+  <div class="tile">
+    <div class="k">Shots per final-third action</div>
+    <div class="v dj">0.059</div>
+    <div class="s"><b>11th of 12</b>. Their entry volume is 3rd</div>
+  </div>
+  <div class="tile">
+    <div class="k">Goalless matches</div>
+    <div class="v dj">9 / 27</div>
+    <div class="s"><b>All before R19</b>. None after R20</div>
+  </div>
+  <div class="tile">
+    <div class="k">Average shot distance</div>
+    <div class="v up">17.4 → 14.9m</div>
+    <div class="s">xG per shot <b>0.108 → 0.144</b></div>
+  </div>
+  <div class="tile">
+    <div class="k">Signings in between</div>
+    <div class="v">None</div>
+    <div class="s">Every second-half regular was <b>already there in R1</b></div>
+  </div>
+</div>
+</div>
+
+<div class="wrap">
+
+<section>
+  <div class="eyebrow"><span class="role">Problem</span><span class="cap">arriving without shooting</span></div>
+  <h2>They reach the same place as Gwangju by the opposite route</h2>
+  <div class="body">
+    <p class="lede">In the previous episode Gwangju were a team that <strong>could not get into</strong> the final third. Daejeon are the inverse. Third in the league for getting there, sixth from bottom for shooting once they do.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">How much they enter, and how much they shoot</div>
+    <div class="figsub">x: final-third actions per 90 · y: shots per 90 · 12 clubs</div>
+    <svg viewBox="0 0 620 360" role="img" aria-label="Scatter plot of final-third activity against shots, with Daejeon below the league trend">
+      <g stroke="var(--grid)" stroke-width="1">
+        <line x1="78" y1="300" x2="592" y2="300"/><line x1="78" y1="240" x2="592" y2="240"/>
+        <line x1="78" y1="180" x2="592" y2="180"/><line x1="78" y1="120" x2="592" y2="120"/>
+        <line x1="78" y1="60" x2="592" y2="60"/>
+      </g>
+      <line x1="78" y1="40" x2="78" y2="300" stroke="var(--axis)" stroke-width="1"/>
+      <line x1="78" y1="300" x2="592" y2="300" stroke="var(--axis)" stroke-width="1"/>
+      <text class="sv-lb" x="70" y="304" text-anchor="end">7</text>
+      <text class="sv-lb" x="70" y="244" text-anchor="end">8.5</text>
+      <text class="sv-lb" x="70" y="184" text-anchor="end">10</text>
+      <text class="sv-lb" x="70" y="124" text-anchor="end">11.5</text>
+      <text class="sv-lb" x="70" y="64" text-anchor="end">13</text>
+      <text class="sv-lb" x="78" y="318" text-anchor="middle">100</text>
+      <text class="sv-lb" x="206.5" y="318" text-anchor="middle">130</text>
+      <text class="sv-lb" x="335" y="318" text-anchor="middle">160</text>
+      <text class="sv-lb" x="463.5" y="318" text-anchor="middle">190</text>
+      <text class="sv-lb" x="335" y="342" text-anchor="middle">Final-third actions (per 90)</text>
+      <text class="sv-lb" x="26" y="170" text-anchor="middle" transform="rotate(-90 26 170)">Shots (per 90)</text>
+      <line x1="99" y1="249" x2="528" y2="109" stroke="var(--top)" stroke-width="1.6" stroke-dasharray="6 4"/>
+      <text class="sv-lb" x="176" y="196" fill="var(--top)">league trend</text>
+      <g fill="var(--lg)">
+        <circle cx="96.4" cy="260.0" r="5"/><circle cx="102.8" cy="271.6" r="5"/>
+        <circle cx="226.6" cy="199.2" r="5"/><circle cx="238.2" cy="220.4" r="5"/>
+        <circle cx="264.3" cy="152.8" r="5"/><circle cx="274.6" cy="117.2" r="5"/>
+        <circle cx="322.6" cy="177.6" r="5"/><circle cx="326.0" cy="198.0" r="5"/>
+        <circle cx="349.6" cy="108.4" r="5"/><circle cx="472.9" cy="94.8" r="5"/>
+        <circle cx="529.9" cy="109.6" r="5"/>
+      </g>
+      <g fill="var(--lg)">
+        <text class="sv-lb" x="88" y="253" text-anchor="end">Bucheon</text>
+        <text class="sv-lb" x="102.8" y="288" text-anchor="middle">Gwangju</text>
+        <text class="sv-lb" x="226.6" y="191" text-anchor="middle">Pohang</text>
+        <text class="sv-lb" x="238.2" y="236" text-anchor="middle">Anyang</text>
+        <text class="sv-lb" x="264.3" y="144" text-anchor="middle">Jeju</text>
+        <text class="sv-lb" x="274.6" y="109" text-anchor="middle">Ulsan</text>
+        <text class="sv-lb" x="314" y="181" text-anchor="end">Gimcheon</text>
+        <text class="sv-lb" x="334" y="202" text-anchor="start">Incheon</text>
+        <text class="sv-lb" x="349.6" y="100" text-anchor="middle">Jeonbuk</text>
+        <text class="sv-lb" x="472.9" y="86" text-anchor="middle">Seoul</text>
+        <text class="sv-lb" x="529.9" y="126" text-anchor="middle">Gangwon</text>
+      </g>
+      <circle cx="398.4" cy="169.2" r="7.5" fill="var(--dj)"/>
+      <text class="sv-nm" x="410" y="173" fill="var(--dj)">Daejeon · 174.8 / 10.27</text>
+    </svg>
+    <figcaption>Daejeon sit below the trend: they shoot less than clubs who get there as often. Gwangju are at the far left — they never arrive at all.</figcaption>
+  </figure>
+
+  <div class="body">
+    <p>Converted to shots per final-third action it comes to <span class="num">0.059</span>, <strong>11th of 12</strong>. Gwangju were last for arriving but 5th for shots per arrival. Two clubs build a bottom-half attack for exactly opposite reasons.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">Shots per final-third action</div>
+    <div class="figsub">Full season · the ratio of the two per-90 figures</div>
+    <div class="bars">
+      <div class="br"><div class="lb">Ulsan</div><div class="tk"><div class="fl" style="width:100%"></div></div><div class="vl">0.079</div></div>
+      <div class="br"><div class="lb">Bucheon</div><div class="tk"><div class="fl" style="width:96.7%"></div></div><div class="vl">0.077</div></div>
+      <div class="br"><div class="lb">Jeju</div><div class="tk"><div class="fl" style="width:93.8%"></div></div><div class="vl">0.074</div></div>
+      <div class="br"><div class="lb">Gwangju</div><div class="tk"><div class="fl" style="width:91.8%"></div></div><div class="vl">0.073</div></div>
+      <div class="br"><div class="lb">Jeonbuk</div><div class="tk"><div class="fl" style="width:91.0%"></div></div><div class="vl">0.072</div></div>
+      <div class="br"><div class="lb">Pohang</div><div class="tk"><div class="fl" style="width:89.2%"></div></div><div class="vl">0.071</div></div>
+      <div class="br"><div class="lb">Anyang</div><div class="tk"><div class="fl" style="width:82.5%"></div></div><div class="vl">0.065</div></div>
+      <div class="br"><div class="lb">Gimcheon</div><div class="tk"><div class="fl" style="width:80.7%"></div></div><div class="vl">0.064</div></div>
+      <div class="br"><div class="lb">Seoul</div><div class="tk"><div class="fl" style="width:79.6%"></div></div><div class="vl">0.063</div></div>
+      <div class="br"><div class="lb">Incheon</div><div class="tk"><div class="fl" style="width:76.3%"></div></div><div class="vl">0.061</div></div>
+      <div class="br hi"><div class="lb">Daejeon</div><div class="tk"><div class="fl" style="width:74.0%"></div></div><div class="vl">0.059</div></div>
+      <div class="br"><div class="lb">Gangwon</div><div class="tk"><div class="fl" style="width:72.2%"></div></div><div class="vl">0.057</div></div>
+    </div>
+    <figcaption>Daejeon's 174.8 final-third actions per 90 is 3rd in the league; their 10.27 shots is 6th.</figcaption>
+  </figure>
+
+  <div class="body">
+    <p>The odd part is that <strong>when they do shoot, it goes in</strong>. The share of their shots taken inside the box is <span class="num">64.6%</span>, 2nd in the league, and they score on <span class="num">36.9%</span> of shots on target against a league baseline of <span class="num">29.6%</span>. Their <span class="num">38</span> goals beat their <span class="num">35.9</span> xG.</p>
+    <p class="pull">The quality is good and the quantity is not. What Daejeon lack is not good chances but the number of them.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">Observation</span><span class="cap">nine silences</span></div>
+  <h2>The goalless matches all sit on one side</h2>
+
+  <figure>
+    <div class="figtitle">Goals by round</div>
+    <div class="figsub">Red bars are goalless · the green line marks the R19/R20 boundary · R27 events not published</div>
+    <div class="goalline">
+      <div class="gl-col"><div class="gl-bar" style="height:20%"></div></div>
+      <div class="gl-col"><div class="gl-bar" style="height:20%"></div></div>
+      <div class="gl-col"><div class="gl-bar" style="height:20%"></div></div>
+      <div class="gl-col"><div class="gl-bar" style="height:60%"></div></div>
+      <div class="gl-col"><div class="gl-bar zero"></div></div>
+      <div class="gl-col"><div class="gl-bar zero"></div></div>
+      <div class="gl-col"><div class="gl-bar zero"></div></div>
+      <div class="gl-col"><div class="gl-bar" style="height:20%"></div></div>
+      <div class="gl-col"><div class="gl-bar zero"></div></div>
+      <div class="gl-col"><div class="gl-bar" style="height:80%"></div></div>
+      <div class="gl-col"><div class="gl-bar" style="height:100%"></div></div>
+      <div class="gl-col"><div class="gl-bar zero"></div></div>
+      <div class="gl-col"><div class="gl-bar zero"></div></div>
+      <div class="gl-col"><div class="gl-bar zero"></div></div>
+      <div class="gl-col"><div class="gl-bar" style="height:20%"></div></div>
+      <div class="gl-col"><div class="gl-bar" style="height:40%"></div></div>
+      <div class="gl-col"><div class="gl-bar zero"></div></div>
+      <div class="gl-col"><div class="gl-bar" style="height:40%"></div></div>
+      <div class="gl-col"><div class="gl-bar zero"></div><div class="split"></div></div>
+      <div class="gl-col"><div class="gl-bar" style="height:40%"></div></div>
+      <div class="gl-col"><div class="gl-bar" style="height:40%"></div></div>
+      <div class="gl-col"><div class="gl-bar" style="height:40%"></div></div>
+      <div class="gl-col"><div class="gl-bar" style="height:40%"></div></div>
+      <div class="gl-col"><div class="gl-bar" style="height:60%"></div></div>
+      <div class="gl-col"><div class="gl-bar" style="height:40%"></div></div>
+      <div class="gl-col"><div class="gl-bar" style="height:20%"></div></div>
+      <div class="gl-col"><div class="gl-bar" style="height:60%"></div></div>
+    </div>
+    <div class="gl-lb">
+      <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+      <span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span>
+      <span>21</span><span>22</span><span>23</span><span>24</span><span>25</span><span>26</span><span>28</span>
+    </div>
+    <figcaption>Goalless in R5·6·7·9·12·13·14·17·19 — every one of them left of the line. Nine of 19 matches (47%) in the first half of the season, none of 8 in the second.</figcaption>
+  </figure>
+
+  <div class="body">
+    <p>Nine of 27 matches produced nothing. One in three. And all nine of them fall <strong>before R19</strong>. That is too clean a split to shrug at.</p>
+    <p>The first suspicion is that opponents sat deep and locked the game. They did not. The average height of opponents' defensive actions was <span class="num">67.4</span> in the goalless matches and <span class="num">68.6</span> in the rest — <strong>effectively identical</strong> (measured in Daejeon's attacking direction, higher means a deeper block).</p>
+    <p>The comparison carries two traps, so it was controlled twice. First, the nine goalless matches cluster in the first half of the season, so they are <strong>confounded with time</strong> — the comparison was rerun within the first half only. Second, comparing "the 0-0 phase" is circular: in a match they eventually win, that phase <strong>ends the moment the goal goes in</strong>, so by construction it contains the passage that produced it. Instead the comparison uses <strong>a fixed window: the opening 15 minutes</strong>, whose length cannot depend on the outcome.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">Opening 15 minutes — 9 goalless vs 10 scoring matches (first half of season only)</div>
+    <div class="figsub">Fixed window · per-90 rates · each metric on its own scale</div>
+    <div class="legend">
+      <span><i style="background:var(--axis)"></i>Goalless 9</span>
+      <span><i style="background:var(--dj)"></i>Scoring 10</span>
+    </div>
+    <div class="pair">
+      <div class="pg">
+        <div class="pn">Passes<small>the ball moves the same</small></div>
+        <div class="pgb">
+          <div class="pgr"><div class="tk"><div class="fl" style="width:88.9%;background:var(--axis)"></div></div><div class="vl" style="color:var(--muted)">436.7</div></div>
+          <div class="pgr"><div class="tk"><div class="fl" style="width:100%;background:var(--dj)"></div></div><div class="vl" style="color:var(--dj)">491.4</div></div>
+        </div>
+      </div>
+      <div class="pg">
+        <div class="pn">Final-third entries<small>arrival is similar too</small></div>
+        <div class="pgb">
+          <div class="pgr"><div class="tk"><div class="fl" style="width:88.8%;background:var(--axis)"></div></div><div class="vl" style="color:var(--muted)">29.3</div></div>
+          <div class="pgr"><div class="tk"><div class="fl" style="width:100%;background:var(--dj)"></div></div><div class="vl" style="color:var(--dj)">33.0</div></div>
+        </div>
+      </div>
+      <div class="pg">
+        <div class="pn">Key passes, left<small>this is where it breaks</small></div>
+        <div class="pgb">
+          <div class="pgr"><div class="tk"><div class="fl" style="width:11.2%;background:var(--axis)"></div></div><div class="vl" style="color:var(--muted)">0.67</div></div>
+          <div class="pgr"><div class="tk"><div class="fl" style="width:100%;background:var(--dj)"></div></div><div class="vl" style="color:var(--dj)">6.00</div></div>
+        </div>
+      </div>
+      <div class="pg">
+        <div class="pn">Shots<small>the result</small></div>
+        <div class="pgb">
+          <div class="pgr"><div class="tk"><div class="fl" style="width:44.4%;background:var(--axis)"></div></div><div class="vl" style="color:var(--muted)">5.33</div></div>
+          <div class="pgr"><div class="tk"><div class="fl" style="width:100%;background:var(--dj)"></div></div><div class="vl" style="color:var(--dj)">12.00</div></div>
+        </div>
+      </div>
+    </div>
+    <figcaption>The 30- and 45-minute windows point the same way (left key passes 1.00 vs 4.50, then 1.78 vs 5.00).</figcaption>
+  </figure>
+
+  <div class="body">
+    <p>Passes differ by <span class="num">11%</span> and entries by <span class="num">11%</span>, while <strong>left-side key passes run <span class="num">0.67</span> against <span class="num">6.00</span></strong>. The nine silences had already begun by the fifteenth minute, and they began in one place.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">Turn</span><span class="cap">and then it stopped</span></div>
+  <h2>After R20 there was never another goalless match</h2>
+  <div class="body">
+    <p><span class="num">1.11</span> goals per match across the first <span class="num">19</span>. <span class="num">2.12</span> across the last <span class="num">8</span>. Goalless: <span class="num">0</span>.</p>
+    <p>The first question is whether the opponents got easier. The average league position of their opponents was <span class="num">5.8</span> before and <span class="num">6.6</span> after — near enough the same. More strictly, restricting to the <strong>seven clubs they played in both halves</strong> (Anyang, Gimcheon, Gangwon, Seoul, Jeju, Ulsan, Gwangju) leaves the result intact.</p>
+  </div>
+
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Same seven opponents</th><th class="n">First half, 11</th><th class="n">Second half, 8</th><th class="n">Change</th></tr></thead>
+      <tbody>
+        <tr><td>Goals per match</td><td class="n">1.36</td><td class="n">2.12</td><td class="n up">+56%</td></tr>
+        <tr><td>Final-third actions</td><td class="n">175.1</td><td class="n">212.4</td><td class="n up">+21%</td></tr>
+        <tr><td>Key passes</td><td class="n">8.64</td><td class="n">10.12</td><td class="n up">+17%</td></tr>
+        <tr><td>of which on the left</td><td class="n">3.64</td><td class="n">4.50</td><td class="n up">+24%</td></tr>
+        <tr><td>Shots</td><td class="n">11.45</td><td class="n">11.75</td><td class="n">+3%</td></tr>
+        <tr><td><b>xG per shot</b></td><td class="n">0.114</td><td class="n">0.144</td><td class="n up">+26%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="body">
+    <p>The line to watch is that <strong>the number of shots barely moved</strong> (<span class="num">11.45</span> → <span class="num">11.75</span>). What rose was their quality: the same volume, taken from better places. Splitting the shots by distance shows exactly which places.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">Shot distance distribution — first half vs second half of the season</div>
+    <div class="figsub">Shots per match · the figure in brackets is xG per shot in that band</div>
+    <div class="legend">
+      <span><i style="background:var(--axis)"></i>R1–19</span>
+      <span><i style="background:var(--dj)"></i>R20–28</span>
+    </div>
+    <div class="dist">
+      <div class="dr"><div class="dl">~8m</div><div class="db">
+        <div class="bar" style="width:36.3%;background:var(--axis)">0.95 <span style="opacity:.75">(.259)</span></div>
+        <div class="bar" style="width:85.9%;background:var(--dj)">2.25 <span style="opacity:.75">(.372)</span></div></div><div></div></div>
+      <div class="dr"><div class="dl">8–12m</div><div class="db">
+        <div class="bar" style="width:66.4%;background:var(--axis)">1.74 <span style="opacity:.75">(.181)</span></div>
+        <div class="bar" style="width:100%;background:var(--dj)">2.62 <span style="opacity:.75">(.148)</span></div></div><div></div></div>
+      <div class="dr"><div class="dl">12–16m</div><div class="db">
+        <div class="bar" style="width:88.5%;background:var(--axis)">2.32 <span style="opacity:.75">(.132)</span></div>
+        <div class="bar" style="width:76.3%;background:var(--dj)">2.00 <span style="opacity:.75">(.099)</span></div></div><div></div></div>
+      <div class="dr"><div class="dl">16–20m</div><div class="db">
+        <div class="bar" style="width:96.6%;background:var(--axis)">2.53 <span style="opacity:.75">(.074)</span></div>
+        <div class="bar" style="width:66.8%;background:var(--dj)">1.75 <span style="opacity:.75">(.085)</span></div></div><div></div></div>
+      <div class="dr"><div class="dl">20–25m</div><div class="db">
+        <div class="bar" style="width:74.4%;background:var(--axis)">1.95 <span style="opacity:.75">(.050)</span></div>
+        <div class="bar" style="width:57.3%;background:var(--dj)">1.50 <span style="opacity:.75">(.054)</span></div></div><div></div></div>
+      <div class="dr"><div class="dl">25m+</div><div class="db">
+        <div class="bar" style="width:54.2%;background:var(--axis)">1.42 <span style="opacity:.75">(.021)</span></div>
+        <div class="bar" style="width:61.8%;background:var(--dj)">1.62 <span style="opacity:.75">(.021)</span></div></div><div></div></div>
+    </div>
+    <figcaption>Shots inside 12m went from 2.69 to 4.87 per match, up 81%; the 12–25m band fell 23%, from 6.80 to 5.25. Beyond 25m the count actually rose — they did not stop shooting from range, they gained shots from close in.</figcaption>
+  </figure>
+
+  <div class="body">
+    <p>This is what the rise in xG per shot actually is. Daejeon did not talk themselves out of long shots — from beyond <span class="num">25</span>m the count went <em>up</em>, from <span class="num">1.42</span> to <span class="num">1.62</span>. What changed is that <strong>chances to shoot from inside <span class="num">12</span>m grew by <span class="num">81%</span></strong>.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">Cause</span><span class="cap">what changed</span></div>
+  <h2>There were no signings. The places simply settled</h2>
+  <div class="body">
+    <p>Every player whose minutes jumped in the second half was <strong>already at the club in R1</strong>. Nobody arrived. What changed is that they started appearing <strong>every week</strong>.</p>
+  </div>
+
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Player</th><th class="n">First half</th><th class="n">Second half</th><th class="n">Full matches (95m+)</th></tr></thead>
+      <tbody>
+        <tr><td><span class="nm">Lee Myung-jae</span> <span class="no">(16)</span></td><td class="n">12 / 19</td><td class="n">8 / 8</td><td class="n up">42% → 88%</td></tr>
+        <tr><td><span class="nm">Cho Seong-kwon</span> <span class="no">(4)</span></td><td class="n">13 / 19</td><td class="n">8 / 8</td><td class="n up">63% → 100%</td></tr>
+        <tr><td><span class="nm">Anton</span> <span class="no">(98)</span></td><td class="n">10 / 19</td><td class="n">7 / 8</td><td class="n up">47% → 63%</td></tr>
+        <tr><td><span class="nm">Massa</span> <span class="no">(7)</span></td><td class="n">10 / 19</td><td class="n">8 / 8</td><td class="n">25.5 → 62.0 min/match</td></tr>
+        <tr><td><span class="nm">Ju Min-kyu</span> <span class="no">(10)</span></td><td class="n">18 / 19</td><td class="n">8 / 8</td><td class="n">48.7 → 73.5 min/match</td></tr>
+        <tr><td><span class="nm">Eom Won-sang</span> <span class="no">(11)</span></td><td class="n">8 / 19</td><td class="n">5 / 8</td><td class="n">18.9 → 44.2 min/match</td></tr>
+        <tr><td colspan="4" style="background:var(--raise);font-size:12px;color:var(--muted);font-family:var(--mono)">Gone over the same span — João Victor (77) 15 matches→0 · Kim Min-deok (3) 9→0 · Park Gyu-hyun (2) 7→0</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="body">
+    <p>What happened on the left is the clearest of it. In the first half of the season <strong>five players split the left-side key passes</strong> and the leader held <span class="num">27%</span>. In the second, <strong>Lee Myung-jae (16) alone holds <span class="num">42%</span></strong>.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">Who makes the key passes on the left — from split to concentrated</div>
+    <div class="figsub">Share of key passes originating in the left wing and left halfspace</div>
+    <div class="stacklb">R1–19 · 3.37 per match</div>
+    <div class="stackrow">
+      <div style="width:27%;background:var(--lg)">Seo Jin-su 27%</div>
+      <div style="width:16%;background:#4a7fc4">Rubixon 16%</div>
+      <div style="width:14%;background:#6b96d0">Lee 14%</div>
+      <div style="width:8%;background:#8aacdb">Hyun-sik</div>
+      <div style="width:8%;background:#a5c1e4">Gyu-hyun</div>
+      <div style="width:27%;background:var(--surface-2);color:var(--muted)">others 27%</div>
+    </div>
+    <div class="stacklb" style="margin-top:1.3em">R20–28 · 4.50 per match</div>
+    <div class="stackrow">
+      <div style="width:42%;background:var(--dj)">Lee Myung-jae (16) 42%</div>
+      <div style="width:14%;background:#c98a3a">Seo Jin-su 14%</div>
+      <div style="width:14%;background:#d6a463">Rubixon 14%</div>
+      <div style="width:8%;background:#e0bb8b">Massa</div>
+      <div style="width:6%;background:#e9d0b0">Ju</div>
+      <div style="width:16%;background:var(--surface-2);color:var(--muted)">others</div>
+    </div>
+    <figcaption>Not only did the volume rise (3.37 → 4.50), it gathered into one player. When the same man stands in the same place, the opponent learns it — but so do his teammates.</figcaption>
+  </figure>
+
+  <h3>The key passes moved across the pitch</h3>
+  <div class="body">
+    <p>Splitting where key passes originate into <span class="num">5</span> lanes by <span class="num">3</span> thirds shows the weight shifting <strong>out of the centre and onto both flanks</strong>.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">Where key passes originate — per match</div>
+    <div class="figsub">Attacking upward · darker means more · the defensive third is near zero in both and is omitted</div>
+    <div class="heatwrap">
+      <div>
+        <h4>R1–19</h4>
+        <div class="heat">
+          <div class="rl">Final 3rd</div>
+          <div class="c" style="background:rgba(184,105,11,.26)">1.05</div>
+          <div class="c" style="background:rgba(184,105,11,.42)">1.68</div>
+          <div class="c" style="background:rgba(184,105,11,.36)">1.42</div>
+          <div class="c" style="background:rgba(184,105,11,.32)">1.26</div>
+          <div class="c" style="background:rgba(184,105,11,.33)">1.32</div>
+          <div class="rl">Middle 3rd</div>
+          <div class="c" style="background:rgba(184,105,11,.08)">0.32</div>
+          <div class="c" style="background:rgba(184,105,11,.07)">0.26</div>
+          <div class="c" style="background:rgba(184,105,11,.12)">0.47</div>
+          <div class="c" style="background:rgba(184,105,11,.05)">0.21</div>
+          <div class="c" style="background:rgba(184,105,11,.01)">0.05</div>
+          <div class="rl"></div>
+          <div class="cl">L wing</div><div class="cl">L half</div><div class="cl">centre</div><div class="cl">R half</div><div class="cl">R wing</div>
+        </div>
+      </div>
+      <div>
+        <h4>R20–28</h4>
+        <div class="heat">
+          <div class="rl">Final 3rd</div>
+          <div class="c" style="background:rgba(184,105,11,.50)">2.00</div>
+          <div class="c" style="background:rgba(184,105,11,.38)">1.50</div>
+          <div class="c" style="background:rgba(184,105,11,.28)">1.12</div>
+          <div class="c" style="background:rgba(184,105,11,.38)">1.50</div>
+          <div class="c" style="background:rgba(184,105,11,.50)">2.00</div>
+          <div class="rl">Middle 3rd</div>
+          <div class="c" style="background:rgba(184,105,11,.10)">0.38</div>
+          <div class="c" style="background:rgba(184,105,11,.16)">0.62</div>
+          <div class="c" style="background:rgba(184,105,11,.16)">0.62</div>
+          <div class="c" style="background:rgba(184,105,11,.03)">0.12</div>
+          <div class="c" style="background:rgba(184,105,11,.06)">0.25</div>
+          <div class="rl"></div>
+          <div class="cl">L wing</div><div class="cl">L half</div><div class="cl">centre</div><div class="cl">R half</div><div class="cl">R wing</div>
+        </div>
+      </div>
+    </div>
+    <figcaption>Left wing 1.05→2.00 · right wing 1.32→2.00 · centre 1.42→1.12. Both edges darken and the middle fades. The side that had died in the goalless matches was the left, but when it came back both flanks rose together.</figcaption>
+  </figure>
+
+  <h3>And the destination settled too</h3>
+  <div class="body">
+    <p>A cross only becomes a key pass if somebody is there to meet it. In the second half the people standing in the box settled as well — the number of players taking at least <span class="num">0.25</span> shots per match from inside the area went from <span class="num">8</span> to <span class="num">10</span>, and box shots themselves from <span class="num">6.68</span> to <span class="num">8.50</span>.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">Where the crosses come from and where the shot happens</div>
+    <div class="figsub">Attacking 35m · restricted to the seven clubs played in both halves (opponent-controlled)</div>
+    <svg viewBox="0 0 620 372" role="img" aria-label="Crosses from the left flank grew thicker in the second half and the average shot location was pulled 2.7 metres closer to goal">
+      <defs>
+        <marker id="ahe1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+          <polygon points="0,1 9,5 0,9" fill="var(--axis)"/></marker>
+        <marker id="ahe2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+          <polygon points="0,1 9,5 0,9" fill="var(--dj)"/></marker>
+      </defs>
+      <rect x="30" y="40" width="544" height="280" fill="none" stroke="var(--axis)" stroke-width="1.2"/>
+      <rect x="140.7" y="40" width="322.6" height="132" fill="none" stroke="var(--axis)" stroke-width="1"/>
+      <rect x="228.7" y="40" width="146.6" height="44" fill="none" stroke="var(--axis)" stroke-width="1"/>
+      <line x1="272.7" y1="40" x2="331.3" y2="40" stroke="var(--ink-2)" stroke-width="4"/>
+      <circle cx="302" cy="128" r="2.5" fill="var(--axis)"/>
+      <path d="M 218.9 88 Q 302 150.4 385.1 88" fill="none" stroke="var(--top)" stroke-width="1.4" stroke-dasharray="5 4"/>
+      <text class="sv-lb" x="302" y="146" text-anchor="middle" fill="var(--top)">12m</text>
+      <path d="M 198.8 99.6 Q 302 177.1 405.2 99.6" fill="none" stroke="var(--dj)" stroke-width="1.6"/>
+      <text class="sv-lb" x="416" y="103" fill="var(--dj)">R20–28 mean 14.9m</text>
+      <path d="M 180.1 110.4 Q 302 201.9 423.9 110.4" fill="none" stroke="var(--axis)" stroke-width="1.4" stroke-dasharray="3 4"/>
+      <text class="sv-lb" x="434" y="114" fill="var(--muted)">R1–19 mean 17.6m</text>
+      <rect x="30" y="150" width="70" height="120" fill="var(--dj)" opacity=".10"/>
+      <text class="sv-lb" x="65" y="285" text-anchor="middle">left flank</text>
+      <path d="M 100 232 Q 178 176 248 152" fill="none" stroke="var(--axis)" stroke-width="3" marker-end="url(#ahe1)"/>
+      <text class="sv-lb" x="163" y="252" fill="var(--muted)">R1–19 · 12.00 crosses · 22.7% found a man</text>
+      <path d="M 100 206 Q 190 120 284 112" fill="none" stroke="var(--dj)" stroke-width="7" stroke-linecap="round" marker-end="url(#ahe2)"/>
+      <text class="sv-nm" x="120" y="152" fill="var(--dj)">R20–28 · 15.12 crosses · 28.1%</text>
+      <circle cx="248" cy="152" r="4" fill="var(--axis)"/>
+      <circle cx="284" cy="112" r="5.5" fill="var(--dj)"/>
+      <text class="sv-lb" x="302" y="336" text-anchor="middle">shots straight from a cross 1.91 → 3.12 per match · shots inside 12m 2.69 → 4.87</text>
+      <text class="sv-lb" x="302" y="352" text-anchor="middle">xG per shot 0.114 → 0.144 · goals 1.36 → 2.12</text>
+    </svg>
+    <figcaption>The thick line is the second half. As crosses from the left grew in number and accuracy, the average shot location was pulled from 17.6m to 14.9m. The right flank moved the same way (key passes 1.32 → 2.00). All five figures come from the same seven opponents.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">Matches</span><span class="cap">four scenes</span></div>
+  <h2>Four matches that show the season in data</h2>
+  <div class="body">
+    <p>To see what those numbers looked like as football, four matches — chosen not by result but because each <strong>carries one of this piece's claims</strong>.</p>
+  </div>
+
+  <div class="mcards">
+    <div class="mc">
+      <div class="hd"><span class="rd">R13</span><span class="op">Pohang (H)</span><span class="sc">0 – 2</span></div>
+      <div class="why"><b>"Arriving without shooting" at its extreme.</b> <b>227</b> final-third actions, among their highest of the season, and 10 shots for nothing. They crossed 25 times and found a man <b>twice</b>; left-side key passes: <b>one</b>.</div>
+      <div class="kv">
+        <div><span class="k2">Final third</span><span class="v2">227</span></div>
+        <div><span class="k2">Shots / xG</span><span class="v2 mute">10 / 1.16</span></div>
+        <div><span class="k2">Key passes, left</span><span class="v2">1</span></div>
+        <div><span class="k2">Crosses found</span><span class="v2">2 / 25</span></div>
+      </div>
+    </div>
+
+    <div class="mc">
+      <div class="hd"><span class="rd">R7</span><span class="op">Gangwon (H)</span><span class="sc">0 – 2</span></div>
+      <div class="why"><b>The match they only shot from distance.</b> Average shot distance <b>29.4m</b>, the season's worst; xG per shot <b>0.058</b>, the season's lowest. <b>One</b> shot from inside 12m. They got there and had nothing to do.</div>
+      <div class="kv">
+        <div><span class="k2">Mean shot distance</span><span class="v2">29.4m</span></div>
+        <div><span class="k2">xG per shot</span><span class="v2">0.058</span></div>
+        <div><span class="k2">Shots inside 12m</span><span class="v2">1</span></div>
+        <div><span class="k2">Box shots</span><span class="v2 mute">3</span></div>
+      </div>
+    </div>
+
+    <div class="mc">
+      <div class="hd"><span class="rd">R20</span><span class="op">Gimcheon (A)</span><span class="sc">2 – 3</span></div>
+      <div class="why"><b>The turn begins — and they lose.</b> <b>7</b> shots straight from a cross, the season's most; average shot distance <b>12.0m</b>; xG 2.24. The first match built the new way, and it ended in defeat. Process and result move separately.</div>
+      <div class="kv">
+        <div><span class="k2">Shots from crosses</span><span class="v2">7</span></div>
+        <div><span class="k2">Mean shot distance</span><span class="v2">12.0m</span></div>
+        <div><span class="k2">xG per shot</span><span class="v2">0.187</span></div>
+        <div><span class="k2">xG</span><span class="v2 mute">2.24</span></div>
+      </div>
+    </div>
+
+    <div class="mc">
+      <div class="hd"><span class="rd">R24</span><span class="op">Gangwon (H)</span><span class="sc">3 – 0</span></div>
+      <div class="why"><b>Same opponent as R7, finished version.</b> 266 final-third actions and <b>2.28</b> xG, the season's highest. xG per shot went <b>0.058 → 0.190</b>, a <b>3.3×</b> change. Same opponent, same number of shots, entirely different places.</div>
+      <div class="kv">
+        <div><span class="k2">Final third</span><span class="v2">266</span></div>
+        <div><span class="k2">xG</span><span class="v2">2.28</span></div>
+        <div><span class="k2">xG per shot</span><span class="v2">0.190</span></div>
+        <div><span class="k2">vs R7</span><span class="v2">3.3×</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="body">
+    <p>Jeju give the same pairing. Losing <span class="num">0-1</span> at home in R9 they took 9 shots worth <span class="num">0.61</span> xG at an average of <span class="num">18.4</span>m. Away in R26 they took 10 shots worth <span class="num">1.96</span> xG at <span class="num">10.5</span>m — <strong>almost the same count and three times the xG</strong>. They lost that one <span class="num">1-3</span>, and what they built was nothing alike.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">Twist</span><span class="cap">but it isn't form</span></div>
+  <h2>Individuals did not sharpen. A combination settled</h2>
+  <div class="body">
+    <p>The natural explanation here is "playing every week brought their sharpness back". That explanation was tested.</p>
+    <p>Across <strong>three seasons of K League 1, 2024–2026, 12 clubs, 24,894 player-matches</strong>, the comparison was made <strong>within each player</strong>: matches he entered having played <span class="num">180</span>+ minutes across the previous three rounds, against matches he entered on under <span class="num">120</span>. Differences in ability are controlled away automatically.</p>
+  </div>
+
+  <div class="note">
+    <b>Result — no effect</b><br>
+    <span class="num">493</span> cases · mean difference in pass completion <b>+0.04pp</b> · median −0.18pp ·
+    higher when playing continuously in <b>243 of 493 (49.3%)</b> · <b>p = 0.75</b><br>
+    <span style="font-size:13px;color:var(--muted)">By season (2024 −0.29 / 2025 +0.62 / 2026 −0.28) and by position (DF +0.07 / MF −0.21 / FW −0.01) it sits at zero throughout. The faint signal visible in 72 players across six clubs vanished once the sample widened.</span>
+  </div>
+
+  <div class="body">
+    <p>So <strong>no individual's passing became more accurate</strong>. Lee Myung-jae (16) did not start striking the ball better. He was in the same place every week, and the same people were standing in the box, and <strong>the crosses began finding somebody</strong>.</p>
+    <p class="pull">Form did not attach to the players. It attached to the connection.</p>
+    <p>The distinction matters in practice. If the players have come good, you wait. If a combination has settled, the job is <strong>not to break it</strong>.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">Limits</span><span class="cap">where this could be wrong</span></div>
+  <h2>Four things</h2>
+  <ul class="clean">
+    <li><b>The second half is eight matches.</b> Controlling for opponent does not make eight matches into more than eight. Three of them going differently would move these numbers.</li>
+    <li><b>The direction of cause is not fully closed.</b> Did the places settle and then they played well, or did they play well and get given the places? If the latter, this piece runs backwards. Against that: Lee Myung-jae's (16) poor first half was not confined to his short appearances — in R6, R13, R17 and R19 he played the full match and produced <span class="num">0–1</span> key passes.</li>
+    <li><b>R27 is missing.</b> The raw events for the 5 September match at Bucheon are not yet published. The dataset is R1–R26 plus R28, and the rounds are not contiguous.</li>
+    <li><b>Event data records only the player who touched the ball.</b> How many players stood in the box, and how they moved, is not counted. "The destination settled" is inferred from the distribution of box shots.</li>
+  </ul>
+
+  <div class="body">
+    <p style="margin-top:2.4em">In one sentence: <strong>Daejeon's 2026 attack was never about the ability to arrive but about what happened after arriving, and that showed up as nine goalless matches before disappearing after R20.</strong> It disappeared not because of new players, but because the ball coming in from the flanks finally began to find somebody.</p>
+  </div>
+</section>
+
+<footer>
+  <b>Data</b> K League Data Portal event feed · 2026 K League 1, R1–R26 and R28 (27 matches) · R27 unpublished<br>
+  <b>League comparison</b> Collected sets for Daejeon, Gwangju, Jeju, Jeonbuk, Ulsan and Pohang de-duplicated by match ID · 125 matches, 180,359 events · all 12 clubs represented<br>
+  <b>Continuity test</b> 2024–2026 K League 1, 12 clubs, 24,894 player-matches · within-player fixed effects<br>
+  <b>Validation</b> Match report reconciled with the goal log in all 27 matches · coordinate normalisation 100.0 for both sides · two portal ST/RCV mis-tags restored (R22 Ju Min-kyu, R23 Song Min-kyu)<br>
+  <b>Notation</b> Brackets after a name are shirt numbers · zones are defensive / middle / final third · key pass = a pass that led to a shot · distances converted on a 105×68m pitch
+</footer>
+
+</div>
+
+</body>
+</html>

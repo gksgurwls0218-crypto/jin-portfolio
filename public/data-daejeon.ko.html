@@ -1,0 +1,743 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>아홉 번의 침묵</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@400;500;600;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --page:#eef0ec; --surface:#fafbf9; --surface-2:#e2e6e0; --raise:#f4f6f3;
+  --ink:#12150f; --ink-2:#3a4036; --muted:#6d7568;
+  --line:rgba(18,21,15,.14); --line-2:rgba(18,21,15,.07);
+  --grid:#dde2da; --axis:#bfc7bb;
+  --dj:#b8690b; --lg:#3068b8; --top:#0f7f5e; --bad:#a3272f;
+  --dj-soft:rgba(184,105,11,.13); --top-soft:rgba(15,127,94,.11);
+  --sp:clamp(18px,4.5vw,30px);
+  --disp:"Hahmlet",'Nanum Myeongjo',serif;
+  --body:"IBM Plex Sans KR",-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,'SFMono-Regular',monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --page:#101310; --surface:#171a16; --surface-2:#232720; --raise:#1d211c;
+    --ink:#e9ece5; --ink-2:#b9c0b4; --muted:#8b9386;
+    --line:rgba(233,236,229,.16); --line-2:rgba(233,236,229,.08);
+    --grid:#2b302a; --axis:#464c43;
+    --dj:#c47d0a; --lg:#4a8ace; --top:#159876; --bad:#d4565e;
+    --dj-soft:rgba(196,125,10,.17); --top-soft:rgba(21,152,118,.15);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --page:#101310; --surface:#171a16; --surface-2:#232720; --raise:#1d211c;
+  --ink:#e9ece5; --ink-2:#b9c0b4; --muted:#8b9386;
+  --line:rgba(233,236,229,.16); --line-2:rgba(233,236,229,.08);
+  --grid:#2b302a; --axis:#464c43;
+  --dj:#c47d0a; --lg:#4a8ace; --top:#159876; --bad:#d4565e;
+  --dj-soft:rgba(196,125,10,.17); --top-soft:rgba(21,152,118,.15);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font-family:var(--body);
+  word-break:keep-all;overflow-wrap:break-word;
+  font-weight:400;font-size:16px;line-height:1.72;-webkit-font-smoothing:antialiased}
+.wrap{max-width:940px;margin:0 auto;padding-inline:var(--sp);padding-block:0}
+p{margin:0 0 1.05em}
+strong{font-weight:600;color:var(--ink)}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums;font-weight:500;letter-spacing:-.01em}
+
+header{padding-block:clamp(48px,9vw,88px) clamp(30px,5vw,44px);border-bottom:1px solid var(--line)}
+.badge{display:inline-flex;align-items:center;gap:.55em;font-family:var(--mono);font-size:11px;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--dj);font-weight:500}
+.badge::before{content:"";width:22px;height:2px;background:var(--dj)}
+h1{font-family:var(--disp);font-weight:600;font-size:clamp(38px,8.6vw,68px);line-height:1.06;
+  letter-spacing:-.025em;margin:.34em 0 .3em;text-wrap:balance}
+.dek{font-family:var(--disp);font-weight:400;font-size:clamp(17px,2.5vw,21px);line-height:1.55;
+  color:var(--ink-2);max-width:34em;margin:0 0 1.5em}
+.meta{display:flex;flex-wrap:wrap;gap:.5em 0;font-family:var(--mono);font-size:11.5px;
+  color:var(--muted);letter-spacing:.02em}
+.meta span+span::before{content:"|";padding:0 .85em;color:var(--axis)}
+
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line-2);
+  border-block:1px solid var(--line)}
+@media(max-width:760px){.tiles{grid-template-columns:repeat(2,1fr)}}
+.tile{background:var(--page);padding:clamp(16px,3vw,24px) clamp(12px,2.4vw,20px);display:flex;
+  flex-direction:column;gap:.3em}
+.tile .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.tile .v{font-family:var(--disp);font-weight:600;font-size:clamp(23px,4.1vw,34px);line-height:1;
+  letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.tile .v.dj{color:var(--dj)} .tile .v.up{color:var(--top)}
+.tile .s{font-size:12.5px;line-height:1.45;color:var(--ink-2)}
+
+section{padding-block:clamp(40px,7vw,68px);border-bottom:1px solid var(--line-2)}
+section:last-of-type{border-bottom:none}
+.eyebrow{display:flex;align-items:baseline;gap:.9em;margin-bottom:.9em}
+.eyebrow .role{font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--page);background:var(--ink-2);padding:.35em .7em;border-radius:2px;white-space:nowrap}
+.eyebrow .cap{font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--muted)}
+h2{font-family:var(--disp);font-weight:600;font-size:clamp(25px,4.4vw,37px);line-height:1.2;
+  letter-spacing:-.022em;margin:0 0 .6em;text-wrap:balance;max-width:19em}
+h3{font-family:var(--disp);font-weight:600;font-size:clamp(17px,2.4vw,21px);line-height:1.35;
+  letter-spacing:-.012em;margin:2.1em 0 .7em}
+.lede{font-size:clamp(16.5px,2.1vw,18.5px);line-height:1.68;color:var(--ink-2);max-width:33em;margin-bottom:1.6em}
+.body{max-width:35em}
+.pull{border-left:3px solid var(--dj);padding:.1em 0 .1em 1.15em;margin:1.9em 0;
+  font-family:var(--disp);font-weight:500;font-size:clamp(18px,2.7vw,23px);line-height:1.45;
+  letter-spacing:-.014em;color:var(--ink);max-width:24em;text-wrap:balance}
+
+figure{margin:2em 0;padding:clamp(16px,3vw,26px);background:var(--surface);
+  border:1px solid var(--line);border-radius:3px}
+figcaption{font-family:var(--mono);font-size:11px;line-height:1.6;color:var(--muted);
+  margin-top:1.15em;padding-top:.85em;border-top:1px solid var(--line-2)}
+.figtitle{font-family:var(--body);font-weight:600;font-size:14px;line-height:1.4;color:var(--ink);
+  margin-bottom:.3em;letter-spacing:-.005em}
+.figsub{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:1.35em;letter-spacing:.01em}
+.legend{display:flex;flex-wrap:wrap;gap:.5em 1.3em;font-family:var(--mono);font-size:11px;
+  color:var(--ink-2);margin-bottom:1.1em}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:1px;margin-right:.45em;vertical-align:-1px}
+
+.bars{display:flex;flex-direction:column;gap:7px}
+.br{display:grid;grid-template-columns:74px 1fr 62px;align-items:center;gap:10px}
+@media(max-width:560px){.br{grid-template-columns:58px 1fr 52px;gap:7px}}
+.br .lb{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.br .tk{height:17px;background:var(--surface-2);border-radius:1px;overflow:hidden}
+.br .fl{height:100%;background:var(--lg);border-radius:1px}
+.br .vl{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;color:var(--ink-2);text-align:right}
+.br.hi .lb,.br.hi .vl{color:var(--dj);font-weight:600} .br.hi .fl{background:var(--dj)}
+
+.pair{display:flex;flex-direction:column;gap:16px}
+.pg{display:grid;grid-template-columns:118px 1fr;gap:12px;align-items:center}
+@media(max-width:560px){.pg{grid-template-columns:1fr;gap:5px}}
+.pg .pn{font-family:var(--body);font-size:13px;font-weight:600;color:var(--ink)}
+.pg .pn small{display:block;font-family:var(--mono);font-weight:400;font-size:10.5px;color:var(--muted)}
+.pgb{display:flex;flex-direction:column;gap:5px}
+.pgr{display:grid;grid-template-columns:1fr 58px;gap:9px;align-items:center}
+.pgr .tk{height:15px;background:var(--surface-2);border-radius:1px;overflow:hidden}
+.pgr .fl{height:100%;border-radius:1px}
+.pgr .vl{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;text-align:right}
+
+.tbl{overflow-x:auto;margin:1.8em 0;border:1px solid var(--line);border-radius:3px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:500px;font-size:13px}
+th,td{padding:9px 13px;text-align:left;border-bottom:1px solid var(--line-2);vertical-align:baseline}
+th{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:500;background:var(--raise);white-space:nowrap}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+td .nm{font-weight:600} td .no{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.up{color:var(--top);font-weight:600} .dn{color:var(--bad);font-weight:600}
+
+.note{background:var(--raise);border:1px solid var(--line);border-left:3px solid var(--axis);
+  border-radius:3px;padding:clamp(14px,2.6vw,20px);margin:1.9em 0;font-size:14px;line-height:1.65;color:var(--ink-2)}
+.note b{color:var(--ink);font-weight:600}
+.note.key{border-left-color:var(--dj);background:var(--dj-soft);border-color:var(--line)}
+
+.chain{display:flex;flex-direction:column;gap:0;margin:1.9em 0}
+.step{display:grid;grid-template-columns:26px 1fr;gap:14px;padding:14px 0;border-top:1px solid var(--line-2)}
+.step:first-child{border-top:none}
+.step .n{font-family:var(--mono);font-size:11px;color:var(--page);background:var(--dj);
+  width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600}
+.step .t{font-weight:600;font-size:14.5px;color:var(--ink);margin-bottom:.15em}
+.step .d{font-size:13.5px;color:var(--ink-2);line-height:1.6}
+.step .d b{font-family:var(--mono);font-variant-numeric:tabular-nums;color:var(--dj);font-weight:600}
+
+ul.clean{list-style:none;padding:0;margin:1.3em 0;display:flex;flex-direction:column;gap:.85em;max-width:35em}
+ul.clean li{padding-left:1.5em;position:relative;font-size:14.5px;line-height:1.62;color:var(--ink-2)}
+ul.clean li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:1.5px;background:var(--axis)}
+ul.clean li b{color:var(--ink);font-weight:600}
+
+footer{padding-block:clamp(34px,6vw,54px) clamp(46px,8vw,74px);border-top:1px solid var(--line);
+  font-family:var(--mono);font-size:11.5px;line-height:1.85;color:var(--muted)}
+footer b{color:var(--ink-2);font-weight:500}
+</style><style>
+/* ── 추가 컴포넌트 ── */
+.heat{display:grid;grid-template-columns:64px repeat(5,1fr);gap:3px;font-family:var(--mono);font-size:11px}
+.heat .rl{display:flex;align-items:center;justify-content:flex-end;color:var(--muted);padding-right:6px;font-size:10.5px}
+.heat .cl{text-align:center;color:var(--muted);font-size:10px;padding-bottom:3px}
+.heat .c{aspect-ratio:1.7;display:flex;align-items:center;justify-content:center;border-radius:2px;
+  color:var(--ink);font-variant-numeric:tabular-nums;font-weight:500;border:1px solid var(--line-2)}
+.heatwrap{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,3vw,26px)}
+@media(max-width:640px){.heatwrap{grid-template-columns:1fr}}
+.heatwrap h4{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--muted);
+  margin:0 0 .7em;font-weight:500;text-transform:uppercase}
+.goalline{display:flex;align-items:flex-end;gap:2px;height:120px;margin-bottom:6px}
+.gl-col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:3px;position:relative}
+.gl-bar{width:100%;background:var(--dj);border-radius:1px 1px 0 0;min-height:2px}
+.gl-bar.zero{background:var(--bad);height:3px!important;opacity:.85}
+.gl-lb{display:flex;gap:2px;font-family:var(--mono);font-size:8.5px;color:var(--muted)}
+.gl-lb span{flex:1;text-align:center}
+.split{position:absolute;top:-118px;bottom:0;width:1px;background:var(--top);opacity:.85}
+.dist{display:flex;flex-direction:column;gap:9px}
+.dr{display:grid;grid-template-columns:56px 1fr 1fr;gap:8px;align-items:center}
+.dr .dl{font-family:var(--mono);font-size:11px;color:var(--ink-2);text-align:right}
+.dr .db{display:flex;flex-direction:column;gap:3px}
+.dr .bar{height:13px;border-radius:1px;display:flex;align-items:center;padding-left:5px;
+  font-family:var(--mono);font-size:9.5px;color:var(--page);font-variant-numeric:tabular-nums}
+.stackrow{display:flex;height:30px;border-radius:2px;overflow:hidden;margin-bottom:5px}
+.stackrow div{display:flex;align-items:center;justify-content:center;font-family:var(--mono);
+  font-size:10px;color:#fff;white-space:nowrap;overflow:hidden}
+.stacklb{font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-bottom:.5em}
+</style>
+<style>
+svg{display:block;max-width:100%;height:auto;overflow:visible}
+.sv-lb{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:var(--muted)}
+.sv-nm{font-family:"IBM Plex Sans KR",sans-serif;font-size:11.5px;font-weight:600;fill:var(--ink-2)}
+</style>
+<style>
+.mcards{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line-2);
+  border:1px solid var(--line);border-radius:3px;overflow:hidden;margin:1.9em 0}
+@media(max-width:680px){.mcards{grid-template-columns:1fr}}
+.mc{background:var(--surface);padding:clamp(15px,2.7vw,20px);display:flex;flex-direction:column;gap:.55em}
+.mc .hd{display:flex;align-items:baseline;gap:.6em;flex-wrap:wrap}
+.mc .rd{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--page);
+  background:var(--dj);padding:.25em .55em;border-radius:2px;font-weight:600}
+.mc .op{font-family:var(--disp);font-weight:600;font-size:17px;color:var(--ink);letter-spacing:-.01em}
+.mc .sc{font-family:var(--mono);font-size:13px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.mc .why{font-size:13.5px;line-height:1.6;color:var(--ink-2)}
+.mc .why b{color:var(--ink);font-weight:600}
+.mc .kv{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line-2);
+  border:1px solid var(--line-2);border-radius:2px;margin-top:.3em}
+.mc .kv div{background:var(--raise);padding:7px 9px}
+.mc .kv .k2{font-family:var(--mono);font-size:9.5px;letter-spacing:.05em;color:var(--muted);display:block}
+.mc .kv .v2{font-family:var(--mono);font-size:13px;font-variant-numeric:tabular-nums;color:var(--dj);font-weight:600}
+.mc .kv .v2.mute{color:var(--ink-2);font-weight:500}
+</style>
+<style>*{box-sizing:border-box}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+
+<div class="wrap">
+<header>
+  <div class="badge">데이터가 말하는 · 09편 · K리그1 2026 R1–R28</div>
+  <h1>아홉 번의<br>침묵</h1>
+  <p class="dek">대전은 파이널서드에 리그 3위로 들어가면서 슛은 6위에 그친다. 27경기 중 9경기가 무득점이었고, 그 아홉 번이 전부 R19 이전에 몰려 있다. 2026시즌 대전의 공격을 처음부터 끝까지 읽는다.</p>
+  <div class="meta">
+    <span>K리그 데이터포털 이벤트 원본</span>
+    <span>대전 27경기 · 40,130이벤트</span>
+    <span>리그 풀링 125경기 · 180,359이벤트</span>
+    <span>괄호 안은 등번호</span>
+  </div>
+</header>
+</div>
+
+<div class="wrap">
+<div class="tiles">
+  <div class="tile">
+    <div class="k">파이널서드 대비 슛</div>
+    <div class="v dj">0.059</div>
+    <div class="s">12팀 중 <b>11위</b>. 들어가는 양은 3위</div>
+  </div>
+  <div class="tile">
+    <div class="k">무득점 경기</div>
+    <div class="v dj">9 / 27</div>
+    <div class="s"><b>전부 R19 이전</b>. R20 이후 0경기</div>
+  </div>
+  <div class="tile">
+    <div class="k">평균 슛 거리</div>
+    <div class="v up">17.4 → 14.9m</div>
+    <div class="s">슛당 xG <b>0.108 → 0.144</b></div>
+  </div>
+  <div class="tile">
+    <div class="k">그 사이 영입</div>
+    <div class="v">0명</div>
+    <div class="s">후반기 주전 전원이 <b>R1부터 있던 선수</b></div>
+  </div>
+</div>
+</div>
+
+<div class="wrap">
+
+<section>
+  <div class="eyebrow"><span class="role">문제</span><span class="cap">들어가는데 못 쏜다</span></div>
+  <h2>광주와 정반대의 방식으로 같은 곳에 도착한다</h2>
+  <div class="body">
+    <p class="lede">앞 편에서 광주는 파이널서드에 <strong>못 들어가는</strong> 팀이었다. 대전은 반대다. 리그에서 세 번째로 많이 들어가고, 슛은 여섯 번째로 적게 쏜다.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">파이널서드에 얼마나 들어가고, 얼마나 쏘는가</div>
+    <div class="figsub">가로: 파이널서드 활동 90분당 · 세로: 슛 90분당 · 12개 구단</div>
+    <svg viewBox="0 0 620 360" role="img" aria-label="파이널서드 활동과 슛의 산점도">
+      <g stroke="var(--grid)" stroke-width="1">
+        <line x1="78" y1="300" x2="592" y2="300"/><line x1="78" y1="240" x2="592" y2="240"/>
+        <line x1="78" y1="180" x2="592" y2="180"/><line x1="78" y1="120" x2="592" y2="120"/>
+        <line x1="78" y1="60" x2="592" y2="60"/>
+      </g>
+      <line x1="78" y1="40" x2="78" y2="300" stroke="var(--axis)" stroke-width="1"/>
+      <line x1="78" y1="300" x2="592" y2="300" stroke="var(--axis)" stroke-width="1"/>
+      <text class="sv-lb" x="70" y="304" text-anchor="end">7</text>
+      <text class="sv-lb" x="70" y="244" text-anchor="end">8.5</text>
+      <text class="sv-lb" x="70" y="184" text-anchor="end">10</text>
+      <text class="sv-lb" x="70" y="124" text-anchor="end">11.5</text>
+      <text class="sv-lb" x="70" y="64" text-anchor="end">13</text>
+      <text class="sv-lb" x="78" y="318" text-anchor="middle">100</text>
+      <text class="sv-lb" x="206.5" y="318" text-anchor="middle">130</text>
+      <text class="sv-lb" x="335" y="318" text-anchor="middle">160</text>
+      <text class="sv-lb" x="463.5" y="318" text-anchor="middle">190</text>
+      <text class="sv-lb" x="335" y="342" text-anchor="middle">파이널서드 활동 (90분당)</text>
+      <text class="sv-lb" x="26" y="170" text-anchor="middle" transform="rotate(-90 26 170)">슛 (90분당)</text>
+      <line x1="99" y1="249" x2="528" y2="109" stroke="var(--top)" stroke-width="1.6" stroke-dasharray="6 4"/>
+      <text class="sv-lb" x="470" y="132" fill="var(--top)">리그 추세</text>
+      <g fill="var(--lg)">
+        <circle cx="96.4" cy="260.0" r="5"/><circle cx="102.8" cy="271.6" r="5"/>
+        <circle cx="226.6" cy="199.2" r="5"/><circle cx="238.2" cy="220.4" r="5"/>
+        <circle cx="264.3" cy="152.8" r="5"/><circle cx="274.6" cy="117.2" r="5"/>
+        <circle cx="322.6" cy="177.6" r="5"/><circle cx="326.0" cy="198.0" r="5"/>
+        <circle cx="349.6" cy="108.4" r="5"/><circle cx="472.9" cy="94.8" r="5"/>
+        <circle cx="529.9" cy="109.6" r="5"/>
+      </g>
+      <g fill="var(--lg)">
+        <text class="sv-lb" x="88" y="253" text-anchor="end">부천</text>
+        <text class="sv-lb" x="102.8" y="288" text-anchor="middle">광주</text>
+        <text class="sv-lb" x="226.6" y="191" text-anchor="middle">포항</text>
+        <text class="sv-lb" x="238.2" y="236" text-anchor="middle">안양</text>
+        <text class="sv-lb" x="264.3" y="144" text-anchor="middle">제주</text>
+        <text class="sv-lb" x="274.6" y="109" text-anchor="middle">울산</text>
+        <text class="sv-lb" x="314" y="181" text-anchor="end">김천</text>
+        <text class="sv-lb" x="334" y="202" text-anchor="start">인천</text>
+        <text class="sv-lb" x="349.6" y="100" text-anchor="middle">전북</text>
+        <text class="sv-lb" x="472.9" y="86" text-anchor="middle">서울</text>
+        <text class="sv-lb" x="529.9" y="126" text-anchor="middle">강원</text>
+      </g>
+      <circle cx="398.4" cy="169.2" r="7.5" fill="var(--dj)"/>
+      <text class="sv-nm" x="410" y="173" fill="var(--dj)">대전 · 174.8 / 10.27</text>
+    </svg>
+    <figcaption>대전은 추세선 아래에 있다. 같은 양을 들어가는 팀들보다 덜 쏜다. 광주는 왼쪽 끝 — 아예 들어가지 못한다.</figcaption>
+  </figure>
+
+  <div class="body">
+    <p>파이널서드 활동 하나당 슛으로 환산하면 <span class="num">0.059</span>회, <strong>12팀 중 11위</strong>다. 광주는 도달이 꼴찌였지만 도달당 슛은 5위였다. 두 팀이 리그 하위권 공격을 정반대 이유로 만든다.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">파이널서드 활동 1회당 슛</div>
+    <div class="figsub">시즌 전체 · 90분 환산한 두 값의 비</div>
+    <div class="bars">
+      <div class="br"><div class="lb">울산</div><div class="tk"><div class="fl" style="width:100%"></div></div><div class="vl">0.079</div></div>
+      <div class="br"><div class="lb">부천</div><div class="tk"><div class="fl" style="width:96.7%"></div></div><div class="vl">0.077</div></div>
+      <div class="br"><div class="lb">제주</div><div class="tk"><div class="fl" style="width:93.8%"></div></div><div class="vl">0.074</div></div>
+      <div class="br"><div class="lb">광주</div><div class="tk"><div class="fl" style="width:91.8%"></div></div><div class="vl">0.073</div></div>
+      <div class="br"><div class="lb">전북</div><div class="tk"><div class="fl" style="width:91.0%"></div></div><div class="vl">0.072</div></div>
+      <div class="br"><div class="lb">포항</div><div class="tk"><div class="fl" style="width:89.2%"></div></div><div class="vl">0.071</div></div>
+      <div class="br"><div class="lb">안양</div><div class="tk"><div class="fl" style="width:82.5%"></div></div><div class="vl">0.065</div></div>
+      <div class="br"><div class="lb">김천</div><div class="tk"><div class="fl" style="width:80.7%"></div></div><div class="vl">0.064</div></div>
+      <div class="br"><div class="lb">서울</div><div class="tk"><div class="fl" style="width:79.6%"></div></div><div class="vl">0.063</div></div>
+      <div class="br"><div class="lb">인천</div><div class="tk"><div class="fl" style="width:76.3%"></div></div><div class="vl">0.061</div></div>
+      <div class="br hi"><div class="lb">대전</div><div class="tk"><div class="fl" style="width:74.0%"></div></div><div class="vl">0.059</div></div>
+      <div class="br"><div class="lb">강원</div><div class="tk"><div class="fl" style="width:72.2%"></div></div><div class="vl">0.057</div></div>
+    </div>
+    <figcaption>대전의 파이널서드 활동 174.8회/90분은 리그 3위, 슛 10.27회는 6위다.</figcaption>
+  </figure>
+
+  <div class="body">
+    <p>이상한 것은 <strong>쏘기만 하면 잘 들어간다</strong>는 점이다. PA 안에서 나오는 슛 비중이 <span class="num">64.6%</span>로 리그 2위이고, 유효슛당 득점은 <span class="num">36.9%</span>로 리그 기준선 <span class="num">29.6%</span>를 크게 웃돈다. 골 <span class="num">38</span>은 xG <span class="num">35.9</span>보다 많다.</p>
+    <p class="pull">양이 부족하고 질은 좋다. 대전에 없는 것은 좋은 기회가 아니라 기회의 개수다.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">관찰</span><span class="cap">아홉 번의 침묵</span></div>
+  <h2>무득점 경기는 한쪽에 몰려 있다</h2>
+
+  <figure>
+    <div class="figtitle">라운드별 득점</div>
+    <div class="figsub">빨간 칸이 무득점 · 초록 선이 R19와 R20의 경계 · R27은 원시 이벤트 미공개</div>
+    <div class="goalline">
+      <div class="gl-col"><div class="gl-bar" style="height:20%"></div></div>
+      <div class="gl-col"><div class="gl-bar" style="height:20%"></div></div>
+      <div class="gl-col"><div class="gl-bar" style="height:20%"></div></div>
+      <div class="gl-col"><div class="gl-bar" style="height:60%"></div></div>
+      <div class="gl-col"><div class="gl-bar zero"></div></div>
+      <div class="gl-col"><div class="gl-bar zero"></div></div>
+      <div class="gl-col"><div class="gl-bar zero"></div></div>
+      <div class="gl-col"><div class="gl-bar" style="height:20%"></div></div>
+      <div class="gl-col"><div class="gl-bar zero"></div></div>
+      <div class="gl-col"><div class="gl-bar" style="height:80%"></div></div>
+      <div class="gl-col"><div class="gl-bar" style="height:100%"></div></div>
+      <div class="gl-col"><div class="gl-bar zero"></div></div>
+      <div class="gl-col"><div class="gl-bar zero"></div></div>
+      <div class="gl-col"><div class="gl-bar zero"></div></div>
+      <div class="gl-col"><div class="gl-bar" style="height:20%"></div></div>
+      <div class="gl-col"><div class="gl-bar" style="height:40%"></div></div>
+      <div class="gl-col"><div class="gl-bar zero"></div></div>
+      <div class="gl-col"><div class="gl-bar" style="height:40%"></div></div>
+      <div class="gl-col"><div class="gl-bar zero"></div><div class="split"></div></div>
+      <div class="gl-col"><div class="gl-bar" style="height:40%"></div></div>
+      <div class="gl-col"><div class="gl-bar" style="height:40%"></div></div>
+      <div class="gl-col"><div class="gl-bar" style="height:40%"></div></div>
+      <div class="gl-col"><div class="gl-bar" style="height:40%"></div></div>
+      <div class="gl-col"><div class="gl-bar" style="height:60%"></div></div>
+      <div class="gl-col"><div class="gl-bar" style="height:40%"></div></div>
+      <div class="gl-col"><div class="gl-bar" style="height:20%"></div></div>
+      <div class="gl-col"><div class="gl-bar" style="height:60%"></div></div>
+    </div>
+    <div class="gl-lb">
+      <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+      <span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span>
+      <span>21</span><span>22</span><span>23</span><span>24</span><span>25</span><span>26</span><span>28</span>
+    </div>
+    <figcaption>무득점 R5·6·7·9·12·13·14·17·19 — 전부 경계 왼쪽이다. 전반기 19경기 중 9경기(47%)가 무득점, 후반기 8경기 중 0경기.</figcaption>
+  </figure>
+
+  <div class="body">
+    <p>27경기 중 <span class="num">9</span>경기에서 한 골도 넣지 못했다. 세 번 중 한 번이다. 그리고 그 아홉 번이 <strong>전부 R19 이전</strong>에 있다. 우연이라기엔 너무 깨끗하게 갈린다.</p>
+    <p>가장 먼저 의심할 것은 상대가 내려앉아 잠갔다는 설명이다. 그렇지 않았다. 상대 수비 액션의 평균 높이는 무득점 경기 <span class="num">67.4</span>, 득점 경기 <span class="num">68.6</span>으로 <strong>사실상 같다</strong>(대전 공격 방향 기준, 클수록 낮은 블록). 상대는 다르게 막지 않았다.</p>
+    <p>비교 자체가 함정을 안고 있어서 두 번 통제했다. 첫째, 무득점 아홉 경기가 전반기에 몰려 있으니 <strong>시기 효과와 구분되지 않는다</strong> — 전반기 안에서만 비교했다. 둘째, 「0-0 구간」을 비교하면 득점 경기의 구간은 <strong>골이 들어가는 순간 끝나므로</strong> 정의상 득점 국면을 품는다 — <strong>경기 시작 15분이라는 고정창</strong>으로 바꿨다. 구간 길이가 결과에 의존하지 않는다.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">경기 시작 15분 — 무득점 9경기 vs 득점 10경기 (전반기 한정)</div>
+    <div class="figsub">고정창 · 90분 환산 · 각 지표의 축척은 서로 다르다</div>
+    <div class="legend">
+      <span><i style="background:var(--axis)"></i>무득점 9</span>
+      <span><i style="background:var(--dj)"></i>득점 10</span>
+    </div>
+    <div class="pair">
+      <div class="pg">
+        <div class="pn">패스<small>볼은 비슷하게 돈다</small></div>
+        <div class="pgb">
+          <div class="pgr"><div class="tk"><div class="fl" style="width:88.9%;background:var(--axis)"></div></div><div class="vl" style="color:var(--muted)">436.7</div></div>
+          <div class="pgr"><div class="tk"><div class="fl" style="width:100%;background:var(--dj)"></div></div><div class="vl" style="color:var(--dj)">491.4</div></div>
+        </div>
+      </div>
+      <div class="pg">
+        <div class="pn">파이널서드 진입<small>도달도 비슷하다</small></div>
+        <div class="pgb">
+          <div class="pgr"><div class="tk"><div class="fl" style="width:88.8%;background:var(--axis)"></div></div><div class="vl" style="color:var(--muted)">29.3</div></div>
+          <div class="pgr"><div class="tk"><div class="fl" style="width:100%;background:var(--dj)"></div></div><div class="vl" style="color:var(--dj)">33.0</div></div>
+        </div>
+      </div>
+      <div class="pg">
+        <div class="pn">왼쪽 키패스<small>여기서 무너진다</small></div>
+        <div class="pgb">
+          <div class="pgr"><div class="tk"><div class="fl" style="width:11.2%;background:var(--axis)"></div></div><div class="vl" style="color:var(--muted)">0.67</div></div>
+          <div class="pgr"><div class="tk"><div class="fl" style="width:100%;background:var(--dj)"></div></div><div class="vl" style="color:var(--dj)">6.00</div></div>
+        </div>
+      </div>
+      <div class="pg">
+        <div class="pn">슛<small>결과</small></div>
+        <div class="pgb">
+          <div class="pgr"><div class="tk"><div class="fl" style="width:44.4%;background:var(--axis)"></div></div><div class="vl" style="color:var(--muted)">5.33</div></div>
+          <div class="pgr"><div class="tk"><div class="fl" style="width:100%;background:var(--dj)"></div></div><div class="vl" style="color:var(--dj)">12.00</div></div>
+        </div>
+      </div>
+    </div>
+    <figcaption>30분·45분 창에서도 방향은 같다(왼쪽 키패스 1.00 vs 4.50, 1.78 vs 5.00).</figcaption>
+  </figure>
+
+  <div class="body">
+    <p>패스는 <span class="num">11%</span>, 진입도 <span class="num">11%</span>밖에 차이나지 않는데 <strong>왼쪽 키패스는 <span class="num">0.67</span> 대 <span class="num">6.00</span></strong>이다. 아홉 번의 침묵은 킥오프 <span class="num">15</span>분부터 이미 시작돼 있었고, 시작점은 한 곳이었다.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">전환</span><span class="cap">그리고 멈췄다</span></div>
+  <h2>R20 이후, 무득점은 한 번도 없었다</h2>
+  <div class="body">
+    <p>전반기 <span class="num">19</span>경기에서 경기당 <span class="num">1.11</span>골. 후반기 <span class="num">8</span>경기에서 <span class="num">2.12</span>골. 무득점은 <span class="num">0</span>경기다.</p>
+    <p>먼저 물어야 할 것은 상대가 쉬워졌느냐다. 전반기 상대의 평균 순위 <span class="num">5.8</span>, 후반기 <span class="num">6.6</span>으로 거의 같다. 더 엄격하게, <strong>전·후반기에 모두 만난 7개 팀</strong>(안양·김천·강원·서울·제주·울산·광주)만 뽑아 비교해도 결과는 유지된다.</p>
+  </div>
+
+  <div class="tbl">
+    <table>
+      <thead><tr><th>같은 7개 팀 상대</th><th class="n">전반기 11경기</th><th class="n">후반기 8경기</th><th class="n">변화</th></tr></thead>
+      <tbody>
+        <tr><td>득점 / 경기</td><td class="n">1.36</td><td class="n">2.12</td><td class="n up">+56%</td></tr>
+        <tr><td>파이널서드 활동</td><td class="n">175.1</td><td class="n">212.4</td><td class="n up">+21%</td></tr>
+        <tr><td>키패스</td><td class="n">8.64</td><td class="n">10.12</td><td class="n up">+17%</td></tr>
+        <tr><td>그중 왼쪽</td><td class="n">3.64</td><td class="n">4.50</td><td class="n up">+24%</td></tr>
+        <tr><td>슛</td><td class="n">11.45</td><td class="n">11.75</td><td class="n">+3%</td></tr>
+        <tr><td><b>슛당 xG</b></td><td class="n">0.114</td><td class="n">0.144</td><td class="n up">+26%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="body">
+    <p>눈여겨볼 것은 <strong>슛 개수가 거의 그대로</strong>라는 점이다(<span class="num">11.45</span> → <span class="num">11.75</span>). 늘어난 것은 슛의 질이다. 같은 횟수를 쏘면서 더 좋은 자리에서 쐈다. 그 「좋은 자리」가 정확히 어디인지는 슛 거리를 나눠 보면 드러난다.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">슛 거리 분포 — 전반기 vs 후반기</div>
+    <div class="figsub">경기당 슛 수 · 괄호 안은 그 구간의 슛당 xG</div>
+    <div class="legend">
+      <span><i style="background:var(--axis)"></i>전반기 R1–19</span>
+      <span><i style="background:var(--dj)"></i>후반기 R20–28</span>
+    </div>
+    <div class="dist">
+      <div class="dr"><div class="dl">~8m</div><div class="db">
+        <div class="bar" style="width:36.3%;background:var(--axis)">0.95 <span style="opacity:.75">(.259)</span></div>
+        <div class="bar" style="width:85.9%;background:var(--dj)">2.25 <span style="opacity:.75">(.372)</span></div></div><div></div></div>
+      <div class="dr"><div class="dl">8–12m</div><div class="db">
+        <div class="bar" style="width:66.4%;background:var(--axis)">1.74 <span style="opacity:.75">(.181)</span></div>
+        <div class="bar" style="width:100%;background:var(--dj)">2.62 <span style="opacity:.75">(.148)</span></div></div><div></div></div>
+      <div class="dr"><div class="dl">12–16m</div><div class="db">
+        <div class="bar" style="width:88.5%;background:var(--axis)">2.32 <span style="opacity:.75">(.132)</span></div>
+        <div class="bar" style="width:76.3%;background:var(--dj)">2.00 <span style="opacity:.75">(.099)</span></div></div><div></div></div>
+      <div class="dr"><div class="dl">16–20m</div><div class="db">
+        <div class="bar" style="width:96.6%;background:var(--axis)">2.53 <span style="opacity:.75">(.074)</span></div>
+        <div class="bar" style="width:66.8%;background:var(--dj)">1.75 <span style="opacity:.75">(.085)</span></div></div><div></div></div>
+      <div class="dr"><div class="dl">20–25m</div><div class="db">
+        <div class="bar" style="width:74.4%;background:var(--axis)">1.95 <span style="opacity:.75">(.050)</span></div>
+        <div class="bar" style="width:57.3%;background:var(--dj)">1.50 <span style="opacity:.75">(.054)</span></div></div><div></div></div>
+      <div class="dr"><div class="dl">25m+</div><div class="db">
+        <div class="bar" style="width:54.2%;background:var(--axis)">1.42 <span style="opacity:.75">(.021)</span></div>
+        <div class="bar" style="width:61.8%;background:var(--dj)">1.62 <span style="opacity:.75">(.021)</span></div></div><div></div></div>
+    </div>
+    <figcaption>12m 안쪽 슛이 2.69 → 4.87회로 81% 늘었고, 12–25m이 6.80 → 5.25회로 23% 줄었다. 25m 밖은 오히려 조금 늘었다 — 먼 슛을 참은 것이 아니라 가까운 슛이 생긴 것이다.</figcaption>
+  </figure>
+
+  <div class="body">
+    <p>이것이 「슛당 xG 상승」의 실체다. 대전이 무리한 중거리 슛을 자제한 것이 아니다. <span class="num">25</span>m 밖 슛은 오히려 <span class="num">1.42</span>에서 <span class="num">1.62</span>회로 늘었다. 바뀐 것은 <strong>골문 <span class="num">12</span>m 안쪽에서 쏠 기회가 <span class="num">81%</span> 늘었다</strong>는 것이다.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">원인</span><span class="cap">무엇이 바뀌었나</span></div>
+  <h2>영입은 없었다. 자리가 정해졌을 뿐이다</h2>
+  <div class="body">
+    <p>후반기에 출전이 크게 늘어난 선수들은 <strong>전원 R1부터 팀에 있던 선수</strong>다. 새로 온 사람은 없다. 바뀐 것은 그들이 <strong>매주 나오게 됐다</strong>는 것이다.</p>
+  </div>
+
+  <div class="tbl">
+    <table>
+      <thead><tr><th>선수</th><th class="n">전반기 출전</th><th class="n">후반기 출전</th><th class="n">풀타임(95분+) 비율</th></tr></thead>
+      <tbody>
+        <tr><td><span class="nm">이명재</span> <span class="no">(16)</span></td><td class="n">12 / 19</td><td class="n">8 / 8</td><td class="n up">42% → 88%</td></tr>
+        <tr><td><span class="nm">조성권</span> <span class="no">(4)</span></td><td class="n">13 / 19</td><td class="n">8 / 8</td><td class="n up">63% → 100%</td></tr>
+        <tr><td><span class="nm">안톤</span> <span class="no">(98)</span></td><td class="n">10 / 19</td><td class="n">7 / 8</td><td class="n up">47% → 63%</td></tr>
+        <tr><td><span class="nm">마사</span> <span class="no">(7)</span></td><td class="n">10 / 19</td><td class="n">8 / 8</td><td class="n">경기당 25.5 → 62.0분</td></tr>
+        <tr><td><span class="nm">주민규</span> <span class="no">(10)</span></td><td class="n">18 / 19</td><td class="n">8 / 8</td><td class="n">경기당 48.7 → 73.5분</td></tr>
+        <tr><td><span class="nm">엄원상</span> <span class="no">(11)</span></td><td class="n">8 / 19</td><td class="n">5 / 8</td><td class="n">경기당 18.9 → 44.2분</td></tr>
+        <tr><td colspan="4" style="background:var(--raise);font-size:12px;color:var(--muted);font-family:var(--mono)">같은 기간 사라진 선수 — 주앙 빅토르(77) 15경기→0 · 김민덕(3) 9→0 · 박규현(2) 7→0</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="body">
+    <p>왼쪽에서 벌어진 일이 특히 분명하다. 전반기에는 왼쪽 키패스를 <strong>다섯 명이 나눠 맡았고</strong> 1등이 <span class="num">27%</span>였다. 후반기에는 <strong>이명재(16) 한 명이 <span class="num">42%</span></strong>다.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">왼쪽 키패스는 누가 만드나 — 분산에서 집중으로</div>
+    <div class="figsub">좌측면 + 좌하프에서 나온 키패스의 선수별 구성</div>
+    <div class="stacklb">전반기 R1–19 · 경기당 3.37회</div>
+    <div class="stackrow">
+      <div style="width:27%;background:var(--lg)">서진수 27%</div>
+      <div style="width:16%;background:#4a7fc4">루빅손 16%</div>
+      <div style="width:14%;background:#6b96d0">이명재 14%</div>
+      <div style="width:8%;background:#8aacdb">이현식</div>
+      <div style="width:8%;background:#a5c1e4">박규현</div>
+      <div style="width:27%;background:var(--surface-2);color:var(--muted)">그 외 27%</div>
+    </div>
+    <div class="stacklb" style="margin-top:1.3em">후반기 R20–28 · 경기당 4.50회</div>
+    <div class="stackrow">
+      <div style="width:42%;background:var(--dj)">이명재(16) 42%</div>
+      <div style="width:14%;background:#c98a3a">서진수 14%</div>
+      <div style="width:14%;background:#d6a463">루빅손 14%</div>
+      <div style="width:8%;background:#e0bb8b">마사</div>
+      <div style="width:6%;background:#e9d0b0">주민규</div>
+      <div style="width:16%;background:var(--surface-2);color:var(--muted)">그 외</div>
+    </div>
+    <figcaption>양이 늘었을 뿐 아니라(3.37 → 4.50) 한 사람에게 모였다. 같은 자리에 같은 사람이 서면 상대도 알지만, 동료도 안다.</figcaption>
+  </figure>
+
+  <h3>키패스가 피치에서 이동했다</h3>
+  <div class="body">
+    <p>키패스가 나오는 위치를 <span class="num">5</span>레인 × <span class="num">3</span>구역으로 나눠 보면, 후반기에 무게가 <strong>중앙에서 양 측면으로</strong> 옮겨간 것이 보인다.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">키패스 발생 위치 — 경기당</div>
+    <div class="figsub">공격 방향은 위쪽 · 진한 칸일수록 많다 · 수비3은 양쪽 모두 0에 가까워 생략</div>
+    <div class="heatwrap">
+      <div>
+        <h4>전반기 R1–19</h4>
+        <div class="heat">
+          <div class="rl">공격3</div>
+          <div class="c" style="background:rgba(184,105,11,.26)">1.05</div>
+          <div class="c" style="background:rgba(184,105,11,.42)">1.68</div>
+          <div class="c" style="background:rgba(184,105,11,.36)">1.42</div>
+          <div class="c" style="background:rgba(184,105,11,.32)">1.26</div>
+          <div class="c" style="background:rgba(184,105,11,.33)">1.32</div>
+          <div class="rl">중앙3</div>
+          <div class="c" style="background:rgba(184,105,11,.08)">0.32</div>
+          <div class="c" style="background:rgba(184,105,11,.07)">0.26</div>
+          <div class="c" style="background:rgba(184,105,11,.12)">0.47</div>
+          <div class="c" style="background:rgba(184,105,11,.05)">0.21</div>
+          <div class="c" style="background:rgba(184,105,11,.01)">0.05</div>
+          <div class="rl"></div>
+          <div class="cl">좌측</div><div class="cl">좌하프</div><div class="cl">중앙</div><div class="cl">우하프</div><div class="cl">우측</div>
+        </div>
+      </div>
+      <div>
+        <h4>후반기 R20–28</h4>
+        <div class="heat">
+          <div class="rl">공격3</div>
+          <div class="c" style="background:rgba(184,105,11,.50)">2.00</div>
+          <div class="c" style="background:rgba(184,105,11,.38)">1.50</div>
+          <div class="c" style="background:rgba(184,105,11,.28)">1.12</div>
+          <div class="c" style="background:rgba(184,105,11,.38)">1.50</div>
+          <div class="c" style="background:rgba(184,105,11,.50)">2.00</div>
+          <div class="rl">중앙3</div>
+          <div class="c" style="background:rgba(184,105,11,.10)">0.38</div>
+          <div class="c" style="background:rgba(184,105,11,.16)">0.62</div>
+          <div class="c" style="background:rgba(184,105,11,.16)">0.62</div>
+          <div class="c" style="background:rgba(184,105,11,.03)">0.12</div>
+          <div class="c" style="background:rgba(184,105,11,.06)">0.25</div>
+          <div class="rl"></div>
+          <div class="cl">좌측</div><div class="cl">좌하프</div><div class="cl">중앙</div><div class="cl">우하프</div><div class="cl">우측</div>
+        </div>
+      </div>
+    </div>
+    <figcaption>좌측면 1.05→2.00 · 우측면 1.32→2.00 · 중앙 1.42→1.12. 양 끝이 진해지고 가운데가 옅어졌다. 무득점 경기에서 죽어 있던 쪽은 왼쪽이었지만, 되살아날 때는 양쪽이 함께 올라왔다.</figcaption>
+  </figure>
+
+  <h3>그리고 도착지도 함께 정해졌다</h3>
+  <div class="body">
+    <p>크로스는 받을 사람이 있어야 키패스가 된다. 후반기에는 박스 안에 서는 사람도 같이 고정됐다 — 경기당 <span class="num">0.25</span>회 이상 PA 안에서 쏘는 선수가 <span class="num">8</span>명에서 <span class="num">10</span>명으로 늘었고, PA내 슛 자체가 <span class="num">6.68</span>에서 <span class="num">8.50</span>회로 늘었다.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">크로스는 어디서 와서 어디서 슛이 되었나</div>
+    <div class="figsub">공격 진영 35m · 전·후반기 모두 만난 7개 팀 한정 (상대 통제)</div>
+    <svg viewBox="0 0 620 358" role="img" aria-label="왼쪽 측면에서 들어온 크로스가 후반기에 더 굵어지고, 슛이 나오는 평균 지점이 골문 쪽으로 2.7미터 당겨졌다">
+      <defs>
+        <marker id="ah1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+          <polygon points="0,1 9,5 0,9" fill="var(--axis)"/></marker>
+        <marker id="ah2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+          <polygon points="0,1 9,5 0,9" fill="var(--dj)"/></marker>
+      </defs>
+      <rect x="30" y="40" width="544" height="280" fill="none" stroke="var(--axis)" stroke-width="1.2"/>
+      <rect x="140.7" y="40" width="322.6" height="132" fill="none" stroke="var(--axis)" stroke-width="1"/>
+      <rect x="228.7" y="40" width="146.6" height="44" fill="none" stroke="var(--axis)" stroke-width="1"/>
+      <line x1="272.7" y1="40" x2="331.3" y2="40" stroke="var(--ink-2)" stroke-width="4"/>
+      <circle cx="302" cy="128" r="2.5" fill="var(--axis)"/>
+      <path d="M 218.9 88 Q 302 150.4 385.1 88" fill="none" stroke="var(--top)" stroke-width="1.4" stroke-dasharray="5 4"/>
+      <text class="sv-lb" x="302" y="146" text-anchor="middle" fill="var(--top)">12m</text>
+      <path d="M 198.8 99.6 Q 302 177.1 405.2 99.6" fill="none" stroke="var(--dj)" stroke-width="1.6"/>
+      <text class="sv-lb" x="416" y="103" fill="var(--dj)">후반기 평균 14.9m</text>
+      <path d="M 180.1 110.4 Q 302 201.9 423.9 110.4" fill="none" stroke="var(--axis)" stroke-width="1.4" stroke-dasharray="3 4"/>
+      <text class="sv-lb" x="434" y="114" fill="var(--muted)">전반기 평균 17.6m</text>
+      <rect x="30" y="150" width="70" height="120" fill="var(--dj)" opacity=".10"/>
+      <text class="sv-lb" x="65" y="285" text-anchor="middle">왼쪽 측면</text>
+      <path d="M 100 232 Q 178 176 248 152" fill="none" stroke="var(--axis)" stroke-width="3" marker-end="url(#ah1)"/>
+      <text class="sv-lb" x="163" y="252" fill="var(--muted)">전반기 12.00회 · 성공 22.7%</text>
+      <path d="M 100 206 Q 190 120 284 112" fill="none" stroke="var(--dj)" stroke-width="7" stroke-linecap="round" marker-end="url(#ah2)"/>
+      <text class="sv-nm" x="128" y="163" fill="var(--dj)">후반기 15.12회 · 성공 28.1%</text>
+      <circle cx="248" cy="152" r="4" fill="var(--axis)"/>
+      <circle cx="284" cy="112" r="5.5" fill="var(--dj)"/>
+      <text class="sv-lb" x="302" y="338" text-anchor="middle">크로스 직후 슛 경기당 1.91 → 3.12회 · 12m 안쪽 슛 2.69 → 4.87회 · 슛당 xG 0.114 → 0.144</text>
+    </svg>
+    <figcaption>굵은 선이 후반기다. 왼쪽에서 들어오는 크로스가 늘고 정확해지면서, 슛이 나오는 평균 지점이 17.6m에서 14.9m로 당겨졌다. 오른쪽 측면에서도 같은 방향의 변화가 있었다(키패스 1.32 → 2.00). 다섯 수치 전부 같은 상대 7개 팀에서 계산했다.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">경기</span><span class="cap">네 장면</span></div>
+  <h2>이 시즌을 데이터로 보여주는 네 경기</h2>
+  <div class="body">
+    <p>앞의 숫자들이 실제로 어떤 경기였는지, 네 경기로 좁힌다. 성적순이 아니라 <strong>이 글의 논지에 각각 대응하는</strong> 경기다.</p>
+  </div>
+
+  <div class="mcards">
+    <div class="mc">
+      <div class="hd"><span class="rd">R13</span><span class="op">포항 (홈)</span><span class="sc">0 – 2</span></div>
+      <div class="why"><b>「들어가는데 못 쏜다」의 극단.</b> 파이널서드 활동 <b>227회</b>로 시즌 최상위권인데 슛은 10개, 무득점. 크로스를 25번 올려 <b>2번</b> 맞혔고 왼쪽 키패스는 <b>1개</b>였다.</div>
+      <div class="kv">
+        <div><span class="k2">파이널서드</span><span class="v2">227</span></div>
+        <div><span class="k2">슛 / xG</span><span class="v2 mute">10 / 1.16</span></div>
+        <div><span class="k2">왼쪽 키패스</span><span class="v2">1</span></div>
+        <div><span class="k2">크로스 성공</span><span class="v2">2 / 25</span></div>
+      </div>
+    </div>
+
+    <div class="mc">
+      <div class="hd"><span class="rd">R7</span><span class="op">강원 (홈)</span><span class="sc">0 – 2</span></div>
+      <div class="why"><b>가장 멀리서만 쏜 경기.</b> 평균 슛 거리 <b>29.4m</b>로 시즌 최악, 슛당 xG <b>0.058</b>로 시즌 최저. 12m 안쪽 슛은 <b>1개</b>뿐이었다. 들어가지 못한 것이 아니라 들어가서 할 것이 없었다.</div>
+      <div class="kv">
+        <div><span class="k2">평균 슛 거리</span><span class="v2">29.4m</span></div>
+        <div><span class="k2">슛당 xG</span><span class="v2">0.058</span></div>
+        <div><span class="k2">12m 안쪽 슛</span><span class="v2">1</span></div>
+        <div><span class="k2">PA내 슛</span><span class="v2 mute">3</span></div>
+      </div>
+    </div>
+
+    <div class="mc">
+      <div class="hd"><span class="rd">R20</span><span class="op">김천 (원정)</span><span class="sc">2 – 3</span></div>
+      <div class="why"><b>전환이 시작된 경기. 그런데 졌다.</b> 크로스 직후 슛 <b>7개</b>로 시즌 최다, 평균 슛 거리 <b>12.0m</b>, xG 2.24. 만드는 방식이 바뀐 첫 경기이고 결과는 패배였다 — 과정과 결과는 따로 움직인다.</div>
+      <div class="kv">
+        <div><span class="k2">크로스 직후 슛</span><span class="v2">7</span></div>
+        <div><span class="k2">평균 슛 거리</span><span class="v2">12.0m</span></div>
+        <div><span class="k2">슛당 xG</span><span class="v2">0.187</span></div>
+        <div><span class="k2">xG</span><span class="v2 mute">2.24</span></div>
+      </div>
+    </div>
+
+    <div class="mc">
+      <div class="hd"><span class="rd">R24</span><span class="op">강원 (홈)</span><span class="sc">3 – 0</span></div>
+      <div class="why"><b>R7과 같은 상대, 완성된 형태.</b> 파이널서드 266회, xG <b>2.28</b>로 시즌 최고. 슛당 xG가 <b>0.058 → 0.190</b>으로 <b>3.3배</b>가 됐다. 같은 상대에게 같은 개수를 쏘고 전혀 다른 자리에서 쐈다.</div>
+      <div class="kv">
+        <div><span class="k2">파이널서드</span><span class="v2">266</span></div>
+        <div><span class="k2">xG</span><span class="v2">2.28</span></div>
+        <div><span class="k2">슛당 xG</span><span class="v2">0.190</span></div>
+        <div><span class="k2">R7 대비</span><span class="v2">3.3배</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="body">
+    <p>제주전도 같은 대조를 만든다. R9 홈에서 <span class="num">0-1</span>로 질 때 슛 9개에 xG <span class="num">0.61</span>, 평균 거리 <span class="num">18.4</span>m였다. R26 원정에서는 슛 10개에 xG <span class="num">1.96</span>, 평균 거리 <span class="num">10.5</span>m — <strong>거의 같은 개수를 쏘고 xG는 세 배</strong>였다. 결과는 <span class="num">1-3</span> 패배였지만 만든 것은 완전히 달랐다.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">반전</span><span class="cap">그런데 폼은 아니다</span></div>
+  <h2>개인이 살아난 것이 아니라 조합이 굳은 것이다</h2>
+  <div class="body">
+    <p>여기서 자연스러운 설명은 「꾸준히 뛰니 경기 감각이 올라왔다」이다. 그 설명을 검정해봤다.</p>
+    <p>K리그1 <strong>2024~2026 세 시즌, 12개 구단, 선수-경기 24,894행</strong>을 모아 <strong>같은 선수 안에서</strong> 비교했다. 직전 3라운드를 <span class="num">180</span>분 이상 뛴 상태로 맞은 경기와, <span class="num">120</span>분 미만으로 밀려 있다가 맞은 경기. 선수의 실력 차이는 자동으로 통제된다.</p>
+  </div>
+
+  <div class="note">
+    <b>결과 — 효과가 없다</b><br>
+    대상 <span class="num">493</span>건 · 패스 성공률 차이 평균 <b>+0.04%p</b> · 중앙값 −0.18%p ·
+    연속 출전 때 더 높은 비율 <b>243 / 493 (49.3%)</b> · <b>p = 0.75</b><br>
+    <span style="font-size:13px;color:var(--muted)">시즌별(2024 −0.29 / 2025 +0.62 / 2026 −0.28)로도, 포지션별(DF +0.07 / MF −0.21 / FW −0.01)로도 0 근처다. 6개 구단 72명에서 보이던 약한 신호는 표본을 넓히자 사라졌다.</span>
+  </div>
+
+  <div class="body">
+    <p>즉 <strong>개인의 패스가 정확해진 것이 아니다.</strong> 이명재(16)가 더 잘 차게 된 것이 아니라, 그가 매주 같은 자리에 있고 박스 안에 같은 사람들이 서 있게 되면서 <strong>크로스가 사람을 찾기 시작한 것</strong>이다.</p>
+    <p class="pull">폼은 개인에게 붙지 않았다. 연결에 붙었다.</p>
+    <p>이 구분은 실무적으로 다르다. 「선수들이 살아났다」면 기다리면 된다. 「조합이 굳었다」면 <strong>그 조합을 깨지 않는 것</strong>이 다음 할 일이 된다.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">한계</span><span class="cap">이 글이 틀릴 수 있는 지점</span></div>
+  <h2>네 가지</h2>
+  <ul class="clean">
+    <li><b>후반기 표본이 8경기다.</b> 상대를 통제해도 8경기는 8경기다. 세 경기만 다르게 흘렀어도 숫자는 움직인다.</li>
+    <li><b>인과의 방향을 완전히 닫지 못했다.</b> 자리가 정해져서 잘하게 된 것인지, 잘하니까 자리를 준 것인지. 후자라면 이 글의 순서는 뒤집힌다. 다만 이명재(16)의 전반기 부진은 짧게 뛴 경기에만 몰려 있지 않았다 — 풀타임을 소화한 R6·R13·R17·R19에서도 키패스는 <span class="num">0~1</span>이었다.</li>
+    <li><b>R27이 빠져 있다.</b> 9월 5일 부천전의 원시 이벤트가 포털에 아직 없다. 데이터셋은 R1~R26 + R28이며 라운드가 연속이 아니다.</li>
+    <li><b>이벤트 데이터는 볼을 만진 선수만 기록한다.</b> 박스 안에 몇 명이 서 있었는지, 어떻게 움직였는지는 세지 못한다. 「도착지가 정해졌다」는 PA내 슛 분포로 추정한 것이다.</li>
+  </ul>
+
+  <div class="body">
+    <p style="margin-top:2.4em">한 문장으로 남긴다면 이렇다. <strong>2026시즌 대전의 공격은 도착하는 능력이 아니라 도착한 뒤의 문제였고, 그 문제는 아홉 번의 무득점으로 나타났다가 R20 이후 사라졌다.</strong> 사라진 이유는 새 선수가 아니라, 측면에서 올라간 공이 드디어 사람을 찾기 시작했기 때문이다.</p>
+  </div>
+</section>
+
+<footer>
+  <b>데이터</b> K리그 데이터포털 이벤트 원본 · 2026 K리그1 R1~R26, R28 (27경기) · R27 미공개<br>
+  <b>리그 비교</b> 대전·광주·제주·전북·울산·포항 수집분을 경기번호로 중복 제거 · 125경기 180,359이벤트 · 12개 구단 전부 포함<br>
+  <b>연속성 검정</b> 2024~2026 K리그1 12개 구단 선수-경기 24,894행 · 선수 고정효과<br>
+  <b>검증</b> 경기기록부 ↔ 득점상황 27경기 전부 일치 · 좌표 정규화 양팀 100.0 · 포털 ST/RCV 오태깅 2건 복원(R22 주민규, R23 송민규)<br>
+  <b>표기</b> 선수 이름 옆 괄호는 등번호 · 피치 구역은 defensive / middle / final third · 키패스 = 슛으로 이어진 패스 · 슛 거리는 105×68m 환산
+</footer>
+
+</div>
+
+</body>
+</html>
