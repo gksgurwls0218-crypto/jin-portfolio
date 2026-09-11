@@ -1,6 +1,5 @@
 "use client";
 import Link from "@/components/LocaleLink";
-import { useState } from "react";
 import Reveal from "@/components/Reveal";
 import { type Locale } from "@/lib/i18n";
 import { useLocale } from "@/lib/useLocale";
@@ -274,24 +273,9 @@ const COPY = {
 
 function EpisodeRow({ ep }: { ep: Episode }) {
   const locale = useLocale();
-  const [hover, setHover] = useState(false);
   return (
-    <Link
-      href={`/match-analysis/data-series/${ep.slug}`}
-      className="relative flex items-start gap-4 md:gap-7 px-4 md:px-6 py-5 md:py-6 rounded-xl"
-      style={{
-        background: hover ? "var(--green-soft)" : "transparent",
-        borderBottom: "0.5px solid var(--green-line)",
-        transition: "background .4s var(--ease-out)",
-        cursor: "pointer",
-      }}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-    >
-      <span
-        className="display shrink-0 pt-0.5"
-        style={{ fontSize: 15, width: 30, letterSpacing: "-0.02em", color: hover ? "var(--green-bright)" : "var(--ink-4)", transition: "color .4s var(--ease-out)" }}
-      >
+    <Link href={`/match-analysis/data-series/${ep.slug}`} className="list-row">
+      <span className="lr-lead display shrink-0 pt-0.5" style={{ fontSize: 15, width: 30, letterSpacing: "-0.02em" }}>
         {ep.no}
       </span>
 
@@ -307,26 +291,11 @@ function EpisodeRow({ ep }: { ep: Episode }) {
           )}
         </div>
 
-        <h2
-          className="display"
-          style={{ fontSize: "clamp(19px,2vw,24px)", lineHeight: 1.22, letterSpacing: "-0.03em", color: hover ? "var(--green-bright)" : "var(--ink)", transition: "color .4s var(--ease-out)" }}
-        >
+        <h2 className="lr-title display" style={{ fontSize: "clamp(19px,2vw,24px)", lineHeight: 1.22, letterSpacing: "-0.03em" }}>
           {ep.title[locale]}
         </h2>
 
-        <p
-          className="mt-2"
-          style={{
-            fontSize: 13.5,
-            lineHeight: 1.62,
-            color: "var(--ink-3)",
-            maxWidth: 620,
-            display: "-webkit-box",
-            WebkitLineClamp: 2,
-            WebkitBoxOrient: "vertical",
-            overflow: "hidden",
-          }}
-        >
+        <p className="lr-clamp mt-2" style={{ fontSize: 13.5, lineHeight: 1.62, color: "var(--ink-3)", maxWidth: 620 }}>
           {ep.blurb[locale]}
         </p>
       </div>
@@ -340,12 +309,8 @@ function EpisodeRow({ ep }: { ep: Episode }) {
         ))}
       </div>
 
-      <span
-        className="mono shrink-0 self-center hidden sm:block"
-        style={{ fontSize: 13, color: hover ? "var(--green-bright)" : "var(--ink-4)", transform: hover ? "translateX(3px)" : "none", transition: "transform .4s var(--ease-out), color .4s var(--ease-out)" }}
-        aria-hidden
-      >
-        →
+      <span className="lr-arrow mono shrink-0 self-center hidden sm:block" style={{ fontSize: 13 }} aria-hidden>
+        &rarr;
       </span>
     </Link>
   );

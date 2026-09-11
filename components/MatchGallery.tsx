@@ -1,11 +1,8 @@
 "use client";
 import Link from "@/components/LocaleLink";
-import { useState } from "react";
 import Crest from "@/components/Crest";
-import MatchBoard from "@/components/match/MatchBoard";
-import GoalsSummary from "@/components/match/GoalsSummary";
 import Reveal from "@/components/Reveal";
-import { MATCHES, type GalleryMatch } from "@/lib/matchGallery";
+import { MATCHES, type GalleryMatch, type Side } from "@/lib/matchGallery";
 import { UI, type Locale } from "@/lib/i18n";
 import { useLocale } from "@/lib/useLocale";
 
@@ -14,8 +11,8 @@ const GALLERY_COPY = {
   title1: { en: "Theory applied to", ko: "이론을 경기에" },
   title2: { en: "matches analysed.", ko: "적용해 분석하다" },
   intro: {
-    en: "Each analysis states what the framework predicted, then reports what actually happened. Hover a match to see both line-ups — then step inside.",
-    ko: "각 분석은 프레임워크가 무엇을 예측했는지 밝힌 뒤, 실제로 무슨 일이 일어났는지 보고한다. 경기 위에 마우스를 올리면 양 팀 라인업이 보인다 — 그런 뒤 안으로 들어가 보라.",
+    en: "Each analysis states what the framework predicted, then reports what actually happened. Newest first — single matches, team reports and whole-tournament parses in one list.",
+    ko: "각 분석은 프레임워크가 무엇을 예측했는지 밝힌 뒤, 실제로 무슨 일이 일어났는지 보고한다. 최신순이며 단일 경기·팀 리포트·대회 전수 분석이 한 목록에 놓인다.",
   },
 } as const;
 
@@ -58,90 +55,67 @@ const GALLERY_CARDS: CardEntry[] = [
   })),
 ].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
 
+const MATCH_TAG = { en: "MATCH", ko: "경기 분석" } as const;
+
+/* 득점자 한 줄 — 카드 시절의 두 단 배치 대신 목록 행에 맞춘 압축 표기.
+   "Kvaratskhelia 24', 56' · Dembélé 45+5' (p)  —  Kane 17' (p) · Olise 41'" */
+function scorerLine(match: GalleryMatch, side: Side) {
+  const order: string[] = [];
+  const map: Record<string, string[]> = {};
+  match.goals.filter((g) => g.team === side).forEach((g) => {
+    if (!map[g.scorer]) { map[g.scorer] = []; order.push(g.scorer); }
+    map[g.scorer].push(`${g.minute}${g.plus ? `+${g.plus}` : ""}'${g.pen ? " (p)" : ""}`);
+  });
+  return order.map((n) => `${n} ${map[n].join(", ")}`).join(" · ");
+}
+
 function Row({ match }: { match: GalleryMatch }) {
-  const [hover, setHover] = useState(false);
   const locale = useLocale();
+  const home = scorerLine(match, "home");
+  const away = scorerLine(match, "away");
+  const goalless = match.home.score === 0 && match.away.score === 0;
+  const scorers = home || away
+    ? [home, away].filter(Boolean).join("  —  ")
+    : goalless ? (locale === "ko" ? "무득점 무승부" : "Goalless draw") : (locale === "ko" ? "득점자 미입력" : "Scorers to be added");
 
   return (
-    <Link
-      href={`/match-analysis/${match.slug}`}
-      className="relative flex flex-col lg:flex-row gap-6 rounded-[26px] p-8 md:p-10"
-      style={{
-        background: "var(--stage-3)",
-        border: `0.5px solid ${hover ? "var(--green-line)" : "var(--edge)"}`,
-        boxShadow: hover ? "var(--lift)" : "0 20px 50px rgba(0,0,0,0.35)",
-        transition: "border-color .5s var(--ease-out), box-shadow .5s var(--ease-out)",
-        minHeight: 300,
-        cursor: "pointer",
-      }}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-    >
-      {/* ── info card ── */}
-      <div
-        className="flex flex-col justify-between shrink-0"
-        style={{
-          flexBasis: hover ? "42%" : "100%",
-          transition: "flex-basis .55s var(--ease-out)",
-        }}
-      >
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-6">
-          <span className="mono" style={{ fontSize: 11, color: "var(--green-mid)", letterSpacing: "0.06em" }}>{match.competition}</span>
+    <Link href={`/match-analysis/${match.slug}`} className="list-row">
+      <div className="flex-1 min-w-0">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-1.5">
+          <span className="mono px-1.5 rounded-full shrink-0" style={{ fontSize: 8.5, letterSpacing: ".12em", border: "0.5px solid var(--green-line)", color: "var(--green-bright)" }}>
+            {MATCH_TAG[locale]}
+          </span>
           {match.featured && (
-            <span className="mono px-2 py-0.5 rounded-full" style={{ fontSize: 9, background: "var(--green-soft)", color: "var(--green-bright)", border: "0.5px solid var(--green-line)" }}>{UI.common.featured[locale]}</span>
+            <span className="mono px-1.5 rounded-full shrink-0" style={{ fontSize: 8.5, letterSpacing: ".12em", background: "var(--green-soft)", border: "0.5px solid var(--green-line)", color: "var(--green-bright)" }}>
+              {UI.common.featured[locale]}
+            </span>
           )}
-        </div>
-
-        {/* BIG SCORE — the dominant element */}
-        <div className="flex items-center gap-5 md:gap-7 mb-6">
-          <div className="flex flex-col items-center gap-2.5" style={{ width: 78 }}>
-            <Crest name={match.home.name} size={54} />
-            <span className="display text-center" style={{ fontSize: 14, color: "var(--ink)", lineHeight: 1.05 }}>{match.home.name}</span>
-          </div>
-          <div className="display flex items-center gap-3" style={{ color: "var(--ink)", letterSpacing: "-0.04em" }}>
-            <span style={{ fontSize: "clamp(52px,8vw,88px)", lineHeight: 1 }}>{match.home.score}</span>
-            <span style={{ fontSize: "clamp(30px,4vw,44px)", color: "var(--ink-4)", fontWeight: 400 }}>–</span>
-            <span style={{ fontSize: "clamp(52px,8vw,88px)", lineHeight: 1 }}>{match.away.score}</span>
-          </div>
-          <div className="flex flex-col items-center gap-2.5" style={{ width: 78 }}>
-            <Crest name={match.away.name} size={54} />
-            <span className="display text-center" style={{ fontSize: 14, color: "var(--ink)", lineHeight: 1.05 }}>{match.away.name}</span>
-          </div>
-        </div>
-
-        {/* meta + goals */}
-        <div className="flex flex-col gap-4">
-          <div className="flex flex-wrap gap-x-5 gap-y-1">
-            <span className="mono" style={{ fontSize: 11, color: "var(--ink-3)" }}>{match.date}</span>
-            <span className="mono" style={{ fontSize: 11, color: "var(--ink-4)" }}>{match.venue}</span>
-          </div>
-          <GoalsSummary match={match} />
-          <span
-            className="mono inline-flex items-center gap-1.5 w-fit mt-1"
-            style={{ fontSize: 12.5, color: "var(--green-mid)" }}
-          >
-            {UI.common.viewAnalysis[locale]}
-            <span style={{ transform: hover ? "translateX(4px)" : "none", transition: "transform .3s var(--ease-out)" }}>→</span>
+          <span className="mono truncate" style={{ fontSize: 10, letterSpacing: ".07em", color: "var(--ink-4)", maxWidth: "100%" }}>
+            {match.competition}
           </span>
         </div>
+
+        <h2 className="lr-title display flex flex-wrap items-center gap-x-2.5 gap-y-1" style={{ fontSize: "clamp(19px,2vw,24px)", lineHeight: 1.22, letterSpacing: "-0.03em" }}>
+          <Crest name={match.home.name} size={22} />
+          <span>{match.home.name}</span>
+          <span style={{ fontVariantNumeric: "tabular-nums" }}>{match.home.score}&ndash;{match.away.score}</span>
+          <span>{match.away.name}</span>
+          <Crest name={match.away.name} size={22} />
+        </h2>
+
+        <p className="lr-clamp mt-2" style={{ fontSize: 13.5, lineHeight: 1.62, color: "var(--ink-3)", maxWidth: 620 }}>
+          {scorers}
+        </p>
       </div>
 
-      {/* ── tactical board (slides out on hover) ── */}
-      <div
-        className="hidden lg:block overflow-hidden"
-        style={{
-          flexBasis: hover ? "58%" : "0%",
-          opacity: hover ? 1 : 0,
-          transform: hover ? "translateX(0)" : "translateX(24px)",
-          transition: "flex-basis .55s var(--ease-out), opacity .45s var(--ease-out), transform .55s var(--ease-out)",
-          minHeight: 236,
-        }}
-        aria-hidden={!hover}
-      >
-        <div style={{ height: "100%", minHeight: 236 }}>
-          <MatchBoard match={match} />
-        </div>
+      <div className="hidden lg:flex flex-col gap-1.5 shrink-0 self-center" style={{ width: 186 }}>
+        <span className="mono block" style={{ fontSize: 11, color: "var(--ink-2)" }}>{match.date}</span>
+        <span className="mono block" style={{ fontSize: 9, lineHeight: 1.45, letterSpacing: ".08em", color: "var(--ink-4)" }}>{match.venue}</span>
       </div>
+
+      <span className="lr-arrow mono shrink-0 self-center hidden sm:block" style={{ fontSize: 13 }} aria-hidden>
+        &rarr;
+      </span>
     </Link>
   );
 }
@@ -156,6 +130,10 @@ const TOURNAMENT_COPY = {
     en: "The barren game model loses. Every official FIFA post-match report of the tournament, parsed in full — 208 team-matches — and read back against variation theory. Including the three measures of mine that failed.",
     ko: "무력한 게임 모델이 진다. 대회 FIFA 공식 경기 리포트 전수 파싱 — 208 팀-경기 — 을 변이 이론에 되비춰 읽었다. 실패한 내 지표 세 개까지 그대로.",
   },
+  blurb: {
+    en: "The barren game model loses, not the underdog. All 104 matches and 208 team-matches of official FIFA post-match data, read back against variation theory.",
+    ko: "약팀이 지는 게 아니라 무력한 게임 모델이 진다. FIFA 공식 리포트 104경기·208 팀-경기 전수를 변이 이론에 되비춰 읽었다.",
+  },
   stats: {
     en: [["0 / 15", "barren reactive, knockouts"], ["88.9%", "productive reactive"], ["86.2%", "xG picks the winner"], ["104", "matches parsed"]],
     ko: [["15전 0승", "무력한 반응형 (녹아웃)"], ["88.9%", "생산적 반응형 승률"], ["86.2%", "xG의 승자 적중률"], ["104", "전 경기 파싱"]],
@@ -164,49 +142,39 @@ const TOURNAMENT_COPY = {
 
 function TournamentRow() {
   const locale = useLocale();
-  const [hover, setHover] = useState(false);
   return (
-    <Link
-      href="/match-analysis/wc2026-report"
-      className="relative flex flex-col lg:flex-row gap-8 rounded-[26px] p-8 md:p-10"
-      style={{
-        background: "var(--green)",
-        color: "var(--signal-ink)",
-        border: `0.5px solid ${hover ? "var(--signal-edge)" : "transparent"}`,
-        boxShadow: hover ? "var(--lift)" : "0 20px 50px rgba(0,0,0,0.35)",
-        transition: "box-shadow .5s var(--ease-out), border-color .5s var(--ease-out)",
-        cursor: "pointer",
-      }}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-    >
-      <div className="flex-1">
-        <div className="flex flex-wrap items-center gap-3 mb-6">
-          <span className="mono px-2 py-0.5 rounded-full" style={{ fontSize: 9, letterSpacing: ".14em", border: "0.5px solid var(--signal-edge)", color: "var(--signal-ink-2)" }}>
+    <Link href="/match-analysis/wc2026-report" className="list-row">
+      <div className="flex-1 min-w-0">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-1.5">
+          <span className="mono px-1.5 rounded-full shrink-0" style={{ fontSize: 8.5, letterSpacing: ".12em", border: "0.5px solid var(--green-line)", color: "var(--green-bright)" }}>
             {TOURNAMENT_COPY.tag[locale]}
           </span>
-          <span className="mono" style={{ fontSize: 11, color: "var(--signal-ink-3)", letterSpacing: "0.06em" }}>
+          <span className="mono truncate" style={{ fontSize: 10, letterSpacing: ".07em", color: "var(--ink-4)", maxWidth: "100%" }}>
             {TOURNAMENT_COPY.competition[locale]}
           </span>
         </div>
-        <h2 className="display mb-4" style={{ fontSize: "clamp(28px,4vw,46px)", lineHeight: 1.08, letterSpacing: "-0.035em" }}>
+
+        <h2 className="lr-title display" style={{ fontSize: "clamp(19px,2vw,24px)", lineHeight: 1.22, letterSpacing: "-0.03em" }}>
           {TOURNAMENT_COPY.title[locale]}
         </h2>
-        <p style={{ fontSize: 15.5, lineHeight: 1.68, color: "var(--signal-ink-2)", maxWidth: 560 }}>
-          {TOURNAMENT_COPY.sub[locale]}
+
+        <p className="lr-clamp mt-2" style={{ fontSize: 13.5, lineHeight: 1.62, color: "var(--ink-3)", maxWidth: 620 }}>
+          {TOURNAMENT_COPY.blurb[locale]}
         </p>
-        <span className="mono inline-block mt-7" style={{ fontSize: 11.5, letterSpacing: ".14em", color: "var(--signal-ink)", borderBottom: "1px solid var(--signal-edge)", paddingBottom: 3 }}>
-          {UI.common.viewAnalysis[locale].toUpperCase()} →
-        </span>
       </div>
-      <div className="grid grid-cols-2 gap-x-8 gap-y-6 shrink-0 self-center" style={{ minWidth: 240 }}>
-        {TOURNAMENT_COPY.stats[locale].map(([big, label]) => (
-          <div key={label} className="pt-3" style={{ borderTop: "0.5px solid var(--signal-edge)" }}>
-            <span className="display block" style={{ fontSize: 26, letterSpacing: "-0.03em" }}>{big}</span>
-            <span className="mono block mt-1" style={{ fontSize: 9.5, letterSpacing: ".12em", color: "var(--signal-ink-3)" }}>{label}</span>
+
+      <div className="hidden lg:flex flex-col gap-3 shrink-0 self-center" style={{ width: 186 }}>
+        {TOURNAMENT_COPY.stats[locale].slice(0, 2).map(([big, label]) => (
+          <div key={label}>
+            <span className="display block" style={{ fontSize: 15, letterSpacing: "-0.02em", color: "var(--ink-2)" }}>{big}</span>
+            <span className="mono block" style={{ fontSize: 8.5, lineHeight: 1.45, letterSpacing: ".1em", color: "var(--ink-4)" }}>{label}</span>
           </div>
         ))}
       </div>
+
+      <span className="lr-arrow mono shrink-0 self-center hidden sm:block" style={{ fontSize: 13 }} aria-hidden>
+        &rarr;
+      </span>
     </Link>
   );
 }
@@ -221,6 +189,8 @@ type ReportCopy = {
   competition: Record<Locale, string>;
   title: Record<Locale, string>;
   sub: Record<Locale, string>;
+  /** 목록에서 보이는 두 줄 요약. sub는 상세용으로 남겨둔다. */
+  blurb: Record<Locale, string>;
   stats: Record<Locale, readonly ReportStat[]>;
 };
 
@@ -232,6 +202,10 @@ const REPORTS: Record<"korea-jordan" | "suwon-cross-shot" | "wc2022-2026-champio
     sub: {
       en: "This began as an attempt to sort Seoul's opponents into high, mid and low blocks, and it failed — across 17 rematches the within-team correlation of block height is negative. Ulsan set the second-highest block in the league in March and one of the lowest in August. What survives the failure is a direction: 8 of 11 teams dropped their block for the return fixture, the expected goal Seoul get from each ball played into the centre of the box fell 30% over the second half of the season, and their points per game went up anyway.",
       ko: "상대를 하이·미들·로우 블록으로 분류하려다 실패한 기록이다 — 재대결 17쌍의 팀 내 상관이 음수로 나왔다. 울산은 3월에 리그에서 두 번째로 높은 블록을 섰고 8월에 리그 최저에 가까운 블록을 섰다. 실패에서 남은 것은 방향이다. 11팀 중 8팀이 재대결에서 블록을 낮췄고, 서울이 골문 앞 중앙에 공을 한 번 보낼 때 얻는 기대득점은 시즌 후반에 30% 줄었고, 그런데도 경기당 승점은 오히려 올랐다.",
+    },
+    blurb: {
+      en: "An attempt to sort Seoul's opponents into high, mid and low blocks that failed outright. What survives is a direction: 8 of 11 teams dropped their block, and Seoul's points went up anyway.",
+      ko: "상대를 하이·미들·로우 블록으로 분류하려다 실패한 기록이다. 남은 것은 방향이다 — 11팀 중 8팀이 재대결에서 블록을 낮췄고, 서울의 승점은 오히려 올랐다.",
     },
     stats: {
       en: [["r = −0.280", "within-team, across rematches"], ["8 of 11", "teams dropped their block"], ["−30%", "xG per delivery, R14-25"], ["2.00 → 2.08", "points per game"]],
@@ -246,6 +220,10 @@ const REPORTS: Record<"korea-jordan" | "suwon-cross-shot" | "wc2022-2026-champio
       en: "Seoul deliver into the central cell in front of goal 72% of the time; their opponents 69%. The xG each delivery produces is identical to three decimals. Yet ranking the 25 matches by that value puts ten straight wins at the top and six goals in ten matches at the bottom — and the side that delivered more scored less. I tested every attribute the event data holds and none of them separates the two groups. The piece ends where the data stops, with a way to measure what is missing.",
       ko: "서울이 골문 앞 중앙에 공을 넣는 비율은 72%, 상대 11개 팀은 69%다. 도착 한 번이 만드는 기대득점은 소수점 셋째 자리까지 같다. 그런데 그 값으로 25경기를 줄 세우면 상위 열 경기가 전승, 하위 열 경기가 열 경기에 여섯 골이고 — 배달을 더 많이 한 쪽이 골은 더 적었다. 이벤트 데이터의 모든 속성을 넣어봤지만 그 차이를 설명하는 것은 없었다. 데이터가 멈춘 지점에서 글을 닫고, 무엇을 더 재야 하는지를 적었다.",
     },
+    blurb: {
+      en: "Seoul and their opponents deliver into the same cell in front of goal at almost the same rate, for the same xG. Rank the 25 matches by it and the top ten are all wins.",
+      ko: "서울과 상대는 골문 앞 중앙에 거의 같은 비율로, 같은 기대득점으로 공을 넣는다. 그 값으로 25경기를 줄 세우면 상위 열 경기가 전승이다.",
+    },
     stats: {
       en: [["72% / 69%", "Seoul vs opponents into zone 17"], ["10-0-0", "top ten by xG per delivery"], ["4×", "outcome gap, attributes identical"], ["7", "of my own errors corrected"]],
       ko: [["72% / 69%", "서울 대 상대 · zone 17 도착률"], ["10승 0무 0패", "배달당 xG 상위 10경기"], ["4배", "속성은 같고 결과만 다름"], ["7건", "스스로 고친 내 오류"]],
@@ -258,6 +236,10 @@ const REPORTS: Record<"korea-jordan" | "suwon-cross-shot" | "wc2022-2026-champio
     sub: {
       en: "A revision of my own report. I pulled 279 shot coordinates off the league’s chalk boards and re-read 23 pass matrices, and three of my conclusions did not survive it — the leak has two cut points rather than one, the route I named as the cause had already corrected itself over the season, and the 554 crosses I built the argument on included set pieces. Every Suwon figure comes from the K League Data Portal alone.",
       ko: "내 리포트를 내가 고친다. 경기 기록판에서 슛 좌표 279개를 직접 뽑고 패스 매트릭스 23경기를 다시 읽었더니, 지난 결론 세 개가 살아남지 못했다 — 결손 구간의 절단면은 하나가 아니라 둘이고, 원인으로 지목한 경로는 이미 스스로 고쳐지고 있었으며, 논거로 삼은 크로스 554회에는 세트피스가 섞여 있었다. 수원에 관한 모든 수치는 K리그 데이터포털 하나에서만 가져왔다.",
+    },
+    blurb: {
+      en: "A revision of my own report. After 279 shot coordinates and 23 pass matrices, three of my earlier conclusions did not survive.",
+      ko: "내 리포트를 내가 고친다. 슛 좌표 279개와 패스 매트릭스 23경기를 다시 읽었더니 지난 결론 세 개가 살아남지 못했다.",
     },
     stats: {
       en: [["279", "shot coordinates extracted"], ["2", "cut points, not one"], ["r = −0.78", "back-route share vs round"], ["3", "of my own conclusions corrected"]],
@@ -272,6 +254,10 @@ const REPORTS: Record<"korea-jordan" | "suwon-cross-shot" | "wc2022-2026-champio
       en: "The club that crosses more than anyone in K League 2 ranks 6th for goals. Twelve figures locate the leak in one phase and set out what to change in front of it — two tactical boards for the hook, a ribbon narrowing through four multiplying gates, league gaps drawn as circles on a real pitch. Each carries the sample it rests on.",
       ko: "리그에서 크로스를 가장 많이 올리는 팀이 득점 6위다. 그림 12종으로 결손 구간을 한 곳으로 좁히고, 그 앞의 무엇을 바꿔야 하는지까지 간다 — 훅을 여는 전술판 두 장, 네 관문을 곱하며 좁아지는 리본, 실제 경기장 위에 원으로 올린 리그 간 격차. 그림마다 근거가 된 표본을 함께 적었다.",
     },
+    blurb: {
+      en: "The club that crosses more than anyone in K League 2 ranks sixth for goals. Twelve figures narrow the leak to one phase and set out what to change in front of it.",
+      ko: "리그에서 크로스를 가장 많이 올리는 팀이 득점 6위다. 그림 12종으로 결손 구간을 한 곳으로 좁히고, 그 앞의 무엇을 바꿔야 하는지까지 간다.",
+    },
     stats: {
       en: [["12", "figures across eight acts"], ["49.1%", "cross → shot (Europe 71.6%)"], ["2.94×", "K1 ÷ K2, midfield centre"], ["13", "hypotheses logged as refuted"]],
       ko: [["12종", "8막에 들어가는 그림"], ["49.1%", "크로스 → 슈팅 (유럽 71.6%)"], ["2.94배", "K1 ÷ K2, 중원 중앙"], ["13건", "반증 기록에 올린 가설"]],
@@ -284,6 +270,10 @@ const REPORTS: Record<"korea-jordan" | "suwon-cross-shot" | "wc2022-2026-champio
     sub: {
       en: "Two claims tested in order. Penetration halved — and shots went up. What changed was not the runs in front but the pressing behind them. Every figure marked for what is measured and what is assumed.",
       ko: "두 개의 가설을 순서대로 검증했다. 침투는 반토막 났는데 슈팅은 늘었다. 바뀐 것은 앞선의 침투가 아니라 상대의 압박이었다. 확정된 수치와 가정을 그림마다 구분해 표시했다.",
+    },
+    blurb: {
+      en: "Two claims tested in order. Penetration halved and shots went up — what changed was not the runs in front but the pressing behind them.",
+      ko: "두 개의 가설을 순서대로 검증했다. 침투는 반토막 났는데 슈팅은 늘었다. 바뀐 것은 앞선의 침투가 아니라 상대의 압박이었다.",
     },
     stats: {
       en: [["164 → 81", "runs in behind"], ["14 → 22", "shots"], ["42 → 25", "CB circulation"], ["14 / 6 / 16", "A–B–A shots"]],
@@ -298,6 +288,10 @@ const REPORTS: Record<"korea-jordan" | "suwon-cross-shot" | "wc2022-2026-champio
       en: "League leaders with the best defence, yet the fewest goals of the top six. Set against 96 Big 5 clubs, the gap narrows to one phase — crosses that never become shots. The Cross Freedom model (Z×F×A) sets out what decides it, with the context T marked as still in development.",
       ko: "리그 1위이자 최소 실점 팀인데 상위 6팀 중 득점이 가장 적다. 유럽 5대리그 96팀과 대조하면 차이가 나는 구간은 하나로 좁혀진다 — 슈팅이 되지 못하는 크로스. 자유 크로스도(Z×F×A)로 무엇이 그것을 가르는지 정리하고, 맥락 T는 개발 중임을 명시했다.",
     },
+    blurb: {
+      en: "League leaders with the best defence and the fewest goals of the top six. Against 96 Big 5 clubs the gap narrows to one phase — crosses that never become shots.",
+      ko: "리그 1위이자 최소 실점 팀인데 상위 6팀 중 득점이 가장 적다. 유럽 96팀과 대조하면 차이는 한 구간으로 좁혀진다 — 슈팅이 되지 못하는 크로스.",
+    },
     stats: {
       en: [["49.1%", "cross → shot (Europe 71.6%)"], ["2.04", "crosses ÷ shots"], ["r = −0.68", "ratio vs goals, 96 clubs"], ["34.9%", "shots on target — hold"]],
       ko: [["49.1%", "크로스 → 슈팅 (유럽 71.6%)"], ["2.04", "크로스 ÷ 슈팅"], ["r = −0.68", "비율과 득점, 96팀"], ["34.9%", "유효슛 비율 — 유지"]],
@@ -311,6 +305,10 @@ const REPORTS: Record<"korea-jordan" | "suwon-cross-shot" | "wc2022-2026-champio
       en: "FIFA changed the ruler between the two tournaments — so the raw numbers are dropped for tournament-relative z-scores. The team that ran more lost in 2022; the team that pressed more lost in 2026. Six robustness checks, and the one conclusion that failed them is corrected in the text.",
       ko: "두 대회 사이에 FIFA가 자를 바꿨다 — 그래서 원값을 버리고 대회 내 z-score로 비교했다. 2022에 진 팀은 많이 뛴 팀이고, 2026에 진 팀은 많이 압박한 팀이다. 검증 6종을 돌렸고, 통과하지 못한 결론 하나는 본문에서 그대로 수정했다.",
     },
+    blurb: {
+      en: "FIFA changed the ruler between the two tournaments, so the raw numbers go. The team that ran more lost in 2022; the team that pressed more lost in 2026.",
+      ko: "두 대회 사이에 FIFA가 자를 바꿨다 — 원값을 버리고 대회 내 z-score로 비교했다. 2022에 진 팀은 많이 뛴 팀이고, 2026에 진 팀은 많이 압박한 팀이다.",
+    },
     stats: {
       en: [["81.8%", "2022 knockouts — the team that ran less won"], ["11.5%", "2026 heaviest pressers, win rate"], ["4 / 4", "finalists whose ace walked most"], ["168", "matches parsed"]],
       ko: [["81.8%", "2022 녹아웃 · 덜 뛴 팀 승리"], ["11.5%", "2026 최다 압박 4분위 승률"], ["4 / 4", "결승 진출팀 에이스가 걷기 최상위"], ["168", "전 경기 파싱"]],
@@ -322,49 +320,40 @@ type ReportId = keyof typeof REPORTS;
 
 function ReportRow({ id }: { id: ReportId }) {
   const locale = useLocale();
-  const [hover, setHover] = useState(false);
-  const REPORT_COPY = REPORTS[id];
+  const c = REPORTS[id];
   return (
-    <Link
-      href={`/match-analysis/${id}`}
-      className="relative flex flex-col lg:flex-row gap-8 rounded-[26px] p-8 md:p-10"
-      style={{
-        background: "var(--green-soft)",
-        border: `0.5px solid ${hover ? "var(--green-bright)" : "var(--green-line)"}`,
-        boxShadow: hover ? "var(--lift)" : "none",
-        transition: "box-shadow .5s var(--ease-out), border-color .5s var(--ease-out)",
-        cursor: "pointer",
-      }}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-    >
-      <div className="flex-1">
-        <div className="flex flex-wrap items-center gap-3 mb-6">
-          <span className="mono px-2 py-0.5 rounded-full" style={{ fontSize: 9, letterSpacing: ".14em", border: "0.5px solid var(--green-line)", color: "var(--green-bright)" }}>
-            {REPORT_COPY.tag[locale]}
+    <Link href={`/match-analysis/${id}`} className="list-row">
+      <div className="flex-1 min-w-0">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-1.5">
+          <span className="mono px-1.5 rounded-full shrink-0" style={{ fontSize: 8.5, letterSpacing: ".12em", border: "0.5px solid var(--green-line)", color: "var(--green-bright)" }}>
+            {c.tag[locale]}
           </span>
-          <span className="mono" style={{ fontSize: 11, color: "var(--ink-3)", letterSpacing: "0.06em" }}>
-            {REPORT_COPY.competition[locale]}
+          <span className="mono truncate" style={{ fontSize: 10, letterSpacing: ".07em", color: "var(--ink-4)", maxWidth: "100%" }}>
+            {c.competition[locale]}
           </span>
         </div>
-        <h2 className="display mb-4" style={{ fontSize: "clamp(26px,3.4vw,40px)", lineHeight: 1.1, letterSpacing: "-0.035em", color: "var(--ink)" }}>
-          {REPORT_COPY.title[locale]}
+
+        <h2 className="lr-title display" style={{ fontSize: "clamp(19px,2vw,24px)", lineHeight: 1.22, letterSpacing: "-0.03em" }}>
+          {c.title[locale]}
         </h2>
-        <p style={{ fontSize: 15.5, lineHeight: 1.68, color: "var(--ink-2)", maxWidth: 560 }}>
-          {REPORT_COPY.sub[locale]}
+
+        <p className="lr-clamp mt-2" style={{ fontSize: 13.5, lineHeight: 1.62, color: "var(--ink-3)", maxWidth: 620 }}>
+          {c.blurb[locale]}
         </p>
-        <span className="mono inline-block mt-7" style={{ fontSize: 11.5, letterSpacing: ".14em", color: "var(--green-bright)", borderBottom: "1px solid var(--green-line)", paddingBottom: 3 }}>
-          {UI.common.viewAnalysis[locale].toUpperCase()} →
-        </span>
       </div>
-      <div className="grid grid-cols-2 gap-x-8 gap-y-6 shrink-0 self-center" style={{ minWidth: 240 }}>
-        {REPORT_COPY.stats[locale].map(([big, label]) => (
-          <div key={label} className="pt-3" style={{ borderTop: "0.5px solid var(--green-line)" }}>
-            <span className="display block" style={{ fontSize: 22, letterSpacing: "-0.03em", color: "var(--ink)" }}>{big}</span>
-            <span className="mono block mt-1" style={{ fontSize: 9.5, letterSpacing: ".12em", color: "var(--ink-3)" }}>{label}</span>
+
+      <div className="hidden lg:flex flex-col gap-3 shrink-0 self-center" style={{ width: 186 }}>
+        {c.stats[locale].slice(0, 2).map(([big, label]) => (
+          <div key={label}>
+            <span className="display block" style={{ fontSize: 15, letterSpacing: "-0.02em", color: "var(--ink-2)" }}>{big}</span>
+            <span className="mono block" style={{ fontSize: 8.5, lineHeight: 1.45, letterSpacing: ".1em", color: "var(--ink-4)" }}>{label}</span>
           </div>
         ))}
       </div>
+
+      <span className="lr-arrow mono shrink-0 self-center hidden sm:block" style={{ fontSize: 13 }} aria-hidden>
+        &rarr;
+      </span>
     </Link>
   );
 }
@@ -380,14 +369,14 @@ export default function MatchGallery() {
             {GALLERY_COPY.title1[locale]}<br />
             <span style={{ color: "var(--green-bright)" }}>{GALLERY_COPY.title2[locale]}</span>
           </h1>
-          <p className="mb-20" style={{ color: "var(--ink-2)", fontSize: "clamp(16px,1.6vw,19px)", lineHeight: 1.6, maxWidth: 640 }}>
+          <p className="mb-14" style={{ color: "var(--ink-2)", fontSize: "clamp(16px,1.6vw,19px)", lineHeight: 1.6, maxWidth: 640 }}>
             {GALLERY_COPY.intro[locale]}
           </p>
         </Reveal>
 
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col" style={{ borderTop: "0.5px solid var(--green-line)" }}>
           {GALLERY_CARDS.map((c, i) => (
-            <Reveal key={c.key} delay={i * 80}>
+            <Reveal key={c.key} delay={i * 40}>
               {c.kind === "tournament" ? <TournamentRow />
                 : c.kind === "report" ? <ReportRow id={c.key as ReportId} />
                 : <Row match={c.match} />}
