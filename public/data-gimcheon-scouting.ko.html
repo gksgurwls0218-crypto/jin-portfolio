@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>김천상무 공략 — 상대 분석 리포트 | 한혁진</title>
+<meta name="description" content="29경기에서 4승 18무 7패. 비기는 팀이지 무너지는 팀이 아니다. 공략 지점은 오픈플레이가 아니라 멈춘 공, 그리고 그들이 앞서 있는 시간에 있다. K리그 데이터포털 원시 이벤트 41,879건에서 뽑은 경기 전 브리핑.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light;
+  --page:#f1f1ef; --surface:#fcfcfb; --surface-2:#e4e4e1; --raise:#f7f7f5;
+  --ink:#141413; --ink-2:#3c3c3a; --muted:#70706c;
+  --line:rgba(20,20,19,.14); --line-2:rgba(20,20,19,.07);
+  --grid:#e0e0dd; --axis:#c2c2be;
+  --kc:#a32b36; --lg:#2f6fa8; --top:#0e7c52; --bad:#8a1f27;
+  --kc-soft:rgba(163,43,54,.11); --lg-soft:rgba(47,111,168,.11);
+  --top-soft:rgba(14,124,82,.11); --bad-soft:rgba(138,31,39,.10);
+  --sp:clamp(18px,4.5vw,30px);
+  --disp:"Hahmlet",'Nanum Myeongjo',serif;
+  --body:"IBM Plex Sans KR",-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,'SFMono-Regular',monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --page:#121211; --surface:#1a1a19; --surface-2:#262624; --raise:#1f1f1e;
+    --ink:#eaeae7; --ink-2:#b8b8b4; --muted:#8d8d89;
+    --line:rgba(234,234,231,.16); --line-2:rgba(234,234,231,.08);
+    --grid:#2d2d2b; --axis:#4a4a47;
+    --kc:#d9555f; --lg:#4e90cc; --top:#17a077; --bad:#e8737c;
+    --kc-soft:rgba(217,85,95,.16); --lg-soft:rgba(78,144,204,.15);
+    --top-soft:rgba(23,160,119,.15); --bad-soft:rgba(232,115,124,.14);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --page:#121211; --surface:#1a1a19; --surface-2:#262624; --raise:#1f1f1e;
+  --ink:#eaeae7; --ink-2:#b8b8b4; --muted:#8d8d89;
+  --line:rgba(234,234,231,.16); --line-2:rgba(234,234,231,.08);
+  --grid:#2d2d2b; --axis:#4a4a47;
+  --kc:#d9555f; --lg:#4e90cc; --top:#17a077; --bad:#e8737c;
+  --kc-soft:rgba(217,85,95,.16); --lg-soft:rgba(78,144,204,.15);
+  --top-soft:rgba(23,160,119,.15); --bad-soft:rgba(232,115,124,.14);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font-family:var(--body);
+  word-break:keep-all;overflow-wrap:break-word;
+  font-weight:400;font-size:16px;line-height:1.72;-webkit-font-smoothing:antialiased}
+.wrap{max-width:940px;margin:0 auto;padding-inline:var(--sp);padding-block:0}
+p{margin:0 0 1.05em}
+strong{font-weight:600;color:var(--ink)}
+em{font-style:normal;background:var(--kc-soft);padding:.06em .3em;border-radius:2px;font-weight:500}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums;font-weight:500;letter-spacing:-.01em}
+
+/* ── header ── */
+header{padding-block:clamp(48px,9vw,88px) clamp(30px,5vw,44px);border-bottom:1px solid var(--line)}
+.badge{display:inline-flex;align-items:center;gap:.55em;font-family:var(--mono);font-size:11px;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--kc);font-weight:500}
+.badge::before{content:"";width:22px;height:2px;background:var(--kc)}
+h1{font-family:var(--disp);font-weight:600;font-size:clamp(38px,8.6vw,68px);line-height:1.06;
+  letter-spacing:-.025em;margin:.34em 0 .3em;text-wrap:balance}
+.dek{font-family:var(--disp);font-weight:400;font-size:clamp(17px,2.5vw,21px);line-height:1.55;
+  color:var(--ink-2);max-width:34em;margin:0 0 1.5em}
+.meta{display:flex;flex-wrap:wrap;gap:.5em 0;font-family:var(--mono);font-size:11.5px;
+  color:var(--muted);letter-spacing:.02em}
+.meta span+span::before{content:"|";padding:0 .85em;color:var(--axis)}
+
+/* ── tiles ── */
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line-2);
+  border-block:1px solid var(--line);margin-block:0}
+@media(max-width:760px){.tiles{grid-template-columns:repeat(2,1fr)}}
+.tile{background:var(--page);padding:clamp(16px,3vw,24px) clamp(12px,2.4vw,20px);display:flex;
+  flex-direction:column;gap:.3em}
+.tile .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.tile .v{font-family:var(--disp);font-weight:600;font-size:clamp(26px,4.6vw,38px);line-height:1;
+  letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.tile .v.gj{color:var(--kc)} .tile .v.bad{color:var(--bad)}
+.tile .s{font-size:12.5px;line-height:1.45;color:var(--ink-2)}
+
+/* ── sections ── */
+section{padding-block:clamp(40px,7vw,68px);border-bottom:1px solid var(--line-2)}
+section:last-of-type{border-bottom:none}
+.eyebrow{display:flex;align-items:baseline;gap:.9em;margin-bottom:.9em}
+.eyebrow .role{font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--page);background:var(--ink-2);padding:.35em .7em;border-radius:2px;white-space:nowrap}
+.eyebrow .cap{font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--muted)}
+h2{font-family:var(--disp);font-weight:600;font-size:clamp(25px,4.4vw,37px);line-height:1.2;
+  letter-spacing:-.022em;margin:0 0 .6em;text-wrap:balance;max-width:19em}
+h3{font-family:var(--disp);font-weight:600;font-size:clamp(17px,2.4vw,21px);line-height:1.35;
+  letter-spacing:-.012em;margin:2.1em 0 .7em}
+.lede{font-size:clamp(16.5px,2.1vw,18.5px);line-height:1.68;color:var(--ink-2);max-width:33em;margin-bottom:1.6em}
+.body{max-width:35em}
+.body.wide{max-width:40em}
+
+/* ── pull ── */
+.pull{border-left:3px solid var(--kc);padding:.1em 0 .1em 1.15em;margin:1.9em 0;
+  font-family:var(--disp);font-weight:500;font-size:clamp(18px,2.7vw,23px);line-height:1.45;
+  letter-spacing:-.014em;color:var(--ink);max-width:24em;text-wrap:balance}
+
+/* ── figure ── */
+figure{margin:2em 0;padding:clamp(16px,3vw,26px);background:var(--surface);
+  border:1px solid var(--line);border-radius:3px}
+figcaption{font-family:var(--mono);font-size:11px;line-height:1.6;color:var(--muted);
+  margin-top:1.15em;padding-top:.85em;border-top:1px solid var(--line-2)}
+.figtitle{font-family:var(--body);font-weight:600;font-size:14px;line-height:1.4;color:var(--ink);
+  margin-bottom:.3em;letter-spacing:-.005em}
+.figsub{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:1.35em;letter-spacing:.01em}
+.legend{display:flex;flex-wrap:wrap;gap:.5em 1.3em;font-family:var(--mono);font-size:11px;
+  color:var(--ink-2);margin-bottom:1.1em}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:1px;margin-right:.45em;vertical-align:-1px}
+
+/* ── bar rows ── */
+.bars{display:flex;flex-direction:column;gap:7px}
+.br{display:grid;grid-template-columns:74px 1fr 62px;align-items:center;gap:10px}
+@media(max-width:560px){.br{grid-template-columns:60px 1fr 54px;gap:7px}}
+.br .lb{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);text-align:right;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bars.lbwrap .br{grid-template-columns:90px 1fr 46px}
+.bars.lbwrap .br .lb{white-space:normal;overflow:visible;text-overflow:clip;line-height:1.28}
+@media(max-width:560px){.bars.lbwrap .br{grid-template-columns:78px 1fr 40px;gap:7px}}
+.br .tk{height:17px;background:var(--surface-2);border-radius:1px;overflow:hidden}
+.br .fl{height:100%;background:var(--lg);border-radius:1px}
+.br .vl{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;
+  color:var(--ink-2);text-align:right}
+.br.hi .lb{color:var(--kc);font-weight:600}
+.br.hi .fl{background:var(--kc)}
+.br.hi .vl{color:var(--kc);font-weight:600}
+.br.ref .fl{background:var(--top)}
+.br.ref .lb,.br.ref .vl{color:var(--top)}
+
+/* ── grouped pair bars ── */
+.pair{display:flex;flex-direction:column;gap:16px}
+.pg{display:grid;grid-template-columns:96px 1fr;gap:12px;align-items:center}
+@media(max-width:560px){.pg{grid-template-columns:1fr;gap:5px}}
+.pg .pn{font-family:var(--body);font-size:13px;font-weight:600;color:var(--ink)}
+.pg .pn small{display:block;font-family:var(--mono);font-weight:400;font-size:10.5px;color:var(--muted)}
+.pgb{display:flex;flex-direction:column;gap:5px}
+.pgr{display:grid;grid-template-columns:1fr 54px;gap:9px;align-items:center}
+.pgr .tk{height:15px;background:var(--surface-2);border-radius:1px;overflow:hidden}
+.pgr .fl{height:100%;border-radius:1px}
+.pgr .vl{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;text-align:right}
+
+/* ── table ── */
+.tbl{overflow-x:auto;margin:1.8em 0;border:1px solid var(--line);border-radius:3px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:13px}
+th,td{padding:9px 13px;text-align:left;border-bottom:1px solid var(--line-2);vertical-align:baseline}
+th{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;background:var(--raise);white-space:nowrap}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+td .nm{font-weight:600}
+td .no{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.up{color:var(--top);font-weight:600} .dn{color:var(--bad);font-weight:600}
+.dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:.5em;vertical-align:1px}
+.dot.on{background:var(--top)} .dot.mid{background:var(--axis)} .dot.off{background:transparent;
+  border:1px solid var(--axis)}
+
+/* ── slope svg ── */
+svg{display:block;max-width:100%;height:auto;overflow:visible}
+.sv-lb{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:var(--muted)}
+.sv-vl{font-family:"IBM Plex Mono",monospace;font-size:11.5px;font-weight:500}
+.sv-nm{font-family:"IBM Plex Sans KR",sans-serif;font-size:11.5px;font-weight:600;fill:var(--ink-2)}
+
+p.rate{font-size:13px;line-height:1.6;color:var(--muted);border-left:2px solid var(--line);
+  padding-left:1.1em;margin:1.5em 0}
+p.rate b{color:var(--ink-2);font-weight:600}
+
+/* ── callout ── */
+.note{background:var(--raise);border:1px solid var(--line);border-left:3px solid var(--axis);
+  border-radius:3px;padding:clamp(14px,2.6vw,20px);margin:1.9em 0;font-size:14px;line-height:1.65;
+  color:var(--ink-2)}
+.note b{color:var(--ink);font-weight:600}
+.note.warn{border-left-color:var(--bad)}
+.note.key{border-left-color:var(--kc);background:var(--kc-soft);border-color:var(--line)}
+
+/* ── stat strip ── */
+.strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-2);
+  border:1px solid var(--line);border-radius:3px;overflow:hidden;margin:1.9em 0}
+@media(max-width:620px){.strip{grid-template-columns:1fr}}
+.strip>div{background:var(--surface);padding:clamp(13px,2.4vw,18px)}
+.strip .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:.4em}
+.strip .v{font-family:var(--disp);font-weight:600;font-size:clamp(20px,3.4vw,27px);line-height:1.1;
+  font-variant-numeric:tabular-nums;letter-spacing:-.018em}
+.strip .s{font-size:12px;color:var(--ink-2);margin-top:.35em;line-height:1.45}
+
+/* ── list ── */
+ul.clean{list-style:none;padding:0;margin:1.3em 0;display:flex;flex-direction:column;gap:.85em;max-width:35em}
+ul.clean li{padding-left:1.5em;position:relative;font-size:14.5px;line-height:1.62;color:var(--ink-2)}
+ul.clean li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:1.5px;background:var(--axis)}
+ul.clean li b{color:var(--ink);font-weight:600}
+
+/* ── case panel ── */
+.case{border:1px solid var(--line);border-top:3px solid var(--bad);border-radius:3px;
+  background:var(--surface);padding:clamp(18px,3.2vw,28px);margin:2.2em 0}
+.case+.case{margin-top:1.4em}
+.case .ch{display:flex;flex-wrap:wrap;align-items:baseline;gap:.5em .9em;margin-bottom:.35em}
+.case .ct{font-family:var(--disp);font-weight:600;font-size:clamp(20px,3.2vw,26px);line-height:1.15;
+  letter-spacing:-.02em;color:var(--ink)}
+.case .cn{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.case .cs{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--bad);border:1px solid var(--bad);border-radius:2px;padding:.22em .55em;white-space:nowrap}
+.case .cd{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:1.15em;
+  padding-bottom:1.15em;border-bottom:1px solid var(--line-2)}
+.case p{font-size:14.5px;line-height:1.68;color:var(--ink-2);margin-bottom:1em;max-width:40em}
+.case p:last-child{margin-bottom:0}
+.case p b,.case p strong{color:var(--ink);font-weight:600}
+.case h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;margin:1.6em 0 .7em}
+
+/* ── ledger (two-column consequence table inside a case) ── */
+.ledger{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line-2);
+  border:1px solid var(--line);border-radius:3px;overflow:hidden;margin:1.4em 0}
+@media(max-width:620px){.ledger{grid-template-columns:1fr}}
+.ledger>div{background:var(--raise);padding:clamp(13px,2.4vw,17px)}
+.ledger .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:.5em}
+.ledger .v{font-family:var(--disp);font-weight:600;font-size:clamp(17px,2.8vw,21px);line-height:1.2;
+  letter-spacing:-.015em;margin-bottom:.4em}
+.ledger .state .v{color:var(--ink-2)}
+.ledger .social .v{color:var(--bad)}
+.ledger .s{font-size:12.5px;line-height:1.5;color:var(--ink-2)}
+
+/* ── timeline strip ── */
+.tl{display:flex;gap:2px;margin:1.3em 0 .6em}
+.tl .y{flex:1;min-width:0;text-align:center}
+.tl .yb{height:30px;border-radius:1px;background:var(--surface-2)}
+.tl .yb.play{background:var(--lg)}
+.tl .yb.gap{background:var(--bad-soft);border:1px dashed var(--bad)}
+.tl .yb.low{background:var(--kc-soft);border:1px solid var(--kc)}
+.tl .yl{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:.45em;
+  writing-mode:vertical-rl;transform:rotate(180deg);height:34px;display:inline-block}
+@media(min-width:560px){.tl .yl{writing-mode:horizontal-tb;transform:none;height:auto}}
+
+footer{padding-block:clamp(34px,6vw,54px) clamp(46px,8vw,74px);border-top:1px solid var(--line);
+  font-family:var(--mono);font-size:11.5px;line-height:1.85;color:var(--muted)}
+footer b{color:var(--ink-2);font-weight:500}
+@media(prefers-reduced-motion:no-preference){
+  section{animation:fi .5s ease-out both}
+  @keyframes fi{from{opacity:.55}to{opacity:1}}
+}
+
+/* ── scouting report components ── */
+.warnbar{background:var(--bad-soft);border:1px solid var(--bad);border-radius:3px;
+  padding:clamp(13px,2.4vw,18px);margin:1.6em 0;font-size:13.5px;line-height:1.6;color:var(--ink-2)}
+.warnbar b{color:var(--bad);font-weight:600}
+
+/* numbered instruction card */
+.instr{display:grid;grid-template-columns:44px 1fr;gap:clamp(12px,2.4vw,20px);
+  border:1px solid var(--line);border-left:3px solid var(--kc);border-radius:3px;
+  background:var(--surface);padding:clamp(15px,2.8vw,22px);margin:1.1em 0}
+@media(max-width:560px){.instr{grid-template-columns:32px 1fr;gap:12px}}
+.instr .n{font-family:var(--disp);font-weight:600;font-size:clamp(26px,4.4vw,34px);line-height:1;
+  color:var(--kc);letter-spacing:-.03em}
+.instr h3{font-family:var(--body);font-weight:600;font-size:clamp(15.5px,2.2vw,18px);
+  line-height:1.34;color:var(--ink);margin:0 0 .5em;letter-spacing:-.01em}
+.instr p{font-size:14px;line-height:1.62;color:var(--ink-2);margin:0 0 .7em;max-width:40em}
+.instr p:last-child{margin-bottom:0}
+.instr .ev{font-family:var(--mono);font-size:11.5px;line-height:1.55;color:var(--muted);
+  border-top:1px solid var(--line-2);padding-top:.7em;margin-top:.9em}
+.instr .ev b{color:var(--kc);font-weight:600}
+
+/* do-not list */
+.dont{border:1px solid var(--line);border-radius:3px;background:var(--raise);
+  padding:clamp(15px,2.8vw,22px);margin:1.1em 0}
+.dont .hd{display:flex;align-items:baseline;gap:.7em;margin-bottom:.55em}
+.dont .x{font-family:var(--mono);font-size:15px;color:var(--axis);line-height:1}
+.dont h3{font-family:var(--body);font-weight:600;font-size:15px;line-height:1.34;
+  color:var(--muted);margin:0;text-decoration:line-through;text-decoration-color:var(--axis)}
+.dont p{font-size:13.5px;line-height:1.6;color:var(--ink-2);margin:0;max-width:40em}
+.dont p b{color:var(--ink);font-weight:600}
+
+/* pitch zone map */
+.zgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin:1.2em 0}
+.zcell{padding:clamp(14px,2.6vw,22px) 10px;border-radius:2px;text-align:center}
+.zcell .zv{font-family:var(--disp);font-weight:600;font-size:clamp(22px,3.8vw,30px);
+  line-height:1;letter-spacing:-.02em}
+.zcell .zn{font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-top:.55em;
+  letter-spacing:.03em}
+.zcell .zr{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:.25em}
+
+/* player duel table */
+.duel{display:flex;flex-direction:column;gap:6px;margin:1.2em 0}
+.drow{display:grid;grid-template-columns:104px 34px 1fr 46px;align-items:center;gap:9px}
+@media(max-width:560px){.drow{grid-template-columns:88px 28px 1fr 42px;gap:6px}}
+.drow .dn{font-family:var(--body);font-size:12.5px;font-weight:600;color:var(--ink);
+  text-align:right;line-height:1.24}
+.drow .dp{font-family:var(--mono);font-size:10px;color:var(--muted);text-align:right}
+.drow .dt{height:16px;background:var(--surface-2);border-radius:1px;position:relative;overflow:hidden}
+.drow .df{position:absolute;top:0;bottom:0;border-radius:1px}
+.drow .dm{position:absolute;top:-2px;bottom:-2px;width:1.5px;background:var(--axis);left:50%}
+.drow .dv{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;text-align:right}
+
+/* one-page summary */
+.sheet{border:2px solid var(--ink);border-radius:4px;padding:clamp(18px,3.4vw,30px);
+  margin:2em 0;background:var(--surface)}
+.sheet h3{font-family:var(--disp);font-weight:600;font-size:clamp(19px,3vw,25px);
+  letter-spacing:-.02em;color:var(--ink);margin:0 0 .2em}
+.sheet .sd{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:1.4em;
+  padding-bottom:1.1em;border-bottom:1px solid var(--line)}
+.sheet ol{margin:0;padding-left:1.35em;display:flex;flex-direction:column;gap:.7em}
+.sheet ol li{font-size:14px;line-height:1.55;color:var(--ink-2)}
+.sheet ol li b{color:var(--ink);font-weight:600}
+.sheet .neg{margin-top:1.5em;padding-top:1.2em;border-top:1px solid var(--line-2)}
+.sheet .neg .nl{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:.6em}
+.sheet .neg p{font-size:13px;line-height:1.6;color:var(--muted);margin:0}
+
+</style>
+<body>
+<header><div class="wrap">
+  <div class="badge">상대 분석 리포트</div>
+  <h1>김천상무를 어떻게 이기나</h1>
+  <p class="dek">29경기에서 4승 18무 7패. 비기는 팀이지 무너지는 팀이 아니다. 공략 지점은 오픈플레이가 아니라 멈춘 공, 그리고 그들이 앞서 있는 시간에 있다. K리그 데이터포털 원시 이벤트 41,879건에서 뽑은 경기 전 브리핑.</p>
+  <div class="meta"><span>K리그1 2026 · R1–R29</span><span>2026년 9월 13일까지</span><span>원시 이벤트 41,879건 직접 파싱</span><span>한혁진</span></div>
+</div></header>
+<div class="tiles"><div class="tile"><div class="k">세트피스 득실</div><div class="v bad">2 : 13</div><div class="s">시즌 득실차 −8의 전부<br>오픈플레이는 26 : 23</div></div><div class="tile"><div class="k">리드 중 실점/90</div><div class="v bad">2.58</div><div class="s">기대 1.42 · 포아송 p=0.027<br>동점·열세에서는 기대 이하</div></div><div class="tile"><div class="k">피PK / 획득PK</div><div class="v bad">6 / 0</div><div class="s">리그 최악의 −6<br>12개 구단 중 유일한 획득 0</div></div><div class="tile"><div class="k">홈 성적</div><div class="v gj">1승</div><div class="s">홈 14경기 1승 10무 3패<br>홈 실점 1.43 · 원정 1.07</div></div></div>
+<div class="wrap">
+
+<section>
+  <div class="eyebrow"><span class="role">먼저</span><span class="cap">이 문서의 유효기간</span></div>
+  <h2>이 리포트는 다른 리포트보다 빨리 상한다</h2>
+  <div class="body">
+    <p>김천상무는 선수단이 <strong>전역일에 바뀌는</strong> 구단이다. 이적시장과 무관한 날짜에,
+      경고 없이. 실제로 2026시즌에만 8월 29일 하루에 주전 3명이 마지막 경기를 뛰었고
+      그중 한 명이 직전 26라운드 중 25경기를 선발로 나선 주전 골키퍼였다.
+      리그 등록기간이 닫힌 지 열흘 뒤의 일이다.</p>
+  </div>
+
+  <div class="warnbar"><b>확인하고 쓸 것.</b>
+    아래 개인 지표는 R1–R29 누적이다. 경기 전에 <b>최근 2주 출전 명단</b>을 반드시 대조하라.
+    이 리포트에서 이름이 지목된 선수가 이미 전역했을 수 있다.
+    팀 단위 지표(세트피스 득실, 스코어 상태별 실점, 블록 높이, 피PK)는 29경기 누적이라
+    개인 교체에 덜 민감하다. <b>구조는 믿고, 이름은 확인하라.</b>
+  </div>
+
+  <div class="body">
+    <p>한 가지 더. 김천의 <strong>2027년 K리그2행은 순위와 무관하게 이미 확정</strong>돼 있다.
+      연고 협약 종료에 따른 것이고 성적과 상관없다. 즉 이 팀에게 남은 경기의
+      <em>집단적</em> 동기는 순위표가 아니다. 다만 무기력으로 읽으면 안 된다.
+      전원이 원소속팀 복귀를 앞둔 개인 오디션 중이다. 집단으로는 걸린 게 없고 개인으로는 전부가 걸려 있다.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">KEY</span><span class="cap">공략 지점 다섯</span></div>
+  <h2>이 다섯 개만 가져가도 된다</h2>
+  <div class="lede">아래는 29경기 데이터가 지지하는 순서대로다. 1번이 가장 강하다.</div>
+
+  <div class="instr">
+    <div class="n">1</div>
+    <div>
+      <h3>그들이 먼저 넣게 두어도 된다 — 리드하는 김천이 가장 약하다</h3>
+      <p>직관과 반대다. 이 팀은 <strong>앞서 있을 때만</strong> 무너진다.
+        시즌 전체로는 기대실점 41.1에 실점 36으로 5골을 벌었는데,
+        그 이득 전부를 리드 국면에서 토해낸다.</p>
+      <p>동점일 때와 지고 있을 때는 오히려 기대보다 <em>덜</em> 먹는다.
+        즉 <strong>선제골을 넣고 쫓아가는 그림이 우리에게 유리하다</strong>.
+        0-1로 끌려가는 상황을 재앙으로 취급하지 말고, 준비된 시나리오로 다뤄라.</p>
+      <p class="ev">리드 489분 — 기대 7.73골, 실제 <b>14골</b>. 포아송 P(X≥14) = <b>0.027</b>.
+        90분 환산 실점 리드 <b>2.58</b> / 동점 0.74 / 열세 1.28.
+        리드 중 실점 14건의 평균 기대값은 0.294로 나머지 실점(0.355)보다 오히려 <b>낮다</b> —
+        좋은 기회를 내줘서가 아니라 나쁜 기회가 들어갔다.</p>
+    </div>
+  </div>
+
+  <div class="instr">
+    <div class="n">2</div>
+    <div>
+      <h3>데드볼을 최대한 많이 만들어라</h3>
+      <p>이 팀의 시즌 득실차 −8은 전부 정지 상황에서 나왔다.
+        <strong>세트피스 2득 13실, 오픈플레이 26득 23실.</strong>
+        흐르는 축구에서는 이기고 있는 팀이다. 흐르게 두지 마라.</p>
+      <p>구체적으로: 코너와 측면 프리킥을 얻는 것 자체가 득점 기회다.
+        그리고 <strong>첫 볼에 끝내라.</strong> 세컨드볼을 준비할 필요가 거의 없다.</p>
+      <p class="ev">세트피스 실점 8건(PK 제외) 중 <b>7건이 데드볼 3초 이내</b>, <b>4건이 첫 접촉 득점</b>.
+        피코너 111회 중 김천의 첫 수비 접촉 평균 위치는 자기 골라인에서 <b>6.1</b>(골에어리어 경계선)이고
+        그중 <b>42%가 클리어링</b>이다. 피코너 1개당 실점 <b>3.6%</b>.</p>
+    </div>
+  </div>
+
+  <div class="instr">
+    <div class="n">3</div>
+    <div>
+      <h3>박스 안에서 접촉을 만들어라 — 리그에서 가장 많이 내주고 하나도 못 얻는 팀</h3>
+      <p>29경기에서 <strong>페널티킥 6개를 내주고 0개를 얻었다.</strong>
+        −6은 12개 구단 중 최악이고, 획득 0은 리그에서 김천뿐이다.
+        박스 안 경합을 피할 이유가 없다는 뜻이다.</p>
+      <p>타이밍도 일정하다. 6개 중 <strong>3개가 전·후반 추가시간</strong>에 나왔다.
+        종료 직전 박스 안 크로스와 컷백의 값이 평소보다 높다.</p>
+      <p class="ev">피PK <b>6</b> / 획득 <b>0</b> (리그 평균 피PK 3.5).
+        추가시간 PK 3건 — 전반 45+3, 45+4, 후반 90+3.
+        반칙자는 김현우·김이석·김태환(2)·박철우·김민규로 <b>특정 개인에 몰려 있지 않다</b>.
+        구조적인 문제다.</p>
+    </div>
+  </div>
+
+  <div class="instr">
+    <div class="n">4</div>
+    <div>
+      <h3>공중볼은 센터백 둘을 피해서 올려라</h3>
+      <p>김천의 제공권은 팀 전체가 아니라 <strong>센터백 두 명에게만</strong> 있다.
+        이정택과 변준수는 자기 진영과 중앙에서 60%대를 이긴다.
+        그 외 전원은 43% 이하다.</p>
+      <p>실무적으로: 니어·파포스트를 노려 <strong>센터백이 서 있는 골에어리어 중앙을 비껴가라.</strong>
+        그리고 장신 수비수 두 명이 <em>공격 세트피스로 올라가 있는 동안</em>이
+        가장 좋은 타이밍이다 — 그때 뒤에 남는 조합의 공중볼 승률이 가장 낮다.</p>
+      <p class="ev">팀 공중볼 승률 <b>46.3%</b>(467승 542패). 구역별로 자기진영 47.8% · 중앙 50.0% ·
+        공격진영 <b>39.1%</b>. 이정택 중앙 <b>67.3%</b> · 변준수 <b>66.7%</b>인데,
+        이건희(FW·186cm)는 전 구역 <b>37–42%</b>, 고재현 38–42%, 박세진 중앙 <b>18.8%</b>다.</p>
+    </div>
+  </div>
+
+  <div class="instr">
+    <div class="n">5</div>
+    <div>
+      <h3>크로스는 골라인까지 파고들어서 올려라</h3>
+      <p>좌우가 아니라 <strong>깊이</strong>가 축이다. 김천을 상대로 이른 위치에서 올린 크로스는
+        거의 값이 없고, 골라인 부근까지 내려가서 올린 크로스는 3배 위험하다.</p>
+      <p>그리고 <strong>세트피스에서 직접 올라온 크로스가 오픈플레이 크로스보다 압도적으로 위험하다</strong> —
+        2번 항목과 같은 결론으로 수렴한다.</p>
+      <p class="ev">김천이 내준 크로스 496개 기준 전환율: 골라인 <b>4.2%</b> · 깊은 위치 2.2% ·
+        이른 위치 <b>1.4%</b>. 세트피스 직접 크로스는 83개(17%)에서 <b>6골(38%)</b>,
+        오픈플레이 역습 크로스는 257개에서 5골. 크로스 1개당 <b>3.8배</b>.</p>
+    </div>
+  </div>
+
+  <div class="note key"><b>보너스 — 시계를 보라.</b>
+    김천의 실점은 후반으로 갈수록 늘어난다. <b>45–75분 구간에서만 17실점</b>으로 36실점의 47%다.
+    반대로 15–30분은 2실점뿐이다. 초반 30분에 무리하게 던질 이유가 없고,
+    <b>후반 시작 직후가 가장 열려 있다.</b>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">주의</span><span class="cap">준비를 낭비하지 않기 위해</span></div>
+  <h2>하지 말 것 — 검정에서 기각된 네 가지</h2>
+  <div class="lede">아래는 김천을 상대할 때 흔히 세우는 계획인데, 29경기 데이터가 지지하지 않는다.
+    훈련 시간을 여기에 쓰면 손해다.</div>
+
+  <div class="dont">
+    <div class="hd"><span class="x">✕</span><h3>하이프레스로 빌드업을 깬다</h3></div>
+    <p>김천의 패스 실패율은 <b>모든 구역에서 상대보다 낮다.</b> 자기 진영 17.2% 대 22.4%,
+      중앙 12.8% 대 15.4%, 공격 진영 28.4% 대 31.6%. 이 팀은 압박에 무너져서 실점하지 않는다.
+      후방에서 공을 뺏겠다는 계획은 근거가 없다. 프레스를 쓰려면 실점 유도가 아니라
+      <b>진영을 밀어올려 데드볼을 만드는 수단</b>으로 써라.</p>
+  </div>
+
+  <div class="dont">
+    <div class="hd"><span class="x">✕</span><h3>앞서면 내려앉을 테니 그때 밀어붙인다</h3></div>
+    <p>내려앉지 않는다. 수비 액션 평균 위치가 <b>리드 28.5 · 동점 29.1 · 열세 29.6</b>으로
+      세 상태의 차이가 1.1(약 1m)이다. 블록 높이는 사실상 고정이다.
+      리드 중에 바뀌는 것은 <b>점유</b>다 — 90분당 패스가 462에서 386으로 16% 줄어든다.
+      물러나는 게 아니라 <b>공을 내준다</b>. 그러니 "내려앉은 블록 공략" 훈련이 아니라
+      <b>회수 후 즉시 전개</b> 훈련이 맞다.</p>
+  </div>
+
+  <div class="dont">
+    <div class="hd"><span class="x">✕</span><h3>오른쪽이 약하니 그쪽으로 몬다</h3></div>
+    <p>내가 직접 냈다가 <b>기각한 발견</b>이라 명시해 둔다. 집계만 보면 리드 중 김천 오른쪽으로
+      들어간 크로스가 90분당 7.60→11.23으로 48% 늘어난다. 그런데 전환율은 왼쪽 4.1% ·
+      오른쪽 2.8%로 방향이 반대고(이항검정 p=0.32), 국면을 나누면 지배적 국면인 역습에서
+      <b>양쪽이 6.44로 정확히 같다.</b> 상대별로도 7팀 중 5팀만 증가했다.
+      더해서 생긴 허상이다. 좌우 편향으로 계획을 세우지 마라.</p>
+  </div>
+
+  <div class="dont">
+    <div class="hd"><span class="x">✕</span><h3>그들의 코너를 역습 기회로 설계한다</h3></div>
+    <p>값이 없다. 김천의 세트피스 배달 <b>82개 이후 25초 이내에 나온 우리 쪽 슛은 0회</b>다.
+      코너를 내줘도 되는 것과 코너에서 역습이 나오는 것은 다른 이야기다.
+      김천의 코너는 <b>무해하지만 역습거리도 아니다</b>(147개에 1골, 전환율 0.68%, 리그 최하위).
+      수비 후 안전하게 빠져나오는 데 집중하고 역습 트리거는 다른 곳에 걸어라.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">근거</span><span class="cap">공중볼 지도</span></div>
+  <h2>제공권이 어디에 몰려 있나</h2>
+  <div class="body">
+    <p>4번 지시의 근거다. 팀 평균 46.3%는 이 팀을 설명하지 못한다.
+      구역별로, 그리고 개인별로 갈라야 그림이 보인다.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">김천의 공중볼 승률 — 구역별</div>
+    <div class="figsub">경합 발생 위치 기준 · 총 1,009회 · 50%가 중립</div>
+    <div class="zgrid">
+      <div class="zcell" style="background:var(--lg-soft)">
+        <div class="zv" style="color:var(--lg)">47.8%</div>
+        <div class="zn">자기 진영</div><div class="zr">128승 140패</div></div>
+      <div class="zcell" style="background:var(--surface-2)">
+        <div class="zv" style="color:var(--ink-2)">50.0%</div>
+        <div class="zn">중앙</div><div class="zr">226승 226패</div></div>
+      <div class="zcell" style="background:var(--lg-soft);border:1px solid var(--lg)">
+        <div class="zv" style="color:var(--lg)">39.1%</div>
+        <div class="zn">공격 진영</div><div class="zr">113승 176패</div></div>
+    </div>
+    <div class="legend"><span><i style="background:var(--lg)"></i>김천이 지는 구역 — 우리 기회</span><span><i style="background:var(--surface-2);border:1px solid var(--axis)"></i>중립(50%)</span><span><i style="background:var(--kc)"></i>김천이 이기는 구역 — 회피</span></div>
+    <figcaption>세 구역 어디에도 김천이 이기는 칸이 없다. 팀 단위로 보면 공중볼에서 지는 팀이다.
+      다만 개인으로 쪼개면 이야기가 달라진다.</figcaption>
+  </figure>
+
+  <figure>
+    <div class="figtitle">선수별 공중볼 승률 — 경합 12회 이상</div>
+    <div class="figsub">가운데 선이 50% · 오른쪽으로 갈수록 김천이 이긴다</div>
+    <div class="duel">
+      <div class="drow"><div class="dn">김현우</div><div class="dp">DF</div><div class="dt"><div class="df" style="left:50%;width:15.7%;background:var(--kc)"></div><div class="dm"></div></div><div class="dv" style="color:var(--kc)">65.7%</div></div>
+      <div class="drow"><div class="dn">이강현</div><div class="dp">MF</div><div class="dt"><div class="df" style="left:50%;width:15.5%;background:var(--kc)"></div><div class="dm"></div></div><div class="dv" style="color:var(--kc)">65.5%</div></div>
+      <div class="drow"><div class="dn">변준수</div><div class="dp">DF</div><div class="dt"><div class="df" style="left:50%;width:7.8%;background:var(--kc)"></div><div class="dm"></div></div><div class="dv" style="color:var(--kc)">57.8%</div></div>
+      <div class="drow"><div class="dn">이정택</div><div class="dp">DF</div><div class="dt"><div class="df" style="left:50%;width:6.8%;background:var(--kc)"></div><div class="dm"></div></div><div class="dv" style="color:var(--kc)">56.8%</div></div>
+      <div class="drow"><div class="dn">김태환</div><div class="dp">DF</div><div class="dt"><div class="df" style="left:49.2%;width:0.8%;background:var(--surface-2)"></div><div class="dm"></div></div><div class="dv">49.2%</div></div>
+      <div class="drow"><div class="dn">이수빈</div><div class="dp">MF</div><div class="dt"><div class="df" style="left:48.1%;width:1.9%;background:var(--lg)"></div><div class="dm"></div></div><div class="dv" style="color:var(--lg)">48.1%</div></div>
+      <div class="drow"><div class="dn">정재민</div><div class="dp">FW</div><div class="dt"><div class="df" style="left:45.3%;width:4.7%;background:var(--lg)"></div><div class="dm"></div></div><div class="dv" style="color:var(--lg)">45.3%</div></div>
+      <div class="drow"><div class="dn">박태준</div><div class="dp">MF</div><div class="dt"><div class="df" style="left:44.8%;width:5.2%;background:var(--lg)"></div><div class="dm"></div></div><div class="dv" style="color:var(--lg)">44.8%</div></div>
+      <div class="drow"><div class="dn">이건희</div><div class="dp">FW</div><div class="dt"><div class="df" style="left:39.2%;width:10.8%;background:var(--lg)"></div><div class="dm"></div></div><div class="dv" style="color:var(--lg)">39.2%</div></div>
+      <div class="drow"><div class="dn">고재현</div><div class="dp">MF</div><div class="dt"><div class="df" style="left:38.8%;width:11.2%;background:var(--lg)"></div><div class="dm"></div></div><div class="dv" style="color:var(--lg)">38.8%</div></div>
+      <div class="drow"><div class="dn">박철우</div><div class="dp">DF</div><div class="dt"><div class="df" style="left:37.0%;width:13.0%;background:var(--lg)"></div><div class="dm"></div></div><div class="dv" style="color:var(--lg)">37.0%</div></div>
+      <div class="drow"><div class="dn">박세진</div><div class="dp">MF</div><div class="dt"><div class="df" style="left:27.3%;width:22.7%;background:var(--lg)"></div><div class="dm"></div></div><div class="dv" style="color:var(--lg)">27.3%</div></div>
+    </div>
+    <div class="legend"><span><i style="background:var(--kc)"></i>50% 초과 — 피하라</span><span><i style="background:var(--lg)"></i>50% 미만 — 노려라</span></div>
+    <figcaption>출전 시간이 가장 긴 공격 자원 이건희(2,183분·186cm)가 39.2%다.
+      박철우는 수비수인데도 37.0%이고, 공격 진영에서는 7회 중 1회(14.3%)만 이겼다.
+      경합 12회 미만인 선수는 제외했다.</figcaption>
+  </figure>
+
+  <div class="note"><b>실무적으로 어떻게 쓰나.</b>
+    우리 공격 세트피스에서 <b>이정택·변준수가 붙는 지점을 피해</b> 배달하고,
+    수비 세트피스에서는 <b>그 둘만 맨마킹</b>하면 된다. 나머지 필드 플레이어는
+    전원 50% 미만이다. 그리고 롱볼 경합은 <b>박철우 쪽으로</b> 거는 편이 유리하다 —
+    센터백 중 유일하게 37%다.
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">근거</span><span class="cap">경기 운영</span></div>
+  <h2>언제, 어디서 열리나</h2>
+
+  <figure>
+    <div class="figtitle">시간대별 득실 — 김천 기준</div>
+    <div class="figsub">29경기 · 득점 27 · 실점 36 (자책골 제외)</div>
+    <svg viewBox="0 0 620 250" role="img" aria-label="15분 구간별로 김천의 득점과 실점을 비교한 막대그래프. 45-60분과 60-75분 구간에서 실점이 가장 많다.">
+      <line x1="52" y1="180" x2="600" y2="180" stroke="var(--axis)" stroke-width="1"/>
+      <line x1="52" y1="26" x2="52" y2="180" stroke="var(--axis)" stroke-width="1"/>
+      <line x1="52" y1="103" x2="600" y2="103" stroke="var(--grid)" stroke-width="1" stroke-dasharray="2 3"/>
+      <text class="sv-lb" x="46" y="184" text-anchor="end">0</text>
+      <text class="sv-lb" x="46" y="107" text-anchor="end">5</text>
+      <text class="sv-lb" x="46" y="30" text-anchor="end">10</text>
+      <g fill="var(--kc)">
+        <rect x="72"  y="118" width="34" height="62"  rx="3"><title>0-15분 득점 4</title></rect>
+        <rect x="160" y="103" width="34" height="77"  rx="3"><title>15-30분 득점 5</title></rect>
+        <rect x="248" y="118" width="34" height="62"  rx="3"><title>30-45분 득점 4</title></rect>
+        <rect x="336" y="149" width="34" height="31"  rx="3"><title>45-60분 득점 2</title></rect>
+        <rect x="424" y="88"  width="34" height="92"  rx="3"><title>60-75분 득점 6</title></rect>
+        <rect x="512" y="88"  width="34" height="92"  rx="3"><title>75분-종료 득점 6</title></rect>
+      </g>
+      <g fill="var(--lg)">
+        <rect x="108" y="118" width="34" height="62"  rx="3"><title>0-15분 실점 4</title></rect>
+        <rect x="196" y="149" width="34" height="31"  rx="3"><title>15-30분 실점 2</title></rect>
+        <rect x="284" y="88"  width="34" height="92"  rx="3"><title>30-45분 실점 6</title></rect>
+        <rect x="372" y="57"  width="34" height="123" rx="3"><title>45-60분 실점 8 — 가장 많다</title></rect>
+        <rect x="460" y="42"  width="34" height="138" rx="3"><title>60-75분 실점 9 — 가장 많다</title></rect>
+        <rect x="548" y="72"  width="34" height="108" rx="3"><title>75분-종료 실점 7</title></rect>
+      </g>
+      <text class="sv-vl" x="389" y="49" text-anchor="middle" fill="var(--lg)">8</text>
+      <text class="sv-vl" x="477" y="34" text-anchor="middle" fill="var(--lg)">9</text>
+      <text class="sv-lb" x="107" y="198" text-anchor="middle">0–15</text>
+      <text class="sv-lb" x="195" y="198" text-anchor="middle">15–30</text>
+      <text class="sv-lb" x="283" y="198" text-anchor="middle">30–45</text>
+      <text class="sv-lb" x="371" y="198" text-anchor="middle">45–60</text>
+      <text class="sv-lb" x="459" y="198" text-anchor="middle">60–75</text>
+      <text class="sv-lb" x="547" y="198" text-anchor="middle">75–</text>
+      <rect x="52" y="214" width="10" height="10" fill="var(--kc)" rx="1"/>
+      <text class="sv-lb" x="68" y="223">김천 득점</text>
+      <rect x="150" y="214" width="10" height="10" fill="var(--lg)" rx="1"/>
+      <text class="sv-lb" x="166" y="223">김천 실점</text>
+      <text class="sv-nm" x="330" y="243" text-anchor="middle">45–75분 사이에만 17실점 — 전체의 47%</text>
+    </svg>
+    <figcaption>15–30분은 2실점뿐이다. 초반에 던질 이유가 없다. 후반 시작 직후가 가장 열린다.</figcaption>
+  </figure>
+
+  <figure>
+    <div class="figtitle">스코어 상태별 실점 — 기대값 대비</div>
+    <div class="figsub">90분 환산 · 상태를 바꾼 골은 그 직전 상태에 귀속</div>
+    <div class="pair">
+      <div class="pg"><div class="pn">리드 중<small>489분</small></div><div class="pgb">
+        <div class="pgr" title="리드 중 실제 실점 90분당 2.58"><div class="tk"><div class="fl" style="width:100%;background:var(--kc)"></div></div><div class="vl" style="color:var(--kc)">2.58</div></div>
+        <div class="pgr" title="리드 중 기대실점 90분당 1.42"><div class="tk"><div class="fl" style="width:55%;background:var(--lg)"></div></div><div class="vl" style="color:var(--lg)">1.42</div></div></div></div>
+      <div class="pg"><div class="pn">동점<small>1,706분</small></div><div class="pgb">
+        <div class="pgr" title="동점 실제 실점 0.74"><div class="tk"><div class="fl" style="width:28.7%;background:var(--kc)"></div></div><div class="vl" style="color:var(--kc)">0.74</div></div>
+        <div class="pgr" title="동점 기대실점 1.14"><div class="tk"><div class="fl" style="width:44.2%;background:var(--lg)"></div></div><div class="vl" style="color:var(--lg)">1.14</div></div></div></div>
+      <div class="pg"><div class="pn">열세<small>563분</small></div><div class="pgb">
+        <div class="pgr" title="열세 실제 실점 1.28"><div class="tk"><div class="fl" style="width:49.6%;background:var(--kc)"></div></div><div class="vl" style="color:var(--kc)">1.28</div></div>
+        <div class="pgr" title="열세 기대실점 1.89"><div class="tk"><div class="fl" style="width:73.3%;background:var(--lg)"></div></div><div class="vl" style="color:var(--lg)">1.89</div></div></div></div>
+    </div>
+    <div class="legend"><span><i style="background:var(--kc)"></i>실제 실점 / 90</span><span><i style="background:var(--lg)"></i>기대 실점 / 90</span></div>
+    <figcaption>축 최대 2.58. 세 상태 중 리드에서만 실제가 기대를 넘는다. 1번 지시의 근거다.</figcaption>
+  </figure>
+
+  <div class="strip">
+    <div><div class="k">홈 성적</div><div class="v num">1승 10무 3패</div><div class="s">14경기 · 실점 1.43/경기<br>원정은 3승 8무 4패 · 1.07</div></div>
+    <div><div class="k">피PK / 획득</div><div class="v num">6 / 0</div><div class="s">리그 최악 −6<br>리그 평균 피PK 3.5</div></div>
+    <div><div class="k">오픈플레이 크로스</div><div class="v num">543개</div><div class="s">성공률 23.0%<br>많이 올리지만 잘 안 맞는다</div></div>
+  </div>
+
+  <div class="body">
+    <p><strong>원정 경기가 오히려 낫다는 점은 짚어둘 만하다.</strong> 김천은 홈 14경기에서 1승밖에 못했고
+      홈 실점이 원정보다 경기당 0.36골 많다. 김천 원정을 어려운 일정으로 취급할 이유가 없다.
+      다만 표본이 14경기이므로 <em>강한 근거가 아니라 참고</em>로 다뤄라.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">페널티킥 — 12개 구단 비교</div>
+    <div class="figsub">획득 − 피PK · 2026 R1–R29 · 리그 전체 42개</div>
+    <div class="bars lbwrap">
+      <div class="br"><div class="lb">인천</div><div class="tk"><div class="fl" style="width:100%"></div></div><div class="vl">+5</div></div>
+      <div class="br"><div class="lb">포항</div><div class="tk"><div class="fl" style="width:100%"></div></div><div class="vl">+5</div></div>
+      <div class="br"><div class="lb">울산</div><div class="tk"><div class="fl" style="width:82%"></div></div><div class="vl">+3</div></div>
+      <div class="br"><div class="lb">안양·강원</div><div class="tk"><div class="fl" style="width:73%"></div></div><div class="vl">+2</div></div>
+      <div class="br"><div class="lb">서울·제주</div><div class="tk"><div class="fl" style="width:64%"></div></div><div class="vl">0</div></div>
+      <div class="br"><div class="lb">부천</div><div class="tk"><div class="fl" style="width:55%"></div></div><div class="vl">−1</div></div>
+      <div class="br"><div class="lb">대전</div><div class="tk"><div class="fl" style="width:45%"></div></div><div class="vl">−2</div></div>
+      <div class="br"><div class="lb">전북</div><div class="tk"><div class="fl" style="width:36%"></div></div><div class="vl">−3</div></div>
+      <div class="br"><div class="lb">광주</div><div class="tk"><div class="fl" style="width:18%"></div></div><div class="vl">−5</div></div>
+      <div class="br hi"><div class="lb">김천</div><div class="tk"><div class="fl" style="width:9%"></div></div><div class="vl">−6</div></div>
+    </div>
+    <figcaption>단일 계열이고 김천만 강조했다. 막대 길이는 −6에서 +5까지를 편 것이다. 김천만 획득 0이다.
+      즉 −6은 심판 성향이 아니라 <b>박스 안에서 접촉을 만들지 못한다</b>는 뜻이기도 하다.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">근거</span><span class="cap">그들의 위협</span></div>
+  <h2>우리가 실제로 막아야 하는 것</h2>
+  <div class="body">
+    <p>여기까지가 공략이고, 이제 수비다. 좋은 소식부터. <strong>김천의 세트피스는 무해하다.</strong>
+      코너 147개에서 1골, 전환율 0.68%로 12개 구단 최하위다. 리그 평균의 3분의 1이다.
+      코너를 내주는 것 자체를 두려워할 이유가 없다.</p>
+    <p>위험은 전부 <strong>오픈플레이 26골</strong>에 있고, 그마저 소수에게 몰려 있다.</p>
+  </div>
+
+  <div class="tbl"><table>
+    <thead><tr><th>선수</th><th>출전분</th><th>골</th><th>도움</th><th>슛</th><th>키패스</th></tr></thead>
+    <tbody>
+      <tr><td><span class="nm">고재현</span> <span class="no">MF</span></td><td class="n">2,166</td><td class="n"><b>7</b></td><td class="n">3</td><td class="n">53</td><td class="n">19</td></tr>
+      <tr><td><span class="nm">이건희</span> <span class="no">FW · 186cm</span></td><td class="n">2,183</td><td class="n"><b>5</b></td><td class="n">2</td><td class="n">58</td><td class="n">17</td></tr>
+      <tr><td><span class="nm">박철우</span> <span class="no">DF</span></td><td class="n">2,434</td><td class="n">2</td><td class="n">3</td><td class="n">22</td><td class="n"><b>31</b></td></tr>
+      <tr><td><span class="nm">박태준</span> <span class="no">MF</span></td><td class="n">2,293</td><td class="n">2</td><td class="n">1</td><td class="n">18</td><td class="n"><b>40</b></td></tr>
+      <tr><td><span class="nm">이정택</span> <span class="no">DF</span></td><td class="n">2,483</td><td class="n">1</td><td class="n">3</td><td class="n">3</td><td class="n">12</td></tr>
+      <tr><td class="no">팀 합계</td><td class="n">—</td><td class="n">28</td><td class="n">20</td><td class="n">—</td><td class="n">—</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="body">
+    <p><strong>상위 3명이 팀 공격 포인트 48개 중 22개(46%)를 만든다.</strong>
+      고재현과 이건희를 묶으면 이 팀의 득점 경로 절반이 닫힌다.
+      그리고 키패스는 <strong>박태준(40)과 박철우(31)</strong>에서 나온다 —
+      최전방이 아니라 중원과 뒷선이 공급원이다. 전진 패스의 출발점을 압박하는 편이
+      최전방을 막는 것보다 효율이 높다.</p>
+    <p>덧붙여 <strong>이건희는 슛 58개로 팀 내 최다인데 5골</strong>이다. 슛을 허용하되
+      좋은 자리를 안 주는 쪽이 현실적인 타협이다. 김천의 유효슛 비율은 <strong>29.5%</strong>로
+      리그 12개 구단 중 유일한 20%대다.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">요약</span><span class="cap">한 장</span></div>
+  <h2>라커룸 한 장</h2>
+
+  <div class="sheet">
+    <h3>김천상무 — 경기 전 요약</h3>
+    <div class="sd">K리그1 2026 R1–29 기준 · 개인 지표는 최근 출전 명단과 대조할 것</div>
+    <ol>
+      <li><b>그들이 먼저 넣어도 당황하지 마라.</b> 리드 중 90분당 2.58실점(기대 1.42). 앞서는 순간 가장 약해진다.</li>
+      <li><b>데드볼을 만들어라.</b> 세트피스 2:13. 첫 볼에 끝내라 — 실점 8건 중 7건이 3초 이내.</li>
+      <li><b>박스 안에서 붙어라.</b> 피PK 6 · 획득 0, 리그 최악. 그중 3개가 추가시간.</li>
+      <li><b>이정택·변준수만 피해서 올려라.</b> 나머지 필드 플레이어는 전원 공중볼 50% 미만.</li>
+      <li><b>골라인까지 파고들어라.</b> 전환율 4.2% 대 1.4%.</li>
+      <li><b>후반 시작 직후.</b> 45–75분에만 17실점, 전체의 47%.</li>
+      <li><b>고재현·이건희를 묶어라.</b> 팀 공격 포인트의 46%가 상위 3명이다.</li>
+    </ol>
+    <div class="neg">
+      <div class="nl">하지 말 것</div>
+      <p>하이프레스로 빌드업 파괴(그들의 패스 실패율이 우리보다 낮다) · 내려앉을 거라는 가정(블록이 1m만 움직인다) ·
+        좌우 편향 공략(검정에서 기각) · 그들 코너에서의 역습 설계(82개 이후 25초 내 우리 슛 0회).</p>
+    </div>
+  </div>
+
+  <div class="body">
+    <p class="pull">이 팀은 못하는 팀이 아니다. 흐르는 축구에서는 26:23으로 이기고 있다.
+      이기려면 흐르게 두지 말고, 멈춰 세우고, 그들이 앞서게 만든 다음 그 시간을 노려야 한다.</p>
+  </div>
+</section>
+
+<footer><div class="wrap"><b>데이터</b> · K리그 데이터포털(portal.kleague.com) 직접 파싱. 2026 K리그1 R1–R29, 2026년 9월 13일 기준. 원시 이벤트 41,879건(김천 22,373), 선수-경기 1,159행, 경기기록부 29건, 공식 페널티킥 기록 42건.<br><b>검증</b> · 이벤트–리그기록 대조 10항목 완전 일치. 공격 방향 정규화 검증 완료. 기대득점은 포털 자체 값이며 모델 명세는 비공개다.<br><b>한계</b> · 본문의 "상대"는 리그 평균이 아니라 김천이 실제로 만난 11개 구단을 뜻한다. 공중볼 구역은 경합 발생 좌표 기준이며 경합 주체의 의도를 구분하지 않는다.<br><b>작성</b> · 한혁진 · 2026년 9월</div></footer>
+</div>
+</body>
+</html>

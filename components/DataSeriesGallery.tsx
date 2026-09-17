@@ -21,6 +21,8 @@ type Episode = {
   publishedAt: string;
   /** 국문판만 나온 편이면 true. 영문 HTML을 추가하면 항목에서 지운다. */
   koOnly?: boolean;
+  /** 연재 본편이 아닌 동반 문서(스카우팅 리포트 등). 번호 자리에 — 를 두고 배지를 단다. */
+  companion?: Record<Locale, string>;
   competition: Record<Locale, string>;
   title: Record<Locale, string>;
   sub: Record<Locale, string>;
@@ -78,6 +80,32 @@ const EPISODES: Episode[] = [
     stats: {
       en: [["0", "foreign players, every season since 2022"], ["0", "transfers in or out, ever"], ["$545", "monthly pay as a private, 2026"], ["3", "host cities since 2003, a fourth being decided"]],
       ko: [["0", "외국인 선수, 2022년 이후 매 시즌"], ["0", "영입과 방출, 제도상 불가"], ["75만원", "이등병 월 봉급, 2026년"], ["3", "2003년 이후 연고지, 네 번째는 논의 중"]],
+    },
+  },
+  {
+    slug: "gimcheon-scouting",
+    no: "—",
+    publishedAt: "2026-09-17",
+    companion: { en: "COMPANION REPORT", ko: "동반 리포트" },
+    competition: {
+      en: "K League 1 2026 · Gimcheon Sangmu · written from the opposition's side",
+      ko: "하나은행 K리그1 2026 · 김천상무 · 상대팀 관점",
+    },
+    title: {
+      en: "How to Beat Gimcheon Sangmu",
+      ko: "김천상무를 어떻게 이기나",
+    },
+    sub: {
+      en: "The same 29 matches, rewritten as the document an opposing analyst hands his head coach. Five ways in, ordered by how strongly the data supports them. First: let them score. Gimcheon concede 2.58 per 90 while leading against 1.42 expected (Poisson p = 0.027) and are below expectation in every other state \u2014 so the shape that favours you is the one where they lead and you chase. Second: manufacture dead balls, because the whole of their \u22128 is stationary play (set pieces 2:13, open play 26:23) and seven of eight set-piece goals were finished within three seconds. Third: make contact in the box \u2014 six penalties conceded, none won, the worst differential in the league, three of the six in added time. Fourth: deliver away from Lee Jung-taek and Byun Jun-soo, the only two outfield players above 50% in the air; every other regular is at 43% or below, including the 186cm forward who plays the most minutes. Fifth: reach the byline, where crosses convert at 4.2% against 1.4% from early positions. Then four plans the data rejects and that would waste a training week: pressing their build-up (their pass-failure rate is lower than their opponents\u2019 in every third), waiting for them to sit deep (the block moves one metre between score states), targeting a left-right bias (my own finding, withdrawn), and countering from their corners (82 deliveries, zero shots against within 25 seconds). Ends with a one-page dressing-room summary.",
+      ko: "같은 29경기를, 김천을 상대할 구단의 분석관이 감독에게 올리는 문서로 다시 썼다. 데이터가 지지하는 순서대로 공략 지점 다섯 개. 첫째, 그들이 먼저 넣게 두어도 된다 \u2014 리드 중 90분당 2.58실점(기대 1.42, 포아송 p=0.027)인데 동점과 열세에서는 오히려 기대보다 덜 먹는다. 그들이 앞서고 우리가 쫓는 그림이 우리에게 유리하다는 뜻이다. 둘째, 데드볼을 만들어라. 득실차 \u22128의 전부가 정지 상황이고(세트피스 2:13, 오픈플레이 26:23) 세트피스 실점 8건 중 7건이 데드볼 3초 이내에 끝났다. 셋째, 박스 안에서 접촉을 만들어라 \u2014 피PK 6, 획득 0, 리그 최악의 \u22126이고 그중 3개가 추가시간이다. 넷째, 이정택과 변준수만 피해서 올려라. 공중볼 50%를 넘기는 필드 플레이어가 그 둘뿐이고 나머지는 전원 43% 이하다. 출전 시간이 가장 긴 186cm 공격수도 39.2%다. 다섯째, 골라인까지 파고들어라 \u2014 전환율 4.2% 대 1.4%. 그리고 훈련 한 주를 낭비하게 될 계획 네 가지를 기각 근거와 함께 적었다. 빌드업 압박(그들의 패스 실패율이 전 구역에서 상대보다 낮다), 내려앉을 거라는 가정(블록이 1m만 움직인다), 좌우 편향 공략(내가 냈다가 철회한 발견), 그들 코너에서의 역습 설계(배달 82개 이후 25초 내 우리 슛 0회). 마지막은 라커룸에 붙이는 한 장 요약이다.",
+    },
+    blurb: {
+      en: "The same dataset, written as a pre-match briefing for whoever plays them next. Five ways in \u2014 and four plans the data rejects, including one of my own.",
+      ko: "같은 데이터를 김천을 상대할 팀의 경기 전 브리핑으로 다시 썼다. 공략 지점 다섯 개, 그리고 기각된 계획 네 개. 내가 낸 것 하나를 포함해서.",
+    },
+    stats: {
+      en: [["2.58 vs 1.42", "conceded vs expected per 90 while leading"], ["6 / 0", "penalties conceded / won, worst in the league"], ["39.1%", "aerial win rate in the attacking third"], ["45\u201375\u2032", "17 of 36 goals conceded"]],
+      ko: [["2.58 vs 1.42", "리드 중 90분당 실점과 기대실점"], ["6 / 0", "피PK와 획득PK, 리그 최악"], ["39.1%", "공격 진영 공중볼 승률"], ["45\u201375\ubd84", "36실점 중 17실점"]],
     },
   },
   {
@@ -334,6 +362,11 @@ function EpisodeRow({ ep }: { ep: Episode }) {
           <span className="mono truncate" style={{ fontSize: 10, letterSpacing: ".07em", color: "var(--ink-4)", maxWidth: "100%" }}>
             {ep.competition[locale]}
           </span>
+          {ep.companion && (
+            <span className="mono px-1.5 rounded-full" style={{ fontSize: 8.5, letterSpacing: ".12em", border: "0.5px solid var(--edge)", color: "var(--ink-3)" }}>
+              {ep.companion[locale]}
+            </span>
+          )}
           {ep.koOnly && locale === "en" && (
             <span className="mono px-1.5 rounded-full" style={{ fontSize: 8.5, letterSpacing: ".12em", border: "0.5px solid var(--edge)", color: "var(--ink-3)" }}>
               KOREAN EDITION

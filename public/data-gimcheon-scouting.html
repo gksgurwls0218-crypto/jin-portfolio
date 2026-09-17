@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How to Beat Gimcheon Sangmu — Opposition Report | Hyuckjin Han</title>
+<meta name="description" content="Four wins, eighteen draws, seven defeats in 29 matches. This is a side that draws, not one that collapses. The way in is not open play — it is the dead ball, and the minutes when they are ahead. A pre-match briefing built from 41,879 raw events parsed from the K League Data Portal.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light;
+  --page:#f1f1ef; --surface:#fcfcfb; --surface-2:#e4e4e1; --raise:#f7f7f5;
+  --ink:#141413; --ink-2:#3c3c3a; --muted:#70706c;
+  --line:rgba(20,20,19,.14); --line-2:rgba(20,20,19,.07);
+  --grid:#e0e0dd; --axis:#c2c2be;
+  --kc:#a32b36; --lg:#2f6fa8; --top:#0e7c52; --bad:#8a1f27;
+  --kc-soft:rgba(163,43,54,.11); --lg-soft:rgba(47,111,168,.11);
+  --top-soft:rgba(14,124,82,.11); --bad-soft:rgba(138,31,39,.10);
+  --sp:clamp(18px,4.5vw,30px);
+  --disp:"Hahmlet",'Nanum Myeongjo',serif;
+  --body:"IBM Plex Sans KR",-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,'SFMono-Regular',monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --page:#121211; --surface:#1a1a19; --surface-2:#262624; --raise:#1f1f1e;
+    --ink:#eaeae7; --ink-2:#b8b8b4; --muted:#8d8d89;
+    --line:rgba(234,234,231,.16); --line-2:rgba(234,234,231,.08);
+    --grid:#2d2d2b; --axis:#4a4a47;
+    --kc:#d9555f; --lg:#4e90cc; --top:#17a077; --bad:#e8737c;
+    --kc-soft:rgba(217,85,95,.16); --lg-soft:rgba(78,144,204,.15);
+    --top-soft:rgba(23,160,119,.15); --bad-soft:rgba(232,115,124,.14);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --page:#121211; --surface:#1a1a19; --surface-2:#262624; --raise:#1f1f1e;
+  --ink:#eaeae7; --ink-2:#b8b8b4; --muted:#8d8d89;
+  --line:rgba(234,234,231,.16); --line-2:rgba(234,234,231,.08);
+  --grid:#2d2d2b; --axis:#4a4a47;
+  --kc:#d9555f; --lg:#4e90cc; --top:#17a077; --bad:#e8737c;
+  --kc-soft:rgba(217,85,95,.16); --lg-soft:rgba(78,144,204,.15);
+  --top-soft:rgba(23,160,119,.15); --bad-soft:rgba(232,115,124,.14);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font-family:var(--body);
+  word-break:keep-all;overflow-wrap:break-word;
+  font-weight:400;font-size:16px;line-height:1.72;-webkit-font-smoothing:antialiased}
+.wrap{max-width:940px;margin:0 auto;padding-inline:var(--sp);padding-block:0}
+p{margin:0 0 1.05em}
+strong{font-weight:600;color:var(--ink)}
+em{font-style:normal;background:var(--kc-soft);padding:.06em .3em;border-radius:2px;font-weight:500}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums;font-weight:500;letter-spacing:-.01em}
+
+/* ── header ── */
+header{padding-block:clamp(48px,9vw,88px) clamp(30px,5vw,44px);border-bottom:1px solid var(--line)}
+.badge{display:inline-flex;align-items:center;gap:.55em;font-family:var(--mono);font-size:11px;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--kc);font-weight:500}
+.badge::before{content:"";width:22px;height:2px;background:var(--kc)}
+h1{font-family:var(--disp);font-weight:600;font-size:clamp(38px,8.6vw,68px);line-height:1.06;
+  letter-spacing:-.025em;margin:.34em 0 .3em;text-wrap:balance}
+.dek{font-family:var(--disp);font-weight:400;font-size:clamp(17px,2.5vw,21px);line-height:1.55;
+  color:var(--ink-2);max-width:34em;margin:0 0 1.5em}
+.meta{display:flex;flex-wrap:wrap;gap:.5em 0;font-family:var(--mono);font-size:11.5px;
+  color:var(--muted);letter-spacing:.02em}
+.meta span+span::before{content:"|";padding:0 .85em;color:var(--axis)}
+
+/* ── tiles ── */
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line-2);
+  border-block:1px solid var(--line);margin-block:0}
+@media(max-width:760px){.tiles{grid-template-columns:repeat(2,1fr)}}
+.tile{background:var(--page);padding:clamp(16px,3vw,24px) clamp(12px,2.4vw,20px);display:flex;
+  flex-direction:column;gap:.3em}
+.tile .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.tile .v{font-family:var(--disp);font-weight:600;font-size:clamp(26px,4.6vw,38px);line-height:1;
+  letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.tile .v.gj{color:var(--kc)} .tile .v.bad{color:var(--bad)}
+.tile .s{font-size:12.5px;line-height:1.45;color:var(--ink-2)}
+
+/* ── sections ── */
+section{padding-block:clamp(40px,7vw,68px);border-bottom:1px solid var(--line-2)}
+section:last-of-type{border-bottom:none}
+.eyebrow{display:flex;align-items:baseline;gap:.9em;margin-bottom:.9em}
+.eyebrow .role{font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--page);background:var(--ink-2);padding:.35em .7em;border-radius:2px;white-space:nowrap}
+.eyebrow .cap{font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--muted)}
+h2{font-family:var(--disp);font-weight:600;font-size:clamp(25px,4.4vw,37px);line-height:1.2;
+  letter-spacing:-.022em;margin:0 0 .6em;text-wrap:balance;max-width:19em}
+h3{font-family:var(--disp);font-weight:600;font-size:clamp(17px,2.4vw,21px);line-height:1.35;
+  letter-spacing:-.012em;margin:2.1em 0 .7em}
+.lede{font-size:clamp(16.5px,2.1vw,18.5px);line-height:1.68;color:var(--ink-2);max-width:33em;margin-bottom:1.6em}
+.body{max-width:35em}
+.body.wide{max-width:40em}
+
+/* ── pull ── */
+.pull{border-left:3px solid var(--kc);padding:.1em 0 .1em 1.15em;margin:1.9em 0;
+  font-family:var(--disp);font-weight:500;font-size:clamp(18px,2.7vw,23px);line-height:1.45;
+  letter-spacing:-.014em;color:var(--ink);max-width:24em;text-wrap:balance}
+
+/* ── figure ── */
+figure{margin:2em 0;padding:clamp(16px,3vw,26px);background:var(--surface);
+  border:1px solid var(--line);border-radius:3px}
+figcaption{font-family:var(--mono);font-size:11px;line-height:1.6;color:var(--muted);
+  margin-top:1.15em;padding-top:.85em;border-top:1px solid var(--line-2)}
+.figtitle{font-family:var(--body);font-weight:600;font-size:14px;line-height:1.4;color:var(--ink);
+  margin-bottom:.3em;letter-spacing:-.005em}
+.figsub{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:1.35em;letter-spacing:.01em}
+.legend{display:flex;flex-wrap:wrap;gap:.5em 1.3em;font-family:var(--mono);font-size:11px;
+  color:var(--ink-2);margin-bottom:1.1em}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:1px;margin-right:.45em;vertical-align:-1px}
+
+/* ── bar rows ── */
+.bars{display:flex;flex-direction:column;gap:7px}
+.br{display:grid;grid-template-columns:74px 1fr 62px;align-items:center;gap:10px}
+@media(max-width:560px){.br{grid-template-columns:60px 1fr 54px;gap:7px}}
+.br .lb{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);text-align:right;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bars.lbwrap .br{grid-template-columns:90px 1fr 46px}
+.bars.lbwrap .br .lb{white-space:normal;overflow:visible;text-overflow:clip;line-height:1.28}
+@media(max-width:560px){.bars.lbwrap .br{grid-template-columns:78px 1fr 40px;gap:7px}}
+.br .tk{height:17px;background:var(--surface-2);border-radius:1px;overflow:hidden}
+.br .fl{height:100%;background:var(--lg);border-radius:1px}
+.br .vl{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;
+  color:var(--ink-2);text-align:right}
+.br.hi .lb{color:var(--kc);font-weight:600}
+.br.hi .fl{background:var(--kc)}
+.br.hi .vl{color:var(--kc);font-weight:600}
+.br.ref .fl{background:var(--top)}
+.br.ref .lb,.br.ref .vl{color:var(--top)}
+
+/* ── grouped pair bars ── */
+.pair{display:flex;flex-direction:column;gap:16px}
+.pg{display:grid;grid-template-columns:96px 1fr;gap:12px;align-items:center}
+@media(max-width:560px){.pg{grid-template-columns:1fr;gap:5px}}
+.pg .pn{font-family:var(--body);font-size:13px;font-weight:600;color:var(--ink)}
+.pg .pn small{display:block;font-family:var(--mono);font-weight:400;font-size:10.5px;color:var(--muted)}
+.pgb{display:flex;flex-direction:column;gap:5px}
+.pgr{display:grid;grid-template-columns:1fr 54px;gap:9px;align-items:center}
+.pgr .tk{height:15px;background:var(--surface-2);border-radius:1px;overflow:hidden}
+.pgr .fl{height:100%;border-radius:1px}
+.pgr .vl{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;text-align:right}
+
+/* ── table ── */
+.tbl{overflow-x:auto;margin:1.8em 0;border:1px solid var(--line);border-radius:3px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:13px}
+th,td{padding:9px 13px;text-align:left;border-bottom:1px solid var(--line-2);vertical-align:baseline}
+th{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;background:var(--raise);white-space:nowrap}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+td .nm{font-weight:600}
+td .no{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.up{color:var(--top);font-weight:600} .dn{color:var(--bad);font-weight:600}
+.dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:.5em;vertical-align:1px}
+.dot.on{background:var(--top)} .dot.mid{background:var(--axis)} .dot.off{background:transparent;
+  border:1px solid var(--axis)}
+
+/* ── slope svg ── */
+svg{display:block;max-width:100%;height:auto;overflow:visible}
+.sv-lb{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:var(--muted)}
+.sv-vl{font-family:"IBM Plex Mono",monospace;font-size:11.5px;font-weight:500}
+.sv-nm{font-family:"IBM Plex Sans KR",sans-serif;font-size:11.5px;font-weight:600;fill:var(--ink-2)}
+
+p.rate{font-size:13px;line-height:1.6;color:var(--muted);border-left:2px solid var(--line);
+  padding-left:1.1em;margin:1.5em 0}
+p.rate b{color:var(--ink-2);font-weight:600}
+
+/* ── callout ── */
+.note{background:var(--raise);border:1px solid var(--line);border-left:3px solid var(--axis);
+  border-radius:3px;padding:clamp(14px,2.6vw,20px);margin:1.9em 0;font-size:14px;line-height:1.65;
+  color:var(--ink-2)}
+.note b{color:var(--ink);font-weight:600}
+.note.warn{border-left-color:var(--bad)}
+.note.key{border-left-color:var(--kc);background:var(--kc-soft);border-color:var(--line)}
+
+/* ── stat strip ── */
+.strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-2);
+  border:1px solid var(--line);border-radius:3px;overflow:hidden;margin:1.9em 0}
+@media(max-width:620px){.strip{grid-template-columns:1fr}}
+.strip>div{background:var(--surface);padding:clamp(13px,2.4vw,18px)}
+.strip .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:.4em}
+.strip .v{font-family:var(--disp);font-weight:600;font-size:clamp(20px,3.4vw,27px);line-height:1.1;
+  font-variant-numeric:tabular-nums;letter-spacing:-.018em}
+.strip .s{font-size:12px;color:var(--ink-2);margin-top:.35em;line-height:1.45}
+
+/* ── list ── */
+ul.clean{list-style:none;padding:0;margin:1.3em 0;display:flex;flex-direction:column;gap:.85em;max-width:35em}
+ul.clean li{padding-left:1.5em;position:relative;font-size:14.5px;line-height:1.62;color:var(--ink-2)}
+ul.clean li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:1.5px;background:var(--axis)}
+ul.clean li b{color:var(--ink);font-weight:600}
+
+/* ── case panel ── */
+.case{border:1px solid var(--line);border-top:3px solid var(--bad);border-radius:3px;
+  background:var(--surface);padding:clamp(18px,3.2vw,28px);margin:2.2em 0}
+.case+.case{margin-top:1.4em}
+.case .ch{display:flex;flex-wrap:wrap;align-items:baseline;gap:.5em .9em;margin-bottom:.35em}
+.case .ct{font-family:var(--disp);font-weight:600;font-size:clamp(20px,3.2vw,26px);line-height:1.15;
+  letter-spacing:-.02em;color:var(--ink)}
+.case .cn{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.case .cs{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--bad);border:1px solid var(--bad);border-radius:2px;padding:.22em .55em;white-space:nowrap}
+.case .cd{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:1.15em;
+  padding-bottom:1.15em;border-bottom:1px solid var(--line-2)}
+.case p{font-size:14.5px;line-height:1.68;color:var(--ink-2);margin-bottom:1em;max-width:40em}
+.case p:last-child{margin-bottom:0}
+.case p b,.case p strong{color:var(--ink);font-weight:600}
+.case h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;margin:1.6em 0 .7em}
+
+/* ── ledger (two-column consequence table inside a case) ── */
+.ledger{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line-2);
+  border:1px solid var(--line);border-radius:3px;overflow:hidden;margin:1.4em 0}
+@media(max-width:620px){.ledger{grid-template-columns:1fr}}
+.ledger>div{background:var(--raise);padding:clamp(13px,2.4vw,17px)}
+.ledger .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:.5em}
+.ledger .v{font-family:var(--disp);font-weight:600;font-size:clamp(17px,2.8vw,21px);line-height:1.2;
+  letter-spacing:-.015em;margin-bottom:.4em}
+.ledger .state .v{color:var(--ink-2)}
+.ledger .social .v{color:var(--bad)}
+.ledger .s{font-size:12.5px;line-height:1.5;color:var(--ink-2)}
+
+/* ── timeline strip ── */
+.tl{display:flex;gap:2px;margin:1.3em 0 .6em}
+.tl .y{flex:1;min-width:0;text-align:center}
+.tl .yb{height:30px;border-radius:1px;background:var(--surface-2)}
+.tl .yb.play{background:var(--lg)}
+.tl .yb.gap{background:var(--bad-soft);border:1px dashed var(--bad)}
+.tl .yb.low{background:var(--kc-soft);border:1px solid var(--kc)}
+.tl .yl{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:.45em;
+  writing-mode:vertical-rl;transform:rotate(180deg);height:34px;display:inline-block}
+@media(min-width:560px){.tl .yl{writing-mode:horizontal-tb;transform:none;height:auto}}
+
+footer{padding-block:clamp(34px,6vw,54px) clamp(46px,8vw,74px);border-top:1px solid var(--line);
+  font-family:var(--mono);font-size:11.5px;line-height:1.85;color:var(--muted)}
+footer b{color:var(--ink-2);font-weight:500}
+@media(prefers-reduced-motion:no-preference){
+  section{animation:fi .5s ease-out both}
+  @keyframes fi{from{opacity:.55}to{opacity:1}}
+}
+
+/* ── scouting report components ── */
+.warnbar{background:var(--bad-soft);border:1px solid var(--bad);border-radius:3px;
+  padding:clamp(13px,2.4vw,18px);margin:1.6em 0;font-size:13.5px;line-height:1.6;color:var(--ink-2)}
+.warnbar b{color:var(--bad);font-weight:600}
+
+/* numbered instruction card */
+.instr{display:grid;grid-template-columns:44px 1fr;gap:clamp(12px,2.4vw,20px);
+  border:1px solid var(--line);border-left:3px solid var(--kc);border-radius:3px;
+  background:var(--surface);padding:clamp(15px,2.8vw,22px);margin:1.1em 0}
+@media(max-width:560px){.instr{grid-template-columns:32px 1fr;gap:12px}}
+.instr .n{font-family:var(--disp);font-weight:600;font-size:clamp(26px,4.4vw,34px);line-height:1;
+  color:var(--kc);letter-spacing:-.03em}
+.instr h3{font-family:var(--body);font-weight:600;font-size:clamp(15.5px,2.2vw,18px);
+  line-height:1.34;color:var(--ink);margin:0 0 .5em;letter-spacing:-.01em}
+.instr p{font-size:14px;line-height:1.62;color:var(--ink-2);margin:0 0 .7em;max-width:40em}
+.instr p:last-child{margin-bottom:0}
+.instr .ev{font-family:var(--mono);font-size:11.5px;line-height:1.55;color:var(--muted);
+  border-top:1px solid var(--line-2);padding-top:.7em;margin-top:.9em}
+.instr .ev b{color:var(--kc);font-weight:600}
+
+/* do-not list */
+.dont{border:1px solid var(--line);border-radius:3px;background:var(--raise);
+  padding:clamp(15px,2.8vw,22px);margin:1.1em 0}
+.dont .hd{display:flex;align-items:baseline;gap:.7em;margin-bottom:.55em}
+.dont .x{font-family:var(--mono);font-size:15px;color:var(--axis);line-height:1}
+.dont h3{font-family:var(--body);font-weight:600;font-size:15px;line-height:1.34;
+  color:var(--muted);margin:0;text-decoration:line-through;text-decoration-color:var(--axis)}
+.dont p{font-size:13.5px;line-height:1.6;color:var(--ink-2);margin:0;max-width:40em}
+.dont p b{color:var(--ink);font-weight:600}
+
+/* pitch zone map */
+.zgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin:1.2em 0}
+.zcell{padding:clamp(14px,2.6vw,22px) 10px;border-radius:2px;text-align:center}
+.zcell .zv{font-family:var(--disp);font-weight:600;font-size:clamp(22px,3.8vw,30px);
+  line-height:1;letter-spacing:-.02em}
+.zcell .zn{font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-top:.55em;
+  letter-spacing:.03em}
+.zcell .zr{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:.25em}
+
+/* player duel table */
+.duel{display:flex;flex-direction:column;gap:6px;margin:1.2em 0}
+.drow{display:grid;grid-template-columns:104px 34px 1fr 46px;align-items:center;gap:9px}
+@media(max-width:560px){.drow{grid-template-columns:88px 28px 1fr 42px;gap:6px}}
+.drow .dn{font-family:var(--body);font-size:12.5px;font-weight:600;color:var(--ink);
+  text-align:right;line-height:1.24}
+.drow .dp{font-family:var(--mono);font-size:10px;color:var(--muted);text-align:right}
+.drow .dt{height:16px;background:var(--surface-2);border-radius:1px;position:relative;overflow:hidden}
+.drow .df{position:absolute;top:0;bottom:0;border-radius:1px}
+.drow .dm{position:absolute;top:-2px;bottom:-2px;width:1.5px;background:var(--axis);left:50%}
+.drow .dv{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;text-align:right}
+
+/* one-page summary */
+.sheet{border:2px solid var(--ink);border-radius:4px;padding:clamp(18px,3.4vw,30px);
+  margin:2em 0;background:var(--surface)}
+.sheet h3{font-family:var(--disp);font-weight:600;font-size:clamp(19px,3vw,25px);
+  letter-spacing:-.02em;color:var(--ink);margin:0 0 .2em}
+.sheet .sd{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:1.4em;
+  padding-bottom:1.1em;border-bottom:1px solid var(--line)}
+.sheet ol{margin:0;padding-left:1.35em;display:flex;flex-direction:column;gap:.7em}
+.sheet ol li{font-size:14px;line-height:1.55;color:var(--ink-2)}
+.sheet ol li b{color:var(--ink);font-weight:600}
+.sheet .neg{margin-top:1.5em;padding-top:1.2em;border-top:1px solid var(--line-2)}
+.sheet .neg .nl{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:.6em}
+.sheet .neg p{font-size:13px;line-height:1.6;color:var(--muted);margin:0}
+
+</style>
+<body>
+<header><div class="wrap">
+  <div class="badge">Opposition report</div>
+  <h1>How to Beat Gimcheon Sangmu</h1>
+  <p class="dek">Four wins, eighteen draws, seven defeats in 29 matches. This is a side that draws, not one that collapses. The way in is not open play — it is the dead ball, and the minutes when they are ahead. A pre-match briefing built from 41,879 raw events parsed from the K League Data Portal.</p>
+  <div class="meta"><span>K League 1 2026 · Rounds 1–29</span><span>Cut-off 13 September 2026</span><span>41,879 raw events, parsed directly</span><span>Hyuckjin Han</span></div>
+</div></header>
+<div class="tiles"><div class="tile"><div class="k">Set-piece record</div><div class="v bad">2 : 13</div><div class="s">Scored : conceded<br>Open play is 26 : 23</div></div><div class="tile"><div class="k">Conceded / 90 when ahead</div><div class="v bad">2.58</div><div class="s">Expected 1.42 · Poisson p = 0.027<br>Below expectation in every other state</div></div><div class="tile"><div class="k">Penalties against / for</div><div class="v bad">6 / 0</div><div class="s">Worst differential in the league<br>The only club on zero won</div></div><div class="tile"><div class="k">Home record</div><div class="v gj">1 win</div><div class="s">1W 10D 3L in 14 home matches<br>Concedes 1.43 at home, 1.07 away</div></div></div>
+<div class="wrap">
+
+<section>
+  <div class="eyebrow"><span class="role">First</span><span class="cap">The shelf life of this document</span></div>
+  <h2>This report expires faster than most</h2>
+  <div class="body">
+    <p>Gimcheon Sangmu is a club whose squad changes <strong>on discharge dates</strong> — dates that have
+      nothing to do with the transfer window, and no notice attached. In this season alone, three regulars
+      played their last match on a single day, 29 August, one of them the first-choice goalkeeper who had
+      started 25 of the previous 26 rounds. That was ten days after the summer registration period closed.</p>
+  </div>
+
+  <div class="warnbar"><b>Check this before you use it.</b>
+    The individual figures below are cumulative over Rounds 1–29. Before the match,
+    <b>check the last two team sheets</b>. A player named in this report may already have been discharged.
+    The team-level numbers — set-piece record, concession by score state, block height, penalties —
+    are 29-match aggregates and are far less sensitive to individual turnover.
+    <b>Trust the structure; verify the names.</b>
+  </div>
+
+  <div class="body">
+    <p>One more thing worth knowing. <strong>Gimcheon's 2027 place in K League 2 is already fixed,
+      regardless of where they finish.</strong> It follows from the expiry of their hosting agreement, not
+      from results. So the <em>collective</em> incentive in their remaining fixtures is not the table.
+      Do not read that as apathy, though. Every player in that squad is auditioning for a return to his
+      parent club and, in many cases, for the contract that defines his career. Nothing collective is at
+      stake and everything personal is.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">KEY</span><span class="cap">Five ways in</span></div>
+  <h2>If you take nothing else, take these five</h2>
+  <div class="lede">Ordered by how strongly 29 matches of data support them. The first is the strongest.</div>
+
+  <div class="instr">
+    <div class="n">1</div>
+    <div>
+      <h3>Let them score first — Gimcheon are at their worst when ahead</h3>
+      <p>This runs against the instinct, and it is the single most exploitable thing about them.
+        Across the whole season they conceded 36 goals against 41.1 expected — five to the good.
+        They give that entire surplus back in one score state.</p>
+      <p>Level and behind, they concede <em>less</em> than expected. Which means a match in which they lead
+        and you chase is the shape that favours you. <strong>Do not treat going 0–1 down as a disaster.
+        Treat it as a rehearsed scenario.</strong></p>
+      <p class="ev">489 minutes leading — 7.73 goals expected, <b>14 conceded</b>.
+        Poisson P(X≥14) = <b>0.027</b>. Conceded per 90: leading <b>2.58</b> / level 0.74 / behind 1.28.
+        The mean expected value of the 14 goals conceded while leading was 0.294, <b>lower</b> than the
+        0.355 of everything else — they were not being opened up, bad chances were going in.</p>
+    </div>
+  </div>
+
+  <div class="instr">
+    <div class="n">2</div>
+    <div>
+      <h3>Manufacture as many dead balls as you can</h3>
+      <p>Their entire &minus;8 goal difference comes from stationary play.
+        <strong>Set pieces 2 for, 13 against. Open play 26 for, 23 against.</strong>
+        In the run of play this is a winning team. Do not let the play run.</p>
+      <p>Concretely: winning a corner or a wide free kick is itself a scoring chance. And
+        <strong>finish on the first ball.</strong> There is very little need to prepare second-phase routines.</p>
+      <p class="ev">Of the eight set-piece goals conceded (penalties excluded),
+        <b>seven were finished within three seconds of the dead ball</b> and <b>four on the first contact</b>.
+        Across 111 corners faced, the first Gimcheon defensive touch averaged <b>6.1</b> from their own goal
+        line — the edge of the six-yard box — and <b>42% of those touches were clearances</b>.
+        They concede on <b>3.6%</b> of corners faced.</p>
+    </div>
+  </div>
+
+  <div class="instr">
+    <div class="n">3</div>
+    <div>
+      <h3>Make contact in the box — no club in the league gives up more penalties or wins fewer</h3>
+      <p>In 29 matches they have <strong>conceded six penalties and won none.</strong>
+        A differential of &minus;6 is the worst of the twelve clubs, and they are the only side on zero won.
+        There is no reason to avoid a physical contest in their area.</p>
+      <p>The timing is consistent too. <strong>Three of the six came in added time</strong> at the end of a half.
+        A cross or cutback into their box in the closing minutes is worth more than it usually is.</p>
+      <p class="ev">Penalties conceded <b>6</b> / won <b>0</b> (league average conceded 3.5).
+        Three in stoppage time — 45+3, 45+4 and 90+3.
+        The fouls were committed by five different players, so this is
+        <b>not one individual</b>. It is structural.</p>
+    </div>
+  </div>
+
+  <div class="instr">
+    <div class="n">4</div>
+    <div>
+      <h3>Deliver away from the two centre-backs</h3>
+      <p>Gimcheon's aerial ability is not distributed across the team. It sits with
+        <strong>two centre-backs</strong>. Lee Jung-taek and Byun Jun-soo win in the mid-60s in their own half
+        and in midfield. <strong>Every other outfield regular is at 43% or below.</strong></p>
+      <p>In practice: aim near and far post and <strong>miss the centre of the six-yard box where those two
+        stand.</strong> And the best moment of all is while both of them are <em>up the pitch for a Gimcheon
+        set piece</em> — the combination left behind is the weakest aerial group they can field.</p>
+      <p class="ev">Team aerial win rate <b>46.3%</b> (467 won, 542 lost). By zone: own third 47.8%,
+        middle 50.0%, attacking third <b>39.1%</b>. Lee Jung-taek wins <b>67.3%</b> in midfield and
+        Byun Jun-soo <b>66.7%</b>, while Lee Gun-hee (forward, 186 cm) runs <b>37–42%</b> in every zone,
+        Ko Jae-hyun 38–42%, and Park Se-jin <b>18.8%</b> in midfield.</p>
+    </div>
+  </div>
+
+  <div class="instr">
+    <div class="n">5</div>
+    <div>
+      <h3>Get to the byline before you cross</h3>
+      <p>The axis is not left and right. It is <strong>depth</strong>. Crosses hit early against Gimcheon are
+        worth almost nothing; crosses from the byline are three times as dangerous.</p>
+      <p>And <strong>a cross delivered straight from a set piece is far more dangerous than one from open
+        play</strong> — which converges on instruction 2.</p>
+      <p class="ev">Across the 496 crosses Gimcheon faced: byline <b>4.2%</b> conversion, deep positions 2.2%,
+        early positions <b>1.4%</b>. Set-piece deliveries are 83 crosses (17%) and produced <b>6 of the 16
+        goals (38%)</b>; open-play fast breaks are 257 crosses and 5 goals. Per cross, <b>3.8 times</b>
+        more dangerous.</p>
+    </div>
+  </div>
+
+  <div class="note key"><b>Bonus — watch the clock.</b>
+    Their concessions climb as the match goes on. <b>Seventeen of their 36 goals conceded — 47% — fall
+    between the 45th and 75th minute</b>, while the 15–30 window has produced only two all season.
+    There is no case for over-committing in the opening half hour, and
+    <b>the period right after half-time is when they are most open.</b>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">Caution</span><span class="cap">So you do not waste the week</span></div>
+  <h2>What not to do — four plans the data rejects</h2>
+  <div class="lede">These are the plans sides commonly bring to this fixture. Twenty-nine matches of data do
+    not support any of them. Training time spent here is time lost.</div>
+
+  <div class="dont">
+    <div class="hd"><span class="x">✕</span><h3>Press high and break their build-up</h3></div>
+    <p>Gimcheon's pass-failure rate is <b>lower than their opponents' in every third of the pitch</b> —
+      17.2% against 22.4% in their own third, 12.8% against 15.4% in midfield, 28.4% against 31.6% in the
+      attacking third. This team does not concede because it is pressed into mistakes. A plan built on
+      winning the ball high has no support here. If you press, press to
+      <b>push the game up the pitch and generate dead balls</b>, not to force turnovers.</p>
+  </div>
+
+  <div class="dont">
+    <div class="hd"><span class="x">✕</span><h3>Wait for them to sit deep once ahead, then push on</h3></div>
+    <p>They do not sit deep. The mean position of a Gimcheon defensive action is
+      <b>28.5 leading, 29.1 level, 29.6 behind</b> — a spread of 1.1 units, about one metre.
+      The block height is effectively fixed. What changes when they lead is <b>possession</b>:
+      462 passes per 90 drops to 386, a fall of 16%. They are not retreating, they are
+      <b>giving the ball away</b>. So the session to run is not "breaking a low block" —
+      it is <b>immediate attack from a regain</b>.</p>
+  </div>
+
+  <div class="dont">
+    <div class="hd"><span class="x">✕</span><h3>Target their right side, which is weaker</h3></div>
+    <p>Stated plainly because this was <b>my own finding, and I withdrew it.</b> In aggregate, crosses into
+      Gimcheon's right rise from 7.60 to 11.23 per 90 when they lead, up 48%. But conversion runs the other
+      way — 4.1% on the left against 2.8% on the right (binomial p = 0.32) — and once the phases are
+      separated, the dominant one, fast breaks, rises to <b>exactly 6.44 on both sides</b>.
+      Opponent by opponent only five of seven show the increase. It is an artefact of adding things together.
+      Do not build a plan on a left-right bias.</p>
+  </div>
+
+  <div class="dont">
+    <div class="hd"><span class="x">✕</span><h3>Set up to counter from their corners</h3></div>
+    <p>There is nothing there. Across <b>82 Gimcheon set-piece deliveries, opponents produced zero shots
+      within 25 seconds.</b> Their corners being harmless and their corners being a counter-attacking
+      opportunity are two different claims, and only the first is true — 147 corners, one goal, a 0.68%
+      conversion rate that is the lowest of the twelve clubs. Defend them, exit safely, and hang your
+      counter-attacking triggers somewhere else.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">Evidence</span><span class="cap">The aerial map</span></div>
+  <h2>Where their heading ability actually sits</h2>
+  <div class="body">
+    <p>This is the basis for instruction 4. The team average of 46.3% does not describe this side.
+      Split it by zone, and then by player, and the picture appears.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">Gimcheon aerial win rate — by zone</div>
+    <div class="figsub">Position of the duel · 1,009 duels · 50% is neutral</div>
+    <div class="zgrid">
+      <div class="zcell" style="background:var(--lg-soft)">
+        <div class="zv" style="color:var(--lg)">47.8%</div>
+        <div class="zn">own third</div><div class="zr">128 won · 140 lost</div></div>
+      <div class="zcell" style="background:var(--surface-2)">
+        <div class="zv" style="color:var(--ink-2)">50.0%</div>
+        <div class="zn">middle third</div><div class="zr">226 won · 226 lost</div></div>
+      <div class="zcell" style="background:var(--lg-soft);border:1px solid var(--lg)">
+        <div class="zv" style="color:var(--lg)">39.1%</div>
+        <div class="zn">attacking third</div><div class="zr">113 won · 176 lost</div></div>
+    </div>
+    <div class="legend"><span><i style="background:var(--lg)"></i>Gimcheon lose — your opportunity</span><span><i style="background:var(--surface-2);border:1px solid var(--axis)"></i>Neutral (50%)</span><span><i style="background:var(--kc)"></i>Gimcheon win — avoid</span></div>
+    <figcaption>There is no zone in which the team wins. As a team, Gimcheon lose the heading contest.
+      Split by player, the story changes.</figcaption>
+  </figure>
+
+  <figure>
+    <div class="figtitle">Aerial win rate by player — 12 or more duels</div>
+    <div class="figsub">The centre line is 50% · further right means Gimcheon win more</div>
+    <div class="duel">
+      <div class="drow"><div class="dn">Kim Hyun-woo</div><div class="dp">DF</div><div class="dt"><div class="df" style="left:50%;width:15.7%;background:var(--kc)"></div><div class="dm"></div></div><div class="dv" style="color:var(--kc)">65.7%</div></div>
+      <div class="drow"><div class="dn">Lee Kang-hyun</div><div class="dp">MF</div><div class="dt"><div class="df" style="left:50%;width:15.5%;background:var(--kc)"></div><div class="dm"></div></div><div class="dv" style="color:var(--kc)">65.5%</div></div>
+      <div class="drow"><div class="dn">Byun Jun-soo</div><div class="dp">DF</div><div class="dt"><div class="df" style="left:50%;width:7.8%;background:var(--kc)"></div><div class="dm"></div></div><div class="dv" style="color:var(--kc)">57.8%</div></div>
+      <div class="drow"><div class="dn">Lee Jung-taek</div><div class="dp">DF</div><div class="dt"><div class="df" style="left:50%;width:6.8%;background:var(--kc)"></div><div class="dm"></div></div><div class="dv" style="color:var(--kc)">56.8%</div></div>
+      <div class="drow"><div class="dn">Kim Tae-hwan</div><div class="dp">DF</div><div class="dt"><div class="df" style="left:49.2%;width:0.8%;background:var(--surface-2)"></div><div class="dm"></div></div><div class="dv">49.2%</div></div>
+      <div class="drow"><div class="dn">Lee Su-bin</div><div class="dp">MF</div><div class="dt"><div class="df" style="left:48.1%;width:1.9%;background:var(--lg)"></div><div class="dm"></div></div><div class="dv" style="color:var(--lg)">48.1%</div></div>
+      <div class="drow"><div class="dn">Jung Jae-min</div><div class="dp">FW</div><div class="dt"><div class="df" style="left:45.3%;width:4.7%;background:var(--lg)"></div><div class="dm"></div></div><div class="dv" style="color:var(--lg)">45.3%</div></div>
+      <div class="drow"><div class="dn">Park Tae-jun</div><div class="dp">MF</div><div class="dt"><div class="df" style="left:44.8%;width:5.2%;background:var(--lg)"></div><div class="dm"></div></div><div class="dv" style="color:var(--lg)">44.8%</div></div>
+      <div class="drow"><div class="dn">Lee Gun-hee</div><div class="dp">FW</div><div class="dt"><div class="df" style="left:39.2%;width:10.8%;background:var(--lg)"></div><div class="dm"></div></div><div class="dv" style="color:var(--lg)">39.2%</div></div>
+      <div class="drow"><div class="dn">Ko Jae-hyun</div><div class="dp">MF</div><div class="dt"><div class="df" style="left:38.8%;width:11.2%;background:var(--lg)"></div><div class="dm"></div></div><div class="dv" style="color:var(--lg)">38.8%</div></div>
+      <div class="drow"><div class="dn">Park Chul-woo</div><div class="dp">DF</div><div class="dt"><div class="df" style="left:37.0%;width:13.0%;background:var(--lg)"></div><div class="dm"></div></div><div class="dv" style="color:var(--lg)">37.0%</div></div>
+      <div class="drow"><div class="dn">Park Se-jin</div><div class="dp">MF</div><div class="dt"><div class="df" style="left:27.3%;width:22.7%;background:var(--lg)"></div><div class="dm"></div></div><div class="dv" style="color:var(--lg)">27.3%</div></div>
+    </div>
+    <div class="legend"><span><i style="background:var(--kc)"></i>Above 50% — avoid</span><span><i style="background:var(--lg)"></i>Below 50% — target</span></div>
+    <figcaption>Lee Gun-hee, the most-used attacking player at 2,183 minutes and 186 cm, wins 39.2%.
+      Park Chul-woo is a defender and wins 37.0% — one of seven in the attacking third (14.3%).
+      Players with fewer than 12 duels are excluded.</figcaption>
+  </figure>
+
+  <div class="note"><b>How to use it.</b>
+    On your own set pieces, <b>deliver away from wherever Lee Jung-taek and Byun Jun-soo are standing</b>.
+    Defending theirs, <b>man-mark those two and nobody else</b> — every other outfield player is under 50%.
+    And aim your long balls at <b>Park Chul-woo</b>, the one centre-back who loses them.
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">Evidence</span><span class="cap">Game management</span></div>
+  <h2>When and where they open up</h2>
+
+  <figure>
+    <div class="figtitle">Goals by fifteen-minute window — Gimcheon's own</div>
+    <div class="figsub">29 matches · 27 scored, 36 conceded (own goals excluded)</div>
+    <svg viewBox="0 0 620 250" role="img" aria-label="Column chart comparing Gimcheon goals scored and conceded in fifteen-minute windows. Concessions peak between the 45th and 75th minute.">
+      <line x1="52" y1="180" x2="600" y2="180" stroke="var(--axis)" stroke-width="1"/>
+      <line x1="52" y1="26" x2="52" y2="180" stroke="var(--axis)" stroke-width="1"/>
+      <line x1="52" y1="103" x2="600" y2="103" stroke="var(--grid)" stroke-width="1" stroke-dasharray="2 3"/>
+      <text class="sv-lb" x="46" y="184" text-anchor="end">0</text>
+      <text class="sv-lb" x="46" y="107" text-anchor="end">5</text>
+      <text class="sv-lb" x="46" y="30" text-anchor="end">10</text>
+      <g fill="var(--kc)">
+        <rect x="72"  y="118" width="34" height="62"  rx="3"><title>0-15: 4 scored</title></rect>
+        <rect x="160" y="103" width="34" height="77"  rx="3"><title>15-30: 5 scored</title></rect>
+        <rect x="248" y="118" width="34" height="62"  rx="3"><title>30-45: 4 scored</title></rect>
+        <rect x="336" y="149" width="34" height="31"  rx="3"><title>45-60: 2 scored</title></rect>
+        <rect x="424" y="88"  width="34" height="92"  rx="3"><title>60-75: 6 scored</title></rect>
+        <rect x="512" y="88"  width="34" height="92"  rx="3"><title>75-end: 6 scored</title></rect>
+      </g>
+      <g fill="var(--lg)">
+        <rect x="108" y="118" width="34" height="62"  rx="3"><title>0-15: 4 conceded</title></rect>
+        <rect x="196" y="149" width="34" height="31"  rx="3"><title>15-30: 2 conceded</title></rect>
+        <rect x="284" y="88"  width="34" height="92"  rx="3"><title>30-45: 6 conceded</title></rect>
+        <rect x="372" y="57"  width="34" height="123" rx="3"><title>45-60: 8 conceded — joint highest</title></rect>
+        <rect x="460" y="42"  width="34" height="138" rx="3"><title>60-75: 9 conceded — highest</title></rect>
+        <rect x="548" y="72"  width="34" height="108" rx="3"><title>75-end: 7 conceded</title></rect>
+      </g>
+      <text class="sv-vl" x="389" y="49" text-anchor="middle" fill="var(--lg)">8</text>
+      <text class="sv-vl" x="477" y="34" text-anchor="middle" fill="var(--lg)">9</text>
+      <text class="sv-lb" x="107" y="198" text-anchor="middle">0–15</text>
+      <text class="sv-lb" x="195" y="198" text-anchor="middle">15–30</text>
+      <text class="sv-lb" x="283" y="198" text-anchor="middle">30–45</text>
+      <text class="sv-lb" x="371" y="198" text-anchor="middle">45–60</text>
+      <text class="sv-lb" x="459" y="198" text-anchor="middle">60–75</text>
+      <text class="sv-lb" x="547" y="198" text-anchor="middle">75–</text>
+      <rect x="52" y="214" width="10" height="10" fill="var(--kc)" rx="1"/>
+      <text class="sv-lb" x="68" y="223">scored</text>
+      <rect x="150" y="214" width="10" height="10" fill="var(--lg)" rx="1"/>
+      <text class="sv-lb" x="166" y="223">conceded</text>
+      <text class="sv-nm" x="330" y="243" text-anchor="middle">Seventeen goals conceded between 45 and 75 — 47% of the total</text>
+    </svg>
+    <figcaption>Only two goals conceded between the 15th and 30th minute all season. There is no case for
+      over-committing early. The period right after half-time is where it opens.</figcaption>
+  </figure>
+
+  <figure>
+    <div class="figtitle">Conceded versus expected, by score state</div>
+    <div class="figsub">Per 90 minutes · a goal that changed the state is assigned to the state before it</div>
+    <div class="pair">
+      <div class="pg"><div class="pn">Leading<small>489 min</small></div><div class="pgb">
+        <div class="pgr" title="Leading: 2.58 conceded per 90"><div class="tk"><div class="fl" style="width:100%;background:var(--kc)"></div></div><div class="vl" style="color:var(--kc)">2.58</div></div>
+        <div class="pgr" title="Leading: 1.42 expected against per 90"><div class="tk"><div class="fl" style="width:55%;background:var(--lg)"></div></div><div class="vl" style="color:var(--lg)">1.42</div></div></div></div>
+      <div class="pg"><div class="pn">Level<small>1,706 min</small></div><div class="pgb">
+        <div class="pgr" title="Level: 0.74 conceded per 90"><div class="tk"><div class="fl" style="width:28.7%;background:var(--kc)"></div></div><div class="vl" style="color:var(--kc)">0.74</div></div>
+        <div class="pgr" title="Level: 1.14 expected against per 90"><div class="tk"><div class="fl" style="width:44.2%;background:var(--lg)"></div></div><div class="vl" style="color:var(--lg)">1.14</div></div></div></div>
+      <div class="pg"><div class="pn">Behind<small>563 min</small></div><div class="pgb">
+        <div class="pgr" title="Behind: 1.28 conceded per 90"><div class="tk"><div class="fl" style="width:49.6%;background:var(--kc)"></div></div><div class="vl" style="color:var(--kc)">1.28</div></div>
+        <div class="pgr" title="Behind: 1.89 expected against per 90"><div class="tk"><div class="fl" style="width:73.3%;background:var(--lg)"></div></div><div class="vl" style="color:var(--lg)">1.89</div></div></div></div>
+    </div>
+    <div class="legend"><span><i style="background:var(--kc)"></i>conceded / 90</span><span><i style="background:var(--lg)"></i>expected against / 90</span></div>
+    <figcaption>Axis maximum 2.58. Of the three states, only leading has actual above expected.
+      This is the basis for instruction 1.</figcaption>
+  </figure>
+
+  <div class="strip">
+    <div><div class="k">Home record</div><div class="v num">1W 10D 3L</div><div class="s">14 matches · 1.43 conceded per match<br>Away: 3W 8D 4L · 1.07</div></div>
+    <div><div class="k">Penalties against / for</div><div class="v num">6 / 0</div><div class="s">Worst in the league at −6<br>League average conceded 3.5</div></div>
+    <div><div class="k">Open-play crosses</div><div class="v num">543</div><div class="s">23.0% find a teammate<br>High volume, low accuracy</div></div>
+  </div>
+
+  <div class="body">
+    <p><strong>It is worth noting that away at Gimcheon is the better fixture.</strong> They have won once in
+      fourteen home matches and concede 0.36 goals per match more at home than away. There is no reason to
+      treat the trip as a difficult one. With a sample of fourteen matches, though, treat this as
+      <em>context rather than strong evidence</em>.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">Penalties — all twelve clubs</div>
+    <div class="figsub">Won minus conceded · 2026 Rounds 1–29 · 42 penalties league-wide</div>
+    <div class="bars lbwrap">
+      <div class="br"><div class="lb">Incheon</div><div class="tk"><div class="fl" style="width:100%"></div></div><div class="vl">+5</div></div>
+      <div class="br"><div class="lb">Pohang</div><div class="tk"><div class="fl" style="width:100%"></div></div><div class="vl">+5</div></div>
+      <div class="br"><div class="lb">Ulsan</div><div class="tk"><div class="fl" style="width:82%"></div></div><div class="vl">+3</div></div>
+      <div class="br"><div class="lb">Anyang<br>Gangwon</div><div class="tk"><div class="fl" style="width:73%"></div></div><div class="vl">+2</div></div>
+      <div class="br"><div class="lb">Seoul<br>Jeju</div><div class="tk"><div class="fl" style="width:64%"></div></div><div class="vl">0</div></div>
+      <div class="br"><div class="lb">Bucheon</div><div class="tk"><div class="fl" style="width:55%"></div></div><div class="vl">−1</div></div>
+      <div class="br"><div class="lb">Daejeon</div><div class="tk"><div class="fl" style="width:45%"></div></div><div class="vl">−2</div></div>
+      <div class="br"><div class="lb">Jeonbuk</div><div class="tk"><div class="fl" style="width:36%"></div></div><div class="vl">−3</div></div>
+      <div class="br"><div class="lb">Gwangju</div><div class="tk"><div class="fl" style="width:18%"></div></div><div class="vl">−5</div></div>
+      <div class="br hi"><div class="lb">Gimcheon</div><div class="tk"><div class="fl" style="width:9%"></div></div><div class="vl">−6</div></div>
+    </div>
+    <figcaption>One series, with the subject highlighted. Bar length spans −6 to +5. Gimcheon are the only club on zero won, which means the −6 is not
+      a refereeing pattern so much as evidence that <b>they cannot manufacture contact in the box</b>.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">Evidence</span><span class="cap">Their threat</span></div>
+  <h2>What you actually have to defend</h2>
+  <div class="body">
+    <p>That is the attacking half. Now the defending. The good news first:
+      <strong>Gimcheon's set pieces are harmless.</strong> 147 corners produced one goal, a conversion rate of
+      0.68% that is the lowest of the twelve clubs and about a third of the league average.
+      Conceding a corner to this side is not, in itself, a problem.</p>
+    <p>The danger is all in their <strong>26 open-play goals</strong>, and even that is concentrated.</p>
+  </div>
+
+  <div class="tbl"><table>
+    <thead><tr><th>Player</th><th>Minutes</th><th>Goals</th><th>Assists</th><th>Shots</th><th>Key passes</th></tr></thead>
+    <tbody>
+      <tr><td><span class="nm">Ko Jae-hyun</span> <span class="no">MF</span></td><td class="n">2,166</td><td class="n"><b>7</b></td><td class="n">3</td><td class="n">53</td><td class="n">19</td></tr>
+      <tr><td><span class="nm">Lee Gun-hee</span> <span class="no">FW · 186cm</span></td><td class="n">2,183</td><td class="n"><b>5</b></td><td class="n">2</td><td class="n">58</td><td class="n">17</td></tr>
+      <tr><td><span class="nm">Park Chul-woo</span> <span class="no">DF</span></td><td class="n">2,434</td><td class="n">2</td><td class="n">3</td><td class="n">22</td><td class="n"><b>31</b></td></tr>
+      <tr><td><span class="nm">Park Tae-jun</span> <span class="no">MF</span></td><td class="n">2,293</td><td class="n">2</td><td class="n">1</td><td class="n">18</td><td class="n"><b>40</b></td></tr>
+      <tr><td><span class="nm">Lee Jung-taek</span> <span class="no">DF</span></td><td class="n">2,483</td><td class="n">1</td><td class="n">3</td><td class="n">3</td><td class="n">12</td></tr>
+      <tr><td class="no">Team total</td><td class="n">—</td><td class="n">28</td><td class="n">20</td><td class="n">—</td><td class="n">—</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="body">
+    <p><strong>The top three account for 22 of the team's 48 goal involvements — 46%.</strong>
+      Contain Ko Jae-hyun and Lee Gun-hee and you have closed half of this side's scoring.
+      And the key passes come from <strong>Park Tae-jun (40) and Park Chul-woo (31)</strong> — the supply
+      runs from midfield and the back line, not from the front. Pressing the origin of the forward pass is
+      a better use of a man than marking the striker.</p>
+    <p>Worth adding that <strong>Lee Gun-hee has taken 58 shots, the most in the squad, for five goals.</strong>
+      Conceding the shot while denying the position is a reasonable trade. Gimcheon's shots-on-target rate is
+      <strong>29.5%</strong>, the only figure in the twenties among the twelve clubs.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">Summary</span><span class="cap">One page</span></div>
+  <h2>The dressing-room page</h2>
+
+  <div class="sheet">
+    <h3>Gimcheon Sangmu — pre-match summary</h3>
+    <div class="sd">K League 1 2026, Rounds 1–29 · check individual figures against the latest team sheet</div>
+    <ol>
+      <li><b>Do not panic if they score first.</b> 2.58 conceded per 90 while leading, against 1.42 expected. Leading is when they are weakest.</li>
+      <li><b>Manufacture dead balls.</b> Set pieces 2:13. Finish on the first ball — seven of eight inside three seconds.</li>
+      <li><b>Get physical in the box.</b> Six penalties conceded, none won, worst in the league. Three of the six in added time.</li>
+      <li><b>Deliver away from Lee Jung-taek and Byun Jun-soo.</b> Every other outfield player is under 50% in the air.</li>
+      <li><b>Reach the byline.</b> 4.2% conversion against 1.4% from early crosses.</li>
+      <li><b>Straight after half-time.</b> 17 of 36 goals conceded fall between 45 and 75 minutes.</li>
+      <li><b>Contain Ko Jae-hyun and Lee Gun-hee.</b> Three players make 46% of this team's goal involvements.</li>
+    </ol>
+    <div class="neg">
+      <div class="nl">Do not</div>
+      <p>Press high to break the build-up (their pass-failure rate is lower than yours) · assume they will sit deep
+        (the block moves one metre) · target a left-right bias (tested and rejected) · plan counters from their
+        corners (zero shots within 25 seconds of 82 deliveries).</p>
+    </div>
+  </div>
+
+  <div class="body">
+    <p class="pull">This is not a bad team. In the run of play they are winning, 26 to 23.
+      To beat them you have to stop the play running, hold the ball still, let them get in front —
+      and attack the minutes that follow.</p>
+  </div>
+</section>
+
+<footer><div class="wrap"><b>Data</b> · K League Data Portal (portal.kleague.com), parsed directly. 2026 K League 1 Rounds 1–29, cut-off 13 September 2026. 41,879 raw events (Gimcheon 22,373), 1,159 player-match rows, 29 match reports, 42 official penalty records.<br><b>Verification</b> · Ten event-vs-league-search checks reconciled exactly. Attacking-direction normalisation verified. Expected-goal values are the portal's own; the model specification is not published.<br><b>Limits</b> · Where this report says "the opposition", it means the eleven clubs Gimcheon faced, not a league average. Aerial zones are taken from the coordinate of the duel itself and do not distinguish which side initiated it.<br><b>Author</b> · Hyuckjin Han · September 2026</div></footer>
+</div>
+</body>
+</html>
