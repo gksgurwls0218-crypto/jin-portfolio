@@ -31,6 +31,56 @@ type Episode = {
 
 const EPISODES: Episode[] = [
   {
+    slug: "gimcheon",
+    no: "11",
+    publishedAt: "2026-09-17",
+    competition: {
+      en: "K League 1 2026 · Gimcheon Sangmu · 29 matches, 41,879 events",
+      ko: "하나은행 K리그1 2026 · 김천상무 · 29경기 · 이벤트 41,879건",
+    },
+    title: {
+      en: "Lost on Dead Balls",
+      ko: "멈춘 공에서 잃었다",
+    },
+    sub: {
+      en: "Eighteen draws in 29 matches, six clear of any other club in the division, and fifteen of them finished 1\u20131 or 0\u20130. The team was not hanging on \u2014 it was ahead: twelve conceded goals erased a lead, and the ten matches that followed cost 21 points. Hold those and the season reads 51 points, second place. Split the \u22128 goal difference by phase and it stops looking like an eleventh-placed side. Open play is 26:23, a positive record. Set pieces are 2:13. The whole of the deficit is the dead ball. Cut by score state and the defence is five goals to the good over the season \u2014 and surrenders all of it in one state: while leading, 7.73 goals were expected and 14 arrived (Poisson p = 0.027), nine of the fourteen aerial, and the conceded shots were worse chances than average rather than better. Four explanations were then removed. The club cannot sign a foreign target man, and the mechanism behind that is real \u2014 42% of the league\u2019s tall forwards are foreign, the domestic pool of 188cm regulars is one player, and the dependence ran 47 to 82 percent in two seasons \u2014 but it does not apply here: Gimcheon is third in the league for minutes given to forwards of 185cm or more, with none of them foreign, and tall-forward inventory does not predict corner goals at all (r = \u22120.19). Squad rotation does not survive either; 42 players measured against themselves at both clubs give +0.60 points and t = 0.89. Nor does sitting deep \u2014 the block moves one metre. Nor did my own right-side cross finding, which dissolved when the phases were separated. What is left is the delivery: 56% of corners into the centre of the six-yard area, first contact lost 53% of the time, and a 192cm forward on the pitch for 31% of his own team\u2019s corners.",
+      ko: "29경기에 무승부 18번. 2위 구단보다 여섯 경기 많고, 그중 15번이 1\u20131 또는 0\u20130이었다. 버틴 게 아니라 앞서 있었다 \u2014 리드를 지운 실점이 12건이고, 그중 끝내 못 이긴 10경기에서 승점 21점을 흘렸다. 그 열 경기를 지켰다면 51점, 2위다. 득실차 \u22128을 국면으로 쪼개면 리그 11위 팀의 숫자가 아니다. 오픈플레이는 26:23으로 오히려 플러스이고, 세트피스가 2:13이다. 마이너스 전부가 정지 상황이다. 스코어 상태로 자르면 시즌 전체로는 기대실점 대비 5골을 벌었는데, 그 이득을 한 상태에서 전부 토해낸다. 리드 중 기대 7.73에 실제 14(포아송 p=0.027), 14건 중 9건이 공중볼이고, 들어간 슛은 평균보다 오히려 나쁜 기회였다. 그다음 네 가지 설명을 덜어냈다. 외국인 타겟맨을 못 데려오는 것은 사실이고 그 메커니즘도 실재한다 \u2014 리그 장신 공격수의 42%가 외국인, 188cm 이상 국내 주전은 한 명, 의존도는 두 시즌 만에 47\u219282% \u2014 그런데 김천에는 적용되지 않는다. 185cm 이상 공격수 출전시간 비중이 리그 3위인데 외국인은 0명이고, 장신 공격수 보유 수는 코너 득점을 전혀 예측하지 못한다(r=\u22120.19). 선수단 회전도 기각된다. 양쪽 구단에서 모두 뛴 42명을 자기 자신과 비교하면 +0.60%p, t=0.89다. 내려앉기도 아니다 \u2014 블록은 1미터 움직인다. 내가 낸 오른쪽 크로스 발견도 국면을 갈라내자 사라졌다. 남는 것은 배달이다. 코너의 56%가 골에어리어 중앙으로 가고, 첫 접촉의 53%를 잃으며, 192cm 공격수는 자기 팀 코너의 31%에만 그라운드에 있었다.",
+    },
+    blurb: {
+      en: "Open play 26:23, set pieces 2:13 \u2014 the whole of the \u22128 is the dead ball. Four explanations for it die under testing, including one of my own.",
+      ko: "오픈플레이 26:23, 세트피스 2:13 \u2014 \u22128의 전부가 정지 상황이다. 그에 대한 설명 네 가지가 검정에서 죽는다. 내가 낸 것 하나를 포함해서.",
+    },
+    stats: {
+      en: [["2 : 13", "set-piece goals, scored to conceded"], ["p = 0.027", "conceded above expectation while leading"], ["r = \u22120.19", "tall forwards against corner goals, 12 clubs"], ["31%", "of its own corners with the 192cm forward on"]],
+      ko: [["2 : 13", "세트피스 득실"], ["p = 0.027", "리드 국면 기대 대비 실점"], ["r = \u22120.19", "장신 공격수 보유와 코너 득점, 12개 구단"], ["31%", "192cm 공격수의 자기 팀 코너 출전율"]],
+    },
+  },
+  {
+    slug: "gimcheon-club",
+    no: "10",
+    publishedAt: "2026-09-17",
+    competition: {
+      en: "K League 1 2026 · Gimcheon Sangmu · the institution",
+      ko: "하나은행 K리그1 2026 · 김천상무 · 제도",
+    },
+    title: {
+      en: "A Football Club That Is Also an Army Unit",
+      ko: "축구 구단이면서 군부대인 팀",
+    },
+    sub: {
+      en: "Before the data, the constraints \u2014 because almost none of them are guessable from outside Korea, and all of them change which questions about this team are fair to ask. Gimcheon Sangmu is a unit of the Armed Forces Athletic Corps that plays in the top division. Its players did not sign for the club and the club did not scout them: they applied to the Ministry of National Defense and were selected by a military board, on paper, twice a year, against positional quotas \u2014 so a player in excellent form can be rejected because the unit already has enough in his position. The head coach cannot build a squad. He receives one. When Sangmu selects a player no club can block it; there is no fee, no negotiation and no refusal, and the only party who can say no is the player, whose alternative is eighteen months in a line unit with no football at all. The squad turns over on enlistment and discharge dates the transfer window does not know about: ten days after the summer registration period closed in 2026, three regulars played their last match, including a goalkeeper who had started 25 of the previous 26 rounds. A professional contract is suspended for the duration, not paid out. Pay is the conscript scale \u2014 $545 a month as a private, $1,091 as a sergeant \u2014 against a K League 1 domestic average thirteen times higher, and the league\u2019s own salary disclosure covers eleven of twelve clubs because this one has no salaries to disclose. The club is required to change host city about every decade, which is why the city is a prefix and Sangmu is the club. The piece also sets out why nobody refuses: Korea is under an armistice rather than a peace treaty, conscription is universal, and the two men who tried something else \u2014 Suk Hyun-jun, six seasons gone to a travel permission he let expire, and Jang Hyun-soo, an international career ended by 196 hours of falsified paperwork against a state penalty of five days \u2014 are what the exit looks like.",
+      ko: "데이터에 앞서 제약 조건을 정리한다. 이 조건들이 2편의 모든 숫자에 대한 해석을 바꾸기 때문이다. 김천상무는 K리그1에서 뛰는 국군체육부대다. 선수는 구단과 계약하지 않았고 구단이 스카우트하지도 않았다. 국방부에 지원해 군 전형을 통과했고, 그 선발은 서류로, 연 2회, 포지션 정원에 맞춰 이뤄진다 \u2014 컨디션이 좋아도 해당 포지션이 찼으면 떨어진다. 감독은 선수단을 구성하지 않는다. 배정받는다. 상무가 선발하면 어떤 구단도 막을 수 없고 이적료도 협상도 거부권도 없다. 거절할 수 있는 유일한 당사자는 선수 본인인데, 그 대가는 축구 없는 18개월이다. 선수단은 이적시장이 모르는 입대일과 전역일에 교체된다. 2026년 여름 등록기간이 닫힌 지 열흘 뒤, 직전 26라운드 중 25경기를 선발로 뛴 골키퍼를 포함해 주전 3명이 마지막 경기를 뛰었다. 프로 계약은 그 기간 동안 정산되는 것이 아니라 정지된다. 보수는 병 봉급이고 \u2014 이등병 75만 원, 병장 150만 원 \u2014 K리그1 국내 평균의 13분의 1이다. 연맹의 구단별 연봉 공시가 12개 구단 중 11개만 다루는 이유도 같다. 공시할 연봉이 없다. 연고지는 약 10년마다 바뀌어야 하고, 그래서 도시 이름은 접두어이고 상무가 구단이다. 아무도 거절하지 않는 이유도 함께 다룬다. 한국은 종전이 아니라 휴전 상태이고 병역은 보편 의무이며, 다른 길을 시도한 두 사람 \u2014 만료되도록 둔 국외여행허가에 여섯 시즌을 쓴 석현준, 국가 처분은 복무 5일 연장이었는데 196시간의 허위 서류로 대표팀 커리어가 끝난 장현수 \u2014 이 그 출구의 모습이다.",
+    },
+    blurb: {
+      en: "A squad picked by a military board, on a private soldier\u2019s wage, turning over on dates the transfer window does not know about. The constraints, before the data.",
+      ko: "군이 선발하고, 병 봉급을 받고, 이적시장이 모르는 날짜에 교체되는 선수단. 데이터에 앞서, 그 제약 조건들.",
+    },
+    stats: {
+      en: [["0", "foreign players, every season since 2022"], ["0", "transfers in or out, ever"], ["$545", "monthly pay as a private, 2026"], ["3", "host cities since 2003, a fourth being decided"]],
+      ko: [["0", "외국인 선수, 2022년 이후 매 시즌"], ["0", "영입과 방출, 제도상 불가"], ["75만원", "이등병 월 봉급, 2026년"], ["3", "2003년 이후 연고지, 네 번째는 논의 중"]],
+    },
+  },
+  {
     slug: "daejeon",
     no: "09",
     publishedAt: "2026-09-11",

@@ -1,0 +1,891 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lost on Dead Balls — The Conscript Club</title>
+<meta name="description" content="Eighteen draws in 29 matches. Split the goal difference by phase and the season stops looking like an eleventh-placed team &mdash; and two popular explanations for it, plus one of my own findings, do not survive the follow-up tests.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@400;500;600;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --page:#f1f1ef; --surface:#fcfcfb; --surface-2:#e4e4e1; --raise:#f7f7f5;
+  --ink:#141413; --ink-2:#3c3c3a; --muted:#70706c;
+  --line:rgba(20,20,19,.14); --line-2:rgba(20,20,19,.07);
+  --grid:#e0e0dd; --axis:#c2c2be;
+  --kc:#a32b36; --lg:#2f6fa8; --top:#0e7c52; --bad:#8a1f27;
+  --kc-soft:rgba(163,43,54,.11); --lg-soft:rgba(47,111,168,.11);
+  --top-soft:rgba(14,124,82,.11); --bad-soft:rgba(138,31,39,.10);
+  --sp:clamp(18px,4.5vw,30px);
+  --disp:"Hahmlet",'Nanum Myeongjo',serif;
+  --body:"IBM Plex Sans KR",-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,'SFMono-Regular',monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --page:#121211; --surface:#1a1a19; --surface-2:#262624; --raise:#1f1f1e;
+    --ink:#eaeae7; --ink-2:#b8b8b4; --muted:#8d8d89;
+    --line:rgba(234,234,231,.16); --line-2:rgba(234,234,231,.08);
+    --grid:#2d2d2b; --axis:#4a4a47;
+    --kc:#d9555f; --lg:#4e90cc; --top:#17a077; --bad:#e8737c;
+    --kc-soft:rgba(217,85,95,.16); --lg-soft:rgba(78,144,204,.15);
+    --top-soft:rgba(23,160,119,.15); --bad-soft:rgba(232,115,124,.14);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --page:#121211; --surface:#1a1a19; --surface-2:#262624; --raise:#1f1f1e;
+  --ink:#eaeae7; --ink-2:#b8b8b4; --muted:#8d8d89;
+  --line:rgba(234,234,231,.16); --line-2:rgba(234,234,231,.08);
+  --grid:#2d2d2b; --axis:#4a4a47;
+  --kc:#d9555f; --lg:#4e90cc; --top:#17a077; --bad:#e8737c;
+  --kc-soft:rgba(217,85,95,.16); --lg-soft:rgba(78,144,204,.15);
+  --top-soft:rgba(23,160,119,.15); --bad-soft:rgba(232,115,124,.14);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font-family:var(--body);
+  word-break:keep-all;overflow-wrap:break-word;
+  font-weight:400;font-size:16px;line-height:1.72;-webkit-font-smoothing:antialiased}
+.wrap{max-width:940px;margin:0 auto;padding-inline:var(--sp);padding-block:0}
+p{margin:0 0 1.05em}
+strong{font-weight:600;color:var(--ink)}
+em{font-style:normal;background:var(--kc-soft);padding:.06em .3em;border-radius:2px;font-weight:500}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums;font-weight:500;letter-spacing:-.01em}
+
+/* ── header ── */
+header{padding-block:clamp(48px,9vw,88px) clamp(30px,5vw,44px);border-bottom:1px solid var(--line)}
+.badge{display:inline-flex;align-items:center;gap:.55em;font-family:var(--mono);font-size:11px;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--kc);font-weight:500}
+.badge::before{content:"";width:22px;height:2px;background:var(--kc)}
+h1{font-family:var(--disp);font-weight:600;font-size:clamp(38px,8.6vw,68px);line-height:1.06;
+  letter-spacing:-.025em;margin:.34em 0 .3em;text-wrap:balance}
+.dek{font-family:var(--disp);font-weight:400;font-size:clamp(17px,2.5vw,21px);line-height:1.55;
+  color:var(--ink-2);max-width:34em;margin:0 0 1.5em}
+.meta{display:flex;flex-wrap:wrap;gap:.5em 0;font-family:var(--mono);font-size:11.5px;
+  color:var(--muted);letter-spacing:.02em}
+.meta span+span::before{content:"|";padding:0 .85em;color:var(--axis)}
+
+/* ── tiles ── */
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line-2);
+  border-block:1px solid var(--line);margin-block:0}
+@media(max-width:760px){.tiles{grid-template-columns:repeat(2,1fr)}}
+.tile{background:var(--page);padding:clamp(16px,3vw,24px) clamp(12px,2.4vw,20px);display:flex;
+  flex-direction:column;gap:.3em}
+.tile .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.tile .v{font-family:var(--disp);font-weight:600;font-size:clamp(26px,4.6vw,38px);line-height:1;
+  letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.tile .v.gj{color:var(--kc)} .tile .v.bad{color:var(--bad)}
+.tile .s{font-size:12.5px;line-height:1.45;color:var(--ink-2)}
+
+/* ── sections ── */
+section{padding-block:clamp(40px,7vw,68px);border-bottom:1px solid var(--line-2)}
+section:last-of-type{border-bottom:none}
+.eyebrow{display:flex;align-items:baseline;gap:.9em;margin-bottom:.9em}
+.eyebrow .role{font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--page);background:var(--ink-2);padding:.35em .7em;border-radius:2px;white-space:nowrap}
+.eyebrow .cap{font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--muted)}
+h2{font-family:var(--disp);font-weight:600;font-size:clamp(25px,4.4vw,37px);line-height:1.2;
+  letter-spacing:-.022em;margin:0 0 .6em;text-wrap:balance;max-width:19em}
+h3{font-family:var(--disp);font-weight:600;font-size:clamp(17px,2.4vw,21px);line-height:1.35;
+  letter-spacing:-.012em;margin:2.1em 0 .7em}
+.lede{font-size:clamp(16.5px,2.1vw,18.5px);line-height:1.68;color:var(--ink-2);max-width:33em;margin-bottom:1.6em}
+.body{max-width:35em}
+.body.wide{max-width:40em}
+
+/* ── pull ── */
+.pull{border-left:3px solid var(--kc);padding:.1em 0 .1em 1.15em;margin:1.9em 0;
+  font-family:var(--disp);font-weight:500;font-size:clamp(18px,2.7vw,23px);line-height:1.45;
+  letter-spacing:-.014em;color:var(--ink);max-width:24em;text-wrap:balance}
+
+/* ── figure ── */
+figure{margin:2em 0;padding:clamp(16px,3vw,26px);background:var(--surface);
+  border:1px solid var(--line);border-radius:3px}
+figcaption{font-family:var(--mono);font-size:11px;line-height:1.6;color:var(--muted);
+  margin-top:1.15em;padding-top:.85em;border-top:1px solid var(--line-2)}
+.figtitle{font-family:var(--body);font-weight:600;font-size:14px;line-height:1.4;color:var(--ink);
+  margin-bottom:.3em;letter-spacing:-.005em}
+.figsub{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:1.35em;letter-spacing:.01em}
+.legend{display:flex;flex-wrap:wrap;gap:.5em 1.3em;font-family:var(--mono);font-size:11px;
+  color:var(--ink-2);margin-bottom:1.1em}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:1px;margin-right:.45em;vertical-align:-1px}
+
+/* ── bar rows ── */
+.bars{display:flex;flex-direction:column;gap:7px}
+.br{display:grid;grid-template-columns:74px 1fr 62px;align-items:center;gap:10px}
+@media(max-width:560px){.br{grid-template-columns:60px 1fr 54px;gap:7px}}
+.br .lb{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);text-align:right;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bars.lbwrap .br{grid-template-columns:90px 1fr 46px}
+.bars.lbwrap .br .lb{white-space:normal;overflow:visible;text-overflow:clip;line-height:1.28}
+@media(max-width:560px){.bars.lbwrap .br{grid-template-columns:78px 1fr 40px;gap:7px}}
+.br .tk{height:17px;background:var(--surface-2);border-radius:1px;overflow:hidden}
+.br .fl{height:100%;background:var(--lg);border-radius:1px}
+.br .vl{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;
+  color:var(--ink-2);text-align:right}
+.br.hi .lb{color:var(--kc);font-weight:600}
+.br.hi .fl{background:var(--kc)}
+.br.hi .vl{color:var(--kc);font-weight:600}
+.br.ref .fl{background:var(--top)}
+.br.ref .lb,.br.ref .vl{color:var(--top)}
+
+/* ── grouped pair bars ── */
+.pair{display:flex;flex-direction:column;gap:16px}
+.pg{display:grid;grid-template-columns:96px 1fr;gap:12px;align-items:center}
+@media(max-width:560px){.pg{grid-template-columns:1fr;gap:5px}}
+.pg .pn{font-family:var(--body);font-size:13px;font-weight:600;color:var(--ink)}
+.pg .pn small{display:block;font-family:var(--mono);font-weight:400;font-size:10.5px;color:var(--muted)}
+.pgb{display:flex;flex-direction:column;gap:5px}
+.pgr{display:grid;grid-template-columns:1fr 54px;gap:9px;align-items:center}
+.pgr .tk{height:15px;background:var(--surface-2);border-radius:1px;overflow:hidden}
+.pgr .fl{height:100%;border-radius:1px}
+.pgr .vl{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;text-align:right}
+
+/* ── table ── */
+.tbl{overflow-x:auto;margin:1.8em 0;border:1px solid var(--line);border-radius:3px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:13px}
+th,td{padding:9px 13px;text-align:left;border-bottom:1px solid var(--line-2);vertical-align:baseline}
+th{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;background:var(--raise);white-space:nowrap}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+td .nm{font-weight:600}
+td .no{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.up{color:var(--top);font-weight:600} .dn{color:var(--bad);font-weight:600}
+.dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:.5em;vertical-align:1px}
+.dot.on{background:var(--top)} .dot.mid{background:var(--axis)} .dot.off{background:transparent;
+  border:1px solid var(--axis)}
+
+/* ── slope svg ── */
+svg{display:block;max-width:100%;height:auto;overflow:visible}
+.sv-lb{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:var(--muted)}
+.sv-vl{font-family:"IBM Plex Mono",monospace;font-size:11.5px;font-weight:500}
+.sv-nm{font-family:"IBM Plex Sans KR",sans-serif;font-size:11.5px;font-weight:600;fill:var(--ink-2)}
+
+p.rate{font-size:13px;line-height:1.6;color:var(--muted);border-left:2px solid var(--line);
+  padding-left:1.1em;margin:1.5em 0}
+p.rate b{color:var(--ink-2);font-weight:600}
+
+/* ── callout ── */
+.note{background:var(--raise);border:1px solid var(--line);border-left:3px solid var(--axis);
+  border-radius:3px;padding:clamp(14px,2.6vw,20px);margin:1.9em 0;font-size:14px;line-height:1.65;
+  color:var(--ink-2)}
+.note b{color:var(--ink);font-weight:600}
+.note.warn{border-left-color:var(--bad)}
+.note.key{border-left-color:var(--kc);background:var(--kc-soft);border-color:var(--line)}
+
+/* ── stat strip ── */
+.strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-2);
+  border:1px solid var(--line);border-radius:3px;overflow:hidden;margin:1.9em 0}
+@media(max-width:620px){.strip{grid-template-columns:1fr}}
+.strip>div{background:var(--surface);padding:clamp(13px,2.4vw,18px)}
+.strip .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:.4em}
+.strip .v{font-family:var(--disp);font-weight:600;font-size:clamp(20px,3.4vw,27px);line-height:1.1;
+  font-variant-numeric:tabular-nums;letter-spacing:-.018em}
+.strip .s{font-size:12px;color:var(--ink-2);margin-top:.35em;line-height:1.45}
+
+/* ── list ── */
+ul.clean{list-style:none;padding:0;margin:1.3em 0;display:flex;flex-direction:column;gap:.85em;max-width:35em}
+ul.clean li{padding-left:1.5em;position:relative;font-size:14.5px;line-height:1.62;color:var(--ink-2)}
+ul.clean li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:1.5px;background:var(--axis)}
+ul.clean li b{color:var(--ink);font-weight:600}
+
+/* ── case panel ── */
+.case{border:1px solid var(--line);border-top:3px solid var(--bad);border-radius:3px;
+  background:var(--surface);padding:clamp(18px,3.2vw,28px);margin:2.2em 0}
+.case+.case{margin-top:1.4em}
+.case .ch{display:flex;flex-wrap:wrap;align-items:baseline;gap:.5em .9em;margin-bottom:.35em}
+.case .ct{font-family:var(--disp);font-weight:600;font-size:clamp(20px,3.2vw,26px);line-height:1.15;
+  letter-spacing:-.02em;color:var(--ink)}
+.case .cn{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.case .cs{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--bad);border:1px solid var(--bad);border-radius:2px;padding:.22em .55em;white-space:nowrap}
+.case .cd{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:1.15em;
+  padding-bottom:1.15em;border-bottom:1px solid var(--line-2)}
+.case p{font-size:14.5px;line-height:1.68;color:var(--ink-2);margin-bottom:1em;max-width:40em}
+.case p:last-child{margin-bottom:0}
+.case p b,.case p strong{color:var(--ink);font-weight:600}
+.case h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;margin:1.6em 0 .7em}
+
+/* ── ledger (two-column consequence table inside a case) ── */
+.ledger{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line-2);
+  border:1px solid var(--line);border-radius:3px;overflow:hidden;margin:1.4em 0}
+@media(max-width:620px){.ledger{grid-template-columns:1fr}}
+.ledger>div{background:var(--raise);padding:clamp(13px,2.4vw,17px)}
+.ledger .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:.5em}
+.ledger .v{font-family:var(--disp);font-weight:600;font-size:clamp(17px,2.8vw,21px);line-height:1.2;
+  letter-spacing:-.015em;margin-bottom:.4em}
+.ledger .state .v{color:var(--ink-2)}
+.ledger .social .v{color:var(--bad)}
+.ledger .s{font-size:12.5px;line-height:1.5;color:var(--ink-2)}
+
+/* ── timeline strip ── */
+.tl{display:flex;gap:2px;margin:1.3em 0 .6em}
+.tl .y{flex:1;min-width:0;text-align:center}
+.tl .yb{height:30px;border-radius:1px;background:var(--surface-2)}
+.tl .yb.play{background:var(--lg)}
+.tl .yb.gap{background:var(--bad-soft);border:1px dashed var(--bad)}
+.tl .yb.low{background:var(--kc-soft);border:1px solid var(--kc)}
+.tl .yl{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:.45em;
+  writing-mode:vertical-rl;transform:rotate(180deg);height:34px;display:inline-block}
+@media(min-width:560px){.tl .yl{writing-mode:horizontal-tb;transform:none;height:auto}}
+
+footer{padding-block:clamp(34px,6vw,54px) clamp(46px,8vw,74px);border-top:1px solid var(--line);
+  font-family:var(--mono);font-size:11.5px;line-height:1.85;color:var(--muted)}
+footer b{color:var(--ink-2);font-weight:500}
+@media(prefers-reduced-motion:no-preference){
+  section{animation:fi .5s ease-out both}
+  @keyframes fi{from{opacity:.55}to{opacity:1}}
+}
+</style>
+<style>
+/* ── series nav ── */
+.serienav{border-bottom:1px solid var(--line);background:var(--surface)}
+.serienav .in{max-width:940px;margin:0 auto;padding:12px var(--sp);display:flex;
+  align-items:center;gap:.9em;flex-wrap:wrap;font-family:var(--mono);font-size:11px;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.serienav b{color:var(--kc);font-weight:600}
+.serienav a{color:var(--muted);text-decoration:none;border-bottom:1px solid transparent;padding-bottom:1px}
+.serienav a:hover{color:var(--ink);border-bottom-color:var(--line)}
+.serienav a[aria-current]{color:var(--ink);font-weight:600}
+.serienav .sep{color:var(--axis)}
+/* ── next/prev ── */
+.pager{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line-2);
+  border:1px solid var(--line);border-radius:3px;overflow:hidden;margin:2.4em 0 .6em}
+@media(max-width:560px){.pager{grid-template-columns:1fr}}
+.pager a{background:var(--surface);padding:clamp(15px,2.8vw,22px);text-decoration:none;display:block}
+.pager a:hover{background:var(--raise)}
+.pager .lb{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.pager .tt{font-family:var(--disp);font-weight:600;font-size:16px;color:var(--ink);margin-top:.35em;line-height:1.3}
+.pager .nx{text-align:right}
+/* ── figure caption source line ── */
+.srcline{font-family:var(--mono);font-size:10.5px;color:var(--axis);margin-top:.5em}
+/* ── pitch schematic ── */
+.pitch{background:var(--raise);border:1px solid var(--line);border-radius:3px;padding:10px}
+</style>
+
+</head>
+<body data-palette="#a32b36,#2f6fa8,#0e7c52">
+<nav class="serienav"><div class="in"><b>Data Series</b><span class="sep">/</span><span>Part 2 of 2</span><span class="sep">|</span><a href="/en/match-analysis/data-series/gimcheon-club">1</a><span class="sep">·</span><a href="/en/match-analysis/data-series/gimcheon" aria-current="page">2</a></div></nav><header><div class="wrap">
+  <div class="badge">Part 2 · The data</div>
+  <h1>Lost on Dead Balls</h1>
+  <p class="dek">Eighteen draws in 29 matches. Split the goal difference by phase and the season stops looking like an eleventh-placed team &mdash; and two popular explanations for it, plus one of my own findings, do not survive the follow-up tests.</p>
+  <div class="meta"><span>41,879 raw events · 654 shots</span><span>3,762 player-seasons for the squad work</span><span>24,894 player-match records as control</span></div>
+</div></header>
+<div class="tiles"><div class="tile"><div class="k">Set pieces</div><div class="v num">2 : 13</div><div class="s">Scored : conceded<br>The whole of the −8</div></div><div class="tile"><div class="k">Open play</div><div class="v num">26 : 23</div><div class="s">Scored : conceded<br>A positive record</div></div><div class="tile"><div class="k">Corner conversion</div><div class="v num">0.68%</div><div class="s">147 corners, 1 goal<br>Lowest of 12 clubs</div></div><div class="tile"><div class="k">Tallest forward at corners</div><div class="v num">31%</div><div class="s">Jung Jae-min, 192 cm<br>on the pitch for 46 of 147</div></div></div>
+<div class="wrap">
+
+<section>
+  <div class="eyebrow"><span class="role">The season</span><span class="cap">What actually happened</span></div>
+  <h2>Eighteen draws</h2>
+  <div class="body">
+    <p>Gimcheon finished the 29-round stretch on <strong>4 wins, 18 draws, 7 defeats</strong> — 30 points,
+      eleventh of twelve. The draw rate of <span class="num">62.1%</span> is not merely the highest in the
+      league. It is half again as high as the next club.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">Draws, K League 1 2026 — through Round 29</div>
+    <div class="figsub">Gimcheon drew six more matches than any other club</div>
+    <div class="pair">
+      <div class="pg"><div class="pn">Gimcheon<small>4W 18D 7L</small></div><div class="pgb">
+        <div class="pgr" title="Gimcheon: 18 draws in 29 matches"><div class="tk"><div class="fl" style="width:100%;background:var(--kc)"></div></div><div class="vl" style="color:var(--kc)">18</div></div></div></div>
+      <div class="pg"><div class="pn">Gangwon<small>10W 12D 6L</small></div><div class="pgb">
+        <div class="pgr" title="Gangwon: 12 draws"><div class="tk"><div class="fl" style="width:66.7%;background:var(--lg)"></div></div><div class="vl" style="color:var(--lg)">12</div></div></div></div>
+      <div class="pg"><div class="pn">Anyang<small>8W 11D 10L</small></div><div class="pgb">
+        <div class="pgr" title="Anyang: 11 draws"><div class="tk"><div class="fl" style="width:61.1%;background:var(--lg)"></div></div><div class="vl" style="color:var(--lg)">11</div></div></div></div>
+      <div class="pg"><div class="pn">Bucheon<small>7W 11D 11L</small></div><div class="pgb">
+        <div class="pgr" title="Bucheon: 11 draws"><div class="tk"><div class="fl" style="width:61.1%;background:var(--lg)"></div></div><div class="vl" style="color:var(--lg)">11</div></div></div></div>
+      <div class="pg"><div class="pn">Gwangju<small>1W 11D 17L</small></div><div class="pgb">
+        <div class="pgr" title="Gwangju: 11 draws"><div class="tk"><div class="fl" style="width:61.1%;background:var(--lg)"></div></div><div class="vl" style="color:var(--lg)">11</div></div></div></div>
+      <div class="pg"><div class="pn">Seoul<small>19W 5D 5L</small></div><div class="pgb">
+        <div class="pgr" title="Seoul, the league leader: 5 draws"><div class="tk"><div class="fl" style="width:27.8%;background:var(--lg)"></div></div><div class="vl" style="color:var(--lg)">5</div></div></div></div>
+    </div>
+    <figcaption>Axis maximum 18. Gangwon had played 28 matches at the cut-off; all others 29.</figcaption>
+  </figure>
+
+  <div class="body">
+    <p>The character of those draws matters more than the count. <strong>Fifteen of the eighteen finished 1–1
+      or 0–0.</strong> Across the whole 29 matches, <span class="num">24</span> —
+      <span class="num">82.8%</span> — ended within a single goal. These were not shoot-outs that happened to
+      level out. They were quiet.</p>
+    <p>And the team was not hanging on. <strong>It was ahead.</strong> Gimcheon scored first in twelve matches
+      and won three of them. Counted as goals rather than matches, <strong>twelve conceded goals erased a
+      lead</strong>; in the ten of those matches that were not subsequently won, the club dropped
+      <strong>21 points</strong>. Hold those ten and the season reads 51 points — second place.</p>
+    <p class="pull">So: where did those goals come from?</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">Locate</span><span class="cap">Splitting the goal difference</span></div>
+  <h2>In open play this team was winning</h2>
+  <div class="body">
+    <p>28 scored, 36 conceded, a goal difference of &minus;8. Split that by how the goals were created and it
+      stops looking like one team. The classification below is taken verbatim from the official match-report
+      goal descriptions, not inferred.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">Goals for and against, by phase</div>
+    <div class="figsub">Set pieces = corners, free kicks and penalties</div>
+    <div class="pair">
+      <div class="pg"><div class="pn">Set pieces<small>2 for / 13 against</small></div><div class="pgb">
+        <div class="pgr" title="Set-piece goals scored: 2"><div class="tk"><div class="fl" style="width:7.7%;background:var(--kc)"></div></div><div class="vl" style="color:var(--kc)">2</div></div>
+        <div class="pgr" title="Set-piece goals conceded: 13"><div class="tk"><div class="fl" style="width:50%;background:var(--lg)"></div></div><div class="vl" style="color:var(--lg)">13</div></div></div></div>
+      <div class="pg"><div class="pn">Open play<small>26 for / 23 against</small></div><div class="pgb">
+        <div class="pgr" title="Open-play goals scored: 26"><div class="tk"><div class="fl" style="width:100%;background:var(--kc)"></div></div><div class="vl" style="color:var(--kc)">26</div></div>
+        <div class="pgr" title="Open-play goals conceded: 23"><div class="tk"><div class="fl" style="width:88.5%;background:var(--lg)"></div></div><div class="vl" style="color:var(--lg)">23</div></div></div></div>
+    </div>
+    <div class="legend"><span><i style="background:var(--kc)"></i>scored</span><span><i style="background:var(--lg)"></i>conceded</span></div>
+    <figcaption>Axis maximum 26 goals. Set pieces &minus;11, open play +3, total &minus;8.</figcaption>
+  </figure>
+
+  <div class="body">
+    <p class="pull">This club did not lose its season in the run of play. It lost it when the ball was stationary.</p>
+    <p>On open play alone the record is <strong>26 : 23</strong>. Those are not the numbers of an eleventh-placed
+      side. The whole of the &minus;8 is the <strong>&minus;11 on dead balls</strong>.</p>
+  </div>
+
+  <div class="strip">
+    <div><div class="k">Corner conversion</div><div class="v num">0.68%</div><div class="s">147 corners, 1 goal · 12th of 12<br>League average 1.77 percent</div></div>
+    <div><div class="k">Conceded per corner</div><div class="v num">3.6%</div><div class="s">Scored per own corner: 0.7 percent<br>A five-fold asymmetry</div></div>
+    <div><div class="k">Corners faced</div><div class="v num">3.83</div><div class="s">Per match · league average 4.23<br>Fewer faced, more conceded</div></div>
+  </div>
+
+  <div class="body">
+    <p>Volume is not the problem. Gimcheon committed the fourth-most fouls in the league yet
+      <strong>faced fewer corners than the league average</strong>. Opponents were not being allowed deep.
+      What failed was <em>conversion</em>.</p>
+    <p>Reconstructed second by second, the eight set-piece goals conceded (penalties excluded) break down
+      brutally: <strong>seven were finished within three seconds of the dead ball, and four were scored on the
+      first contact</strong>. This is not a second-ball problem. It is a first-contact problem. Across 111
+      corners faced, the first Gimcheon defensive touch was identified 108 times &mdash; on average
+      <strong>6.1 units from their own goal line</strong>, which is the edge of the six-yard box, and
+      <strong>42 percent of those touches were clearances</strong>.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">Amplify</span><span class="cap">Score state</span></div>
+  <h2>Only when ahead does the sign flip</h2>
+  <div class="body">
+    <p>Cut the season by score state and the defence looks competent. Over the full 29 matches Gimcheon
+      conceded 36 against 41.1 expected &mdash; <strong>five goals to the good</strong>. That entire surplus is
+      surrendered in one state.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">Conceded versus expected, by score state</div>
+    <div class="figsub">Per 90 minutes · a goal that changed the state is assigned to the state before it</div>
+    <div class="pair">
+      <div class="pg"><div class="pn">Leading<small>489 min</small></div><div class="pgb">
+        <div class="pgr" title="Leading: 2.58 goals conceded per 90"><div class="tk"><div class="fl" style="width:100%;background:var(--kc)"></div></div><div class="vl" style="color:var(--kc)">2.58</div></div>
+        <div class="pgr" title="Leading: 1.42 expected goals against per 90"><div class="tk"><div class="fl" style="width:55%;background:var(--lg)"></div></div><div class="vl" style="color:var(--lg)">1.42</div></div></div></div>
+      <div class="pg"><div class="pn">Level<small>1,706 min</small></div><div class="pgb">
+        <div class="pgr" title="Level: 0.74 conceded per 90"><div class="tk"><div class="fl" style="width:28.7%;background:var(--kc)"></div></div><div class="vl" style="color:var(--kc)">0.74</div></div>
+        <div class="pgr" title="Level: 1.14 expected against per 90"><div class="tk"><div class="fl" style="width:44.2%;background:var(--lg)"></div></div><div class="vl" style="color:var(--lg)">1.14</div></div></div></div>
+      <div class="pg"><div class="pn">Behind<small>563 min</small></div><div class="pgb">
+        <div class="pgr" title="Behind: 1.28 conceded per 90"><div class="tk"><div class="fl" style="width:49.6%;background:var(--kc)"></div></div><div class="vl" style="color:var(--kc)">1.28</div></div>
+        <div class="pgr" title="Behind: 1.89 expected against per 90"><div class="tk"><div class="fl" style="width:73.3%;background:var(--lg)"></div></div><div class="vl" style="color:var(--lg)">1.89</div></div></div></div>
+    </div>
+    <div class="legend"><span><i style="background:var(--kc)"></i>conceded / 90</span><span><i style="background:var(--lg)"></i>expected against / 90</span></div>
+    <figcaption>Axis maximum 2.58. While leading, 7.73 goals were expected and 14 arrived — Poisson P(X&ge;14) = 0.027.</figcaption>
+  </figure>
+
+  <div class="body">
+    <p>Level and behind, this team concedes <em>less</em> than expected. Only when ahead does the relationship
+      invert. And the goals that went in were not good chances: while leading, the mean expected value of a
+      conceded shot was <span class="num">0.294</span>, <strong>lower</strong> than the
+      <span class="num">0.355</span> of everything else. Bad chances went in.</p>
+    <p>What kind of bad chances? <strong>Nine of the fourteen (64 percent) were headers, or came from a cross or
+      a headed assist.</strong> Across the other 22 goals conceded, that figure is 27 percent
+      (Fisher exact, two-sided, p = 0.030).</p>
+  </div>
+
+  <div class="note"><b>The obvious objection, tested.</b> If the portal's expected-goal model underrates headers,
+    then any sample that is 64 percent aerial will show goals above expectation with no defensive failing at all.
+    So I split all 654 shots in the dataset by whether the shot was preceded by that team's own cross.
+    <b>Cross-finished shots: 0.81 goals per expected goal. Everything else: 0.84.</b> No meaningful difference.
+    Within this dataset there is no evidence the model systematically underrates cross finishes.
+    (Caveat: a cross finish is not the same thing as a header. It is the closest proxy the event data allows.)</div>
+
+  <div class="body">
+    <p>One popular explanation dies here. <strong>"They sit back when ahead" is not in the data.</strong> The mean
+      position of a Gimcheon defensive action is 28.5 when leading, 29.1 when level, 29.6 when behind &mdash;
+      effectively identical. The block height does not move. What moves is <em>possession</em>: leading, the team
+      plays 386 passes per 90 against 462 when level, a drop of 16 percent.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">Mechanism</span><span class="cap">Deliveries</span></div>
+  <h2>The corners go where the centre-backs are</h2>
+  <div class="body">
+    <p>If the defensive set-piece record is bad, the attacking one is worse. <strong>147 corners produced one
+      goal</strong> &mdash; a conversion rate of 0.68 percent against a league average of 1.77 percent, and the
+      lowest of the twelve clubs. Seoul took exactly the same number of corners, 147, and scored twice.</p>
+    <p>League-wide, <strong>24 of the 26 corner goals scored in 2026 were headers</strong>, and 25 of 26 were
+      indirect. Corners are a heading contest. Here is where Gimcheon puts the ball.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">Where 147 corners were delivered</div>
+    <div class="figsub">End coordinate of each delivery, grouped by lateral zone</div>
+    <svg viewBox="0 0 620 250" role="img" aria-label="Schematic of the penalty area showing that 83 of 147 corner deliveries landed in the central zone, 28 near post and 29 far post">
+      <rect x="110" y="30" width="400" height="180" fill="none" stroke="var(--axis)" stroke-width="1.5"/>
+      <rect x="230" y="30" width="160" height="66" fill="none" stroke="var(--axis)" stroke-width="1"/>
+      <line x1="262" y1="28" x2="358" y2="28" stroke="var(--ink-2)" stroke-width="3.5"/>
+      <text class="sv-lb" x="310" y="20" text-anchor="middle">goal</text>
+      <rect x="110" y="30" width="133" height="180" fill="var(--lg-soft)"/>
+      <rect x="243" y="30" width="134" height="180" fill="var(--kc-soft)"/>
+      <rect x="377" y="30" width="133" height="180" fill="var(--lg-soft)"/>
+      <line x1="243" y1="30" x2="243" y2="210" stroke="var(--grid)" stroke-width="1" stroke-dasharray="3 4"/>
+      <line x1="377" y1="30" x2="377" y2="210" stroke="var(--grid)" stroke-width="1" stroke-dasharray="3 4"/>
+      <g><title>Near post: 28 of 147 deliveries, 19 percent</title>
+        <text class="sv-vl" x="176" y="118" text-anchor="middle" fill="var(--lg)" style="font-size:26px">28</text>
+        <text class="sv-lb" x="176" y="140" text-anchor="middle">near post · 19%</text></g>
+      <g><title>Central zone: 83 of 147 deliveries, 56 percent — the best defended area of the box</title>
+        <text class="sv-vl" x="310" y="118" text-anchor="middle" fill="var(--kc)" style="font-size:34px">83</text>
+        <text class="sv-lb" x="310" y="142" text-anchor="middle">central · 56%</text></g>
+      <g><title>Far post: 29 of 147 deliveries, 20 percent</title>
+        <text class="sv-vl" x="444" y="118" text-anchor="middle" fill="var(--lg)" style="font-size:26px">29</text>
+        <text class="sv-lb" x="444" y="140" text-anchor="middle">far post · 20%</text></g>
+      <text class="sv-lb" x="310" y="232" text-anchor="middle">7 more deliveries (5%) never reached the box · short corners: 21 of 147 (14%)</text>
+    </svg>
+    <figcaption>Mean delivery end point: 93.5 along the pitch, 50.8 across it — the centre of the six-yard area, which is where the opposition centre-backs and goalkeeper are.</figcaption>
+  </figure>
+
+  <div class="body">
+    <p>The consequences are measurable at every step. The delivery reaches a teammate half the time
+      (<span class="num">50%</span>). A shot follows within twelve seconds a third of the time
+      (<span class="num">34%</span>). But <strong>the first contact goes to the opponent 53 percent of the
+      time</strong>, and the single most common first contact in the whole sample is
+      <strong>an opposition clearance, 44 times</strong>. The shots that do come are poor: 54 corner-origin shots
+      at <span class="num">17%</span> on target, against a team average of 29.5 percent, and the lowest expected
+      value per shot of any origin.</p>
+    <p class="pull">A league that scores from corners with headers, a team that wins 48.5 percent of its aerial
+      duels, and a delivery pattern that puts 56 percent of the ball into the best-defended square of the box.</p>
+    <p>Which raises the obvious question, and it is the one everybody asks about this club first.
+      <strong>Is this just what happens when you are the only team in the league that cannot sign a foreign
+      target man?</strong> That is the next section.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">Hypothesis</span><span class="cap">The obvious explanation</span></div>
+  <h2>Korea is short of target men. Clubs import them.</h2>
+  <div class="body">
+    <p>Here is the explanation every Korean analyst reaches for, and it is a good one. Korean football has a
+      shortage of tall centre-forwards. K League clubs solve it the way clubs everywhere solve a shortage:
+      they buy it abroad. <strong>Gimcheon cannot.</strong> Foreign players cannot serve in a military unit, and
+      the club has fielded zero in every season from 2022 to 2026. So of course it loses the heading contest.</p>
+    <p>To test this I built a second dataset: <strong>K League 1 and 2, 2022 to 2026, four evenly spaced rounds
+      per league-season, 248 matches, 3,762 player-seasons</strong> with height, age and position, taken from
+      the matchday squad lists. Nationality was inferred from names and then sanity-checked against the quota:
+      no club exceeded its allowance in any season, and the minimum of zero was always Gimcheon.</p>
+  </div>
+
+  <h3>Where to draw the line</h3>
+  <div class="body">
+    <p>A threshold for "can threaten in the air" needs a basis. The mean height of a K League centre-back
+      &mdash; approximated as the taller half of defenders, to exclude full-backs &mdash; is
+      <strong>187.5 cm</strong>. Rather than pick a round number below that, I checked it against outcomes: for
+      the 30 players in the 2026 sample with 15 or more aerial duels (1,204 duels in total), a weighted
+      regression gives</p>
+    <p class="pull">win rate (%) = 0.790 &times; height &minus; 94.0</p>
+    <p>which crosses 50 percent at <strong>182.4 cm</strong> and 55 percent at <strong>188.7 cm</strong>. This
+      series therefore uses two lines: <strong>185 cm</strong>, at which a forward can contest a centre-back,
+      and <strong>188 cm</strong>, at which he starts to win.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">Finding</span><span class="cap">The import market</span></div>
+  <h2>Height is bought in two positions only</h2>
+  <div class="body">
+    <p>Foreign players are <strong>14.5 percent</strong> of all player-seasons in the sample. Their height
+      advantage is not spread evenly across the pitch &mdash; it exists in two positions and is
+      <em>negative</em> in a third.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">Mean height by position, foreign versus domestic</div>
+    <div class="figsub">K League 1 and 2 · 2022–2026 · 3,762 player-seasons</div>
+    <div class="pair">
+      <div class="pg"><div class="pn">Defenders<small>70 foreign / 950 domestic</small></div><div class="pgb">
+        <div class="pgr" title="Foreign defenders average 187.4 cm"><div class="tk"><div class="fl" style="width:100%;background:var(--kc)"></div></div><div class="vl" style="color:var(--kc)">187.4</div></div>
+        <div class="pgr" title="Domestic defenders average 182.5 cm"><div class="tk"><div class="fl" style="width:97.4%;background:var(--lg)"></div></div><div class="vl" style="color:var(--lg)">182.5</div></div></div></div>
+      <div class="pg"><div class="pn">Forwards<small>226 foreign / 531 domestic</small></div><div class="pgb">
+        <div class="pgr" title="Foreign forwards average 182.9 cm"><div class="tk"><div class="fl" style="width:97.6%;background:var(--kc)"></div></div><div class="vl" style="color:var(--kc)">182.9</div></div>
+        <div class="pgr" title="Domestic forwards average 180.9 cm"><div class="tk"><div class="fl" style="width:96.5%;background:var(--lg)"></div></div><div class="vl" style="color:var(--lg)">180.9</div></div></div></div>
+      <div class="pg"><div class="pn">Midfielders<small>164 foreign / 1,097 domestic</small></div><div class="pgb">
+        <div class="pgr" title="Foreign midfielders average 176.9 cm — shorter than domestic"><div class="tk"><div class="fl" style="width:94.4%;background:var(--kc)"></div></div><div class="vl" style="color:var(--kc)">176.9</div></div>
+        <div class="pgr" title="Domestic midfielders average 177.5 cm"><div class="tk"><div class="fl" style="width:94.7%;background:var(--lg)"></div></div><div class="vl" style="color:var(--lg)">177.5</div></div></div></div>
+    </div>
+    <div class="legend"><span><i style="background:var(--kc)"></i>foreign</span><span><i style="background:var(--lg)"></i>domestic</span></div>
+    <figcaption>Bars start at 160 cm so the differences are visible; axis maximum 187.4 cm. Defenders +4.9 cm, forwards +2.1 cm, midfielders −0.7 cm.</figcaption>
+  </figure>
+
+  <div class="body">
+    <p>The same pattern read from the other side: of every player in the sample standing 185 cm or more,
+      <strong>42 percent of the forwards are foreign</strong>, against 13 percent of the defenders and
+      <strong>5 percent of the midfielders</strong>. A group that is 14.5 percent of the league supplies
+      four in ten of its tall forwards &mdash; roughly a three-fold over-representation. Clubs do not import
+      height in general. <strong>They import a centre-forward who can head the ball.</strong></p>
+    <p>And the dependence is accelerating, in step with the rules. The Asian quota was abolished for 2025, the
+      squad limit rose to six, and for 2026 the holding limit was removed entirely with five allowed on the
+      pitch at once in K League 1.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">Share of regular tall forwards who are foreign — K League 1</div>
+    <div class="figsub">Forwards with 1,000 or more minutes in the season</div>
+    <svg viewBox="0 0 620 300" role="img" aria-label="Line chart showing the foreign share of regular tall forwards rising from 2024 to 2026">
+      <line x1="70" y1="250" x2="590" y2="250" stroke="var(--axis)" stroke-width="1"/>
+      <line x1="70" y1="36" x2="70" y2="250" stroke="var(--axis)" stroke-width="1"/>
+      <line x1="70" y1="145" x2="590" y2="145" stroke="var(--grid)" stroke-width="1" stroke-dasharray="3 4"/>
+      <text class="sv-lb" x="62" y="149" text-anchor="end">50%</text>
+      <text class="sv-lb" x="62" y="44" text-anchor="end">100%</text>
+      <text class="sv-lb" x="62" y="254" text-anchor="end">0%</text>
+      <text class="sv-lb" x="120" y="272" text-anchor="middle">2024</text>
+      <text class="sv-lb" x="310" y="272" text-anchor="middle">2025</text>
+      <text class="sv-lb" x="500" y="272" text-anchor="middle">2026</text>
+      <text class="sv-lb" x="310" y="290" text-anchor="middle">Asian quota abolished · limit 6 → no holding limit</text>
+      <g><title>188 cm and above: 38 percent in 2024, 60 percent in 2025, 86 percent in 2026</title>
+        <polyline points="120,170 310,124 500,69" fill="none" stroke="var(--kc)" stroke-width="2.4"/>
+        <circle cx="120" cy="170" r="5" fill="var(--kc)" stroke="var(--surface)" stroke-width="2"/>
+        <circle cx="310" cy="124" r="5" fill="var(--kc)" stroke="var(--surface)" stroke-width="2"/>
+        <circle cx="500" cy="69" r="5" fill="var(--kc)" stroke="var(--surface)" stroke-width="2"/>
+        <text class="sv-vl" x="120" y="190" text-anchor="middle" fill="var(--kc)">38%</text>
+        <text class="sv-vl" x="310" y="114" text-anchor="middle" fill="var(--kc)">60%</text>
+        <text class="sv-vl" x="500" y="59" text-anchor="middle" fill="var(--kc)">86%</text>
+      </g>
+      <g><title>185 cm and above: 47 percent in 2024, 50 percent in 2025, 82 percent in 2026</title>
+        <polyline points="120,151 310,145 500,78" fill="none" stroke="var(--lg)" stroke-width="2.4" stroke-dasharray="6 4"/>
+        <circle cx="120" cy="151" r="5" fill="var(--lg)" stroke="var(--surface)" stroke-width="2"/>
+        <circle cx="310" cy="145" r="5" fill="var(--lg)" stroke="var(--surface)" stroke-width="2"/>
+        <circle cx="500" cy="78" r="5" fill="var(--lg)" stroke="var(--surface)" stroke-width="2"/>
+        <text class="sv-vl" x="112" y="140" text-anchor="end" fill="var(--lg)">47%</text>
+        <text class="sv-vl" x="310" y="165" text-anchor="middle" fill="var(--lg)">50%</text>
+        <text class="sv-vl" x="512" y="96" fill="var(--lg)">82%</text>
+      </g>
+    </svg>
+    <div class="legend"><span><i style="background:var(--kc)"></i>188 cm and above</span><span><i style="background:var(--lg)"></i>185 cm and above</span></div>
+    <figcaption>In 2026, seven forwards of 188 cm or more played 1,000+ minutes in K League 1. Six were foreign.</figcaption>
+  </figure>
+
+  <div class="body">
+    <p class="pull">There is exactly one regular domestic target man of 188 cm or more in the entire division:
+      Lee Ho-jae of Pohang.</p>
+    <p>That is the true size of the shortage, and it is worse than the phrase "target men are scarce" suggests.
+      It is not that they are rare. It is that <strong>the domestic supply is one player</strong>, and the other
+      six places in that category are filled from a market Gimcheon is legally barred from.</p>
+    <p>So the first half of the hypothesis is correct in every particular. The league does import height, it
+      imports it specifically at centre-forward, the domestic pool is essentially empty, and the dependence has
+      roughly doubled in two seasons.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">Refutation</span><span class="cap">Applying it to Gimcheon</span></div>
+  <h2>And yet this team had the height</h2>
+  <div class="body">
+    <p>If the mechanism explains Gimcheon's aerial record, the club should be short of tall forwards. It is not.
+      In 2024 it held <strong>four</strong> forwards of 185 cm or more &mdash; joint most in the league, with no
+      foreign players. In 2025 and 2026, three, against a league average of 2.3.</p>
+    <p>Holding a player is cheap, though. Playing him is the test.</p>
+  </div>
+
+  <div class="tbl"><table>
+    <thead><tr><th>2026 K League 1</th><th>Tall forwards (185 cm+)</th><th>Share of team minutes</th><th>Of which foreign</th></tr></thead>
+    <tbody>
+      <tr><td><span class="nm">Pohang</span></td><td class="n">5</td><td class="n">15.6%</td><td class="n">24%</td></tr>
+      <tr><td><span class="nm">Incheon</span></td><td class="n">2</td><td class="n">10.7%</td><td class="n">100%</td></tr>
+      <tr><td><span class="nm">Gimcheon</span> <span class="no">★</span></td><td class="n">3</td><td class="n">9.2%</td><td class="n">0%</td></tr>
+      <tr><td><span class="nm">Jeonbuk</span></td><td class="n">2</td><td class="n">8.2%</td><td class="n">100%</td></tr>
+      <tr><td><span class="nm">Gwangju</span></td><td class="n">2</td><td class="n">7.4%</td><td class="n">100%</td></tr>
+      <tr><td class="no">…</td><td class="n"></td><td class="n"></td><td class="n"></td></tr>
+      <tr><td><span class="nm">Seoul</span></td><td class="n">1</td><td class="n">0.2%</td><td class="n">0%</td></tr>
+      <tr><td class="no">League average</td><td class="n">2.3</td><td class="n">6.8%</td><td class="n">—</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="body">
+    <p><strong>Gimcheon gives 9.2 percent of its minutes to forwards of 185 cm or more &mdash; third in the
+      league, above average, with no foreign players at all.</strong> Lee Gun-hee (186 cm, 2,077 minutes) played
+      more minutes than any other tall forward in the division.</p>
+    <p>And the decisive test: across the twelve clubs, the number of tall forwards a team holds
+      <strong>does not predict its corner goals</strong> &mdash; the correlation is <span class="num">&minus;0.19</span>,
+      pointing the wrong way, and with aerial duels it is <span class="num">0.04</span>. Daejeon scored five
+      corner goals, the league's best, with two tall forwards. Pohang scored one with five.</p>
+  </div>
+
+  <div class="note key"><b>Verdict.</b>
+    ① The league imports height &mdash; <b>supported</b>.
+    ② The domestic target-man pool is essentially empty &mdash; <b>supported</b>, one player.
+    ③ The dependence is accelerating &mdash; <b>supported</b>, 47 to 82 percent in two seasons.
+    ④ Therefore Gimcheon lacks height &mdash; <b>rejected</b>, third in the league by minutes.
+    ⑤ Therefore Gimcheon loses in the air &mdash; <b>unsupported</b>, r = &minus;0.19.
+    <br><br>One strand survives. <b>Gimcheon has had no regular forward of 188 cm or more for three straight
+    seasons</b> — its most-used forward measured 186, 187 and 186 cm in 2024, 2025 and 2026 — and six of the
+    seven players in that category are foreign. In that narrow band, the exclusion is real.</div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">The actual finding</span><span class="cap">Presence, not inventory</span></div>
+  <h2>The tallest player was not on the pitch</h2>
+  <div class="body">
+    <p>If the club has the height and still loses the heading contest, the next place to look is whether the
+      height is on the field when it matters. Gimcheon took 147 corners in 2026. Here is who was available for
+      them.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">Share of the team's own corners with each player on the pitch</div>
+    <div class="figsub">147 corners · substitutions off are not modelled, so these are upper bounds</div>
+    <div class="pair">
+      <div class="pg"><div class="pn">Lee Jung-taek<small>183 cm · DF</small></div><div class="pgb"><div class="pgr" title="On the pitch for 128 of 147 corners"><div class="tk"><div class="fl" style="width:87%;background:var(--lg)"></div></div><div class="vl" style="color:var(--lg)">87%</div></div></div></div>
+      <div class="pg"><div class="pn">Lee Gun-hee<small>186 cm · FW</small></div><div class="pgb"><div class="pgr" title="On the pitch for 115 of 147 corners"><div class="tk"><div class="fl" style="width:78%;background:var(--lg)"></div></div><div class="vl" style="color:var(--lg)">78%</div></div></div></div>
+      <div class="pg"><div class="pn">Byun Jun-soo<small>190 cm · DF</small></div><div class="pgb"><div class="pgr" title="On the pitch for 93 of 147 corners"><div class="tk"><div class="fl" style="width:63%;background:var(--lg)"></div></div><div class="vl" style="color:var(--lg)">63%</div></div></div></div>
+      <div class="pg"><div class="pn">Jung Jae-min<small>192 cm · FW</small></div><div class="pgb"><div class="pgr" title="On the pitch for only 46 of 147 corners"><div class="tk"><div class="fl" style="width:31%;background:var(--kc)"></div></div><div class="vl" style="color:var(--kc)">31%</div></div></div></div>
+      <div class="pg"><div class="pn">Kang Min-kyu<small>185 cm · FW</small></div><div class="pgb"><div class="pgr" title="On the pitch for only 18 of 147 corners"><div class="tk"><div class="fl" style="width:12%;background:var(--kc)"></div></div><div class="vl" style="color:var(--kc)">12%</div></div></div></div>
+    </div>
+    <figcaption>Mean height of Gimcheon players on the pitch at their own corners: 180.6 cm, upper-bound estimate.</figcaption>
+  </figure>
+
+  <div class="body">
+    <p class="pull">The tallest attacking player at the club was on the field for under a third of its own corners.</p>
+    <p>Jung Jae-min is 192 cm. He played 577 minutes across 14 appearances &mdash; an impact substitute. There is
+      nothing inherently wrong with that; a 192 cm forward is not automatically a starter. But it does change
+      the shape of the problem. <strong>The constraint that matters here is not the transfer market. It is the
+      team sheet.</strong></p>
+    <p>Which makes the practical conclusions above stronger rather than weaker. You cannot blame a resource you
+      are barred from buying. You can ask why the one you already own watched 101 of your corners from the bench.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">Method</span><span class="cap">Why this part exists</span></div>
+  <h2>Three findings I tried to kill</h2>
+  <div class="body">
+    <p>Everything above makes a case. This section is about the checks, because a football analysis that only
+      reports what survived is not showing its work. Two popular explanations for Gimcheon's season died under
+      testing, and so did one of my own findings.</p>
+    <p>All three are worth reading not for the conclusions but for the shape of the test. In each case the
+      pattern was visible at the aggregate level and dissolved when the right control was applied.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">Rejected ①</span><span class="cap">The rotation explanation</span></div>
+  <h2>&ldquo;The squad keeps changing, so of course they struggle&rdquo;</h2>
+  <div class="body">
+    <p>This is the explanation that follows naturally from Part 1 of this series. Eighteen-month terms, two intakes a year,
+      players arriving and being discharged mid-season &mdash; the organisational cost seems obvious.</p>
+    <p>It is testable, because the rest of the league is a control group. I used <strong>24,894 player-match
+      records from K League 1, 2024 to 2026</strong>, and ran three checks.</p>
+  </div>
+
+  <div class="strip">
+    <div><div class="k">① Turnover intensity</div><div class="v num">4th</div><div class="s">6.22 squad changes per round in 2026<br>Anyang 7.26, Bucheon 6.93, Pohang 6.78 are higher</div></div>
+    <div><div class="k">② Continuity effect</div><div class="v num">t = 0.80</div><div class="s">Playing the previous match → pass completion<br>+0.16 points league-wide, not significant</div></div>
+    <div><div class="k">③ The Sangmu effect</div><div class="v num">t = 0.89</div><div class="s">42 players, same man, both clubs<br>+0.60 points — and the sign is positive</div></div>
+  </div>
+
+  <div class="body">
+    <p>The third is the direct one. Between 2024 and 2026, <strong>42 players appeared at least six times for
+      Gimcheon and at least six times for another club</strong>. Comparing a player against himself removes
+      individual ability entirely.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">The same player, at Gimcheon and at his parent club</div>
+    <div class="figsub">42 players · pass completion, Gimcheon minus elsewhere</div>
+    <svg viewBox="0 0 620 210" role="img" aria-label="Dot strip of pass-completion differences for 42 players who played both for Gimcheon and for another club">
+  <line x1="70" y1="136" x2="590" y2="136" stroke="var(--axis)" stroke-width="1"/>
+  <line x1="233.6" y1="52" x2="233.6" y2="144" stroke="var(--ink-2)" stroke-width="1.5"/>
+  <line x1="244.6" y1="60" x2="244.6" y2="136" stroke="var(--lg)" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text class="sv-vl" x="252.6" y="50" fill="var(--lg)">mean +0.60</text>
+  <text class="sv-lb" x="225.6" y="42" text-anchor="end">no change</text>
+  <circle cx="109.6" cy="120" r="4.8" fill="var(--kc)" fill-opacity=".85" stroke="var(--surface)" stroke-width="1.5"><title>김태현: -6.82 percentage points (13 matches for Gimcheon, 55 elsewhere)</title></circle>
+  <circle cx="112.0" cy="108" r="4.8" fill="var(--kc)" fill-opacity=".85" stroke="var(--surface)" stroke-width="1.5"><title>김준홍: -6.69 percentage points (17 matches for Gimcheon, 15 elsewhere)</title></circle>
+  <circle cx="122.0" cy="120" r="4.8" fill="var(--kc)" fill-opacity=".85" stroke="var(--surface)" stroke-width="1.5"><title>김동헌: -6.14 percentage points (34 matches for Gimcheon, 22 elsewhere)</title></circle>
+  <circle cx="139.6" cy="120" r="4.8" fill="var(--kc)" fill-opacity=".85" stroke="var(--surface)" stroke-width="1.5"><title>박상혁: -5.17 percentage points (37 matches for Gimcheon, 10 elsewhere)</title></circle>
+  <circle cx="147.6" cy="108" r="4.8" fill="var(--kc)" fill-opacity=".85" stroke="var(--surface)" stroke-width="1.5"><title>이건희: -4.73 percentage points (26 matches for Gimcheon, 21 elsewhere)</title></circle>
+  <circle cx="155.5" cy="120" r="4.8" fill="var(--kc)" fill-opacity=".85" stroke="var(--surface)" stroke-width="1.5"><title>홍윤상: -4.30 percentage points (18 matches for Gimcheon, 56 elsewhere)</title></circle>
+  <circle cx="167.6" cy="120" r="4.8" fill="var(--kc)" fill-opacity=".85" stroke="var(--surface)" stroke-width="1.5"><title>김현욱: -3.63 percentage points (13 matches for Gimcheon, 34 elsewhere)</title></circle>
+  <circle cx="176.2" cy="120" r="4.8" fill="var(--kc)" fill-opacity=".85" stroke="var(--surface)" stroke-width="1.5"><title>이강현: -3.16 percentage points (13 matches for Gimcheon, 36 elsewhere)</title></circle>
+  <circle cx="178.9" cy="108" r="4.8" fill="var(--kc)" fill-opacity=".85" stroke="var(--surface)" stroke-width="1.5"><title>박수일: -3.01 percentage points (37 matches for Gimcheon, 24 elsewhere)</title></circle>
+  <circle cx="187.1" cy="120" r="4.8" fill="var(--kc)" fill-opacity=".85" stroke="var(--surface)" stroke-width="1.5"><title>김이석: -2.56 percentage points (15 matches for Gimcheon, 15 elsewhere)</title></circle>
+  <circle cx="202.5" cy="120" r="4.8" fill="var(--kc)" fill-opacity=".85" stroke="var(--surface)" stroke-width="1.5"><title>박찬용: -1.71 percentage points (39 matches for Gimcheon, 34 elsewhere)</title></circle>
+  <circle cx="209.3" cy="120" r="4.8" fill="var(--kc)" fill-opacity=".85" stroke="var(--surface)" stroke-width="1.5"><title>김강산: -1.34 percentage points (28 matches for Gimcheon, 13 elsewhere)</title></circle>
+  <circle cx="213.5" cy="108" r="4.8" fill="var(--kc)" fill-opacity=".85" stroke="var(--surface)" stroke-width="1.5"><title>김태환: -1.11 percentage points (28 matches for Gimcheon, 100 elsewhere)</title></circle>
+  <circle cx="218.4" cy="120" r="4.8" fill="var(--kc)" fill-opacity=".85" stroke="var(--surface)" stroke-width="1.5"><title>변준수: -0.84 percentage points (18 matches for Gimcheon, 50 elsewhere)</title></circle>
+  <circle cx="219.3" cy="108" r="4.8" fill="var(--kc)" fill-opacity=".85" stroke="var(--surface)" stroke-width="1.5"><title>박태준: -0.79 percentage points (34 matches for Gimcheon, 37 elsewhere)</title></circle>
+  <circle cx="220.5" cy="96" r="4.8" fill="var(--kc)" fill-opacity=".85" stroke="var(--surface)" stroke-width="1.5"><title>이동경: -0.72 percentage points (51 matches for Gimcheon, 32 elsewhere)</title></circle>
+  <circle cx="223.1" cy="84" r="4.8" fill="var(--kc)" fill-opacity=".85" stroke="var(--surface)" stroke-width="1.5"><title>이수빈: -0.58 percentage points (16 matches for Gimcheon, 23 elsewhere)</title></circle>
+  <circle cx="223.8" cy="72" r="4.8" fill="var(--kc)" fill-opacity=".85" stroke="var(--surface)" stroke-width="1.5"><title>김승섭: -0.54 percentage points (40 matches for Gimcheon, 23 elsewhere)</title></circle>
+  <circle cx="231.1" cy="120" r="4.8" fill="var(--kc)" fill-opacity=".85" stroke="var(--surface)" stroke-width="1.5"><title>이승원: -0.14 percentage points (31 matches for Gimcheon, 6 elsewhere)</title></circle>
+  <circle cx="236.4" cy="108" r="4.8" fill="var(--lg)" fill-opacity=".85" stroke="var(--surface)" stroke-width="1.5"><title>전병관: +0.15 percentage points (17 matches for Gimcheon, 26 elsewhere)</title></circle>
+  <circle cx="236.9" cy="120" r="4.8" fill="var(--lg)" fill-opacity=".85" stroke="var(--surface)" stroke-width="1.5"><title>고재현: +0.18 percentage points (26 matches for Gimcheon, 25 elsewhere)</title></circle>
+  <circle cx="239.6" cy="108" r="4.8" fill="var(--lg)" fill-opacity=".85" stroke="var(--surface)" stroke-width="1.5"><title>박승욱: +0.33 percentage points (48 matches for Gimcheon, 18 elsewhere)</title></circle>
+  <circle cx="240.5" cy="96" r="4.8" fill="var(--lg)" fill-opacity=".85" stroke="var(--surface)" stroke-width="1.5"><title>서민우: +0.38 percentage points (36 matches for Gimcheon, 41 elsewhere)</title></circle>
+  <circle cx="255.3" cy="120" r="4.8" fill="var(--lg)" fill-opacity=".85" stroke="var(--surface)" stroke-width="1.5"><title>정치인: +1.19 percentage points (13 matches for Gimcheon, 45 elsewhere)</title></circle>
+  <circle cx="256.0" cy="108" r="4.8" fill="var(--lg)" fill-opacity=".85" stroke="var(--surface)" stroke-width="1.5"><title>김민덕: +1.23 percentage points (19 matches for Gimcheon, 19 elsewhere)</title></circle>
+  <circle cx="260.2" cy="120" r="4.8" fill="var(--lg)" fill-opacity=".85" stroke="var(--surface)" stroke-width="1.5"><title>박세진: +1.46 percentage points (25 matches for Gimcheon, 32 elsewhere)</title></circle>
+  <circle cx="262.4" cy="108" r="4.8" fill="var(--lg)" fill-opacity=".85" stroke="var(--surface)" stroke-width="1.5"><title>김대원: +1.58 percentage points (33 matches for Gimcheon, 44 elsewhere)</title></circle>
+  <circle cx="262.4" cy="96" r="4.8" fill="var(--lg)" fill-opacity=".85" stroke="var(--surface)" stroke-width="1.5"><title>모재현: +1.58 percentage points (29 matches for Gimcheon, 38 elsewhere)</title></circle>
+  <circle cx="268.7" cy="84" r="4.8" fill="var(--lg)" fill-opacity=".85" stroke="var(--surface)" stroke-width="1.5"><title>김진규: +1.93 percentage points (15 matches for Gimcheon, 70 elsewhere)</title></circle>
+  <circle cx="280.7" cy="120" r="4.8" fill="var(--lg)" fill-opacity=".85" stroke="var(--surface)" stroke-width="1.5"><title>이상헌: +2.59 percentage points (14 matches for Gimcheon, 59 elsewhere)</title></circle>
+  <circle cx="283.5" cy="108" r="4.8" fill="var(--lg)" fill-opacity=".85" stroke="var(--surface)" stroke-width="1.5"><title>김봉수: +2.74 percentage points (53 matches for Gimcheon, 46 elsewhere)</title></circle>
+  <circle cx="284.5" cy="96" r="4.8" fill="var(--lg)" fill-opacity=".85" stroke="var(--surface)" stroke-width="1.5"><title>박철우: +2.80 percentage points (38 matches for Gimcheon, 35 elsewhere)</title></circle>
+  <circle cx="294.5" cy="120" r="4.8" fill="var(--lg)" fill-opacity=".85" stroke="var(--surface)" stroke-width="1.5"><title>조현택: +3.35 percentage points (26 matches for Gimcheon, 37 elsewhere)</title></circle>
+  <circle cx="300.2" cy="108" r="4.8" fill="var(--lg)" fill-opacity=".85" stroke="var(--surface)" stroke-width="1.5"><title>이동준: +3.66 percentage points (20 matches for Gimcheon, 28 elsewhere)</title></circle>
+  <circle cx="303.8" cy="120" r="4.8" fill="var(--lg)" fill-opacity=".85" stroke="var(--surface)" stroke-width="1.5"><title>홍시후: +3.86 percentage points (6 matches for Gimcheon, 17 elsewhere)</title></circle>
+  <circle cx="306.4" cy="108" r="4.8" fill="var(--lg)" fill-opacity=".85" stroke="var(--surface)" stroke-width="1.5"><title>김동현: +4.00 percentage points (11 matches for Gimcheon, 45 elsewhere)</title></circle>
+  <circle cx="306.7" cy="96" r="4.8" fill="var(--lg)" fill-opacity=".85" stroke="var(--surface)" stroke-width="1.5"><title>맹성웅: +4.02 percentage points (23 matches for Gimcheon, 16 elsewhere)</title></circle>
+  <circle cx="323.5" cy="120" r="4.8" fill="var(--lg)" fill-opacity=".85" stroke="var(--surface)" stroke-width="1.5"><title>백종범: +4.94 percentage points (27 matches for Gimcheon, 16 elsewhere)</title></circle>
+  <circle cx="348.4" cy="120" r="4.8" fill="var(--lg)" fill-opacity=".85" stroke="var(--surface)" stroke-width="1.5"><title>이정택: +6.31 percentage points (42 matches for Gimcheon, 25 elsewhere)</title></circle>
+  <circle cx="359.3" cy="120" r="4.8" fill="var(--lg)" fill-opacity=".85" stroke="var(--surface)" stroke-width="1.5"><title>임덕근: +6.91 percentage points (8 matches for Gimcheon, 18 elsewhere)</title></circle>
+  <circle cx="359.8" cy="108" r="4.8" fill="var(--lg)" fill-opacity=".85" stroke="var(--surface)" stroke-width="1.5"><title>윤종규: +6.94 percentage points (7 matches for Gimcheon, 24 elsewhere)</title></circle>
+  <circle cx="544.7" cy="120" r="4.8" fill="var(--lg)" fill-opacity=".85" stroke="var(--surface)" stroke-width="1.5"><title>원기종: +17.11 percentage points (8 matches for Gimcheon, 6 elsewhere)</title></circle>
+  <text class="sv-lb" x="70" y="156" text-anchor="start">worse at Gimcheon</text>
+  <text class="sv-lb" x="590" y="156" text-anchor="end">better at Gimcheon</text>
+  <text class="sv-lb" x="233.6" y="156" text-anchor="middle">0</text>
+  <text class="sv-nm" x="330" y="188" text-anchor="middle">Pass completion, same player, Gimcheon minus parent club (percentage points)</text>
+</svg>
+    <figcaption>Mean +0.60 points (t = 0.89). Key passes +0.072 (t = 1.24), ball losses +0.067 (t = 1.12). None significant, and all three point the same, positive, way.</figcaption>
+  </figure>
+
+  <div class="body">
+    <p>The spread is wide &mdash; Won Ki-jong is +17.1, Kim Tae-hyun &minus;6.8 &mdash; but the players with the
+      largest samples sit within three points of zero, and the central tendency is a small positive.
+      <strong>There is no evidence that going to Gimcheon makes a player worse.</strong></p>
+    <p>And the 2026 change runs the other way from the story. The share of minutes taken by the eleven
+      most-used players rose from <strong>52.8 percent in 2025 to 70.0 percent in 2026</strong>, against a
+      league average of 68.5. The squad did not churn more. <em>It settled.</em></p>
+  </div>
+
+  <div class="note warn"><b>What this test does not cover.</b> It measures individual output &mdash; pass
+    completion, key passes, ball losses. <b>The learning cost of collective agreements</b> — set-piece
+    assignments, a routine for protecting a lead — does not show up in any of those. "Rotation is not a cost to
+    individual performance" is as far as this evidence goes. The organisational question remains open.</div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">Rejected ②</span><span class="cap">The retreat explanation</span></div>
+  <h2>&ldquo;They sit back when they go ahead&rdquo;</h2>
+  <div class="body">
+    <p>We established above that Gimcheon concedes 1.16 goals per 90 above expectation while leading, and nowhere
+      else. The intuitive reading is that the team drops deep, invites pressure and gets punished. That is
+      checkable: if a side retreats, its defensive actions happen closer to its own goal.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">Mean position of a Gimcheon defensive action</div>
+    <div class="figsub">0 = own goal line, 100 = opposition goal line</div>
+    <div class="pair">
+      <div class="pg"><div class="pn">Leading<small>489 min</small></div><div class="pgb"><div class="pgr" title="Leading: mean defensive action at 28.5"><div class="tk"><div class="fl" style="width:96.3%;background:var(--lg)"></div></div><div class="vl" style="color:var(--lg)">28.5</div></div></div></div>
+      <div class="pg"><div class="pn">Level<small>1,706 min</small></div><div class="pgb"><div class="pgr" title="Level: mean defensive action at 29.1"><div class="tk"><div class="fl" style="width:98.3%;background:var(--lg)"></div></div><div class="vl" style="color:var(--lg)">29.1</div></div></div></div>
+      <div class="pg"><div class="pn">Behind<small>563 min</small></div><div class="pgb"><div class="pgr" title="Behind: mean defensive action at 29.6"><div class="tk"><div class="fl" style="width:100%;background:var(--lg)"></div></div><div class="vl" style="color:var(--lg)">29.6</div></div></div></div>
+    </div>
+    <figcaption>Axis range 0–29.6. The gap between the three states is 1.1 units — roughly one metre of pitch.</figcaption>
+  </figure>
+
+  <div class="body">
+    <p class="pull">The block does not move. The team that concedes 2.58 per 90 while leading defends at the same
+      height as the team that concedes 0.74 while level.</p>
+    <p>What does change is possession. Leading, Gimcheon plays <strong>386 passes per 90</strong> against
+      <strong>462 when level</strong> &mdash; a 16 percent drop. It is not retreating. It is
+      <em>giving the ball away</em>, which is a different problem with a different fix.</p>
+    <p>This matters practically. "Stop dropping so deep" is a instruction that would have had no purchase here,
+      because the deep block was never the change. The change was that the team stopped keeping the ball.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">Rejected ③</span><span class="cap">My own finding</span></div>
+  <h2>The right-side cross that turned out to be an artefact</h2>
+  <div class="body">
+    <p>Working through the 496 crosses Gimcheon faced, a clean pattern appeared. <strong>When leading, crosses
+      into Gimcheon's right side rose from 7.60 to 11.23 per 90 &mdash; up 48 percent &mdash; while the left
+      side did not move.</strong> The lead-erasing goals leaned the same way, five on that side against two on
+      the other. It looked like a specific, coachable weakness, and I wrote it up as one.</p>
+    <p>Two checks took it apart.</p>
+    <p><strong>First, conversion.</strong> Volume went right, but goals did not. Across the season the
+      concession rate was 4.1 percent per cross on the left and 2.8 percent on the right &mdash; pointing the
+      opposite way from the volume, and a binomial test returns <span class="num">p = 0.32</span>. There is no
+      demonstrable left-right difference in danger at all.</p>
+    <p><strong>Second, stratification.</strong> Splitting the 496 crosses by phase showed where the increase
+      actually came from.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">Crosses faced while leading versus level, by phase and side</div>
+    <div class="figsub">Per 90 minutes · the largest phase is shown first</div>
+    <div class="pair">
+      <div class="pg"><div class="pn">Fast break, right<small>the apparent finding</small></div><div class="pgb">
+        <div class="pgr" title="Fast-break crosses into the right side while leading: 6.44 per 90"><div class="tk"><div class="fl" style="width:100%;background:var(--kc)"></div></div><div class="vl" style="color:var(--kc)">6.44</div></div>
+        <div class="pgr" title="Fast-break crosses into the right side while level: 4.11 per 90"><div class="tk"><div class="fl" style="width:63.8%;background:var(--lg)"></div></div><div class="vl" style="color:var(--lg)">4.11</div></div></div></div>
+      <div class="pg"><div class="pn">Fast break, left<small>and the same rise</small></div><div class="pgb">
+        <div class="pgr" title="Fast-break crosses into the left side while leading: 6.44 per 90 — identical"><div class="tk"><div class="fl" style="width:100%;background:var(--kc)"></div></div><div class="vl" style="color:var(--kc)">6.44</div></div>
+        <div class="pgr" title="Fast-break crosses into the left side while level: 4.43 per 90"><div class="tk"><div class="fl" style="width:68.8%;background:var(--lg)"></div></div><div class="vl" style="color:var(--lg)">4.43</div></div></div></div>
+    </div>
+    <div class="legend"><span><i style="background:var(--kc)"></i>while leading</span><span><i style="background:var(--lg)"></i>while level</span></div>
+    <figcaption>Axis maximum 6.44. Fast breaks are 257 of the 496 crosses. While leading, both sides rise to exactly the same figure.</figcaption>
+  </figure>
+
+  <div class="body">
+    <p>The dominant phase rises <em>symmetrically</em>. The apparent right-side bias was the sum of three small
+      residual categories &mdash; second-phase set pieces, turnovers, throw-ins &mdash; each worth 0.3 to 0.5
+      crosses per 90. And opponent by opponent it is not even consistent: of the seven clubs against whom
+      Gimcheon led for 30 minutes or more, five produced more right-side crosses and two fewer, with Daejeon
+      (+8.63) and Pohang (+7.86) carrying most of the effect against Ulsan's &minus;10.84.</p>
+    <p class="pull">A pattern that is real in the aggregate, absent in the dominant sub-phase, and inconsistent
+      across opponents is not a weakness. It is an artefact of adding things together.</p>
+  </div>
+
+  <div class="note key"><b>What replaced it.</b> The same stratification produced a finding that does hold.
+    <b>Crosses delivered directly from a set piece are 83 of the 496 &mdash; 17 percent &mdash; and produce
+    6 of the 16 goals, 38 percent.</b> Open-play fast breaks are 257 crosses and 5 goals. Per cross, the
+    set-piece delivery is <b>3.8 times</b> more dangerous. And by depth rather than side: crosses from the
+    byline convert at <b>4.2 percent</b> against 2.2 from deep and 1.4 from early positions.
+    <br><br>The axis was never left and right. It was <b>depth, and whether the ball was dead beforehand</b> —
+    which points back at the set-piece section.</div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">Close</span><span class="cap">What the series leaves</span></div>
+  <h2>What is left after the subtraction</h2>
+  <div class="body">
+    <p>Four explanations were removed along the way: no foreign target man, squad rotation, sitting deep, and a
+      right-side defensive weakness. What survives is narrower and more actionable than any of them.</p>
+  </div>
+  <ul class="clean">
+    <li><b>The delivery, not the personnel.</b> 56 percent of corners go into the centre of the six-yard area;
+      first contact is lost 53 percent of the time; the most common outcome is an opposition clearance.</li>
+    <li><b>Presence at the moment.</b> A 192 cm forward was on the pitch for 31 percent of his own team's
+      corners. Mean height on the field at a Gimcheon corner: 180.6 cm.</li>
+    <li><b>Depth of cross, and the dead ball before it.</b> Byline crosses convert at three times the rate of
+      early ones; set-piece deliveries at nearly four times the rate of open-play ones.</li>
+    <li><b>Keeping the ball while ahead.</b> Not a deeper block &mdash; 16 percent fewer passes.</li>
+    <li><b>The second action in the box.</b> 39 ground duels inside the penalty area produced zero fouls won,
+      across a whole season, while the opposition won three from seventeen.</li>
+  </ul>
+  <div class="body">
+    <p>None of those require a signing this club is forbidden from making. All of them are things a coach who
+      receives his squad rather than choosing it can still work on.</p>
+    <p class="pull">The problem was never who was playing. It was what they did in the air and in the box.</p>
+  </div>
+</section>
+
+</div>
+<div class="wrap"><div class="pager"><a href="/en/match-analysis/data-series/gimcheon-club"><div class="lb">Previous</div><div class="tt">A Football Club That Is Also an Army Unit</div></a><a class="nx" href="/en/match-analysis/data-series"><div class="lb">Series index</div><div class="tt">The Conscript Club</div></a></div></div><footer><div class="wrap"><b>Data</b> · K League Data Portal, parsed directly. 2026 K League 1 Rounds 1–29: 41,879 raw events (Gimcheon 22,373), 1,159 player-match rows &times; 77 columns, 29 match reports, 45 league-wide team metrics for 12 clubs.<br><b>Verification</b> · Ten event-vs-league-search checks reconciled exactly (shots 346 · on target 102 · fouls 324 · tackles 161 · interceptions 227 · clearances 614 · key passes 163 · corners 147 · box shots 210 · offsides 40). League table reconciled against recomputed match reports. Attacking-direction normalisation verified (mean shot-end X = 100.0 both sides).<br><b>Limits</b> · Expected-goal values are the portal's own; the model specification is not published. Where this series says "the opposition", it means the eleven clubs Gimcheon faced, not a league average.<br><b>Author</b> · Hyuckjin Han · September 2026</div></footer>
+</body>
+</html>

@@ -1,0 +1,955 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>A Football Club That Is Also an Army Unit — The Conscript Club</title>
+<meta name="description" content="Gimcheon Sangmu’s players are conscripts on a private soldier’s wage. A military board picks them, no club can refuse, the squad turns over on dates the transfer window does not know about, and the club is required to change city every decade.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@400;500;600;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --page:#f1f1ef; --surface:#fcfcfb; --surface-2:#e4e4e1; --raise:#f7f7f5;
+  --ink:#141413; --ink-2:#3c3c3a; --muted:#70706c;
+  --line:rgba(20,20,19,.14); --line-2:rgba(20,20,19,.07);
+  --grid:#e0e0dd; --axis:#c2c2be;
+  --kc:#a32b36; --lg:#2f6fa8; --top:#0e7c52; --bad:#8a1f27;
+  --kc-soft:rgba(163,43,54,.11); --lg-soft:rgba(47,111,168,.11);
+  --top-soft:rgba(14,124,82,.11); --bad-soft:rgba(138,31,39,.10);
+  --sp:clamp(18px,4.5vw,30px);
+  --disp:"Hahmlet",'Nanum Myeongjo',serif;
+  --body:"IBM Plex Sans KR",-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,'SFMono-Regular',monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --page:#121211; --surface:#1a1a19; --surface-2:#262624; --raise:#1f1f1e;
+    --ink:#eaeae7; --ink-2:#b8b8b4; --muted:#8d8d89;
+    --line:rgba(234,234,231,.16); --line-2:rgba(234,234,231,.08);
+    --grid:#2d2d2b; --axis:#4a4a47;
+    --kc:#d9555f; --lg:#4e90cc; --top:#17a077; --bad:#e8737c;
+    --kc-soft:rgba(217,85,95,.16); --lg-soft:rgba(78,144,204,.15);
+    --top-soft:rgba(23,160,119,.15); --bad-soft:rgba(232,115,124,.14);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --page:#121211; --surface:#1a1a19; --surface-2:#262624; --raise:#1f1f1e;
+  --ink:#eaeae7; --ink-2:#b8b8b4; --muted:#8d8d89;
+  --line:rgba(234,234,231,.16); --line-2:rgba(234,234,231,.08);
+  --grid:#2d2d2b; --axis:#4a4a47;
+  --kc:#d9555f; --lg:#4e90cc; --top:#17a077; --bad:#e8737c;
+  --kc-soft:rgba(217,85,95,.16); --lg-soft:rgba(78,144,204,.15);
+  --top-soft:rgba(23,160,119,.15); --bad-soft:rgba(232,115,124,.14);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font-family:var(--body);
+  word-break:keep-all;overflow-wrap:break-word;
+  font-weight:400;font-size:16px;line-height:1.72;-webkit-font-smoothing:antialiased}
+.wrap{max-width:940px;margin:0 auto;padding-inline:var(--sp);padding-block:0}
+p{margin:0 0 1.05em}
+strong{font-weight:600;color:var(--ink)}
+em{font-style:normal;background:var(--kc-soft);padding:.06em .3em;border-radius:2px;font-weight:500}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums;font-weight:500;letter-spacing:-.01em}
+
+/* ── header ── */
+header{padding-block:clamp(48px,9vw,88px) clamp(30px,5vw,44px);border-bottom:1px solid var(--line)}
+.badge{display:inline-flex;align-items:center;gap:.55em;font-family:var(--mono);font-size:11px;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--kc);font-weight:500}
+.badge::before{content:"";width:22px;height:2px;background:var(--kc)}
+h1{font-family:var(--disp);font-weight:600;font-size:clamp(38px,8.6vw,68px);line-height:1.06;
+  letter-spacing:-.025em;margin:.34em 0 .3em;text-wrap:balance}
+.dek{font-family:var(--disp);font-weight:400;font-size:clamp(17px,2.5vw,21px);line-height:1.55;
+  color:var(--ink-2);max-width:34em;margin:0 0 1.5em}
+.meta{display:flex;flex-wrap:wrap;gap:.5em 0;font-family:var(--mono);font-size:11.5px;
+  color:var(--muted);letter-spacing:.02em}
+.meta span+span::before{content:"|";padding:0 .85em;color:var(--axis)}
+
+/* ── tiles ── */
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line-2);
+  border-block:1px solid var(--line);margin-block:0}
+@media(max-width:760px){.tiles{grid-template-columns:repeat(2,1fr)}}
+.tile{background:var(--page);padding:clamp(16px,3vw,24px) clamp(12px,2.4vw,20px);display:flex;
+  flex-direction:column;gap:.3em}
+.tile .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.tile .v{font-family:var(--disp);font-weight:600;font-size:clamp(26px,4.6vw,38px);line-height:1;
+  letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.tile .v.gj{color:var(--kc)} .tile .v.bad{color:var(--bad)}
+.tile .s{font-size:12.5px;line-height:1.45;color:var(--ink-2)}
+
+/* ── sections ── */
+section{padding-block:clamp(40px,7vw,68px);border-bottom:1px solid var(--line-2)}
+section:last-of-type{border-bottom:none}
+.eyebrow{display:flex;align-items:baseline;gap:.9em;margin-bottom:.9em}
+.eyebrow .role{font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--page);background:var(--ink-2);padding:.35em .7em;border-radius:2px;white-space:nowrap}
+.eyebrow .cap{font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--muted)}
+h2{font-family:var(--disp);font-weight:600;font-size:clamp(25px,4.4vw,37px);line-height:1.2;
+  letter-spacing:-.022em;margin:0 0 .6em;text-wrap:balance;max-width:19em}
+h3{font-family:var(--disp);font-weight:600;font-size:clamp(17px,2.4vw,21px);line-height:1.35;
+  letter-spacing:-.012em;margin:2.1em 0 .7em}
+.lede{font-size:clamp(16.5px,2.1vw,18.5px);line-height:1.68;color:var(--ink-2);max-width:33em;margin-bottom:1.6em}
+.body{max-width:35em}
+.body.wide{max-width:40em}
+
+/* ── pull ── */
+.pull{border-left:3px solid var(--kc);padding:.1em 0 .1em 1.15em;margin:1.9em 0;
+  font-family:var(--disp);font-weight:500;font-size:clamp(18px,2.7vw,23px);line-height:1.45;
+  letter-spacing:-.014em;color:var(--ink);max-width:24em;text-wrap:balance}
+
+/* ── figure ── */
+figure{margin:2em 0;padding:clamp(16px,3vw,26px);background:var(--surface);
+  border:1px solid var(--line);border-radius:3px}
+figcaption{font-family:var(--mono);font-size:11px;line-height:1.6;color:var(--muted);
+  margin-top:1.15em;padding-top:.85em;border-top:1px solid var(--line-2)}
+.figtitle{font-family:var(--body);font-weight:600;font-size:14px;line-height:1.4;color:var(--ink);
+  margin-bottom:.3em;letter-spacing:-.005em}
+.figsub{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:1.35em;letter-spacing:.01em}
+.legend{display:flex;flex-wrap:wrap;gap:.5em 1.3em;font-family:var(--mono);font-size:11px;
+  color:var(--ink-2);margin-bottom:1.1em}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:1px;margin-right:.45em;vertical-align:-1px}
+
+/* ── bar rows ── */
+.bars{display:flex;flex-direction:column;gap:7px}
+.br{display:grid;grid-template-columns:74px 1fr 62px;align-items:center;gap:10px}
+@media(max-width:560px){.br{grid-template-columns:60px 1fr 54px;gap:7px}}
+.br .lb{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);text-align:right;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bars.lbwrap .br{grid-template-columns:90px 1fr 46px}
+.bars.lbwrap .br .lb{white-space:normal;overflow:visible;text-overflow:clip;line-height:1.28}
+@media(max-width:560px){.bars.lbwrap .br{grid-template-columns:78px 1fr 40px;gap:7px}}
+.br .tk{height:17px;background:var(--surface-2);border-radius:1px;overflow:hidden}
+.br .fl{height:100%;background:var(--lg);border-radius:1px}
+.br .vl{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;
+  color:var(--ink-2);text-align:right}
+.br.hi .lb{color:var(--kc);font-weight:600}
+.br.hi .fl{background:var(--kc)}
+.br.hi .vl{color:var(--kc);font-weight:600}
+.br.ref .fl{background:var(--top)}
+.br.ref .lb,.br.ref .vl{color:var(--top)}
+
+/* ── grouped pair bars ── */
+.pair{display:flex;flex-direction:column;gap:16px}
+.pg{display:grid;grid-template-columns:96px 1fr;gap:12px;align-items:center}
+@media(max-width:560px){.pg{grid-template-columns:1fr;gap:5px}}
+.pg .pn{font-family:var(--body);font-size:13px;font-weight:600;color:var(--ink)}
+.pg .pn small{display:block;font-family:var(--mono);font-weight:400;font-size:10.5px;color:var(--muted)}
+.pgb{display:flex;flex-direction:column;gap:5px}
+.pgr{display:grid;grid-template-columns:1fr 54px;gap:9px;align-items:center}
+.pgr .tk{height:15px;background:var(--surface-2);border-radius:1px;overflow:hidden}
+.pgr .fl{height:100%;border-radius:1px}
+.pgr .vl{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;text-align:right}
+
+/* ── table ── */
+.tbl{overflow-x:auto;margin:1.8em 0;border:1px solid var(--line);border-radius:3px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:13px}
+th,td{padding:9px 13px;text-align:left;border-bottom:1px solid var(--line-2);vertical-align:baseline}
+th{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;background:var(--raise);white-space:nowrap}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+td .nm{font-weight:600}
+td .no{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.up{color:var(--top);font-weight:600} .dn{color:var(--bad);font-weight:600}
+.dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:.5em;vertical-align:1px}
+.dot.on{background:var(--top)} .dot.mid{background:var(--axis)} .dot.off{background:transparent;
+  border:1px solid var(--axis)}
+
+/* ── slope svg ── */
+svg{display:block;max-width:100%;height:auto;overflow:visible}
+.sv-lb{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:var(--muted)}
+.sv-vl{font-family:"IBM Plex Mono",monospace;font-size:11.5px;font-weight:500}
+.sv-nm{font-family:"IBM Plex Sans KR",sans-serif;font-size:11.5px;font-weight:600;fill:var(--ink-2)}
+
+p.rate{font-size:13px;line-height:1.6;color:var(--muted);border-left:2px solid var(--line);
+  padding-left:1.1em;margin:1.5em 0}
+p.rate b{color:var(--ink-2);font-weight:600}
+
+/* ── callout ── */
+.note{background:var(--raise);border:1px solid var(--line);border-left:3px solid var(--axis);
+  border-radius:3px;padding:clamp(14px,2.6vw,20px);margin:1.9em 0;font-size:14px;line-height:1.65;
+  color:var(--ink-2)}
+.note b{color:var(--ink);font-weight:600}
+.note.warn{border-left-color:var(--bad)}
+.note.key{border-left-color:var(--kc);background:var(--kc-soft);border-color:var(--line)}
+
+/* ── stat strip ── */
+.strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-2);
+  border:1px solid var(--line);border-radius:3px;overflow:hidden;margin:1.9em 0}
+@media(max-width:620px){.strip{grid-template-columns:1fr}}
+.strip>div{background:var(--surface);padding:clamp(13px,2.4vw,18px)}
+.strip .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:.4em}
+.strip .v{font-family:var(--disp);font-weight:600;font-size:clamp(20px,3.4vw,27px);line-height:1.1;
+  font-variant-numeric:tabular-nums;letter-spacing:-.018em}
+.strip .s{font-size:12px;color:var(--ink-2);margin-top:.35em;line-height:1.45}
+
+/* ── list ── */
+ul.clean{list-style:none;padding:0;margin:1.3em 0;display:flex;flex-direction:column;gap:.85em;max-width:35em}
+ul.clean li{padding-left:1.5em;position:relative;font-size:14.5px;line-height:1.62;color:var(--ink-2)}
+ul.clean li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:1.5px;background:var(--axis)}
+ul.clean li b{color:var(--ink);font-weight:600}
+
+/* ── case panel ── */
+.case{border:1px solid var(--line);border-top:3px solid var(--bad);border-radius:3px;
+  background:var(--surface);padding:clamp(18px,3.2vw,28px);margin:2.2em 0}
+.case+.case{margin-top:1.4em}
+.case .ch{display:flex;flex-wrap:wrap;align-items:baseline;gap:.5em .9em;margin-bottom:.35em}
+.case .ct{font-family:var(--disp);font-weight:600;font-size:clamp(20px,3.2vw,26px);line-height:1.15;
+  letter-spacing:-.02em;color:var(--ink)}
+.case .cn{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.case .cs{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--bad);border:1px solid var(--bad);border-radius:2px;padding:.22em .55em;white-space:nowrap}
+.case .cd{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:1.15em;
+  padding-bottom:1.15em;border-bottom:1px solid var(--line-2)}
+.case p{font-size:14.5px;line-height:1.68;color:var(--ink-2);margin-bottom:1em;max-width:40em}
+.case p:last-child{margin-bottom:0}
+.case p b,.case p strong{color:var(--ink);font-weight:600}
+.case h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;margin:1.6em 0 .7em}
+
+/* ── ledger (two-column consequence table inside a case) ── */
+.ledger{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line-2);
+  border:1px solid var(--line);border-radius:3px;overflow:hidden;margin:1.4em 0}
+@media(max-width:620px){.ledger{grid-template-columns:1fr}}
+.ledger>div{background:var(--raise);padding:clamp(13px,2.4vw,17px)}
+.ledger .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:.5em}
+.ledger .v{font-family:var(--disp);font-weight:600;font-size:clamp(17px,2.8vw,21px);line-height:1.2;
+  letter-spacing:-.015em;margin-bottom:.4em}
+.ledger .state .v{color:var(--ink-2)}
+.ledger .social .v{color:var(--bad)}
+.ledger .s{font-size:12.5px;line-height:1.5;color:var(--ink-2)}
+
+/* ── timeline strip ── */
+.tl{display:flex;gap:2px;margin:1.3em 0 .6em}
+.tl .y{flex:1;min-width:0;text-align:center}
+.tl .yb{height:30px;border-radius:1px;background:var(--surface-2)}
+.tl .yb.play{background:var(--lg)}
+.tl .yb.gap{background:var(--bad-soft);border:1px dashed var(--bad)}
+.tl .yb.low{background:var(--kc-soft);border:1px solid var(--kc)}
+.tl .yl{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:.45em;
+  writing-mode:vertical-rl;transform:rotate(180deg);height:34px;display:inline-block}
+@media(min-width:560px){.tl .yl{writing-mode:horizontal-tb;transform:none;height:auto}}
+
+footer{padding-block:clamp(34px,6vw,54px) clamp(46px,8vw,74px);border-top:1px solid var(--line);
+  font-family:var(--mono);font-size:11.5px;line-height:1.85;color:var(--muted)}
+footer b{color:var(--ink-2);font-weight:500}
+@media(prefers-reduced-motion:no-preference){
+  section{animation:fi .5s ease-out both}
+  @keyframes fi{from{opacity:.55}to{opacity:1}}
+}
+</style>
+<style>
+/* ── series nav ── */
+.serienav{border-bottom:1px solid var(--line);background:var(--surface)}
+.serienav .in{max-width:940px;margin:0 auto;padding:12px var(--sp);display:flex;
+  align-items:center;gap:.9em;flex-wrap:wrap;font-family:var(--mono);font-size:11px;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.serienav b{color:var(--kc);font-weight:600}
+.serienav a{color:var(--muted);text-decoration:none;border-bottom:1px solid transparent;padding-bottom:1px}
+.serienav a:hover{color:var(--ink);border-bottom-color:var(--line)}
+.serienav a[aria-current]{color:var(--ink);font-weight:600}
+.serienav .sep{color:var(--axis)}
+/* ── next/prev ── */
+.pager{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line-2);
+  border:1px solid var(--line);border-radius:3px;overflow:hidden;margin:2.4em 0 .6em}
+@media(max-width:560px){.pager{grid-template-columns:1fr}}
+.pager a{background:var(--surface);padding:clamp(15px,2.8vw,22px);text-decoration:none;display:block}
+.pager a:hover{background:var(--raise)}
+.pager .lb{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.pager .tt{font-family:var(--disp);font-weight:600;font-size:16px;color:var(--ink);margin-top:.35em;line-height:1.3}
+.pager .nx{text-align:right}
+/* ── figure caption source line ── */
+.srcline{font-family:var(--mono);font-size:10.5px;color:var(--axis);margin-top:.5em}
+/* ── pitch schematic ── */
+.pitch{background:var(--raise);border:1px solid var(--line);border-radius:3px;padding:10px}
+</style>
+
+</head>
+<body data-palette="#a32b36,#2f6fa8,#0e7c52">
+<nav class="serienav"><div class="in"><b>Data Series</b><span class="sep">/</span><span>Part 1 of 2</span><span class="sep">|</span><a href="/en/match-analysis/data-series/gimcheon-club" aria-current="page">1</a><span class="sep">·</span><a href="/en/match-analysis/data-series/gimcheon">2</a></div></nav><header><div class="wrap">
+  <div class="badge">Part 1 · The institution</div>
+  <h1>A Football Club That Is Also an Army Unit</h1>
+  <p class="dek">Gimcheon Sangmu’s players are conscripts on a private soldier’s wage. A military board picks them, no club can refuse, the squad turns over on dates the transfer window does not know about, and the club is required to change city every decade.</p>
+  <div class="meta"><span>K League 1 2026 · Rounds 1–29</span><span>4W 18D 7L · 11th of 12</span><span>Cut-off 13 September 2026</span></div>
+</div></header>
+<div class="tiles"><div class="tile"><div class="k">Foreign players</div><div class="v num">0</div><div class="s">Structurally impossible<br>Every season, by regulation</div></div><div class="tile"><div class="k">Transfers, in or out</div><div class="v num">0</div><div class="s">No fee, no negotiation<br>No club can refuse a call-up</div></div><div class="tile"><div class="k">Top monthly pay</div><div class="v num">$1,091</div><div class="s">Sergeant rate, the top one<br>League average is 13× higher</div></div><div class="tile"><div class="k">Home cities since 2003</div><div class="v num">3</div><div class="s">Gwangju → Sangju → Gimcheon<br>A fourth move is being decided now</div></div></div>
+<div class="wrap">
+
+<section>
+  <div class="eyebrow"><span class="role">Premise</span><span class="cap">Why this club is different</span></div>
+  <h2>The players did not sign for this club</h2>
+  <div class="body">
+    <p>Gimcheon Sangmu is a unit of the <strong>Korea Armed Forces Athletic Corps</strong> that happens to play
+      in the top division of South Korean football. Its players are enlisted soldiers serving a compulsory
+      military term. They did not sign for the club and the club did not scout them. They
+      <strong>applied to the Ministry of National Defense and were selected by a military board</strong>,
+      and every one of them leaves the moment their service ends.</p>
+    <p>Nothing else in professional football works like this. Not the Italian or Brazilian police and army
+      clubs, which employ career servicemen. Not a reserve side, which belongs to a parent club.
+      Sangmu is a <em>revolving door mandated by conscription law</em>, and the club has no say over who
+      walks through it.</p>
+    <p>Almost none of what follows is guessable from outside Korea, and all of it changes which questions
+      about this team are fair to ask.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">Context</span><span class="cap">The obligation</span></div>
+  <h2>Three routes, and only one of them keeps your career</h2>
+  <div class="body">
+    <p>Every South Korean man must complete military service, roughly between the ages of 18 and 35. The
+      standard army term is <strong>18 months</strong>. For a footballer, disappearing into a barracks in his
+      early-to-mid twenties would take away the two or three seasons that decide his career.</p>
+  </div>
+
+  <div class="tbl"><table>
+    <thead><tr><th>Route</th><th>Condition</th><th>Term</th><th>Football during service</th></tr></thead>
+    <tbody>
+      <tr><td><span class="nm">Athlete route</span></td><td>Olympic medal of any colour, or Asian Games gold</td>
+        <td class="n">34 months</td><td>Uninterrupted — stays at his club, <b>conditionally</b></td></tr>
+      <tr><td><span class="nm">Sangmu</span></td><td>Accepted by the Armed Forces Athletic Corps</td>
+        <td class="n">18 months</td><td><b>Top-flight football, as a soldier</b></td></tr>
+      <tr><td><span class="nm">Alternative service</span></td><td>Medical grade 4 or comparable circumstances</td>
+        <td class="n">21 months</td><td>Semi-professional only — <b>K4</b></td></tr>
+      <tr><td><span class="no">Regular unit</span></td><td>Everyone else</td>
+        <td class="n">18 months</td><td><b>None</b></td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="body">
+    <p>The first row is the one everyone calls an <em>exemption</em>, and the label is misleading twice over:
+      it is the longest of the four terms, and it is conditional. What it exempts you from is the barracks, not
+      the obligation. It is set out in full in the Jang Hyun-soo case below, because his is what happens when
+      the condition is not met.</p>
+    <p>So Sangmu is not a career move. It is <strong>the best available way to discharge an unavoidable
+      obligation without losing your career</strong> — which is why it is heavily oversubscribed.</p>
+  </div>
+
+  <h3>The K4 route, and why it exists</h3>
+  <div class="body">
+    <p>The third row deserves explanation, because it is the fallback for players Sangmu does not take.
+      A man assigned to <strong>alternative service</strong> — a 21-month posting at a public institution
+      rather than a military unit — is not a soldier on a base. He works weekdays and goes home. Under Korea
+      Football Association rules he can register for a club with a <strong>secondary-employment permit</strong>,
+      and that permit restricts him to <strong>weekend league fixtures</strong>.</p>
+    <p>That is only workable in a league that plays at weekends and does not expect full-time availability
+      — which means <strong>K4, the fourth division</strong>. Korea's pyramid runs K League 1 and 2 as fully
+      professional, then <strong>K3 and K4 as semi-professional</strong> — clubs where players are not
+      necessarily full-time employees. Alternative-service players are permitted no higher than K4.</p>
+    <p>Two well-known names took this route. <strong>Lee Chang-min</strong>, a Jeju midfielder with
+      international caps, served in 2023–24 and played for <strong>Geoje Citizen FC in K4</strong>, returning
+      to Jeju in March 2025 when his service ended. <strong>Suk Hyun-jun</strong> — formerly of Ajax and Porto —
+      took the same route at the end of a far longer and more contested story, captaining
+      <strong>Namyangju FC in K4</strong> in 2025 before returning to the professional game in 2026.
+      His case is set out in full two sections below, because it is the clearest illustration of what
+      happens to a player who tries to avoid the obligation rather than schedule it.</p>
+  </div>
+
+  <div class="note"><b>A note on the pyramid, because 2026 is the first year of it.</b>
+    Until now, Korea's professional leagues and its semi-professional ones were separate worlds — you could win
+    K3 and go nowhere. In January 2026 the Korea Football Association restructured the whole thing, and
+    <b>2026 is the first season played under a promotion and relegation pathway that connects all four
+    divisions</b>. The K3 champion, if it obtains a K League 2 licence by 30 June, plays the bottom club of
+    K League 2 in a single match at that club's ground. Below it, K4's champion goes up on request and its
+    runner-up plays off. K3 has 14 clubs in 2026 and K4 has 13. The deciders are played at the end of this
+    season and take effect for 2027.
+    <br><br>Which matters here for one reason: <b>the division a conscript can play in is now connected to the
+    division he came from</b>. The gap he drops through is no longer a different universe. It is three rungs.</div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">Context</span><span class="cap">Why no one refuses</span></div>
+  <h2>A country that is not at peace, and what that does to a footballer</h2>
+  <div class="body">
+    <p>Everything above describes a mechanism. It does not yet explain the force behind it — why a player
+      who has just broken into the national team accepts eighteen months at a soldier's wage without a public
+      word of complaint, and why the handful who have tried to avoid it are still, years later, being asked
+      about it every time they touch a ball.</p>
+    <p>Start with the fact that a reader outside Korea is most likely to get wrong. <strong>The Korean War
+      never ended.</strong> What was signed on 27 July 1953 at Panmunjom was an <em>armistice</em> — a
+      ceasefire between military commands, signed by the United Nations Command, the Korean People's Army and
+      the Chinese People's Volunteer Army. <strong>South Korea did not sign it.</strong> President Syngman
+      Rhee refused, because signing meant accepting a divided country. No peace treaty has been concluded in
+      the seventy-three years since. In the strict legal sense the war is suspended, not over, and the
+      four-kilometre strip that runs across the peninsula is a ceasefire line rather than a border.</p>
+    <p>That is not a historical footnote in Korea. It is the premise of the state. Conscription is not a
+      policy that could be repealed next year if opinion shifted; it is the thing that keeps roughly
+      <strong>450,000 people under arms</strong> against an adversary twenty-five miles from a capital city of
+      ten million. Every Korean man is liable, from the year he turns eighteen. There is no fee, no alternative
+      civilian track a healthy man may simply choose, and no meaningful conscientious-objection route except a
+      narrow one for recognised religious objectors, established only in 2018 and longer than the service it
+      replaces.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">How long each route takes</div>
+    <div class="figsub">Statutory service length in months, 2026</div>
+    <div class="bars lbwrap">
+      <div class="br hi"><div class="lb">Army<br>Sangmu</div><div class="tk"><div class="fl" style="width:52.9%"></div></div><div class="vl">18</div></div>
+      <div class="br"><div class="lb">Navy</div><div class="tk"><div class="fl" style="width:58.8%"></div></div><div class="vl">20</div></div>
+      <div class="br"><div class="lb">Air force</div><div class="tk"><div class="fl" style="width:61.8%"></div></div><div class="vl">21</div></div>
+      <div class="br"><div class="lb">Social<br>service</div><div class="tk"><div class="fl" style="width:61.8%"></div></div><div class="vl">21</div></div>
+      <div class="br ref"><div class="lb">Athlete<br>route</div><div class="tk"><div class="fl" style="width:100%"></div></div><div class="vl">34</div></div>
+    </div>
+    <figcaption>The bottom row is the one people call an "exemption", and it is the longest of the five.</figcaption>
+  </figure>
+
+  <div class="body">
+    <p>Two consequences follow, and both of them matter for reading a Gimcheon team sheet.</p>
+    <p>The first is arithmetic. Korea's conscript pool is collapsing. The country's fertility rate was
+      <strong>0.75</strong> in 2024, the lowest recorded anywhere, and the cohort of twenty-year-old men fell
+      by about <strong>30 per cent between 2019 and 2025</strong>, from roughly 330,000 to 230,000. The active
+      force has shrunk from about 690,000 in the early 2000s to 450,000 now, and the defence ministry puts
+      itself some 50,000 short of what it considers adequate. A shrinking pool does not loosen the obligation.
+      It tightens it — fewer exceptions, not more.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">Fewer men, same border</div>
+    <div class="figsub">Active-duty personnel and the annual pool of twenty-year-old men</div>
+    <svg viewBox="0 0 620 210" role="img" aria-label="Two declining series: South Korean active-duty personnel falling from about 690,000 in 2003 to 450,000 in 2025, and the twenty-year-old male population falling from about 330,000 in 2019 to 230,000 in 2025.">
+      <line x1="58" y1="20" x2="58" y2="160" stroke="var(--axis)" stroke-width="1"/>
+      <line x1="58" y1="160" x2="600" y2="160" stroke="var(--axis)" stroke-width="1"/>
+      <line x1="58" y1="20" x2="600" y2="20" stroke="var(--grid)" stroke-width="1" stroke-dasharray="2 3"/>
+      <line x1="58" y1="90" x2="600" y2="90" stroke="var(--grid)" stroke-width="1" stroke-dasharray="2 3"/>
+      <text class="sv-lb" x="52" y="24" text-anchor="end">700k</text>
+      <text class="sv-lb" x="52" y="94" text-anchor="end">350k</text>
+      <text class="sv-lb" x="52" y="164" text-anchor="end">0</text>
+
+      <polyline points="120,22 350,47 560,70" fill="none" stroke="var(--lg)" stroke-width="2.5"/>
+      <circle cx="120" cy="22" r="4" fill="var(--lg)"/>
+      <circle cx="350" cy="47" r="4" fill="var(--lg)"/>
+      <circle cx="560" cy="70" r="4" fill="var(--lg)"/>
+      <text class="sv-vl" x="112" y="26" text-anchor="end" fill="var(--lg)">690k</text>
+      <text class="sv-vl" x="350" y="39" text-anchor="middle" fill="var(--lg)">563k</text>
+      <text class="sv-vl" x="560" y="62" text-anchor="middle" fill="var(--lg)">450k</text>
+
+      <polyline points="350,94 560,114" fill="none" stroke="var(--kc)" stroke-width="2.5"/>
+      <circle cx="350" cy="94" r="4" fill="var(--kc)"/>
+      <circle cx="560" cy="114" r="4" fill="var(--kc)"/>
+      <text class="sv-vl" x="350" y="110" text-anchor="middle" fill="var(--kc)">330k</text>
+      <text class="sv-vl" x="560" y="130" text-anchor="middle" fill="var(--kc)">230k</text>
+
+      <text class="sv-lb" x="120" y="178" text-anchor="middle">2003</text>
+      <text class="sv-lb" x="350" y="178" text-anchor="middle">2019</text>
+      <text class="sv-lb" x="560" y="178" text-anchor="middle">2025</text>
+
+      <rect x="58" y="192" width="10" height="10" fill="var(--lg)" rx="1"/>
+      <text class="sv-lb" x="74" y="201">Active-duty personnel</text>
+      <rect x="238" y="192" width="10" height="10" fill="var(--kc)" rx="1"/>
+      <text class="sv-lb" x="254" y="201">Twenty-year-old men, annual cohort</text>
+    </svg>
+    <figcaption>The two series are on the same axis but are not the same kind of quantity: the blue line is a
+      standing force, the red one an annual intake. The point is the direction of both.</figcaption>
+  </figure>
+
+  <div class="body">
+    <p>The second consequence is social, and it is the harder one to convey. In a country where every man
+      you meet has done it, service is not experienced as a tax. It is experienced as <strong>a debt everyone
+      pays in the same currency</strong> — eighteen months out of the middle of your twenties, taken at the
+      point where a career, a degree or a relationship is most inconvenient to interrupt. What makes the
+      scrutiny of footballers so exact is not envy of their money. It is that the currency is time, and a
+      famous man's eighteen months are worth exactly as much as anyone else's. The moment someone appears to
+      have paid in something else, the arrangement stops looking like a shared obligation and starts looking
+      like a market.</p>
+    <p>So the public reaction to an evasion case is not proportionate to the legal offence, and it is not
+      meant to be. <strong>The state's punishment ends. The public's does not.</strong> The two cases below
+      are the ones every Korean football supporter can recite, and they are instructive precisely because the
+      offences were so different in scale — and the outcomes so similar in shape.</p>
+  </div>
+
+  <div class="note warn"><b>Before the two cases, the machinery.</b>
+    Failing to report for service is prosecuted under the Military Service Act. Refusing enlistment or a
+    social-service call-up carries up to three years; so does overstaying an overseas-travel permission.
+    Obtaining a deferral or exemption by deception — faked injuries, manipulated weight, fraudulent foreign
+    residency — is a separate and heavier offence. Conviction is not the end of it. The Military Manpower
+    Administration <b>publishes the personal details of evaders on a government website</b>: name, age,
+    district of residence, the date and the nature of the evasion. Public-sector employment is barred, and
+    certain licensed occupations are closed. The list has been published annually since 2015, and it is not
+    retired when the sentence is served.
+  </div>
+
+  <div class="case">
+    <div class="ch">
+      <div class="ct">Suk Hyun-jun</div>
+      <div class="cn">석현준 · born 1991 · forward</div>
+      <div class="cs">Draft evasion</div>
+    </div>
+    <div class="cd">Ajax · Porto · Trabzonspor · Troyes · Nantes — 15 caps for Korea</div>
+    <p>Suk was, on paper, the most conventionally successful Korean forward of his generation: a professional
+      debut at Ajax in 2009, then Portugal, Turkey and France, and a national-team place through the 2010s.
+      Like every Korean man abroad, his right to remain outside the country ran on a permission from the
+      Military Manpower Administration, renewable only up to a statutory age. <strong>His expired in
+      2019.</strong> He was required to return and enlist. He did not.</p>
+    <p>His defence rested on his parents having obtained Hungarian residency, which would have allowed a
+      longer overseas stay for a family emigrating permanently. The courts examined it and did not believe it.
+      The family's Hungarian business was found to have no actual operations; the "rent" on its premises ran
+      to about <strong>$29 a month</strong>, roughly the price of a takeaway meal for two; and his parents were
+      found to have spent more than <strong>300 days a year in Korea</strong> during the period they were
+      supposedly resident abroad. The court concluded the residency had been obtained for the purpose of the
+      deferral, not for emigration. His administrative challenge was dismissed in February 2021.</p>
+    <p>In December 2020 his name appeared on the <strong>Military Manpower Administration's published list of
+      draft evaders</strong> — a public government page, under his own name, for failure to return within the
+      permitted period. He was convicted under the Military Service Act and given <strong>six months'
+      imprisonment, suspended for one year</strong>. He then served, as a social-service worker, the
+      obligation he had spent years avoiding.</p>
+
+    <h4>What the two punishments actually cost</h4>
+    <div class="ledger">
+      <div class="state"><div class="k">The state's penalty</div><div class="v">6 months, suspended</div>
+        <div class="s">Plus publication of his name on the evader list, and the full service obligation
+          performed in the end. Concluded; the suspension lapsed in early 2025.</div></div>
+      <div class="social"><div class="k">The career penalty</div><div class="v">Six seasons</div>
+        <div class="s">Last professional appearance in Europe in 2020. No professional club in Korea would
+          sign him. He resurfaced in 2025 in <b>K4</b>, captaining Namyangju FC, and returned
+          to professional football in 2026 — at 35, in the second tier, with a club playing its first
+          season.</div></div>
+    </div>
+
+    <h4>Career, by season</h4>
+    <div class="tl">
+      <div class="y"><div class="yb play"></div><div class="yl">2016</div></div>
+      <div class="y"><div class="yb play"></div><div class="yl">2017</div></div>
+      <div class="y"><div class="yb play"></div><div class="yl">2018</div></div>
+      <div class="y"><div class="yb play"></div><div class="yl">2019</div></div>
+      <div class="y"><div class="yb gap"></div><div class="yl">2020</div></div>
+      <div class="y"><div class="yb gap"></div><div class="yl">2021</div></div>
+      <div class="y"><div class="yb gap"></div><div class="yl">2022</div></div>
+      <div class="y"><div class="yb gap"></div><div class="yl">2023</div></div>
+      <div class="y"><div class="yb gap"></div><div class="yl">2024</div></div>
+      <div class="y"><div class="yb low"></div><div class="yl">2025</div></div>
+      <div class="y"><div class="yb play"></div><div class="yl">2026</div></div>
+    </div>
+    <div class="legend"><span><i style="background:var(--lg)"></i>Professional football</span><span><i style="background:var(--kc-soft);border:1px solid var(--kc)"></i>K4</span><span><i style="background:var(--bad-soft);border:1px dashed var(--bad)"></i>Dispute, prosecution, service</span></div>
+
+    <p>His signing for Yongin FC in December 2025 was reported in Korea not as a transfer but as a
+      <em>decision</em> — a new club, in its first season, choosing to take on the argument along with the
+      player. The arithmetic is the point. He is a forward who at 29 was playing in Ligue 1 and at 35 is
+      starting again in the second division of his own country, having lost the years in between to a
+      permission he let expire. The suspended sentence was six months. The bill was six seasons.</p>
+  </div>
+
+  <div class="case">
+    <div class="ch">
+      <div class="ct">Jang Hyun-soo</div>
+      <div class="cn">장현수 · born 1991 · centre-back</div>
+      <div class="cs">Falsified records</div>
+    </div>
+    <div class="cd">FC Tokyo · Guangzhou R&amp;F · Al-Hilal · Al-Gharafa — 60+ caps, 2018 World Cup starter</div>
+    <p>Jang's case is the opposite of Suk's in every respect except the ending. He did not evade anything.
+      He had already earned the thing Korean athletes want most: a gold medal at the <strong>2014 Asian Games
+      in Incheon</strong>, which moves a man onto the <em>athlete route</em>.</p>
+
+    <h4>What the "exemption" actually is</h4>
+    <p>This is the route the routes table calls the longest of the four, and it is worth setting out once,
+      properly, because almost every English-language account of it is wrong. Winning an Olympic medal of any
+      colour, or Asian Games gold, does not cancel a man's military service. It converts it into
+      <strong>thirty-four months registered as a sportsman</strong> — counted from the date he is enrolled,
+      and the longest term of any route. He does four weeks of basic training, and then discharges the rest
+      of the obligation by continuing to play for his club. That is the whole of the benefit: not a shorter
+      obligation, a <em>differently served</em> one.</p>
+    <p>It is also conditional, and the condition is the part that matters here. Across those thirty-four
+      months he must complete <strong>544 hours of community coaching</strong> — using the specific skill the
+      state is crediting him for — and he cannot leave it to the end. The requirement is enforced
+      <strong>quarterly, at a minimum of 24 hours in each quarter</strong>, with the full 544 completed inside
+      the service period. Miss a quarter without good cause and the penalty is a formal warning, which adds
+      <strong>five days</strong> to the obligation, plus <strong>twice the shortfall</strong> in additional
+      service hours. File hours that turn out to be false and the penalty is the same shape: a warning, and
+      twice the falsified hours to be served again. Fail to finish the 544 by the end of the term and the term
+      itself is extended. In the worst case the enrolment is cancelled altogether and the man reverts to
+      being a regular conscript or a social-service worker.</p>
+    <p class="pull">So Koreans do not call this an exemption because it is short. They call it an exemption
+      because you keep your career — and the 544 hours are the visible price of keeping it.</p>
+    <h4>What he did</h4>
+    <p>In 2018, journalists examined the paperwork Jang had filed for <strong>196 of those hours</strong>,
+      claimed for coaching at his old high school over two months from December 2017. The documentation did
+      not survive contact with a calendar. Photographs submitted as evidence of training sessions showed a
+      clear, dry pitch on days when heavy snow had fallen. Images taken on a single day had been filed against
+      several different dates. He admitted the submissions were false.</p>
+    <p>What happened next is the sentence that explains Korean football to outsiders better than any other
+      single fact in this article.</p>
+
+    <h4>What the two punishments actually cost</h4>
+    <div class="ledger">
+      <div class="state"><div class="k">The state's penalty</div><div class="v">Five days</div>
+        <div class="s">A formal warning from the Military Manpower Administration, which under the Act
+          carries a five-day extension of the service obligation. That is the entire statutory
+          consequence.</div></div>
+      <div class="social"><div class="k">The federation's penalty</div><div class="v">Permanent</div>
+        <div class="s">On 1 November 2018 the Korea Football Association's disciplinary committee stripped
+          him of national-team eligibility <b>for life</b> and fined him <b>$21,800</b>. He was 27, had more
+          than 60 caps, and had started at the World Cup four months earlier. He never played for Korea again.</div></div>
+    </div>
+
+    <p>Five days, against a career's worth of international football. The gap between those two columns is
+      not an inconsistency in Korean law; it is the whole point. The state was enforcing an administrative
+      rule about documentation. The federation was enforcing something else — and the something else was
+      understood, immediately and without much dissent, to be the more serious of the two. He had not dodged
+      service. He had been <em>careless with the receipt</em> for a privilege other people do eighteen months
+      in a barracks to avoid needing. In Korea that is enough.</p>
+    <p>Jang was 27 in 2018. He is 35 now, and has spent the whole of the intervening period playing
+      club football abroad, at a decent level, for good money, with a permanent bar between him and the
+      national team. The ban has never been revisited.</p>
+  </div>
+
+  <div class="note key"><b>Why this section is in an article about a football club.</b>
+    Because it answers the question every non-Korean reader arrives with, which is <em>why doesn't a player
+    just say no?</em> He can. Nothing compels a selected player to accept the Gimcheon route specifically —
+    the alternative is to decline and take the regular eighteen months in a line unit, with no football at all.
+    What he cannot do is decline the obligation. The two men above are what the exit looks like: one lost six
+    seasons to a permission he let lapse, the other lost his international career to 196 hours of paperwork.
+    Neither outcome was imposed mainly by a court. Set against that, eighteen months at $545 a month,
+    playing in the first division, with your professional contract frozen and waiting for you, is not a
+    sacrifice a player agonises over. <b>It is the best available version of something that is going to happen
+    anyway.</b> That is the single most important thing to understand about the squad list in Part Two.
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">Mechanism</span><span class="cap">Selection</span></div>
+  <h2>Who gets in — and who cannot</h2>
+  <div class="body">
+    <p><strong>Eligibility.</strong> Applicants must be <strong>aged 19 to 27</strong> at the date of
+      application and registered professionals in <strong>K League 1 or K League 2 only</strong> — the
+      semi-professional tiers cannot apply. Turn 28 without being accepted and the options collapse to the
+      first table's last two rows. Criminal records disqualify, including suspended sentences, and fines or
+      worse for drink-driving, drugs or sexual offences; anyone under investigation is excluded.</p>
+    <p><strong>Process.</strong> Applications open <strong>twice a year</strong> through the Military Manpower
+      Administration. Candidates submit a player-registration certificate, a competition record covering
+      roughly the last two years of professional appearances, national-team history at every level, and a
+      school record. Then <strong>document screening, a physical test and an interview</strong>, assessed by
+      military officers. Reported acceptance rates in a recent cycle ran at roughly <strong>10 to 30
+      percent</strong>.</p>
+  </div>
+
+  <div class="note key"><b>The consequence people outside Korea miss.</b> Selection is done
+    <b>by the military, on paper, twice a year, with positional quotas</b>. A player in excellent form can be
+    rejected because the unit already has enough players in his position — this is a documented occurrence.
+    The head coach of Gimcheon Sangmu therefore <b>cannot build a squad. He receives one.</b>
+    <br><br>And it runs the other way too. <b>When Sangmu selects a player, no club can block it.</b> There is
+    no fee, no negotiation and no refusal. The only party who can say no is the player himself — and the price
+    of saying no is 18 months in a regular unit with no football at all.</div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">The strange part</span><span class="cap">Cohorts</span></div>
+  <h2>A club that does not use the transfer market</h2>
+  <div class="body">
+    <p>This is the part that tends to stop foreign readers, and it is worth going through slowly.</p>
+    <p>Because intake happens twice a year, Sangmu's squad is organised into <strong>cohorts</strong>. A player
+      accepted in a cycle receives an <strong>enlistment date</strong>. He reports, completes
+      <strong>five weeks of basic training</strong> — live firing, gas-chamber drill, loaded march — and only
+      then joins the football team. Eighteen months later, on his discharge date, he leaves. Not at the end of
+      a season, not in a window: <em>on the date</em>.</p>
+    <p>What happens to his contract is equally particular. Joining Sangmu is not a transfer. It functions as a
+      <strong>loan from his parent club</strong>, and his professional contract is <strong>suspended, not
+      terminated</strong>, for the duration. On discharge the loan simply ends and he returns. The K League
+      registration system even has a dedicated category for it —
+      <strong><em>military-discharge registration</em></strong> — sitting alongside transfers, loans and free
+      agents in the league's own published totals. Players habitually call their parent club
+      <em>my original club</em> rather than using its name.</p>
+    <p class="pull">So Gimcheon's squad changes on the military's calendar, and the rest of the league's squads
+      change on the football calendar. Twice a year, those two calendars collide.</p>
+    <p>Every Sangmu intake removes a player from some other club mid-contract. Every discharge returns one.
+      <strong>Eleven other squads are reshaped on dates that have nothing to do with the transfer window</strong>,
+      and the club at the centre of it never pays a fee, never negotiates and never registers a signing.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">Two calendars — the league's window and Gimcheon's own clock</div>
+    <div class="figsub">2026 season to Round 29 · arrivals above the line, departures below</div>
+    <svg viewBox="0 0 620 262" role="img" aria-label="Timeline comparing the K League summer registration window with the dates Gimcheon players first and last appeared">
+      <rect x="402" y="46" width="105" height="140" rx="3" fill="var(--lg-soft)"/>
+      <text class="sv-lb" x="454" y="66" text-anchor="middle">K League</text>
+      <text class="sv-lb" x="454" y="80" text-anchor="middle">summer window</text>
+      <text class="sv-lb" x="454" y="98" text-anchor="middle">9 Jul – 19 Aug</text>
+      <line x1="70" y1="130" x2="590" y2="130" stroke="var(--axis)" stroke-width="1"/>
+      <text class="sv-lb" x="64" y="112" text-anchor="end">in</text>
+      <text class="sv-lb" x="64" y="150" text-anchor="end">out</text>
+      <g fill="var(--kc)">
+        <rect x="87" y="114" width="8" height="16" rx="2"><title>8 Mar — 1 first appearance</title></rect>
+        <rect x="102" y="98" width="8" height="32" rx="2"><title>14 Mar — 2 first appearances</title></rect>
+        <rect x="110" y="114" width="8" height="16" rx="2"><title>17 Mar — 1 first appearance</title></rect>
+        <rect x="158" y="98" width="8" height="32" rx="2"><title>5 Apr — 2 first appearances</title></rect>
+        <rect x="176" y="114" width="8" height="16" rx="2"><title>12 Apr — 1 first appearance</title></rect>
+        <rect x="191" y="114" width="8" height="16" rx="2"><title>18 Apr — 1 first appearance</title></rect>
+        <rect x="199" y="114" width="8" height="16" rx="2"><title>21 Apr — 1 first appearance</title></rect>
+        <rect x="226" y="114" width="8" height="16" rx="2"><title>2 May — 1 first appearance</title></rect>
+        <rect x="234" y="98" width="8" height="32" rx="2"><title>5 May — 2 first appearances</title></rect>
+        <rect x="254" y="114" width="8" height="16" rx="2"><title>13 May — 1 first appearance</title></rect>
+        <rect x="518" y="114" width="8" height="16" rx="2"><title>25 Aug — 1 first appearance</title></rect>
+        <rect x="549" y="114" width="8" height="16" rx="2"><title>6 Sep — 1 first appearance, goalkeeper Park Man-ho</title></rect>
+      </g>
+      <g fill="var(--lg)">
+        <rect x="191" y="130" width="8" height="16" rx="2"><title>18 Apr — last appearance of a squad player</title></rect>
+        <rect x="226" y="130" width="8" height="16" rx="2"><title>2 May — last appearance of a squad player</title></rect>
+        <rect x="254" y="130" width="8" height="16" rx="2"><title>13 May — last appearance of a squad player</title></rect>
+        <rect x="440" y="130" width="8" height="16" rx="2"><title>25 Jul — last appearance of a squad player</title></rect>
+        <rect x="511" y="130" width="8" height="16" rx="2"><title>22 Aug — last appearance of a squad player</title></rect>
+        <rect x="528" y="130" width="8" height="48" rx="2"><title>29 Aug — three regulars play their last match, including the first-choice goalkeeper with 25 appearances</title></rect>
+      </g>
+      <text class="sv-vl" x="544" y="176" fill="var(--lg)">3 players</text>
+      <line x1="70" y1="200" x2="590" y2="200" stroke="var(--line-2)" stroke-width="1"/>
+      <text class="sv-lb" x="70" y="216" text-anchor="start">28 Feb</text>
+      <text class="sv-lb" x="230" y="216" text-anchor="middle">May</text>
+      <text class="sv-lb" x="590" y="216" text-anchor="end">13 Sep</text>
+      <text class="sv-nm" x="330" y="244" text-anchor="middle">Ten days after the window shut, three regulars played their last match</text>
+    </svg>
+    <div class="legend"><span><i style="background:var(--kc)"></i>first appearance</span><span><i style="background:var(--lg)"></i>last appearance</span></div>
+    <figcaption>The 29 rounds Gimcheon had played by 13 September. Arrivals cluster in April–May and late August; the largest single departure falls on 29 August, ten days after the league's registration period closed. Last appearances in the final two rounds are excluded as ambiguous.</figcaption>
+  </figure>
+
+  <div class="body">
+    <p>The cluster on 29 August is the clearest illustration in the dataset. <strong>Three regulars played
+      their last match that day</strong> — among them the first-choice goalkeeper, who had started 25 of the
+      previous 26 rounds. The summer registration period had closed on 19 August. No other club in the league
+      could have changed its goalkeeper at that point. <strong>Gimcheon's changed anyway</strong>, because a
+      discharge date had arrived.</p>
+    <p><strong>Early discharge exists too</strong>, which moves even the exit dates. Winning Asian Games gold or
+      an Olympic medal during service ends the term immediately, whatever remains of it. Cho Young-wook left
+      roughly seven months early after the 2023 Asian Games.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">The other strange part</span><span class="cap">Wages</span></div>
+  <h2>A private soldier's pay, in a professional league</h2>
+  <div class="body">
+    <p>While serving, a Sangmu player is paid <strong>as a soldier</strong>, on the standard conscript scale.
+      Not a reduced professional salary — the same monthly pay as every other private in the army, rising by
+      rank as his service progresses.</p>
+    <p class="rate"><b>A note on currency.</b> Every figure in this series is given in US dollars, converted
+      from Korean won at <b>₩1,375 = US$1</b>, the mid-market rate on <b>17 September 2026</b>. The underlying
+      figures are all won amounts; the won moves, so treat the dollar values as a snapshot rather than a
+      fixed equivalence.</p>
+  </div>
+
+  <div class="tbl"><table>
+    <thead><tr><th>Rank</th><th>Monthly pay (2026)</th><th>Savings top-up, paid on discharge</th></tr></thead>
+    <tbody>
+      <tr><td><span class="nm">Private</span> <span class="no">이등병</span></td><td class="n">$545</td><td class="n">+$109</td></tr>
+      <tr><td><span class="nm">Private first class</span> <span class="no">일병</span></td><td class="n">$655</td><td class="n">+$145</td></tr>
+      <tr><td><span class="nm">Corporal</span> <span class="no">상병</span></td><td class="n">$873</td><td class="n">+$255</td></tr>
+      <tr><td><span class="nm">Sergeant</span> <span class="no">병장</span></td><td class="n">$1,091</td><td class="n">+$400</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="body">
+    <p>The savings column is a government match on a conscript savings scheme; it is not received monthly
+      but paid as a lump sum at discharge. Annualised at the top rate, a Sangmu player's pay comes to
+      <strong>about $13,100 a year</strong>.</p>
+    <p>Set that against the league he is playing in.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">Annual pay — a Sangmu conscript against K League 1</div>
+    <div class="figsub">K League salary figures are the league's own disclosure for the 2025 season</div>
+    <div class="pair">
+      <div class="pg"><div class="pn">Sangmu player<small>sergeant rate × 12</small></div><div class="pgb">
+        <div class="pgr" title="About 13,100 dollars a year"><div class="tk"><div class="fl" style="width:5.8%;background:var(--kc)"></div></div><div class="vl" style="color:var(--kc)">$13.1k</div></div></div></div>
+      <div class="pg"><div class="pn">League minimum<small>K League floor</small></div><div class="pgb">
+        <div class="pgr" title="19,600 dollars — the lowest minimum salary of Korea's four major team sports"><div class="tk"><div class="fl" style="width:8.7%;background:var(--kc)"></div></div><div class="vl" style="color:var(--kc)">$19.6k</div></div></div></div>
+      <div class="pg"><div class="pn">Domestic average<small>K League 1 · Korean players</small></div><div class="pgb">
+        <div class="pgr" title="173,000 dollars — the average for Korean players in K League 1"><div class="tk"><div class="fl" style="width:76.3%;background:var(--lg)"></div></div><div class="vl" style="color:var(--lg)">$173k</div></div></div></div>
+      <div class="pg"><div class="pn">All players<small>K League 1 · including foreigners</small></div><div class="pgb">
+        <div class="pgr" title="227,000 dollars — the all-player average, including foreign players at 608,000"><div class="tk"><div class="fl" style="width:100%;background:var(--lg)"></div></div><div class="vl" style="color:var(--lg)">$227k</div></div></div></div>
+    </div>
+    <figcaption>Axis maximum $227,000. Foreign players in K League 1 average <b>$608,000</b>, which is why the all-player average sits well above the domestic one.</figcaption>
+  </figure>
+
+  <div class="body">
+    <p>The more useful way to look at it is not the annual rate but the whole eighteen months, because that is
+      the unit the player actually experiences. A K League 1 regular on the domestic average gives up
+      <strong>about $246,000</strong> to do this.</p>
+  </div>
+
+  <figure>
+    <div class="figtitle">What eighteen months costs</div>
+    <div class="figsub">Total pay over one full service term, at 2025–26 rates</div>
+    <div class="pair">
+      <div class="pg"><div class="pn">Sangmu<small>18 months, conscript scale</small></div><div class="pgb">
+        <div class="pgr"><div class="tk"><div class="fl" style="width:5.0%;background:var(--kc)"></div></div><div class="vl" style="color:var(--kc)">$13.1k</div></div></div></div>
+      <div class="pg"><div class="pn">Same player, no service<small>18 months at the domestic average</small></div><div class="pgb">
+        <div class="pgr"><div class="tk"><div class="fl" style="width:100%;background:var(--lg)"></div></div><div class="vl" style="color:var(--lg)">$259k</div></div></div></div>
+    </div>
+    <figcaption>US dollars. The Sangmu total assumes the rank progression above rather than the sergeant
+      rate throughout, so it is lower than $13.1k × 1.5. Difference: about <b>$246,000</b>.</figcaption>
+  </figure>
+
+  <div class="note"><b>And it is not deferred pay.</b>
+    This is the point non-Korean readers most often assume away. The club contract a player holds before he
+    enlists is <b>suspended, not paid out</b> — the remaining term stops, waits, and resumes on the day he is
+    discharged. He does not draw his salary during service and does not receive it in arrears afterwards. The
+    eighteen months of professional earnings in the right-hand bar are not delayed. They are gone.</div>
+
+  <div class="body">
+    <p>A Sangmu player earns roughly <strong>one-thirteenth of the domestic average</strong> of the division he
+      is playing in, and about <strong>two-thirds of the league minimum</strong> — a minimum which is itself
+      the lowest of Korea's four major team sports, below baseball, basketball and volleyball.</p>
+    <p>There is a small administrative detail that says the rest. When the K League publishes its annual
+      club-by-club salary disclosure, it covers <strong>eleven of the twelve K League 1 clubs</strong>.
+      Gimcheon Sangmu is excluded, with a note that it is the military team. <em>Its players do not have
+      salaries to disclose.</em></p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">Geography</span><span class="cap">A club with no permanent home</span></div>
+  <h2>Why it keeps moving city — and why the city is not the name</h2>
+  <div class="body">
+    <p>The unit has existed since <strong>1984</strong> and has played under three different city names in the
+      professional era: <strong>Gwangju (2003–2010) → Sangju (2011–2020) → Gimcheon (2021– )</strong>.
+      Foreign readers reasonably assume financial trouble or a stadium dispute. It is neither. It is policy.</p>
+    <p>The Armed Forces Athletic Corps operates the club partly as a <strong>development instrument for Korean
+      football</strong>, and works to a stated principle that <strong>no single city may host it for more than
+      about ten years</strong>. When a hosting agreement nears its end, local governments bid. The club moves.
+      The point is to spread a professional fixture list, and the attention that comes with it, into cities
+      that would not otherwise have one.</p>
+    <p>The bidding is real money. When Sangju's term was ending, the club's annual running cost was around
+      <strong>$2.9 million</strong>, of which the city carried about <strong>$1.24 million</strong>; rival
+      cities reportedly offered more. In Gimcheon the arrangement now runs at roughly
+      <strong>$4.6 million</strong> a year with the city contributing <strong>$1.8 million</strong>.
+      The host pays for a top-division club
+      without paying professional wages — because, as above, there are none.</p>
+    <p class="pull">Which is why the city's name is the prefix and <em>Sangmu</em> is the club. The city
+      changes; the unit does not.</p>
+    <p><strong>Sangmu</strong> (상무) is the armed forces' sporting name, and it carries across the whole
+      corps — there are Sangmu teams in other sports too. So the club reads <em>Gwangju Sangmu</em>, then
+      <em>Sangju Sangmu</em>, then <em>Gimcheon Sangmu</em>, with the constant at the back rather than the
+      front. A supporter does not follow a city's team that happens to be military. He follows the army's team
+      that is currently housed in his city.</p>
+  </div>
+
+  <div class="note warn"><b>And it is happening again, right now.</b> The Gimcheon hosting agreement —
+    already extended once by a year — <b>expires at the end of 2026</b>. In December 2025 the K League board
+    settled what happens next: if the Armed Forces Athletic Corps re-founds the club in a new host city,
+    <b>it enters K League 2</b>; if Gimcheon instead creates its own citizens' club, that also enters
+    K League 2. Either way, <b>Gimcheon Sangmu's 2026 league position is irrelevant to which division it plays
+    in next season</b>.
+    <br><br>As of September 2026 the city is deciding. A conversion to a citizens' club would take the annual
+    budget from $4.6 million to about <b>$8.0 million</b> — almost all of it the difference between conscript
+    pay and professional salaries — and the city's own share from $1.8 million to $3.6 million. A residents'
+    survey ran from late August, a public hearing was scheduled for <b>18 September</b>, and the decision is
+    expected by the end of the month. Where the military club goes if it leaves has not been announced.</div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">Constraints</span><span class="cap">What cannot exist here</span></div>
+  <h2>Five things the club is structurally forbidden from having</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Cannot have</th><th>Reason</th></tr></thead>
+    <tbody>
+      <tr><td><span class="nm">Foreign players</span></td><td>It is a military unit; only Korean conscripts may serve in it. Zero in every season, 2022–2026.</td></tr>
+      <tr><td><span class="nm">A youth academy</span></td><td>There is no pathway — nobody is developed into a soldier</td></tr>
+      <tr><td><span class="nm">Continental football</span></td><td>The AFC does not recognise it as a full professional club, so a top-three finish or a cup win yields <b>no</b> Champions League place; the berth passes down the table</td></tr>
+      <tr><td><span class="nm">Transfers of any kind</span></td><td>No fee in, no fee out, no loan extension, no replacement signing. When a key player is discharged, the club waits for the next intake.</td></tr>
+      <tr><td><span class="nm">Squad continuity</span></td><td>Every player is on a countdown clock from the day he arrives</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="body">
+    <p>It is, however, subject to normal <strong>promotion and relegation</strong> on sporting merit, and has
+      been relegated (2012, 2014, 2022) and promoted (2013, 2023) like anyone else.</p>
+    <p><strong>Daily life.</strong> Players are based at the Armed Forces Athletic Corps facility in
+      <strong>Mungyeong</strong>, about 69 km from the Gimcheon stadium where they play home matches. They
+      remain subject to military regulation throughout, including rules on political neutrality. On non-match
+      days they are soldiers, in uniform, on a base. They travel to matches. They may still play for the
+      national team during service.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">2026</span><span class="cap">This season specifically</span></div>
+  <h2>Three facts that change how the results should be read</h2>
+  <ul class="clean">
+    <li><b>A first-year head coach.</b> Ju Seung-jin was appointed on 31 December 2025, replacing Chung
+      Jung-yong, who left for Jeonbuk.</li>
+    <li><b>The hosting agreement expires at the end of 2026</b>, and the citizens-club decision is due within
+      weeks of this being written.</li>
+    <li><b>The club's 2027 division is already settled — K League 2 — regardless of where it finishes.</b></li>
+  </ul>
+  <div class="body">
+    <p class="pull">For the 2026 season this club had nothing to win and nothing to lose. No continental place
+      was available to it, no title was realistically in play, and its next-season division was already fixed.</p>
+    <p>Whatever motivational structure exists in this squad, <strong>it is not the league table</strong>.
+      But do not over-read that into apathy. The individual incentives are extreme: every player is auditioning
+      for a return to his parent club, and in many cases for the contract that will define his career. A Sangmu
+      squad is a room full of men with nothing collective to play for and everything personal to play for.
+      That asymmetry is worth holding in mind before attributing anything in Part 2 to <em>mentality</em>.</p>
+  </div>
+</section>
+
+<section>
+  <div class="eyebrow"><span class="role">Reading note</span><span class="cap">Analysing a revolving door</span></div>
+  <h2>Six things that follow from all of it</h2>
+  <div class="body">
+    <p>The institutional facts above have consequences that show up directly in the data. They are worth
+      stating because they change which questions are fair.</p>
+  </div>
+  <ul class="clean">
+    <li><b>The squad is not chosen, so there is no recruitment logic to reverse-engineer.</b> Positional balance
+      is an accident of who applied and whom the board took.</li>
+    <li><b>Personnel change mid-season, in both directions, on a calendar the league does not share.</b> Any
+      before-and-after analysis has to check the roster rather than assume it.</li>
+    <li><b>There is no multi-year project.</b> A coach gets each player for at most 18 months, usually less by
+      the time he is match-fit. Judging the coaching by whether an identity developed is unfair; judging it by
+      how fast a new arrival is integrated is the right question.</li>
+    <li><b>The age distribution is compressed and artificial.</b> Everyone is roughly 20 to 28. No veterans, no
+      teenagers, and none of the leadership structure that normally rests on a 33-year-old captain.</li>
+    <li><b>Quality is volatile in a way that is not the club's doing.</b> An intake that happens to include two
+      international-class players makes the team good. Season-to-season comparisons of this club measure the
+      intake as much as the coaching.</li>
+    <li><b>The squad is a rough sample of Korean football's own twenty-something cohort</b>, filtered by a
+      military board — an odd but occasionally useful mirror of the domestic talent pool.</li>
+  </ul>
+
+  <figure>
+    <div class="figtitle">When players first appeared — 2026</div>
+    <div class="figsub">31 players used · nine made a first appearance after Round 5</div>
+    <svg viewBox="0 0 620 210" role="img" aria-label="Column chart of how many Gimcheon players made their first appearance in each round of the 2026 season">
+      <line x1="46" y1="160" x2="600" y2="160" stroke="var(--axis)" stroke-width="1"/>
+      <line x1="46" y1="24" x2="46" y2="160" stroke="var(--axis)" stroke-width="1"/>
+      <text class="sv-lb" x="40" y="164" text-anchor="end">0</text>
+      <text class="sv-lb" x="40" y="36" text-anchor="end">16</text>
+      <g fill="var(--kc)">
+        <rect x="52" y="32" width="14" height="128" rx="3"><title>Round 1: 16 players (the opening squad)</title></rect>
+        <rect x="71" y="152" width="14" height="8" rx="3"><title>Round 2: 1 new player</title></rect>
+        <rect x="90" y="144" width="14" height="16" rx="3"><title>Round 3: 2 new players</title></rect>
+        <rect x="109" y="152" width="14" height="8" rx="3"><title>Round 4: 1 new player</title></rect>
+        <rect x="147" y="144" width="14" height="16" rx="3"><title>Round 6: 2 new players</title></rect>
+        <rect x="166" y="152" width="14" height="8" rx="3"><title>Round 7: 1 new player</title></rect>
+        <rect x="185" y="152" width="14" height="8" rx="3"><title>Round 8: 1 new player</title></rect>
+        <rect x="204" y="152" width="14" height="8" rx="3"><title>Round 9: 1 new player</title></rect>
+        <rect x="242" y="152" width="14" height="8" rx="3"><title>Round 11: 1 new player</title></rect>
+        <rect x="261" y="144" width="14" height="16" rx="3"><title>Round 12: 2 new players</title></rect>
+        <rect x="299" y="152" width="14" height="8" rx="3"><title>Round 14: 1 new player</title></rect>
+        <rect x="508" y="152" width="14" height="8" rx="3"><title>Round 25: 1 new player</title></rect>
+        <rect x="546" y="152" width="14" height="8" rx="3"><title>Round 27: 1 new player — Park Man-ho, who took over in goal</title></rect>
+      </g>
+      <text class="sv-lb" x="59" y="178" text-anchor="middle">R1</text>
+      <text class="sv-lb" x="230" y="178" text-anchor="middle">R10</text>
+      <text class="sv-lb" x="420" y="178" text-anchor="middle">R20</text>
+      <text class="sv-lb" x="553" y="178" text-anchor="middle">R27</text>
+      <text class="sv-nm" x="330" y="200" text-anchor="middle">The matchday squad changes by 6.3 players from one round to the next</text>
+    </svg>
+    <figcaption>In a normal club an average of 6.3 changes per round would be a crisis. Here it is the operating model.</figcaption>
+  </figure>
+
+  <div class="body">
+    <p>All of which is prelude. Gimcheon Sangmu finished the 29-round stretch on
+      <strong>4 wins, 18 draws and 7 defeats</strong> — a draw rate of 62 percent, six draws clear of any
+      other club in the division, and the thing that made me open the dataset in the first place.</p>
+    <p>Part 2 is about where that season was actually lost. It is not where the constraints in this piece would
+      lead you to guess.</p>
+  </div>
+</section>
+
+</div>
+<div class="wrap"><div class="pager"><a href="/en/match-analysis/data-series"><div class="lb">Series index</div><div class="tt">The Conscript Club</div></a><a class="nx" href="/en/match-analysis/data-series/gimcheon"><div class="lb">Next</div><div class="tt">Lost on Dead Balls</div></a></div></div><footer><div class="wrap"><b>Institutional sources</b> · Military Manpower Administration recruitment notice (eligibility, documents, screening sequence, exclusions). Korea JoongAng Daily explainer (18-month term, twice-yearly intake, acceptance rate, five-week basic training, Mungyeong base, early discharge). Korea Football Association materials and Namu Wiki for the K3/K4 semi-professional status and the alternative-service restriction. Korean news reporting, January to September 2026, for the integrated promotion system, the hosting agreement, the 2027 division and the citizens-club consultation.<br><b>Currency</b> · All amounts converted from Korean won at ₩1,375 = US$1, the mid-market rate on 17 September 2026.<br><b>Figures</b> · 2026 conscript pay from the published military pay table. K League salary figures from the K League's own club-by-club disclosure of 30 December 2025, covering the 2025 season. Minimum salary and cross-sport comparison from Korean reporting of February 2026.<br><b>Caution</b> · Some older English-language sources state a two-year service term and a single annual intake. Both appear to predate the reduction of army service to 18 months and the current twice-yearly cycle. Where sources conflict, this series follows the Korean ones. The alternative-service and league eligibility rules are summarised from secondary sources and are the item most worth re-checking before quoting.<br><b>Squad-movement figures</b> are my own, computed from match appearances in the 2026 season. A first or last appearance is not the same as an enlistment or discharge date; it is the closest observable proxy.<br><b>Author</b> · Hyuckjin Han · September 2026</div></footer>
+</body>
+</html>
