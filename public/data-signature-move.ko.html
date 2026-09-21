@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="ko">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>급할 때 나오는 것 — Signature Move와 탈압박의 역학 | 한혁진</title>
+<meta name="description" content="압박을 벗기는 일은 시간 예산 문제다. Signature Move는 상대의 시간을 두 갈래로 사는데, 하나는 상대가 좋아질수록 사라지고 하나는 사라지지 않는다. 그리고 아무도 세지 않은 항이 하나 있다 — 공격수 본인이 치르는 시간이다. 그 항을 넣으면 손익분기점이 0.367초에서 0.20초로 내려오고, 육성에서 획일화가 멈춰야 할 지점이 드러난다.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light;
+  --page:#f1f1ef; --surface:#fcfcfb; --surface-2:#e4e4e1; --raise:#f7f7f5;
+  --ink:#141413; --ink-2:#3c3c3a; --muted:#70706c;
+  --line:rgba(20,20,19,.14); --line-2:rgba(20,20,19,.07);
+  --grid:#e0e0dd; --axis:#c2c2be;
+  --ay:#7a3391; --op:#a8620f; --top:#0e7c52; --bad:#8a1f27;
+  --ay-soft:rgba(122,51,145,.12); --op-soft:rgba(168,98,15,.12);
+  --top-soft:rgba(14,124,82,.11); --bad-soft:rgba(138,31,39,.10);
+  --sp:clamp(18px,4.5vw,30px);
+  --disp:"Hahmlet",'Nanum Myeongjo',serif;
+  --body:"IBM Plex Sans KR",-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,'SFMono-Regular',monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --page:#121211; --surface:#1a1a19; --surface-2:#262624; --raise:#1f1f1e;
+    --ink:#eaeae7; --ink-2:#b8b8b4; --muted:#8d8d89;
+    --line:rgba(234,234,231,.16); --line-2:rgba(234,234,231,.08);
+    --grid:#2d2d2b; --axis:#4a4a47;
+    --ay:#a869cc; --op:#bb7a2a; --top:#17a077; --bad:#e8737c;
+    --ay-soft:rgba(168,105,204,.17); --op-soft:rgba(187,122,42,.17);
+    --top-soft:rgba(23,160,119,.15); --bad-soft:rgba(232,115,124,.14);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --page:#121211; --surface:#1a1a19; --surface-2:#262624; --raise:#1f1f1e;
+  --ink:#eaeae7; --ink-2:#b8b8b4; --muted:#8d8d89;
+  --line:rgba(234,234,231,.16); --line-2:rgba(234,234,231,.08);
+  --grid:#2d2d2b; --axis:#4a4a47;
+  --ay:#a869cc; --op:#bb7a2a; --top:#17a077; --bad:#e8737c;
+  --ay-soft:rgba(168,105,204,.17); --op-soft:rgba(187,122,42,.17);
+  --top-soft:rgba(23,160,119,.15); --bad-soft:rgba(232,115,124,.14);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font-family:var(--body);
+  word-break:keep-all;overflow-wrap:break-word;
+  font-weight:400;font-size:16px;line-height:1.72;-webkit-font-smoothing:antialiased}
+.wrap{max-width:940px;margin:0 auto;padding-inline:var(--sp);padding-block:0}
+p{margin:0 0 1.05em}
+strong{font-weight:600;color:var(--ink)}
+em{font-style:normal;background:var(--ay-soft);padding:.06em .3em;border-radius:2px;font-weight:500}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums;font-weight:500;letter-spacing:-.01em}
+
+/* ── header ── */
+header{padding-block:clamp(48px,9vw,88px) clamp(30px,5vw,44px);border-bottom:1px solid var(--line)}
+.badge{display:inline-flex;align-items:center;gap:.55em;font-family:var(--mono);font-size:11px;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--ay);font-weight:500}
+.badge::before{content:"";width:22px;height:2px;background:var(--ay)}
+h1{font-family:var(--disp);font-weight:600;font-size:clamp(38px,8.6vw,68px);line-height:1.06;
+  letter-spacing:-.025em;margin:.34em 0 .3em;text-wrap:balance}
+.dek{font-family:var(--disp);font-weight:400;font-size:clamp(17px,2.5vw,21px);line-height:1.55;
+  color:var(--ink-2);max-width:34em;margin:0 0 1.5em}
+.meta{display:flex;flex-wrap:wrap;gap:.5em 0;font-family:var(--mono);font-size:11.5px;
+  color:var(--muted);letter-spacing:.02em}
+.meta span+span::before{content:"|";padding:0 .85em;color:var(--axis)}
+
+/* ── tiles ── */
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line-2);
+  border-block:1px solid var(--line);margin-block:0}
+@media(max-width:760px){.tiles{grid-template-columns:repeat(2,1fr)}}
+.tile{background:var(--page);padding:clamp(16px,3vw,24px) clamp(12px,2.4vw,20px);display:flex;
+  flex-direction:column;gap:.3em}
+.tile .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.tile .v{font-family:var(--disp);font-weight:600;font-size:clamp(26px,4.6vw,38px);line-height:1;
+  letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.tile .v.gj{color:var(--ay)} .tile .v.bad{color:var(--bad)}
+.tile .s{font-size:12.5px;line-height:1.45;color:var(--ink-2)}
+
+/* ── sections ── */
+section{padding-block:clamp(40px,7vw,68px);border-bottom:1px solid var(--line-2)}
+section:last-of-type{border-bottom:none}
+.eyebrow{display:flex;align-items:baseline;gap:.9em;margin-bottom:.9em}
+.eyebrow .role{font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--page);background:var(--ink-2);padding:.35em .7em;border-radius:2px;white-space:nowrap}
+.eyebrow .cap{font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--muted)}
+h2{font-family:var(--disp);font-weight:600;font-size:clamp(25px,4.4vw,37px);line-height:1.2;
+  letter-spacing:-.022em;margin:0 0 .6em;text-wrap:balance;max-width:19em}
+h3{font-family:var(--disp);font-weight:600;font-size:clamp(17px,2.4vw,21px);line-height:1.35;
+  letter-spacing:-.012em;margin:2.1em 0 .7em}
+.lede{font-size:clamp(16.5px,2.1vw,18.5px);line-height:1.68;color:var(--ink-2);max-width:33em;margin-bottom:1.6em}
+.body{max-width:35em}
+.body.wide{max-width:40em}
+
+/* ── pull ── */
+.pull{border-left:3px solid var(--ay);padding:.1em 0 .1em 1.15em;margin:1.9em 0;
+  font-family:var(--disp);font-weight:500;font-size:clamp(18px,2.7vw,23px);line-height:1.45;
+  letter-spacing:-.014em;color:var(--ink);max-width:24em;text-wrap:balance}
+
+/* ── figure ── */
+figure{margin:2em 0;padding:clamp(16px,3vw,26px);background:var(--surface);
+  border:1px solid var(--line);border-radius:3px}
+figcaption{font-family:var(--mono);font-size:11px;line-height:1.6;color:var(--muted);
+  margin-top:1.15em;padding-top:.85em;border-top:1px solid var(--line-2)}
+.figtitle{font-family:var(--body);font-weight:600;font-size:14px;line-height:1.4;color:var(--ink);
+  margin-bottom:.3em;letter-spacing:-.005em}
+.figsub{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:1.35em;letter-spacing:.01em}
+.legend{display:flex;flex-wrap:wrap;gap:.5em 1.3em;font-family:var(--mono);font-size:11px;
+  color:var(--ink-2);margin-bottom:1.1em}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:1px;margin-right:.45em;vertical-align:-1px}
+
+/* ── bar rows ── */
+.bars{display:flex;flex-direction:column;gap:7px}
+.br{display:grid;grid-template-columns:74px 1fr 62px;align-items:center;gap:10px}
+@media(max-width:560px){.br{grid-template-columns:60px 1fr 54px;gap:7px}}
+.br .lb{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);text-align:right;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bars.lbwrap .br{grid-template-columns:90px 1fr 46px}
+.bars.lbwrap .br .lb{white-space:normal;overflow:visible;text-overflow:clip;line-height:1.28}
+@media(max-width:560px){.bars.lbwrap .br{grid-template-columns:78px 1fr 40px;gap:7px}}
+.br .tk{height:17px;background:var(--surface-2);border-radius:1px;overflow:hidden}
+.br .fl{height:100%;background:var(--op);border-radius:1px}
+.br .vl{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;
+  color:var(--ink-2);text-align:right}
+.br.hi .lb{color:var(--ay);font-weight:600}
+.br.hi .fl{background:var(--ay)}
+.br.hi .vl{color:var(--ay);font-weight:600}
+.br.ref .fl{background:var(--top)}
+.br.ref .lb,.br.ref .vl{color:var(--top)}
+
+/* ── grouped pair bars ── */
+.pair{display:flex;flex-direction:column;gap:16px}
+.pg{display:grid;grid-template-columns:96px 1fr;gap:12px;align-items:center}
+@media(max-width:560px){.pg{grid-template-columns:1fr;gap:5px}}
+.pg .pn{font-family:var(--body);font-size:13px;font-weight:600;color:var(--ink)}
+.pg .pn small{display:block;font-family:var(--mono);font-weight:400;font-size:10.5px;color:var(--muted)}
+.pgb{display:flex;flex-direction:column;gap:5px}
+.pgr{display:grid;grid-template-columns:1fr 54px;gap:9px;align-items:center}
+.pgr .tk{height:15px;background:var(--surface-2);border-radius:1px;overflow:hidden}
+.pgr .fl{height:100%;border-radius:1px}
+.pgr .vl{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;text-align:right}
+
+/* ── table ── */
+.tbl{overflow-x:auto;margin:1.8em 0;border:1px solid var(--line);border-radius:3px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:13px}
+th,td{padding:9px 13px;text-align:left;border-bottom:1px solid var(--line-2);vertical-align:baseline}
+th{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;background:var(--raise);white-space:nowrap}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+td .nm{font-weight:600}
+td .no{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.up{color:var(--top);font-weight:600} .dn{color:var(--bad);font-weight:600}
+.dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:.5em;vertical-align:1px}
+.dot.on{background:var(--top)} .dot.mid{background:var(--axis)} .dot.off{background:transparent;
+  border:1px solid var(--axis)}
+
+/* ── slope svg ── */
+svg{display:block;max-width:100%;height:auto;overflow:visible}
+.sv-lb{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:var(--muted)}
+.sv-vl{font-family:"IBM Plex Mono",monospace;font-size:11.5px;font-weight:500}
+.sv-nm{font-family:"IBM Plex Sans KR",sans-serif;font-size:11.5px;font-weight:600;fill:var(--ink-2)}
+
+p.rate{font-size:13px;line-height:1.6;color:var(--muted);border-left:2px solid var(--line);
+  padding-left:1.1em;margin:1.5em 0}
+p.rate b{color:var(--ink-2);font-weight:600}
+
+/* ── callout ── */
+.note{background:var(--raise);border:1px solid var(--line);border-left:3px solid var(--axis);
+  border-radius:3px;padding:clamp(14px,2.6vw,20px);margin:1.9em 0;font-size:14px;line-height:1.65;
+  color:var(--ink-2)}
+.note b{color:var(--ink);font-weight:600}
+.note.warn{border-left-color:var(--bad)}
+.note.key{border-left-color:var(--ay);background:var(--ay-soft);border-color:var(--line)}
+
+/* ── stat strip ── */
+.strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-2);
+  border:1px solid var(--line);border-radius:3px;overflow:hidden;margin:1.9em 0}
+@media(max-width:620px){.strip{grid-template-columns:1fr}}
+.strip>div{background:var(--surface);padding:clamp(13px,2.4vw,18px)}
+.strip .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:.4em}
+.strip .v{font-family:var(--disp);font-weight:600;font-size:clamp(20px,3.4vw,27px);line-height:1.1;
+  font-variant-numeric:tabular-nums;letter-spacing:-.018em}
+.strip .s{font-size:12px;color:var(--ink-2);margin-top:.35em;line-height:1.45}
+
+/* ── list ── */
+ul.clean{list-style:none;padding:0;margin:1.3em 0;display:flex;flex-direction:column;gap:.85em;max-width:35em}
+ul.clean li{padding-left:1.5em;position:relative;font-size:14.5px;line-height:1.62;color:var(--ink-2)}
+ul.clean li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:1.5px;background:var(--axis)}
+ul.clean li b{color:var(--ink);font-weight:600}
+
+/* ── case panel ── */
+.case{border:1px solid var(--line);border-top:3px solid var(--ay);border-radius:3px;
+  background:var(--surface);padding:clamp(18px,3.2vw,28px);margin:2.2em 0}
+.case+.case{margin-top:1.4em}
+.case .ch{display:flex;flex-wrap:wrap;align-items:baseline;gap:.5em .9em;margin-bottom:.35em}
+.case .ct{font-family:var(--disp);font-weight:600;font-size:clamp(20px,3.2vw,26px);line-height:1.15;
+  letter-spacing:-.02em;color:var(--ink)}
+.case .cn{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.case .cs{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ay);border:1px solid var(--ay);border-radius:2px;padding:.22em .55em;white-space:nowrap}
+.case .cd{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:1.15em;
+  padding-bottom:1.15em;border-bottom:1px solid var(--line-2)}
+.case p{font-size:14.5px;line-height:1.68;color:var(--ink-2);margin-bottom:1em;max-width:40em}
+.case p:last-child{margin-bottom:0}
+.case p b,.case p strong{color:var(--ink);font-weight:600}
+.case h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;margin:1.6em 0 .7em}
+
+/* ── ledger (two-column consequence table inside a case) ── */
+.ledger{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line-2);
+  border:1px solid var(--line);border-radius:3px;overflow:hidden;margin:1.4em 0}
+@media(max-width:620px){.ledger{grid-template-columns:1fr}}
+.ledger>div{background:var(--raise);padding:clamp(13px,2.4vw,17px)}
+.ledger .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:.5em}
+.ledger .v{font-family:var(--disp);font-weight:600;font-size:clamp(17px,2.8vw,21px);line-height:1.2;
+  letter-spacing:-.015em;margin-bottom:.4em}
+.ledger .state .v{color:var(--ink-2)}
+.ledger .social .v{color:var(--bad)}
+.ledger .s{font-size:12.5px;line-height:1.5;color:var(--ink-2)}
+
+/* ── timeline strip ── */
+.tl{display:flex;gap:2px;margin:1.3em 0 .6em}
+.tl .y{flex:1;min-width:0;text-align:center}
+.tl .yb{height:30px;border-radius:1px;background:var(--surface-2)}
+.tl .yb.play{background:var(--op)}
+.tl .yb.gap{background:var(--bad-soft);border:1px dashed var(--bad)}
+.tl .yb.low{background:var(--ay-soft);border:1px solid var(--ay)}
+.tl .yl{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:.45em;
+  writing-mode:vertical-rl;transform:rotate(180deg);height:34px;display:inline-block}
+@media(min-width:560px){.tl .yl{writing-mode:horizontal-tb;transform:none;height:auto}}
+
+footer{padding-block:clamp(34px,6vw,54px) clamp(46px,8vw,74px);border-top:1px solid var(--line);
+  font-family:var(--mono);font-size:11.5px;line-height:1.85;color:var(--muted)}
+footer b{color:var(--ink-2);font-weight:500}
+@media(prefers-reduced-motion:no-preference){
+  section{animation:fi .5s ease-out both}
+  @keyframes fi{from{opacity:.55}to{opacity:1}}
+}
+
+/* ── scouting report components ── */
+.warnbar{background:var(--bad-soft);border:1px solid var(--bad);border-radius:3px;
+  padding:clamp(13px,2.4vw,18px);margin:1.6em 0;font-size:13.5px;line-height:1.6;color:var(--ink-2)}
+.warnbar b{color:var(--bad);font-weight:600}
+
+/* numbered instruction card */
+.instr{display:grid;grid-template-columns:44px 1fr;gap:clamp(12px,2.4vw,20px);
+  border:1px solid var(--line);border-left:3px solid var(--ay);border-radius:3px;
+  background:var(--surface);padding:clamp(15px,2.8vw,22px);margin:1.1em 0}
+@media(max-width:560px){.instr{grid-template-columns:32px 1fr;gap:12px}}
+.instr .n{font-family:var(--disp);font-weight:600;font-size:clamp(26px,4.4vw,34px);line-height:1;
+  color:var(--ay);letter-spacing:-.03em}
+.instr h3{font-family:var(--body);font-weight:600;font-size:clamp(15.5px,2.2vw,18px);
+  line-height:1.34;color:var(--ink);margin:0 0 .5em;letter-spacing:-.01em}
+.instr p{font-size:14px;line-height:1.62;color:var(--ink-2);margin:0 0 .7em;max-width:40em}
+.instr p:last-child{margin-bottom:0}
+.instr .ev{font-family:var(--mono);font-size:11.5px;line-height:1.55;color:var(--muted);
+  border-top:1px solid var(--line-2);padding-top:.7em;margin-top:.9em}
+.instr .ev b{color:var(--ay);font-weight:600}
+
+/* do-not list */
+.dont{border:1px solid var(--line);border-radius:3px;background:var(--raise);
+  padding:clamp(15px,2.8vw,22px);margin:1.1em 0}
+.dont .hd{display:flex;align-items:baseline;gap:.7em;margin-bottom:.55em}
+.dont .x{font-family:var(--mono);font-size:15px;color:var(--axis);line-height:1}
+.dont h3{font-family:var(--body);font-weight:600;font-size:15px;line-height:1.34;
+  color:var(--muted);margin:0;text-decoration:line-through;text-decoration-color:var(--axis)}
+.dont p{font-size:13.5px;line-height:1.6;color:var(--ink-2);margin:0;max-width:40em}
+.dont p b{color:var(--ink);font-weight:600}
+
+/* pitch zone map */
+.zgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin:1.2em 0}
+.zcell{padding:clamp(14px,2.6vw,22px) 10px;border-radius:2px;text-align:center}
+.zcell .zv{font-family:var(--disp);font-weight:600;font-size:clamp(22px,3.8vw,30px);
+  line-height:1;letter-spacing:-.02em}
+.zcell .zn{font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-top:.55em;
+  letter-spacing:.03em}
+.zcell .zr{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:.25em}
+
+/* player duel table */
+.duel{display:flex;flex-direction:column;gap:6px;margin:1.2em 0}
+.drow{display:grid;grid-template-columns:104px 34px 1fr 46px;align-items:center;gap:9px}
+@media(max-width:560px){.drow{grid-template-columns:88px 28px 1fr 42px;gap:6px}}
+.drow .dn{font-family:var(--body);font-size:12.5px;font-weight:600;color:var(--ink);
+  text-align:right;line-height:1.24}
+.drow .dp{font-family:var(--mono);font-size:10px;color:var(--muted);text-align:right}
+.drow .dt{height:16px;background:var(--surface-2);border-radius:1px;position:relative;overflow:hidden}
+.drow .df{position:absolute;top:0;bottom:0;border-radius:1px}
+.drow .dm{position:absolute;top:-2px;bottom:-2px;width:1.5px;background:var(--axis);left:50%}
+.drow .dv{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;text-align:right}
+
+/* one-page summary */
+.sheet{border:2px solid var(--ink);border-radius:4px;padding:clamp(18px,3.4vw,30px);
+  margin:2em 0;background:var(--surface)}
+.sheet h3{font-family:var(--disp);font-weight:600;font-size:clamp(19px,3vw,25px);
+  letter-spacing:-.02em;color:var(--ink);margin:0 0 .2em}
+.sheet .sd{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:1.4em;
+  padding-bottom:1.1em;border-bottom:1px solid var(--line)}
+.sheet ol{margin:0;padding-left:1.35em;display:flex;flex-direction:column;gap:.7em}
+.sheet ol li{font-size:14px;line-height:1.55;color:var(--ink-2)}
+.sheet ol li b{color:var(--ink);font-weight:600}
+.sheet .neg{margin-top:1.5em;padding-top:1.2em;border-top:1px solid var(--line-2)}
+.sheet .neg .nl{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:.6em}
+.sheet .neg p{font-size:13px;line-height:1.6;color:var(--muted);margin:0}
+
+/* ── butterfly (대칭 막대) ── */
+.bf{display:flex;flex-direction:column;gap:0}
+.bfh{display:grid;grid-template-columns:78px 1fr 1fr 50px;gap:0;align-items:center;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--muted);
+  padding-bottom:7px;border-bottom:1px solid var(--line-2);margin-bottom:3px}
+.bfh .a{text-align:right;padding-right:11px} .bfh .b{padding-left:11px}
+.bfh .c{text-align:right}
+.bfr{display:grid;grid-template-columns:78px 1fr 1fr 50px;align-items:center;padding-block:3px}
+.bfr .bl{font-family:var(--body);font-size:12.5px;color:var(--ink-2);white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis;padding-right:8px}
+.bfr .ba{display:flex;justify-content:flex-end;align-items:center;gap:7px;
+  padding-right:9px;border-right:2px solid var(--axis)}
+.bfr .bb{display:flex;align-items:center;gap:7px;padding-left:9px}
+.bfr i{display:block;height:17px;border-radius:1px;flex:none}
+.bfr .ba i{background:var(--ay)} .bfr .bb i{background:var(--bad)}
+.bfr .v{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;
+  color:var(--ink-2);flex:none}
+.bfr .d{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;
+  text-align:right;color:var(--muted);padding-left:8px}
+.bfr.tot{margin-top:5px;padding-top:8px;border-top:1px solid var(--line)}
+.bfr.tot .bl,.bfr.tot .v,.bfr.tot .d{font-weight:600;color:var(--ink)}
+@media(max-width:560px){.bfh,.bfr{grid-template-columns:64px 1fr 1fr 48px}
+  .bfr .bl{font-size:11px;padding-right:5px}
+  .bfr .ba,.bfr .bb{padding-inline:6px}}
+
+/* ── dumbbell (연결점) ── */
+.db{display:flex;flex-direction:column;gap:2px}
+.dbr{display:grid;grid-template-columns:94px 44px 1fr 44px 86px;align-items:center;gap:8px;
+  padding:7px 0;border-bottom:1px solid var(--line-2)}
+.dbr:last-child{border-bottom:none}
+.dbr .nm{font-family:var(--body);font-size:12.5px;font-weight:600;color:var(--ink);line-height:1.22}
+.dbr .nm small{display:block;font-family:var(--mono);font-weight:400;font-size:9.5px;
+  color:var(--muted);letter-spacing:0}
+.dbr .va,.dbr .vo{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums}
+.dbr .va{text-align:right;color:var(--ay);font-weight:600}
+.dbr .vo{text-align:left;color:var(--op)}
+.dbr .tr{position:relative;height:20px}
+.dbr .tr::before{content:"";position:absolute;left:0;right:0;top:9.5px;height:1px;background:var(--line-2)}
+.dbr .cn{position:absolute;top:8px;height:4px;border-radius:2px}
+.dbr .pt{position:absolute;top:4px;width:12px;height:12px;border-radius:50%;
+  border:2px solid var(--surface)}
+.dbr .pa{background:var(--ay)} .dbr .po{background:var(--op)}
+.dbr .jg{font-family:var(--mono);font-size:10px;letter-spacing:.02em;text-align:right;
+  white-space:nowrap}
+.dbr .jg.up{color:var(--top)} .dbr .jg.dn{color:var(--bad)} .dbr .jg.md{color:var(--muted)}
+@media(max-width:620px){
+  .dbr{grid-template-columns:76px 40px 1fr 40px;gap:6px;row-gap:2px}
+  .dbr .jg{grid-column:2/-1;text-align:left;padding-top:1px}}
+
+/* ── 경기 카드 ── */
+.mcards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:1.9em 0}
+@media(max-width:700px){.mcards{grid-template-columns:1fr}}
+.mcard{border:1px solid var(--line);border-top:3px solid var(--ay);border-radius:3px;
+  background:var(--surface);padding:clamp(15px,2.6vw,20px);display:flex;flex-direction:column}
+.mcard .why{font-family:var(--mono);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ay);margin-bottom:.7em}
+.mcard .hd{display:flex;align-items:baseline;gap:.6em;flex-wrap:wrap;margin-bottom:.15em}
+.mcard .sc{font-family:var(--disp);font-weight:600;font-size:clamp(23px,3.6vw,29px);
+  line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.mcard .op{font-family:var(--body);font-size:14px;font-weight:600;color:var(--ink)}
+.mcard .rd{font-family:var(--mono);font-size:10.5px;color:var(--muted)}
+.mcard .kv{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;margin:1em 0 .9em;
+  padding:.85em 0;border-block:1px solid var(--line-2)}
+.mcard .kv dt{font-family:var(--mono);font-size:10.5px;color:var(--muted);white-space:nowrap}
+.mcard .kv dd{margin:0;font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;
+  color:var(--ink-2)}
+.mcard .kv dd b{color:var(--ay);font-weight:600}
+.mcard .kv dd em{background:none;padding:0;color:var(--bad);font-weight:600}
+.mcard p{font-size:13.5px;line-height:1.62;color:var(--ink-2);margin:0}
+.mcard p b{color:var(--ink);font-weight:600}
+
+/* ── 피치 ── */
+.pitches{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px}
+.pitchwrap .pttl{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:.5em;
+  letter-spacing:.03em}
+
+</style>
+<style>
+/* ── page-specific components ── */
+
+/* equation strip */
+.eq{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:1.7em 0}
+.eq .t{flex:1 1 158px;min-width:142px;border:1px solid var(--line);border-radius:3px;
+  background:var(--raise);padding:clamp(12px,2.2vw,16px);display:flex;flex-direction:column;gap:.35em}
+.eq .t.a{border-top:3px solid var(--op)} .eq .t.b{border-top:3px solid var(--ay)}
+.eq .t.c{border-top:3px solid var(--ink-2)}
+.eq .t .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.eq .t .v{font-family:var(--disp);font-weight:600;font-size:clamp(16px,2.6vw,20px);line-height:1.2;
+  letter-spacing:-.015em;font-variant-numeric:tabular-nums}
+.eq .t.a .v{color:var(--op)} .eq .t.b .v{color:var(--ay)}
+.eq .t .s{font-size:12px;line-height:1.45;color:var(--ink-2)}
+.eq .sg{display:flex;align-items:center;justify-content:center;font-family:var(--disp);
+  font-weight:600;font-size:clamp(19px,3vw,25px);color:var(--muted);flex:0 0 16px}
+@media(max-width:620px){.eq{flex-direction:column}.eq .sg{flex:0 0 auto;padding:2px 0}}
+
+/* layer stack */
+.lay{display:flex;flex-direction:column;gap:0;border:1px solid var(--line);border-radius:3px;
+  overflow:hidden;margin:1.7em 0}
+.lr{display:grid;grid-template-columns:52px 1fr 108px;gap:clamp(10px,2vw,16px);align-items:center;
+  background:var(--surface);padding:clamp(13px,2.3vw,17px) clamp(12px,2.2vw,18px);
+  border-bottom:1px solid var(--line-2)}
+@media(max-width:620px){.lr{grid-template-columns:42px 1fr;gap:10px}.lr .st{grid-column:2;margin-top:.3em}}
+.lr:last-child{border-bottom:none}
+.lr .ln{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--muted);letter-spacing:.04em}
+.lr .lt{font-family:var(--body);font-weight:600;font-size:14.5px;line-height:1.35;color:var(--ink)}
+.lr .ls{font-size:12.5px;line-height:1.5;color:var(--muted);margin-top:.18em}
+.lr .st{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;
+  text-align:center;border-radius:2px;padding:.34em .5em;white-space:nowrap}
+.lr .st.ok{color:var(--top);border:1px solid var(--top)}
+.lr .st.no{color:var(--bad);border:1px solid var(--bad);background:var(--bad-soft)}
+.lr.cut{background:var(--ay-soft);border-top:3px solid var(--ay);border-bottom:none}
+.lr.cut .ln,.lr.cut .lt{color:var(--ay)}
+.laycut{background:var(--ay);color:var(--page);font-family:var(--mono);font-size:10.5px;
+  letter-spacing:.11em;text-transform:uppercase;padding:.55em clamp(12px,2.2vw,18px);font-weight:500}
+
+/* 2x2 matrix */
+.q2{display:grid;grid-template-columns:96px 1fr 1fr;gap:1px;background:var(--line-2);
+  border:1px solid var(--line);border-radius:3px;overflow:hidden;margin:1.7em 0}
+@media(max-width:620px){.q2{grid-template-columns:70px 1fr 1fr}}
+.q2>div{background:var(--surface);padding:clamp(11px,2.1vw,16px)}
+.q2 .hd{background:var(--raise);font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--muted);display:flex;align-items:flex-end}
+.q2 .rh{background:var(--raise);font-family:var(--body);font-size:12.5px;font-weight:600;
+  color:var(--ink-2);line-height:1.35;display:flex;align-items:center}
+.q2 .cell .cv{font-family:var(--disp);font-weight:600;font-size:clamp(15px,2.4vw,18px);
+  line-height:1.2;letter-spacing:-.012em;margin-bottom:.45em}
+.q2 .cell .cs{font-size:12px;line-height:1.5;color:var(--ink-2)}
+.q2 .cell .mtr{height:6px;background:var(--surface-2);border-radius:1px;overflow:hidden;margin-bottom:.6em}
+.q2 .cell .mtr i{display:block;height:100%;border-radius:1px;background:var(--ay)}
+.q2 .cell.worst{background:var(--bad-soft)}
+.q2 .cell.worst .cv{color:var(--bad)} .q2 .cell.worst .mtr i{background:var(--bad)}
+
+/* signal split */
+.sig{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line-2);
+  border:1px solid var(--line);border-radius:3px;overflow:hidden;margin:1.5em 0}
+@media(max-width:620px){.sig{grid-template-columns:1fr}}
+.sig>div{background:var(--surface);padding:clamp(13px,2.4vw,18px)}
+.sig .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  margin-bottom:.5em}
+.sig .free .k{color:var(--ay)} .sig .lock .k{color:var(--ink-2)}
+.sig .v{font-family:var(--disp);font-weight:600;font-size:clamp(16px,2.6vw,20px);line-height:1.25;
+  letter-spacing:-.015em;margin-bottom:.45em}
+.sig .free .v{color:var(--ay)}
+.sig .s{font-size:12.5px;line-height:1.55;color:var(--ink-2)}
+.sig .free{border-top:3px solid var(--ay)} .sig .lock{border-top:3px solid var(--axis)}
+
+/* svg text helpers */
+.s-ax{font-family:"IBM Plex Mono",monospace;font-size:10.5px}
+.s-vl{font-family:"IBM Plex Mono",monospace;font-size:11.5px;font-weight:500;font-variant-numeric:tabular-nums}
+.s-nm{font-family:"IBM Plex Sans KR",sans-serif;font-size:12px;font-weight:600}
+.s-cp{font-family:"IBM Plex Sans KR",sans-serif;font-size:11px}
+.s-hd{font-family:"IBM Plex Sans KR",sans-serif;font-size:11.5px;font-weight:600}
+/* default ink only when the element carries no explicit fill — lets fill="var(--ay)" win */
+.s-ax:not([fill]),.s-cp:not([fill]),.s-hd:not([fill]){fill:var(--muted)}
+.s-nm:not([fill]),.s-vl:not([fill]){fill:var(--ink-2)}
+g.s-ax text:not([fill]){fill:var(--muted)}
+</style>
+<body>
+<header><div class="wrap">
+  <div class="badge">Signature Move 연재 · 1편 · 탈압박의 역학</div>
+  <h1>급할 때 나오는 것</h1>
+  <p class="dek">훈련장에서 백 번 굴린 턴이 경기에서는 안 나온다. 안 나오는 정도가 아니라 급할수록 더 안 나온다. 현장의 표준 진단은 압박감 아니면 반복 부족이고, 둘 다 반복을 더 시키라는 결론으로 간다. 나는 다른 답을 의심해 왔다 — 그 선수의 몸이 배운 동작을 비싸다고 판단했고, 급한 순간에 더 싼 것을 골랐을 가능성이다.</p>
+  <div class="meta"><span>생체역학 · 운동제어 문헌 10편 종합</span><span>2026년 9월</span><span>정량 모델 + 검정 설계</span><span>한혁진</span></div>
+</div></header>
+
+<div class="tiles">
+  <div class="tile"><div class="k">지각으로 사는 시간</div><div class="v gj">167<span style="font-size:.5em"> ms</span></div><div class="s">숙련·비숙련 정보 픽업 격차<br>상대가 좋아지면 사라진다</div></div>
+  <div class="tile"><div class="k">역학으로 사는 시간</div><div class="v gj">0.15–0.30<span style="font-size:.45em"> s</span></div><div class="s">방향전환 각도별 지면접촉<br>사라지지 않는다</div></div>
+  <div class="tile"><div class="k">몸이 지키는 경로</div><div class="v">3°<span style="font-size:.45em"> 이내</span></div><div class="s">신발을 바꿔도 러너 80–100%<br>&ldquo;편한 동작&rdquo;은 방어된다</div></div>
+  <div class="tile"><div class="k">쫓아가는 절약 폭</div><div class="v">&lt;5%</div><div class="s">에너지 최적점 이동 시 수 분 내 수렴<br>의식하지 않고</div></div>
+</div>
+
+<div class="wrap">
+
+<!-- ══════════ 1 ══════════ -->
+<section>
+<div class="eyebrow"><span class="role">출발점</span><span class="cap">현장의 장면 하나</span></div>
+<h2>훈련장에서는 됐는데</h2>
+<div class="body">
+<p class="lede">같은 장면을 여러 번 봤다. 훈련에서 백 번 굴린 턴이 경기에서는 안 나온다. 안 나오는 정도가 아니라 <b>급할수록 더 안 나온다.</b> 여유 있을 때는 배운 대로 하다가, 상대가 등 뒤까지 붙은 순간에는 전혀 다른 동작이 나온다. 그리고 대개 그 다른 동작은 아무도 가르친 적 없는, 그 선수가 어릴 때부터 해 오던 것이다.</p>
+<p>현장의 표준 진단은 두 가지다. <b>압박감을 못 이겼거나, 반복이 부족했거나.</b> 두 진단이 다른 말처럼 들리지만 결론은 같은 곳으로 간다 — 더 시켜라.</p>
+<p>그런데 이상한 점이 있다. 반복이 부족해서라면 여유 있을 때도 안 나와야 한다. 그런데 여유 있을 때는 나온다. <em>압박이 걸릴 때만 선택적으로 사라진다면, 그건 숙달의 문제가 아니라 선택의 문제다.</em></p>
+</div>
+<div class="pull">몸이 그 동작을 비싸다고 판단했고, 급한 순간에 더 싼 것을 골랐다면?</div>
+<div class="body">
+<p>이 글은 그 의심을 역학으로 검증해 본 기록이다. 결론부터 말하면 의심은 대체로 맞았고, 대신 내가 원래 하려던 주장 하나는 버려야 했다. 버린 것도 아래에 그대로 적었다.</p>
+</div>
+</section>
+
+<!-- ══════════ 2 ══════════ -->
+<section>
+<div class="eyebrow"><span class="role">전제</span><span class="cap">압박을 정확히 정의한다</span></div>
+<h2>압박은 시간 문제다</h2>
+<div class="body">
+<p class="lede">먼저 압박이 무엇인지부터 정해야 한다. Narizuka와 동료들(2026)은 J1리그 2023시즌 <b>306경기 전부</b>를 이벤트와 트래킹을 동기화해 분석하면서, 압박을 <b>최소 도달 시간</b>으로 정의했다. 가장 빠른 상대 선수가 볼을 가진 선수 위치까지 오는 데 걸리는 시간이다.</p>
+<p>결과는 단순했다. <b>그 시간이 짧아질수록 볼을 잃을 확률이 올라갔다.</b></p>
+<p>그러니까 탈압박은 &ldquo;예산 안에서 무엇을 할 수 있는가&rdquo;의 문제다. 그리고 예산이 줄면, 줄어드는 순서가 있다.</p>
+</div>
+
+<figure>
+<div class="figtitle">예산이 줄면 앞쪽부터 사라진다</div>
+<div class="figsub">볼을 잡은 순간부터 상대가 도달할 때까지 — 그 안에 들어가야 하는 것들</div>
+<svg viewBox="0 0 640 234" role="img" aria-label="시간 예산이 길 때는 보기·돌기·고르기·실행이 모두 들어가지만, 예산이 짧아지면 앞의 세 가지가 밀려나고 실행만 남는다">
+  <text class="s-hd" x="0" y="14">예산이 길 때</text>
+  <rect x="0" y="26" width="600" height="34" rx="2" fill="var(--op-soft)" stroke="var(--line)"/>
+  <rect x="0" y="26" width="120" height="34" rx="2" fill="var(--op-soft)"/>
+  <line x1="120" y1="26" x2="120" y2="60" stroke="var(--surface)" stroke-width="2"/>
+  <line x1="248" y1="26" x2="248" y2="60" stroke="var(--surface)" stroke-width="2"/>
+  <line x1="380" y1="26" x2="380" y2="60" stroke="var(--surface)" stroke-width="2"/>
+  <rect x="380" y="26" width="220" height="34" rx="2" fill="var(--ay)"/>
+  <text class="s-vl" x="60" y="48" text-anchor="middle" fill="var(--ink-2)">보기</text>
+  <text class="s-vl" x="184" y="48" text-anchor="middle" fill="var(--ink-2)">돌기</text>
+  <text class="s-vl" x="314" y="48" text-anchor="middle" fill="var(--ink-2)">고르기</text>
+  <text class="s-vl" x="490" y="48" text-anchor="middle" fill="var(--page)">실행</text>
+
+  <text class="s-hd" x="0" y="104">예산이 짧을 때 — 맨투맨 압박</text>
+  <rect x="0" y="116" width="196" height="34" rx="2" fill="var(--ay)"/>
+  <text class="s-vl" x="98" y="138" text-anchor="middle" fill="var(--page)">실행</text>
+  <line x1="196" y1="110" x2="196" y2="186" stroke="var(--ay)" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text class="s-cp" x="206" y="132">보기 · 돌기 · 고르기가 들어갈 자리가 없다</text>
+  <text class="s-cp" x="206" y="147">남는 것은 몸에서 그냥 나오는 것뿐</text>
+
+  <line x1="0" y1="182" x2="600" y2="182" stroke="var(--axis)" stroke-width="1"/>
+  <line x1="0" y1="178" x2="0" y2="186" stroke="var(--axis)"/>
+  <line x1="600" y1="178" x2="600" y2="186" stroke="var(--axis)"/>
+  <text class="s-ax" x="0" y="200">볼을 잡은 순간</text>
+  <text class="s-ax" x="600" y="200" text-anchor="end">상대 도달 &mdash; 최소 도달 시간</text>
+  <text class="s-cp" x="0" y="222">맨투맨 전방 압박이 표준이 된다는 것은, 리그 평균 예산이 줄어든다는 뜻이다.</text>
+</svg>
+<figcaption>도식은 개념 표현이며 각 구간의 길이는 실측치가 아니다. 최소 도달 시간의 정의와 볼 손실 확률과의 관계는 Narizuka et al.(2026), J1리그 2023시즌 306경기 전수.</figcaption>
+</figure>
+
+<div class="note"><b>측정 방식 —</b> 도달 시간은 Fujimura&ndash;Sugihara 물리 기반 운동 모델로 계산한다. 다만 최대 속도와 가속 파라미터가 <b>전 선수 공통 고정값</b>(10.0&nbsp;m/s, 1.0&nbsp;s<sup>&minus;1</sup>)이고 신체 방향·패스 레인·팀 협응이 빠져 있다. 원문도 &ldquo;프록시로 해석해야 한다&rdquo;고 명시한다. 개인차를 다루려는 이 글의 목적과는 가정이 어긋나는 지점이다.</div>
+</section>
+
+<!-- ══════════ 3 ══════════ -->
+<section>
+<div class="eyebrow"><span class="role">기전 1</span><span class="cap">상대의 시간을 사는 첫 번째 화폐</span></div>
+<h2>몸은 두 가지 신호를 동시에 낸다</h2>
+<div class="body">
+<p class="lede">그 예산을 늘리는 개인 단위 해법을 나는 <b>Signature Move</b>라고 불러 왔다. 이름 붙은 드리블 기술이 아니라, 그 선수만의 터치 질감·턴 방향·리듬·압박 반응의 총합이다.</p>
+<p>역학으로 보면 Signature Move는 상대의 시간을 두 가지 방식으로 산다. 첫 번째는 <b>지각</b>이다 — 수비수가 틀린 신호를 읽고 잘못된 쪽으로 가는 것이다.</p>
+<p>Brault와 동료들(2012)은 럭비 사이드스텝을 모션캡처와 가상현실로 분해하면서, 몸이 <em>두 종류의 신호를 동시에 낸다</em>는 것을 보였다.</p>
+</div>
+
+<figure>
+<div class="figtitle">과장할 수 있는 몸과, 과장할 수 없는 몸</div>
+<div class="figsub">기만 신호와 정직 신호가 서로 다른 분절에 실린다</div>
+<svg viewBox="0 0 640 306" role="img" aria-label="상체 요와 바깥발 배치는 과장할 수 있는 기만 신호이고, 무게중심과 하체 요는 과장할 수 없는 정직 신호다">
+  <defs>
+    <marker id="mA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--ay)"/>
+    </marker>
+    <marker id="mH" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--ink)"/>
+    </marker>
+  </defs>
+  <g stroke="var(--axis)" stroke-width="2" fill="none" stroke-linecap="round">
+    <circle cx="330" cy="48" r="16"/>
+    <line x1="330" y1="64" x2="330" y2="150"/>
+    <line x1="282" y1="90" x2="378" y2="90"/>
+    <line x1="330" y1="150" x2="306" y2="224"/>
+    <line x1="330" y1="150" x2="358" y2="220"/>
+    <line x1="306" y1="224" x2="292" y2="244"/>
+    <line x1="358" y1="220" x2="380" y2="242"/>
+  </g>
+  <path d="M268 78 Q330 56 392 78" fill="none" stroke="var(--ay)" stroke-width="2.6" stroke-dasharray="6 4" marker-end="url(#mA)" marker-start="url(#mA)"/>
+  <text class="s-vl" x="330" y="32" text-anchor="middle" fill="var(--ay)">상체 요</text>
+  <circle cx="380" cy="242" r="6.5" fill="var(--ay)"/>
+  <path d="M394 248 L450 248" fill="none" stroke="var(--ay)" stroke-width="2.6" stroke-dasharray="6 4" marker-end="url(#mA)"/>
+  <text class="s-vl" x="458" y="252" fill="var(--ay)">바깥발 배치</text>
+  <path d="M302 140 Q330 130 358 140" fill="none" stroke="var(--ink)" stroke-width="2.4"/>
+  <line x1="248" y1="124" x2="300" y2="137" stroke="var(--line)" stroke-width="1"/>
+  <text class="s-vl" x="242" y="122" text-anchor="end" fill="var(--ink)">하체 요</text>
+  <circle cx="330" cy="150" r="14" fill="none" stroke="var(--ink)" stroke-width="1.5"/>
+  <circle cx="330" cy="150" r="8" fill="var(--ink)"/>
+  <path d="M318 160 L256 199" fill="none" stroke="var(--ink)" stroke-width="3" marker-end="url(#mH)"/>
+  <text class="s-vl" x="242" y="186" text-anchor="end" fill="var(--ink)">무게중심</text>
+  <text class="s-cp" x="242" y="202" text-anchor="end">실제로 가는 쪽</text>
+  <rect x="0" y="286" width="12" height="3" fill="var(--ay)"/>
+  <text class="s-cp" x="20" y="291">과장할 수 있다 &mdash; 결과에 묶여 있지 않다</text>
+  <rect x="330" y="286" width="12" height="3" fill="var(--ink)"/>
+  <text class="s-cp" x="350" y="291">과장할 수 없다 &mdash; 뉴턴 역학에 묶여 있다</text>
+</svg>
+<figcaption>Brault et al.(2012). 원문은 과장된 움직임을 기만 신호, 최소화된 움직임을 정직 신호로 규정한다. 무게중심은 가려는 쪽으로 실제로 실려야 갈 수 있으므로 &ldquo;속이는 척&rdquo;이 불가능하다.</figcaption>
+</figure>
+
+<div class="sig">
+  <div class="free"><div class="k">기만 신호</div><div class="v">상체 요 · 바깥발 배치</div><div class="s">결과에 직접 묶여 있지 않으므로 의도적으로 크게 만들 수 있다. <b>Signature Move가 사는 자리가 여기다.</b></div></div>
+  <div class="lock"><div class="k">정직 신호</div><div class="v">무게중심 · 하체 요</div><div class="s">가려는 쪽으로 실제로 실려야 하므로 크게 만들 수 없다. <b>여기서는 아무도 속일 수 없다.</b></div></div>
+</div>
+
+<div class="body">
+<p>그래서 수비수의 숙련도가 갈린다. <b>숙련자는 무게중심을 읽고, 비숙련자는 상체를 읽는다.</b> 그리고 이 차이가 만드는 결과가 반직관적이다.</p>
+</div>
+
+<figure>
+<div class="figtitle">숙련자는 더 늦게 움직여서 이긴다</div>
+<div class="figsub">같은 연구의 두 과제 &mdash; 정보를 언제 집어내는가, 몸을 언제 쓰는가</div>
+<svg viewBox="0 0 640 268" role="img" aria-label="숙련자는 방향 전환 183밀리초 전에 무게중심 정보를 집어내고 비숙련자는 16밀리초 전에 집어낸다. 그리고 요격 동작은 숙련자가 267밀리초, 비숙련자가 192밀리초에 시작해 숙련자가 더 늦게 움직인다">
+  <!-- panel A -->
+  <text class="s-hd" x="0" y="13">A · 무게중심 정보를 집어낸 시점 (방향 전환 = 0)</text>
+  <line x1="60" y1="58" x2="600" y2="58" stroke="var(--axis)" stroke-width="1"/>
+  <g class="s-ax" text-anchor="middle" fill="var(--muted)">
+    <line x1="109" y1="55" x2="109" y2="61" stroke="var(--axis)"/><text x="109" y="76">&minus;200</text>
+    <line x1="232" y1="55" x2="232" y2="61" stroke="var(--axis)"/><text x="232" y="76">&minus;150</text>
+    <line x1="355" y1="55" x2="355" y2="61" stroke="var(--axis)"/><text x="355" y="76">&minus;100</text>
+    <line x1="477" y1="55" x2="477" y2="61" stroke="var(--axis)"/><text x="477" y="76">&minus;50</text>
+  </g>
+  <line x1="600" y1="30" x2="600" y2="70" stroke="var(--ink-2)" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text class="s-ax" x="596" y="26" text-anchor="end" fill="var(--ink-2)">0 &mdash; 공격수가 트는 순간</text>
+  <circle cx="151" cy="58" r="7" fill="var(--ay)" stroke="var(--surface)" stroke-width="2"/>
+  <text class="s-vl" x="151" y="46" text-anchor="middle" fill="var(--ay)">&minus;183</text>
+  <text class="s-nm" x="151" y="97" text-anchor="middle" fill="var(--ay)">숙련</text>
+  <circle cx="561" cy="58" r="7" fill="var(--op)" stroke="var(--surface)" stroke-width="2"/>
+  <text class="s-vl" x="561" y="46" text-anchor="middle" fill="var(--op)">&minus;16</text>
+  <text class="s-nm" x="561" y="97" text-anchor="middle" fill="var(--op)">비숙련</text>
+  <line x1="160" y1="58" x2="552" y2="58" stroke="var(--ay)" stroke-width="1" stroke-dasharray="3 3"/>
+  <text class="s-cp" x="356" y="113" text-anchor="middle">격차 167&nbsp;ms &mdash; 숙련자는 트기도 전에 이미 알고 있다</text>
+
+  <!-- panel B -->
+  <text class="s-hd" x="0" y="163">B · 요격 동작을 시작한 시점</text>
+  <line x1="60" y1="208" x2="600" y2="208" stroke="var(--axis)" stroke-width="1"/>
+  <g class="s-ax" text-anchor="middle" fill="var(--muted)">
+    <line x1="60" y1="205" x2="60" y2="211" stroke="var(--axis)"/><text x="60" y="226">0</text>
+    <line x1="229" y1="205" x2="229" y2="211" stroke="var(--axis)"/><text x="229" y="226">100</text>
+    <line x1="398" y1="205" x2="398" y2="211" stroke="var(--axis)"/><text x="398" y="226">200</text>
+    <line x1="566" y1="205" x2="566" y2="211" stroke="var(--axis)"/><text x="566" y="226">300</text>
+  </g>
+  <line x1="385" y1="176" x2="512" y2="176" stroke="var(--ay)" stroke-width="1.4"/>
+  <line x1="385" y1="176" x2="385" y2="184" stroke="var(--ay)" stroke-width="1.4"/>
+  <line x1="512" y1="176" x2="512" y2="184" stroke="var(--ay)" stroke-width="1.4"/>
+  <text class="s-vl" x="448" y="169" text-anchor="middle" fill="var(--ay)">+75 ms 늦게</text>
+  <circle cx="385" cy="208" r="7" fill="var(--op)" stroke="var(--surface)" stroke-width="2"/>
+  <text class="s-vl" x="385" y="196" text-anchor="middle" fill="var(--op)">192.7</text>
+  <text class="s-nm" x="385" y="247" text-anchor="middle" fill="var(--op)">비숙련</text>
+  <circle cx="512" cy="208" r="7" fill="var(--ay)" stroke="var(--surface)" stroke-width="2"/>
+  <text class="s-vl" x="512" y="196" text-anchor="middle" fill="var(--ay)">267.7</text>
+  <text class="s-nm" x="512" y="247" text-anchor="middle" fill="var(--ay)">숙련</text>
+  <text class="s-ax" x="626" y="212" text-anchor="end">ms</text>
+</svg>
+<figcaption>Brault et al.(2012). A는 무게중심의 tau 임계값, B는 요격 과제의 동작 개시 시점(숙련 267.74±36.18, 비숙련 192.71±63.82). <b>두 값은 같은 연구의 서로 다른 과제에서 나왔으므로 하나의 시계로 이어 읽지 않는다.</b> 초보는 과장된 상체를 믿고 먼저 뛰쳐나가서 진다.</figcaption>
+</figure>
+
+<div class="strip">
+  <div><div class="k">축구에서도 같다</div><div class="v">1.46 <span style="font-size:.6em;color:var(--muted)">vs</span> 0.63</div><div class="s">스텝오버 진위 판별 민감도 &mdash; 고숙련 대 저숙련, 선수 48명</div></div>
+  <div><div class="k">검정</div><div class="v">p &lt; .001</div><div class="s">F(1,44)=175.73 · 모든 차폐 조건에서 일관</div></div>
+  <div><div class="k">함의</div><div class="v">감쇠한다</div><div class="s">상대가 좋아질수록 지각으로 사는 시간은 0에 가까워진다</div></div>
+</div>
+</section>
+
+<!-- ══════════ 4 ══════════ -->
+<section>
+<div class="eyebrow"><span class="role">기전 2</span><span class="cap">두 번째 화폐</span></div>
+<h2>되돌리는 데는 값이 붙는다</h2>
+<div class="body">
+<p class="lede">두 번째는 <b>역학</b>이다. 수비수가 이미 실린 운동량을 되돌리는 데 드는 시간이고, 이쪽은 상대가 아무리 정확히 읽어도 사라지지 않는다.</p>
+<p>van den Tillaar와 동료들(2020)이 그 가격표를 쟀다. 축구 선수 23명, 접근 거리 4미터 기준이다.</p>
+</div>
+
+<figure>
+<div class="figtitle">방향 전환의 가격표</div>
+<div class="figsub">각도가 커질수록 디딤발이 땅에 더 오래 붙고, 감속에 더 많은 스텝이 든다</div>
+<div class="legend"><span><i style="background:var(--op)"></i>수비수가 치르는 값</span></div>
+<div style="font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.7em">디딤발 지면접촉시간 (초)</div>
+<div class="bars">
+  <div class="br"><div class="lb">45&deg;</div><div class="tk"><div class="fl" style="width:50.0%"></div></div><div class="vl">0.15</div></div>
+  <div class="br"><div class="lb">90&deg;</div><div class="tk"><div class="fl" style="width:60.0%"></div></div><div class="vl">0.18</div></div>
+  <div class="br"><div class="lb">135&deg;</div><div class="tk"><div class="fl" style="width:76.7%"></div></div><div class="vl">0.23</div></div>
+  <div class="br hi"><div class="lb">180&deg;</div><div class="tk"><div class="fl" style="width:100%"></div></div><div class="vl">0.30</div></div>
+</div>
+<div style="font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:1.6em 0 .7em">감속에 쓰인 스텝 수 (개)</div>
+<div class="bars">
+  <div class="br"><div class="lb">45&deg;</div><div class="tk"><div class="fl" style="width:12.1%"></div></div><div class="vl">0.4</div></div>
+  <div class="br"><div class="lb">90&deg;</div><div class="tk"><div class="fl" style="width:81.8%"></div></div><div class="vl">2.7</div></div>
+  <div class="br"><div class="lb">135&deg;</div><div class="tk"><div class="fl" style="width:100%"></div></div><div class="vl">3.3</div></div>
+  <div class="br hi"><div class="lb">180&deg;</div><div class="tk"><div class="fl" style="width:100%"></div></div><div class="vl">3.3</div></div>
+</div>
+<figcaption>van den Tillaar et al.(2020), 남자 축구 선수 23명, 4&nbsp;m 접근. 두 지표는 단위가 달라 각각의 축을 쓴다. 45&deg;와 180&deg;는 정도 차이가 아니라 서로 다른 근육 전략이다 &mdash; 속도 지배 구간(45&ndash;90&deg;)이 힘 지배 구간(135&ndash;180&deg;)보다 내전근·햄스트링·비복근 활성이 유의하게 높다(p&nbsp;&le;&nbsp;.034). <b>다만 이 과제에는 볼이 없다.</b> 온더볼 값으로 그대로 옮기지 않는다.</figcaption>
+</figure>
+
+<div class="pull">이것이 역학적 잔액이다. 상대가 내 무브를 완벽하게 읽어냈을 때에도 남아 있는 우위.</div>
+</section>
+
+<!-- ══════════ 5 ══════════ -->
+<section>
+<div class="eyebrow"><span class="role">반전</span><span class="cap">아무도 세지 않던 항</span></div>
+<h2>그런데 나도 시간을 쓴다</h2>
+<div class="body">
+<p class="lede">여기까지가 상대 쪽 계산이고, 여기에 빠진 것이 하나 있다. <b>방향을 바꾸는 건 공격수도 마찬가지다.</b> 위의 가격표는 누가 돌든 적용된다. 공격수도 자기 운동량을 죽이고, 디딤발을 놓고, 새 방향으로 속도를 다시 쌓아야 한다.</p>
+<p>그런데 코칭의 대화는 늘 수비수 쪽이다. 속았다, 무게중심이 무너졌다, 한 발 늦었다. <em>공격수가 그 동작에 얼마를 냈는지는 아무도 세지 않는다.</em></p>
+<p>나는 이것을 <b>실행 비용</b>이라 부르기로 했다. 탈압박 동작이 그것을 수행하는 선수 본인에게 물리는 시간이다.</p>
+<p>공격수가 유리한 이유는 사실 세 가지뿐인데, 세 번째가 이 글의 주제다.</p>
+</div>
+
+<ul class="clean">
+  <li><b>예지</b> &mdash; 언제 어디로 돌지 본인이 안다. 그래서 지각·반응 항이 0이다.</li>
+  <li><b>사전 적재</b> &mdash; 무게중심과 디딤발과 속도를 미리 맞춰 놓을 수 있다. 제동 구간이 줄어든다.</li>
+  <li><b>체화</b> &mdash; 그 동작이 몸에 배어 있다. <b>실행 자체가 싸다.</b> 이것이 Signature Move이고, 그 값이 실행 비용이다.</li>
+</ul>
+
+<figure>
+<div class="figtitle">순 탈압박 창</div>
+<div class="figsub">상대가 잃는 시간에서, 내가 쓰는 시간을 뺀 것</div>
+<div class="eq">
+  <div class="t a"><div class="k">지각 이득</div><div class="v">0 &ndash; 0.167 s</div><div class="s">수비수가 틀린 신호를 읽는다<br><b style="color:var(--bad)">상대가 좋아지면 감쇠</b></div></div>
+  <div class="sg">+</div>
+  <div class="t a"><div class="k">역학 이득</div><div class="v">0.15 &ndash; 0.30 s</div><div class="s">실린 운동량을 되돌린다<br><b style="color:var(--top)">감쇠하지 않는다</b></div></div>
+  <div class="sg">&minus;</div>
+  <div class="t b"><div class="k">실행 비용</div><div class="v">?</div><div class="s">내가 그 동작에 쓰는 시간<br><b style="color:var(--bad)">아무도 측정하지 않았다</b></div></div>
+  <div class="sg">=</div>
+  <div class="t c"><div class="k">순 탈압박 창</div><div class="v">남는 시간</div><div class="s">이만큼이 실제로 벌어진 시간이다</div></div>
+</div>
+<figcaption>세 항의 크기 대역은 서로 다른 연구에서 왔으며 한 장면의 측정치가 아니다. 지각 이득의 0.167초는 숙련·비숙련 사이의 <b>격차</b>이지 실제로 잃은 시간이 아니고, 역학 이득은 볼이 없는 방향전환 과제 값이다.</figcaption>
+</figure>
+</section>
+
+<!-- ══════════ 6 ══════════ -->
+<section>
+<div class="eyebrow"><span class="role">핵심</span><span class="cap">모델이 말하는 단 하나</span></div>
+<h2>손익분기점이 내려온다</h2>
+<div class="body">
+<p class="lede">두 이득은 상대가 좋아질 때 완전히 다르게 움직인다. 지각은 0으로 줄고 역학은 그대로다. 그러면 <b>실행 비용이 얼마를 넘으면 손해가 되는가</b>라는 기준선이 통째로 내려온다.</p>
+</div>
+
+<figure>
+<div class="figtitle">같은 동작, 다른 손익분기</div>
+<div class="figsub">실행 비용이 이 선을 넘으면 그 무브는 쓰지 않는 편이 낫다</div>
+<svg viewBox="0 0 640 320" role="img" aria-label="하위 리그에서는 지각 이득과 역학 이득을 합쳐 0.367초가 손익분기점이지만, 최상위에서는 지각 이득이 사라져 역학 이득만 남아 손익분기점이 0.20초로 내려온다">
+  <defs>
+    <pattern id="hx6" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="7" height="7" fill="var(--op-soft)"/>
+      <line x1="0" y1="0" x2="0" y2="7" stroke="var(--op)" stroke-width="2.4"/>
+    </pattern>
+  </defs>
+  <!-- axis -->
+  <line x1="60" y1="238" x2="610" y2="238" stroke="var(--axis)" stroke-width="1"/>
+  <g class="s-ax" text-anchor="middle" fill="var(--muted)">
+    <line x1="60" y1="238" x2="60" y2="244" stroke="var(--axis)"/><text x="60" y="258">0</text>
+    <line x1="195" y1="238" x2="195" y2="244" stroke="var(--axis)"/><text x="195" y="258">0.10</text>
+    <line x1="330" y1="238" x2="330" y2="244" stroke="var(--axis)"/><text x="330" y="258">0.20</text>
+    <line x1="465" y1="238" x2="465" y2="244" stroke="var(--axis)"/><text x="465" y="258">0.30</text>
+    <line x1="600" y1="238" x2="600" y2="244" stroke="var(--axis)"/><text x="600" y="258">0.40</text>
+  </g>
+  <text class="s-ax" x="600" y="276" text-anchor="end">상대에게 물린 시간 (초)</text>
+
+  <!-- row 1 -->
+  <text class="s-nm" x="0" y="52">하위 리그</text>
+  <text class="s-cp" x="0" y="68">수비수가 상체를 읽는다</text>
+  <rect x="60" y="76" width="225" height="38" fill="url(#hx6)" stroke="var(--op)" stroke-width="1"/>
+  <line x1="285" y1="76" x2="285" y2="114" stroke="var(--surface)" stroke-width="2"/>
+  <rect x="285" y="76" width="270" height="38" rx="0" fill="var(--op)"/>
+  <text class="s-vl" x="172" y="100" text-anchor="middle" fill="var(--ink-2)" stroke="var(--surface)" stroke-width="3.5" paint-order="stroke">지각 0.167</text>
+  <text class="s-vl" x="420" y="100" text-anchor="middle" fill="var(--page)">역학 0.20</text>
+  <line x1="555" y1="64" x2="555" y2="126" stroke="var(--ay)" stroke-width="2"/>
+  <circle cx="555" cy="64" r="3.5" fill="var(--ay)"/>
+  <text class="s-vl" x="563" y="70" fill="var(--ay)">손익분기 0.367</text>
+
+  <!-- row 2 -->
+  <text class="s-nm" x="0" y="160">최상위</text>
+  <text class="s-cp" x="0" y="176">수비수가 무게중심을 읽는다</text>
+  <rect x="60" y="184" width="270" height="38" fill="var(--op)"/>
+  <text class="s-vl" x="195" y="208" text-anchor="middle" fill="var(--page)">역학 0.20</text>
+  <text class="s-cp" x="340" y="200">지각 이득은 사라졌다</text>
+  <line x1="330" y1="172" x2="330" y2="234" stroke="var(--ay)" stroke-width="2"/>
+  <circle cx="330" cy="172" r="3.5" fill="var(--ay)"/>
+  <text class="s-vl" x="344" y="162" fill="var(--ay)">손익분기 0.20</text>
+
+  <!-- drop arrow -->
+  <path d="M566 132 L566 150 L340 150 L340 164" fill="none" stroke="var(--ay)" stroke-width="1.6" stroke-dasharray="4 3"/>
+  <text class="s-cp" x="452" y="145" text-anchor="middle" fill="var(--ay)">기준선이 내려온다</text>
+
+  <!-- footer claim -->
+  <rect x="0" y="288" width="4" height="22" fill="var(--ay)"/>
+  <text class="s-nm" x="14" y="304" fill="var(--ink-2)">실행 비용이 0.20초를 넘는 순간, 최상위에서 그 무브는 손해다. 하위 리그에서는 0.367초까지 버텼다.</text>
+</svg>
+<figcaption>막대는 서로 다른 연구에서 온 <b>크기 대역</b>이며 한 장면의 측정치가 아니다. 이 그림이 주장하는 것은 특정 숫자가 아니라 구조다 &mdash; 상위 레벨에서 살아남는 두 항이 같은 자릿수라, 실행 비용이 부호를 결정한다.</figcaption>
+</figure>
+
+<div class="note key"><b>정리 —</b> 레벨이 올라갈수록 압박을 벗기는 일은 <b>&ldquo;얼마나 잘 속이느냐&rdquo;</b>의 문제에서 <b>&ldquo;그 동작이 나에게 얼마나 싼가&rdquo;</b>의 문제로 넘어간다.</div>
+
+<div class="body">
+<h3>그럼 더 빨라지면 되지 않나</h3>
+<p>자연스러운 반론이고, 답도 있다. Brink와 동료들(2023)이 MLS 드리블 623회를 두 개의 결합된 운동방정식에 적합시켜 보았다.</p>
+</div>
+
+<figure>
+<div class="figtitle">물리 레버는 짧다</div>
+<div class="figsub">최고속도를 크게 올려도 드리블 점수는 조금 오른다</div>
+<div class="bars lbwrap">
+  <div class="br"><div class="lb">투입<br><span style="font-size:10px">최고속도</span></div><div class="tk"><div class="fl" style="width:100%"></div></div><div class="vl">+25%</div></div>
+  <div class="br hi"><div class="lb">산출<br><span style="font-size:10px">드리블 점수</span></div><div class="tk"><div class="fl" style="width:24%;margin-left:8%"></div></div><div class="vl">+2~8%</div></div>
+</div>
+<figcaption>Brink et al.(2023), San Jose Earthquakes 2019 홈 17경기, 트래킹 25&nbsp;Hz, 드리블 2,714회 중 623회 분석. <b>두 막대는 서로 다른 양의 변화율이므로 크기를 직접 비교하는 그림이 아니다</b> &mdash; 큰 투입에 작은 산출이 따른다는 비율만 읽는다. 프로 선수가 최고속도를 25% 올리는 것은 사실상 불가능에 가깝다.</figcaption>
+</figure>
+</section>
+
+<!-- ══════════ 7 ══════════ -->
+<section>
+<div class="eyebrow"><span class="role">기전 3</span><span class="cap">&ldquo;몸이 편한 것&rdquo;의 정체</span></div>
+<h2>무엇이 동작을 싸게 만드는가</h2>
+<div class="body">
+<p class="lede">그러면 실행 비용은 무엇이 정하는가. 나는 오래전부터 &ldquo;선수마다 몸이 편한 동작이 다르다&rdquo;고 말해 왔다. 그게 감(感)이 아니라 정식 이름이 있는 것이었다.</p>
+<p>Nigg와 동료들(2017)은 러너 35명을 카메라 8대·240헤르츠로 촬영하면서 신발 세 종류와 맨발을 비교했고, 각 러너가 <b>선호 움직임 경로</b>를 갖는다는 것을 보였다. 정의가 중요하다 &mdash; <em>에너지를 가장 적게 요구하는 관절 궤적</em>이다.</p>
+</div>
+
+<figure>
+<div class="figtitle">신발을 바꿔도 몸은 자기 경로를 지킨다</div>
+<div class="figsub">조건을 바꿨을 때 관절각이 얼마나 밀려나는가</div>
+<svg viewBox="0 0 640 288" role="img" aria-label="신발을 서로 바꿨을 때 러너의 80에서 100퍼센트가 관절각 3도 이내를 유지했고, 맨발에서만 발목 각도가 3.5도와 4.3도로 밀려났다">
+  <line x1="92" y1="30" x2="92" y2="200" stroke="var(--axis)" stroke-width="1"/>
+  <g class="s-ax" text-anchor="end" fill="var(--muted)">
+    <line x1="86" y1="200" x2="92" y2="200" stroke="var(--axis)"/><text x="80" y="204">0&deg;</text>
+    <line x1="86" y1="168" x2="92" y2="168" stroke="var(--axis)"/><text x="80" y="172">1&deg;</text>
+    <line x1="86" y1="136" x2="92" y2="136" stroke="var(--axis)"/><text x="80" y="140">2&deg;</text>
+    <line x1="86" y1="104" x2="92" y2="104" stroke="var(--axis)"/><text x="80" y="108">3&deg;</text>
+    <line x1="86" y1="72" x2="92" y2="72" stroke="var(--axis)"/><text x="80" y="76">4&deg;</text>
+    <line x1="86" y1="40" x2="92" y2="40" stroke="var(--axis)"/><text x="80" y="44">5&deg;</text>
+  </g>
+  <rect x="92" y="104" width="508" height="96" fill="var(--ay-soft)"/>
+  <line x1="92" y1="104" x2="600" y2="104" stroke="var(--ay)" stroke-width="1.6" stroke-dasharray="6 4"/>
+  <text class="s-vl" x="100" y="98" fill="var(--ay)">3&deg; 경계</text>
+  <text class="s-nm" x="108" y="132" fill="var(--ay)">여기 머문 러너 80&ndash;100%</text>
+  <text class="s-cp" x="108" y="152">일반 쿠션 · 레이싱 플랫 · 미니멀 &mdash; 서로 바꿔 신겨도</text>
+  <text class="s-cp" x="108" y="170">관절 성분에 따라 80%에서 100%가 이 띠 안에 남았다</text>
+  <line x1="380" y1="200" x2="380" y2="62" stroke="var(--op)" stroke-width="3"/>
+  <circle cx="380" cy="62" r="7" fill="var(--op)" stroke="var(--surface)" stroke-width="2"/>
+  <text class="s-vl" x="380" y="50" text-anchor="middle" fill="var(--op)">4.3&deg;</text>
+  <line x1="520" y1="200" x2="520" y2="88" stroke="var(--op)" stroke-width="3"/>
+  <circle cx="520" cy="88" r="7" fill="var(--op)" stroke="var(--surface)" stroke-width="2"/>
+  <text class="s-vl" x="520" y="76" text-anchor="middle" fill="var(--op)">3.5&deg;</text>
+  <line x1="92" y1="200" x2="600" y2="200" stroke="var(--axis)" stroke-width="1"/>
+  <text class="s-cp" x="380" y="218" text-anchor="middle">저·배측굴곡</text>
+  <text class="s-cp" x="520" y="218" text-anchor="middle">내·외번</text>
+  <line x1="348" y1="232" x2="552" y2="232" stroke="var(--axis)" stroke-width="1"/>
+  <line x1="348" y1="232" x2="348" y2="226" stroke="var(--axis)"/>
+  <line x1="552" y1="232" x2="552" y2="226" stroke="var(--axis)"/>
+  <text class="s-nm" x="450" y="250" text-anchor="middle" fill="var(--op)">맨발 조건</text>
+  <text class="s-cp" x="92" y="278">신발끼리 바꾸는 정도로는 경로가 밀리지 않는다. 맨발처럼 조건이 크게 달라져야 비로소 벗어난다.</text>
+</svg>
+<figcaption>Nigg et al.(2017), <i>MSSE</i> 49(8). 러너 35명, 3.3&nbsp;m/s. 발목 배측굴곡에서는 신발&ndash;맨발 간 3&deg; 초과 차이를 보인 피험자가 93%였다. 띠 안의 설명 문구는 요약이며 개별 신발의 좌표가 아니다.</figcaption>
+</figure>
+
+<div class="body">
+<p>Selinger와 동료들(2015)은 더 나갔다. 외골격을 써서 <b>에너지적 최적점의 위치 자체를 인위적으로 옮겨</b> 놓은 것이다.</p>
+</div>
+
+<figure>
+<div class="figtitle">몸은 옮겨진 최적점을 찾아간다</div>
+<div class="figsub">최적점을 밖에서 이동시키면, 사람은 그쪽으로 걸어간다</div>
+<svg viewBox="0 0 640 268" role="img" aria-label="외골격으로 에너지 최적점을 옮기면 사람은 수 분 안에 새 최적점으로 수렴하고 교란 후에는 수 초 안에 재수렴한다">
+  <defs>
+    <marker id="a8" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="var(--ay)"/>
+    </marker>
+  </defs>
+  <line x1="60" y1="200" x2="610" y2="200" stroke="var(--axis)" stroke-width="1"/>
+  <line x1="60" y1="200" x2="60" y2="40" stroke="var(--axis)" stroke-width="1"/>
+  <text class="s-ax" x="610" y="228" text-anchor="end">보행 빈도 &rarr;</text>
+  <text class="s-ax" x="52" y="48" text-anchor="end">에너지</text>
+  <text class="s-ax" x="52" y="62" text-anchor="end">비용</text>
+
+  <!-- original cost curve -->
+  <path d="M110 62 Q220 214 330 62" fill="none" stroke="var(--ink-2)" stroke-width="2" stroke-dasharray="6 4"/>
+  <circle cx="220" cy="138" r="6" fill="var(--ink-2)"/>
+  <text class="s-vl" x="220" y="126" text-anchor="middle" fill="var(--ink-2)">원래 최적</text>
+  <!-- shifted cost curve -->
+  <path d="M300 62 Q410 214 520 62" fill="none" stroke="var(--op)" stroke-width="2.4"/>
+  <circle cx="410" cy="138" r="6" fill="var(--op)"/>
+  <text class="s-vl" x="410" y="126" text-anchor="middle" fill="var(--op)">옮겨진 최적</text>
+  <text class="s-cp" x="528" y="74">외골격이</text>
+  <text class="s-cp" x="528" y="90">비용 지형을 바꾼다</text>
+
+  <!-- movement -->
+  <line x1="220" y1="146" x2="220" y2="176" stroke="var(--ay)" stroke-width="1.4" stroke-dasharray="3 3"/>
+  <line x1="410" y1="146" x2="410" y2="176" stroke="var(--ay)" stroke-width="1.4" stroke-dasharray="3 3"/>
+  <path d="M220 176 L400 176" fill="none" stroke="var(--ay)" stroke-width="2.6" marker-end="url(#a8)"/>
+  <text class="s-vl" x="312" y="196" text-anchor="middle" fill="var(--ay)">수 분 안에 수렴</text>
+
+  <rect x="0" y="244" width="12" height="3" fill="var(--ay)"/>
+  <text class="s-cp" x="20" y="249">교란 후 재수렴은 수 초 · 반응한 절약 폭은 5% 미만 · 의식하지 않고 일어난다</text>
+</svg>
+<figcaption>Selinger et al.(2015), <i>Current Biology</i> 25(18). <b>곡선 형태는 개념 도해이며 원 논문의 실측 곡선이 아니다.</b> 보고된 것은 수렴 시간(수 분), 재수렴 시간(수 초), 반응한 비용 절약 폭(5% 미만)이다. 또한 이것은 보행이라는 닫힌 주기 과제이므로 온더볼 동작에 그대로 옮기지 않는다.</figcaption>
+</figure>
+
+<div class="pull">&ldquo;몸이 편한 것&rdquo;은 비유가 아니다. 에너지 비용의 최소점이고, 신경계는 시키지 않아도 그것을 찾아가며, 외부 간섭에 맞서 방어한다.</div>
+
+<div class="body">
+<p>그리고 이것이 &ldquo;가르쳐도 결국 자기 것으로 돌아간다&rdquo;의 기전이다. 밖에서 밀어 넣은 동작이 그 선수의 최소점이 아니라면, <b>몸은 계속 그것을 떠나려 한다.</b></p>
+<p>한 가지 덧붙이면, 개인차가 허용되는 구간은 동작 안에서도 나뉜다. Deghaies와 동료들(2025)이 프로 테니스 서브를 국면별로 쪼갰더니 <b>로딩 국면의 개인차는 약 42%, 가속 국면은 15~21%</b>였다. 앞 절의 기만·정직 신호와 합치면 답이 나온다 &mdash; <em>Signature Move는 역학이 자유롭게 남겨둔 자유도에서만 산다.</em> 그러니까 지문을 가질 수 있는 예산 자체를 창의성이 아니라 몸이 배분한다.</p>
+</div>
+</section>
+
+<!-- ══════════ 8 ══════════ -->
+<section>
+<div class="eyebrow"><span class="role">회수</span><span class="cap">1절의 장면으로 돌아간다</span></div>
+<h2>받아온 동작은 두 번 실패한다</h2>
+<div class="body">
+<p class="lede">이제 처음 장면을 설명할 수 있다. 밖에서 심어준 동작은 그 선수의 최소점이 아니므로 <b>실행 비용이 처음부터 높다.</b> 이게 첫 번째 손해다. 두 번째가 더 나쁘다.</p>
+<p>Masters(1992)는 명시적 지시로 습득한 기술이 <b>압박 아래에서 무너진다</b>는 것을 보였다. 수행자가 의식적 통제를 그 동작에 다시 투입하기 때문이다. 이후 상반된 결과를 낸 연구 두 편이 나왔고, Mullen·Hardy·Oldham(2007)이 32명으로 다시 검정해 <b>Masters를 재현했다.</b></p>
+</div>
+
+<figure>
+<div class="figtitle">두 번째 손해는 필요한 순간에 온다</div>
+<div class="figsub">같은 동작이 조건에 따라 얼마나 비싸지는가</div>
+<div class="q2">
+  <div class="hd"></div>
+  <div class="hd">여유 있을 때</div>
+  <div class="hd">급할 때</div>
+
+  <div class="rh">스스로 찾은 동작</div>
+  <div class="cell"><div class="mtr"><i style="width:26%"></i></div><div class="cv">싸다</div><div class="cs">선호 경로 위에 있다</div></div>
+  <div class="cell"><div class="mtr"><i style="width:34%"></i></div><div class="cv">거의 그대로</div><div class="cs">의식 통제로 되돌아갈 규칙이 애초에 없다</div></div>
+
+  <div class="rh">받아온 동작</div>
+  <div class="cell"><div class="mtr"><i style="width:56%"></i></div><div class="cv">조금 비싸다</div><div class="cs">선호 경로 밖이지만 시간이 있으면 수행된다</div></div>
+  <div class="cell worst"><div class="mtr"><i style="width:100%"></i></div><div class="cv">가장 비싸다</div><div class="cs">명시적으로 배운 규칙에 의식이 재투입되며 무너진다</div></div>
+</div>
+<figcaption>막대 길이는 실측치가 아니라 두 기전(선호 경로 이탈 · 압박 하 재투자)이 가리키는 방향을 표현한 것이다. 우하단 칸만이 두 기전을 동시에 받는다.</figcaption>
+</figure>
+
+<div class="body">
+<p>즉 코치가 심어준 동작은 <b>선수가 급할 때 정확히 더 비싸진다.</b> 그리고 그때가 바로 도달 시간이 짧고 탈압박이 필요한 상황이다.</p>
+</div>
+
+<div class="pull">기술은 필요한 바로 그 순간에 가장 크게 실패한다.</div>
+
+<div class="body">
+<p>&ldquo;압박받으면 결국 습관이 나온다&rdquo;는 현장의 말이 있다. 그 말의 진짜 내용이 이것이라고 생각한다. 올라오는 것은 단순히 <b>가장 많이 반복한 것</b>이 아니다. <b>몸이 가장 싸다고 판단한 것</b>이다.</p>
+</div>
+</section>
+
+<!-- ══════════ 9 ══════════ -->
+<section>
+<div class="eyebrow"><span class="role">결론</span><span class="cap">육성에서의 경계선</span></div>
+<h2>그래서 어디까지 가르치는가</h2>
+<div class="body">
+<p class="lede">여기서 이 글이 오해되기 쉽다. <em>&ldquo;그러니까 기본기를 가르치지 마라&rdquo;</em>로 읽히는 것이다. 그건 내 주장이 아니고, 나는 반대 방향으로도 적은 적이 있다 &mdash; <b>드리블·터치·기본 움직임은 획일화된 교육이 필요하다. 모두가 공유해야 하는 공통 언어다.</b></p>
+<p>정확한 주장은 <b>경계선이 어디인가</b>다. 코칭 지시와 실제 동작 사이에는 네 개의 층이 있다.</p>
+</div>
+
+<figure>
+<div class="figtitle">표준화가 멈춰야 하는 지점</div>
+<div class="figsub">앞의 세 층은 공통 언어다. 네 번째 층만이 선수 본인의 것이다</div>
+<div class="lay">
+  <div class="lr"><div class="ln">L1</div><div><div class="lt">지각 &mdash; 무엇을, 언제 보는가</div><div class="ls">스캔 타이밍과 횟수. 정보이지 동작이 아니다</div></div><div class="st ok">가능</div></div>
+  <div class="lr"><div class="ln">L2</div><div><div class="lt">지향 &mdash; 몸을 어느 쪽으로 여는가</div><div class="ls">오픈 바디, 하프턴. 훈련으로 개선되고 일찍 배울수록 자연스러워진다</div></div><div class="st ok">가능</div></div>
+  <div class="lr"><div class="ln">L3</div><div><div class="lt">결과 제약 &mdash; 볼이 어디로 가야 하는가</div><div class="ls">출구, 레인, 시간. 제약으로 걸 수 있고 전원에게 동일하게 적용된다</div></div><div class="st ok">가능</div></div>
+  <div class="laycut">표준화는 여기서 멈춘다</div>
+  <div class="lr cut"><div class="ln">L4</div><div><div class="lt">실행 경로 &mdash; 어떤 관절 경로로 만드는가</div><div class="ls">선호 움직임 경로. 밖에서 설치할 수 없고, 설치를 시도하면 실행 비용이 올라간다</div></div><div class="st no">불가</div></div>
+</div>
+<figcaption>이 구분은 코칭 문헌과의 충돌도 정리해 준다. &ldquo;받는 자세는 훈련으로 개선되고 일찍 배울수록 자연스러워진다&rdquo;는 지적은 옳고, 그것은 L2다. 내가 가르칠 수 없다고 주장해 온 것은 L4다. <b>둘은 애초에 같은 주장이 아니었다.</b></figcaption>
+</figure>
+
+<div class="instr">
+  <div class="n">?</div>
+  <div>
+    <h3>훈련장에서 쓸 수 있는 형태는 질문 하나다</h3>
+    <p><b>지금 내가 고치려는 것이 &ldquo;어디로 가야 하는가&rdquo;인가, &ldquo;어떻게 가는가&rdquo;인가?</b></p>
+    <p>후자라면, 그 교정은 그 선수에게 동작을 더 비싸게 만들고 있는 것이고, 압박이 들어오는 바로 그 순간에 값을 치르게 된다.</p>
+    <div class="ev">⚠ 경계선 자체가 완전히 단단하지는 않다 &mdash; 오픈 바디 자세(L2)는 결국 관절 경로(L4)로 구현된다. 개념적으로는 깨끗한 구분이 훈련장에서도 깨끗한지는 아직 모른다.</div>
+  </div>
+</div>
+
+<div class="body">
+<p>그리고 이 경계선이 유소년에서 특히 중요한 이유가 있다. 실행 비용을 낮추는 일은 <b>시기가 정해져 있기 때문</b>이다. 몸에 깊이 각인된 습관을 성인기에 재학습으로 바꾸는 것은 사실상 불가능에 가깝다. 지금 L4까지 표준화하고 있다면, 그 선수가 나중에 되찾을 방법은 없다.</p>
+</div>
+</section>
+
+<!-- ══════════ 10 ══════════ -->
+<section>
+<div class="eyebrow"><span class="role">유보 1</span><span class="cap">검증에서 탈락한 주장</span></div>
+<h2>쓰지 않기로 한 논거</h2>
+<div class="body">
+<p class="lede">원래 나는 여기에 한 줄을 더 쓰려고 했다. <em>&ldquo;그러니까 획일적 반복 대신 다양한 변이로 연습시켜야 한다.&rdquo;</em> 쓰지 않기로 했다. <b>문헌이 지지하지 않는다.</b></p>
+</div>
+
+<figure>
+<div class="figtitle">연습 방법을 바꾸면 더 잘 배우는가</div>
+<div class="figsub">메타분석 효과크기 &mdash; 0에서 멀수록 효과가 크다</div>
+<svg viewBox="0 0 640 296" role="img" aria-label="맥락간섭 메타분석 37개 연구는 습득 0.1, 파지 마이너스 0.159, 전이 마이너스 0.243으로 모두 통계적으로 무의미했고, 차등학습 메타분석은 습득 0.26 파지 0.61이지만 저자들이 성급하다고 명시했다">
+  <!-- zero line -->
+  <line x1="243" y1="34" x2="243" y2="236" stroke="var(--ink-2)" stroke-width="1.5"/>
+  <text class="s-ax" x="243" y="26" text-anchor="middle" fill="var(--ink-2)">효과 0</text>
+  <!-- x axis -->
+  <line x1="100" y1="236" x2="600" y2="236" stroke="var(--axis)" stroke-width="1"/>
+  <g class="s-ax" text-anchor="middle" fill="var(--muted)">
+    <line x1="100" y1="236" x2="100" y2="242" stroke="var(--axis)"/><text x="100" y="256">&minus;0.4</text>
+    <line x1="243" y1="236" x2="243" y2="242" stroke="var(--axis)"/><text x="243" y="256">0</text>
+    <line x1="386" y1="236" x2="386" y2="242" stroke="var(--axis)"/><text x="386" y="256">0.4</text>
+    <line x1="529" y1="236" x2="529" y2="242" stroke="var(--axis)"/><text x="529" y="256">0.8</text>
+  </g>
+
+  <!-- rows: contextual interference (op) -->
+  <text class="s-nm" x="0" y="54">맥락간섭 · 습득</text>
+  <circle cx="279" cy="50" r="6" fill="var(--op)"/>
+  <text class="s-vl" x="292" y="54" fill="var(--op)">0.1</text>
+  <text class="s-cp" x="330" y="54">p = .154</text>
+
+  <text class="s-nm" x="0" y="88">맥락간섭 · 파지</text>
+  <circle cx="186" cy="84" r="6" fill="var(--op)"/>
+  <text class="s-vl" x="176" y="88" text-anchor="end" fill="var(--op)">&minus;0.159</text>
+  <text class="s-cp" x="330" y="88">p = .141</text>
+
+  <text class="s-nm" x="0" y="122">맥락간섭 · 전이</text>
+  <circle cx="156" cy="118" r="6" fill="var(--op)"/>
+  <text class="s-vl" x="146" y="122" text-anchor="end" fill="var(--op)">&minus;0.243</text>
+  <text class="s-cp" x="330" y="122">p = .071</text>
+
+  <!-- rows: differential learning (ay) -->
+  <text class="s-nm" x="0" y="166">차등학습 · 습득</text>
+  <line x1="279" y1="162" x2="393" y2="162" stroke="var(--ay)" stroke-width="2"/>
+  <line x1="279" y1="156" x2="279" y2="168" stroke="var(--ay)" stroke-width="2"/>
+  <line x1="393" y1="156" x2="393" y2="168" stroke="var(--ay)" stroke-width="2"/>
+  <circle cx="336" cy="162" r="6" fill="var(--ay)" stroke="var(--surface)" stroke-width="1.5"/>
+  <text class="s-vl" x="404" y="166" fill="var(--ay)">0.26</text>
+
+  <text class="s-nm" x="0" y="200">차등학습 · 파지</text>
+  <line x1="350" y1="196" x2="568" y2="196" stroke="var(--ay)" stroke-width="2"/>
+  <line x1="350" y1="190" x2="350" y2="202" stroke="var(--ay)" stroke-width="2"/>
+  <line x1="568" y1="190" x2="568" y2="202" stroke="var(--ay)" stroke-width="2"/>
+  <circle cx="461" cy="196" r="6" fill="var(--ay)" stroke="var(--surface)" stroke-width="1.5"/>
+  <text class="s-vl" x="579" y="200" fill="var(--ay)">0.61</text>
+
+  <!-- legend -->
+  <rect x="0" y="278" width="12" height="3" fill="var(--op)"/>
+  <text class="s-cp" x="20" y="283">맥락간섭 37연구 &mdash; 전부 무의미</text>
+  <rect x="270" y="278" width="12" height="3" fill="var(--ay)"/>
+  <text class="s-cp" x="290" y="283">차등학습 27연구 · 897명 &mdash; 가로선은 95% 신뢰구간</text>
+</svg>
+<figcaption>맥락간섭: Ammar, Trabelsi &hellip; &amp; Schöllhorn(2023), <i>Educational Research Review</i> 39, 37개 연구. <b>저자 목록에 차등학습을 만든 당사자 본인이 들어 있다.</b> 차등학습: Tassignon et al.(2021), 27연구·897명 &mdash; 파지 0.61이지만 저자들이 이질성·소표본·출판편향을 들어 <b>&ldquo;결론은 성급하다(premature)&rdquo;</b>고 직접 명시했다. 축구 직접 적용(Bozkurt 2018, 15세 12명, 4주)은 집단 간 차이가 없었다.</figcaption>
+</figure>
+
+<div class="note"><b>그런데 —</b> 이 세 편을 자세히 보면 셋 다 <b>&ldquo;같은 목표 동작에 도달하는 연습 방법&rdquo;</b>을 비교했다. 블록으로 할까 무작위로 할까, 변이를 줄까 반복을 줄까. <b>내 주장은 연습 스케줄이 아니라 목표 동작 자체가 선수마다 달라야 한다는 것이다.</b> 그 질문을 정면으로 검정한 연구는 없다.</div>
+
+<div class="body">
+<h3>그래서 필요한 검정은 이렇게 생겼다</h3>
+<p>두 집단에 <b>같은 결과 제약</b>을 준다 &mdash; 수비수 뒤 게이트로 볼을 통과시켜라. 한쪽은 통과 방법을 지정하고 시범과 교정을 붙이고, 다른 쪽은 지정하지 않는다. 그리고 <b>압박 조건과 무압박 조건의 성공률 차이</b>를 본다. 재투자 이론이 예측하는 것은 절대 성공률이 아니라 그 차이다. 기간은 최소 8&ndash;12주 &mdash; 무차이로 끝난 축구 연구가 4주였다.</p>
+</div>
+</section>
+
+<!-- ══════════ 11 ══════════ -->
+<section>
+<div class="eyebrow"><span class="role">유보 2</span><span class="cap">논증의 가장 약한 고리</span></div>
+<h2>편한 것과 효과적인 것은 같지 않다</h2>
+<div class="body">
+<p class="lede">구멍이 하나 있고, 남이 찾아내게 두기보다 내가 이름 붙이는 편을 택한다.</p>
+<p>연구가 확립한 것은 <b>에너지의 최소점</b>이고, 수비수를 이기는 데 필요한 것은 <b>다른 사람에 대한 우위</b>다. 둘이 일치한다는 보장은 없고, 반대를 상상하기는 쉽다 &mdash; 어떤 선수에게 <em>가장 편한 턴이 가장 예측 가능한 턴</em>일 수도 있다.</p>
+</div>
+
+<div class="note warn"><b>부분적인 답과, 그것이 답이 아닌 이유 —</b> 최상위 레벨에서는 지각 이득이 어차피 0으로 가므로, 예측 가능성의 대가는 <b>이미 치러진 상태</b>이고 실행 비용을 낮추는 것만이 남은 개선이 된다. 다만 이것은 내 추론이지 검정된 것이 아니다.</div>
+
+<div class="body">
+<p>그리고 <b>실행 비용 자체는 한 번도 측정된 적이 없다.</b> 식의 세 항 중 범위조차 인용할 수 없는 유일한 항이다. 재려면 온더볼 상황의 3차원 추적이 필요하고, 그건 지금 내 데이터로는 안 된다.</p>
+<p>나는 측정되지 않은 항을 조용히 빼기보다, <b>그 항을 넣은 채로 식을 내놓는 편</b>을 택한다. 빼면 식이 깔끔해지지만, 깔끔해진 식은 상위 레벨에서 틀린다.</p>
+</div>
+
+<div class="strip">
+  <div><div class="k">입증됨</div><div class="v" style="color:var(--top)">3</div><div class="s">몸마다 편한 동작이 다르다 · 몸은 그것을 찾아간다 · 급할 때 몸에 밴 것이 남는다</div></div>
+  <div><div class="k">미입증</div><div class="v" style="color:var(--bad)">2</div><div class="s">다양하게 연습시키면 낫다 · 편한 것이 효과적인 것이다</div></div>
+  <div><div class="k">미측정</div><div class="v" style="color:var(--bad)">1</div><div class="s">실행 비용 &mdash; 모델의 세 항 중 유일하게 대역조차 없다</div></div>
+</div>
+</section>
+
+<!-- ══════════ 12 ══════════ -->
+<section>
+<div class="eyebrow"><span class="role">닫으며</span><span class="cap">현장으로</span></div>
+<h2>자기 몸에서 가장 싸게 나오는 것 하나</h2>
+<div class="body">
+<p class="lede">정리하면 이렇다. 압박을 벗기는 일은 시간 예산 문제다. Signature Move가 사는 시간은 두 종류인데, 상대가 좋아질수록 <b>지각으로 산 시간은 사라지고 역학으로 산 시간만 남는다.</b> 그리고 남은 그것과 <b>내가 치른 비용</b>이 같은 자릿수다.</p>
+<p>그러니 위로 올라갈수록 중요해지는 것은 얼마나 화려한 무브를 가졌느냐가 아니라, <b>그 무브가 그 선수의 몸에서 얼마나 싸게 나오느냐</b>다. 그리고 그 값은 그 선수의 신체 구조가 정한다. 밖에서 정해줄 수 없다.</p>
+<p>모든 선수가 크랙일 수는 없다. 하지만 <b>자기 몸에서 가장 싸게 나오는 탈출 동작 하나</b>는 누구나 가질 수 있고, 그게 압박 축구에서 살아남는 개인 단위 해법이다.</p>
+<p>그걸 만드는 방법은 더 많은 반복이 아니다. <em>어디로 가야 하는지는 정확히 가르치고, 어떻게 가는지는 선수가 찾을 시간을 주는 것</em>이다. 실패하는 순간 &ldquo;올바른 기술&rdquo;로 교정하지 않고, 성공과 실패 사이의 중간 지대에 선수를 두는 것이다.</p>
+</div>
+
+<div class="pull">어디로 가야 하는가는 가르친다. 어떻게 가는가는 기른다.</div>
+</section>
+
+</div>
+
+<footer><div class="wrap">
+<b>문헌</b> · Narizuka et al.(2026) arXiv:2606.09452 · Brault, Bideau, Kulpa &amp; Craig(2012) <i>PLOS ONE</i> 7(6):e37494 · Jackson, Barton, Ashford &amp; Abernethy(2018) <i>Front Psychol</i> 9:2043 · van den Tillaar, Falch &amp; Rædergård(2020) <i>Front Sports Act Living</i> 2:594567 · Nigg et al.(2017) <i>MSSE</i> 49(8):1641&ndash;1648 · Selinger, O'Connor, Wong &amp; Donelan(2015) <i>Curr Biol</i> 25(18):2452&ndash;2456 · Masters(1992) <i>Br J Psychol</i> 83(3) · Mullen, Hardy &amp; Oldham(2007) <i>Br J Psychol</i> 98(1):141&ndash;156 · Deghaies et al.(2025) <i>J Hum Kinet</i> · Brink et al.(2023) <i>Sci Rep</i> 13:19004 · Tassignon et al.(2021) <i>Front Psychol</i> 12:533033 · Ammar, Trabelsi &hellip; &amp; Schöllhorn(2023) <i>Educ Res Rev</i> 39 · Bozkurt(2018) <i>J Educ Train Stud</i> 6(4a)<br>
+<b>성격</b> · 이 글은 문헌 종합과 그 위에 세운 정량 모델이며, 새로운 실험이나 자체 데이터 분석의 결과 보고가 아니다. 본문의 모든 수치는 인용이고, 모델의 세 항 중 실행 비용은 미측정이다.<br>
+<b>한계</b> · 선호 움직임 경로와 에너지 최적화는 러닝·보행이라는 닫힌 주기 과제에서 나왔고, 압박 하 붕괴는 골프 퍼팅 32명에서 나왔다. 방향전환 가격표에는 볼이 없다. 축구 온더볼로의 이전은 모두 추론이다.<br>
+<b>작성</b> · 한혁진 · 2026년 9월
+</div></footer>
+</body>
+</html>

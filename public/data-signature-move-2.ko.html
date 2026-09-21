@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="ko">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>한 경기 안의 여러 축구 — Signature Move가 필연인 이유 | 한혁진</title>
+<meta name="description" content="포지션별 기본기는 한 포지션이 한 가지 맥락에서 볼을 받는다는 전제 위에 설계돼 있다. 그 전제가 네 방향에서 깨지고 있다 — 사람이 붙는 자리가 뒤로 왔고, 한 선수가 두 형태에서 다른 일을 하고, 한 경기 안에 여러 블록이 섞이고, 그 높이가 경기 중에 20m 넘게 움직인다. 늘어난 맥락은 기술의 개수로 메울 수 없다.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light;
+  --page:#f1f1ef; --surface:#fcfcfb; --surface-2:#e4e4e1; --raise:#f7f7f5;
+  --ink:#141413; --ink-2:#3c3c3a; --muted:#70706c;
+  --line:rgba(20,20,19,.14); --line-2:rgba(20,20,19,.07);
+  --grid:#e0e0dd; --axis:#c2c2be;
+  --ay:#7a3391; --op:#a8620f; --top:#0e7c52; --bad:#8a1f27;
+  --ay-soft:rgba(122,51,145,.12); --op-soft:rgba(168,98,15,.12);
+  --top-soft:rgba(14,124,82,.11); --bad-soft:rgba(138,31,39,.10);
+  --sp:clamp(18px,4.5vw,30px);
+  --disp:"Hahmlet",'Nanum Myeongjo',serif;
+  --body:"IBM Plex Sans KR",-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,'SFMono-Regular',monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --page:#121211; --surface:#1a1a19; --surface-2:#262624; --raise:#1f1f1e;
+    --ink:#eaeae7; --ink-2:#b8b8b4; --muted:#8d8d89;
+    --line:rgba(234,234,231,.16); --line-2:rgba(234,234,231,.08);
+    --grid:#2d2d2b; --axis:#4a4a47;
+    --ay:#a869cc; --op:#bb7a2a; --top:#17a077; --bad:#e8737c;
+    --ay-soft:rgba(168,105,204,.17); --op-soft:rgba(187,122,42,.17);
+    --top-soft:rgba(23,160,119,.15); --bad-soft:rgba(232,115,124,.14);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --page:#121211; --surface:#1a1a19; --surface-2:#262624; --raise:#1f1f1e;
+  --ink:#eaeae7; --ink-2:#b8b8b4; --muted:#8d8d89;
+  --line:rgba(234,234,231,.16); --line-2:rgba(234,234,231,.08);
+  --grid:#2d2d2b; --axis:#4a4a47;
+  --ay:#a869cc; --op:#bb7a2a; --top:#17a077; --bad:#e8737c;
+  --ay-soft:rgba(168,105,204,.17); --op-soft:rgba(187,122,42,.17);
+  --top-soft:rgba(23,160,119,.15); --bad-soft:rgba(232,115,124,.14);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font-family:var(--body);
+  word-break:keep-all;overflow-wrap:break-word;
+  font-weight:400;font-size:16px;line-height:1.72;-webkit-font-smoothing:antialiased}
+.wrap{max-width:940px;margin:0 auto;padding-inline:var(--sp);padding-block:0}
+p{margin:0 0 1.05em}
+strong{font-weight:600;color:var(--ink)}
+em{font-style:normal;background:var(--ay-soft);padding:.06em .3em;border-radius:2px;font-weight:500}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums;font-weight:500;letter-spacing:-.01em}
+
+/* ── header ── */
+header{padding-block:clamp(48px,9vw,88px) clamp(30px,5vw,44px);border-bottom:1px solid var(--line)}
+.badge{display:inline-flex;align-items:center;gap:.55em;font-family:var(--mono);font-size:11px;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--ay);font-weight:500}
+.badge::before{content:"";width:22px;height:2px;background:var(--ay)}
+h1{font-family:var(--disp);font-weight:600;font-size:clamp(38px,8.6vw,68px);line-height:1.06;
+  letter-spacing:-.025em;margin:.34em 0 .3em;text-wrap:balance}
+.dek{font-family:var(--disp);font-weight:400;font-size:clamp(17px,2.5vw,21px);line-height:1.55;
+  color:var(--ink-2);max-width:34em;margin:0 0 1.5em}
+.meta{display:flex;flex-wrap:wrap;gap:.5em 0;font-family:var(--mono);font-size:11.5px;
+  color:var(--muted);letter-spacing:.02em}
+.meta span+span::before{content:"|";padding:0 .85em;color:var(--axis)}
+
+/* ── tiles ── */
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line-2);
+  border-block:1px solid var(--line);margin-block:0}
+@media(max-width:760px){.tiles{grid-template-columns:repeat(2,1fr)}}
+.tile{background:var(--page);padding:clamp(16px,3vw,24px) clamp(12px,2.4vw,20px);display:flex;
+  flex-direction:column;gap:.3em}
+.tile .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.tile .v{font-family:var(--disp);font-weight:600;font-size:clamp(26px,4.6vw,38px);line-height:1;
+  letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.tile .v.gj{color:var(--ay)} .tile .v.bad{color:var(--bad)}
+.tile .s{font-size:12.5px;line-height:1.45;color:var(--ink-2)}
+
+/* ── sections ── */
+section{padding-block:clamp(40px,7vw,68px);border-bottom:1px solid var(--line-2)}
+section:last-of-type{border-bottom:none}
+.eyebrow{display:flex;align-items:baseline;gap:.9em;margin-bottom:.9em}
+.eyebrow .role{font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--page);background:var(--ink-2);padding:.35em .7em;border-radius:2px;white-space:nowrap}
+.eyebrow .cap{font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--muted)}
+h2{font-family:var(--disp);font-weight:600;font-size:clamp(25px,4.4vw,37px);line-height:1.2;
+  letter-spacing:-.022em;margin:0 0 .6em;text-wrap:balance;max-width:19em}
+h3{font-family:var(--disp);font-weight:600;font-size:clamp(17px,2.4vw,21px);line-height:1.35;
+  letter-spacing:-.012em;margin:2.1em 0 .7em}
+.lede{font-size:clamp(16.5px,2.1vw,18.5px);line-height:1.68;color:var(--ink-2);max-width:33em;margin-bottom:1.6em}
+.body{max-width:35em}
+.body.wide{max-width:40em}
+
+/* ── pull ── */
+.pull{border-left:3px solid var(--ay);padding:.1em 0 .1em 1.15em;margin:1.9em 0;
+  font-family:var(--disp);font-weight:500;font-size:clamp(18px,2.7vw,23px);line-height:1.45;
+  letter-spacing:-.014em;color:var(--ink);max-width:24em;text-wrap:balance}
+
+/* ── figure ── */
+figure{margin:2em 0;padding:clamp(16px,3vw,26px);background:var(--surface);
+  border:1px solid var(--line);border-radius:3px}
+figcaption{font-family:var(--mono);font-size:11px;line-height:1.6;color:var(--muted);
+  margin-top:1.15em;padding-top:.85em;border-top:1px solid var(--line-2)}
+.figtitle{font-family:var(--body);font-weight:600;font-size:14px;line-height:1.4;color:var(--ink);
+  margin-bottom:.3em;letter-spacing:-.005em}
+.figsub{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:1.35em;letter-spacing:.01em}
+.legend{display:flex;flex-wrap:wrap;gap:.5em 1.3em;font-family:var(--mono);font-size:11px;
+  color:var(--ink-2);margin-bottom:1.1em}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:1px;margin-right:.45em;vertical-align:-1px}
+
+/* ── bar rows ── */
+.bars{display:flex;flex-direction:column;gap:7px}
+.br{display:grid;grid-template-columns:74px 1fr 62px;align-items:center;gap:10px}
+@media(max-width:560px){.br{grid-template-columns:60px 1fr 54px;gap:7px}}
+.br .lb{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);text-align:right;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bars.lbwrap .br{grid-template-columns:90px 1fr 46px}
+.bars.lbwrap .br .lb{white-space:normal;overflow:visible;text-overflow:clip;line-height:1.28}
+@media(max-width:560px){.bars.lbwrap .br{grid-template-columns:78px 1fr 40px;gap:7px}}
+.br .tk{height:17px;background:var(--surface-2);border-radius:1px;overflow:hidden}
+.br .fl{height:100%;background:var(--op);border-radius:1px}
+.br .vl{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;
+  color:var(--ink-2);text-align:right}
+.br.hi .lb{color:var(--ay);font-weight:600}
+.br.hi .fl{background:var(--ay)}
+.br.hi .vl{color:var(--ay);font-weight:600}
+.br.ref .fl{background:var(--top)}
+.br.ref .lb,.br.ref .vl{color:var(--top)}
+
+/* ── grouped pair bars ── */
+.pair{display:flex;flex-direction:column;gap:16px}
+.pg{display:grid;grid-template-columns:96px 1fr;gap:12px;align-items:center}
+@media(max-width:560px){.pg{grid-template-columns:1fr;gap:5px}}
+.pg .pn{font-family:var(--body);font-size:13px;font-weight:600;color:var(--ink)}
+.pg .pn small{display:block;font-family:var(--mono);font-weight:400;font-size:10.5px;color:var(--muted)}
+.pgb{display:flex;flex-direction:column;gap:5px}
+.pgr{display:grid;grid-template-columns:1fr 54px;gap:9px;align-items:center}
+.pgr .tk{height:15px;background:var(--surface-2);border-radius:1px;overflow:hidden}
+.pgr .fl{height:100%;border-radius:1px}
+.pgr .vl{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;text-align:right}
+
+/* ── table ── */
+.tbl{overflow-x:auto;margin:1.8em 0;border:1px solid var(--line);border-radius:3px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:13px}
+th,td{padding:9px 13px;text-align:left;border-bottom:1px solid var(--line-2);vertical-align:baseline}
+th{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;background:var(--raise);white-space:nowrap}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+td .nm{font-weight:600}
+td .no{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.up{color:var(--top);font-weight:600} .dn{color:var(--bad);font-weight:600}
+.dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:.5em;vertical-align:1px}
+.dot.on{background:var(--top)} .dot.mid{background:var(--axis)} .dot.off{background:transparent;
+  border:1px solid var(--axis)}
+
+/* ── slope svg ── */
+svg{display:block;max-width:100%;height:auto;overflow:visible}
+.sv-lb{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:var(--muted)}
+.sv-vl{font-family:"IBM Plex Mono",monospace;font-size:11.5px;font-weight:500}
+.sv-nm{font-family:"IBM Plex Sans KR",sans-serif;font-size:11.5px;font-weight:600;fill:var(--ink-2)}
+
+p.rate{font-size:13px;line-height:1.6;color:var(--muted);border-left:2px solid var(--line);
+  padding-left:1.1em;margin:1.5em 0}
+p.rate b{color:var(--ink-2);font-weight:600}
+
+/* ── callout ── */
+.note{background:var(--raise);border:1px solid var(--line);border-left:3px solid var(--axis);
+  border-radius:3px;padding:clamp(14px,2.6vw,20px);margin:1.9em 0;font-size:14px;line-height:1.65;
+  color:var(--ink-2)}
+.note b{color:var(--ink);font-weight:600}
+.note.warn{border-left-color:var(--bad)}
+.note.key{border-left-color:var(--ay);background:var(--ay-soft);border-color:var(--line)}
+
+/* ── stat strip ── */
+.strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-2);
+  border:1px solid var(--line);border-radius:3px;overflow:hidden;margin:1.9em 0}
+@media(max-width:620px){.strip{grid-template-columns:1fr}}
+.strip>div{background:var(--surface);padding:clamp(13px,2.4vw,18px)}
+.strip .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:.4em}
+.strip .v{font-family:var(--disp);font-weight:600;font-size:clamp(20px,3.4vw,27px);line-height:1.1;
+  font-variant-numeric:tabular-nums;letter-spacing:-.018em}
+.strip .s{font-size:12px;color:var(--ink-2);margin-top:.35em;line-height:1.45}
+
+/* ── list ── */
+ul.clean{list-style:none;padding:0;margin:1.3em 0;display:flex;flex-direction:column;gap:.85em;max-width:35em}
+ul.clean li{padding-left:1.5em;position:relative;font-size:14.5px;line-height:1.62;color:var(--ink-2)}
+ul.clean li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:1.5px;background:var(--axis)}
+ul.clean li b{color:var(--ink);font-weight:600}
+
+/* ── case panel ── */
+.case{border:1px solid var(--line);border-top:3px solid var(--ay);border-radius:3px;
+  background:var(--surface);padding:clamp(18px,3.2vw,28px);margin:2.2em 0}
+.case+.case{margin-top:1.4em}
+.case .ch{display:flex;flex-wrap:wrap;align-items:baseline;gap:.5em .9em;margin-bottom:.35em}
+.case .ct{font-family:var(--disp);font-weight:600;font-size:clamp(20px,3.2vw,26px);line-height:1.15;
+  letter-spacing:-.02em;color:var(--ink)}
+.case .cn{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.case .cs{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ay);border:1px solid var(--ay);border-radius:2px;padding:.22em .55em;white-space:nowrap}
+.case .cd{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:1.15em;
+  padding-bottom:1.15em;border-bottom:1px solid var(--line-2)}
+.case p{font-size:14.5px;line-height:1.68;color:var(--ink-2);margin-bottom:1em;max-width:40em}
+.case p:last-child{margin-bottom:0}
+.case p b,.case p strong{color:var(--ink);font-weight:600}
+.case h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;margin:1.6em 0 .7em}
+
+/* ── ledger (two-column consequence table inside a case) ── */
+.ledger{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line-2);
+  border:1px solid var(--line);border-radius:3px;overflow:hidden;margin:1.4em 0}
+@media(max-width:620px){.ledger{grid-template-columns:1fr}}
+.ledger>div{background:var(--raise);padding:clamp(13px,2.4vw,17px)}
+.ledger .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:.5em}
+.ledger .v{font-family:var(--disp);font-weight:600;font-size:clamp(17px,2.8vw,21px);line-height:1.2;
+  letter-spacing:-.015em;margin-bottom:.4em}
+.ledger .state .v{color:var(--ink-2)}
+.ledger .social .v{color:var(--bad)}
+.ledger .s{font-size:12.5px;line-height:1.5;color:var(--ink-2)}
+
+/* ── timeline strip ── */
+.tl{display:flex;gap:2px;margin:1.3em 0 .6em}
+.tl .y{flex:1;min-width:0;text-align:center}
+.tl .yb{height:30px;border-radius:1px;background:var(--surface-2)}
+.tl .yb.play{background:var(--op)}
+.tl .yb.gap{background:var(--bad-soft);border:1px dashed var(--bad)}
+.tl .yb.low{background:var(--ay-soft);border:1px solid var(--ay)}
+.tl .yl{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:.45em;
+  writing-mode:vertical-rl;transform:rotate(180deg);height:34px;display:inline-block}
+@media(min-width:560px){.tl .yl{writing-mode:horizontal-tb;transform:none;height:auto}}
+
+footer{padding-block:clamp(34px,6vw,54px) clamp(46px,8vw,74px);border-top:1px solid var(--line);
+  font-family:var(--mono);font-size:11.5px;line-height:1.85;color:var(--muted)}
+footer b{color:var(--ink-2);font-weight:500}
+@media(prefers-reduced-motion:no-preference){
+  section{animation:fi .5s ease-out both}
+  @keyframes fi{from{opacity:.55}to{opacity:1}}
+}
+
+/* ── scouting report components ── */
+.warnbar{background:var(--bad-soft);border:1px solid var(--bad);border-radius:3px;
+  padding:clamp(13px,2.4vw,18px);margin:1.6em 0;font-size:13.5px;line-height:1.6;color:var(--ink-2)}
+.warnbar b{color:var(--bad);font-weight:600}
+
+/* numbered instruction card */
+.instr{display:grid;grid-template-columns:44px 1fr;gap:clamp(12px,2.4vw,20px);
+  border:1px solid var(--line);border-left:3px solid var(--ay);border-radius:3px;
+  background:var(--surface);padding:clamp(15px,2.8vw,22px);margin:1.1em 0}
+@media(max-width:560px){.instr{grid-template-columns:32px 1fr;gap:12px}}
+.instr .n{font-family:var(--disp);font-weight:600;font-size:clamp(26px,4.4vw,34px);line-height:1;
+  color:var(--ay);letter-spacing:-.03em}
+.instr h3{font-family:var(--body);font-weight:600;font-size:clamp(15.5px,2.2vw,18px);
+  line-height:1.34;color:var(--ink);margin:0 0 .5em;letter-spacing:-.01em}
+.instr p{font-size:14px;line-height:1.62;color:var(--ink-2);margin:0 0 .7em;max-width:40em}
+.instr p:last-child{margin-bottom:0}
+.instr .ev{font-family:var(--mono);font-size:11.5px;line-height:1.55;color:var(--muted);
+  border-top:1px solid var(--line-2);padding-top:.7em;margin-top:.9em}
+.instr .ev b{color:var(--ay);font-weight:600}
+
+/* do-not list */
+.dont{border:1px solid var(--line);border-radius:3px;background:var(--raise);
+  padding:clamp(15px,2.8vw,22px);margin:1.1em 0}
+.dont .hd{display:flex;align-items:baseline;gap:.7em;margin-bottom:.55em}
+.dont .x{font-family:var(--mono);font-size:15px;color:var(--axis);line-height:1}
+.dont h3{font-family:var(--body);font-weight:600;font-size:15px;line-height:1.34;
+  color:var(--muted);margin:0;text-decoration:line-through;text-decoration-color:var(--axis)}
+.dont p{font-size:13.5px;line-height:1.6;color:var(--ink-2);margin:0;max-width:40em}
+.dont p b{color:var(--ink);font-weight:600}
+
+/* pitch zone map */
+.zgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin:1.2em 0}
+.zcell{padding:clamp(14px,2.6vw,22px) 10px;border-radius:2px;text-align:center}
+.zcell .zv{font-family:var(--disp);font-weight:600;font-size:clamp(22px,3.8vw,30px);
+  line-height:1;letter-spacing:-.02em}
+.zcell .zn{font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-top:.55em;
+  letter-spacing:.03em}
+.zcell .zr{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:.25em}
+
+/* player duel table */
+.duel{display:flex;flex-direction:column;gap:6px;margin:1.2em 0}
+.drow{display:grid;grid-template-columns:104px 34px 1fr 46px;align-items:center;gap:9px}
+@media(max-width:560px){.drow{grid-template-columns:88px 28px 1fr 42px;gap:6px}}
+.drow .dn{font-family:var(--body);font-size:12.5px;font-weight:600;color:var(--ink);
+  text-align:right;line-height:1.24}
+.drow .dp{font-family:var(--mono);font-size:10px;color:var(--muted);text-align:right}
+.drow .dt{height:16px;background:var(--surface-2);border-radius:1px;position:relative;overflow:hidden}
+.drow .df{position:absolute;top:0;bottom:0;border-radius:1px}
+.drow .dm{position:absolute;top:-2px;bottom:-2px;width:1.5px;background:var(--axis);left:50%}
+.drow .dv{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;text-align:right}
+
+/* one-page summary */
+.sheet{border:2px solid var(--ink);border-radius:4px;padding:clamp(18px,3.4vw,30px);
+  margin:2em 0;background:var(--surface)}
+.sheet h3{font-family:var(--disp);font-weight:600;font-size:clamp(19px,3vw,25px);
+  letter-spacing:-.02em;color:var(--ink);margin:0 0 .2em}
+.sheet .sd{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:1.4em;
+  padding-bottom:1.1em;border-bottom:1px solid var(--line)}
+.sheet ol{margin:0;padding-left:1.35em;display:flex;flex-direction:column;gap:.7em}
+.sheet ol li{font-size:14px;line-height:1.55;color:var(--ink-2)}
+.sheet ol li b{color:var(--ink);font-weight:600}
+.sheet .neg{margin-top:1.5em;padding-top:1.2em;border-top:1px solid var(--line-2)}
+.sheet .neg .nl{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:.6em}
+.sheet .neg p{font-size:13px;line-height:1.6;color:var(--muted);margin:0}
+
+/* ── butterfly (대칭 막대) ── */
+.bf{display:flex;flex-direction:column;gap:0}
+.bfh{display:grid;grid-template-columns:78px 1fr 1fr 50px;gap:0;align-items:center;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--muted);
+  padding-bottom:7px;border-bottom:1px solid var(--line-2);margin-bottom:3px}
+.bfh .a{text-align:right;padding-right:11px} .bfh .b{padding-left:11px}
+.bfh .c{text-align:right}
+.bfr{display:grid;grid-template-columns:78px 1fr 1fr 50px;align-items:center;padding-block:3px}
+.bfr .bl{font-family:var(--body);font-size:12.5px;color:var(--ink-2);white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis;padding-right:8px}
+.bfr .ba{display:flex;justify-content:flex-end;align-items:center;gap:7px;
+  padding-right:9px;border-right:2px solid var(--axis)}
+.bfr .bb{display:flex;align-items:center;gap:7px;padding-left:9px}
+.bfr i{display:block;height:17px;border-radius:1px;flex:none}
+.bfr .ba i{background:var(--ay)} .bfr .bb i{background:var(--bad)}
+.bfr .v{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;
+  color:var(--ink-2);flex:none}
+.bfr .d{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;
+  text-align:right;color:var(--muted);padding-left:8px}
+.bfr.tot{margin-top:5px;padding-top:8px;border-top:1px solid var(--line)}
+.bfr.tot .bl,.bfr.tot .v,.bfr.tot .d{font-weight:600;color:var(--ink)}
+@media(max-width:560px){.bfh,.bfr{grid-template-columns:64px 1fr 1fr 48px}
+  .bfr .bl{font-size:11px;padding-right:5px}
+  .bfr .ba,.bfr .bb{padding-inline:6px}}
+
+/* ── dumbbell (연결점) ── */
+.db{display:flex;flex-direction:column;gap:2px}
+.dbr{display:grid;grid-template-columns:94px 44px 1fr 44px 86px;align-items:center;gap:8px;
+  padding:7px 0;border-bottom:1px solid var(--line-2)}
+.dbr:last-child{border-bottom:none}
+.dbr .nm{font-family:var(--body);font-size:12.5px;font-weight:600;color:var(--ink);line-height:1.22}
+.dbr .nm small{display:block;font-family:var(--mono);font-weight:400;font-size:9.5px;
+  color:var(--muted);letter-spacing:0}
+.dbr .va,.dbr .vo{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums}
+.dbr .va{text-align:right;color:var(--ay);font-weight:600}
+.dbr .vo{text-align:left;color:var(--op)}
+.dbr .tr{position:relative;height:20px}
+.dbr .tr::before{content:"";position:absolute;left:0;right:0;top:9.5px;height:1px;background:var(--line-2)}
+.dbr .cn{position:absolute;top:8px;height:4px;border-radius:2px}
+.dbr .pt{position:absolute;top:4px;width:12px;height:12px;border-radius:50%;
+  border:2px solid var(--surface)}
+.dbr .pa{background:var(--ay)} .dbr .po{background:var(--op)}
+.dbr .jg{font-family:var(--mono);font-size:10px;letter-spacing:.02em;text-align:right;
+  white-space:nowrap}
+.dbr .jg.up{color:var(--top)} .dbr .jg.dn{color:var(--bad)} .dbr .jg.md{color:var(--muted)}
+@media(max-width:620px){
+  .dbr{grid-template-columns:76px 40px 1fr 40px;gap:6px;row-gap:2px}
+  .dbr .jg{grid-column:2/-1;text-align:left;padding-top:1px}}
+
+/* ── 경기 카드 ── */
+.mcards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:1.9em 0}
+@media(max-width:700px){.mcards{grid-template-columns:1fr}}
+.mcard{border:1px solid var(--line);border-top:3px solid var(--ay);border-radius:3px;
+  background:var(--surface);padding:clamp(15px,2.6vw,20px);display:flex;flex-direction:column}
+.mcard .why{font-family:var(--mono);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ay);margin-bottom:.7em}
+.mcard .hd{display:flex;align-items:baseline;gap:.6em;flex-wrap:wrap;margin-bottom:.15em}
+.mcard .sc{font-family:var(--disp);font-weight:600;font-size:clamp(23px,3.6vw,29px);
+  line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.mcard .op{font-family:var(--body);font-size:14px;font-weight:600;color:var(--ink)}
+.mcard .rd{font-family:var(--mono);font-size:10.5px;color:var(--muted)}
+.mcard .kv{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;margin:1em 0 .9em;
+  padding:.85em 0;border-block:1px solid var(--line-2)}
+.mcard .kv dt{font-family:var(--mono);font-size:10.5px;color:var(--muted);white-space:nowrap}
+.mcard .kv dd{margin:0;font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;
+  color:var(--ink-2)}
+.mcard .kv dd b{color:var(--ay);font-weight:600}
+.mcard .kv dd em{background:none;padding:0;color:var(--bad);font-weight:600}
+.mcard p{font-size:13.5px;line-height:1.62;color:var(--ink-2);margin:0}
+.mcard p b{color:var(--ink);font-weight:600}
+
+/* ── 피치 ── */
+.pitches{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px}
+.pitchwrap .pttl{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:.5em;
+  letter-spacing:.03em}
+
+</style>
+<style>
+/* ── page-specific components ── */
+
+/* equation strip */
+.eq{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:1.7em 0}
+.eq .t{flex:1 1 158px;min-width:142px;border:1px solid var(--line);border-radius:3px;
+  background:var(--raise);padding:clamp(12px,2.2vw,16px);display:flex;flex-direction:column;gap:.35em}
+.eq .t.a{border-top:3px solid var(--op)} .eq .t.b{border-top:3px solid var(--ay)}
+.eq .t.c{border-top:3px solid var(--ink-2)}
+.eq .t .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.eq .t .v{font-family:var(--disp);font-weight:600;font-size:clamp(16px,2.6vw,20px);line-height:1.2;
+  letter-spacing:-.015em;font-variant-numeric:tabular-nums}
+.eq .t.a .v{color:var(--op)} .eq .t.b .v{color:var(--ay)}
+.eq .t .s{font-size:12px;line-height:1.45;color:var(--ink-2)}
+.eq .sg{display:flex;align-items:center;justify-content:center;font-family:var(--disp);
+  font-weight:600;font-size:clamp(19px,3vw,25px);color:var(--muted);flex:0 0 16px}
+@media(max-width:620px){.eq{flex-direction:column}.eq .sg{flex:0 0 auto;padding:2px 0}}
+
+/* layer stack */
+.lay{display:flex;flex-direction:column;gap:0;border:1px solid var(--line);border-radius:3px;
+  overflow:hidden;margin:1.7em 0}
+.lr{display:grid;grid-template-columns:52px 1fr 108px;gap:clamp(10px,2vw,16px);align-items:center;
+  background:var(--surface);padding:clamp(13px,2.3vw,17px) clamp(12px,2.2vw,18px);
+  border-bottom:1px solid var(--line-2)}
+@media(max-width:620px){.lr{grid-template-columns:42px 1fr;gap:10px}.lr .st{grid-column:2;margin-top:.3em}}
+.lr:last-child{border-bottom:none}
+.lr .ln{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--muted);letter-spacing:.04em}
+.lr .lt{font-family:var(--body);font-weight:600;font-size:14.5px;line-height:1.35;color:var(--ink)}
+.lr .ls{font-size:12.5px;line-height:1.5;color:var(--muted);margin-top:.18em}
+.lr .st{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;
+  text-align:center;border-radius:2px;padding:.34em .5em;white-space:nowrap}
+.lr .st.ok{color:var(--top);border:1px solid var(--top)}
+.lr .st.no{color:var(--bad);border:1px solid var(--bad);background:var(--bad-soft)}
+.lr.cut{background:var(--ay-soft);border-top:3px solid var(--ay);border-bottom:none}
+.lr.cut .ln,.lr.cut .lt{color:var(--ay)}
+.laycut{background:var(--ay);color:var(--page);font-family:var(--mono);font-size:10.5px;
+  letter-spacing:.11em;text-transform:uppercase;padding:.55em clamp(12px,2.2vw,18px);font-weight:500}
+
+/* 2x2 matrix */
+.q2{display:grid;grid-template-columns:96px 1fr 1fr;gap:1px;background:var(--line-2);
+  border:1px solid var(--line);border-radius:3px;overflow:hidden;margin:1.7em 0}
+@media(max-width:620px){.q2{grid-template-columns:70px 1fr 1fr}}
+.q2>div{background:var(--surface);padding:clamp(11px,2.1vw,16px)}
+.q2 .hd{background:var(--raise);font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--muted);display:flex;align-items:flex-end}
+.q2 .rh{background:var(--raise);font-family:var(--body);font-size:12.5px;font-weight:600;
+  color:var(--ink-2);line-height:1.35;display:flex;align-items:center}
+.q2 .cell .cv{font-family:var(--disp);font-weight:600;font-size:clamp(15px,2.4vw,18px);
+  line-height:1.2;letter-spacing:-.012em;margin-bottom:.45em}
+.q2 .cell .cs{font-size:12px;line-height:1.5;color:var(--ink-2)}
+.q2 .cell .mtr{height:6px;background:var(--surface-2);border-radius:1px;overflow:hidden;margin-bottom:.6em}
+.q2 .cell .mtr i{display:block;height:100%;border-radius:1px;background:var(--ay)}
+.q2 .cell.worst{background:var(--bad-soft)}
+.q2 .cell.worst .cv{color:var(--bad)} .q2 .cell.worst .mtr i{background:var(--bad)}
+
+/* signal split */
+.sig{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line-2);
+  border:1px solid var(--line);border-radius:3px;overflow:hidden;margin:1.5em 0}
+@media(max-width:620px){.sig{grid-template-columns:1fr}}
+.sig>div{background:var(--surface);padding:clamp(13px,2.4vw,18px)}
+.sig .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  margin-bottom:.5em}
+.sig .free .k{color:var(--ay)} .sig .lock .k{color:var(--ink-2)}
+.sig .v{font-family:var(--disp);font-weight:600;font-size:clamp(16px,2.6vw,20px);line-height:1.25;
+  letter-spacing:-.015em;margin-bottom:.45em}
+.sig .free .v{color:var(--ay)}
+.sig .s{font-size:12.5px;line-height:1.55;color:var(--ink-2)}
+.sig .free{border-top:3px solid var(--ay)} .sig .lock{border-top:3px solid var(--axis)}
+
+/* svg text helpers */
+.s-ax{font-family:"IBM Plex Mono",monospace;font-size:10.5px}
+.s-vl{font-family:"IBM Plex Mono",monospace;font-size:11.5px;font-weight:500;font-variant-numeric:tabular-nums}
+.s-nm{font-family:"IBM Plex Sans KR",sans-serif;font-size:12px;font-weight:600}
+.s-cp{font-family:"IBM Plex Sans KR",sans-serif;font-size:11px}
+.s-hd{font-family:"IBM Plex Sans KR",sans-serif;font-size:11.5px;font-weight:600}
+/* default ink only when the element carries no explicit fill — lets fill="var(--ay)" win */
+.s-ax:not([fill]),.s-cp:not([fill]),.s-hd:not([fill]){fill:var(--muted)}
+.s-nm:not([fill]),.s-vl:not([fill]){fill:var(--ink-2)}
+g.s-ax text:not([fill]){fill:var(--muted)}
+</style>
+<style>
+/* ── part 2 components ── */
+.g3{display:grid;grid-template-columns:86px repeat(3,1fr);gap:1px;background:var(--line-2);
+  border:1px solid var(--line);border-radius:3px;overflow:hidden;margin:1.4em 0 .6em}
+@media(max-width:620px){.g3{grid-template-columns:58px repeat(3,1fr)}}
+.g3>div{background:var(--surface);padding:clamp(9px,1.8vw,13px)}
+.g3 .hd{background:var(--raise);font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--muted);
+  display:flex;align-items:flex-end;line-height:1.35}
+.g3 .rh{background:var(--raise);font-family:var(--body);font-size:12.5px;font-weight:600;color:var(--ink-2);
+  display:flex;align-items:center;line-height:1.3}
+.g3 .c{font-size:12.5px;line-height:1.5;color:var(--ink-2);display:flex;flex-direction:column;gap:.45em}
+.g3 .c.v{background:var(--ay-soft)}
+.g3 .c b{color:var(--ink);font-weight:600}
+.tg{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;border-radius:2px;
+  padding:.18em .45em;margin-right:.3em;white-space:nowrap}
+.tg.t{color:var(--op);border:1px solid var(--op)}
+.tg.i{color:var(--ay);border:1px solid var(--ay)}
+.series{display:flex;gap:1px;background:var(--line-2);border:1px solid var(--line);border-radius:3px;overflow:hidden;margin:1.4em 0}
+.series>div{flex:1;background:var(--surface);padding:clamp(12px,2.2vw,16px)}
+.series .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.35em}
+.series .v{font-family:var(--disp);font-weight:600;font-size:clamp(16px,2.6vw,19px);line-height:1.25}
+.series .s{font-size:12.5px;color:var(--ink-2);margin-top:.3em;line-height:1.5}
+.series .now{border-top:3px solid var(--ay)} .series .prev{border-top:3px solid var(--axis)}
+</style>
+<body>
+<header><div class="wrap">
+  <div class="badge">Signature Move 연재 · 2편 · 전술적 필연</div>
+  <h1>한 경기 안의 여러 축구</h1>
+  <p class="dek">1편은 Signature Move가 어떻게 작동하는지를 역학으로 따졌다. 남은 질문은 왜 지금, 왜 모든 선수에게냐다. 포지션별 기본기는 한 포지션이 한 가지 맥락에서 볼을 받는다는 전제 위에 설계돼 있다. 그 전제가 지금 네 방향에서 동시에 깨지고 있고, 깨진 자리를 기술의 개수로는 메울 수 없다.</p>
+  <div class="meta"><span>FIFA 기술연구그룹 보고서 · 월드컵 2026 104경기 · K리그 5경기 원시 이벤트</span><span>2026년 9월</span><span>한혁진</span></div>
+</div></header>
+
+<div class="tiles">
+  <div class="tile"><div class="k">한 경기 안의 수비 국면</div><div class="v gj">67%</div><div class="s">비보유 국면을 3개 이상 쓴 팀-경기<br>월드컵 2026 · 208개 중 139개</div></div>
+  <div class="tile"><div class="k">풀백이 안쪽에서 받는 비율</div><div class="v gj">+23.1%</div><div class="s">클럽월드컵 2025, 카타르 2022 대비<br>풀백의 받는 자리가 바뀌었다</div></div>
+  <div class="tile"><div class="k">짧게 시작하는 골킥</div><div class="v">30→50%</div><div class="s">그때 2명 이상이 압박한 비율 23→40%<br>사람이 붙는 자리가 뒤로 왔다</div></div>
+  <div class="tile"><div class="k">경기 중 수비 높이의 폭</div><div class="v">약 23 m</div><div class="s">15분 구간 평균의 최대–최소, 중앙값<br>K리그 5경기 · 무작위 기준 약 10 m</div></div>
+</div>
+
+<div class="wrap">
+
+<!-- 1 -->
+<section>
+<div class="eyebrow"><span class="role">출발점</span><span class="cap">1편이 남긴 질문</span></div>
+<h2>포지션별 기본기가 전제하던 것</h2>
+<div class="body">
+<p class="lede">1편에서 나는 압박을 벗기는 일이 시간 예산 문제이고, 상대 수준이 올라갈수록 승부처가 <b>&ldquo;얼마나 속이느냐&rdquo;에서 &ldquo;그 동작이 나에게 얼마나 싼가&rdquo;</b>로 넘어간다고 썼다. 그리고 그 값은 밖에서 정해줄 수 없다고.</p>
+<p>그런데 거기엔 답하지 않은 질문이 있었다. <b>그래서 왜 지금인가. 그리고 왜 모든 선수에게인가.</b> 크랙 몇 명만 가지고 있으면 되는 것 아닌가.</p>
+<p>답은 포지션별 기본기가 무엇을 전제하고 있었는지에서 시작한다. 센터백은 뒤에서 앞을 보고 받는다. 풀백은 측면에서 터치라인을 등에 대고 받는다. 윙어는 바깥에서 안쪽을 보고 받는다. 기본기 훈련은 <em>한 포지션 = 한 가지 맥락</em>이라는 전제 위에서, 그 맥락에서 가장 자주 쓰는 동작을 반복시키도록 설계돼 있다.</p>
+<p>그 전제가 지금 네 방향에서 동시에 깨지고 있다.</p>
+</div>
+<div class="series">
+  <div class="prev"><div class="k">1편</div><div class="v">급할 때 나오는 것</div><div class="s">어떻게 작동하는가 &mdash; 탈압박의 역학과 실행 비용</div></div>
+  <div class="now"><div class="k">2편 · 이 글</div><div class="v">한 경기 안의 여러 축구</div><div class="s">왜 필연인가 &mdash; 현대 축구가 늘리는 맥락의 수</div></div>
+</div>
+</section>
+
+<!-- 2 -->
+<section>
+<div class="eyebrow"><span class="role">균열 1</span><span class="cap">압박의 위치</span></div>
+<h2>사람이 붙는 자리가 뒤로 왔다</h2>
+<div class="body">
+<p class="lede">먼저 정정부터 해야 한다. 나는 오랫동안 <b>&ldquo;맨마킹 기반 전방 압박이 표준이 됐다&rdquo;</b>고 써 왔다. 데이터를 모아 보니 이 문장은 과장이다.</p>
+</div>
+
+<figure>
+<div class="figtitle">볼이 없을 때 팀이 보내는 시간</div>
+<div class="figsub">월드컵 2026 · 104경기 208 팀-경기 평균 · 비보유 국면 분류별 시간 비율</div>
+<div class="legend"><span><i style="background:var(--ay)"></i>볼 가진 사람에게 바로 붙는 국면</span><span><i style="background:var(--op)"></i>블록 · 전환 국면</span></div>
+<div class="bars lbwrap">
+<div class="br hi"><div class="lb">하이프레스</div><div class="tk"><div class="fl" style="width:22.0%"></div></div><div class="vl">5.1%</div></div>
+<div class="br hi"><div class="lb">미드프레스</div><div class="tk"><div class="fl" style="width:15.9%"></div></div><div class="vl">3.7%</div></div>
+<div class="br hi"><div class="lb">로우프레스</div><div class="tk"><div class="fl" style="width:2.2%"></div></div><div class="vl">0.5%</div></div>
+<div class="br hi"><div class="lb">카운터프레스</div><div class="tk"><div class="fl" style="width:42.2%"></div></div><div class="vl">9.8%</div></div>
+<div class="br"><div class="lb">하이블록</div><div class="tk"><div class="fl" style="width:21.6%"></div></div><div class="vl">5.0%</div></div>
+<div class="br"><div class="lb">미드블록</div><div class="tk"><div class="fl" style="width:92.2%"></div></div><div class="vl">21.4%</div></div>
+<div class="br"><div class="lb">로우블록</div><div class="tk"><div class="fl" style="width:100.0%"></div></div><div class="vl">23.2%</div></div>
+<div class="br"><div class="lb">수비 전환</div><div class="tk"><div class="fl" style="width:59.9%"></div></div><div class="vl">13.9%</div></div>
+<div class="br"><div class="lb">리커버리</div><div class="tk"><div class="fl" style="width:19.8%"></div></div><div class="vl">4.6%</div></div>
+</div>
+<figcaption>FIFA 공식 경기 보고서(PMSR)의 Phases of Play를 파싱했다. 아홉 국면의 합은 경기당 73~97%(중앙값 87.5%)이고 나머지는 분류되지 않은 시간이다. 압박 계열 네 국면을 합쳐도 평균 약 19%다. <b>이 분류는 압박 국면이지 맨마킹 여부를 직접 기록한 것이 아니다.</b></figcaption>
+</figure>
+
+<div class="body">
+<p>팀은 볼이 없는 시간 대부분을 블록 안에서 보낸다. 사람을 따라가며 붙는 압박은 소수 국면이다. 코너킥 대인 마킹은 오히려 38%에서 14%로 줄었다는 보고도 있다. <em>맨마킹의 총량이 늘었다고 말할 근거는 없다.</em></p>
+<p>그런데 총량 대신 <b>위치</b>를 보면 이야기가 달라진다.</p>
+</div>
+
+<figure>
+<div class="figtitle">골킥은 짧아졌고, 거기에 사람이 붙는다</div>
+<div class="figsub">카타르 2022 대비 클럽월드컵 2025 · 골킥 재개 장면</div>
+<svg viewBox="0 0 640 262" role="img" aria-label="골킥을 짧게 시작한 비율은 30에서 50퍼센트로, 그때 2명 이상이 압박한 비율은 23에서 40퍼센트로 늘었고, 압박 없이 재개된 비율은 48에서 31퍼센트로 줄었다">
+<line x1="190" y1="32.0" x2="190" y2="236.0" stroke="var(--axis)"/>
+<text class="s-hd" x="190" y="254" text-anchor="middle">카타르 2022</text>
+<line x1="450" y1="32.0" x2="450" y2="236.0" stroke="var(--axis)"/>
+<text class="s-hd" x="450" y="254" text-anchor="middle">클럽월드컵 2025</text>
+<line x1="190" y1="236.0" x2="450" y2="236.0" stroke="var(--grid)" stroke-dasharray="2 4"/>
+<line x1="190" y1="168.0" x2="450" y2="168.0" stroke="var(--grid)" stroke-dasharray="2 4"/>
+<line x1="190" y1="100.0" x2="450" y2="100.0" stroke="var(--grid)" stroke-dasharray="2 4"/>
+<line x1="190" y1="32.0" x2="450" y2="32.0" stroke="var(--grid)" stroke-dasharray="2 4"/>
+<line x1="190" y1="134.0" x2="450" y2="66.0" stroke="var(--op)" stroke-width="2.6"/>
+<circle cx="190" cy="134.0" r="5" fill="var(--op)" stroke="var(--surface)" stroke-width="2"/>
+<circle cx="450" cy="66.0" r="5" fill="var(--op)" stroke="var(--surface)" stroke-width="2"/>
+<text class="s-vl" x="178" y="138.0" text-anchor="end" fill="var(--op)">30%</text>
+<text class="s-vl" x="462" y="70.0" fill="var(--op)">50%</text>
+<text class="s-cp" x="500" y="70.0">숏 골킥 비율</text>
+<line x1="190" y1="157.8" x2="450" y2="100.0" stroke="var(--ay)" stroke-width="2.6"/>
+<circle cx="190" cy="157.8" r="5" fill="var(--ay)" stroke="var(--surface)" stroke-width="2"/>
+<circle cx="450" cy="100.0" r="5" fill="var(--ay)" stroke="var(--surface)" stroke-width="2"/>
+<text class="s-vl" x="178" y="161.8" text-anchor="end" fill="var(--ay)">23%</text>
+<text class="s-vl" x="462" y="104.0" fill="var(--ay)">40%</text>
+<text class="s-cp" x="500" y="104.0">그중 2명 이상이 압박</text>
+<line x1="190" y1="72.8" x2="450" y2="130.6" stroke="var(--ay)" stroke-width="2.6" stroke-dasharray="6 4"/>
+<circle cx="190" cy="72.8" r="5" fill="var(--ay)" stroke="var(--surface)" stroke-width="2"/>
+<circle cx="450" cy="130.6" r="5" fill="var(--ay)" stroke="var(--surface)" stroke-width="2"/>
+<text class="s-vl" x="178" y="76.8" text-anchor="end" fill="var(--ay)">48%</text>
+<text class="s-vl" x="462" y="134.6" fill="var(--ay)">31%</text>
+<text class="s-cp" x="500" y="134.6">압박 없이 재개</text>
+</svg>
+<figcaption>FIFA 기술연구그룹(TSG) 클럽월드컵 2025 하이프레스 분석(wiki 인제스트 기준). 국가대표 대회와 클럽 대회의 비교이므로 대회 성격 차이가 섞여 있다. 같은 보고서에서 하이프레스 사용 시간은 +5%였고, 대회 내내 하이프레스를 유지한 팀은 32개 중 소수였다.</figcaption>
+</figure>
+
+<div class="body">
+<p>빌드업은 더 자주 뒤에서, 짧게 시작하고, 그 순간에 사람이 붙는 빈도가 늘었다. 그리고 블록 높이에 따라 무엇을 잡는지가 다르다.</p>
+</div>
+
+<figure>
+<div class="figtitle">어디서 볼을 받느냐에 따라, 붙는 것이 다르다</div>
+<div class="figsub">상대의 수비 높이별 마킹 기준 &mdash; 공격하는 쪽에서 본 그림</div>
+<svg viewBox="0 0 640 250" role="img" aria-label="우리 수비 서드에서는 상대 하이프레스가 사람을 잡고, 중앙 서드에서는 미드블록이 공간을 닫고, 상대 진영 서드에서는 로우블록이 다시 사람을 잡는다. 사람이 붙는 칸 중 하나에 센터백과 골키퍼가 선다">
+  <rect x="20" y="36" width="600" height="150" rx="2" fill="var(--surface-2)" stroke="var(--line)"/>
+  <rect x="20" y="36" width="200" height="150" fill="var(--ay-soft)"/>
+  <rect x="420" y="36" width="200" height="150" fill="var(--ay-soft)"/>
+  <line x1="220" y1="36" x2="220" y2="186" stroke="var(--surface)" stroke-width="2"/>
+  <line x1="420" y1="36" x2="420" y2="186" stroke="var(--surface)" stroke-width="2"/>
+  <line x1="320" y1="36" x2="320" y2="186" stroke="var(--axis)" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="14" y="86" width="6" height="50" fill="var(--ink-2)"/>
+  <rect x="620" y="86" width="6" height="50" fill="var(--axis)"/>
+  <text class="s-hd" x="120" y="26" text-anchor="middle">우리 수비 서드</text>
+  <text class="s-hd" x="320" y="26" text-anchor="middle">중앙 서드</text>
+  <text class="s-hd" x="520" y="26" text-anchor="middle">상대 진영 서드</text>
+  <text class="s-cp" x="120" y="72" text-anchor="middle">상대 하이프레스</text>
+  <text class="s-nm" x="120" y="100" text-anchor="middle" fill="var(--ay)">사람을 잡는다</text>
+  <text class="s-cp" x="320" y="72" text-anchor="middle">상대 미드블록</text>
+  <text class="s-nm" x="320" y="100" text-anchor="middle" fill="var(--op)">공간을 닫는다</text>
+  <text class="s-cp" x="520" y="72" text-anchor="middle">상대 로우블록</text>
+  <text class="s-nm" x="520" y="100" text-anchor="middle" fill="var(--ay)">사람을 잡는다</text>
+  <text class="s-vl" x="120" y="160" text-anchor="middle" fill="var(--ink-2)">GK · CB · DM</text>
+  <text class="s-vl" x="320" y="160" text-anchor="middle" fill="var(--ink-2)">8번 · 풀백</text>
+  <text class="s-vl" x="520" y="160" text-anchor="middle" fill="var(--ink-2)">윙어 · 10번 · 9번</text>
+  <text class="s-ax" x="120" y="176" text-anchor="middle">여기서 받는 선수</text>
+  <text class="s-ax" x="320" y="176" text-anchor="middle">여기서 받는 선수</text>
+  <text class="s-ax" x="520" y="176" text-anchor="middle">여기서 받는 선수</text>
+  <text class="s-cp" x="20" y="214">&larr; 우리 골문</text>
+  <text class="s-cp" x="620" y="214" text-anchor="end">공격 방향 &rarr;</text>
+  <text class="s-cp" x="20" y="240">오른쪽 칸의 선수들은 원래 1v1을 하던 선수들이다. 새로 사람이 붙게 된 것은 왼쪽 칸이다.</text>
+</svg>
+<figcaption>마킹 기준 정리는 wiki <i>formation_agnostic_principles</i> D5(하이프레스 = 사람 / 세트 블록 = 공간 / 로우블록 = 사람)를 공격하는 쪽 시점으로 뒤집은 것이다. 실제 팀은 혼합형이 많고 &mdash; 블록은 존으로 서다가 위험 지역 진입 시 사람으로 바꾼다 &mdash; 이 그림은 기준의 경향이지 규칙이 아니다.</figcaption>
+</figure>
+
+<div class="pull">맨마킹이 늘어난 게 아니다. 온더볼을 가장 덜 배운 포지션이 사람이 붙는 칸에 서게 됐다.</div>
+</section>
+
+<!-- 3 -->
+<section>
+<div class="eyebrow"><span class="role">균열 2</span><span class="cap">공수 형태의 분리</span></div>
+<h2>한 선수, 두 개의 형태</h2>
+<div class="body">
+<p class="lede">두 번째 균열은 형태다. 현대 팀은 <b>수비할 때의 형태와 공격할 때의 형태가 다르고</b>, 한 선수가 두 형태에서 다른 일을 한다. 이건 이제 특별한 전술이 아니라 기본값에 가깝다.</p>
+<p>맨시티는 4-4-2로 수비하다가 빌드업에서 3-2-5로 바뀐다. 스톤스는 센터백에서 로드리 옆 피벗으로 올라갔다. 풀백은 안으로 들어와 미드필더가 된다. 이 변화가 한 선수에게 무엇을 요구하는지 그려 보면 이렇다.</p>
+</div>
+
+<figure>
+<div class="figtitle">같은 풀백, 다른 문제</div>
+<div class="figsub">수비 형태에서 받는 볼과 공격 형태에서 받는 볼은 방향·높이·주변 밀도가 다르다</div>
+<svg viewBox="0 0 640 352" role="img" aria-label="수비 형태 4-4-2에서 오른쪽 풀백은 측면에서 전방을 보고 받지만, 공격 형태 3-2-5에서는 중앙 피벗 자리에서 등진 채 여러 상대에 둘러싸여 받는다">
+  <defs>
+    <marker id="p2a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--ay)"/></marker>
+  </defs>
+  <text class="s-hd" x="150" y="14" text-anchor="middle">수비 형태 · 4-4-2</text>
+  <text class="s-hd" x="490" y="14" text-anchor="middle">공격 형태 · 3-2-5</text>
+  <!-- left pitch -->
+  <rect x="30" y="24" width="240" height="270" rx="2" fill="none" stroke="var(--line)" stroke-width="1.4"/>
+  <line x1="30" y1="159" x2="270" y2="159" stroke="var(--line)"/>
+  <rect x="110" y="286" width="80" height="8" fill="none" stroke="var(--line)"/>
+  <g fill="var(--axis)">
+    <circle cx="150" cy="280" r="6"/>
+    <circle cx="75" cy="238" r="6"/><circle cx="125" cy="238" r="6"/><circle cx="175" cy="238" r="6"/>
+    <circle cx="75" cy="194" r="6"/><circle cx="125" cy="194" r="6"/><circle cx="175" cy="194" r="6"/><circle cx="225" cy="194" r="6"/>
+    <circle cx="125" cy="146" r="6"/><circle cx="175" cy="146" r="6"/>
+  </g>
+  <circle cx="200" cy="218" r="7" fill="none" stroke="var(--op)" stroke-width="2"/>
+  <circle cx="225" cy="238" r="8.5" fill="var(--ay)"/>
+  <path d="M225 228 L225 210" fill="none" stroke="var(--ay)" stroke-width="2" marker-end="url(#p2a)"/>
+  <text class="s-vl" x="248" y="258" fill="var(--ay)">RB</text>
+  <line x1="270" y1="24" x2="270" y2="294" stroke="var(--ink-2)" stroke-width="2.5"/>
+  <text class="s-cp" x="150" y="316" text-anchor="middle">측면에서, 전방을 보고 받는다</text>
+  <text class="s-cp" x="150" y="332" text-anchor="middle">한쪽은 터치라인이 막아 준다 · 붙는 사람 1명</text>
+  <!-- right pitch -->
+  <rect x="370" y="24" width="240" height="270" rx="2" fill="none" stroke="var(--line)" stroke-width="1.4"/>
+  <line x1="370" y1="159" x2="610" y2="159" stroke="var(--line)"/>
+  <rect x="450" y="286" width="80" height="8" fill="none" stroke="var(--line)"/>
+  <g fill="var(--axis)">
+    <circle cx="490" cy="280" r="6"/>
+    <circle cx="430" cy="232" r="6"/><circle cx="490" cy="232" r="6"/><circle cx="550" cy="232" r="6"/>
+    <circle cx="462" cy="182" r="6"/>
+    <circle cx="392" cy="92" r="6"/><circle cx="441" cy="92" r="6"/><circle cx="490" cy="92" r="6"/><circle cx="539" cy="92" r="6"/><circle cx="588" cy="92" r="6"/>
+  </g>
+  <circle cx="570" cy="238" r="8" fill="none" stroke="var(--ay)" stroke-width="1.5" stroke-dasharray="3 2"/>
+  <path d="M562 232 L528 192" fill="none" stroke="var(--ay)" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#p2a)"/>
+  <g fill="none" stroke="var(--op)" stroke-width="2">
+    <circle cx="512" cy="160" r="7"/><circle cx="548" cy="176" r="7"/><circle cx="500" cy="200" r="7"/><circle cx="540" cy="208" r="7"/>
+  </g>
+  <circle cx="522" cy="184" r="8.5" fill="var(--ay)"/>
+  <path d="M522 194 L522 214" fill="none" stroke="var(--ay)" stroke-width="2" marker-end="url(#p2a)"/>
+  <text class="s-vl" x="532" y="232" fill="var(--ay)">RB</text>
+  <text class="s-cp" x="490" y="316" text-anchor="middle">중앙에서, 등진 채 받는다</text>
+  <text class="s-cp" x="490" y="332" text-anchor="middle">사방이 열려 있다 · 붙는 사람이 여러 명</text>
+  <!-- legend -->
+  <circle cx="36" cy="346" r="0"/>
+</svg>
+<figcaption>개념 도해다. 상대 위치(빈 원)는 예시이며 특정 경기의 좌표가 아니다. 화살표는 볼을 받는 순간 몸이 향한 방향. 전환 경로는 팀마다 다르다 &mdash; 풀백 한 명이 안으로 들어오거나, 두 명이 올라가고 수비형 미드필더가 내려오거나, 센터백이 피벗으로 올라간다.</figcaption>
+</figure>
+
+<div class="strip">
+  <div><div class="k">풀백의 받는 자리</div><div class="v">+23.1%</div><div class="s">안쪽·중앙 채널에서 받는 비율 &mdash; 클럽월드컵 2025, 카타르 2022 대비</div></div>
+  <div><div class="k">골키퍼의 골킥</div><div class="v">91 → 52%</div><div class="s">골킥을 골키퍼가 직접 찬 비율 &mdash; 월드컵 2022 → 2026. 나머지는 필드 선수가 시작한다</div></div>
+  <div><div class="k">가장 고정된 포지션</div><div class="v">+1.3 m</div><div class="s">골키퍼 평균 위치, 2018 대비 카타르 2022 &mdash; 골키퍼조차 받는 자리가 바뀐다</div></div>
+</div>
+
+<div class="body">
+<p>풀백이 안으로 들어오면 <b>받는 방향이 바뀐다</b>(전방 → 등진 채). <b>받는 높이가 바뀐다</b>(수비 서드 → 중앙 서드). <b>주변 밀도가 바뀐다</b>(터치라인이 막아 주던 한쪽이 열린다). 포지션 이름은 그대로인데, 온더볼 문제는 미드필더의 문제가 된다.</p>
+</div>
+</section>
+
+<!-- 4 -->
+<section>
+<div class="eyebrow"><span class="role">균열 3</span><span class="cap">블록의 혼합</span></div>
+<h2>한 경기, 여러 개의 블록</h2>
+<div class="body">
+<p class="lede">세 번째는 상대다. 선수가 마주하는 상대의 블록은 경기마다 다를 뿐 아니라 <b>한 경기 안에서도 바뀐다.</b></p>
+<p>코칭 쪽은 이미 그렇게 가르친다. CoachesVoice의 하이프레스 해설은 이렇게 쓴다 &mdash; <em>&ldquo;헌신적인 하이프레스를 90분 동안 최대 강도로 유지하는 것은 거의 불가능하다. 가장 효과적인 압박 팀들은 게임 스테이트에 따라 압박을 변주한다. 지쳤을 때, 종반에 리드를 지킬 때, 상대의 퀄리티가 압박을 너무 큰 리스크로 만들 때 일시적으로 더 보수적인 형태로 내려간다.&rdquo;</em> 모로코는 올림픽에서 2-0으로 앞선 후반에 전방 투입 인원을 줄이고 레스트 디펜스를 늘렸다.</p>
+<p>이게 예외적인 장면인지, 보편적인 장면인지 월드컵 2026 전 경기로 세어 봤다.</p>
+</div>
+
+<figure>
+<div class="figtitle">한 경기에서 몇 가지 수비 국면을 쓰는가</div>
+<div class="figsub">월드컵 2026 · 208 팀-경기 · 압박·블록 6국면 중 비보유 시간의 5% 이상을 차지한 국면 수</div>
+<div class="legend"><span><i style="background:var(--ay)"></i>3개 이상</span><span><i style="background:var(--op)"></i>2개 이하</span></div>
+<div class="bars lbwrap">
+<div class="br"><div class="lb">1개</div><div class="tk"><div class="fl" style="width:1.5%"></div></div><div class="vl">1경기</div></div>
+<div class="br"><div class="lb">2개</div><div class="tk"><div class="fl" style="width:100.0%"></div></div><div class="vl">68경기</div></div>
+<div class="br hi"><div class="lb">3개</div><div class="tk"><div class="fl" style="width:70.6%"></div></div><div class="vl">48경기</div></div>
+<div class="br hi"><div class="lb">4개</div><div class="tk"><div class="fl" style="width:76.5%"></div></div><div class="vl">52경기</div></div>
+<div class="br hi"><div class="lb">5개</div><div class="tk"><div class="fl" style="width:57.4%"></div></div><div class="vl">39경기</div></div>
+</div>
+<figcaption>대상은 하이·미드·로우 프레스와 하이·미드·로우 블록 여섯 국면. 기준을 5%로 잡으면 <b>139개(67%)가 3개 이상, 91개(44%)가 4개 이상</b>을 한 경기 안에서 썼다. 기준을 10%로 올리면 3개 이상은 19개(9%)로 줄어든다 &mdash; 대부분의 팀은 두 개의 주력 국면에 나머지를 짧게 섞는다. 90분 합계 값이라 <b>언제 바뀌었는지는 이 데이터로 알 수 없다.</b></figcaption>
+</figure>
+
+<div class="body">
+<p>대부분의 팀은 두 개의 주력 국면을 갖고, 거기에 짧은 국면 한두 개를 섞는다. 볼을 가진 쪽에서 보면, <b>같은 90분 안에 서로 다른 성질의 수비를 두세 가지 만난다</b>는 뜻이다.</p>
+</div>
+</section>
+
+<!-- 5 -->
+<section>
+<div class="eyebrow"><span class="role">균열 4</span><span class="cap">직접 재 본 것</span></div>
+<h2>그리고 그 높이는 경기 중에 움직인다</h2>
+<div class="body">
+<p class="lede">월드컵 데이터는 90분 합계라서 <b>한 경기 안에서 언제 바뀌는지</b>는 보여주지 못한다. 그래서 K리그 원시 이벤트 5경기로 직접 쟀다.</p>
+<p>방법은 단순하다. 각 팀의 수비 액션(태클·인터셉트·블락·획득·경합·클리어)이 일어난 위치를 15분 구간마다 평균한다. 그 팀이 <b>어느 높이에서 수비를 하고 있었는지</b>의 대리 지표다.</p>
+</div>
+
+<figure>
+<div class="figtitle">수비 높이가 경기 안에서 20 m 넘게 오르내린다</div>
+<div class="figsub">K리그 5경기 · 팀별 15분 구간 수비 액션 평균 위치 (자기 골문으로부터 거리)</div>
+<svg viewBox="0 0 640 618" role="img" aria-label="K리그 5경기에서 각 팀의 15분 구간별 수비 액션 평균 높이가 한 경기 안에서 20미터 이상 오르내린다">
+<text class="s-ax" x="109.8" y="12" text-anchor="middle">0–15'</text>
+<text class="s-ax" x="189.5" y="12" text-anchor="middle">15–30'</text>
+<text class="s-ax" x="282.5" y="12" text-anchor="middle">30–45'+</text>
+<text class="s-ax" x="374.8" y="12" text-anchor="middle">45–60'</text>
+<text class="s-ax" x="442.5" y="12" text-anchor="middle">60–75'</text>
+<text class="s-ax" x="525.9" y="12" text-anchor="middle">75–90'+</text>
+<text class="s-nm" x="0" y="34">김천 vs 포항</text>
+<line x1="70" y1="112.0" x2="580" y2="112.0" stroke="var(--grid)" stroke-width="1"/>
+<text class="s-ax" x="62" y="115.5" text-anchor="end">20m</text>
+<line x1="70" y1="77.0" x2="580" y2="77.0" stroke="var(--grid)" stroke-width="1"/>
+<text class="s-ax" x="62" y="80.5" text-anchor="end">45m</text>
+<line x1="70" y1="42.0" x2="580" y2="42.0" stroke="var(--grid)" stroke-width="1"/>
+<text class="s-ax" x="62" y="45.5" text-anchor="end">70m</text>
+<line x1="335" y1="36" x2="335" y2="112" stroke="var(--axis)" stroke-width="1" stroke-dasharray="2 3"/>
+<line x1="90.2" y1="38" x2="90.2" y2="112" stroke="var(--ay)" stroke-width="1" stroke-opacity=".55"/>
+<path d="M86.2 32 L94.2 32 L90.2 39 z" fill="var(--ay)"/>
+<line x1="385.6" y1="38" x2="385.6" y2="112" stroke="var(--op)" stroke-width="1" stroke-opacity=".55"/>
+<path d="M381.6 32 L389.6 32 L385.6 39 z" fill="var(--op)"/>
+<polyline points="109.8,72.4 189.5,56.2 282.5,79.7 374.8,88.5 442.5,79.7 525.9,78.3" fill="none" stroke="var(--op)" stroke-width="2"/>
+<circle cx="109.8" cy="72.4" r="3.6" fill="var(--op)" stroke="var(--surface)" stroke-width="1.5"><title>포항 48 m</title></circle>
+<circle cx="189.5" cy="56.2" r="3.6" fill="var(--op)" stroke="var(--surface)" stroke-width="1.5"><title>포항 60 m</title></circle>
+<circle cx="282.5" cy="79.7" r="3.6" fill="var(--op)" stroke="var(--surface)" stroke-width="1.5"><title>포항 43 m</title></circle>
+<circle cx="374.8" cy="88.5" r="3.6" fill="var(--op)" stroke="var(--surface)" stroke-width="1.5"><title>포항 37 m</title></circle>
+<circle cx="442.5" cy="79.7" r="3.6" fill="var(--op)" stroke="var(--surface)" stroke-width="1.5"><title>포항 43 m</title></circle>
+<circle cx="525.9" cy="78.3" r="3.6" fill="var(--op)" stroke="var(--surface)" stroke-width="1.5"><title>포항 44 m</title></circle>
+<text class="s-vl" x="588" y="75.9" fill="var(--op)">포항</text>
+<polyline points="109.8,69.9 189.5,98.8 282.5,77.2 374.8,65.6 442.5,69.1 525.9,78.6" fill="none" stroke="var(--ay)" stroke-width="2"/>
+<circle cx="109.8" cy="69.9" r="3.6" fill="var(--ay)" stroke="var(--surface)" stroke-width="1.5"><title>김천 50 m</title></circle>
+<circle cx="189.5" cy="98.8" r="3.6" fill="var(--ay)" stroke="var(--surface)" stroke-width="1.5"><title>김천 29 m</title></circle>
+<circle cx="282.5" cy="77.2" r="3.6" fill="var(--ay)" stroke="var(--surface)" stroke-width="1.5"><title>김천 45 m</title></circle>
+<circle cx="374.8" cy="65.6" r="3.6" fill="var(--ay)" stroke="var(--surface)" stroke-width="1.5"><title>김천 53 m</title></circle>
+<circle cx="442.5" cy="69.1" r="3.6" fill="var(--ay)" stroke="var(--surface)" stroke-width="1.5"><title>김천 51 m</title></circle>
+<circle cx="525.9" cy="78.6" r="3.6" fill="var(--ay)" stroke="var(--surface)" stroke-width="1.5"><title>김천 44 m</title></circle>
+<text class="s-vl" x="588" y="88.9" fill="var(--ay)">김천</text>
+<text class="s-nm" x="0" y="146">수원 vs 서울E</text>
+<line x1="70" y1="224.0" x2="580" y2="224.0" stroke="var(--grid)" stroke-width="1"/>
+<text class="s-ax" x="62" y="227.5" text-anchor="end">20m</text>
+<line x1="70" y1="189.0" x2="580" y2="189.0" stroke="var(--grid)" stroke-width="1"/>
+<text class="s-ax" x="62" y="192.5" text-anchor="end">45m</text>
+<line x1="70" y1="154.0" x2="580" y2="154.0" stroke="var(--grid)" stroke-width="1"/>
+<text class="s-ax" x="62" y="157.5" text-anchor="end">70m</text>
+<line x1="335" y1="148" x2="335" y2="224" stroke="var(--axis)" stroke-width="1" stroke-dasharray="2 3"/>
+<line x1="166.2" y1="150" x2="166.2" y2="224" stroke="var(--op)" stroke-width="1" stroke-opacity=".55"/>
+<path d="M162.2 144 L170.2 144 L166.2 151 z" fill="var(--op)"/>
+<line x1="285.7" y1="150" x2="285.7" y2="224" stroke="var(--ay)" stroke-width="1" stroke-opacity=".55"/>
+<path d="M281.7 144 L289.7 144 L285.7 151 z" fill="var(--ay)"/>
+<line x1="464.6" y1="150" x2="464.6" y2="224" stroke="var(--ay)" stroke-width="1" stroke-opacity=".55"/>
+<path d="M460.6 144 L468.6 144 L464.6 151 z" fill="var(--ay)"/>
+<polyline points="109.8,200.6 189.5,180.0 282.5,191.7 374.8,218.2 442.5,205.0 525.9,185.8" fill="none" stroke="var(--op)" stroke-width="2"/>
+<circle cx="109.8" cy="200.6" r="3.6" fill="var(--op)" stroke="var(--surface)" stroke-width="1.5"><title>서울E 37 m</title></circle>
+<circle cx="189.5" cy="180.0" r="3.6" fill="var(--op)" stroke="var(--surface)" stroke-width="1.5"><title>서울E 51 m</title></circle>
+<circle cx="282.5" cy="191.7" r="3.6" fill="var(--op)" stroke="var(--surface)" stroke-width="1.5"><title>서울E 43 m</title></circle>
+<circle cx="374.8" cy="218.2" r="3.6" fill="var(--op)" stroke="var(--surface)" stroke-width="1.5"><title>서울E 24 m</title></circle>
+<circle cx="442.5" cy="205.0" r="3.6" fill="var(--op)" stroke="var(--surface)" stroke-width="1.5"><title>서울E 34 m</title></circle>
+<circle cx="525.9" cy="185.8" r="3.6" fill="var(--op)" stroke="var(--surface)" stroke-width="1.5"><title>서울E 47 m</title></circle>
+<text class="s-vl" x="588" y="185.6" fill="var(--op)">서울E</text>
+<polyline points="109.8,174.1 189.5,194.7 282.5,180.0 374.8,163.8 442.5,162.3 525.9,190.3" fill="none" stroke="var(--ay)" stroke-width="2"/>
+<circle cx="109.8" cy="174.1" r="3.6" fill="var(--ay)" stroke="var(--surface)" stroke-width="1.5"><title>수원 56 m</title></circle>
+<circle cx="189.5" cy="194.7" r="3.6" fill="var(--ay)" stroke="var(--surface)" stroke-width="1.5"><title>수원 41 m</title></circle>
+<circle cx="282.5" cy="180.0" r="3.6" fill="var(--ay)" stroke="var(--surface)" stroke-width="1.5"><title>수원 51 m</title></circle>
+<circle cx="374.8" cy="163.8" r="3.6" fill="var(--ay)" stroke="var(--surface)" stroke-width="1.5"><title>수원 63 m</title></circle>
+<circle cx="442.5" cy="162.3" r="3.6" fill="var(--ay)" stroke="var(--surface)" stroke-width="1.5"><title>수원 64 m</title></circle>
+<circle cx="525.9" cy="190.3" r="3.6" fill="var(--ay)" stroke="var(--surface)" stroke-width="1.5"><title>수원 44 m</title></circle>
+<text class="s-vl" x="588" y="198.6" fill="var(--ay)">수원</text>
+<text class="s-nm" x="0" y="258">인천 vs 서울</text>
+<line x1="70" y1="336.0" x2="580" y2="336.0" stroke="var(--grid)" stroke-width="1"/>
+<text class="s-ax" x="62" y="339.5" text-anchor="end">20m</text>
+<line x1="70" y1="301.0" x2="580" y2="301.0" stroke="var(--grid)" stroke-width="1"/>
+<text class="s-ax" x="62" y="304.5" text-anchor="end">45m</text>
+<line x1="70" y1="266.0" x2="580" y2="266.0" stroke="var(--grid)" stroke-width="1"/>
+<text class="s-ax" x="62" y="269.5" text-anchor="end">70m</text>
+<line x1="335" y1="260" x2="335" y2="336" stroke="var(--axis)" stroke-width="1" stroke-dasharray="2 3"/>
+<line x1="347.8" y1="262" x2="347.8" y2="336" stroke="var(--op)" stroke-width="1" stroke-opacity=".55"/>
+<path d="M343.8 256 L351.8 256 L347.8 263 z" fill="var(--op)"/>
+<line x1="412.7" y1="262" x2="412.7" y2="336" stroke="var(--op)" stroke-width="1" stroke-opacity=".55"/>
+<path d="M408.7 256 L416.7 256 L412.7 263 z" fill="var(--op)"/>
+<line x1="551.1" y1="262" x2="551.1" y2="336" stroke="var(--ay)" stroke-width="1" stroke-opacity=".55"/>
+<path d="M547.1 256 L555.1 256 L551.1 263 z" fill="var(--ay)"/>
+<polyline points="109.8,278.7 189.5,292.0 282.5,306.7 374.8,306.7 442.5,317.0 525.9,311.1" fill="none" stroke="var(--op)" stroke-width="2"/>
+<circle cx="109.8" cy="278.7" r="3.6" fill="var(--op)" stroke="var(--surface)" stroke-width="1.5"><title>서울 61 m</title></circle>
+<circle cx="189.5" cy="292.0" r="3.6" fill="var(--op)" stroke="var(--surface)" stroke-width="1.5"><title>서울 51 m</title></circle>
+<circle cx="282.5" cy="306.7" r="3.6" fill="var(--op)" stroke="var(--surface)" stroke-width="1.5"><title>서울 41 m</title></circle>
+<circle cx="374.8" cy="306.7" r="3.6" fill="var(--op)" stroke="var(--surface)" stroke-width="1.5"><title>서울 41 m</title></circle>
+<circle cx="442.5" cy="317.0" r="3.6" fill="var(--op)" stroke="var(--surface)" stroke-width="1.5"><title>서울 34 m</title></circle>
+<circle cx="525.9" cy="311.1" r="3.6" fill="var(--op)" stroke="var(--surface)" stroke-width="1.5"><title>서울 38 m</title></circle>
+<text class="s-vl" x="588" y="315.1" fill="var(--op)">서울</text>
+<polyline points="109.8,317.0 189.5,312.6 282.5,293.4 374.8,296.4 442.5,292.0 525.9,292.0" fill="none" stroke="var(--ay)" stroke-width="2"/>
+<circle cx="109.8" cy="317.0" r="3.6" fill="var(--ay)" stroke="var(--surface)" stroke-width="1.5"><title>인천 34 m</title></circle>
+<circle cx="189.5" cy="312.6" r="3.6" fill="var(--ay)" stroke="var(--surface)" stroke-width="1.5"><title>인천 37 m</title></circle>
+<circle cx="282.5" cy="293.4" r="3.6" fill="var(--ay)" stroke="var(--surface)" stroke-width="1.5"><title>인천 50 m</title></circle>
+<circle cx="374.8" cy="296.4" r="3.6" fill="var(--ay)" stroke="var(--surface)" stroke-width="1.5"><title>인천 48 m</title></circle>
+<circle cx="442.5" cy="292.0" r="3.6" fill="var(--ay)" stroke="var(--surface)" stroke-width="1.5"><title>인천 51 m</title></circle>
+<circle cx="525.9" cy="292.0" r="3.6" fill="var(--ay)" stroke="var(--surface)" stroke-width="1.5"><title>인천 51 m</title></circle>
+<text class="s-vl" x="588" y="296.0" fill="var(--ay)">인천</text>
+<text class="s-nm" x="0" y="370">전북 vs 부천</text>
+<line x1="70" y1="448.0" x2="580" y2="448.0" stroke="var(--grid)" stroke-width="1"/>
+<text class="s-ax" x="62" y="451.5" text-anchor="end">20m</text>
+<line x1="70" y1="413.0" x2="580" y2="413.0" stroke="var(--grid)" stroke-width="1"/>
+<text class="s-ax" x="62" y="416.5" text-anchor="end">45m</text>
+<line x1="70" y1="378.0" x2="580" y2="378.0" stroke="var(--grid)" stroke-width="1"/>
+<text class="s-ax" x="62" y="381.5" text-anchor="end">70m</text>
+<line x1="335" y1="372" x2="335" y2="448" stroke="var(--axis)" stroke-width="1" stroke-dasharray="2 3"/>
+<line x1="139.1" y1="374" x2="139.1" y2="448" stroke="var(--ay)" stroke-width="1" stroke-opacity=".55"/>
+<path d="M135.1 368 L143.1 368 L139.1 375 z" fill="var(--ay)"/>
+<line x1="203.3" y1="374" x2="203.3" y2="448" stroke="var(--op)" stroke-width="1" stroke-opacity=".55"/>
+<path d="M199.3 368 L207.3 368 L203.3 375 z" fill="var(--op)"/>
+<line x1="380.2" y1="374" x2="380.2" y2="448" stroke="var(--ay)" stroke-width="1" stroke-opacity=".55"/>
+<path d="M376.2 368 L384.2 368 L380.2 375 z" fill="var(--ay)"/>
+<line x1="508.8" y1="374" x2="508.8" y2="448" stroke="var(--op)" stroke-width="1" stroke-opacity=".55"/>
+<path d="M504.8 368 L512.8 368 L508.8 375 z" fill="var(--op)"/>
+<line x1="573.7" y1="374" x2="573.7" y2="448" stroke="var(--op)" stroke-width="1" stroke-opacity=".55"/>
+<path d="M569.7 368 L577.7 368 L573.7 375 z" fill="var(--op)"/>
+<polyline points="109.8,417.2 189.5,414.3 282.5,412.8 374.8,415.7 442.5,411.3 525.9,423.1" fill="none" stroke="var(--op)" stroke-width="2"/>
+<circle cx="109.8" cy="417.2" r="3.6" fill="var(--op)" stroke="var(--surface)" stroke-width="1.5"><title>부천 42 m</title></circle>
+<circle cx="189.5" cy="414.3" r="3.6" fill="var(--op)" stroke="var(--surface)" stroke-width="1.5"><title>부천 44 m</title></circle>
+<circle cx="282.5" cy="412.8" r="3.6" fill="var(--op)" stroke="var(--surface)" stroke-width="1.5"><title>부천 45 m</title></circle>
+<circle cx="374.8" cy="415.7" r="3.6" fill="var(--op)" stroke="var(--surface)" stroke-width="1.5"><title>부천 43 m</title></circle>
+<circle cx="442.5" cy="411.3" r="3.6" fill="var(--op)" stroke="var(--surface)" stroke-width="1.5"><title>부천 46 m</title></circle>
+<circle cx="525.9" cy="423.1" r="3.6" fill="var(--op)" stroke="var(--surface)" stroke-width="1.5"><title>부천 38 m</title></circle>
+<text class="s-vl" x="588" y="427.7" fill="var(--op)">부천</text>
+<polyline points="109.8,406.9 189.5,398.1 282.5,418.7 374.8,424.6 442.5,423.1 525.9,411.3" fill="none" stroke="var(--ay)" stroke-width="2"/>
+<circle cx="109.8" cy="406.9" r="3.6" fill="var(--ay)" stroke="var(--surface)" stroke-width="1.5"><title>전북 49 m</title></circle>
+<circle cx="189.5" cy="398.1" r="3.6" fill="var(--ay)" stroke="var(--surface)" stroke-width="1.5"><title>전북 56 m</title></circle>
+<circle cx="282.5" cy="418.7" r="3.6" fill="var(--ay)" stroke="var(--surface)" stroke-width="1.5"><title>전북 41 m</title></circle>
+<circle cx="374.8" cy="424.6" r="3.6" fill="var(--ay)" stroke="var(--surface)" stroke-width="1.5"><title>전북 37 m</title></circle>
+<circle cx="442.5" cy="423.1" r="3.6" fill="var(--ay)" stroke="var(--surface)" stroke-width="1.5"><title>전북 38 m</title></circle>
+<circle cx="525.9" cy="411.3" r="3.6" fill="var(--ay)" stroke="var(--surface)" stroke-width="1.5"><title>전북 46 m</title></circle>
+<text class="s-vl" x="588" y="414.7" fill="var(--ay)">전북</text>
+<text class="s-nm" x="0" y="482">대전 vs 안양</text>
+<line x1="70" y1="560.0" x2="580" y2="560.0" stroke="var(--grid)" stroke-width="1"/>
+<text class="s-ax" x="62" y="563.5" text-anchor="end">20m</text>
+<line x1="70" y1="525.0" x2="580" y2="525.0" stroke="var(--grid)" stroke-width="1"/>
+<text class="s-ax" x="62" y="528.5" text-anchor="end">45m</text>
+<line x1="70" y1="490.0" x2="580" y2="490.0" stroke="var(--grid)" stroke-width="1"/>
+<text class="s-ax" x="62" y="493.5" text-anchor="end">70m</text>
+<line x1="335" y1="484" x2="335" y2="560" stroke="var(--axis)" stroke-width="1" stroke-dasharray="2 3"/>
+<line x1="380.2" y1="486" x2="380.2" y2="560" stroke="var(--ay)" stroke-width="1" stroke-opacity=".55"/>
+<path d="M376.2 480 L384.2 480 L380.2 487 z" fill="var(--ay)"/>
+<line x1="418.1" y1="486" x2="418.1" y2="560" stroke="var(--op)" stroke-width="1" stroke-opacity=".55"/>
+<path d="M414.1 480 L422.1 480 L418.1 487 z" fill="var(--op)"/>
+<polyline points="109.8,527.7 189.5,536.5 282.5,529.2 374.8,524.8 442.5,520.4 525.9,532.1" fill="none" stroke="var(--op)" stroke-width="2"/>
+<circle cx="109.8" cy="527.7" r="3.6" fill="var(--op)" stroke="var(--surface)" stroke-width="1.5"><title>안양 43 m</title></circle>
+<circle cx="189.5" cy="536.5" r="3.6" fill="var(--op)" stroke="var(--surface)" stroke-width="1.5"><title>안양 37 m</title></circle>
+<circle cx="282.5" cy="529.2" r="3.6" fill="var(--op)" stroke="var(--surface)" stroke-width="1.5"><title>안양 42 m</title></circle>
+<circle cx="374.8" cy="524.8" r="3.6" fill="var(--op)" stroke="var(--surface)" stroke-width="1.5"><title>안양 45 m</title></circle>
+<circle cx="442.5" cy="520.4" r="3.6" fill="var(--op)" stroke="var(--surface)" stroke-width="1.5"><title>안양 48 m</title></circle>
+<circle cx="525.9" cy="532.1" r="3.6" fill="var(--op)" stroke="var(--surface)" stroke-width="1.5"><title>안양 40 m</title></circle>
+<text class="s-vl" x="588" y="536.1" fill="var(--op)">안양</text>
+<polyline points="109.8,520.4 189.5,504.2 282.5,532.1 374.8,526.3 442.5,536.5 525.9,517.4" fill="none" stroke="var(--ay)" stroke-width="2"/>
+<circle cx="109.8" cy="520.4" r="3.6" fill="var(--ay)" stroke="var(--surface)" stroke-width="1.5"><title>대전 48 m</title></circle>
+<circle cx="189.5" cy="504.2" r="3.6" fill="var(--ay)" stroke="var(--surface)" stroke-width="1.5"><title>대전 60 m</title></circle>
+<circle cx="282.5" cy="532.1" r="3.6" fill="var(--ay)" stroke="var(--surface)" stroke-width="1.5"><title>대전 40 m</title></circle>
+<circle cx="374.8" cy="526.3" r="3.6" fill="var(--ay)" stroke="var(--surface)" stroke-width="1.5"><title>대전 44 m</title></circle>
+<circle cx="442.5" cy="536.5" r="3.6" fill="var(--ay)" stroke="var(--surface)" stroke-width="1.5"><title>대전 37 m</title></circle>
+<circle cx="525.9" cy="517.4" r="3.6" fill="var(--ay)" stroke="var(--surface)" stroke-width="1.5"><title>대전 50 m</title></circle>
+<text class="s-vl" x="588" y="521.4" fill="var(--ay)">대전</text>
+<text class="s-cp" x="70" y="606">▼ 득점(득점 팀 색) · 세로 점선 = 하프타임 · 높이 = 수비 액션 평균 위치, 자기 골문으로부터 거리(105m 환산)</text>
+</svg>
+<figcaption>2026년 2월 28일~3월 2일 K리그1·2 5경기 원시 이벤트 XML, 공격 방향 정규화 후 계산. 구간당 수비 액션 23~78건. 마지막 구간은 추가시간을 포함한다. <b>이 지표는 &ldquo;그 팀이 수비한 높이&rdquo;이면서 동시에 &ldquo;경기가 치러진 높이&rdquo;다</b> &mdash; 상대가 어디서 볼을 가졌는지에 따라 함께 움직이므로, 블록 선택 그 자체와 같지 않다.</figcaption>
+</figure>
+
+<div class="body">
+<p>선이 출렁이는 건 보인다. 그런데 구간당 수비 액션이 수십 건뿐이라 <b>무작위로도 이 정도는 흔들릴 수 있다.</b> 그래서 각 팀의 수비 액션을 구간에 무작위로 다시 섞어 2,000번 계산하고, 실제 폭과 비교했다.</p>
+</div>
+
+<figure>
+<div class="figtitle">흔들림은 우연보다 두 배 크다</div>
+<div class="figsub">팀별 15분 구간 평균 높이의 최대–최소 폭 · 실제 대 무작위로 섞었을 때</div>
+<svg viewBox="0 0 640 356" role="img" aria-label="10개 팀 중 7개 팀에서 경기 중 수비 높이의 폭이 무작위로 섞었을 때보다 컸다. 관측 폭 중앙값 약 23미터, 무작위 약 10미터">
+<line x1="110.0" y1="28" x2="110.0" y2="316" stroke="var(--grid)"/>
+<text class="s-ax" x="110.0" y="332" text-anchor="middle">0 m</text>
+<line x1="270.0" y1="28" x2="270.0" y2="316" stroke="var(--grid)"/>
+<text class="s-ax" x="270.0" y="332" text-anchor="middle">10 m</text>
+<line x1="430.0" y1="28" x2="430.0" y2="316" stroke="var(--grid)"/>
+<text class="s-ax" x="430.0" y="332" text-anchor="middle">20 m</text>
+<line x1="590.0" y1="28" x2="590.0" y2="316" stroke="var(--grid)"/>
+<text class="s-ax" x="590.0" y="332" text-anchor="middle">30 m</text>
+<text class="s-ax" x="590.0" y="348" text-anchor="end">15분 구간 평균 높이의 최대–최소 폭</text>
+<text class="s-ax" x="600" y="16" text-anchor="end">p (순열 2,000회)</text>
+<text class="s-nm" x="100" y="44" text-anchor="end">서울E</text>
+<line x1="278.0" y1="40" x2="546.8" y2="40" stroke="var(--ay)" stroke-width="2"/>
+<circle cx="278.0" cy="40" r="4.5" fill="var(--surface)" stroke="var(--op)" stroke-width="2"><title>무작위 중앙값 10.5 m</title></circle>
+<circle cx="546.8" cy="40" r="5" fill="var(--ay)"><title>관측 27.3 m</title></circle>
+<text class="s-vl" x="600" y="44" text-anchor="end" fill="var(--ay)">&lt;.001</text>
+<text class="s-nm" x="100" y="70" text-anchor="end">서울</text>
+<line x1="278.0" y1="66" x2="538.4" y2="66" stroke="var(--ay)" stroke-width="2"/>
+<circle cx="278.0" cy="66" r="4.5" fill="var(--surface)" stroke="var(--op)" stroke-width="2"><title>무작위 중앙값 10.5 m</title></circle>
+<circle cx="538.4" cy="66" r="5" fill="var(--ay)"><title>관측 26.8 m</title></circle>
+<text class="s-vl" x="600" y="70" text-anchor="end" fill="var(--ay)">.002</text>
+<text class="s-nm" x="100" y="96" text-anchor="end">수원</text>
+<line x1="301.5" y1="92" x2="496.4" y2="92" stroke="var(--ay)" stroke-width="2"/>
+<circle cx="301.5" cy="92" r="4.5" fill="var(--surface)" stroke="var(--op)" stroke-width="2"><title>무작위 중앙값 12.0 m</title></circle>
+<circle cx="496.4" cy="92" r="5" fill="var(--ay)"><title>관측 24.2 m</title></circle>
+<text class="s-vl" x="600" y="96" text-anchor="end" fill="var(--ay)">.004</text>
+<text class="s-nm" x="100" y="122" text-anchor="end">김천</text>
+<line x1="271.3" y1="118" x2="489.7" y2="118" stroke="var(--ay)" stroke-width="2"/>
+<circle cx="271.3" cy="118" r="4.5" fill="var(--surface)" stroke="var(--op)" stroke-width="2"><title>무작위 중앙값 10.1 m</title></circle>
+<circle cx="489.7" cy="118" r="5" fill="var(--ay)"><title>관측 23.7 m</title></circle>
+<text class="s-vl" x="600" y="122" text-anchor="end" fill="var(--ay)">.002</text>
+<text class="s-nm" x="100" y="148" text-anchor="end">포항</text>
+<line x1="271.3" y1="144" x2="477.9" y2="144" stroke="var(--ay)" stroke-width="2"/>
+<circle cx="271.3" cy="144" r="4.5" fill="var(--surface)" stroke="var(--op)" stroke-width="2"><title>무작위 중앙값 10.1 m</title></circle>
+<circle cx="477.9" cy="144" r="5" fill="var(--ay)"><title>관측 23.0 m</title></circle>
+<text class="s-vl" x="600" y="148" text-anchor="end" fill="var(--ay)">.001</text>
+<text class="s-nm" x="100" y="174" text-anchor="end">대전</text>
+<line x1="278.0" y1="170" x2="467.8" y2="170" stroke="var(--ay)" stroke-width="2"/>
+<circle cx="278.0" cy="170" r="4.5" fill="var(--surface)" stroke="var(--op)" stroke-width="2"><title>무작위 중앙값 10.5 m</title></circle>
+<circle cx="467.8" cy="170" r="5" fill="var(--ay)"><title>관측 22.4 m</title></circle>
+<text class="s-vl" x="600" y="174" text-anchor="end" fill="var(--ay)">.002</text>
+<text class="s-nm" x="100" y="200" text-anchor="end">전북</text>
+<line x1="291.4" y1="196" x2="417.4" y2="196" stroke="var(--ay)" stroke-width="2"/>
+<circle cx="291.4" cy="196" r="4.5" fill="var(--surface)" stroke="var(--op)" stroke-width="2"><title>무작위 중앙값 11.3 m</title></circle>
+<circle cx="417.4" cy="196" r="5" fill="var(--ay)"><title>관측 19.2 m</title></circle>
+<text class="s-vl" x="600" y="200" text-anchor="end" fill="var(--ay)">.042</text>
+<text class="s-nm" x="100" y="226" text-anchor="end">인천</text>
+<line x1="283.0" y1="222" x2="400.6" y2="222" stroke="var(--axis)" stroke-width="2"/>
+<circle cx="283.0" cy="222" r="4.5" fill="var(--surface)" stroke="var(--op)" stroke-width="2"><title>무작위 중앙값 10.8 m</title></circle>
+<circle cx="400.6" cy="222" r="5" fill="var(--axis)"><title>관측 18.2 m</title></circle>
+<text class="s-vl" x="600" y="226" text-anchor="end" fill="var(--muted)">.059</text>
+<text class="s-nm" x="100" y="252" text-anchor="end">안양</text>
+<line x1="257.8" y1="248" x2="298.2" y2="248" stroke="var(--axis)" stroke-width="2"/>
+<circle cx="257.8" cy="248" r="4.5" fill="var(--surface)" stroke="var(--op)" stroke-width="2"><title>무작위 중앙값 9.2 m</title></circle>
+<circle cx="298.2" cy="248" r="5" fill="var(--axis)"><title>관측 11.8 m</title></circle>
+<text class="s-vl" x="600" y="252" text-anchor="end" fill="var(--muted)">.222</text>
+<text class="s-nm" x="100" y="278" text-anchor="end">부천</text>
+<line x1="276.3" y1="274" x2="237.7" y2="274" stroke="var(--axis)" stroke-width="2"/>
+<circle cx="276.3" cy="274" r="4.5" fill="var(--surface)" stroke="var(--op)" stroke-width="2"><title>무작위 중앙값 10.4 m</title></circle>
+<circle cx="237.7" cy="274" r="5" fill="var(--axis)"><title>관측 8.0 m</title></circle>
+<text class="s-vl" x="600" y="278" text-anchor="end" fill="var(--muted)">.731</text>
+<circle cx="8" cy="342" r="4.5" fill="var(--surface)" stroke="var(--op)" stroke-width="2"/><text class="s-cp" x="18" y="346">무작위로 섞었을 때</text>
+<circle cx="138" cy="342" r="5" fill="var(--ay)"/><text class="s-cp" x="148" y="346">실제 (p&lt;.05)</text>
+</svg>
+<figcaption>순열 검정 2,000회(SEED 202). 실제 폭 중앙값 약 23 m, 무작위 중앙값 약 10 m. <b>10팀 중 7팀이 p&lt;.05</b>, 10팀을 합친 검정은 p=.0005. 다만 같은 경기 안의 구간은 서로 독립이 아니고, 5경기·10팀은 &ldquo;검정&rdquo;이 아니라 &ldquo;관찰&rdquo; 규모다.</figcaption>
+</figure>
+
+<div class="body">
+<p>수비 높이는 경기 안에서 실제로 움직인다. 그러면 자연스럽게 따라오는 가설이 있다 &mdash; <em>앞서면 내려앉고, 뒤지면 올라간다.</em> 실제로 몇몇 경기는 그렇게 보인다. 서울이 2-0으로 앞서자 서울의 높이는 내려가고 인천은 올라갔다. 수원도 역전 후 마지막 구간에서 내려갔다.</p>
+<p>그런데 5경기를 모두 모아 스코어 상태별로 나눠 보면 이렇게 된다.</p>
+</div>
+
+<figure>
+<div class="figtitle">스코어로는 설명되지 않았다</div>
+<div class="figsub">스코어 상태별 수비 높이 &mdash; 각 팀 자체 평균 대비 차이</div>
+<svg viewBox="0 0 640 196" role="img" aria-label="스코어 상태별로 수비 높이의 평균 차이는 1~2미터에 불과해, 경기 중 20미터가 넘는 움직임을 설명하지 못한다">
+<line x1="330.0" y1="24" x2="330.0" y2="128" stroke="var(--ink-2)" stroke-width="1.4"/>
+<line x1="130.0" y1="24" x2="130.0" y2="128" stroke="var(--grid)"/>
+<line x1="230.0" y1="24" x2="230.0" y2="128" stroke="var(--grid)"/>
+<line x1="430.0" y1="24" x2="430.0" y2="128" stroke="var(--grid)"/>
+<line x1="530.0" y1="24" x2="530.0" y2="128" stroke="var(--grid)"/>
+<text class="s-ax" x="130.0" y="146" text-anchor="middle">−20 m</text>
+<text class="s-ax" x="230.0" y="146" text-anchor="middle">−10 m</text>
+<text class="s-ax" x="330.0" y="146" text-anchor="middle">0 m</text>
+<text class="s-ax" x="430.0" y="146" text-anchor="middle">+10 m</text>
+<text class="s-ax" x="530.0" y="146" text-anchor="middle">+20 m</text>
+<rect x="216.5" y="24" width="227.0" height="104" fill="var(--ay-soft)"/>
+<text class="s-cp" x="330.0" y="16" text-anchor="middle" fill="var(--ay)">보라 띠 = 경기 중 실제 움직임 폭 (중앙값 약 23 m)</text>
+<text class="s-nm" x="206.5" y="52" text-anchor="end">앞서는 구간</text>
+<rect x="318.4" y="41" width="11.6" height="14" fill="var(--op)"/>
+<text class="s-vl" x="338.0" y="52" fill="var(--ink-2)">−1.2 m · 12구간</text>
+<text class="s-nm" x="206.5" y="84" text-anchor="end">동점 구간</text>
+<rect x="328.9" y="73" width="1.5" height="14" fill="var(--op)"/>
+<text class="s-vl" x="338.0" y="84" fill="var(--ink-2)">−0.1 m · 36구간</text>
+<text class="s-nm" x="206.5" y="116" text-anchor="end">뒤지는 구간</text>
+<rect x="330.0" y="105" width="15.8" height="14" fill="var(--op)"/>
+<text class="s-vl" x="353.8" y="116" fill="var(--ink-2)">+1.6 m · 12구간</text>
+<text class="s-ax" x="530.0" y="166" text-anchor="end">팀 자체 평균 대비 차이 (+ = 더 높이)</text>
+<text class="s-cp" x="0" y="188">스코어로 나눈 차이는 1~2 m다. 23 m짜리 움직임을 설명하지 못한다.</text>
+</svg>
+<figcaption>구간 중간 시점의 스코어로 상태를 붙였다. 득점이 15개뿐이라 앞서거나 뒤진 구간이 각 12개에 불과하다. 코치들이 말하는 &ldquo;리드하면 내려앉는다&rdquo;를 부정하는 결과가 아니라, <b>이 5경기에서 평균으로는 보이지 않았다</b>는 결과다.</figcaption>
+</figure>
+
+<div class="note"><b>그래서 알게 된 것 —</b> 높이는 움직인다. 그런데 그 이유는 스코어 하나가 아니다. 체력, 시간, 교체, 상대의 변화, 경기 흐름이 섞여 있다. <b>선수 입장에서 중요한 것은 이유가 아니라 결과다</b> &mdash; 같은 경기 안에서 자기가 볼을 받는 높이와 상대의 압박 거리가 수십 미터씩 바뀐다는 것.</div>
+</section>
+
+<!-- 6 -->
+<section>
+<div class="eyebrow"><span class="role">곱하기</span><span class="cap">네 균열을 합치면</span></div>
+<h2>한 선수가 마주하는 맥락의 수</h2>
+<div class="body">
+<p class="lede">네 균열은 더해지는 게 아니라 <b>곱해진다.</b> 형태가 둘이면 받는 자리가 둘이고, 거기에 상대 블록이 셋이고, 그 높이가 경기 중에 움직인다.</p>
+<p>풀백 한 명을 예로, 받는 높이와 상대 수비의 조합을 격자로 펼쳐 보면 이렇다.</p>
+</div>
+
+<figure>
+<div class="figtitle">전통 풀백과 인버티드 풀백이 한 경기에서 방문하는 칸</div>
+<div class="figsub">볼을 받는 높이 × 그 순간 상대의 수비 &mdash; 칸마다 온더볼 문제가 다르다</div>
+<div class="g3">
+  <div class="hd"></div><div class="hd">상대 하이프레스</div><div class="hd">상대 미드블록</div><div class="hd">상대 로우블록</div>
+  <div class="rh">수비 서드</div>
+  <div class="c v"><span><b>등 뒤에 사람</b> · 첫 터치로 벗겨야 한다</span><span><span class="tg t">전통</span><span class="tg i">인버티드</span></span></div>
+  <div class="c v"><span><b>시간은 있다</b> · 선을 넘는 패스나 운반</span><span><span class="tg i">인버티드</span></span></div>
+  <div class="c"><span><b>아무도 안 온다</b> · 스텝인으로 끌어내야 한다</span></div>
+  <div class="rh">중앙 서드</div>
+  <div class="c v"><span><b>등진 채 사방이 사람</b> · 좁은 공간 턴</span><span><span class="tg i">인버티드</span></span></div>
+  <div class="c v"><span><b>블록 앞</b> · 방향 전환 후 전진</span><span><span class="tg t">전통</span><span class="tg i">인버티드</span></span></div>
+  <div class="c v"><span><b>하프스페이스</b> · 좁은 틈으로 전진</span><span><span class="tg i">인버티드</span></span></div>
+  <div class="rh">공격 서드</div>
+  <div class="c"><span><b>재탈취 직후</b> · 역압박 속 첫 동작</span></div>
+  <div class="c"><span><b>측면 1v1</b> · 크로스 각도 만들기</span><span><span class="tg t">전통</span></span></div>
+  <div class="c v"><span><b>박스 앞 밀집</b> · 컷인이나 컷백</span><span><span class="tg i">인버티드</span></span></div>
+</div>
+<figcaption><b>개념 도해이며 측정값이 아니다.</b> 칸의 배치와 방문 여부는 전형적인 역할 설명을 옮긴 것이다. 전통 풀백은 3칸, 인버티드 풀백은 6칸(보라 배경). 포지션별 기본기 훈련은 대개 전통 칸 한두 개의 문제를 반복하도록 설계돼 있다.</figcaption>
+</figure>
+
+<div class="pull">포지션 이름은 하나인데, 풀어야 할 온더볼 문제는 여섯 개다.</div>
+</section>
+
+<!-- 7 -->
+<section>
+<div class="eyebrow"><span class="role">반론</span><span class="cap">그러면 기술을 늘리면 되지 않나</span></div>
+<h2>맥락마다 기술을 하나씩 만들 수 있는가</h2>
+<div class="body">
+<p class="lede">자연스러운 답은 이렇다. 칸이 여섯 개면, 칸마다 맞는 기술을 하나씩 가르치면 된다. 등진 턴 하나, 블록 앞 방향 전환 하나, 하프스페이스 전진 하나.</p>
+<p>문제는 두 가지다.</p>
+<p><b>첫째, 과제가 바뀌면 동작이 바뀐다.</b> Horst와 동료들(2020)은 십종경기 선수 7명의 투척 동작으로 사람을 맞히는 실험을 했다. 같은 종목 안에서는 몸의 지문이 선명했지만, <b>다른 종목의 동작만으로 그 선수를 맞힌 비율은 최대 52.6%</b>였다. 반면 어느 종목의 동작인지는 100% 맞혔다. 과제가 동작의 모양을 크게 바꾼다는 뜻이다. 칸마다 기술을 따로 만들면, 그 여섯 개를 <b>각각</b> 자동화 단계까지 끌어올려야 한다.</p>
+<p><b>둘째, 급할 때는 하나만 나온다.</b> 1편의 결론이다 &mdash; 압박이 걸리면 명시적으로 배운 동작은 의식 통제로 되돌아가 무너지고, 몸이 가장 싸다고 판단한 동작이 올라온다. 여섯 개의 기술 중 압박 속에서 실제로 꺼내 쓸 수 있는 것은 <b>몸에 가장 깊이 밴 하나</b>다.</p>
+</div>
+
+<figure>
+<div class="figtitle">과제가 가져가는 몫, 사람이 들고 가는 몫</div>
+<div class="figsub">움직임 데이터로 &ldquo;무엇을 했는가&rdquo;와 &ldquo;누가 했는가&rdquo;를 맞힌 비율</div>
+<div class="legend"><span><i style="background:var(--op)"></i>과제를 맞힘</span><span><i style="background:var(--ay)"></i>사람을 맞힘</span></div>
+<div class="bars lbwrap">
+  <div class="br"><div class="lb">어떤 종목의 동작인가</div><div class="tk"><div class="fl" style="width:100%"></div></div><div class="vl">100%</div></div>
+  <div class="br hi"><div class="lb">다른 종목 동작으로 누구인가</div><div class="tk"><div class="fl" style="width:52.6%"></div></div><div class="vl">≤52.6%</div></div>
+  <div class="br hi"><div class="lb">피로 606회 뒤 누구인가</div><div class="tk"><div class="fl" style="width:100%"></div></div><div class="vl">100%</div></div>
+</div>
+<figcaption>위 두 줄: Horst et al.(2020), 십종경기 선수 7명, 포환·원반·창 57회 투척, 훈련에 쓰지 않은 종목으로 검증. 아래 줄: Burdack et al.(2020), 가라테 숙련자 16명, 같은 과제의 앞차기 606회 &mdash; 피로가 쌓여도 개인 식별은 100%로 유지됐다. <b>둘 다 폐쇄 기술이고 축구 온더볼이 아니다.</b></figcaption>
+</figure>
+
+<div class="body">
+<p>이 두 결과를 겹치면 답이 나온다. 과제가 바뀌면 동작의 절반 가까이가 바뀐다. <b>나머지 절반은 사람이 들고 간다</b> &mdash; 피로가 쌓여도, 과제가 바뀌어도 사라지지 않는 그 사람만의 움직임이다.</p>
+<p>그 들고 가는 절반이 Signature Move다.</p>
+</div>
+</section>
+
+<!-- 8 -->
+<section>
+<div class="eyebrow"><span class="role">결론</span><span class="cap">왜 필연인가</span></div>
+<h2>맥락을 건너는 것은 기술이 아니라 사람이다</h2>
+<div class="body">
+<p class="lede">정리하면 이렇다.</p>
+</div>
+
+<figure>
+<div class="figtitle">네 개의 균열, 두 개의 길</div>
+<div class="figsub">늘어난 맥락을 무엇으로 감당하는가</div>
+<svg viewBox="0 0 640 300" role="img" aria-label="사람이 붙는 자리의 이동, 두 개의 형태, 여러 블록, 경기 중 높이 변화가 겹쳐 한 선수가 마주하는 맥락을 늘리고, 이를 맥락마다 기술을 만들어 감당하는 길은 급할 때 비싸지며, 맥락을 건너는 하나의 동작이 남는다">
+  <defs><marker id="p2b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--ink-2)"/></marker></defs>
+  <g font-family="IBM Plex Sans KR,sans-serif">
+    <rect x="0" y="16" width="176" height="42" rx="3" fill="var(--raise)" stroke="var(--line)"/>
+    <text class="s-nm" x="12" y="42">사람이 붙는 자리가 뒤로</text>
+    <rect x="0" y="72" width="176" height="42" rx="3" fill="var(--raise)" stroke="var(--line)"/>
+    <text class="s-nm" x="12" y="98">한 선수, 두 개의 형태</text>
+    <rect x="0" y="128" width="176" height="42" rx="3" fill="var(--raise)" stroke="var(--line)"/>
+    <text class="s-nm" x="12" y="154">한 경기, 여러 블록</text>
+    <rect x="0" y="184" width="176" height="42" rx="3" fill="var(--raise)" stroke="var(--line)"/>
+    <text class="s-nm" x="12" y="210">높이가 경기 중 움직인다</text>
+  </g>
+  <g stroke="var(--ink-2)" stroke-width="1.4" fill="none">
+    <path d="M176 37 L214 37 L214 110 L230 110" marker-end="url(#p2b)"/>
+    <path d="M176 93 L214 93"/>
+    <path d="M176 149 L214 149"/>
+    <path d="M176 205 L214 205 L214 132 L230 132" marker-end="url(#p2b)"/>
+  </g>
+  <rect x="234" y="88" width="156" height="66" rx="3" fill="var(--surface-2)" stroke="var(--ink-2)" stroke-width="1.4"/>
+  <text class="s-nm" x="312" y="114" text-anchor="middle" fill="var(--ink)">한 선수가 마주하는</text>
+  <text class="s-nm" x="312" y="134" text-anchor="middle" fill="var(--ink)">맥락 × N</text>
+  <g stroke="var(--ink-2)" stroke-width="1.4" fill="none">
+    <path d="M390 108 L420 108 L420 60 L436 60" marker-end="url(#p2b)"/>
+    <path d="M390 134 L420 134 L420 184 L436 184" marker-end="url(#p2b)"/>
+  </g>
+  <rect x="440" y="24" width="200" height="72" rx="3" fill="var(--surface)" stroke="var(--op)" stroke-width="1.6"/>
+  <text class="s-nm" x="452" y="46" fill="var(--op)">맥락마다 기술 하나씩</text>
+  <text class="s-cp" x="452" y="66">N개를 각각 자동화해야 한다</text>
+  <text class="s-cp" x="452" y="84">급할 때는 비싸고, 하나만 나온다</text>
+  <rect x="440" y="148" width="200" height="72" rx="3" fill="var(--ay-soft)" stroke="var(--ay)" stroke-width="2"/>
+  <text class="s-nm" x="452" y="170" fill="var(--ay)">맥락을 건너는 동작 하나</text>
+  <text class="s-cp" x="452" y="190">피로·과제가 바뀌어도 남는 절반</text>
+  <text class="s-cp" x="452" y="208">= Signature Move</text>
+  <text class="s-cp" x="0" y="262">포지션이 맥락을 정해 주던 시대에는 포지션별 기본기로 충분했다.</text>
+  <text class="s-cp" x="0" y="280">맥락이 경기 안에서 늘어나는 시대에는, 맥락을 건너 들고 갈 수 있는 것이 필요하다.</text>
+</svg>
+<figcaption>논증의 구조도. 네 균열 중 측정으로 뒷받침되는 것은 골킥 압박의 증가, 풀백·골키퍼의 역할 이동, 한 경기 안 국면의 혼합, 경기 중 수비 높이의 이동(K리그 관찰)이다. &ldquo;맥락 × N&rdquo;의 N은 측정된 값이 아니다.</figcaption>
+</figure>
+
+<div class="body">
+<p>포지션이 맥락을 정해 주던 시대에는 포지션별 기본기로 충분했다. 센터백은 센터백의 문제만 풀면 됐다. 지금은 센터백이 골킥 순간 사람에게 잡히고, 풀백이 미드필더의 자리에서 등지고 받고, 같은 90분 안에 상대의 블록이 두세 번 바뀐다.</p>
+<p>그 늘어난 맥락을 <b>기술의 개수로 메우는 길</b>은 두 번 막힌다. 과제가 바뀌면 동작이 바뀌어서 여섯 개를 각각 새로 굳혀야 하고, 급할 때는 그중 하나만 나온다.</p>
+<p>남는 길은 하나다. <b>맥락을 건너 들고 갈 수 있는, 그 선수 몸에 가장 깊이 밴 동작 하나.</b> 그래서 나는 Signature Move를 크랙의 장식이 아니라, 모든 선수에게 필요한 현대 축구의 기본 장비라고 생각한다.</p>
+</div>
+
+<div class="instr">
+  <div class="n">→</div>
+  <div>
+    <h3>육성에서 바뀌어야 하는 것 하나</h3>
+    <p><b>포지션을 경험시키지 말고, 맥락을 경험시켜라.</b></p>
+    <p>같은 선수에게 등진 채 받는 칸, 블록 앞에서 받는 칸, 사람이 붙는 칸을 모두 겪게 하고 &mdash; 1편의 경계선대로 &ldquo;어디로 가야 하는가&rdquo;(L3)는 칸마다 바꿔 주되 &ldquo;어떻게 가는가&rdquo;(L4)는 지정하지 않는다. 그러면 여러 칸에서 <b>반복해서 나오는 그 선수만의 동작</b>이 보이기 시작한다. 그게 길러야 할 것이다.</p>
+    <div class="ev">⚠ 이 처방은 논증에서 나온 것이지 검정된 것이 아니다. 맥락을 섞어 경험시킨 집단이 압박 하에서 더 강한지는 아직 아무도 재지 않았다.</div>
+  </div>
+</div>
+</section>
+
+<!-- 9 -->
+<section>
+<div class="eyebrow"><span class="role">유보</span><span class="cap">이 글이 말하지 못하는 것</span></div>
+<h2>과장하지 않기 위해 적어 두는 것</h2>
+<div class="body">
+<p class="lede">이 글은 필연을 주장하지만, 그 필연을 이루는 고리 중 몇 개는 측정이 아니라 추론이다. 구분해서 적는다.</p>
+</div>
+<ul class="clean">
+  <li><b>맨마킹의 총량이 늘었다는 근거는 없다.</b> 압박 계열 국면은 비보유 시간의 약 19%이고, 존 마킹이 여전히 기본값이라는 서술도 많다. 이 글이 말하는 것은 총량이 아니라 <b>사람이 붙는 위치</b>의 이동이다.</li>
+  <li><b>블록을 섞는 것이 이득이라는 근거도 없다.</b> 월드컵 2026에서 로우블록의 모양과 승리의 상관은 &minus;0.13~+0.17로 거의 없었다. 이 글은 섞는 것이 좋다고 말하지 않는다 &mdash; 섞이고 있고, 선수가 그것을 감당해야 한다고 말한다.</li>
+  <li><b>경기 중 높이 변화는 K리그 5경기 관찰이다.</b> 지표는 블록 선택이 아니라 경기가 치러진 높이를 함께 담고 있고, 스코어 상태로는 설명되지 않았다.</li>
+  <li><b>&ldquo;맥락 × N&rdquo;과 풀백 격자는 개념 도해다.</b> 한 선수가 한 경기에서 실제로 몇 개의 맥락을 방문하는지는 트래킹 없이는 잴 수 없다.</li>
+  <li><b>과제 간 이전(52.6%)은 십종경기 7명의 폐쇄 기술에서 나왔다.</b> 축구 온더볼에서 같은 비율이 나온다는 근거는 없다.</li>
+</ul>
+<div class="strip">
+  <div><div class="k">측정으로 뒷받침</div><div class="v" style="color:var(--top)">4</div><div class="s">골킥 압박 증가 · 풀백·GK 역할 이동 · 한 경기 안 국면 혼합 · 경기 중 높이 이동</div></div>
+  <div><div class="k">정정한 것</div><div class="v" style="color:var(--bad)">1</div><div class="s">&ldquo;맨마킹이 표준이 됐다&rdquo; &rarr; 사람이 붙는 위치가 뒤로 왔다</div></div>
+  <div><div class="k">추론</div><div class="v" style="color:var(--bad)">2</div><div class="s">맥락의 곱 · 맥락을 경험시키는 육성이 더 강하다</div></div>
+</div>
+</section>
+
+<!-- 10 -->
+<section>
+<div class="eyebrow"><span class="role">닫으며</span><span class="cap">1편과 2편을 잇는 한 문장</span></div>
+<h2>포지션은 맥락을 더 이상 정해 주지 않는다</h2>
+<div class="body">
+<p class="lede">1편은 <b>급할 때는 몸이 가장 싸다고 판단한 동작이 나온다</b>고 말했다. 2편은 <b>현대 축구가 그 급한 순간을 더 많은 맥락에서, 더 자주 만든다</b>고 말한다.</p>
+<p>둘을 합치면, 포지션별 기본기로 준비된 선수는 자기 포지션의 칸 밖에서 급해질 때 &mdash; 그리고 그런 순간은 점점 늘어난다 &mdash; 꺼낼 것이 없다. 반대로 맥락을 건너 들고 다닐 수 있는 동작 하나를 가진 선수는, 어느 칸에서 급해지든 같은 것을 꺼낸다.</p>
+<p>크랙이 아니어도 된다. 하나면 된다. 다만 그 하나는 <b>그 선수의 몸에서 나와야 하고, 여러 맥락에서 살아남아야 한다.</b></p>
+</div>
+<div class="pull">포지션은 더 이상 맥락을 정해 주지 않는다. 그래서 맥락을 건너는 것은 사람이어야 한다.</div>
+</section>
+
+</div>
+
+<footer><div class="wrap">
+<b>데이터</b> · 월드컵 2026 104경기 FIFA 공식 경기 보고서(PMSR) 파싱, 208 팀-경기의 Phases of Play. K리그1·2 5경기(2026년 2월 28일~3월 2일) 원시 이벤트 XML 직접 파싱, 수비 액션 2,607건, 공격 방향 정규화(슈팅 평균 위치로 방향 검증). 순열 검정 2,000회, SEED 202.<br>
+<b>문헌</b> · FIFA 기술연구그룹 클럽월드컵 2025 보고서(하이프레스 · 인버티드 풀백 · 글로벌 트렌드) · FIFA 월드컵 2026 역압박·골키퍼 배급 분석 · FIFA 카타르 2022 기술·전술 개관 · CoachesVoice InFocus 하이프레스 · FIFA 올림픽 2024 모로코 분석 · Horst et al.(2020) <i>Front Psychol</i> 11 · Burdack et al.(2020) <i>Front Psychol</i> 11. FIFA·CoachesVoice 수치는 wiki 인제스트 문서 기준이다.<br>
+<b>한계</b> · 월드컵 국면 비율은 90분 합계라 전환 시점을 알 수 없다. K리그 수비 높이는 블록 선택과 경기가 치러진 위치가 섞인 대리 지표이며 5경기는 관찰 규모다. 풀백 격자와 &ldquo;맥락 × N&rdquo;은 개념 도해다.<br>
+<b>연재</b> · 1편 「급할 때 나오는 것」 &mdash; 탈압박의 역학과 실행 비용 · 2편 「한 경기 안의 여러 축구」<br>
+<b>작성</b> · 한혁진 · 2026년 9월
+</div></footer>
+</body>
+</html>
