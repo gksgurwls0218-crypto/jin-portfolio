@@ -33,6 +33,56 @@ type Episode = {
 
 const EPISODES: Episode[] = [
   {
+    slug: "bucheon",
+    no: "13",
+    publishedAt: "2026-09-21",
+    competition: {
+      en: "K League 1 2026 · Bucheon FC 1995 · 29 matches, 39,033 events",
+      ko: "하나은행 K리그1 2026 · 부천FC · 29경기 · 이벤트 39,033건",
+    },
+    title: {
+      en: "Once Caught, Never Ahead Again",
+      ko: "한 번 따라잡히면 다시 앞서지 못했다",
+    },
+    sub: {
+      en: "Bucheon took the lead in 14 of their 29 matches, and seven of those leads were wiped out. Not once did they go back in front afterwards — 0 wins, 5 draws, 2 defeats, 16 points gone — and the only comeback win of the season came on the opening day. The table flatters them: expected goal difference is −18.3 against an actual −7, and the 11.5-goal defensive overperformance does not belong to the goalkeepers (save rates 70.1% and 72.2%) or to the structure (Anyang, parsed through the same pipeline, suppress shots as well and finish −3.3). A 200,000-run simulation is narrowly significant on 28 matches, but the portal is missing the 0–5 defeat at Daejeon; restore it and p rises to 0.11. The attack shoots well once it arrives — 13.21 shots per 100 final-third passes, best of four groups — but arrives 22.2 times a match against 33.2, and half the entry gap is one cell: 33.8 mid-range forward passes a match against 63.5. The centre was never closed. A short pass into it succeeds 78.0% of the time against 79.7%, yet only 17.2% of central entries use it; long balls and free kicks, completing 19% and 18%, fill the rest. Leaning left costs nothing — wide conversion is higher than the opposition’s — and the whole xG-per-shot gap sits after recoveries, taken from further out (0.0848 against 0.1182). Level, they are outplayed two to one on xG. Five hypotheses were rejected along the way, all mine, including a baseline error I corrected in the text.",
+      ko: "부천은 29경기 중 14경기에서 리드를 잡았고, 그중 7경기에서 리드가 지워졌다. 지워진 뒤 다시 앞선 경기는 한 번도 없다 — 0승 5무 2패, 승점 16점이 사라졌고, 시즌 유일한 역전승은 개막전이다. 순위표는 이 팀을 실제보다 좋게 보여준다. 기대 득실차 −18.3, 실제 −7. 수비 초과 11.5골은 골키퍼(선방률 70.1%·72.2%)의 것도, 구조의 것도 아니다 — 같은 파이프라인으로 파싱한 안양은 비슷한 억제력으로 −3.3이다. 20만 번 시뮬레이션은 28경기에서 아슬아슬하게 유의하지만, 포털에 0-5 대전전이 빠져 있고 이를 되돌리면 p=0.11이다. 공격은 도착하면 잘 쏜다 — 공격진영 패스 100회당 13.21개, 네 집단 최고. 그러나 도착이 경기당 22.2회 대 33.2회이고, 진입 격차의 절반이 중거리 전진 패스 한 칸이다(경기당 33.8 대 63.5). 중앙은 막혀 있지 않았다. 숏패스로 넣으면 78.0%로 상대(79.7%)와 같은데, 중앙 진입의 17.2%만 이 방법이고 나머지를 성공률 19%·18%의 롱패스와 프리킥이 채운다. 왼쪽 편중은 손해가 아니고, 슛당 xG 격차는 전부 회수 뒤 멀리서 쏘는 한 칸이다(0.0848 대 0.1182). 동점 상태에서는 xG가 두 배로 밀린다. 가설 다섯 개가 기각됐고 전부 내 것이다 — 본문에서 정정한 기준선 오류 하나를 포함해.",
+    },
+    blurb: {
+      en: "Fourteen leads, seven wiped out, none regained. The table flatters them by 11 goals, the centre was never closed — short passes into it work as well as anyone’s — and Bucheon simply rarely play them.",
+      ko: "리드 14번, 그중 7번이 지워졌고 되찾은 적이 없다. 순위표는 11골만큼 이 팀을 좋게 보여주고, 중앙은 막혀 있지 않았다 — 숏패스로 넣으면 상대만큼 통하는데, 부천은 그 방법을 거의 쓰지 않는다.",
+    },
+    stats: {
+      en: [["14 → 7 → 0", "leads taken, wiped out, regained"], ["−18.3 : −7", "expected and actual goal difference"], ["78.0% : 79.7%", "short passes into the centre, completed"]],
+      ko: [["14 → 7 → 0", "잡은 리드 · 지워진 리드 · 되찾은 리드"], ["−18.3 : −7", "기대 득실차와 실제 득실차"], ["78.0% : 79.7%", "중앙 숏패스 진입 성공률"]],
+    },
+  },
+  {
+    slug: "anyang",
+    no: "12",
+    publishedAt: "2026-09-19",
+    competition: {
+      en: "K League 1 2026 · FC Anyang · 29 matches, 41,111 events",
+      ko: "하나은행 K리그1 2026 · 안양FC · 29경기 · 이벤트 41,111건",
+    },
+    title: {
+      en: "Where the Ball Stops",
+      ko: "공은 어디서 멈추는가",
+    },
+    sub: {
+      en: "Anyang have scored 36 and conceded 46 in 29 matches, and the −10 is almost exactly what their chances say it should be: −9.8 on expected goals. Neither luck nor finishing explains it, and effectively all of it was created in open play — the set-piece ledger is level, 7 to 6. The shot count is 281 to 391, but change the denominator and it reverses: per 100 passes made in the final third Anyang take 11.27 shots against 10.45, with a marginally higher xG per shot. The deficit is territory, not execution. Split into eight phases, it has a precise address. Build-up is level with the opposition (80.4% against 80.0% completion, 22.6% against 22.8% own-third exits) and losing the ball is close to harmless (30 of 2,421 turnovers led to a shot within 15 seconds). The gap opens in phase 2: 11.0% of middle-third passes reach the final third against 12.6%, and 11.3% return to their own third against 8.5% — a pattern that holds under alternative zone boundaries. It compounds in phase 3, where entries fall to 23.9 per match against 32.5, 74% of the opposition rate. The cause is not the defenders, who match their opponents for wide attacking touches (10.3% against 10.6%), but the central midfielders: only Matheus clears 10%, at 21.6%, against 5.1%, 8.3% and 3.1% for the other three. Up front the fixable point is his distribution — passes played forward convert to a shot 32.4% of the time against 6.6% backward (z = 3.31, p = 0.0009) — yet his most-used outlet is the one returning 7.4%. Downstream, corners run 90 to 147 and only 31% of first contacts at their own corners are won, because no registered forward reaches 185cm; the 189cm striker signed in January specifically for aerial presence played 860 minutes, was on the pitch for 29% of the team’s corners, and did not appear after round 23. Six hypotheses were rejected or downgraded along the way, five of them mine, including a sample-size bias that had made the front line look more patterned than this data can establish. Four matches close it out, picked by number rather than impression.",
+      ko: "안양FC는 29경기에서 36골을 넣고 46골을 내줬다. 득실차 −10은 기대 득실차 −9.8과 거의 같다. 운으로도 마무리로도 설명되지 않고, 그 전부가 사실상 오픈플레이에서 생겼다 — 세트피스 득실은 7 대 6으로 균형이다. 슛은 281 대 391로 밀리는데 분모를 바꾸면 뒤집힌다. 공격진영 패스 100회당 슛이 11.27 대 10.45이고, 슛당 xG도 약간 높다. 부족한 것은 마무리가 아니라 영토다. 여덟 국면으로 쪼개면 주소가 분명해진다. 빌드업은 상대와 차이가 없고(패스 성공률 80.4% 대 80.0%, 자기진영 탈출률 22.6% 대 22.8%), 공을 잃어도 위험으로 이어지지 않는다(상실 2,421회 중 15초 내 피슛 30회). 격차는 국면 2에서 열린다 — 중앙3 패스의 11.0%가 공격3에 닿고 상대는 12.6%, 자기 진영으로 되돌리는 비율은 11.3% 대 8.5%다. 경계값을 30/70이나 35/65로 바꿔도 유지되는 수치다. 그리고 국면 3에서 누적된다. 경기당 진입이 23.9 대 32.5로 상대의 74% 수준이다. 원인은 수비수가 아니다 — 공격진영 측면 터치 비중이 10.3% 대 10.6%로 상대와 같다. 중앙 미드필더 쪽이다. 10%를 넘는 선수가 마테우스(21.6%) 하나이고 나머지 셋은 5.1% · 8.3% · 3.1%다. 앞선에서 고칠 수 있는 지점은 그의 출구 배분이다. 전방으로 나간 패스는 32.4%가 슛으로 이어지고 후방은 6.6%인데(z=3.31, p=0.0009), 정작 최다 출구는 7.4%짜리다. 그 아래로는 코너가 90 대 147이고, 자기 코너 첫 접촉을 31%밖에 못 딴다. 185cm 이상 등록 공격수가 한 명도 없기 때문이다. 제공권을 보고 1월에 데려온 189cm 스트라이커는 860분을 뛰었고, 자기 팀 코너의 29%에만 그라운드에 있었으며, 23라운드 이후 나오지 않았다. 그 과정에서 가설 여섯 개를 기각하거나 판정 불가로 내렸다. 그중 다섯 개가 내가 세운 것이고, 앞선이 실제보다 더 정형화돼 보이게 만들었던 표본 크기 편향도 거기 들어 있다. 마지막은 인상이 아니라 수치로 고른 네 경기다.",
+    },
+    blurb: {
+      en: "Expected difference −9.8, actual −10. Once in the final third they shoot more than the opposition — what is missing is how often they arrive, and it starts in one phase.",
+      ko: "기대 득실차 −9.8, 실제 −10. 공격진영에 도착하면 오히려 상대보다 더 자주 쏜다 — 부족한 것은 도착 빈도이고, 그것은 한 국면에서 시작된다.",
+    },
+    stats: {
+      en: [["−9.8 : −10", "expected and actual goal difference"], ["11.27 : 10.45", "shots per 100 final-third passes"], ["11.0% : 12.6%", "middle third into the final third"], ["0", "registered forwards at 185cm or above"]],
+      ko: [["−9.8 : −10", "기대 득실차와 실제 득실차"], ["11.27 : 10.45", "공격진영 패스 100회당 슛"], ["11.0% : 12.6%", "중앙3 → 공격3 전달률"], ["0", "185cm 이상 등록 공격수"]],
+    },
+  },
+  {
     slug: "gimcheon",
     no: "11",
     publishedAt: "2026-09-17",
