@@ -136,6 +136,7 @@ export const LAB_TYPE_KO: Record<string, string> = {
   "Theory-derived": "이론 도출",
   Tool: "도구",
   System: "시스템",
+  Research: "연구",
 };
 
 export const STATUS_LABEL_KO: Record<string, string> = { concept: "개념", draft: "초안", live: "적용중" };

@@ -41,6 +41,40 @@ const JWC = {
   },
 };
 
+/** The Signature Move series — self-contained research reports with their own
+ *  pages (the HTML lives in /public). Listed here, in the Lab, because they are
+ *  research in progress rather than finished tactical terms. */
+const SERIES = [
+  {
+    href: "/kpi-lab/lab/signature-move-1",
+    code: "SM-1",
+    type: "Research",
+    status: "draft" as const,
+    added: "2026-09-21",
+    updated: "2026-09-21",
+    basedOn: ["Brault 2012", "van den Tillaar 2020", "Nigg 2017", "Selinger 2015"],
+    name: { en: "What Comes Out Under Pressure", ko: "급할 때 나오는 것" },
+    short: {
+      en: "Escaping a press is a time-budget problem. Count the time the attacker pays himself and the break-even point drops from 0.367 s to 0.20 s — which shows where standardised coaching has to stop.",
+      ko: "압박을 벗기는 일은 시간 예산 문제다. 공격수 본인이 치르는 시간까지 세면 손익분기점이 0.367초에서 0.20초로 내려오고, 육성에서 획일화가 멈춰야 할 지점이 드러난다.",
+    },
+  },
+  {
+    href: "/kpi-lab/lab/signature-move-2",
+    code: "SM-2",
+    type: "Research",
+    status: "draft" as const,
+    added: "2026-09-21",
+    updated: "2026-09-21",
+    basedOn: ["FIFA PMSR", "K League events", "Permutation test", "Horst 2020"],
+    name: { en: "Several Kinds of Football in One Match", ko: "한 경기 안의 여러 축구" },
+    short: {
+      en: "The press moved back, one player works in two shapes, blocks are mixed within a match and their height moves 20 m+. Multiplied contexts cannot be filled with more techniques.",
+      ko: "사람이 붙는 자리가 뒤로 왔고, 한 선수가 두 형태에서 일하고, 한 경기 안에 블록이 섞이고 그 높이가 20m 넘게 움직인다. 늘어난 맥락은 기술의 개수로 메울 수 없다.",
+    },
+  },
+];
+
 /** Tool/system entries that live as their own standalone pages, like JWC.
  *  They are not metrics, so they carry a Tool/System type and their own status. */
 const TOOLS = [
@@ -111,7 +145,7 @@ export default async function LabIndexPage({ params }: { params: Promise<{ local
       added: JWC.added,
       updated: JWC.updated,
     },
-    ...TOOLS.map((t) => {
+    ...[...SERIES, ...TOOLS].map((t) => {
       const badge = STATUS_BADGE[t.status];
       return {
         href: t.href,
