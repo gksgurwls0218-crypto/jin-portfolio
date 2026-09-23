@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>They Give Away the Least, and Concede More — Incheon United 2026 | Hyuckjin Han</title>
+<meta name="description" content="No side in the league allows fewer open-play chances than Incheon. Rate their matches on expected goals and only Seoul are better. Yet they sit seventh, and have conceded more than six goals above expectation. To separate luck from structure, I put all 168 league matches on the same scale and checked one step at a time.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light;
+  --page:#f1f1ef; --surface:#fcfcfb; --surface-2:#e4e4e1; --raise:#f7f7f5;
+  --ink:#141413; --ink-2:#3c3c3a; --muted:#70706c;
+  --line:rgba(20,20,19,.14); --line-2:rgba(20,20,19,.07);
+  --grid:#e0e0dd; --axis:#c2c2be;
+  --ic:#1d5fa6; --op:#b0620f; --top:#3f7a1f; --bad:#8a1f27;
+  --ic-soft:rgba(29,95,166,.11); --op-soft:rgba(176,98,15,.12);
+  --top-soft:rgba(63,122,31,.11); --bad-soft:rgba(138,31,39,.10);
+  --sp:clamp(18px,4.5vw,30px);
+  --disp:"Hahmlet",'Nanum Myeongjo',serif;
+  --body:"IBM Plex Sans KR",-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,'SFMono-Regular',monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --page:#121211; --surface:#1a1a19; --surface-2:#262624; --raise:#1f1f1e;
+    --ink:#eaeae7; --ink-2:#b8b8b4; --muted:#8d8d89;
+    --line:rgba(234,234,231,.16); --line-2:rgba(234,234,231,.08);
+    --grid:#2d2d2b; --axis:#4a4a47;
+    --ic:#5b95d8; --op:#b8762c; --top:#5aa32e; --bad:#e8737c;
+    --ic-soft:rgba(91,149,216,.17); --op-soft:rgba(184,118,44,.17);
+    --top-soft:rgba(90,163,46,.15); --bad-soft:rgba(232,115,124,.14);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --page:#121211; --surface:#1a1a19; --surface-2:#262624; --raise:#1f1f1e;
+  --ink:#eaeae7; --ink-2:#b8b8b4; --muted:#8d8d89;
+  --line:rgba(234,234,231,.16); --line-2:rgba(234,234,231,.08);
+  --grid:#2d2d2b; --axis:#4a4a47;
+  --ic:#5b95d8; --op:#b8762c; --top:#5aa32e; --bad:#e8737c;
+  --ic-soft:rgba(91,149,216,.17); --op-soft:rgba(184,118,44,.17);
+  --top-soft:rgba(90,163,46,.15); --bad-soft:rgba(232,115,124,.14);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font-family:var(--body);
+  word-break:keep-all;overflow-wrap:break-word;
+  font-weight:400;font-size:16px;line-height:1.72;-webkit-font-smoothing:antialiased}
+.wrap{max-width:940px;margin:0 auto;padding-inline:var(--sp);padding-block:0}
+p{margin:0 0 1.05em}
+strong{font-weight:600;color:var(--ink)}
+em{font-style:normal;background:var(--ic-soft);padding:.06em .3em;border-radius:2px;font-weight:500}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums;font-weight:500;letter-spacing:-.01em}
+
+/* ── header ── */
+header{padding-block:clamp(48px,9vw,88px) clamp(30px,5vw,44px);border-bottom:1px solid var(--line)}
+.badge{display:inline-flex;align-items:center;gap:.55em;font-family:var(--mono);font-size:11px;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--ic);font-weight:500}
+.badge::before{content:"";width:22px;height:2px;background:var(--ic)}
+h1{font-family:var(--disp);font-weight:600;font-size:clamp(38px,8.6vw,68px);line-height:1.06;
+  letter-spacing:-.025em;margin:.34em 0 .3em;text-wrap:balance}
+.dek{font-family:var(--disp);font-weight:400;font-size:clamp(17px,2.5vw,21px);line-height:1.55;
+  color:var(--ink-2);max-width:34em;margin:0 0 1.5em}
+.meta{display:flex;flex-wrap:wrap;gap:.5em 0;font-family:var(--mono);font-size:11.5px;
+  color:var(--muted);letter-spacing:.02em}
+.meta span+span::before{content:"|";padding:0 .85em;color:var(--axis)}
+
+/* ── tiles ── */
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line-2);
+  border-block:1px solid var(--line);margin-block:0}
+@media(max-width:760px){.tiles{grid-template-columns:repeat(2,1fr)}}
+.tile{background:var(--page);padding:clamp(16px,3vw,24px) clamp(12px,2.4vw,20px);display:flex;
+  flex-direction:column;gap:.3em}
+.tile .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.tile .v{font-family:var(--disp);font-weight:600;font-size:clamp(26px,4.6vw,38px);line-height:1;
+  letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.tile .v.gj{color:var(--ic)} .tile .v.bad{color:var(--bad)}
+.tile .s{font-size:12.5px;line-height:1.45;color:var(--ink-2)}
+
+/* ── sections ── */
+section{padding-block:clamp(40px,7vw,68px);border-bottom:1px solid var(--line-2)}
+section:last-of-type{border-bottom:none}
+.eyebrow{display:flex;align-items:baseline;gap:.9em;margin-bottom:.9em}
+.eyebrow .role{font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--page);background:var(--ink-2);padding:.35em .7em;border-radius:2px;white-space:nowrap}
+.eyebrow .cap{font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--muted)}
+h2{font-family:var(--disp);font-weight:600;font-size:clamp(25px,4.4vw,37px);line-height:1.2;
+  letter-spacing:-.022em;margin:0 0 .6em;text-wrap:balance;max-width:19em}
+h3{font-family:var(--disp);font-weight:600;font-size:clamp(17px,2.4vw,21px);line-height:1.35;
+  letter-spacing:-.012em;margin:2.1em 0 .7em}
+.lede{font-size:clamp(16.5px,2.1vw,18.5px);line-height:1.68;color:var(--ink-2);max-width:33em;margin-bottom:1.6em}
+.body{max-width:35em}
+.body.wide{max-width:40em}
+
+/* ── pull ── */
+.pull{border-left:3px solid var(--ic);padding:.1em 0 .1em 1.15em;margin:1.9em 0;
+  font-family:var(--disp);font-weight:500;font-size:clamp(18px,2.7vw,23px);line-height:1.45;
+  letter-spacing:-.014em;color:var(--ink);max-width:24em;text-wrap:balance}
+
+/* ── figure ── */
+figure{margin:2em 0;padding:clamp(16px,3vw,26px);background:var(--surface);
+  border:1px solid var(--line);border-radius:3px}
+figcaption{font-family:var(--mono);font-size:11px;line-height:1.6;color:var(--muted);
+  margin-top:1.15em;padding-top:.85em;border-top:1px solid var(--line-2)}
+.figtitle{font-family:var(--body);font-weight:600;font-size:14px;line-height:1.4;color:var(--ink);
+  margin-bottom:.3em;letter-spacing:-.005em}
+.figsub{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:1.35em;letter-spacing:.01em}
+.legend{display:flex;flex-wrap:wrap;gap:.5em 1.3em;font-family:var(--mono);font-size:11px;
+  color:var(--ink-2);margin-bottom:1.1em}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:1px;margin-right:.45em;vertical-align:-1px}
+
+/* ── bar rows ── */
+.bars{display:flex;flex-direction:column;gap:7px}
+.br{display:grid;grid-template-columns:74px 1fr 62px;align-items:center;gap:10px}
+@media(max-width:560px){.br{grid-template-columns:60px 1fr 54px;gap:7px}}
+.br .lb{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);text-align:right;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bars.lbwrap .br{grid-template-columns:90px 1fr 46px}
+.bars.lbwrap .br .lb{white-space:normal;overflow:visible;text-overflow:clip;line-height:1.28}
+@media(max-width:560px){.bars.lbwrap .br{grid-template-columns:78px 1fr 40px;gap:7px}}
+.bars.lbwrap.vwide .br{grid-template-columns:90px 1fr 100px}
+.bars.lbwrap.vwide .br .vl{white-space:nowrap;font-size:10.5px}
+@media(max-width:560px){.bars.lbwrap.vwide .br{grid-template-columns:56px 1fr 90px;gap:6px}}
+.br .tk{height:17px;background:var(--surface-2);border-radius:1px;overflow:hidden}
+.br .fl{height:100%;background:var(--op);border-radius:1px}
+.br .vl{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;
+  color:var(--ink-2);text-align:right}
+.br.hi .lb{color:var(--ic);font-weight:600}
+.br.hi .fl{background:var(--ic)}
+.br.hi .vl{color:var(--ic);font-weight:600}
+.br.ref .fl{background:var(--top)}
+.br.ref .lb,.br.ref .vl{color:var(--top)}
+
+/* ── grouped pair bars ── */
+.pair{display:flex;flex-direction:column;gap:16px}
+.pg{display:grid;grid-template-columns:96px 1fr;gap:12px;align-items:center}
+@media(max-width:560px){.pg{grid-template-columns:1fr;gap:5px}}
+.pg .pn{font-family:var(--body);font-size:13px;font-weight:600;color:var(--ink)}
+.pg .pn small{display:block;font-family:var(--mono);font-weight:400;font-size:10.5px;color:var(--muted)}
+.pgb{display:flex;flex-direction:column;gap:5px}
+.pgr{display:grid;grid-template-columns:1fr 54px;gap:9px;align-items:center}
+.pgr .tk{height:15px;background:var(--surface-2);border-radius:1px;overflow:hidden}
+.pgr .fl{height:100%;border-radius:1px}
+.pgr .vl{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;text-align:right}
+
+/* ── table ── */
+.tbl{overflow-x:auto;margin:1.8em 0;border:1px solid var(--line);border-radius:3px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:13px}
+th,td{padding:9px 13px;text-align:left;border-bottom:1px solid var(--line-2);vertical-align:baseline}
+th{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;background:var(--raise);white-space:nowrap}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+td .nm{font-weight:600}
+td .no{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.up{color:var(--top);font-weight:600} .dn{color:var(--bad);font-weight:600}
+.dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:.5em;vertical-align:1px}
+.dot.on{background:var(--top)} .dot.mid{background:var(--axis)} .dot.off{background:transparent;
+  border:1px solid var(--axis)}
+
+/* ── slope svg ── */
+svg{display:block;max-width:100%;height:auto;overflow:visible}
+.sv-lb{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:var(--muted)}
+.sv-vl{font-family:"IBM Plex Mono",monospace;font-size:11.5px;font-weight:500}
+.sv-nm{font-family:"IBM Plex Sans KR",sans-serif;font-size:11.5px;font-weight:600;fill:var(--ink-2)}
+
+p.rate{font-size:13px;line-height:1.6;color:var(--muted);border-left:2px solid var(--line);
+  padding-left:1.1em;margin:1.5em 0}
+p.rate b{color:var(--ink-2);font-weight:600}
+
+/* ── callout ── */
+.note{background:var(--raise);border:1px solid var(--line);border-left:3px solid var(--axis);
+  border-radius:3px;padding:clamp(14px,2.6vw,20px);margin:1.9em 0;font-size:14px;line-height:1.65;
+  color:var(--ink-2)}
+.note b{color:var(--ink);font-weight:600}
+.note.warn{border-left-color:var(--bad)}
+.note.key{border-left-color:var(--ic);background:var(--ic-soft);border-color:var(--line)}
+
+/* ── stat strip ── */
+.strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-2);
+  border:1px solid var(--line);border-radius:3px;overflow:hidden;margin:1.9em 0}
+@media(max-width:620px){.strip{grid-template-columns:1fr}}
+.strip>div{background:var(--surface);padding:clamp(13px,2.4vw,18px)}
+.strip .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:.4em}
+.strip .v{font-family:var(--disp);font-weight:600;font-size:clamp(20px,3.4vw,27px);line-height:1.1;
+  font-variant-numeric:tabular-nums;letter-spacing:-.018em}
+.strip .s{font-size:12px;color:var(--ink-2);margin-top:.35em;line-height:1.45}
+
+/* ── list ── */
+ul.clean{list-style:none;padding:0;margin:1.3em 0;display:flex;flex-direction:column;gap:.85em;max-width:35em}
+ul.clean li{padding-left:1.5em;position:relative;font-size:14.5px;line-height:1.62;color:var(--ink-2)}
+ul.clean li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:1.5px;background:var(--axis)}
+ul.clean li b{color:var(--ink);font-weight:600}
+
+/* ── case panel ── */
+.case{border:1px solid var(--line);border-top:3px solid var(--ic);border-radius:3px;
+  background:var(--surface);padding:clamp(18px,3.2vw,28px);margin:2.2em 0}
+.case+.case{margin-top:1.4em}
+.case .ch{display:flex;flex-wrap:wrap;align-items:baseline;gap:.5em .9em;margin-bottom:.35em}
+.case .ct{font-family:var(--disp);font-weight:600;font-size:clamp(20px,3.2vw,26px);line-height:1.15;
+  letter-spacing:-.02em;color:var(--ink)}
+.case .cn{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.case .cs{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ic);border:1px solid var(--ic);border-radius:2px;padding:.22em .55em;white-space:nowrap}
+.case .cd{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:1.15em;
+  padding-bottom:1.15em;border-bottom:1px solid var(--line-2)}
+.case p{font-size:14.5px;line-height:1.68;color:var(--ink-2);margin-bottom:1em;max-width:40em}
+.case p:last-child{margin-bottom:0}
+.case p b,.case p strong{color:var(--ink);font-weight:600}
+.case h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;margin:1.6em 0 .7em}
+
+/* ── ledger (two-column consequence table inside a case) ── */
+.ledger{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line-2);
+  border:1px solid var(--line);border-radius:3px;overflow:hidden;margin:1.4em 0}
+@media(max-width:620px){.ledger{grid-template-columns:1fr}}
+.ledger>div{background:var(--raise);padding:clamp(13px,2.4vw,17px)}
+.ledger .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:.5em}
+.ledger .v{font-family:var(--disp);font-weight:600;font-size:clamp(17px,2.8vw,21px);line-height:1.2;
+  letter-spacing:-.015em;margin-bottom:.4em}
+.ledger .state .v{color:var(--ink-2)}
+.ledger .social .v{color:var(--bad)}
+.ledger .s{font-size:12.5px;line-height:1.5;color:var(--ink-2)}
+
+/* ── timeline strip ── */
+.tl{display:flex;gap:2px;margin:1.3em 0 .6em}
+.tl .y{flex:1;min-width:0;text-align:center}
+.tl .yb{height:30px;border-radius:1px;background:var(--surface-2)}
+.tl .yb.play{background:var(--op)}
+.tl .yb.gap{background:var(--bad-soft);border:1px dashed var(--bad)}
+.tl .yb.low{background:var(--ic-soft);border:1px solid var(--ic)}
+.tl .yl{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:.45em;
+  writing-mode:vertical-rl;transform:rotate(180deg);height:34px;display:inline-block}
+@media(min-width:560px){.tl .yl{writing-mode:horizontal-tb;transform:none;height:auto}}
+
+footer{padding-block:clamp(34px,6vw,54px) clamp(46px,8vw,74px);border-top:1px solid var(--line);
+  font-family:var(--mono);font-size:11.5px;line-height:1.85;color:var(--muted)}
+footer b{color:var(--ink-2);font-weight:500}
+@media(prefers-reduced-motion:no-preference){
+  section{animation:fi .5s ease-out both}
+  @keyframes fi{from{opacity:.55}to{opacity:1}}
+}
+
+/* ── scouting report components ── */
+.warnbar{background:var(--bad-soft);border:1px solid var(--bad);border-radius:3px;
+  padding:clamp(13px,2.4vw,18px);margin:1.6em 0;font-size:13.5px;line-height:1.6;color:var(--ink-2)}
+.warnbar b{color:var(--bad);font-weight:600}
+
+/* numbered instruction card */
+.instr{display:grid;grid-template-columns:44px 1fr;gap:clamp(12px,2.4vw,20px);
+  border:1px solid var(--line);border-left:3px solid var(--ic);border-radius:3px;
+  background:var(--surface);padding:clamp(15px,2.8vw,22px);margin:1.1em 0}
+@media(max-width:560px){.instr{grid-template-columns:32px 1fr;gap:12px}}
+.instr .n{font-family:var(--disp);font-weight:600;font-size:clamp(26px,4.4vw,34px);line-height:1;
+  color:var(--ic);letter-spacing:-.03em}
+.instr h3{font-family:var(--body);font-weight:600;font-size:clamp(15.5px,2.2vw,18px);
+  line-height:1.34;color:var(--ink);margin:0 0 .5em;letter-spacing:-.01em}
+.instr p{font-size:14px;line-height:1.62;color:var(--ink-2);margin:0 0 .7em;max-width:40em}
+.instr p:last-child{margin-bottom:0}
+.instr .ev{font-family:var(--mono);font-size:11.5px;line-height:1.55;color:var(--muted);
+  border-top:1px solid var(--line-2);padding-top:.7em;margin-top:.9em}
+.instr .ev b{color:var(--ic);font-weight:600}
+
+/* do-not list */
+.dont{border:1px solid var(--line);border-radius:3px;background:var(--raise);
+  padding:clamp(15px,2.8vw,22px);margin:1.1em 0}
+.dont .hd{display:flex;align-items:baseline;gap:.7em;margin-bottom:.55em}
+.dont .x{font-family:var(--mono);font-size:15px;color:var(--axis);line-height:1}
+.dont h3{font-family:var(--body);font-weight:600;font-size:15px;line-height:1.34;
+  color:var(--muted);margin:0;text-decoration:line-through;text-decoration-color:var(--axis)}
+.dont p{font-size:13.5px;line-height:1.6;color:var(--ink-2);margin:0;max-width:40em}
+.dont p b{color:var(--ink);font-weight:600}
+
+/* pitch zone map */
+.zgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin:1.2em 0}
+.zcell{padding:clamp(14px,2.6vw,22px) 10px;border-radius:2px;text-align:center}
+.zcell .zv{font-family:var(--disp);font-weight:600;font-size:clamp(22px,3.8vw,30px);
+  line-height:1;letter-spacing:-.02em}
+.zcell .zn{font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-top:.55em;
+  letter-spacing:.03em}
+.zcell .zr{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:.25em}
+
+/* player duel table */
+.duel{display:flex;flex-direction:column;gap:6px;margin:1.2em 0}
+.drow{display:grid;grid-template-columns:104px 60px 1fr 46px;align-items:center;gap:9px}
+@media(max-width:560px){.drow{grid-template-columns:84px 52px 1fr 40px;gap:6px}.drow .dp{font-size:9.5px}}
+.drow .dn{font-family:var(--body);font-size:12.5px;font-weight:600;color:var(--ink);
+  text-align:right;line-height:1.24}
+.drow .dp{font-family:var(--mono);font-size:10px;color:var(--muted);text-align:right;white-space:nowrap}
+.drow .dt{height:16px;background:var(--surface-2);border-radius:1px;position:relative;overflow:hidden}
+.drow .df{position:absolute;top:0;bottom:0;border-radius:1px}
+.drow .dm{position:absolute;top:-2px;bottom:-2px;width:1.5px;background:var(--axis);left:50%}
+.drow .dv{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;text-align:right}
+
+/* one-page summary */
+.sheet{border:2px solid var(--ink);border-radius:4px;padding:clamp(18px,3.4vw,30px);
+  margin:2em 0;background:var(--surface)}
+.sheet h3{font-family:var(--disp);font-weight:600;font-size:clamp(19px,3vw,25px);
+  letter-spacing:-.02em;color:var(--ink);margin:0 0 .2em}
+.sheet .sd{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:1.4em;
+  padding-bottom:1.1em;border-bottom:1px solid var(--line)}
+.sheet ol{margin:0;padding-left:1.35em;display:flex;flex-direction:column;gap:.7em}
+.sheet ol li{font-size:14px;line-height:1.55;color:var(--ink-2)}
+.sheet ol li b{color:var(--ink);font-weight:600}
+.sheet .neg{margin-top:1.5em;padding-top:1.2em;border-top:1px solid var(--line-2)}
+.sheet .neg .nl{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:.6em}
+.sheet .neg p{font-size:13px;line-height:1.6;color:var(--muted);margin:0}
+
+/* ── butterfly (대칭 막대) ── */
+.bf{display:flex;flex-direction:column;gap:0}
+.bfh{display:grid;grid-template-columns:78px 1fr 1fr 50px;gap:0;align-items:center;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--muted);
+  padding-bottom:7px;border-bottom:1px solid var(--line-2);margin-bottom:3px}
+.bfh .a{text-align:right;padding-right:11px} .bfh .b{padding-left:11px}
+.bfh .c{text-align:right}
+.bfr{display:grid;grid-template-columns:78px 1fr 1fr 50px;align-items:center;padding-block:3px}
+.bfr .bl{font-family:var(--body);font-size:12.5px;color:var(--ink-2);white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis;padding-right:8px}
+.bfr .ba{display:flex;justify-content:flex-end;align-items:center;gap:7px;
+  padding-right:9px;border-right:2px solid var(--axis)}
+.bfr .bb{display:flex;align-items:center;gap:7px;padding-left:9px}
+.bfr i{display:block;height:17px;border-radius:1px;flex:none}
+.bfr .ba i{background:var(--ic)} .bfr .bb i{background:var(--bad)}
+.bfr .v{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;
+  color:var(--ink-2);flex:none}
+.bfr .d{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;
+  text-align:right;color:var(--muted);padding-left:8px}
+.bfr.tot{margin-top:5px;padding-top:8px;border-top:1px solid var(--line)}
+.bfr.tot .bl,.bfr.tot .v,.bfr.tot .d{font-weight:600;color:var(--ink)}
+@media(max-width:560px){.bfh,.bfr{grid-template-columns:64px 1fr 1fr 48px}
+  .bfr .bl{font-size:11px;padding-right:5px}
+  .bfr .ba,.bfr .bb{padding-inline:6px}}
+
+/* ── dumbbell (연결점) ── */
+.db{display:flex;flex-direction:column;gap:2px}
+.dbr{display:grid;grid-template-columns:88px 44px 1fr 44px 118px;align-items:center;gap:8px;
+  padding:7px 0;border-bottom:1px solid var(--line-2)}
+.dbr:last-child{border-bottom:none}
+.dbr .nm{font-family:var(--body);font-size:12.5px;font-weight:600;color:var(--ink);line-height:1.22}
+.dbr .nm small{display:block;font-family:var(--mono);font-weight:400;font-size:9.5px;
+  color:var(--muted);letter-spacing:0}
+.dbr .va,.dbr .vo{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums}
+.dbr .va{text-align:right;color:var(--ic);font-weight:600}
+.dbr .vo{text-align:left;color:var(--op)}
+.dbr .tr{position:relative;height:20px}
+.dbr .tr::before{content:"";position:absolute;left:0;right:0;top:9.5px;height:1px;background:var(--line-2)}
+.dbr .cn{position:absolute;top:8px;height:4px;border-radius:2px}
+.dbr .pt{position:absolute;top:4px;width:12px;height:12px;border-radius:50%;
+  border:2px solid var(--surface)}
+.dbr .pa{background:var(--ic)} .dbr .po{background:var(--op)}
+.dbr .jg{font-family:var(--mono);font-size:10px;letter-spacing:.02em;text-align:right;white-space:nowrap;
+  white-space:nowrap}
+.dbr .jg.up{color:var(--top)} .dbr .jg.dn{color:var(--bad)} .dbr .jg.md{color:var(--muted)}
+@media(max-width:620px){
+  .dbr{grid-template-columns:76px 40px 1fr 40px;gap:6px;row-gap:2px}
+  .dbr .jg{grid-column:2/-1;text-align:left;padding-top:1px}}
+
+/* ── 경기 카드 ── */
+.mcards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:1.9em 0}
+@media(max-width:700px){.mcards{grid-template-columns:1fr}}
+.mcard{border:1px solid var(--line);border-top:3px solid var(--ic);border-radius:3px;
+  background:var(--surface);padding:clamp(15px,2.6vw,20px);display:flex;flex-direction:column}
+.mcard .why{font-family:var(--mono);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ic);margin-bottom:.7em}
+.mcard .hd{display:flex;align-items:baseline;gap:.6em;flex-wrap:wrap;margin-bottom:.15em}
+.mcard .sc{font-family:var(--disp);font-weight:600;font-size:clamp(23px,3.6vw,29px);
+  line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.mcard .op{font-family:var(--body);font-size:14px;font-weight:600;color:var(--ink)}
+.mcard .rd{font-family:var(--mono);font-size:10.5px;color:var(--muted)}
+.mcard .kv{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;margin:1em 0 .9em;
+  padding:.85em 0;border-block:1px solid var(--line-2)}
+.mcard .kv dt{font-family:var(--mono);font-size:10.5px;color:var(--muted);white-space:nowrap}
+.mcard .kv dd{margin:0;font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;
+  color:var(--ink-2)}
+.mcard .kv dd b{color:var(--ic);font-weight:600}
+.mcard .kv dd em{background:none;padding:0;color:var(--bad);font-weight:600}
+.mcard p{font-size:13.5px;line-height:1.62;color:var(--ink-2);margin:0}
+.mcard p b{color:var(--ink);font-weight:600}
+
+/* ── 피치 ── */
+.pitches{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px}
+.pitchwrap .pttl{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:.5em;
+  letter-spacing:.03em}
+
+
+.dotw .drow{grid-template-columns:96px 0 1fr 150px}
+.dotw .dv{white-space:nowrap;font-size:11px}
+@media(max-width:560px){.dotw .drow{grid-template-columns:66px 0 1fr 116px;gap:5px}.dotw .dv{font-size:9.5px}.dotw .dn{font-size:11.5px;word-break:keep-all}}
+
+.dvb{display:flex;flex-direction:column;gap:7px}
+.dvr{display:grid;grid-template-columns:74px 1fr 62px;align-items:center;gap:10px}
+.dvr .lb{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);text-align:right}
+.dvr .tk{position:relative;height:17px;background:var(--surface-2);border-radius:1px}
+.dvr .zl{position:absolute;top:-4px;bottom:-4px;width:1.5px;background:var(--axis);transform:translateX(-.75px);z-index:1}
+.dvr .fl{position:absolute;top:0;bottom:0;background:var(--op);border-radius:1px}
+.dvr.neg .fl{opacity:.55}
+.dvr .vl{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;text-align:right;color:var(--ink-2)}
+.dvr.hi .lb,.dvr.hi .vl{color:var(--ic);font-weight:600}
+.dvr.hi .fl{background:var(--ic);opacity:1}
+.dvr.ax .axl{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px;color:var(--muted)}
+@media(max-width:560px){.dvr{grid-template-columns:68px 1fr 44px;gap:6px}.dvr .lb{word-break:keep-all}.dvr .lb,.dvr .vl{font-size:10.5px}}
+</style>
+
+<body>
+<header><div class="wrap">
+  <div class="badge">INCHEON UNITED · 2026 · 29 MATCHES</div>
+  <h1>They Give Away the Least, and Concede More</h1>
+  <p class="dek">No side in the league allows fewer open-play chances than Incheon. Rate their matches on expected goals and only Seoul are better. Yet they sit seventh, and have conceded more than six goals above expectation. To separate luck from structure, I put all 168 league matches on the same scale and checked one step at a time.</p>
+  <div class="meta"><span>K League 1 2026 · 29 Incheon matches</span><span>As of 20 Sep 2026</span><span>168 league matches · 239,842 raw events</span><span>Hyuckjin Han</span></div>
+</div></header>
+<div class="tiles"><div class="tile"><div class="k">Season</div><div class="v ">10W 8D 11L</div><div class="s">38 points · 36 scored, 33 conceded<br>7th in the 13 Sep table</div></div><div class="tile"><div class="k">Expected goal diff. per match</div><div class="v gj">+0.39</div><div class="s">2nd in the league · actual +0.14</div></div><div class="tile"><div class="k">Open-play xG allowed per 90</div><div class="v gj">0.68</div><div class="s">Lowest in the league · average 0.95</div></div><div class="tile"><div class="k">Conceded − expected</div><div class="v bad">+6.9</div><div class="s">260 non-penalty shots allowed · 29 conceded<br>Expected 22.1 (league-adjusted)</div></div></div>
+<div class="wrap">
+<section><div class="eyebrow"><span class="role">BASELINE</span><span class="cap">168 league matches · expected vs table</span></div><h2>Second on performance, seventh in the table</h2><div class="body"><p class="lede">Incheon have 10 wins, 8 draws and 11 defeats from 29 matches — 38 points, seventh in the table of 13 September. Re-rate every match by the expected-goal value of each shot, though, and the story changes.</p><p>Across all 168 league matches, Incheon’s expected goal difference per match is <b>+0.39</b>, <b>second only to Seoul</b>. Their actual goal difference is +0.14. Without penalties it is +0.25, 3rd in the league.</p></div><figure><div class="figtitle">Ranked by expected goal difference, Incheon are second</div><div class="figsub">Expected goal difference (xGD) per match · value on the right is xGD and actual goal difference · 168 matches</div><div class="legend"><span><i style="background:var(--ic)"></i>Incheon</span><span><i style="background:var(--op)"></i>Other 11 clubs</span></div><div class="dotw"><div class="duel" style="position:relative"><div class="drow"><div class="dn">Seoul</div><div class="dp"></div><div class="dt" style="background:transparent;border-bottom:1px solid var(--line-2)"><div class="dm" style="left:58.8%;background:var(--bad);opacity:.5"></div><div class="df" style="left:calc(89.8% - 5px);width:10px;height:10px;top:3px;border-radius:50%;background:var(--op)"></div></div><div class="dv" style="color:var(--op)">+0.53 · actual +1.19</div></div><div class="drow"><div class="dn"><b>Incheon</b></div><div class="dp"></div><div class="dt" style="background:transparent;border-bottom:1px solid var(--line-2)"><div class="dm" style="left:58.8%;background:var(--bad);opacity:.5"></div><div class="df" style="left:calc(81.9% - 5px);width:10px;height:10px;top:3px;border-radius:50%;background:var(--ic)"></div></div><div class="dv" style="color:var(--ic)">+0.39 · actual +0.14</div></div><div class="drow"><div class="dn">Jeonbuk</div><div class="dp"></div><div class="dt" style="background:transparent;border-bottom:1px solid var(--line-2)"><div class="dm" style="left:58.8%;background:var(--bad);opacity:.5"></div><div class="df" style="left:calc(78.6% - 5px);width:10px;height:10px;top:3px;border-radius:50%;background:var(--op)"></div></div><div class="dv" style="color:var(--op)">+0.34 · actual +0.39</div></div><div class="drow"><div class="dn">Ulsan</div><div class="dp"></div><div class="dt" style="background:transparent;border-bottom:1px solid var(--line-2)"><div class="dm" style="left:58.8%;background:var(--bad);opacity:.5"></div><div class="df" style="left:calc(75.1% - 5px);width:10px;height:10px;top:3px;border-radius:50%;background:var(--op)"></div></div><div class="dv" style="color:var(--op)">+0.28 · actual +0.18</div></div><div class="drow"><div class="dn">Pohang</div><div class="dp"></div><div class="dt" style="background:transparent;border-bottom:1px solid var(--line-2)"><div class="dm" style="left:58.8%;background:var(--bad);opacity:.5"></div><div class="df" style="left:calc(71.2% - 5px);width:10px;height:10px;top:3px;border-radius:50%;background:var(--op)"></div></div><div class="dv" style="color:var(--op)">+0.21 · actual −0.25</div></div><div class="drow"><div class="dn">Gangwon</div><div class="dp"></div><div class="dt" style="background:transparent;border-bottom:1px solid var(--line-2)"><div class="dm" style="left:58.8%;background:var(--bad);opacity:.5"></div><div class="df" style="left:calc(70.4% - 5px);width:10px;height:10px;top:3px;border-radius:50%;background:var(--op)"></div></div><div class="dv" style="color:var(--op)">+0.20 · actual +0.32</div></div><div class="drow"><div class="dn">Daejeon</div><div class="dp"></div><div class="dt" style="background:transparent;border-bottom:1px solid var(--line-2)"><div class="dm" style="left:58.8%;background:var(--bad);opacity:.5"></div><div class="df" style="left:calc(66.8% - 5px);width:10px;height:10px;top:3px;border-radius:50%;background:var(--op)"></div></div><div class="dv" style="color:var(--op)">+0.13 · actual +0.14</div></div><div class="drow"><div class="dn">Jeju</div><div class="dp"></div><div class="dt" style="background:transparent;border-bottom:1px solid var(--line-2)"><div class="dm" style="left:58.8%;background:var(--bad);opacity:.5"></div><div class="df" style="left:calc(63.8% - 5px);width:10px;height:10px;top:3px;border-radius:50%;background:var(--op)"></div></div><div class="dv" style="color:var(--op)">+0.08 · actual +0.14</div></div><div class="drow"><div class="dn">Gimcheon</div><div class="dp"></div><div class="dt" style="background:transparent;border-bottom:1px solid var(--line-2)"><div class="dm" style="left:58.8%;background:var(--bad);opacity:.5"></div><div class="df" style="left:calc(46.1% - 5px);width:10px;height:10px;top:3px;border-radius:50%;background:var(--op)"></div></div><div class="dv" style="color:var(--op)">−0.22 · actual −0.28</div></div><div class="drow"><div class="dn">Anyang</div><div class="dp"></div><div class="dt" style="background:transparent;border-bottom:1px solid var(--line-2)"><div class="dm" style="left:58.8%;background:var(--bad);opacity:.5"></div><div class="df" style="left:calc(38.9% - 5px);width:10px;height:10px;top:3px;border-radius:50%;background:var(--op)"></div></div><div class="dv" style="color:var(--op)">−0.34 · actual −0.34</div></div><div class="drow"><div class="dn">Bucheon</div><div class="dp"></div><div class="dt" style="background:transparent;border-bottom:1px solid var(--line-2)"><div class="dm" style="left:58.8%;background:var(--bad);opacity:.5"></div><div class="df" style="left:calc(19.5% - 5px);width:10px;height:10px;top:3px;border-radius:50%;background:var(--op)"></div></div><div class="dv" style="color:var(--op)">−0.67 · actual −0.07</div></div><div class="drow"><div class="dn">Gwangju</div><div class="dp"></div><div class="dt" style="background:transparent;border-bottom:1px solid var(--line-2)"><div class="dm" style="left:58.8%;background:var(--bad);opacity:.5"></div><div class="df" style="left:calc(7.2% - 5px);width:10px;height:10px;top:3px;border-radius:50%;background:var(--op)"></div></div><div class="dv" style="color:var(--op)">−0.88 · actual −1.46</div></div><div style="font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-top:.6em;padding-left:146px">← behind on expectation · 0 · ahead →</div></div></div><figcaption>Each dot is xG − xGA per match. Seoul 26 matches, the rest 28–29. Incheon’s gap of 0.25 between expected and actual goal difference is the second largest among the plus teams, after Pohang (0.46).</figcaption></figure><div class="body"><p>Replay every shot at its xG probability and simulate each match, and Incheon’s expected points come to <b>43.8</b>. They have <b>38</b> — <b>5.8 points</b> short.</p><p>It looks like a lot. Set against the rest of the league, it is not.</p></div><figure><div class="figtitle">Being 5.8 points short is not unusual in this league</div><div class="figsub">Shot-level simulated expected points vs actual · P = chance of doing this badly or worse</div><div class="tbl "><table><thead><tr><th>Club</th><th>Matches</th><th>Expected pts</th><th>Actual</th><th>Diff.</th><th>P(actual or lower)</th></tr></thead><tbody><tr><td>Gwangju</td><td class="n">28</td><td class="n">23.5</td><td class="n">14</td><td class="n"><span class="dn">−9.5</span></td><td class="n"><b>0.04</b></td></tr><tr><td>Gimcheon</td><td class="n">29</td><td class="n">36.4</td><td class="n">30</td><td class="n"><span class="dn">−6.4</span></td><td class="n">0.15</td></tr><tr><td>Pohang</td><td class="n">28</td><td class="n">42.3</td><td class="n">36</td><td class="n"><span class="dn">−6.3</span></td><td class="n">0.16</td></tr><tr><td><b>Incheon</b></td><td class="n">28</td><td class="n">43.8</td><td class="n">38</td><td class="n"><span class="dn">−5.8</span></td><td class="n">0.19</td></tr><tr><td>Daejeon</td><td class="n">28</td><td class="n">41.1</td><td class="n">36</td><td class="n"><span class="dn">−5.1</span></td><td class="n">0.24</td></tr><tr><td>Gangwon</td><td class="n">28</td><td class="n">45.0</td><td class="n">42</td><td class="n"><span class="dn">−3.0</span></td><td class="n">0.32</td></tr><tr><td>Jeonbuk</td><td class="n">28</td><td class="n">44.8</td><td class="n">43</td><td class="n"><span class="dn">−1.8</span></td><td class="n">0.42</td></tr><tr><td>Jeju</td><td class="n">28</td><td class="n">39.8</td><td class="n">40</td><td class="n"><span class="up">+0.2</span></td><td class="n">0.56</td></tr><tr><td>Ulsan</td><td class="n">28</td><td class="n">41.9</td><td class="n">44</td><td class="n"><span class="up">+2.1</span></td><td class="n">0.67</td></tr><tr><td>Anyang</td><td class="n">29</td><td class="n">32.2</td><td class="n">35</td><td class="n"><span class="up">+2.8</span></td><td class="n">0.72</td></tr><tr><td>Bucheon</td><td class="n">28</td><td class="n">26.9</td><td class="n">32</td><td class="n"><span class="up">+5.1</span></td><td class="n">0.83</td></tr><tr><td>Seoul</td><td class="n">26</td><td class="n">43.2</td><td class="n">56</td><td class="n"><span class="up">+12.8</span></td><td class="n"><b>0.99</b></td></tr></tbody></table></div><figcaption>P in bold is below 0.05 or above 0.95. Only Seoul (upwards) and Gwangju (downwards) are clearly off their expectation. Incheon (P = 0.19) sit in the same range as Pohang, Gimcheon and Daejeon.</figcaption></figure><div class="pull">The missing points on their own can be put down to luck. But open up where they went, and one pattern is hard to wave away as luck.</div></section>
+<section><div class="eyebrow"><span class="role">TWIST</span><span class="cap">Suppression</span></div><h2>First: nobody gives away less than Incheon</h2><div class="body"><p class="lede">Conceding more than expected does not make this a weak defence. The opposite.</p></div><figure><div class="figtitle">The fewest open-play chances allowed in the league</div><div class="figsub">Open-play xG allowed · per 90 · penalties and set pieces excluded</div><div class="legend"><span><i style="background:var(--ic)"></i>Incheon</span><span><i style="background:var(--op)"></i>Other clubs</span></div><div class="bars "><div class="br hi"><div class="lb"><b>Incheon</b></div><div class="tk"><div class="fl" style="width:52.4%"></div></div><div class="vl">0.68</div></div><div class="br "><div class="lb">Jeonbuk</div><div class="tk"><div class="fl" style="width:61.0%"></div></div><div class="vl">0.79</div></div><div class="br "><div class="lb">Seoul</div><div class="tk"><div class="fl" style="width:65.4%"></div></div><div class="vl">0.85</div></div><div class="br "><div class="lb">Daejeon</div><div class="tk"><div class="fl" style="width:66.1%"></div></div><div class="vl">0.86</div></div><div class="br "><div class="lb">Gangwon</div><div class="tk"><div class="fl" style="width:66.4%"></div></div><div class="vl">0.86</div></div><div class="br "><div class="lb">Jeju</div><div class="tk"><div class="fl" style="width:68.1%"></div></div><div class="vl">0.89</div></div><div class="br "><div class="lb">Pohang</div><div class="tk"><div class="fl" style="width:69.2%"></div></div><div class="vl">0.90</div></div><div class="br "><div class="lb">Gimcheon</div><div class="tk"><div class="fl" style="width:75.0%"></div></div><div class="vl">0.98</div></div><div class="br "><div class="lb">Ulsan</div><div class="tk"><div class="fl" style="width:79.7%"></div></div><div class="vl">1.04</div></div><div class="br "><div class="lb">Anyang</div><div class="tk"><div class="fl" style="width:83.1%"></div></div><div class="vl">1.08</div></div><div class="br "><div class="lb">Bucheon</div><div class="tk"><div class="fl" style="width:91.9%"></div></div><div class="vl">1.20</div></div><div class="br "><div class="lb">Gwangju</div><div class="tk"><div class="fl" style="width:95.2%"></div></div><div class="vl">1.24</div></div></div><figcaption>Shorter is better. Incheon 0.68, league average 0.95. Next best is Jeonbuk (0.79).</figcaption></figure><div class="strip"><div><div class="k">xG allowed per final-third chain</div><div class="v" style="color:var(--ic)">0.018</div><div class="s">League lowest · even when opponents get in, the shot is poor</div></div><div><div class="k">xG allowed within 15 s of losing the ball</div><div class="v" style="color:var(--ic)">0.48</div><div class="s">Per match · league lowest</div></div><div><div class="k">Opponent final-third arrivals</div><div class="v" style="color:var(--ic)">37.9</div><div class="s">Per 90 · 3rd fewest</div></div></div><div class="body"><p>Opponents rarely get deep into Incheon’s half, rarely produce a good shot when they do, and rarely hurt them straight after Incheon lose the ball. <b>On suppression alone, this is the best defence in the league.</b> So where did the extra goals come from?</p></div></section>
+<section><div class="eyebrow"><span class="role">TEST</span><span class="cap">Breaking down the excess</span></div><h2>Yet they conceded more than six goals above expectation</h2><div class="body"><p class="lede">Excluding penalties and own goals, Incheon allowed 260 shots. Using every shot in the 168 matches, I worked out how many of them should have gone in if they had been stopped at the league rate.</p><p>A shot becomes a goal in three steps — <b>where and what kind of shot was allowed</b>, <b>whether it reached the target</b> (unblocked), and <b>whether a shot on target went in</b>.</p></div><div class="strip"><div><div class="k">① Expected from shot location and quality</div><div class="v" style="color:var(--op)">22.1</div><div class="s">League average for the same distance and xG</div></div><div><div class="k">② Expected from shots on target</div><div class="v" style="color:var(--op)">24.4</div><div class="s">+2.3 — the same shots reached the target more often</div></div><div><div class="k">③ Actually conceded</div><div class="v" style="color:var(--bad)">29</div><div class="s">+4.6 — shots on target went in more often</div></div></div><div class="body"><p>In total, <b>+6.9 goals</b> — second only to Gwangju. Fewer shots were blocked than distance would predict (43 against 49.3), and more reached the target (108 against 96.1).</p><p>I then controlled for one more thing: whether a defender got to the shooter. Unchallenged shots go in more often against anyone, so the question is whether Incheon’s excess survives once that is in the model.</p></div><figure><div class="figtitle">The excess survives even after adjusting for pressure on the shooter</div><div class="figsub">Goals conceded minus expected (adjusted for distance × xG × defensive action in the 3 s before the shot) · non-penalty, non-own-goal shots</div><div class="legend"><span><i style="background:var(--ic)"></i>Incheon</span><span><i style="background:var(--op)"></i>Other clubs</span></div><div class="dvb"><div class="dvr "><div class="lb">Gwangju</div><div class="tk"><div class="zl" style="left:42.86%"></div><div class="fl" style="left:42.86%;width:49.34%"></div></div><div class="vl">+13.8</div></div><div class="dvr hi"><div class="lb"><b>Incheon</b></div><div class="tk"><div class="zl" style="left:42.86%"></div><div class="fl" style="left:42.86%;width:22.85%"></div></div><div class="vl">+6.4</div></div><div class="dvr "><div class="lb">Anyang</div><div class="tk"><div class="zl" style="left:42.86%"></div><div class="fl" style="left:42.86%;width:15.33%"></div></div><div class="vl">+4.3</div></div><div class="dvr "><div class="lb">Pohang</div><div class="tk"><div class="zl" style="left:42.86%"></div><div class="fl" style="left:42.86%;width:8.19%"></div></div><div class="vl">+2.3</div></div><div class="dvr "><div class="lb">Ulsan</div><div class="tk"><div class="zl" style="left:42.86%"></div><div class="fl" style="left:42.86%;width:7.81%"></div></div><div class="vl">+2.2</div></div><div class="dvr  neg"><div class="lb">Daejeon</div><div class="tk"><div class="zl" style="left:42.86%"></div><div class="fl" style="left:37.93%;width:4.93%"></div></div><div class="vl">−1.4</div></div><div class="dvr  neg"><div class="lb">Gangwon</div><div class="tk"><div class="zl" style="left:42.86%"></div><div class="fl" style="left:36.59%;width:6.26%"></div></div><div class="vl">−1.8</div></div><div class="dvr  neg"><div class="lb">Gimcheon</div><div class="tk"><div class="zl" style="left:42.86%"></div><div class="fl" style="left:36.56%;width:6.30%"></div></div><div class="vl">−1.8</div></div><div class="dvr  neg"><div class="lb">Jeju</div><div class="tk"><div class="zl" style="left:42.86%"></div><div class="fl" style="left:34.94%;width:7.91%"></div></div><div class="vl">−2.2</div></div><div class="dvr  neg"><div class="lb">Seoul</div><div class="tk"><div class="zl" style="left:42.86%"></div><div class="fl" style="left:23.53%;width:19.33%"></div></div><div class="vl">−5.4</div></div><div class="dvr  neg"><div class="lb">Jeonbuk</div><div class="tk"><div class="zl" style="left:42.86%"></div><div class="fl" style="left:18.94%;width:23.92%"></div></div><div class="vl">−6.7</div></div><div class="dvr  neg"><div class="lb">Bucheon</div><div class="tk"><div class="zl" style="left:42.86%"></div><div class="fl" style="left:7.97%;width:34.88%"></div></div><div class="vl">−9.8</div></div><div class="dvr ax"><div></div><div class="axl"><span>← fewer</span><span>more →</span></div><div></div></div></div><figcaption>The vertical line is zero — conceded exactly as expected. Right of it, more than expected; left, fewer. Incheon +6.4, Gwangju +13.8. The change from the adjustment — the share caused by <i>allowing more</i> unchallenged shots — is only <b>+0.5 goals</b> for Incheon.</figcaption></figure><div class="body"><p>The chance of an excess this large by luck alone is <b>about 8%</b> (20,000 simulations with the adjusted model, P = 0.083). Too high to call it structure, too low to call it luck. So I looked at <b>which shots</b> the excess sits in.</p></div></section>
+<section><div class="eyebrow"><span class="role">CORE</span><span class="cap">147 unchallenged shots</span></div><h2>The ones that went in were shots nobody got to</h2><div class="body"><p class="lede">Split the shots allowed by whether an Incheon defender acted in the three seconds before, and the excess is all on one side.</p></div><figure><div class="figtitle">All of the excess came from unchallenged shots</div><div class="figsub">Adjusted expected goals vs actual · 260 non-penalty, non-own-goal shots allowed</div><div class="legend"><span><i style="background:var(--op)"></i>Expected</span><span><i style="background:var(--ic)"></i>Actual</span></div><div class="pair"><div class="pg"><div class="pn">Unchallenged<small>147 shots · 49.7% on target</small></div><div class="pgb"><div class="pgr"><div class="tk"><div class="fl" style="width:60.9%;background:var(--op)"></div></div><div class="vl" style="color:var(--op)">15.2</div></div><div class="pgr"><div class="tk"><div class="fl" style="width:88.0%;background:var(--ic)"></div></div><div class="vl" style="color:var(--ic)">22</div></div></div></div><div class="pg"><div class="pn">Challenged<small>113 shots · 31.0% on target</small></div><div class="pgb"><div class="pgr"><div class="tk"><div class="fl" style="width:29.5%;background:var(--op)"></div></div><div class="vl" style="color:var(--op)">7.4</div></div><div class="pgr"><div class="tk"><div class="fl" style="width:28.0%;background:var(--ic)"></div></div><div class="vl" style="color:var(--ic)">7</div></div></div></div></div><figcaption>Both groups share one axis (0–25 goals). “Expected” uses league shots of the same distance, xG and pressure status. 45.4% of unchallenged shots across the league reach the target; against Incheon it is 49.7%.</figcaption></figure><div class="pull">They did not allow more of them. Their share of unchallenged shots is close to the league’s. Those shots simply went in far more often than against other teams.</div><div class="note warn"><b>A correction to my own reading.</b> In the first pass I wrote that Incheon concede more because they allow the highest share of unchallenged shots. Re-testing showed that ranking <b>moves with the definition</b> — 2nd with a 2-second window, 1st with 3 seconds, 3rd with 5. The gap to the league average is only 2–3 points, and the goals that share difference cost is <b>+0.5</b>. <b>The problem is not how many unchallenged shots they allow, but how often those shots went in.</b></div><div class="body"><h3>Where the shots came from</h3></div><div class="tbl "><table><thead><tr><th>Situation</th><th>Shots</th><th>xG</th><th>Expected (league-adj.)</th><th>Conceded</th><th>Blocked</th><th>On target</th></tr></thead><tbody><tr><td>Within 15 s of the opponent winning the ball</td><td class="n">135</td><td class="n">13.3</td><td class="n">12.0</td><td class="n"><b>18</b></td><td class="n">20.0%</td><td class="n">43.0%</td></tr><tr><td>Settled attack</td><td class="n">99</td><td class="n">8.4</td><td class="n">7.4</td><td class="n"><b>9</b></td><td class="n">13.1%</td><td class="n">39.4%</td></tr><tr><td>Set piece</td><td class="n">26</td><td class="n">2.7</td><td class="n">2.7</td><td class="n"><b>2</b></td><td class="n">11.5%</td><td class="n">42.3%</td></tr></tbody></table></div><div class="body"><p>More than half the shots allowed (51.9%, second in the league) came <b>within 15 seconds of the opponent winning the ball</b>. Volume and quality are both low — the xG Incheon allow after losing the ball is 0.48 per match, the league’s lowest. Yet <b>18 goals</b> went in from this situation (expected 12.0). The shot is taken before a defence that is still turning can reach the shooter, and it goes in.</p><h3>Goalkeeper</h3></div><div class="tbl "><table><thead><tr><th>Goalkeeper</th><th>Matches</th><th>Shots on target</th><th>Expected conceded</th><th>Conceded</th><th>Diff.</th><th>Save rate</th></tr></thead><tbody><tr><td>Kim Dong-heon</td><td class="n">23</td><td class="n">87</td><td class="n">20.6</td><td class="n">25</td><td class="n">+4.4</td><td class="n">71.3%</td></tr><tr><td>Lee Tae-hee</td><td class="n">5</td><td class="n">21</td><td class="n">3.8</td><td class="n">4</td><td class="n">+0.2</td><td class="n">81.0%</td></tr></tbody></table></div><div class="body"><p>Most of the excess at the “shot on target goes in” step (+4.6) came in the 23 matches Kim Dong-heon played (+4.4). But this data <b>has no shot placement or speed</b>. A hard shot into the corner and a soft one straight at the keeper are both simply “on target”. So I do not read this as a verdict on the goalkeeper — it needs checking on video.</p></div></section>
+<section><div class="eyebrow"><span class="role">STATE</span><span class="cap">Leading · level · trailing</span></div><h2>Even when ahead they allow the least — and overshoot the most</h2><div class="body"><p class="lede">The same breakdown, split by game state.</p></div><div class="tbl "><table><thead><tr><th>Incheon state</th><th>Minutes</th><th>Open-play xG allowed/90</th><th>League rank (fewest)</th><th>Shots allowed</th><th>Expected (adj.)</th><th>Conceded</th></tr></thead><tbody><tr><td>Leading</td><td class="n">619</td><td class="n">0.74</td><td class="n">1st</td><td class="n">75</td><td class="n">5.6</td><td class="n"><b>8</b></td></tr><tr><td>Level</td><td class="n">1627</td><td class="n">0.70</td><td class="n">2nd</td><td class="n">141</td><td class="n">12.7</td><td class="n"><b>17</b></td></tr><tr><td>Trailing</td><td class="n">621</td><td class="n">0.59</td><td class="n">1st</td><td class="n">44</td><td class="n">3.8</td><td class="n"><b>4</b></td></tr></tbody></table></div><div class="body"><p>When ahead, Incheon allow less open-play xG than anyone in the league. They do not sit back to protect it — their own open-play xG while leading stays at 0.99 per 90, 6th in the league. Yet in this state they concede 8 against an expected 5.6, the widest overshoot of the three.</p><p>Of the 16 matches in which they took the lead, <b>7 saw it wiped out.</b> Only once did they go back in front.</p></div><figure><div class="figtitle">The seven wiped-out leads</div><div class="figsub">Matches where Incheon led and then conceded an equaliser or worse · 29 matches</div><div class="tbl "><table><thead><tr><th>Round</th><th>Opponent</th><th>Final score</th><th>Result</th></tr></thead><tbody><tr><td>R3</td><td>Pohang</td><td>1–1</td><td>D</td></tr><tr><td>R8</td><td>Bucheon</td><td>2–2</td><td>D</td></tr><tr><td>R19</td><td>Ulsan</td><td>2–1</td><td>W</td></tr><tr><td>R21</td><td>Jeju</td><td>3–3</td><td>D</td></tr><tr><td>R23</td><td>Gimcheon</td><td>1–1</td><td>D</td></tr><tr><td>R25</td><td>Anyang</td><td>1–2</td><td>L</td></tr><tr><td>R30</td><td>Daejeon</td><td>1–1</td><td>D</td></tr></tbody></table></div><figcaption>5 draws, 1 win, 1 defeat. Away at Ulsan in R19, they went back ahead from 1–1 with a stoppage-time penalty.</figcaption></figure></section>
+<section><div class="eyebrow"><span class="role">ATTACK</span><span class="cap">Penalties · non-penalty</span></div><h2>Take out the penalties and the attack is ninth</h2><div class="body"><p class="lede">The other half of that second-best expected goal difference is the attack. But its xG carries the largest penalty share in the league.</p><p>Incheon have won <b>8 penalties</b> and drawn 8 fouls inside the box — both league highs. Penalties are 17% of their xG; 7 of their 36 goals (19%) are penalties.</p></div><figure><div class="figtitle">Without penalties, xG per match drops from 1.35 to 1.12</div><div class="figsub">Non-penalty xG (NPxG) per match · number of penalties won under each club</div><div class="legend"><span><i style="background:var(--ic)"></i>Incheon</span><span><i style="background:var(--op)"></i>Other clubs</span></div><div class="bars lbwrap"><div class="br "><div class="lb">Seoul<br><span style="opacity:.6">1 pens</span></div><div class="tk"><div class="fl" style="width:92.1%"></div></div><div class="vl">1.57</div></div><div class="br "><div class="lb">Ulsan<br><span style="opacity:.6">6 pens</span></div><div class="tk"><div class="fl" style="width:84.4%"></div></div><div class="vl">1.44</div></div><div class="br "><div class="lb">Jeonbuk<br><span style="opacity:.6">2 pens</span></div><div class="tk"><div class="fl" style="width:82.5%"></div></div><div class="vl">1.40</div></div><div class="br "><div class="lb">Daejeon<br><span style="opacity:.6">2 pens</span></div><div class="tk"><div class="fl" style="width:79.3%"></div></div><div class="vl">1.35</div></div><div class="br "><div class="lb">Gimcheon<br><span style="opacity:.6">0 pens</span></div><div class="tk"><div class="fl" style="width:70.6%"></div></div><div class="vl">1.20</div></div><div class="br "><div class="lb">Gangwon<br><span style="opacity:.6">4 pens</span></div><div class="tk"><div class="fl" style="width:70.1%"></div></div><div class="vl">1.19</div></div><div class="br "><div class="lb">Jeju<br><span style="opacity:.6">2 pens</span></div><div class="tk"><div class="fl" style="width:68.8%"></div></div><div class="vl">1.17</div></div><div class="br "><div class="lb">Pohang<br><span style="opacity:.6">5 pens</span></div><div class="tk"><div class="fl" style="width:66.3%"></div></div><div class="vl">1.13</div></div><div class="br hi"><div class="lb"><b>Incheon</b><br><span style="opacity:.6">8 pens</span></div><div class="tk"><div class="fl" style="width:66.1%"></div></div><div class="vl">1.12</div></div><div class="br "><div class="lb">Anyang<br><span style="opacity:.6">6 pens</span></div><div class="tk"><div class="fl" style="width:55.2%"></div></div><div class="vl">0.94</div></div><div class="br "><div class="lb">Bucheon<br><span style="opacity:.6">2 pens</span></div><div class="tk"><div class="fl" style="width:50.9%"></div></div><div class="vl">0.86</div></div><div class="br "><div class="lb">Gwangju<br><span style="opacity:.6">3 pens</span></div><div class="tk"><div class="fl" style="width:48.3%"></div></div><div class="vl">0.82</div></div></div><figcaption>Incheon 1.12, 9th. Including penalties it is 1.35, 5th. Non-penalty xG allowed is 0.87 per match, the 1st lowest — <b>the second-best expected goal difference is built on the defence and on penalties.</b></figcaption></figure></section>
+<section><div class="eyebrow"><span class="role">DIAGNOSIS</span><span class="cap">Final third</span></div><h2>All the way there, and no shot</h2><div class="body"><p class="lede">Incheon reach the final third at the league’s 5th-highest rate (42.3 times per 90). But the share of those attacks that end in a shot is <b>the lowest in the league</b>.</p></div><figure><div class="figtitle">The lowest share of final-third attacks ending in a shot</div><div class="figsub">Open-play chains reaching the final third → share ending in a shot · arrivals per 90 under each club</div><div class="legend"><span><i style="background:var(--ic)"></i>Incheon</span><span><i style="background:var(--op)"></i>Other clubs</span></div><div class="bars lbwrap vwide"><div class="br "><div class="lb">Jeonbuk<br><span style="opacity:.6">39.8 arrivals/90</span></div><div class="tk"><div class="fl" style="width:83.2%"></div></div><div class="vl">25.0%</div></div><div class="br "><div class="lb">Ulsan<br><span style="opacity:.6">40.3 arrivals/90</span></div><div class="tk"><div class="fl" style="width:78.6%"></div></div><div class="vl">23.6%</div></div><div class="br "><div class="lb">Jeju<br><span style="opacity:.6">39.6 arrivals/90</span></div><div class="tk"><div class="fl" style="width:77.1%"></div></div><div class="vl">23.1%</div></div><div class="br "><div class="lb">Seoul<br><span style="opacity:.6">43.3 arrivals/90</span></div><div class="tk"><div class="fl" style="width:71.6%"></div></div><div class="vl">21.5%</div></div><div class="br "><div class="lb">Gimcheon<br><span style="opacity:.6">44.0 arrivals/90</span></div><div class="tk"><div class="fl" style="width:70.4%"></div></div><div class="vl">21.1%</div></div><div class="br "><div class="lb">Pohang<br><span style="opacity:.6">38.6 arrivals/90</span></div><div class="tk"><div class="fl" style="width:69.8%"></div></div><div class="vl">20.9%</div></div><div class="br "><div class="lb">Gwangju<br><span style="opacity:.6">32.0 arrivals/90</span></div><div class="tk"><div class="fl" style="width:69.7%"></div></div><div class="vl">20.9%</div></div><div class="br "><div class="lb">Bucheon<br><span style="opacity:.6">33.7 arrivals/90</span></div><div class="tk"><div class="fl" style="width:69.0%"></div></div><div class="vl">20.7%</div></div><div class="br "><div class="lb">Gangwon<br><span style="opacity:.6">50.9 arrivals/90</span></div><div class="tk"><div class="fl" style="width:66.2%"></div></div><div class="vl">19.9%</div></div><div class="br "><div class="lb">Daejeon<br><span style="opacity:.6">44.7 arrivals/90</span></div><div class="tk"><div class="fl" style="width:66.2%"></div></div><div class="vl">19.9%</div></div><div class="br "><div class="lb">Anyang<br><span style="opacity:.6">40.4 arrivals/90</span></div><div class="tk"><div class="fl" style="width:61.8%"></div></div><div class="vl">18.5%</div></div><div class="br hi"><div class="lb"><b>Incheon</b><br><span style="opacity:.6">42.3 arrivals/90</span></div><div class="tk"><div class="fl" style="width:61.3%"></div></div><div class="vl">18.4%</div></div></div><figcaption>Incheon 18.4%, league average 21.1%. They are lowest when trailing too, at 17.3%.</figcaption></figure><div class="tbl "><table><thead><tr><th>How final-third chains end</th><th>Incheon</th><th>League average</th></tr></thead><tbody><tr><td>Shot</td><td class="n">18.7%</td><td class="n">21.3%</td></tr><tr><td>Lost after a completed pass</td><td class="n">17.8%</td><td class="n">17.1%</td></tr><tr><td>Other failed pass</td><td class="n">18.0%</td><td class="n">16.6%</td></tr><tr><td>Failed cross</td><td class="n">11.2%</td><td class="n">12.1%</td></tr><tr><td>Failed pass into the box</td><td class="n">6.2%</td><td class="n">6.6%</td></tr><tr><td>Failed dribble</td><td class="n">3.4%</td><td class="n">3.1%</td></tr></tbody></table></div><div class="body"><p>That does not make them poor at creating chances. xG per final-third chain is 0.022, almost the league average (0.023). They shoot less often mainly because they rarely shoot from outside the box (3.8 per match, 11th). <b>It is shot selection, not a shortage of chances.</b> The real shortfalls are elsewhere — attacking straight after winning the ball (shot within 15 s: 4.4%, 10th) and set pieces without penalties (xG 0.070 per 90, 10th).</p></div></section>
+<section><div class="eyebrow"><span class="role">PLAYERS</span><span class="cap">Mugosa on · off</span></div><h2>Without Mugosa the chances stay the same. The finishing changes</h2><div class="body"><p class="lede">Mugosa has 12 of Incheon’s 36 goals: 5 from 6 penalties and 7 from open play and set pieces (non-penalty xG 6.3). To see how much the team leans on him, I split their minutes into time with him on the pitch and without.</p></div><figure><div class="figtitle">Non-penalty chance creation is almost unchanged; goals are not</div><div class="figsub">Mugosa on the pitch 1818 min / off 753 min · per 90</div><div class="legend"><span><i style="background:var(--ic)"></i>Mugosa on</span><span><i style="background:var(--op)"></i>Mugosa off</span></div><div class="pair"><div class="pg"><div class="pn">Non-penalty xG<small>chances Incheon created</small></div><div class="pgb"><div class="pgr"><div class="tk"><div class="fl" style="width:75.3%;background:var(--ic)"></div></div><div class="vl" style="color:var(--ic)">0.98</div></div><div class="pgr"><div class="tk"><div class="fl" style="width:70.1%;background:var(--op)"></div></div><div class="vl" style="color:var(--op)">0.91</div></div></div></div><div class="pg"><div class="pn">Goals<small>including penalties</small></div><div class="pgb"><div class="pgr"><div class="tk"><div class="fl" style="width:87.6%;background:var(--ic)"></div></div><div class="vl" style="color:var(--ic)">1.14</div></div><div class="pgr"><div class="tk"><div class="fl" style="width:55.2%;background:var(--op)"></div></div><div class="vl" style="color:var(--op)">0.72</div></div></div></div></div><figcaption>Both groups share one axis (0–1.3). The time without him is only 753 minutes, a small sample.</figcaption></figure><div class="body"><p>What Incheon rely on him for is <b>finishing, not creating</b>. Without him a similar volume of chances still comes; what changes is how many go in.</p></div></section>
+<section><div class="eyebrow"><span class="role">RETURN</span><span class="cap">Phase × game state</span></div><h2>The same shape repeats in every state</h2><div class="body"><p class="lede">The phase measures by game state in one table. Brackets are league ranks — highest first for attack, fewest first for what is allowed.</p></div><div class="tbl "><table><thead><tr><th>Phase</th><th>Leading</th><th>Level</th><th>Trailing</th></tr></thead><tbody><tr><td>Incheon minutes</td><td class="n">619</td><td class="n">1627</td><td class="n">621</td></tr><tr><td>Attack · final-third arrivals/90</td><td class="n">34.3 <span style="opacity:.55">(6)</span></td><td class="n">39.8 <span style="opacity:.55">(7)</span></td><td class="n">56.9 <span style="opacity:.55">(3)</span></td></tr><tr><td>Attack · arrival → shot</td><td class="n">20.3% <span style="opacity:.55">(9)</span></td><td class="n">18.4% <span style="opacity:.55">(11)</span></td><td class="n">17.3% <span style="opacity:.55">(12)</span></td></tr><tr><td>Attack · open-play xG/90</td><td class="n">0.99 <span style="opacity:.55">(6)</span></td><td class="n">0.84 <span style="opacity:.55">(7)</span></td><td class="n">1.04 <span style="opacity:.55">(9)</span></td></tr><tr><td>Attack · penalty goals/90</td><td class="n">0.29 <span style="opacity:.55">(2)</span></td><td class="n">0.11 <span style="opacity:.55">(5)</span></td><td class="n">0.43 <span style="opacity:.55">(1)</span></td></tr><tr><td>Allowed · open-play xG/90</td><td class="n">0.74 <span style="opacity:.55">(1)</span></td><td class="n">0.70 <span style="opacity:.55">(2)</span></td><td class="n">0.59 <span style="opacity:.55">(1)</span></td></tr><tr><td>Allowed · open-play goals/90</td><td class="n">1.02 <span style="opacity:.55">(6)</span></td><td class="n">0.83 <span style="opacity:.55">(7)</span></td><td class="n">0.58 <span style="opacity:.55">(1)</span></td></tr></tbody></table></div><div class="body"><p><b>Leading</b> — they do not retreat, they allow the least, and they concede furthest above expectation. <b>Level</b> — 57% of the time. Upper-middle of the league both ways. <b>Trailing</b> — they press opponents back harder than anyone: the fewest chances allowed, and 3rd for final-third arrivals. But arrival-to-shot is the lowest in the league, and the goals are propped up by penalties (penalty goals per 90, 1st).</p></div><figure><div class="figtitle">The first goal splits the result fourfold</div><div class="figsub">Scored first in 13 matches / conceded first in 15 · W-D-L (29 matches)</div><div class="legend"><span><i style="background:var(--ic)"></i>Win</span><span><i style="background:var(--axis)"></i>Draw</span><span><i style="background:var(--op)"></i>Loss</span></div><div class="pair"><div class="pg"><div class="pn">Scored first<small>2.15 points per match</small></div><div class="pgb"><div class="pgr"><div class="tk"><div class="fl" style="width:66.7%;background:var(--ic)"></div></div><div class="vl" style="color:var(--ic)">8 W</div></div><div class="pgr"><div class="tk"><div class="fl" style="width:33.3%;background:var(--axis)"></div></div><div class="vl" style="color:var(--axis)">4 D</div></div><div class="pgr"><div class="tk"><div class="fl" style="width:8.3%;background:var(--op)"></div></div><div class="vl" style="color:var(--op)">1 L</div></div></div></div><div class="pg"><div class="pn">Conceded first<small>0.60 points per match</small></div><div class="pgb"><div class="pgr"><div class="tk"><div class="fl" style="width:16.7%;background:var(--ic)"></div></div><div class="vl" style="color:var(--ic)">2 W</div></div><div class="pgr"><div class="tk"><div class="fl" style="width:25.0%;background:var(--axis)"></div></div><div class="vl" style="color:var(--axis)">3 D</div></div><div class="pgr"><div class="tk"><div class="fl" style="width:83.3%;background:var(--op)"></div></div><div class="vl" style="color:var(--op)">10 L</div></div></div></div></div><figcaption>Both groups share one axis (0–12 matches). Only one match finished 0–0. Conceding first 15 times is second only to Gwangju (14 on the 28-match basis, level with Pohang and Anyang).</figcaption></figure></section>
+<section><div class="eyebrow"><span class="role">CASES</span><span class="cap">4 of 29 matches</span></div><h2>Four matches, read again</h2><div class="body"><p class="lede">Chosen by the numbers, not by impression — ① the largest gap between expected and actual points, ② the most goals conceded per shot allowed, ③ the fewest shots per final-third arrival, ④ the widest xG margin.</p></div><div class="mcards"><div class="mcard"><div class="why">① The unluckiest match</div><div class="hd"><span class="sc">1–3</span><span class="op">Daejeon (home)</span></div><div class="rd">R4 · 18 Mar · L · 50% possession</div><dl class="kv"><dt>xG</dt><dd><b>1.57</b> : 0.78</dd><dt>Shots</dt><dd><b>10</b> : 8</dd><dt>Final-third arrivals → shot</dt><dd><b>9</b> of <b>50</b></dd><dt>Expected points</dt><dd><b>2.02</b> → actual 0</dd></dl><p>Eight shots allowed, three goals conceded. Behind early (9 min), level through a headed corner — then two more conceded, in the 85th minute and in stoppage time. <b>Expected points of 2.02 turned into zero, the largest gap of the season.</b></p></div><div class="mcard"><div class="why">② More conceded than allowed</div><div class="hd"><span class="sc">2–3</span><span class="op">Gwangju (away)</span></div><div class="rd">R2 · 7 Mar · L · 58% possession</div><dl class="kv"><dt>xG</dt><dd><b>2.16</b> : 1.37</dd><dt>Shots</dt><dd><b>17</b> : 7</dd><dt>Final-third arrivals → shot</dt><dd><b>12</b> of <b>50</b></dd><dt>Expected points</dt><dd><b>1.96</b> → actual 0</dd></dl><p>Gwangju had 7 shots; without the penalty their xG was 0.59. Those shots produced three goals, penalty included. Incheon shot 17 times, more than twice as often, and lost.</p></div><div class="mcard"><div class="why">③ All the way there, no shot</div><div class="hd"><span class="sc">1–0</span><span class="op">Jeju (home)</span></div><div class="rd">R10 · 25 Apr · W · 55% possession</div><dl class="kv"><dt>xG</dt><dd><b>0.43</b> : 0.69</dd><dt>Shots</dt><dd><b>3</b> : 9</dd><dt>Final-third arrivals → shot</dt><dd><b>2</b> of <b>46</b></dd><dt>Expected points</dt><dd><b>1.03</b> → actual 3</dd></dl><p>They reached the final third 46 times; 2 of those ended in a shot. Three shots, xG 0.43. And they won 1–0 — a single shot from Ferrier in the 70th minute. <b>It is also a win for a defence that allowed only poor shots.</b></p></div><div class="mcard"><div class="why">④ The widest margin</div><div class="hd"><span class="sc">2–1</span><span class="op">Ulsan (away)</span></div><div class="rd">R19 · 21 Jul · W · 56% possession</div><dl class="kv"><dt>xG</dt><dd><b>3.52</b> : 0.64</dd><dt>Shots</dt><dd><b>21</b> : 9</dd><dt>Final-third arrivals → shot</dt><dd><b>18</b> of <b>73</b></dd><dt>Expected points</dt><dd><b>2.87</b> → actual 3</dd></dl><p>xG 3.52 to 0.64, 73 final-third arrivals. Ferrier put them ahead in the 40th minute and the equaliser came two minutes later. The winner was a Mugosa penalty in stoppage time. <b>Even this team’s best day ended with a penalty.</b></p></div></div><div class="note"><b>How they were chosen.</b> For each of Incheon’s 28 matches I computed shot-level simulated expected points, final-third arrival and shot chains, and both sides’ shots and xG, and took the top match on each measure (② is goals conceded ÷ shots allowed — 3/7). A single match is a sample of one, so read these as <b>illustrations, not evidence</b>.</div></section>
+<section><div class="eyebrow"><span class="role">DISCIPLINE</span><span class="cap">Hypothesis log</span></div><h2>What did not survive testing</h2><div class="body"><p class="lede">Five hypotheses and readings from this analysis did not survive the data. <b>All five were mine.</b> They stay in — a rejected hypothesis marks the edges of the conclusions that did survive.</p></div><div class="dont"><div class="hd"><span class="x">✕</span><h3>Incheon concede more because they allow the most unchallenged shots</h3></div><p><b>Corrected.</b> Their rank for the share of unchallenged shots moves with the window (2, 3 or 5 seconds before the shot): 2nd, 1st, 3rd. The gap to the league average is 2–3 points, and the goals that difference cost is +0.5. The core of the excess is not the volume but <b>how often unchallenged shots went in</b>.</p></div><div class="dont"><div class="hd"><span class="x">✕</span><h3>Being 5.8 points short is a structural flaw</h3></div><p><b>Rejected.</b> In the shot-level simulation, the chance of falling this short or further is 0.19. Pohang, Gimcheon and Daejeon are in the same range. The only trace of structure is the shape on the conceding side (unchallenged shots).</p></div><div class="dont"><div class="hd"><span class="x">✕</span><h3>Incheon are strong at set pieces</h3></div><p><b>Rejected.</b> My first scan read them as “1st for set-piece goals per 90”, but that included 7 penalty goals. Without penalties their set-piece xG is 0.070 per 90, <b>10th in the league</b>. What is strong is winning penalties (8 fouls drawn in the box, 1st).</p></div><div class="dont"><div class="hd"><span class="x">✕</span><h3>Incheon took 18 penalty shots</h3></div><p><b>Corrected.</b> In the first scan I estimated penalties from the shot’s start coordinates (near the spot) and counted 18 — mixing in open-play shots from the same area. Counted by the event’s penalty tag, it is <b>8</b>. Event type should not be inferred from coordinates.</p></div><div class="dont"><div class="hd"><span class="x">✕</span><h3>Mugosa creates Incheon’s chances</h3></div><p><b>Rejected.</b> Non-penalty xG per 90 is 0.98 with him and 0.91 without. Chance creation barely moves; goals do (1.14 vs 0.72).</p></div><div class="note"><b>Three traps in the data.</b> ① <b>The portal has no events for matches on 5 September.</b> Incheon’s R27 (away at Seoul) and Bucheon–Daejeon are both empty, and the portal’s official 45-metric table leaves them out too. ② <b>Finding untagged goals (RCV) by timestamp also catches the opposing goalkeeper’s “goal conceded” row in the same second.</b> Only the shot row should count — otherwise the opponent gains a phantom goal. ③ <b>An Incheon player’s own goal is logged as an Incheon shot (goal).</b> The official table counts it in shots but not in shots on target; this piece removes it from shots.</div></section>
+<section><div class="eyebrow"><span class="role">PRESCRIPTION</span><span class="cap">Priorities</span></div><h2>What to look at first, and what is better left alone</h2><div class="body"><p class="lede">The diagnosis has narrowed to “they allow little, but of what they allow, unchallenged shots go in more often”. The order below is lowest cost first.</p></div><div class="instr"><div class="n">1</div><div><h3>Straight after losing the ball, get to the shooter first</h3><p>51.9% of the shots allowed came within 15 seconds of the opponent winning the ball (2nd in the league), and 18 of them went in (expected 12.0). The volume is the league’s lowest — the problem is that on those few shots, nobody got there.</p><p>On video: once the counter-press is beaten, who is first to turn back, and how far is he from the shooter?</p><div class="ev">Evidence · <b>147 unchallenged shots → 22 conceded (expected 15.2)</b> · 113 challenged shots → 7 (expected 7.4)</div></div></div><div class="instr"><div class="n">2</div><div><h3>Classify the shots on target on video</h3><p>The excess at the “shot on target goes in” step is +4.6 goals, mostly in Kim Dong-heon’s matches. With no placement or speed in this data, the goalkeeper’s share and the shooter’s share cannot be separated.</p><p>Split the 29 goals by placement (corner / central), screening and reaction distance, and it becomes clear whether this is goalkeeper coaching or defensive positioning.</p><div class="ev">Evidence · <b>Kim Dong-heon, 23 matches: 87 shots on target → 25 conceded (expected 20.6)</b></div></div></div><div class="instr"><div class="n">3</div><div><h3>In the final third, play one more ball into the box</h3><p>18.4% of final-third attacks end in a shot, the league’s lowest, and it is lowest when trailing too. xG per chain is average, so this is not a call for more long shots.</p><p>The share of final-third passes played into the box is 27.5%, 11th in the league. That is where to add.</p><div class="ev">Evidence · <b>arrival → shot 18.4% (12th)</b> · arrivals 42.3/90 (5th)</div></div></div><div class="instr"><div class="n">4</div><div><h3>Rework the attack straight after winning the ball</h3><p>The share of regains that become a shot within 15 seconds is 4.4%, 10th in the league; the xG from them is 9th. The defence wins the ball as well as anyone, and the moment does not turn into attack.</p><div class="ev">Evidence · <b>shot within 15 s of a regain 4.4% (10th)</b> · transition xG/90 0.46</div></div></div><h3>Better left alone</h3><div class="dont"><div class="hd"><span class="x">✕</span><h3>The suppression structure</h3></div><p>Open-play xG allowed, xG allowed per final-third chain and xG allowed after losing the ball are all the league’s lowest. Dropping the line because of the excess would give up this strength first.</p></div><div class="dont"><div class="hd"><span class="x">✕</span><h3>Attacking while ahead</h3></div><p>While leading they allow the least xG in the league and keep their own attacking xG at the 6th-highest level. The wiped-out leads did not come from refusing to sit back.</p></div><div class="dont"><div class="hd"><span class="x">✕</span><h3>The way they win penalties</h3></div><p>8 fouls drawn in the box, the most in the league. 17% of their xG comes from here. No reason to change it.</p></div><div class="sheet"><h3>One-page summary</h3><div class="sd">Incheon United 2026 · 29 matches · as of 20 September 2026</div><ol><li><b>Second on performance, seventh in the table.</b> Expected goal difference +0.39 per match (2nd), actual +0.14.</li><li><b>Being 5.8 points short is within the range of luck.</b> P = 0.19. Only Seoul and Gwangju are clearly off expectation.</li><li><b>Their suppression is the best in the league.</b> Open-play xG allowed 0.68 per 90, the lowest.</li><li><b>Yet they conceded 6.9 goals above expectation.</b> Second behind Gwangju. Adjusting for pressure on the shooter still leaves +6.4 (P = 0.083).</li><li><b>All of the excess is in unchallenged shots.</b> 147 shots → 22 goals (expected 15.2). Not more of them — they simply went in more often.</li><li><b>It clusters in transition.</b> 51.9% of shots allowed came within 15 s of an opponent regain; 18 goals from there.</li><li><b>Without penalties the attack is 9th.</b> 8 penalties and 8 fouls drawn in the box, both league highs. The second-best xGD is the defence plus penalties.</li><li><b>The lowest share of final-third attacks ending in a shot.</b> xG per chain is average — it is shot selection.</li><li><b>They rely on Mugosa for finishing, not creation.</b> Non-penalty xG/90 0.98 vs 0.91; goals/90 1.14 vs 0.72.</li></ol><div class="neg"><div class="nl">What this piece does not claim</div><p>Whether the excess reflects the goalkeeper’s ability (no shot placement · needs video) · whether “unchallenged” means an actual absence of pressure (an event proxy — body contact and blocked angles are not logged) · what happened in R27, 0–1 away at Seoul (the portal has no events) · whether this shape will hold for the rest of the season (P = 0.083 is not a verdict).</p></div></div></section>
+<footer><div class="wrap"><b>Data</b> · Parsed directly from the K League data portal (portal.kleague.com). Incheon’s 29 K League 1 matches in 2026 (R22 postponed to 27 September). 40,233 raw events (20,886 Incheon), 29 match reports. The league comparison combines, match by match, the eleven club folders I have parsed the same way: <b>168 matches · 239,842 events</b> (Seoul 26 matches, the rest 28–29 — each club was collected on a different date).<br><b>Validation</b> · 21 event-versus-official-record checks, all matching. League table re-summed; shots 288 · on target 92 · inside the box 183 · corners 120 · fouls 259 · offsides 48 · tackles 153 · interceptions 188 · clearances 563 · passes 11,122 · key passes 127. Three mis-tagged goals corrected.<br><b>★ Missing data</b> · <b>The events for R27 (5 September, 0–1 away at Seoul) do not exist on the portal.</b> Bucheon–Daejeon on the same day is also empty, so it looks as if every match from 5 September is missing. Event figures cover 28 Incheon matches; points and goals cover 29.<br><b>Definitions</b> · Chain = a spell in which one team keeps the ball. Transition = within 15 seconds of winning the ball. “Unchallenged shot” = no defensive or duel event by the defending team in the 3 seconds before the shot (a proxy — body contact and blocked angles are not logged as events).<br><b>Author</b> · Hyuckjin Han · September 2026</div></footer>
+</div>
+</body>
+</html>

@@ -33,6 +33,31 @@ type Episode = {
 
 const EPISODES: Episode[] = [
   {
+    slug: "incheon",
+    no: "14",
+    publishedAt: "2026-09-23",
+    competition: {
+      en: "K League 1 2026 · Incheon United · 29 matches, 168-match league pool",
+      ko: "하나은행 K리그1 2026 · 인천유나이티드 · 29경기 · 리그 168경기 비교",
+    },
+    title: {
+      en: "They Give Away the Least, and Concede More",
+      ko: "가장 적게 내주고, 더 많이 먹었다",
+    },
+    sub: {
+      en: "Put all 168 league matches on one scale and Incheon rate second on expected goal difference (+0.39 per match), behind only Seoul — yet they sit seventh. Being 5.8 points short of simulated expected points is within the range of luck (P = 0.19); Pohang, Gimcheon and Daejeon are in the same place. The defence is the best in the league at suppression: 0.68 open-play xG allowed per 90, the lowest, along with the lowest xG allowed per final-third chain and after losing the ball. Yet a league-adjusted model says they conceded 6.9 goals too many, second only to Gwangju, and 6.4 survive even after adjusting for whether a defender reached the shooter (P = 0.083). The excess sits in one place: 147 unchallenged shots produced 22 goals against an expected 15.2, while 113 challenged shots produced 7 against 7.4. They did not allow more of them — a correction to my own first reading — those shots simply went in more often, clustered in the fifteen seconds after an opponent regain. The attack reaches the final third often and ends there in a shot less often than anyone; without penalties (8 won, a league high) it is ninth. Mugosa matters for finishing, not creation. Five hypotheses were rejected along the way, all mine.",
+      ko: "리그 168경기를 한 잣대에 놓으면 인천의 경기당 기대 득실차는 +0.39로 서울 다음 2위다. 순위는 7위다. 기대승점보다 5.8점 모자란 것은 운의 범위다(P=0.19) — 포항·김천·대전도 같은 자리에 있다. 수비 억제는 리그 최고다. 오픈플레이 허용 xG/90 0.68로 최소이고, 파이널서드 체인당 허용 xG와 볼 상실 직후 허용 xG도 최소다. 그런데 리그 보정 모델로는 6.9골을 더 먹었고(광주 다음 2위), 슈터에게 수비가 붙었는지까지 보정해도 6.4골이 남는다(P=0.083). 초과는 한곳에 있다. 붙지 않은 슛 147개에서 22실점(기대 15.2), 붙은 슛 113개에서 7실점(기대 7.4). 더 많이 내준 게 아니라 — 첫 해석을 정정했다 — 그 슛이 더 자주 들어갔고, 상대가 공을 뺏은 직후 15초에 몰려 있다. 공격은 파이널서드까지 자주 가지만 거기서 슛으로 끝나는 비율이 리그 최저이고, PK(8개, 최다)를 빼면 9위다. 무고사 의존은 기회가 아니라 마무리 의존이다. 가설 다섯 개가 기각됐고 전부 내 것이다.",
+    },
+    blurb: {
+      en: "The fewest chances allowed in the league, second on expected goal difference, seventh in the table. The excess goals all came from shots nobody got to — not more of them, just more of them going in.",
+      ko: "리그에서 가장 적게 내주고, 기대 득실차 2위, 순위 7위. 초과 실점은 전부 아무도 붙지 않은 슛에서 나왔다 — 더 많이 내준 게 아니라 더 자주 들어갔다.",
+    },
+    stats: {
+      en: [["0.68", "open-play xG allowed per 90, league lowest"], ["+6.9", "goals conceded above league-adjusted expectation"], ["15.2 → 22", "unchallenged shots, expected vs actual goals"]],
+      ko: [["0.68", "오픈플레이 허용 xG/90, 리그 최소"], ["+6.9", "리그 보정 기대 대비 초과 실점"], ["15.2 → 22", "붙지 않은 슛의 기대 대 실제 실점"]],
+    },
+  },
+  {
     slug: "bucheon",
     no: "13",
     publishedAt: "2026-09-21",
