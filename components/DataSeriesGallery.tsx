@@ -33,6 +33,31 @@ type Episode = {
 
 const EPISODES: Episode[] = [
   {
+    slug: "suwonfc",
+    no: "15",
+    publishedAt: "2026-09-24",
+    competition: {
+      en: "K League 2 2026 · Suwon FC · 25 matches, 212-match league pool",
+      ko: "하나은행 K리그2 2026 · 수원FC · 25경기 · 리그 212경기 비교",
+    },
+    title: {
+      en: "They Reach Less, and Shoot the Most",
+      ko: "적게 닿고, 가장 자주 쏜다",
+    },
+    sub: {
+      en: "Suwon FC have scored 50 goals, the most in K League 2, but on non-penalty expected goal difference they are fourth (+0.41 per match) and 5.3 points above simulated expected points. Build-up, progression and final-third entries are all below the league average — entries rank 13th of 17. What happens next is different: 30.6% of their entries end in a shot, first in the league, and first again whether the final third starts at x 60, 66.7 or 75. The defence is a mirror: opponents reach their third more often (31.9 to 28.9 per 90), yet non-penalty xG runs 1.43 to 1.01 in Suwon FC’s favour. Their ten-second transitions are the league’s sharpest (P = 0.012), but goals from regains sit below the league average share. By score state: level is where the formula is clearest; ahead they allow the fewest open-play chances in the league; behind, entries and regains fall to the bottom and penalties and set pieces carry them — set pieces went 8 goals from 3.44 xG at one end and 6 from 2.57 at the other, both the league’s biggest excess. Unbeaten in 13 since R14, with entries unchanged and entry-to-shot up from 24.6% to 36.5%. Five hypotheses were rejected or revised along the way, all mine.",
+      ko: "수원FC는 50골로 K리그2 최다 득점이지만 PK 제외 기대 득실차는 경기당 +0.41로 4위, 기대승점보다 5.3점 많다. 빌드업·전진·파이널서드 도달 모두 리그 평균 아래이고 도달은 17팀 중 13위다. 차이는 그다음에 있다. 도달의 30.6%가 슛으로 끝나 리그 1위이고, 파이널서드 기준선을 x 60·66.7·75 어디에 그어도 1위다. 수비는 거울상이다 — 상대 도달은 90분당 31.9 대 28.9로 더 많은데 PK 제외 xG는 1.43 대 1.01로 수원FC가 앞선다. 탈취 후 10초 전환은 리그에서 가장 날카롭지만(P=0.012) 탈취 시작 골 비중은 리그 평균 아래다. 상태별로는 동점에서 공식이 가장 선명하고, 앞서면 리그에서 가장 적게 내준다. 뒤지면 도달과 탈취가 최하위로 떨어지고 PK와 세트피스가 버틴다 — 세트피스는 득점 8골(xG 3.44)·실점 6골(xGA 2.57)로 양쪽 모두 리그 최대 초과다. R14 이후 13경기 무패, 도달은 그대로이고 도달 후 슛이 24.6%에서 36.5%로 올랐다. 가설 다섯 개가 기각·수정됐고 전부 내 것이다.",
+    },
+    blurb: {
+      en: "The most goals in K League 2 from the 13th-most final-third entries. Once in, nobody shoots more often — and ahead, nobody allows less.",
+      ko: "파이널서드 도달 13위로 K리그2 최다 득점. 닿으면 가장 자주 쏘고, 앞서면 가장 적게 내준다.",
+    },
+    stats: {
+      en: [["30.6%", "final-third entries ending in a shot, league 1st"], ["13th", "final-third entries per 90, of 17"], ["0.65", "open-play xG allowed per 90 when leading, league lowest"]],
+      ko: [["30.6%", "파이널서드 도달 후 슛 전환, 리그 1위"], ["13위", "90분당 파이널서드 도달, 17팀 중"], ["0.65", "리드 중 허용 오픈플레이 xG/90, 리그 최소"]],
+    },
+  },
+  {
     slug: "incheon",
     no: "14",
     publishedAt: "2026-09-23",

@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>They Reach Less, and Shoot the Most — Suwon FC 2026 | Hyuckjin Han</title>
+<meta name="description" content="Suwon FC have scored more goals than anyone in K League 2. Yet they reach the opponent’s final third less often than most — 13th of 17. What happens next is different: no team turns those entries into shots more often. I put all 212 league matches on one scale and followed that single line — when it works, and when it stops.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light;
+  --page:#f1f1ef; --surface:#fcfcfb; --surface-2:#e4e4e1; --raise:#f7f7f5;
+  --ink:#141413; --ink-2:#3c3c3a; --muted:#70706c;
+  --line:rgba(20,20,19,.14); --line-2:rgba(20,20,19,.07);
+  --grid:#e0e0dd; --axis:#c2c2be;
+  --ic:#c1272d; --op:#1f6fa3; --top:#3f7a1f; --bad:#8a5a00;
+  --ic-soft:rgba(193,39,45,.10); --op-soft:rgba(31,111,163,.11);
+  --top-soft:rgba(63,122,31,.11); --bad-soft:rgba(138,31,39,.10);
+  --sp:clamp(18px,4.5vw,30px);
+  --disp:"Hahmlet",'Nanum Myeongjo',serif;
+  --body:"IBM Plex Sans KR",-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,'SFMono-Regular',monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --page:#121211; --surface:#1a1a19; --surface-2:#262624; --raise:#1f1f1e;
+    --ink:#eaeae7; --ink-2:#b8b8b4; --muted:#8d8d89;
+    --line:rgba(234,234,231,.16); --line-2:rgba(234,234,231,.08);
+    --grid:#2d2d2b; --axis:#4a4a47;
+    --ic:#e0626c; --op:#3a8fca; --top:#5aa32e; --bad:#d6a045;
+    --ic-soft:rgba(224,98,108,.16); --op-soft:rgba(58,143,202,.17);
+    --top-soft:rgba(90,163,46,.15); --bad-soft:rgba(232,115,124,.14);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --page:#121211; --surface:#1a1a19; --surface-2:#262624; --raise:#1f1f1e;
+  --ink:#eaeae7; --ink-2:#b8b8b4; --muted:#8d8d89;
+  --line:rgba(234,234,231,.16); --line-2:rgba(234,234,231,.08);
+  --grid:#2d2d2b; --axis:#4a4a47;
+  --ic:#e0626c; --op:#3a8fca; --top:#5aa32e; --bad:#d6a045;
+  --ic-soft:rgba(224,98,108,.16); --op-soft:rgba(58,143,202,.17);
+  --top-soft:rgba(90,163,46,.15); --bad-soft:rgba(232,115,124,.14);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font-family:var(--body);
+  word-break:keep-all;overflow-wrap:break-word;
+  font-weight:400;font-size:16px;line-height:1.72;-webkit-font-smoothing:antialiased}
+.wrap{max-width:940px;margin:0 auto;padding-inline:var(--sp);padding-block:0}
+p{margin:0 0 1.05em}
+strong{font-weight:600;color:var(--ink)}
+em{font-style:normal;background:var(--ic-soft);padding:.06em .3em;border-radius:2px;font-weight:500}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums;font-weight:500;letter-spacing:-.01em}
+
+/* ── header ── */
+header{padding-block:clamp(48px,9vw,88px) clamp(30px,5vw,44px);border-bottom:1px solid var(--line)}
+.badge{display:inline-flex;align-items:center;gap:.55em;font-family:var(--mono);font-size:11px;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--ic);font-weight:500}
+.badge::before{content:"";width:22px;height:2px;background:var(--ic)}
+h1{font-family:var(--disp);font-weight:600;font-size:clamp(38px,8.6vw,68px);line-height:1.06;
+  letter-spacing:-.025em;margin:.34em 0 .3em;text-wrap:balance}
+.dek{font-family:var(--disp);font-weight:400;font-size:clamp(17px,2.5vw,21px);line-height:1.55;
+  color:var(--ink-2);max-width:34em;margin:0 0 1.5em}
+.meta{display:flex;flex-wrap:wrap;gap:.5em 0;font-family:var(--mono);font-size:11.5px;
+  color:var(--muted);letter-spacing:.02em}
+.meta span+span::before{content:"|";padding:0 .85em;color:var(--axis)}
+
+/* ── tiles ── */
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line-2);
+  border-block:1px solid var(--line);margin-block:0}
+@media(max-width:760px){.tiles{grid-template-columns:repeat(2,1fr)}}
+.tile{background:var(--page);padding:clamp(16px,3vw,24px) clamp(12px,2.4vw,20px);display:flex;
+  flex-direction:column;gap:.3em}
+.tile .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.tile .v{font-family:var(--disp);font-weight:600;font-size:clamp(26px,4.6vw,38px);line-height:1;
+  letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.tile .v.gj{color:var(--ic)} .tile .v.bad{color:var(--bad)}
+.tile .s{font-size:12.5px;line-height:1.45;color:var(--ink-2)}
+
+/* ── sections ── */
+section{padding-block:clamp(40px,7vw,68px);border-bottom:1px solid var(--line-2)}
+section:last-of-type{border-bottom:none}
+.eyebrow{display:flex;align-items:baseline;gap:.9em;margin-bottom:.9em}
+.eyebrow .role{font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--page);background:var(--ink-2);padding:.35em .7em;border-radius:2px;white-space:nowrap}
+.eyebrow .cap{font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--muted)}
+h2{font-family:var(--disp);font-weight:600;font-size:clamp(25px,4.4vw,37px);line-height:1.2;
+  letter-spacing:-.022em;margin:0 0 .6em;text-wrap:balance;max-width:19em}
+h3{font-family:var(--disp);font-weight:600;font-size:clamp(17px,2.4vw,21px);line-height:1.35;
+  letter-spacing:-.012em;margin:2.1em 0 .7em}
+.lede{font-size:clamp(16.5px,2.1vw,18.5px);line-height:1.68;color:var(--ink-2);max-width:33em;margin-bottom:1.6em}
+.body{max-width:35em}
+.body.wide{max-width:40em}
+
+/* ── pull ── */
+.pull{border-left:3px solid var(--ic);padding:.1em 0 .1em 1.15em;margin:1.9em 0;
+  font-family:var(--disp);font-weight:500;font-size:clamp(18px,2.7vw,23px);line-height:1.45;
+  letter-spacing:-.014em;color:var(--ink);max-width:24em;text-wrap:balance}
+
+/* ── figure ── */
+figure{margin:2em 0;padding:clamp(16px,3vw,26px);background:var(--surface);
+  border:1px solid var(--line);border-radius:3px}
+figcaption{font-family:var(--mono);font-size:11px;line-height:1.6;color:var(--muted);
+  margin-top:1.15em;padding-top:.85em;border-top:1px solid var(--line-2)}
+.figtitle{font-family:var(--body);font-weight:600;font-size:14px;line-height:1.4;color:var(--ink);
+  margin-bottom:.3em;letter-spacing:-.005em}
+.figsub{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:1.35em;letter-spacing:.01em}
+.legend{display:flex;flex-wrap:wrap;gap:.5em 1.3em;font-family:var(--mono);font-size:11px;
+  color:var(--ink-2);margin-bottom:1.1em}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:1px;margin-right:.45em;vertical-align:-1px}
+
+/* ── bar rows ── */
+.bars{display:flex;flex-direction:column;gap:7px}
+.br{display:grid;grid-template-columns:74px 1fr 62px;align-items:center;gap:10px}
+@media(max-width:560px){.br{grid-template-columns:60px 1fr 54px;gap:7px}}
+.br .lb{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);text-align:right;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bars.lbwrap .br{grid-template-columns:90px 1fr 46px}
+.bars.lbwrap .br .lb{white-space:normal;overflow:visible;text-overflow:clip;line-height:1.28}
+@media(max-width:560px){.bars.lbwrap .br{grid-template-columns:78px 1fr 40px;gap:7px}}
+.bars.lbwrap.vwide .br{grid-template-columns:90px 1fr 100px}
+.bars.lbwrap.vwide .br .vl{white-space:nowrap;font-size:10.5px}
+@media(max-width:560px){.bars.lbwrap.vwide .br{grid-template-columns:56px 1fr 90px;gap:6px}}
+.br .tk{height:17px;background:var(--surface-2);border-radius:1px;overflow:hidden}
+.br .fl{height:100%;background:var(--op);border-radius:1px}
+.br .vl{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;
+  color:var(--ink-2);text-align:right}
+.br.hi .lb{color:var(--ic);font-weight:600}
+.br.hi .fl{background:var(--ic)}
+.br.hi .vl{color:var(--ic);font-weight:600}
+.br.ref .fl{background:var(--top)}
+.br.ref .lb,.br.ref .vl{color:var(--top)}
+
+/* ── grouped pair bars ── */
+.pair{display:flex;flex-direction:column;gap:16px}
+.pg{display:grid;grid-template-columns:96px 1fr;gap:12px;align-items:center}
+@media(max-width:560px){.pg{grid-template-columns:1fr;gap:5px}}
+.pg .pn{font-family:var(--body);font-size:13px;font-weight:600;color:var(--ink)}
+.pg .pn small{display:block;font-family:var(--mono);font-weight:400;font-size:10.5px;color:var(--muted)}
+.pgb{display:flex;flex-direction:column;gap:5px}
+.pgr{display:grid;grid-template-columns:1fr 54px;gap:9px;align-items:center}
+.pgr .tk{height:15px;background:var(--surface-2);border-radius:1px;overflow:hidden}
+.pgr .fl{height:100%;border-radius:1px}
+.pgr .vl{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;text-align:right}
+
+/* ── table ── */
+.tbl{overflow-x:auto;margin:1.8em 0;border:1px solid var(--line);border-radius:3px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:13px}
+th,td{padding:9px 13px;text-align:left;border-bottom:1px solid var(--line-2);vertical-align:baseline}
+th{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;background:var(--raise);white-space:nowrap}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+td .nm{font-weight:600}
+td .no{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.up{color:var(--top);font-weight:600} .dn{color:var(--bad);font-weight:600}
+.dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:.5em;vertical-align:1px}
+.dot.on{background:var(--top)} .dot.mid{background:var(--axis)} .dot.off{background:transparent;
+  border:1px solid var(--axis)}
+
+/* ── slope svg ── */
+svg{display:block;max-width:100%;height:auto;overflow:visible}
+.sv-lb{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:var(--muted)}
+.sv-vl{font-family:"IBM Plex Mono",monospace;font-size:11.5px;font-weight:500}
+.sv-nm{font-family:"IBM Plex Sans KR",sans-serif;font-size:11.5px;font-weight:600;fill:var(--ink-2)}
+
+p.rate{font-size:13px;line-height:1.6;color:var(--muted);border-left:2px solid var(--line);
+  padding-left:1.1em;margin:1.5em 0}
+p.rate b{color:var(--ink-2);font-weight:600}
+
+/* ── callout ── */
+.note{background:var(--raise);border:1px solid var(--line);border-left:3px solid var(--axis);
+  border-radius:3px;padding:clamp(14px,2.6vw,20px);margin:1.9em 0;font-size:14px;line-height:1.65;
+  color:var(--ink-2)}
+.note b{color:var(--ink);font-weight:600}
+.note.warn{border-left-color:var(--bad)}
+.note.key{border-left-color:var(--ic);background:var(--ic-soft);border-color:var(--line)}
+
+/* ── stat strip ── */
+.strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-2);
+  border:1px solid var(--line);border-radius:3px;overflow:hidden;margin:1.9em 0}
+@media(max-width:620px){.strip{grid-template-columns:1fr}}
+.strip>div{background:var(--surface);padding:clamp(13px,2.4vw,18px)}
+.strip .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:.4em}
+.strip .v{font-family:var(--disp);font-weight:600;font-size:clamp(20px,3.4vw,27px);line-height:1.1;
+  font-variant-numeric:tabular-nums;letter-spacing:-.018em}
+.strip .s{font-size:12px;color:var(--ink-2);margin-top:.35em;line-height:1.45}
+
+/* ── list ── */
+ul.clean{list-style:none;padding:0;margin:1.3em 0;display:flex;flex-direction:column;gap:.85em;max-width:35em}
+ul.clean li{padding-left:1.5em;position:relative;font-size:14.5px;line-height:1.62;color:var(--ink-2)}
+ul.clean li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:1.5px;background:var(--axis)}
+ul.clean li b{color:var(--ink);font-weight:600}
+
+/* ── case panel ── */
+.case{border:1px solid var(--line);border-top:3px solid var(--ic);border-radius:3px;
+  background:var(--surface);padding:clamp(18px,3.2vw,28px);margin:2.2em 0}
+.case+.case{margin-top:1.4em}
+.case .ch{display:flex;flex-wrap:wrap;align-items:baseline;gap:.5em .9em;margin-bottom:.35em}
+.case .ct{font-family:var(--disp);font-weight:600;font-size:clamp(20px,3.2vw,26px);line-height:1.15;
+  letter-spacing:-.02em;color:var(--ink)}
+.case .cn{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.case .cs{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ic);border:1px solid var(--ic);border-radius:2px;padding:.22em .55em;white-space:nowrap}
+.case .cd{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:1.15em;
+  padding-bottom:1.15em;border-bottom:1px solid var(--line-2)}
+.case p{font-size:14.5px;line-height:1.68;color:var(--ink-2);margin-bottom:1em;max-width:40em}
+.case p:last-child{margin-bottom:0}
+.case p b,.case p strong{color:var(--ink);font-weight:600}
+.case h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;margin:1.6em 0 .7em}
+
+/* ── ledger (two-column consequence table inside a case) ── */
+.ledger{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line-2);
+  border:1px solid var(--line);border-radius:3px;overflow:hidden;margin:1.4em 0}
+@media(max-width:620px){.ledger{grid-template-columns:1fr}}
+.ledger>div{background:var(--raise);padding:clamp(13px,2.4vw,17px)}
+.ledger .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:.5em}
+.ledger .v{font-family:var(--disp);font-weight:600;font-size:clamp(17px,2.8vw,21px);line-height:1.2;
+  letter-spacing:-.015em;margin-bottom:.4em}
+.ledger .state .v{color:var(--ink-2)}
+.ledger .social .v{color:var(--bad)}
+.ledger .s{font-size:12.5px;line-height:1.5;color:var(--ink-2)}
+
+/* ── timeline strip ── */
+.tl{display:flex;gap:2px;margin:1.3em 0 .6em}
+.tl .y{flex:1;min-width:0;text-align:center}
+.tl .yb{height:30px;border-radius:1px;background:var(--surface-2)}
+.tl .yb.play{background:var(--op)}
+.tl .yb.gap{background:var(--bad-soft);border:1px dashed var(--bad)}
+.tl .yb.low{background:var(--ic-soft);border:1px solid var(--ic)}
+.tl .yl{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:.45em;
+  writing-mode:vertical-rl;transform:rotate(180deg);height:34px;display:inline-block}
+@media(min-width:560px){.tl .yl{writing-mode:horizontal-tb;transform:none;height:auto}}
+
+footer{padding-block:clamp(34px,6vw,54px) clamp(46px,8vw,74px);border-top:1px solid var(--line);
+  font-family:var(--mono);font-size:11.5px;line-height:1.85;color:var(--muted)}
+footer b{color:var(--ink-2);font-weight:500}
+@media(prefers-reduced-motion:no-preference){
+  section{animation:fi .5s ease-out both}
+  @keyframes fi{from{opacity:.55}to{opacity:1}}
+}
+
+/* ── scouting report components ── */
+.warnbar{background:var(--bad-soft);border:1px solid var(--bad);border-radius:3px;
+  padding:clamp(13px,2.4vw,18px);margin:1.6em 0;font-size:13.5px;line-height:1.6;color:var(--ink-2)}
+.warnbar b{color:var(--bad);font-weight:600}
+
+/* numbered instruction card */
+.instr{display:grid;grid-template-columns:44px 1fr;gap:clamp(12px,2.4vw,20px);
+  border:1px solid var(--line);border-left:3px solid var(--ic);border-radius:3px;
+  background:var(--surface);padding:clamp(15px,2.8vw,22px);margin:1.1em 0}
+@media(max-width:560px){.instr{grid-template-columns:32px 1fr;gap:12px}}
+.instr .n{font-family:var(--disp);font-weight:600;font-size:clamp(26px,4.4vw,34px);line-height:1;
+  color:var(--ic);letter-spacing:-.03em}
+.instr h3{font-family:var(--body);font-weight:600;font-size:clamp(15.5px,2.2vw,18px);
+  line-height:1.34;color:var(--ink);margin:0 0 .5em;letter-spacing:-.01em}
+.instr p{font-size:14px;line-height:1.62;color:var(--ink-2);margin:0 0 .7em;max-width:40em}
+.instr p:last-child{margin-bottom:0}
+.instr .ev{font-family:var(--mono);font-size:11.5px;line-height:1.55;color:var(--muted);
+  border-top:1px solid var(--line-2);padding-top:.7em;margin-top:.9em}
+.instr .ev b{color:var(--ic);font-weight:600}
+
+/* do-not list */
+.dont{border:1px solid var(--line);border-radius:3px;background:var(--raise);
+  padding:clamp(15px,2.8vw,22px);margin:1.1em 0}
+.dont .hd{display:flex;align-items:baseline;gap:.7em;margin-bottom:.55em}
+.dont .x{font-family:var(--mono);font-size:15px;color:var(--axis);line-height:1}
+.dont h3{font-family:var(--body);font-weight:600;font-size:15px;line-height:1.34;
+  color:var(--muted);margin:0;text-decoration:line-through;text-decoration-color:var(--axis)}
+.dont p{font-size:13.5px;line-height:1.6;color:var(--ink-2);margin:0;max-width:40em}
+.dont p b{color:var(--ink);font-weight:600}
+
+/* pitch zone map */
+.zgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin:1.2em 0}
+.zcell{padding:clamp(14px,2.6vw,22px) 10px;border-radius:2px;text-align:center}
+.zcell .zv{font-family:var(--disp);font-weight:600;font-size:clamp(22px,3.8vw,30px);
+  line-height:1;letter-spacing:-.02em}
+.zcell .zn{font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-top:.55em;
+  letter-spacing:.03em}
+.zcell .zr{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:.25em}
+
+/* player duel table */
+.duel{display:flex;flex-direction:column;gap:6px;margin:1.2em 0}
+.drow{display:grid;grid-template-columns:104px 60px 1fr 46px;align-items:center;gap:9px}
+@media(max-width:560px){.drow{grid-template-columns:84px 52px 1fr 40px;gap:6px}.drow .dp{font-size:9.5px}}
+.drow .dn{font-family:var(--body);font-size:12.5px;font-weight:600;color:var(--ink);
+  text-align:right;line-height:1.24}
+.drow .dp{font-family:var(--mono);font-size:10px;color:var(--muted);text-align:right;white-space:nowrap}
+.drow .dt{height:16px;background:var(--surface-2);border-radius:1px;position:relative;overflow:hidden}
+.drow .df{position:absolute;top:0;bottom:0;border-radius:1px}
+.drow .dm{position:absolute;top:-2px;bottom:-2px;width:1.5px;background:var(--axis);left:50%}
+.drow .dv{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;text-align:right}
+
+/* one-page summary */
+.sheet{border:2px solid var(--ink);border-radius:4px;padding:clamp(18px,3.4vw,30px);
+  margin:2em 0;background:var(--surface)}
+.sheet h3{font-family:var(--disp);font-weight:600;font-size:clamp(19px,3vw,25px);
+  letter-spacing:-.02em;color:var(--ink);margin:0 0 .2em}
+.sheet .sd{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:1.4em;
+  padding-bottom:1.1em;border-bottom:1px solid var(--line)}
+.sheet ol{margin:0;padding-left:1.35em;display:flex;flex-direction:column;gap:.7em}
+.sheet ol li{font-size:14px;line-height:1.55;color:var(--ink-2)}
+.sheet ol li b{color:var(--ink);font-weight:600}
+.sheet .neg{margin-top:1.5em;padding-top:1.2em;border-top:1px solid var(--line-2)}
+.sheet .neg .nl{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:.6em}
+.sheet .neg p{font-size:13px;line-height:1.6;color:var(--muted);margin:0}
+
+/* ── butterfly (대칭 막대) ── */
+.bf{display:flex;flex-direction:column;gap:0}
+.bfh{display:grid;grid-template-columns:78px 1fr 1fr 50px;gap:0;align-items:center;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--muted);
+  padding-bottom:7px;border-bottom:1px solid var(--line-2);margin-bottom:3px}
+.bfh .a{text-align:right;padding-right:11px} .bfh .b{padding-left:11px}
+.bfh .c{text-align:right}
+.bfr{display:grid;grid-template-columns:78px 1fr 1fr 50px;align-items:center;padding-block:3px}
+.bfr .bl{font-family:var(--body);font-size:12.5px;color:var(--ink-2);white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis;padding-right:8px}
+.bfr .ba{display:flex;justify-content:flex-end;align-items:center;gap:7px;
+  padding-right:9px;border-right:2px solid var(--axis)}
+.bfr .bb{display:flex;align-items:center;gap:7px;padding-left:9px}
+.bfr i{display:block;height:17px;border-radius:1px;flex:none}
+.bfr .ba i{background:var(--ic)} .bfr .bb i{background:var(--bad)}
+.bfr .v{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;
+  color:var(--ink-2);flex:none}
+.bfr .d{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;
+  text-align:right;color:var(--muted);padding-left:8px}
+.bfr.tot{margin-top:5px;padding-top:8px;border-top:1px solid var(--line)}
+.bfr.tot .bl,.bfr.tot .v,.bfr.tot .d{font-weight:600;color:var(--ink)}
+@media(max-width:560px){.bfh,.bfr{grid-template-columns:64px 1fr 1fr 48px}
+  .bfr .bl{font-size:11px;padding-right:5px}
+  .bfr .ba,.bfr .bb{padding-inline:6px}}
+
+/* ── dumbbell (연결점) ── */
+.db{display:flex;flex-direction:column;gap:2px}
+.dbr{display:grid;grid-template-columns:88px 44px 1fr 44px 118px;align-items:center;gap:8px;
+  padding:7px 0;border-bottom:1px solid var(--line-2)}
+.dbr:last-child{border-bottom:none}
+.dbr .nm{font-family:var(--body);font-size:12.5px;font-weight:600;color:var(--ink);line-height:1.22}
+.dbr .nm small{display:block;font-family:var(--mono);font-weight:400;font-size:9.5px;
+  color:var(--muted);letter-spacing:0}
+.dbr .va,.dbr .vo{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums}
+.dbr .va{text-align:right;color:var(--ic);font-weight:600}
+.dbr .vo{text-align:left;color:var(--op)}
+.dbr .tr{position:relative;height:20px}
+.dbr .tr::before{content:"";position:absolute;left:0;right:0;top:9.5px;height:1px;background:var(--line-2)}
+.dbr .cn{position:absolute;top:8px;height:4px;border-radius:2px}
+.dbr .pt{position:absolute;top:4px;width:12px;height:12px;border-radius:50%;
+  border:2px solid var(--surface)}
+.dbr .pa{background:var(--ic)} .dbr .po{background:var(--op)}
+.dbr .jg{font-family:var(--mono);font-size:10px;letter-spacing:.02em;text-align:right;white-space:nowrap;
+  white-space:nowrap}
+.dbr .jg.up{color:var(--top)} .dbr .jg.dn{color:var(--bad)} .dbr .jg.md{color:var(--muted)}
+@media(max-width:620px){
+  .dbr{grid-template-columns:76px 40px 1fr 40px;gap:6px;row-gap:2px}
+  .dbr .jg{grid-column:2/-1;text-align:left;padding-top:1px}}
+
+/* ── 경기 카드 ── */
+.mcards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:1.9em 0}
+@media(max-width:700px){.mcards{grid-template-columns:1fr}}
+.mcard{border:1px solid var(--line);border-top:3px solid var(--ic);border-radius:3px;
+  background:var(--surface);padding:clamp(15px,2.6vw,20px);display:flex;flex-direction:column}
+.mcard .why{font-family:var(--mono);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ic);margin-bottom:.7em}
+.mcard .hd{display:flex;align-items:baseline;gap:.6em;flex-wrap:wrap;margin-bottom:.15em}
+.mcard .sc{font-family:var(--disp);font-weight:600;font-size:clamp(23px,3.6vw,29px);
+  line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.mcard .op{font-family:var(--body);font-size:14px;font-weight:600;color:var(--ink)}
+.mcard .rd{font-family:var(--mono);font-size:10.5px;color:var(--muted)}
+.mcard .kv{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;margin:1em 0 .9em;
+  padding:.85em 0;border-block:1px solid var(--line-2)}
+.mcard .kv dt{font-family:var(--mono);font-size:10.5px;color:var(--muted);white-space:nowrap}
+.mcard .kv dd{margin:0;font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;
+  color:var(--ink-2)}
+.mcard .kv dd b{color:var(--ic);font-weight:600}
+.mcard .kv dd em{background:none;padding:0;color:var(--bad);font-weight:600}
+.mcard p{font-size:13.5px;line-height:1.62;color:var(--ink-2);margin:0}
+.mcard p b{color:var(--ink);font-weight:600}
+
+/* ── 피치 ── */
+.pitches{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px}
+.pitchwrap .pttl{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:.5em;
+  letter-spacing:.03em}
+
+
+.dotw .drow{grid-template-columns:96px 0 1fr 150px}
+.dotw .dv{white-space:nowrap;font-size:11px}
+@media(max-width:560px){.dotw .drow{grid-template-columns:66px 0 1fr 116px;gap:5px}.dotw .dv{font-size:9.5px}.dotw .dn{font-size:11.5px;word-break:keep-all}}
+
+.dvb{display:flex;flex-direction:column;gap:7px}
+.dvr{display:grid;grid-template-columns:74px 1fr 62px;align-items:center;gap:10px}
+.dvr .lb{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);text-align:right}
+.dvr .tk{position:relative;height:17px;background:var(--surface-2);border-radius:1px}
+.dvr .zl{position:absolute;top:-4px;bottom:-4px;width:1.5px;background:var(--axis);transform:translateX(-.75px);z-index:1}
+.dvr .fl{position:absolute;top:0;bottom:0;background:var(--op);border-radius:1px}
+.dvr.neg .fl{opacity:.55}
+.dvr .vl{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;text-align:right;color:var(--ink-2)}
+.dvr.hi .lb,.dvr.hi .vl{color:var(--ic);font-weight:600}
+.dvr.hi .fl{background:var(--ic);opacity:1}
+.dvr.ax .axl{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px;color:var(--muted)}
+@media(max-width:560px){.dvr{grid-template-columns:68px 1fr 44px;gap:6px}.dvr .lb{word-break:keep-all}.dvr .lb,.dvr .vl{font-size:10.5px}}
+</style>
+
+<body>
+<header><div class="wrap">
+  <div class="badge">SUWON FC · 2026 · K LEAGUE 2 · 25 MATCHES</div>
+  <h1>They Reach Less, and Shoot the Most</h1>
+  <p class="dek">Suwon FC have scored more goals than anyone in K League 2. Yet they reach the opponent’s final third less often than most — 13th of 17. What happens next is different: no team turns those entries into shots more often. I put all 212 league matches on one scale and followed that single line — when it works, and when it stops.</p>
+  <div class="meta"><span>K League 2 2026 · 25 Suwon FC matches</span><span>Matches up to 19 Sep 2026</span><span>212 league matches · 304,486 raw events</span><span>Hyuckjin Han</span></div>
+</div></header>
+<div class="tiles"><div class="tile"><div class="k">Season</div><div class="v ">13W 9D 3L</div><div class="s">48 points · 50 scored, 29 conceded<br>2nd in the 23 Sep table · most goals in the league</div></div><div class="tile"><div class="k">Final-third entries per 90</div><div class="v ">28.9</div><div class="s">13th in the league · average 30.6</div></div><div class="tile"><div class="k">Entry → shot</div><div class="v gj">30.6%</div><div class="s"><b>1st in the league</b> · average 25.3%</div></div><div class="tile"><div class="k">xG allowed per 90 when leading</div><div class="v gj">0.65</div><div class="s">Open play · <b>lowest in the league</b><br>average 1.01</div></div></div>
+<div class="wrap">
+<section><div class="eyebrow"><span class="role">Start</span><span class="cap">Top scorers · 4th on expected</span></div><h2>The team that scored the most is not the team that created the most</h2><div class="body"><p class="lede">Suwon FC scored 50 goals in 25 matches, the most of the 17 K League 2 clubs. They are 2nd, 5 points behind the leaders, Suwon Samsung.</p><p>Rate every match on the expected goals (xG) of each shot and the order changes. Their non-penalty expected goal difference per match is <b>+0.41</b> — <b>4th in the league</b>, behind Suwon Samsung (+0.63), Seoul E-Land (+0.47) and Daegu (+0.43).</p></div><figure><div class="figtitle">On expected goal difference, Suwon FC are fourth</div><div class="figsub">Non-penalty expected goal difference per match (NPxGD) · right: season goals · 212 league matches</div><div class="legend"><span><i style="background:var(--ic)"></i>Suwon FC</span><span><i style="background:var(--op)"></i>The other 16 clubs</span></div><div class="dotw"><div class="duel" style="position:relative"><div class="drow"><div class="dn">Suwon Samsung</div><div class="dp"></div><div class="dt" style="background:transparent;border-bottom:1px solid var(--line-2)"><div class="dm" style="left:56.2%;background:var(--bad);opacity:.5"></div><div class="df" style="left:calc(95.5% - 5px);width:10px;height:10px;top:3px;border-radius:50%;background:var(--op)"></div></div><div class="dv" style="color:var(--op)">+0.63 · 39 goals</div></div><div class="drow"><div class="dn">Seoul E-Land</div><div class="dp"></div><div class="dt" style="background:transparent;border-bottom:1px solid var(--line-2)"><div class="dm" style="left:56.2%;background:var(--bad);opacity:.5"></div><div class="df" style="left:calc(85.6% - 5px);width:10px;height:10px;top:3px;border-radius:50%;background:var(--op)"></div></div><div class="dv" style="color:var(--op)">+0.47 · 45 goals</div></div><div class="drow"><div class="dn">Daegu</div><div class="dp"></div><div class="dt" style="background:transparent;border-bottom:1px solid var(--line-2)"><div class="dm" style="left:56.2%;background:var(--bad);opacity:.5"></div><div class="df" style="left:calc(83.1% - 5px);width:10px;height:10px;top:3px;border-radius:50%;background:var(--op)"></div></div><div class="dv" style="color:var(--op)">+0.43 · 48 goals</div></div><div class="drow"><div class="dn"><b>Suwon FC</b></div><div class="dp"></div><div class="dt" style="background:transparent;border-bottom:1px solid var(--line-2)"><div class="dm" style="left:56.2%;background:var(--bad);opacity:.5"></div><div class="df" style="left:calc(82.2% - 5px);width:10px;height:10px;top:3px;border-radius:50%;background:var(--ic)"></div></div><div class="dv" style="color:var(--ic)">+0.41 · 50 goals</div></div><div class="drow"><div class="dn">Gimpo</div><div class="dp"></div><div class="dt" style="background:transparent;border-bottom:1px solid var(--line-2)"><div class="dm" style="left:56.2%;background:var(--bad);opacity:.5"></div><div class="df" style="left:calc(73.1% - 5px);width:10px;height:10px;top:3px;border-radius:50%;background:var(--op)"></div></div><div class="dv" style="color:var(--op)">+0.27 · 31 goals</div></div><div class="drow"><div class="dn">Hwaseong</div><div class="dp"></div><div class="dt" style="background:transparent;border-bottom:1px solid var(--line-2)"><div class="dm" style="left:56.2%;background:var(--bad);opacity:.5"></div><div class="df" style="left:calc(70.6% - 5px);width:10px;height:10px;top:3px;border-radius:50%;background:var(--op)"></div></div><div class="dv" style="color:var(--op)">+0.23 · 41 goals</div></div><div class="drow"><div class="dn">Busan</div><div class="dp"></div><div class="dt" style="background:transparent;border-bottom:1px solid var(--line-2)"><div class="dm" style="left:56.2%;background:var(--bad);opacity:.5"></div><div class="df" style="left:calc(64.0% - 5px);width:10px;height:10px;top:3px;border-radius:50%;background:var(--op)"></div></div><div class="dv" style="color:var(--op)">+0.12 · 41 goals</div></div><div class="drow"><div class="dn">Seongnam</div><div class="dp"></div><div class="dt" style="background:transparent;border-bottom:1px solid var(--line-2)"><div class="dm" style="left:56.2%;background:var(--bad);opacity:.5"></div><div class="df" style="left:calc(62.4% - 5px);width:10px;height:10px;top:3px;border-radius:50%;background:var(--op)"></div></div><div class="dv" style="color:var(--op)">+0.10 · 28 goals</div></div><div class="drow"><div class="dn">Yongin</div><div class="dp"></div><div class="dt" style="background:transparent;border-bottom:1px solid var(--line-2)"><div class="dm" style="left:56.2%;background:var(--bad);opacity:.5"></div><div class="df" style="left:calc(58.4% - 5px);width:10px;height:10px;top:3px;border-radius:50%;background:var(--op)"></div></div><div class="dv" style="color:var(--op)">+0.03 · 31 goals</div></div><div class="drow"><div class="dn">Chungbuk Cheongju</div><div class="dp"></div><div class="dt" style="background:transparent;border-bottom:1px solid var(--line-2)"><div class="dm" style="left:56.2%;background:var(--bad);opacity:.5"></div><div class="df" style="left:calc(52.5% - 5px);width:10px;height:10px;top:3px;border-radius:50%;background:var(--op)"></div></div><div class="dv" style="color:var(--op)">−0.06 · 31 goals</div></div><div class="drow"><div class="dn">Chungnam Asan</div><div class="dp"></div><div class="dt" style="background:transparent;border-bottom:1px solid var(--line-2)"><div class="dm" style="left:56.2%;background:var(--bad);opacity:.5"></div><div class="df" style="left:calc(50.1% - 5px);width:10px;height:10px;top:3px;border-radius:50%;background:var(--op)"></div></div><div class="dv" style="color:var(--op)">−0.10 · 34 goals</div></div><div class="drow"><div class="dn">Gyeongnam</div><div class="dp"></div><div class="dt" style="background:transparent;border-bottom:1px solid var(--line-2)"><div class="dm" style="left:56.2%;background:var(--bad);opacity:.5"></div><div class="df" style="left:calc(43.7% - 5px);width:10px;height:10px;top:3px;border-radius:50%;background:var(--op)"></div></div><div class="dv" style="color:var(--op)">−0.20 · 31 goals</div></div><div class="drow"><div class="dn">Cheonan</div><div class="dp"></div><div class="dt" style="background:transparent;border-bottom:1px solid var(--line-2)"><div class="dm" style="left:56.2%;background:var(--bad);opacity:.5"></div><div class="df" style="left:calc(43.7% - 5px);width:10px;height:10px;top:3px;border-radius:50%;background:var(--op)"></div></div><div class="dv" style="color:var(--op)">−0.20 · 30 goals</div></div><div class="drow"><div class="dn">Jeonnam</div><div class="dp"></div><div class="dt" style="background:transparent;border-bottom:1px solid var(--line-2)"><div class="dm" style="left:56.2%;background:var(--bad);opacity:.5"></div><div class="df" style="left:calc(36.8% - 5px);width:10px;height:10px;top:3px;border-radius:50%;background:var(--op)"></div></div><div class="dv" style="color:var(--op)">−0.31 · 28 goals</div></div><div class="drow"><div class="dn">Paju</div><div class="dp"></div><div class="dt" style="background:transparent;border-bottom:1px solid var(--line-2)"><div class="dm" style="left:56.2%;background:var(--bad);opacity:.5"></div><div class="df" style="left:calc(32.6% - 5px);width:10px;height:10px;top:3px;border-radius:50%;background:var(--op)"></div></div><div class="dv" style="color:var(--op)">−0.38 · 24 goals</div></div><div class="drow"><div class="dn">Gimhae</div><div class="dp"></div><div class="dt" style="background:transparent;border-bottom:1px solid var(--line-2)"><div class="dm" style="left:56.2%;background:var(--bad);opacity:.5"></div><div class="df" style="left:calc(15.9% - 5px);width:10px;height:10px;top:3px;border-radius:50%;background:var(--op)"></div></div><div class="dv" style="color:var(--op)">−0.65 · 19 goals</div></div><div class="drow"><div class="dn">Ansan</div><div class="dp"></div><div class="dt" style="background:transparent;border-bottom:1px solid var(--line-2)"><div class="dm" style="left:56.2%;background:var(--bad);opacity:.5"></div><div class="df" style="left:calc(2.7% - 5px);width:10px;height:10px;top:3px;border-radius:50%;background:var(--op)"></div></div><div class="dv" style="color:var(--op)">−0.86 · 27 goals</div></div><div style="font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-top:.6em;padding-left:146px">← behind on expected · 0 · ahead →</div></div></div><figcaption>Each dot is NPxG − NPxGA per match. Suwon FC 24 matches (5 September missing), the others 24–26.</figcaption></figure><div class="body"><p>Replay every shot 20,000 times at its xG and Suwon FC’s expected points come to 41.7; they have 47. <b>+5.3 points</b> — the third-largest overperformance in the league. Their goals also run <b>+6.7</b> above the 41.3 xG of their 324 shots, the largest excess in the league.</p><p>So is it luck? Re-take the same shots at their xG 100,000 times and 48 or more goals come up <b>12%</b> of the time. Too large to wave away as luck, too small to call skill. So I changed the question — <b>where is this team different?</b></p></div><figure><div class="figtitle">More than 5 points above expectation</div><div class="figsub">Matches with events · shot-level simulation, 20,000 runs · top six on points</div><div class="tbl "><table><thead><tr><th>Club</th><th>Points</th><th>Expected</th><th>Diff.</th></tr></thead><tbody><tr><td>Suwon Samsung</td><td class="n">53</td><td class="n">46.1</td><td class="n"><span class="up">+6.9</span></td></tr><tr><td>Seoul E-Land</td><td class="n">48</td><td class="n">43.3</td><td class="n"><span class="up">+4.7</span></td></tr><tr><td><b>Suwon FC</b></td><td class="n">47</td><td class="n">41.7</td><td class="n"><span class="up">+5.3</span></td></tr><tr><td>Daegu</td><td class="n">46</td><td class="n">43.2</td><td class="n"><span class="up">+2.8</span></td></tr><tr><td>Hwaseong</td><td class="n">43</td><td class="n">39.7</td><td class="n"><span class="up">+3.3</span></td></tr><tr><td>Busan</td><td class="n">41</td><td class="n">34.1</td><td class="n"><span class="up">+6.9</span></td></tr></tbody></table></div><figcaption>Only Suwon Samsung (+6.9) and Busan (+6.9) beat their expectation by more.</figcaption></figure></section>
+<section><div class="eyebrow"><span class="role">Paradox</span><span class="cap">Build-up · progression · entry</span></div><h2>Moving the ball forward is bottom-half work</h2><div class="body"><p class="lede">The top scorers in a league usually live in the opponent’s half. Suwon FC do the opposite.</p></div><div class="strip"><div><div class="k">① Build-up → midfield</div><div class="v" style="color:var(--op)">61.5%</div><div class="s">attacks starting in their own third · 12th</div></div><div><div class="k">② Midfield → final third</div><div class="v" style="color:var(--op)">45.2%</div><div class="s">14th · average 47.9%</div></div><div><div class="k">③ Final-third entries</div><div class="v" style="color:var(--op)">28.9</div><div class="s">per 90 · 13th</div></div></div><figure><div class="figtitle">They reach the final third less often than most — 13th of 17</div><div class="figsub">Open-play chains that reached the final third · per 90 · set pieces and penalties excluded</div><div class="legend"><span><i style="background:var(--ic)"></i>Suwon FC</span><span><i style="background:var(--op)"></i>The other 16 clubs</span></div><div class="bars lbwrap"><div class="br "><div class="lb">Suwon Samsung</div><div class="tk"><div class="fl" style="width:91.4%"></div></div><div class="vl">34.7</div></div><div class="br "><div class="lb">Cheonan</div><div class="tk"><div class="fl" style="width:89.7%"></div></div><div class="vl">34.1</div></div><div class="br "><div class="lb">Seoul E-Land</div><div class="tk"><div class="fl" style="width:89.5%"></div></div><div class="vl">34.0</div></div><div class="br "><div class="lb">Gimpo</div><div class="tk"><div class="fl" style="width:87.0%"></div></div><div class="vl">33.1</div></div><div class="br "><div class="lb">Chungnam Asan</div><div class="tk"><div class="fl" style="width:84.7%"></div></div><div class="vl">32.2</div></div><div class="br "><div class="lb">Daegu</div><div class="tk"><div class="fl" style="width:83.9%"></div></div><div class="vl">31.9</div></div><div class="br "><div class="lb">Paju</div><div class="tk"><div class="fl" style="width:83.7%"></div></div><div class="vl">31.8</div></div><div class="br "><div class="lb">Seongnam</div><div class="tk"><div class="fl" style="width:81.2%"></div></div><div class="vl">30.9</div></div><div class="br "><div class="lb">Hwaseong</div><div class="tk"><div class="fl" style="width:80.7%"></div></div><div class="vl">30.7</div></div><div class="br "><div class="lb">Jeonnam</div><div class="tk"><div class="fl" style="width:79.2%"></div></div><div class="vl">30.1</div></div><div class="br "><div class="lb">Chungbuk Cheongju</div><div class="tk"><div class="fl" style="width:78.4%"></div></div><div class="vl">29.8</div></div><div class="br "><div class="lb">Busan</div><div class="tk"><div class="fl" style="width:77.1%"></div></div><div class="vl">29.3</div></div><div class="br hi"><div class="lb"><b>Suwon FC</b></div><div class="tk"><div class="fl" style="width:76.2%"></div></div><div class="vl">28.9</div></div><div class="br "><div class="lb">Gimhae</div><div class="tk"><div class="fl" style="width:75.7%"></div></div><div class="vl">28.8</div></div><div class="br "><div class="lb">Gyeongnam</div><div class="tk"><div class="fl" style="width:75.1%"></div></div><div class="vl">28.5</div></div><div class="br "><div class="lb">Yongin</div><div class="tk"><div class="fl" style="width:72.0%"></div></div><div class="vl">27.4</div></div><div class="br "><div class="lb">Ansan</div><div class="tk"><div class="fl" style="width:65.4%"></div></div><div class="vl">24.8</div></div></div><figcaption>Suwon FC 28.9, league average 30.6, top Suwon Samsung 34.7. Their share of passes, 51.5%, is an ordinary 6th — they are not a side without the ball, they are a side that <b>goes in less</b>.</figcaption></figure><div class="body"><p>Build-up, progression, entry — all three below the league average. Yet this team scored the most. Only one place is left where the difference can come from: <b>what happens after the threshold</b>.</p></div></section>
+<section><div class="eyebrow"><span class="role">Core</span><span class="cap">Final-third entry → shot</span></div><h2>Once in, nobody shoots more often</h2><div class="body"><p class="lede">I counted, for all 17 teams in the same way, how often an attack that reached the final third ended in a shot.</p></div><figure><div class="figtitle">13th for entries, 1st for turning them into shots</div><div class="figsub">Open-play chains that reached the final third → share ending in a shot · label: entries per 90</div><div class="legend"><span><i style="background:var(--ic)"></i>Suwon FC</span><span><i style="background:var(--op)"></i>The other 16 clubs</span></div><div class="bars lbwrap vwide"><div class="br hi"><div class="lb"><b>Suwon FC</b><br><span style="opacity:.6">28.9 entries/90</span></div><div class="tk"><div class="fl" style="width:89.9%"></div></div><div class="vl">30.6%</div></div><div class="br "><div class="lb">Daegu<br><span style="opacity:.6">31.9 entries/90</span></div><div class="tk"><div class="fl" style="width:86.2%"></div></div><div class="vl">29.3%</div></div><div class="br "><div class="lb">Seoul E-Land<br><span style="opacity:.6">34.0 entries/90</span></div><div class="tk"><div class="fl" style="width:83.1%"></div></div><div class="vl">28.2%</div></div><div class="br "><div class="lb">Busan<br><span style="opacity:.6">29.3 entries/90</span></div><div class="tk"><div class="fl" style="width:81.0%"></div></div><div class="vl">27.5%</div></div><div class="br "><div class="lb">Seongnam<br><span style="opacity:.6">30.9 entries/90</span></div><div class="tk"><div class="fl" style="width:79.4%"></div></div><div class="vl">27.0%</div></div><div class="br "><div class="lb">Hwaseong<br><span style="opacity:.6">30.7 entries/90</span></div><div class="tk"><div class="fl" style="width:78.6%"></div></div><div class="vl">26.7%</div></div><div class="br "><div class="lb">Suwon Samsung<br><span style="opacity:.6">34.7 entries/90</span></div><div class="tk"><div class="fl" style="width:75.8%"></div></div><div class="vl">25.8%</div></div><div class="br "><div class="lb">Gyeongnam<br><span style="opacity:.6">28.5 entries/90</span></div><div class="tk"><div class="fl" style="width:75.6%"></div></div><div class="vl">25.7%</div></div><div class="br "><div class="lb">Gimpo<br><span style="opacity:.6">33.1 entries/90</span></div><div class="tk"><div class="fl" style="width:74.9%"></div></div><div class="vl">25.5%</div></div><div class="br "><div class="lb">Jeonnam<br><span style="opacity:.6">30.1 entries/90</span></div><div class="tk"><div class="fl" style="width:72.6%"></div></div><div class="vl">24.7%</div></div><div class="br "><div class="lb">Chungbuk Cheongju<br><span style="opacity:.6">29.8 entries/90</span></div><div class="tk"><div class="fl" style="width:71.9%"></div></div><div class="vl">24.5%</div></div><div class="br "><div class="lb">Gimhae<br><span style="opacity:.6">28.8 entries/90</span></div><div class="tk"><div class="fl" style="width:69.5%"></div></div><div class="vl">23.6%</div></div><div class="br "><div class="lb">Ansan<br><span style="opacity:.6">24.8 entries/90</span></div><div class="tk"><div class="fl" style="width:67.9%"></div></div><div class="vl">23.1%</div></div><div class="br "><div class="lb">Chungnam Asan<br><span style="opacity:.6">32.2 entries/90</span></div><div class="tk"><div class="fl" style="width:67.6%"></div></div><div class="vl">23.0%</div></div><div class="br "><div class="lb">Cheonan<br><span style="opacity:.6">34.1 entries/90</span></div><div class="tk"><div class="fl" style="width:66.7%"></div></div><div class="vl">22.7%</div></div><div class="br "><div class="lb">Yongin<br><span style="opacity:.6">27.4 entries/90</span></div><div class="tk"><div class="fl" style="width:66.6%"></div></div><div class="vl">22.7%</div></div><div class="br "><div class="lb">Paju<br><span style="opacity:.6">31.8 entries/90</span></div><div class="tk"><div class="fl" style="width:59.4%"></div></div><div class="vl">20.2%</div></div></div><figcaption>Suwon FC 30.6%, league average 25.3%, bottom 20.2%. The xG generated per entering chain, 0.039, is 2nd.</figcaption></figure><div class="body"><p>Where you draw the “final third” line could change the ranking. I drew it in three places and counted again (open-play chains only).</p></div><div class="tbl "><table><thead><tr><th>Final-third line</th><th>Entries/90</th><th>Entry rank</th><th>Entry → shot</th><th>Shot rank</th><th>League avg.</th></tr></thead><tbody><tr><td>x ≥ 60</td><td class="n">34.1</td><td class="n">13th</td><td class="n"><b>25.3%</b></td><td class="n"><b>1st</b></td><td class="n">21.4%</td></tr><tr><td>x ≥ 66.7 (default)</td><td class="n">28.1</td><td class="n">13th</td><td class="n"><b>30.5%</b></td><td class="n"><b>1st</b></td><td class="n">25.4%</td></tr><tr><td>x ≥ 75</td><td class="n">23.0</td><td class="n">12th</td><td class="n"><b>36.2%</b></td><td class="n"><b>1st</b></td><td class="n">31.0%</td></tr></tbody></table></div><div class="pull">Wherever the line goes, the picture holds: 12th–13th for entries, 1st for shots after entry. Suwon FC’s attack is explained <b>not by volume but by conversion</b>.</div></section>
+<section><div class="eyebrow"><span class="role">Mirror</span><span class="cap">Defence · allowed</span></div><h2>They let you in, and do not let you shoot</h2><div class="body"><p class="lede">Apply the same yardstick to the attacks Suwon FC allow and the same shape appears, as if in a mirror.</p></div><figure><div class="figtitle">More entries allowed, fewer chances allowed</div><div class="figsub">Suwon FC vs opponents · 24 matches · per 90; shares per chain</div><div class="legend"><span><i style="background:var(--ic)"></i>Suwon FC</span><span><i style="background:var(--op)"></i>Opponents</span></div><div class="pair"><div class="pg"><div class="pn">Final-third entries /90<small>entries allowed: 5th highest in the league</small></div><div class="pgb"><div class="pgr"><div class="tk"><div class="fl" style="width:85.5%;background:var(--ic)"></div></div><div class="vl" style="color:var(--ic)">28.9</div></div><div class="pgr"><div class="tk"><div class="fl" style="width:94.3%;background:var(--op)"></div></div><div class="vl" style="color:var(--op)">31.9</div></div></div></div><div class="pg"><div class="pn">Entry → shot<small>allowed: 3rd lowest in the league</small></div><div class="pgb"><div class="pgr"><div class="tk"><div class="fl" style="width:94.3%;background:var(--ic)"></div></div><div class="vl" style="color:var(--ic)">30.6%</div></div><div class="pgr"><div class="tk"><div class="fl" style="width:71.6%;background:var(--op)"></div></div><div class="vl" style="color:var(--op)">23.2%</div></div></div></div><div class="pg"><div class="pn">Non-penalty xG / match<small>allowed: 3rd lowest in the league</small></div><div class="pgb"><div class="pgr"><div class="tk"><div class="fl" style="width:94.3%;background:var(--ic)"></div></div><div class="vl" style="color:var(--ic)">1.43</div></div><div class="pgr"><div class="tk"><div class="fl" style="width:66.9%;background:var(--op)"></div></div><div class="vl" style="color:var(--op)">1.01</div></div></div></div></div><figcaption>Each group has its own axis. The xG an opponent chain generates after entering Suwon FC’s third is 0.025, 2nd lowest in the league (average 0.029).</figcaption></figure><div class="body"><p>Final-third entries run 28.9 to 31.9 — <b>opponents get in more often</b>. Yet expected goals run 1.43 to 1.01 in Suwon FC’s favour. Of the shots they allow, 42.3% come from outside the box, 3rd highest in the league, and the xG they allow inside the box, 0.82 per match, is 3rd lowest.</p><p>Attack and defence reduce to the same sentence. <b>They give up space, and win beyond the threshold.</b></p></div></section>
+<section><div class="eyebrow"><span class="role">Method</span><span class="cap">Ten seconds after the regain</span></div><h2>Their fastest attacks lead the league. But they are not where most goals come from</h2><div class="body"><p class="lede">One reason they shoot so often once in is speed. No team generates more xG from shots within ten seconds of winning the ball.</p></div><figure><div class="figtitle">The most chances within ten seconds of a regain</div><div class="figsub">xG of shots within 10 s of the regain, in chains that began with a ball win · per match · penalties excluded</div><div class="legend"><span><i style="background:var(--ic)"></i>Suwon FC</span><span><i style="background:var(--op)"></i>The other 16 clubs</span></div><div class="bars lbwrap"><div class="br hi"><div class="lb"><b>Suwon FC</b></div><div class="tk"><div class="fl" style="width:81.3%"></div></div><div class="vl">0.33</div></div><div class="br "><div class="lb">Gimpo</div><div class="tk"><div class="fl" style="width:77.2%"></div></div><div class="vl">0.31</div></div><div class="br "><div class="lb">Daegu</div><div class="tk"><div class="fl" style="width:74.2%"></div></div><div class="vl">0.30</div></div><div class="br "><div class="lb">Seoul E-Land</div><div class="tk"><div class="fl" style="width:67.7%"></div></div><div class="vl">0.27</div></div><div class="br "><div class="lb">Cheonan</div><div class="tk"><div class="fl" style="width:63.3%"></div></div><div class="vl">0.25</div></div><div class="br "><div class="lb">Suwon Samsung</div><div class="tk"><div class="fl" style="width:59.6%"></div></div><div class="vl">0.24</div></div><div class="br "><div class="lb">Hwaseong</div><div class="tk"><div class="fl" style="width:56.7%"></div></div><div class="vl">0.23</div></div><div class="br "><div class="lb">Busan</div><div class="tk"><div class="fl" style="width:53.9%"></div></div><div class="vl">0.22</div></div><div class="br "><div class="lb">Chungnam Asan</div><div class="tk"><div class="fl" style="width:53.6%"></div></div><div class="vl">0.21</div></div><div class="br "><div class="lb">Jeonnam</div><div class="tk"><div class="fl" style="width:48.6%"></div></div><div class="vl">0.19</div></div><div class="br "><div class="lb">Seongnam</div><div class="tk"><div class="fl" style="width:45.6%"></div></div><div class="vl">0.18</div></div><div class="br "><div class="lb">Chungbuk Cheongju</div><div class="tk"><div class="fl" style="width:45.0%"></div></div><div class="vl">0.18</div></div><div class="br "><div class="lb">Gimhae</div><div class="tk"><div class="fl" style="width:37.8%"></div></div><div class="vl">0.15</div></div><div class="br "><div class="lb">Yongin</div><div class="tk"><div class="fl" style="width:33.7%"></div></div><div class="vl">0.13</div></div><div class="br "><div class="lb">Ansan</div><div class="tk"><div class="fl" style="width:30.7%"></div></div><div class="vl">0.12</div></div><div class="br "><div class="lb">Gyeongnam</div><div class="tk"><div class="fl" style="width:28.1%"></div></div><div class="vl">0.11</div></div><div class="br "><div class="lb">Paju</div><div class="tk"><div class="fl" style="width:25.1%"></div></div><div class="vl">0.10</div></div></div><figcaption>Suwon FC 0.325; the other 16 clubs’ team-match average 0.201. Match-level bootstrap 95% interval 0.21–0.45; permutation test P = 0.012. Chains that began with a regain in their own half (x &lt; 50) produce 0.47 xG per match, 1st in the league.</figcaption></figure><div class="tbl "><table><thead><tr><th>Time to first shot after regain</th><th>Suwon FC xG/match</th><th>League rank</th></tr></thead><tbody><tr><td>Within 10 s</td><td class="n">0.325</td><td class="n">1st</td></tr><tr><td>Within 15 s</td><td class="n">0.405</td><td class="n">3rd</td></tr><tr><td>Within 20 s</td><td class="n">0.460</td><td class="n">4th</td></tr></tbody></table></div><div class="body"><p>Widen the window to 15 or 20 seconds and they drop to 3rd and 4th. Suwon FC’s weapon is not the counter-attack but the <b>very fast counter-attack</b>. Of their 7.8 ten-second transition xG, <b>3.69 (47%) comes from Ha Jeong-woo alone</b>, and he also starts more of those chains than anyone (10).</p></div><div class="note warn"><b>But the story has to pause here.</b> Split their 48 goals (own goals excluded) by where the move began, and attacks that started with a ball win produced <b>23 goals, 47.9%</b> — below the league average of 53.7%, 11th of 17. The ten-second transition is their sharpest edge, but <b>not their biggest source of goals.</b> Where the rest came from returns later.</div></section>
+<section><div class="eyebrow"><span class="role">State</span><span class="cap">Leading · level · trailing</span></div><h2>When the formula works, and when it stops</h2><div class="body"><p class="lede">I split the same phase metrics by score state. Of 2441 minutes, Suwon FC spent <b>1058 (43%) in front</b> — 1st in the league.</p><p>Brackets show the league rank: attack from highest, allowed from <b>lowest</b>.</p></div><div class="tbl "><table><thead><tr><th>Metric</th><th>Leading</th><th>Level</th><th>Trailing</th></tr></thead><tbody><tr><td>Suwon FC minutes</td><td class="n">1058</td><td class="n">919</td><td class="n">464</td></tr><tr><td>Attack · final-third entries/90</td><td class="n">26.7 <span style="opacity:.55">(8)</span></td><td class="n">30.4 <span style="opacity:.55">(8)</span></td><td class="n">31.1 <span style="opacity:.55">(17)</span></td></tr><tr><td>Attack · entry → shot</td><td class="n">32.8% <span style="opacity:.55">(2)</span></td><td class="n">33.1% <span style="opacity:.55">(1)</span></td><td class="n">21.2% <span style="opacity:.55">(15)</span></td></tr><tr><td>Attack · 10 s transition xG/90</td><td class="n">0.37 <span style="opacity:.55">(3)</span></td><td class="n">0.32 <span style="opacity:.55">(1)</span></td><td class="n">0.05 <span style="opacity:.55">(16)</span></td></tr><tr><td>Attack · open-play xG/90</td><td class="n">1.25 <span style="opacity:.55">(2)</span></td><td class="n">1.07 <span style="opacity:.55">(2)</span></td><td class="n">0.99 <span style="opacity:.55">(8)</span></td></tr><tr><td>Allowed · xG per entering chain</td><td class="n">0.018 <span style="opacity:.55">(1)</span></td><td class="n">0.027 <span style="opacity:.55">(11)</span></td><td class="n">0.043 <span style="opacity:.55">(15)</span></td></tr><tr><td>Allowed · open-play xG/90</td><td class="n">0.65 <span style="opacity:.55">(1)</span></td><td class="n">0.83 <span style="opacity:.55">(9)</span></td><td class="n">1.08 <span style="opacity:.55">(11)</span></td></tr></tbody></table></div><div class="body"><h3>Level — the formula at its clearest</h3><p>Entry → shot 33.1%. Leaving penalty metrics aside, no phase-by-state value in this piece sits further from the league average (z = +2.5). Ten-second transition xG is 1st too. Meanwhile opponents cannot get out: their build-up reaches midfield 55.7% of the time, 2nd lowest in the league.</p><h3>Leading — the tightest side in the league</h3><p>In front, they allow 0.65 open-play xG per 90, and an opponent chain that enters their third is worth 0.018 xG. <b>Both are the lowest of the 17.</b> Nor are they sitting back: their own open-play xG in the same minutes is 1.25 per 90, 2nd in the league.</p><h3>Trailing — every weapon switches off</h3><p>Behind, final-third entries rank 17th, chains started by a regain 17th, ten-second transition xG 16th. Teams that trail usually push in more often (league average 36.8 entries per 90). Suwon FC rise to 31.1, but that is the fewest of the 17, and shot conversion after entry is 15th. One reading is that an opponent who sits deep leaves fewer balls to win and less space to run into — the event data does not show that directly.</p></div></section>
+<section><div class="eyebrow"><span class="role">Answer</span><span class="cap">Set pieces · penalties</span></div><h2>And yet they came back — when the ball stopped</h2><div class="body"><p class="lede">Yet in matches where they conceded first, Suwon FC took 1.60 points per game, 2nd in the league. How, with every weapon switched off?</p><p>Of the 10 goals they scored while trailing, <b>3 were penalties and 1 came from set pieces</b>. At the other end, opponents in those minutes created 1.08 open-play xG per 90 and scored only 0.58.</p></div><div class="strip"><div><div class="k">Dead-ball share of goals</div><div class="v" style="color:var(--ic)">33%</div><div class="s">set pieces 8 + penalties 8 = 16 of 48 · league average 23.4%</div></div><div><div class="k">Penalties won</div><div class="v" style="color:var(--ic)">9</div><div class="s">1st in the league · fouls won in the box (8) also 1st</div></div><div><div class="k">Set-piece shots / match</div><div class="v" style="color:var(--op)">1.7</div><div class="s">xG 3.44 · set-piece xG/90 12th</div></div></div><figure><div class="figtitle">The biggest set-piece overperformance in the league</div><div class="figsub">Set-piece goals − xG (chains started by a corner, free kick or throw-in; penalties excluded) · season total · label: goals</div><div class="legend"><span><i style="background:var(--ic)"></i>Suwon FC</span><span><i style="background:var(--op)"></i>The other 16 clubs</span></div><div class="dvb"><div class="dvr hi"><div class="lb"><b>Suwon FC</b></div><div class="tk"><div class="zl" style="left:41.18%"></div><div class="fl" style="left:41.18%;width:53.65%"></div></div><div class="vl">+4.56 · 8</div></div><div class="dvr "><div class="lb">Yongin</div><div class="tk"><div class="zl" style="left:41.18%"></div><div class="fl" style="left:41.18%;width:35.53%"></div></div><div class="vl">+3.02 · 7</div></div><div class="dvr "><div class="lb">Busan</div><div class="tk"><div class="zl" style="left:41.18%"></div><div class="fl" style="left:41.18%;width:27.41%"></div></div><div class="vl">+2.33 · 7</div></div><div class="dvr "><div class="lb">Suwon Samsung</div><div class="tk"><div class="zl" style="left:41.18%"></div><div class="fl" style="left:41.18%;width:24.47%"></div></div><div class="vl">+2.08 · 8</div></div><div class="dvr "><div class="lb">Ansan</div><div class="tk"><div class="zl" style="left:41.18%"></div><div class="fl" style="left:41.18%;width:23.53%"></div></div><div class="vl">+2.00 · 5</div></div><div class="dvr "><div class="lb">Paju</div><div class="tk"><div class="zl" style="left:41.18%"></div><div class="fl" style="left:41.18%;width:9.41%"></div></div><div class="vl">+0.80 · 4</div></div><div class="dvr "><div class="lb">Gyeongnam</div><div class="tk"><div class="zl" style="left:41.18%"></div><div class="fl" style="left:41.18%;width:5.06%"></div></div><div class="vl">+0.43 · 5</div></div><div class="dvr "><div class="lb">Hwaseong</div><div class="tk"><div class="zl" style="left:41.18%"></div><div class="fl" style="left:41.18%;width:1.53%"></div></div><div class="vl">+0.13 · 4</div></div><div class="dvr "><div class="lb">Cheonan</div><div class="tk"><div class="zl" style="left:41.18%"></div><div class="fl" style="left:41.18%;width:0.47%"></div></div><div class="vl">+0.04 · 4</div></div><div class="dvr  neg"><div class="lb">Seoul E-Land</div><div class="tk"><div class="zl" style="left:41.18%"></div><div class="fl" style="left:38.71%;width:2.47%"></div></div><div class="vl">−0.21 · 5</div></div><div class="dvr  neg"><div class="lb">Daegu</div><div class="tk"><div class="zl" style="left:41.18%"></div><div class="fl" style="left:35.29%;width:5.88%"></div></div><div class="vl">−0.50 · 5</div></div><div class="dvr  neg"><div class="lb">Gimhae</div><div class="tk"><div class="zl" style="left:41.18%"></div><div class="fl" style="left:29.65%;width:11.53%"></div></div><div class="vl">−0.98 · 3</div></div><div class="dvr  neg"><div class="lb">Chungnam Asan</div><div class="tk"><div class="zl" style="left:41.18%"></div><div class="fl" style="left:27.88%;width:13.29%"></div></div><div class="vl">−1.13 · 5</div></div><div class="dvr  neg"><div class="lb">Chungbuk Cheongju</div><div class="tk"><div class="zl" style="left:41.18%"></div><div class="fl" style="left:24.71%;width:16.47%"></div></div><div class="vl">−1.40 · 3</div></div><div class="dvr  neg"><div class="lb">Jeonnam</div><div class="tk"><div class="zl" style="left:41.18%"></div><div class="fl" style="left:20.24%;width:20.94%"></div></div><div class="vl">−1.78 · 1</div></div><div class="dvr  neg"><div class="lb">Gimpo</div><div class="tk"><div class="zl" style="left:41.18%"></div><div class="fl" style="left:11.65%;width:29.53%"></div></div><div class="vl">−2.51 · 1</div></div><div class="dvr  neg"><div class="lb">Seongnam</div><div class="tk"><div class="zl" style="left:41.18%"></div><div class="fl" style="left:8.24%;width:32.94%"></div></div><div class="vl">−2.80 · 0</div></div><div class="dvr ax"><div></div><div class="axl"><span>← fewer than expected</span><span>more than expected →</span></div><div></div></div></div><figcaption>41 shots, 3.44 xG, 8 goals. Re-take those shots at their xG 100,000 times and that many go in 1.6% of the time. League-wide, set-piece goals run at 1.06× xG — almost exactly as expected.</figcaption></figure><div class="body"><p>The other end looks the same. Suwon FC allowed 31 set-piece shots worth 2.57 xG and conceded <b>6</b> — also the largest excess in the league (3.4% chance by luck alone).</p></div><figure><div class="figtitle">And the biggest set-piece excess conceded</div><div class="figsub">Set-piece goals conceded − xG allowed · season total · label: goals conceded</div><div class="legend"><span><i style="background:var(--ic)"></i>Suwon FC</span><span><i style="background:var(--op)"></i>The other 16 clubs</span></div><div class="dvb"><div class="dvr hi"><div class="lb"><b>Suwon FC</b></div><div class="tk"><div class="zl" style="left:42.86%"></div><div class="fl" style="left:42.86%;width:49.00%"></div></div><div class="vl">+3.43 · 6</div></div><div class="dvr "><div class="lb">Daegu</div><div class="tk"><div class="zl" style="left:42.86%"></div><div class="fl" style="left:42.86%;width:42.86%"></div></div><div class="vl">+3.00 · 6</div></div><div class="dvr "><div class="lb">Seoul E-Land</div><div class="tk"><div class="zl" style="left:42.86%"></div><div class="fl" style="left:42.86%;width:27.71%"></div></div><div class="vl">+1.94 · 7</div></div><div class="dvr "><div class="lb">Gimhae</div><div class="tk"><div class="zl" style="left:42.86%"></div><div class="fl" style="left:42.86%;width:20.29%"></div></div><div class="vl">+1.42 · 5</div></div><div class="dvr "><div class="lb">Cheonan</div><div class="tk"><div class="zl" style="left:42.86%"></div><div class="fl" style="left:42.86%;width:17.43%"></div></div><div class="vl">+1.22 · 6</div></div><div class="dvr "><div class="lb">Seongnam</div><div class="tk"><div class="zl" style="left:42.86%"></div><div class="fl" style="left:42.86%;width:11.00%"></div></div><div class="vl">+0.77 · 5</div></div><div class="dvr "><div class="lb">Chungbuk Cheongju</div><div class="tk"><div class="zl" style="left:42.86%"></div><div class="fl" style="left:42.86%;width:10.29%"></div></div><div class="vl">+0.72 · 5</div></div><div class="dvr "><div class="lb">Gyeongnam</div><div class="tk"><div class="zl" style="left:42.86%"></div><div class="fl" style="left:42.86%;width:7.43%"></div></div><div class="vl">+0.52 · 5</div></div><div class="dvr "><div class="lb">Busan</div><div class="tk"><div class="zl" style="left:42.86%"></div><div class="fl" style="left:42.86%;width:7.14%"></div></div><div class="vl">+0.50 · 5</div></div><div class="dvr  neg"><div class="lb">Chungnam Asan</div><div class="tk"><div class="zl" style="left:42.86%"></div><div class="fl" style="left:40.86%;width:2.00%"></div></div><div class="vl">−0.14 · 3</div></div><div class="dvr  neg"><div class="lb">Yongin</div><div class="tk"><div class="zl" style="left:42.86%"></div><div class="fl" style="left:36.14%;width:6.71%"></div></div><div class="vl">−0.47 · 4</div></div><div class="dvr  neg"><div class="lb">Ansan</div><div class="tk"><div class="zl" style="left:42.86%"></div><div class="fl" style="left:33.00%;width:9.86%"></div></div><div class="vl">−0.69 · 6</div></div><div class="dvr  neg"><div class="lb">Hwaseong</div><div class="tk"><div class="zl" style="left:42.86%"></div><div class="fl" style="left:30.29%;width:12.57%"></div></div><div class="vl">−0.88 · 4</div></div><div class="dvr  neg"><div class="lb">Paju</div><div class="tk"><div class="zl" style="left:42.86%"></div><div class="fl" style="left:27.43%;width:15.43%"></div></div><div class="vl">−1.08 · 5</div></div><div class="dvr  neg"><div class="lb">Gimpo</div><div class="tk"><div class="zl" style="left:42.86%"></div><div class="fl" style="left:25.57%;width:17.29%"></div></div><div class="vl">−1.21 · 2</div></div><div class="dvr  neg"><div class="lb">Suwon Samsung</div><div class="tk"><div class="zl" style="left:42.86%"></div><div class="fl" style="left:8.00%;width:34.86%"></div></div><div class="vl">−2.44 · 0</div></div><div class="dvr  neg"><div class="lb">Jeonnam</div><div class="tk"><div class="zl" style="left:42.86%"></div><div class="fl" style="left:6.86%;width:36.00%"></div></div><div class="vl">−2.52 · 1</div></div><div class="dvr ax"><div></div><div class="axl"><span>← fewer than expected</span><span>more than expected →</span></div><div></div></div></div><figcaption>In Suwon FC matches, set pieces do not follow xG at either end. Their 8 set-piece goals began with free kicks 4 · throw-ins 3 · corners 1.</figcaption></figure><div class="note"><b>Read these two findings carefully.</b> They surfaced while scanning many metrics, and P-values found that way come out smaller than they should. The samples — 41 set-piece shots, 9 penalties — are small. So I do not write “Suwon FC are strong at set pieces”. I write only that <b>part of this season’s points came from here</b>.</div></section>
+<section><div class="eyebrow"><span class="role">Time</span><span class="cap">The first 15 minutes of each half</span></div><h2>They score as soon as the door opens</h2><div class="body"><p class="lede">Long spells in front require scoring first. Suwon FC scored first in 58% of the matches that had a goal (5th in the league). I split their goals into 15-minute blocks.</p></div><figure><div class="figtitle">First in the league for goals in the opening 15 minutes of both halves</div><div class="figsub">Goals per 90 · Suwon FC vs league average · 24 matches with events; goal times from shot events</div><div class="legend"><span><i style="background:var(--ic)"></i>Suwon FC</span><span><i style="background:var(--op)"></i>League average</span></div><div class="pair"><div class="pg"><div class="pn">1st half 0–15<small>9 goals · 1st</small></div><div class="pgb"><div class="pgr"><div class="tk"><div class="fl" style="width:83.3%;background:var(--ic)"></div></div><div class="vl" style="color:var(--ic)">2.25</div></div><div class="pgr"><div class="tk"><div class="fl" style="width:35.3%;background:var(--op)"></div></div><div class="vl" style="color:var(--op)">0.95</div></div></div></div><div class="pg"><div class="pn">1st half 16–30<small>4 goals · 6th</small></div><div class="pgb"><div class="pgr"><div class="tk"><div class="fl" style="width:37.0%;background:var(--ic)"></div></div><div class="vl" style="color:var(--ic)">1.00</div></div><div class="pgr"><div class="tk"><div class="fl" style="width:33.4%;background:var(--op)"></div></div><div class="vl" style="color:var(--op)">0.90</div></div></div></div><div class="pg"><div class="pn">1st half 31–<small>8 goals · 2nd</small></div><div class="pgb"><div class="pgr"><div class="tk"><div class="fl" style="width:57.4%;background:var(--ic)"></div></div><div class="vl" style="color:var(--ic)">1.55</div></div><div class="pgr"><div class="tk"><div class="fl" style="width:42.2%;background:var(--op)"></div></div><div class="vl" style="color:var(--op)">1.14</div></div></div></div><div class="pg"><div class="pn">2nd half 0–15<small>10 goals · 1st</small></div><div class="pgb"><div class="pgr"><div class="tk"><div class="fl" style="width:92.6%;background:var(--ic)"></div></div><div class="vl" style="color:var(--ic)">2.50</div></div><div class="pgr"><div class="tk"><div class="fl" style="width:45.0%;background:var(--op)"></div></div><div class="vl" style="color:var(--op)">1.22</div></div></div></div><div class="pg"><div class="pn">2nd half 16–30<small>6 goals · 5th</small></div><div class="pgb"><div class="pgr"><div class="tk"><div class="fl" style="width:55.6%;background:var(--ic)"></div></div><div class="vl" style="color:var(--ic)">1.50</div></div><div class="pgr"><div class="tk"><div class="fl" style="width:43.3%;background:var(--op)"></div></div><div class="vl" style="color:var(--op)">1.17</div></div></div></div><div class="pg"><div class="pn">2nd half 31–<small>12 goals · 2nd</small></div><div class="pgb"><div class="pgr"><div class="tk"><div class="fl" style="width:74.4%;background:var(--ic)"></div></div><div class="vl" style="color:var(--ic)">2.01</div></div><div class="pgr"><div class="tk"><div class="fl" style="width:58.0%;background:var(--op)"></div></div><div class="vl" style="color:var(--op)">1.57</div></div></div></div></div><figcaption>All groups share one axis (0–2.7). 19 of their 49 goals (38.8%) came in the first 15 minutes of either half, which make up 29.5% of playing time (binomial P = 0.10 — not enough to rule out chance).</figcaption></figure><div class="body"><p>The same shape repeats inside those minutes. Final-third entries per 90 rank 15th in the first half and 16th in the second, yet expected goals rank 2nd in both. In contrast, <b>their xG in minutes 16–30 of the first half, 0.47 per 90, is the lowest in the league</b>. A surge straight after kick-off, then a lull.</p></div></section>
+<section><div class="eyebrow"><span class="role">Trend</span><span class="cap">R1–13 vs R14–27</span></div><h2>The same number of entries, more shots</h2><div class="body"><p class="lede">Suwon FC’s last defeat came on 23 May, R13 away at Gyeongnam. Since then: 13 matches, 7 wins, 6 draws, no losses.</p></div><div class="tbl "><table><thead><tr><th></th><th>R1–13</th><th>R14–27</th></tr></thead><tbody><tr><td>Matches · W-D-L</td><td class="n">12 · 6-3-3</td><td class="n">13 · 7-6-0</td></tr><tr><td>Points / match</td><td class="n">1.75</td><td class="n"><b>2.08</b></td></tr><tr><td>Scored : conceded</td><td class="n">24 : 18</td><td class="n">26 : 11</td></tr><tr><td>Final-third entries / match (events: 12 · 12 matches)</td><td class="n">31.8</td><td class="n">31.8</td></tr><tr><td>Entry → shot</td><td class="n">24.6%</td><td class="n"><b>36.5%</b></td></tr><tr><td>Non-penalty xG : xGA / match</td><td class="n">1.31 : 1.07</td><td class="n">1.54 : 0.95</td></tr><tr><td>10 s transition xG / match</td><td class="n">0.25</td><td class="n">0.40</td></tr></tbody></table></div><div class="body"><p>Entries <b>stayed at 31.8 to 31.8 per match.</b> What changed was the conversion to shots (match-level Mann–Whitney P = 0.004). During the season this team did not go in more often; it <b>shot more often from the same number of entries</b>.</p><p>Opponent strength in the second half is not adjusted for. An easier run of fixtures is not ruled out by this table.</p></div></section>
+<section><div class="eyebrow"><span class="role">Cases</span><span class="cap">4 of 24 matches</span></div><h2>Four matches, one more look</h2><div class="body"><p class="lede">The matches were picked by rules set in advance, not by impression — ① the match closest to the season average ② the match where this piece’s formula (reach less, shoot more) showed most strongly ③ the match where the result most outran the performance ④ the match where the performance most outran the result.</p></div><div class="mcards"><div class="mcard"><div class="why">① The most ordinary match</div><div class="hd"><span class="sc">2–2</span><span class="op">Seoul E-Land (home)</span></div><div class="rd">R18 · 18 Jul · Draw · possession 50%</div><dl class="kv"><dt>Final-third entries</dt><dd><b>32</b> : 35</dd><dt>Entry → shot</dt><dd><b>28.1%</b> : 25.7%</dd><dt>Non-penalty xG</dt><dd><b>0.59</b> : 1.12</dd><dt>Expected → actual points</dt><dd><b>1.62</b> → 1</dd></dl><p>Six metrics sit closest to the season average (z-distance 1.22). An opponent own goal in first-half stoppage time put them ahead; goals in the 52nd and 55th minutes turned it round. The equaliser came from <b>Frizzo’s penalty four minutes into second-half stoppage time</b>. A lead, a reversal, and an equaliser at the moment the ball stopped — the arc of this piece in one match.</p></div><div class="mcard"><div class="why">② The formula at its clearest</div><div class="hd"><span class="sc">2–0</span><span class="op">Gimhae (home)</span></div><div class="rd">R23 · 22 Aug · Win · possession 52%</div><dl class="kv"><dt>Final-third entries</dt><dd><b>21</b> : 40</dd><dt>Entry → shot</dt><dd><b>42.9%</b> : 15.0%</dd><dt>Non-penalty xG</dt><dd><b>1.21</b> : 0.81</dd><dt>Expected → actual points</dt><dd><b>1.70</b> → 3</dd></dl><p>Only 21 final-third entries — equal to their season low. 42.9% of them ended in a shot. The opponents got in 40 times and shot from 15.0%. Frizzo in the 44th minute, Ha Jeong-woo in the 88th.</p></div><div class="mcard"><div class="why">③ Result ahead of performance</div><div class="hd"><span class="sc">2–1</span><span class="op">Daegu (away)</span></div><div class="rd">R19 · 25 Jul · Win · possession 43%</div><dl class="kv"><dt>Final-third entries</dt><dd><b>24</b> : 42</dd><dt>Entry → shot</dt><dd><b>45.8%</b> : 21.4%</dd><dt>Non-penalty xG</dt><dd><b>1.31</b> : 0.68</dd><dt>Expected → actual points</dt><dd><b>1.19</b> → 3</dd></dl><p>Three points from 1.19 expected (+1.81, the season’s largest). 43% possession and 24 entries to 42, but 45.8% of entries ended in a shot. Both goals were headers — Jo Jin-woo from a 10th-minute corner, Matheus Babi on 31 minutes.</p></div><div class="mcard"><div class="why">④ The formula reversed</div><div class="hd"><span class="sc">1–2</span><span class="op">Busan (away)</span></div><div class="rd">R8 · 18 Apr · Loss · possession 63%</div><dl class="kv"><dt>Final-third entries</dt><dd><b>40</b> : 33</dd><dt>Entry → shot</dt><dd><b>17.5%</b> : 33.3%</dd><dt>Non-penalty xG</dt><dd><b>1.83</b> : 1.16</dd><dt>Expected → actual points</dt><dd><b>2.41</b> → 0</dd></dl><p>63% possession and 40 entries, among their most. But only 17.5% of entries ended in a shot. 2.41 expected points became zero (−2.41, the season’s biggest shortfall). Their only goal was a Frizzo penalty in the 53rd minute. <b>Reach more, shoot less, lose</b> — the exact opposite of ②.</p></div></div><div class="note"><b>How they were picked.</b> For each of Suwon FC’s 24 matches I computed entries, entry → shot, non-penalty xG (both sides), opponent entries and ten-second transition xG. ① smallest z-distance across the six ② largest (entry → shot z − entries z) ③·④ largest and smallest actual points − shot-level simulated expected points. One match is one sample — <b>an illustration, not evidence</b>.</div></section>
+<section><div class="eyebrow"><span class="role">Discipline</span><span class="cap">Hypothesis log</span></div><h2>What did not survive the test</h2><div class="body"><p class="lede">Hypotheses and readings from this analysis that the data did not support stay in, undeleted. All of them were mine. A rejected hypothesis draws the boundary of the conclusions that survived.</p></div><div class="dont"><div class="hd"><span class="x">✕</span><h3>Suwon FC are a counter-attacking team</h3></div><p><b>Revised.</b> Ten-second transition xG is 1st, but at 15 and 20 seconds they are 3rd and 4th. Goals from moves that began with a ball win are 47.9% of their total, below the league average (53.7%). They have <b>the fastest counter-attack</b>, not the most counter-attacking goals.</p></div><div class="dont"><div class="hd"><span class="x">✕</span><h3>When behind, they pile on the pressure and turn it round</h3></div><p><b>Rejected.</b> Trailing, they rank 17th for final-third entries and 17th for chains started by a regain. Points won from behind came from dead balls (4 of 10 goals while trailing) and opponents’ poor finishing.</p></div><div class="dont"><div class="hd"><span class="x">✕</span><h3>Substitutes change the game</h3></div><p><b>Rejected.</b> Substitutes scored 5 of 49 goals (10.2%), below the league average of 22.9%. <b>Correction</b> — my first count was 11. I missed that on goal rows of the live feed, the “sub in” field holds the assisting player.</p></div><div class="dont"><div class="hd"><span class="x">✕</span><h3>They win the ball with a high press</h3></div><p><b>Rejected.</b> Regains in the opponent’s half (x ≥ 60) come 6.75 times per match, 14th in the league; their PPDA of 5.80 (higher = less pressing) is 4th highest. They win the ball in their own half (77% of regains).</p></div><div class="dont"><div class="hd"><span class="x">✕</span><h3>Top scorers because of finishing</h3></div><p><b>Unresolved.</b> 48 goals from 324 shots worth 41.3 xG (+6.7) is the league’s biggest excess, but chance alone produces it 12% of the time. The largest single piece of the excess is set pieces (+4.6).</p></div><div class="note"><b>Four traps in the data.</b> ① <b>Goal times in the live feed run about a minute behind the actual shot</b> (median 64 s). Used as they are, the minute before each goal is misfiled as “already ahead”. ② <b>Every match report hides a commented-out sample row</b> (a penalty goal from another match) in its scoring table. Where the team names matched (Suwon FC–Seongnam, 0–0), a phantom goal leaked in. ③ <b>Own goals in the live feed belong to the team that benefited</b>; in the event data they belong to the player’s team. ④ <b>No event data exists for any 5 September match</b>, in K League 1 or 2.</div></section>
+<section><div class="eyebrow"><span class="role">Summary</span><span class="cap">On one page</span></div><h2>Reach less, shoot the most — and stop when behind</h2><div class="body"><p class="lede">The diagnosis narrows to one line — <b>they reach less, shoot the most often, and close up when ahead. Behind, the formula stops, and the moment the ball stops becomes the lifeline.</b></p></div><div class="sheet"><h3>One-page summary</h3><div class="sd">Suwon FC 2026 · K League 2 · 25 matches · up to 19 September 2026</div><ol><li><b>Top scorers, 4th on expected goal difference.</b> NPxGD +0.41 per match. +5.3 points above expected.</li><li><b>Moving the ball forward is bottom-half work.</b> Build-up 12th · progression 14th · final-third entries 13th.</li><li><b>Once in, nobody shoots more often.</b> Entry → shot 30.6%, 1st — at all three lines.</li><li><b>The defence is a mirror.</b> Entries allowed 5th highest in the league, shots after entry allowed 3rd lowest.</li><li><b>The fastest counter-attack.</b> Ten-second transition xG 1st (P = 0.012), but goals from regains below the league average.</li><li><b>Closed when ahead.</b> 1058 minutes in front (1st), allowing 0.65 open-play xG per 90, the lowest.</li><li><b>Stopped when behind.</b> Trailing: entries 17th, regains 17th. 4 of 10 goals while behind were penalties or set pieces.</li><li><b>Dead balls break from xG.</b> Set pieces: 8 scored (xG 3.4) · 6 conceded (xGA 2.6), both the league’s biggest excess. Penalties won: 9, 1st.</li><li><b>Unbeaten in 13 since R14.</b> Entries unchanged; entry → shot 24.6% → 36.5%.</li></ol><div class="neg"><div class="nl">What this piece does not say</div><p>Whether this shape is the head coach’s design (event data records outcomes, not intent) · whether the set-piece and penalty excess is skill (small samples, found by scanning many metrics) · whether the unbeaten run owes to the fixture list (opponent strength not adjusted) · what happened in R25 away at Yongin (no event data on the portal).</p></div></div></section>
+<footer><div class="wrap"><b>Data</b> · Parsed directly from the K League data portal (portal.kleague.com). Suwon FC’s 25 K League 2 matches in 2026 (bye in R4 and R20), 34,793 raw events. For the league comparison I pulled <b>all 216 K League 2 matches</b> at once and applied the same definitions (212 matches with events · 304,486 events). Standings from the portal table of 23 September.<br><b>Validation</b> · League table re-summed (Suwon FC 25 matches, 48 points; points match the table for all 17 clubs); match-report goals 79 = 50 + 29; event goals 49 : 28; shots inside the box, key passes and offsides match for both sides. Three goals not tagged as goals (RCV) corrected for Suwon FC (17 league-wide).<br><b>★ Missing data</b> · <b>The events for all four K League 2 matches on 5 September are missing from the portal</b> (including Suwon FC’s R25, 1–1 away at Yongin). K League 1 has the same gap on that day. Event figures cover 24 Suwon FC matches; points and goals cover 25.<br><b>★ Timing correction</b> · Goal times in the portal’s live feed lag the actual shot events by a <b>median of 64 seconds</b> (536 goals measured, 5–95%: 43–82 s). Every score state here uses the shot-event time instead.<br><b>Definitions</b> · Chain = a spell in which one team keeps the ball. Final-third entry = within a chain, the team’s own event location or the end point of a <b>completed</b> pass or dribble reaches the attacking third (x ≥ 66.7); end points of failed passes do not count. Entry → shot = that chain contains at least one shot. 10-second transition = shots within 10 seconds of the regain in a chain that began with a ball win. Phase metrics exclude set-piece and penalty chains.<br><b>Author</b> · Hyuckjin Han · September 2026</div></footer>
+</div>
+</body>
+</html>
