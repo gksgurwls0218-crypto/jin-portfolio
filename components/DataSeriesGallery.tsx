@@ -33,6 +33,31 @@ type Episode = {
 
 const EPISODES: Episode[] = [
   {
+    slug: "seoule",
+    no: "16",
+    publishedAt: "2026-09-25",
+    competition: {
+      en: "K League 2 2026 · Seoul E-Land · 26 matches, 212-match league pool",
+      ko: "하나은행 K리그2 2026 · 서울 이랜드 · 26경기 · 리그 212경기 비교",
+    },
+    title: {
+      en: "They Get In, but They Cannot Shoot",
+      ko: "닿아도, 쏘지 못한다",
+    },
+    sub: {
+      en: "Seoul E-Land are second in K League 2 on non-penalty expected goal difference (+0.47 per match), and their goals and goals conceded match expectation in every score state. Opponents who reach their final third end the move with a shot 22.3% of the time — the league’s lowest, and the lowest wherever the final third is drawn. At the other end they are the best at getting out of their own third (67.2% of build-ups reach midfield) while ranking 16th for the share of passes that go forward, and they win the ball further up the pitch than anyone. By score state: level, they create the most; behind, a leading opponent reaches the final third less than against anyone and Seoul E-Land score set pieces at the league’s highest rate; ahead, they become ordinary — 12 of 30 goals conceded came while leading, when opponent ten-second counters jump to fourth. The route runs through Changhwan Park, Inpyo Oh and Euller. Minutes with only top scorer Jaeyong Bak up front show an xG difference of +0.18 per 90, against +1.12 with only Hyun Kim — non-overlapping intervals, not causal. Foreign players’ share of chance creation is 16th, but of passes into the final third 3rd. They rotate more than any other club. Five hypotheses were rejected along the way, all mine.",
+      ko: "서울 이랜드의 PK 제외 기대 득실차는 경기당 +0.47로 K리그2 2위이고, 득·실점은 모든 스코어 상태에서 기대대로 나왔다. 상대가 서울 이랜드의 파이널서드에 닿았을 때 슛으로 끝내는 비율은 22.3%로 리그 최저이고, 파이널서드를 어디에 그어도 최저다. 반대편에서는 자기 진영을 빠져나가는 비율이 1위(67.2%)인데 앞으로 가는 패스 비중은 16위이고, 리그에서 가장 높은 곳에서 공을 뺏는다. 상태별로는 동점에서 가장 많이 만들고, 뒤지면 앞선 상대가 리그에서 가장 못 들어오며 세트피스 득점은 1위다. 앞서면 평범해진다 — 30실점 중 12골이 리드 중이고, 그때만 상대 10초 역습이 4위로 튄다. 통로는 박창환·오인표·에울레르. 득점 1위 박재용만 뛴 시간의 xG 득실차는 90분당 +0.18, 김현만 뛴 시간은 +1.12다(구간 비중첩, 인과 아님). 외국인은 기회 생산 몫 16위, 파이널서드 진입 패스 몫 3위. 리그에서 가장 많이 로테이션한다. 가설 다섯 개가 기각됐고 전부 내 것이다.",
+    },
+    blurb: {
+      en: "Opponents reach Seoul E-Land’s final third and finish with a shot less often than against anyone. Nobody gets out of their own third better — and they are most ordinary when ahead.",
+      ko: "상대는 닿아도 리그에서 가장 못 쏘고, 서울 이랜드는 가장 잘 올라간다. 약한 순간은 앞서 있을 때다.",
+    },
+    stats: {
+      en: [["22.3%", "opponent final-third entries ending in a shot, league lowest"], ["67.2%", "build-ups reaching midfield, league 1st"], ["+0.18 vs +1.12", "xG diff./90, only Bak vs only Kim up front"]],
+      ko: [["22.3%", "상대 파이널서드 도달 후 슛 전환, 리그 최저"], ["67.2%", "빌드업 → 중앙 도달, 리그 1위"], ["+0.18 vs +1.12", "박재용만 vs 김현만 뛴 시간의 xG 득실차/90"]],
+    },
+  },
+  {
     slug: "suwonfc",
     no: "15",
     publishedAt: "2026-09-24",
