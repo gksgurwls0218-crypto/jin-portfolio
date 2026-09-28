@@ -33,6 +33,31 @@ type Episode = {
 
 const EPISODES: Episode[] = [
   {
+    slug: "daegu",
+    no: "17",
+    publishedAt: "2026-09-28",
+    competition: {
+      en: "K League 2 2026 · Daegu FC · 26 matches, 212-match league pool",
+      ko: "하나은행 K리그2 2026 · 대구FC · 26경기 · 리그 212경기 비교",
+    },
+    title: {
+      en: "They Get In and Shoot — and So Does Everyone Else",
+      ko: "들어가면 쏘고, 들어오면 맞는다",
+    },
+    sub: {
+      en: "Daegu FC take more shots (14.3 per match) and create more xG (1.84) than anyone in K League 2, yet sit fourth: third on non-penalty expected goal difference (+0.43), with goals matching expectation. The reason is at both ends of the pitch. When Daegu reach the final third, 29.4% of those moves end in a shot (2nd, and 2nd–3rd wherever the line is drawn); when opponents get into Daegu’s third, 29.6% end in a shot — the league’s highest, 1st–2nd at every line. Daegu are the only club in the top two on both. They win the entrance (opponents reach their third the 5th-fewest times) and attack short and direct (1st for shots within 10 seconds of a regain, 2nd for crosses). By score state, they are hottest when ahead: 1st for xG created and for opponent 10-second counters, yet 3rd for points in matches they led. After the hour the match heats up: 25 goals after the 60th minute and 16 by substitutes, both 1st — Edgar scored 8 off the bench from 3.2 xG, 6 with his head, though Daegu create as much late on without him. Jaewon Hwang → Serafim is the top link into the final third, and Daegu rely on foreign players more than anyone relative to minutes (18.5% of minutes, 58.1% of non-penalty goals). Six hypotheses were tested and recorded along the way.",
+      ko: "대구FC는 경기당 슛 14.3개·xG 1.84로 K리그2에서 가장 많이 쏘는데 4위다. PK 제외 기대 득실차는 +0.43으로 3위이고, 골은 기대대로 들어갔다. 이유는 경기장 양쪽에 있다. 대구가 파이널서드에 들어가면 29.4%가 슛으로 끝나고(2위, 기준선 세 곳 모두 2~3위), 상대가 대구 진영에 들어와도 29.6%가 슛으로 끝난다(리그 최고, 기준선 세 곳 모두 1~2위). 두 비율이 모두 상위 2위 안인 팀은 대구뿐이다. 입구에서는 이기고(허용 도달 5번째로 적음), 공격은 짧고 곧다(10초 내 슛 1위, 크로스 2위). 상태별로는 앞서 있을 때 가장 뜨겁다 — 만든 xG와 상대 10초 역습 모두 1위지만, 리드 경기 승점은 3위다. 60분이 지나면 더 뜨거워진다 — 61분 이후 25골, 교체 선수 16골 모두 1위. 에드가는 교체로만 8골(xG 3.2, 헤더 6)을 넣었지만, 기회의 양은 그가 없어도 같다. 황재원 → 세라핌이 파이널서드 진입 연결 1위이고, 출전 대비 외국인 의존도는 리그 1위다(출전 18.5%, PK 제외 골 58.1%). 가설 여섯 개를 검정해 기록으로 남겼다.",
+    },
+    blurb: {
+      en: "When Daegu get in, they shoot; when opponents get in, so do they — the only club near the top on both rates. Hottest when ahead, hotter still after the hour.",
+      ko: "대구가 들어가면 쏘고, 상대가 들어와도 쏜다 — 두 비율이 모두 최상위인 팀은 대구뿐이다. 앞서 있을 때, 그리고 60분 이후 가장 뜨겁다.",
+    },
+    stats: {
+      en: [["29.4% / 29.6%", "final-third entries ending in a shot — Daegu 2nd, opponents league highest"], ["25", "goals after the 60th minute, league 1st"], ["8 from 3.2 xG", "Edgar, all off the bench"]],
+      ko: [["29.4% / 29.6%", "파이널서드 도달 후 슛 전환 — 대구 2위, 상대 리그 최고"], ["25골", "61분 이후 득점, 리그 1위"], ["xG 3.2 → 8골", "에드가, 전부 교체 출전"]],
+    },
+  },
+  {
     slug: "seoule",
     no: "16",
     publishedAt: "2026-09-25",
