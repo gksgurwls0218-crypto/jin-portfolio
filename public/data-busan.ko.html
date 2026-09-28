@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ko">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>두 개의 시즌 — 부산아이파크 2026 | 한혁진</title>
+<meta name="description" content="7월의 부산은 선두였다. 9월의 부산은 6위다. 전반기 16경기에서 승점 36, 후반기 10경기에서 승점 5. 같은 팀의 같은 시즌이 이렇게 갈라진 이유를 리그 212경기에 같은 잣대를 대고 따라갔다 — 무엇이 운이었고, 무엇이 진짜 바뀌었는가.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light;
+  --page:#f1f1ef; --surface:#fcfcfb; --surface-2:#e4e4e1; --raise:#f7f7f5;
+  --ink:#141413; --ink-2:#3c3c3a; --muted:#70706c;
+  --line:rgba(20,20,19,.14); --line-2:rgba(20,20,19,.07);
+  --grid:#e0e0dd; --axis:#c2c2be;
+  --ic:#b3202e; --op:#3d6a8e; --top:#3f7a1f; --bad:#8a5a00;
+  --ic-soft:rgba(179,32,46,.10); --op-soft:rgba(61,106,142,.12);
+  --top-soft:rgba(63,122,31,.11); --bad-soft:rgba(138,90,0,.10);
+  --sp:clamp(18px,4.5vw,30px);
+  --disp:"Hahmlet",'Nanum Myeongjo',serif;
+  --body:"IBM Plex Sans KR",-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,'SFMono-Regular',monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --page:#121211; --surface:#1a1a19; --surface-2:#262624; --raise:#1f1f1e;
+    --ink:#eaeae7; --ink-2:#b8b8b4; --muted:#8d8d89;
+    --line:rgba(234,234,231,.16); --line-2:rgba(234,234,231,.08);
+    --grid:#2d2d2b; --axis:#4a4a47;
+    --ic:#ef6f76; --op:#7ea6c8; --top:#5aa32e; --bad:#d9a441;
+    --ic-soft:rgba(239,111,118,.16); --op-soft:rgba(126,166,200,.17);
+    --top-soft:rgba(90,163,46,.15); --bad-soft:rgba(217,164,65,.14);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --page:#121211; --surface:#1a1a19; --surface-2:#262624; --raise:#1f1f1e;
+  --ink:#eaeae7; --ink-2:#b8b8b4; --muted:#8d8d89;
+  --line:rgba(234,234,231,.16); --line-2:rgba(234,234,231,.08);
+  --grid:#2d2d2b; --axis:#4a4a47;
+  --ic:#ef6f76; --op:#7ea6c8; --top:#5aa32e; --bad:#d9a441;
+  --ic-soft:rgba(239,111,118,.16); --op-soft:rgba(126,166,200,.17);
+  --top-soft:rgba(90,163,46,.15); --bad-soft:rgba(217,164,65,.14);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font-family:var(--body);
+  word-break:keep-all;overflow-wrap:break-word;
+  font-weight:400;font-size:16px;line-height:1.72;-webkit-font-smoothing:antialiased}
+.wrap{max-width:940px;margin:0 auto;padding-inline:var(--sp);padding-block:0}
+p{margin:0 0 1.05em}
+strong{font-weight:600;color:var(--ink)}
+em{font-style:normal;background:var(--ic-soft);padding:.06em .3em;border-radius:2px;font-weight:500}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums;font-weight:500;letter-spacing:-.01em}
+
+/* ── header ── */
+header{padding-block:clamp(48px,9vw,88px) clamp(30px,5vw,44px);border-bottom:1px solid var(--line)}
+.badge{display:inline-flex;align-items:center;gap:.55em;font-family:var(--mono);font-size:11px;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--ic);font-weight:500}
+.badge::before{content:"";width:22px;height:2px;background:var(--ic)}
+h1{font-family:var(--disp);font-weight:600;font-size:clamp(38px,8.6vw,68px);line-height:1.06;
+  letter-spacing:-.025em;margin:.34em 0 .3em;text-wrap:balance}
+.dek{font-family:var(--disp);font-weight:400;font-size:clamp(17px,2.5vw,21px);line-height:1.55;
+  color:var(--ink-2);max-width:34em;margin:0 0 1.5em}
+.meta{display:flex;flex-wrap:wrap;gap:.5em 0;font-family:var(--mono);font-size:11.5px;
+  color:var(--muted);letter-spacing:.02em}
+.meta span+span::before{content:"|";padding:0 .85em;color:var(--axis)}
+
+/* ── tiles ── */
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line-2);
+  border-block:1px solid var(--line);margin-block:0}
+@media(max-width:760px){.tiles{grid-template-columns:repeat(2,1fr)}}
+.tile{background:var(--page);padding:clamp(16px,3vw,24px) clamp(12px,2.4vw,20px);display:flex;
+  flex-direction:column;gap:.3em}
+.tile .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.tile .v{font-family:var(--disp);font-weight:600;font-size:clamp(26px,4.6vw,38px);line-height:1;
+  letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.tile .v.gj{color:var(--ic)} .tile .v.bad{color:var(--bad)}
+.tile .s{font-size:12.5px;line-height:1.45;color:var(--ink-2)}
+
+/* ── sections ── */
+section{padding-block:clamp(40px,7vw,68px);border-bottom:1px solid var(--line-2)}
+section:last-of-type{border-bottom:none}
+.eyebrow{display:flex;align-items:baseline;gap:.9em;margin-bottom:.9em}
+.eyebrow .role{font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--page);background:var(--ink-2);padding:.35em .7em;border-radius:2px;white-space:nowrap}
+.eyebrow .cap{font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--muted)}
+h2{font-family:var(--disp);font-weight:600;font-size:clamp(25px,4.4vw,37px);line-height:1.2;
+  letter-spacing:-.022em;margin:0 0 .6em;text-wrap:balance;max-width:19em}
+h3{font-family:var(--disp);font-weight:600;font-size:clamp(17px,2.4vw,21px);line-height:1.35;
+  letter-spacing:-.012em;margin:2.1em 0 .7em}
+.lede{font-size:clamp(16.5px,2.1vw,18.5px);line-height:1.68;color:var(--ink-2);max-width:33em;margin-bottom:1.6em}
+.body{max-width:35em}
+.body.wide{max-width:40em}
+
+/* ── pull ── */
+.pull{border-left:3px solid var(--ic);padding:.1em 0 .1em 1.15em;margin:1.9em 0;
+  font-family:var(--disp);font-weight:500;font-size:clamp(18px,2.7vw,23px);line-height:1.45;
+  letter-spacing:-.014em;color:var(--ink);max-width:24em;text-wrap:balance}
+
+/* ── figure ── */
+figure{margin:2em 0;padding:clamp(16px,3vw,26px);background:var(--surface);
+  border:1px solid var(--line);border-radius:3px}
+figcaption{font-family:var(--mono);font-size:11px;line-height:1.6;color:var(--muted);
+  margin-top:1.15em;padding-top:.85em;border-top:1px solid var(--line-2)}
+.figtitle{font-family:var(--body);font-weight:600;font-size:14px;line-height:1.4;color:var(--ink);
+  margin-bottom:.3em;letter-spacing:-.005em}
+.figsub{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:1.35em;letter-spacing:.01em}
+.legend{display:flex;flex-wrap:wrap;gap:.5em 1.3em;font-family:var(--mono);font-size:11px;
+  color:var(--ink-2);margin-bottom:1.1em}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:1px;margin-right:.45em;vertical-align:-1px}
+
+/* ── bar rows ── */
+.bars{display:flex;flex-direction:column;gap:7px}
+.br{display:grid;grid-template-columns:74px 1fr 62px;align-items:center;gap:10px}
+@media(max-width:560px){.br{grid-template-columns:60px 1fr 54px;gap:7px}}
+.br .lb{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);text-align:right;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bars.lbwrap .br{grid-template-columns:90px 1fr 46px}
+.bars.lbwrap .br .lb{white-space:normal;overflow:visible;text-overflow:clip;line-height:1.28}
+@media(max-width:560px){.bars.lbwrap .br{grid-template-columns:78px 1fr 40px;gap:7px}}
+.bars.lbwrap.vwide .br{grid-template-columns:90px 1fr 100px}
+.bars.lbwrap.vwide .br .vl{white-space:nowrap;font-size:10.5px}
+@media(max-width:560px){.bars.lbwrap.vwide .br{grid-template-columns:56px 1fr 90px;gap:6px}}
+.br .tk{height:17px;background:var(--surface-2);border-radius:1px;overflow:hidden}
+.br .fl{height:100%;background:var(--op);border-radius:1px}
+.br .vl{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;
+  color:var(--ink-2);text-align:right}
+.br.hi .lb{color:var(--ic);font-weight:600}
+.br.hi .fl{background:var(--ic)}
+.br.hi .vl{color:var(--ic);font-weight:600}
+.br.ref .fl{background:var(--top)}
+.br.ref .lb,.br.ref .vl{color:var(--top)}
+
+/* ── grouped pair bars ── */
+.pair{display:flex;flex-direction:column;gap:16px}
+.pg{display:grid;grid-template-columns:96px 1fr;gap:12px;align-items:center}
+@media(max-width:560px){.pg{grid-template-columns:1fr;gap:5px}}
+.pg .pn{font-family:var(--body);font-size:13px;font-weight:600;color:var(--ink)}
+.pg .pn small{display:block;font-family:var(--mono);font-weight:400;font-size:10.5px;color:var(--muted)}
+.pgb{display:flex;flex-direction:column;gap:5px}
+.pgr{display:grid;grid-template-columns:1fr 54px;gap:9px;align-items:center}
+.pgr .tk{height:15px;background:var(--surface-2);border-radius:1px;overflow:hidden}
+.pgr .fl{height:100%;border-radius:1px}
+.pgr .vl{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;text-align:right}
+
+/* ── table ── */
+.tbl{overflow-x:auto;margin:1.8em 0;border:1px solid var(--line);border-radius:3px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:13px}
+th,td{padding:9px 13px;text-align:left;border-bottom:1px solid var(--line-2);vertical-align:baseline}
+th{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;background:var(--raise);white-space:nowrap}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+td .nm{font-weight:600}
+td .no{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.up{color:var(--top);font-weight:600} .dn{color:var(--bad);font-weight:600}
+.dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:.5em;vertical-align:1px}
+.dot.on{background:var(--top)} .dot.mid{background:var(--axis)} .dot.off{background:transparent;
+  border:1px solid var(--axis)}
+
+/* ── slope svg ── */
+svg{display:block;max-width:100%;height:auto;overflow:visible}
+.sv-lb{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:var(--muted)}
+.sv-vl{font-family:"IBM Plex Mono",monospace;font-size:11.5px;font-weight:500}
+.sv-nm{font-family:"IBM Plex Sans KR",sans-serif;font-size:11.5px;font-weight:600;fill:var(--ink-2)}
+
+p.rate{font-size:13px;line-height:1.6;color:var(--muted);border-left:2px solid var(--line);
+  padding-left:1.1em;margin:1.5em 0}
+p.rate b{color:var(--ink-2);font-weight:600}
+
+/* ── callout ── */
+.note{background:var(--raise);border:1px solid var(--line);border-left:3px solid var(--axis);
+  border-radius:3px;padding:clamp(14px,2.6vw,20px);margin:1.9em 0;font-size:14px;line-height:1.65;
+  color:var(--ink-2)}
+.note b{color:var(--ink);font-weight:600}
+.note.warn{border-left-color:var(--bad)}
+.note.key{border-left-color:var(--ic);background:var(--ic-soft);border-color:var(--line)}
+
+/* ── stat strip ── */
+.strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-2);
+  border:1px solid var(--line);border-radius:3px;overflow:hidden;margin:1.9em 0}
+@media(max-width:620px){.strip{grid-template-columns:1fr}}
+.strip>div{background:var(--surface);padding:clamp(13px,2.4vw,18px)}
+.strip .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:.4em}
+.strip .v{font-family:var(--disp);font-weight:600;font-size:clamp(20px,3.4vw,27px);line-height:1.1;
+  font-variant-numeric:tabular-nums;letter-spacing:-.018em}
+.strip .s{font-size:12px;color:var(--ink-2);margin-top:.35em;line-height:1.45}
+
+/* ── list ── */
+ul.clean{list-style:none;padding:0;margin:1.3em 0;display:flex;flex-direction:column;gap:.85em;max-width:35em}
+ul.clean li{padding-left:1.5em;position:relative;font-size:14.5px;line-height:1.62;color:var(--ink-2)}
+ul.clean li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:1.5px;background:var(--axis)}
+ul.clean li b{color:var(--ink);font-weight:600}
+
+/* ── case panel ── */
+.case{border:1px solid var(--line);border-top:3px solid var(--ic);border-radius:3px;
+  background:var(--surface);padding:clamp(18px,3.2vw,28px);margin:2.2em 0}
+.case+.case{margin-top:1.4em}
+.case .ch{display:flex;flex-wrap:wrap;align-items:baseline;gap:.5em .9em;margin-bottom:.35em}
+.case .ct{font-family:var(--disp);font-weight:600;font-size:clamp(20px,3.2vw,26px);line-height:1.15;
+  letter-spacing:-.02em;color:var(--ink)}
+.case .cn{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.case .cs{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ic);border:1px solid var(--ic);border-radius:2px;padding:.22em .55em;white-space:nowrap}
+.case .cd{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:1.15em;
+  padding-bottom:1.15em;border-bottom:1px solid var(--line-2)}
+.case p{font-size:14.5px;line-height:1.68;color:var(--ink-2);margin-bottom:1em;max-width:40em}
+.case p:last-child{margin-bottom:0}
+.case p b,.case p strong{color:var(--ink);font-weight:600}
+.case h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;margin:1.6em 0 .7em}
+
+/* ── ledger (two-column consequence table inside a case) ── */
+.ledger{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line-2);
+  border:1px solid var(--line);border-radius:3px;overflow:hidden;margin:1.4em 0}
+@media(max-width:620px){.ledger{grid-template-columns:1fr}}
+.ledger>div{background:var(--raise);padding:clamp(13px,2.4vw,17px)}
+.ledger .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:.5em}
+.ledger .v{font-family:var(--disp);font-weight:600;font-size:clamp(17px,2.8vw,21px);line-height:1.2;
+  letter-spacing:-.015em;margin-bottom:.4em}
+.ledger .state .v{color:var(--ink-2)}
+.ledger .social .v{color:var(--bad)}
+.ledger .s{font-size:12.5px;line-height:1.5;color:var(--ink-2)}
+
+/* ── timeline strip ── */
+.tl{display:flex;gap:2px;margin:1.3em 0 .6em}
+.tl .y{flex:1;min-width:0;text-align:center}
+.tl .yb{height:30px;border-radius:1px;background:var(--surface-2)}
+.tl .yb.play{background:var(--op)}
+.tl .yb.gap{background:var(--bad-soft);border:1px dashed var(--bad)}
+.tl .yb.low{background:var(--ic-soft);border:1px solid var(--ic)}
+.tl .yl{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:.45em;
+  writing-mode:vertical-rl;transform:rotate(180deg);height:34px;display:inline-block}
+@media(min-width:560px){.tl .yl{writing-mode:horizontal-tb;transform:none;height:auto}}
+
+footer{padding-block:clamp(34px,6vw,54px) clamp(46px,8vw,74px);border-top:1px solid var(--line);
+  font-family:var(--mono);font-size:11.5px;line-height:1.85;color:var(--muted)}
+footer b{color:var(--ink-2);font-weight:500}
+@media(prefers-reduced-motion:no-preference){
+  section{animation:fi .5s ease-out both}
+  @keyframes fi{from{opacity:.55}to{opacity:1}}
+}
+
+/* ── scouting report components ── */
+.warnbar{background:var(--bad-soft);border:1px solid var(--bad);border-radius:3px;
+  padding:clamp(13px,2.4vw,18px);margin:1.6em 0;font-size:13.5px;line-height:1.6;color:var(--ink-2)}
+.warnbar b{color:var(--bad);font-weight:600}
+
+/* numbered instruction card */
+.instr{display:grid;grid-template-columns:44px 1fr;gap:clamp(12px,2.4vw,20px);
+  border:1px solid var(--line);border-left:3px solid var(--ic);border-radius:3px;
+  background:var(--surface);padding:clamp(15px,2.8vw,22px);margin:1.1em 0}
+@media(max-width:560px){.instr{grid-template-columns:32px 1fr;gap:12px}}
+.instr .n{font-family:var(--disp);font-weight:600;font-size:clamp(26px,4.4vw,34px);line-height:1;
+  color:var(--ic);letter-spacing:-.03em}
+.instr h3{font-family:var(--body);font-weight:600;font-size:clamp(15.5px,2.2vw,18px);
+  line-height:1.34;color:var(--ink);margin:0 0 .5em;letter-spacing:-.01em}
+.instr p{font-size:14px;line-height:1.62;color:var(--ink-2);margin:0 0 .7em;max-width:40em}
+.instr p:last-child{margin-bottom:0}
+.instr .ev{font-family:var(--mono);font-size:11.5px;line-height:1.55;color:var(--muted);
+  border-top:1px solid var(--line-2);padding-top:.7em;margin-top:.9em}
+.instr .ev b{color:var(--ic);font-weight:600}
+
+/* do-not list */
+.dont{border:1px solid var(--line);border-radius:3px;background:var(--raise);
+  padding:clamp(15px,2.8vw,22px);margin:1.1em 0}
+.dont .hd{display:flex;align-items:baseline;gap:.7em;margin-bottom:.55em}
+.dont .x{font-family:var(--mono);font-size:15px;color:var(--axis);line-height:1}
+.dont h3{font-family:var(--body);font-weight:600;font-size:15px;line-height:1.34;
+  color:var(--muted);margin:0;text-decoration:line-through;text-decoration-color:var(--axis)}
+.dont p{font-size:13.5px;line-height:1.6;color:var(--ink-2);margin:0;max-width:40em}
+.dont p b{color:var(--ink);font-weight:600}
+
+/* pitch zone map */
+.zgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin:1.2em 0}
+.zcell{padding:clamp(14px,2.6vw,22px) 10px;border-radius:2px;text-align:center}
+.zcell .zv{font-family:var(--disp);font-weight:600;font-size:clamp(22px,3.8vw,30px);
+  line-height:1;letter-spacing:-.02em}
+.zcell .zn{font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-top:.55em;
+  letter-spacing:.03em}
+.zcell .zr{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:.25em}
+
+/* player duel table */
+.duel{display:flex;flex-direction:column;gap:6px;margin:1.2em 0}
+.drow{display:grid;grid-template-columns:104px 60px 1fr 46px;align-items:center;gap:9px}
+@media(max-width:560px){.drow{grid-template-columns:84px 52px 1fr 40px;gap:6px}.drow .dp{font-size:9.5px}}
+.drow .dn{font-family:var(--body);font-size:12.5px;font-weight:600;color:var(--ink);
+  text-align:right;line-height:1.24}
+.drow .dp{font-family:var(--mono);font-size:10px;color:var(--muted);text-align:right;white-space:nowrap}
+.drow .dt{height:16px;background:var(--surface-2);border-radius:1px;position:relative;overflow:hidden}
+.drow .df{position:absolute;top:0;bottom:0;border-radius:1px}
+.drow .dm{position:absolute;top:-2px;bottom:-2px;width:1.5px;background:var(--axis);left:50%}
+.drow .dv{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;text-align:right}
+
+/* one-page summary */
+.sheet{border:2px solid var(--ink);border-radius:4px;padding:clamp(18px,3.4vw,30px);
+  margin:2em 0;background:var(--surface)}
+.sheet h3{font-family:var(--disp);font-weight:600;font-size:clamp(19px,3vw,25px);
+  letter-spacing:-.02em;color:var(--ink);margin:0 0 .2em}
+.sheet .sd{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:1.4em;
+  padding-bottom:1.1em;border-bottom:1px solid var(--line)}
+.sheet ol{margin:0;padding-left:1.35em;display:flex;flex-direction:column;gap:.7em}
+.sheet ol li{font-size:14px;line-height:1.55;color:var(--ink-2)}
+.sheet ol li b{color:var(--ink);font-weight:600}
+.sheet .neg{margin-top:1.5em;padding-top:1.2em;border-top:1px solid var(--line-2)}
+.sheet .neg .nl{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:.6em}
+.sheet .neg p{font-size:13px;line-height:1.6;color:var(--muted);margin:0}
+
+/* ── butterfly (대칭 막대) ── */
+.bf{display:flex;flex-direction:column;gap:0}
+.bfh{display:grid;grid-template-columns:78px 1fr 1fr 50px;gap:0;align-items:center;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--muted);
+  padding-bottom:7px;border-bottom:1px solid var(--line-2);margin-bottom:3px}
+.bfh .a{text-align:right;padding-right:11px} .bfh .b{padding-left:11px}
+.bfh .c{text-align:right}
+.bfr{display:grid;grid-template-columns:78px 1fr 1fr 50px;align-items:center;padding-block:3px}
+.bfr .bl{font-family:var(--body);font-size:12.5px;color:var(--ink-2);white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis;padding-right:8px}
+.bfr .ba{display:flex;justify-content:flex-end;align-items:center;gap:7px;
+  padding-right:9px;border-right:2px solid var(--axis)}
+.bfr .bb{display:flex;align-items:center;gap:7px;padding-left:9px}
+.bfr i{display:block;height:17px;border-radius:1px;flex:none}
+.bfr .ba i{background:var(--ic)} .bfr .bb i{background:var(--bad)}
+.bfr .v{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;
+  color:var(--ink-2);flex:none}
+.bfr .d{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;
+  text-align:right;color:var(--muted);padding-left:8px}
+.bfr.tot{margin-top:5px;padding-top:8px;border-top:1px solid var(--line)}
+.bfr.tot .bl,.bfr.tot .v,.bfr.tot .d{font-weight:600;color:var(--ink)}
+@media(max-width:560px){.bfh,.bfr{grid-template-columns:64px 1fr 1fr 48px}
+  .bfr .bl{font-size:11px;padding-right:5px}
+  .bfr .ba,.bfr .bb{padding-inline:6px}}
+
+/* ── dumbbell (연결점) ── */
+.db{display:flex;flex-direction:column;gap:2px}
+.dbr{display:grid;grid-template-columns:88px 44px 1fr 44px 118px;align-items:center;gap:8px;
+  padding:7px 0;border-bottom:1px solid var(--line-2)}
+.dbr:last-child{border-bottom:none}
+.dbr .nm{font-family:var(--body);font-size:12.5px;font-weight:600;color:var(--ink);line-height:1.22}
+.dbr .nm small{display:block;font-family:var(--mono);font-weight:400;font-size:9.5px;
+  color:var(--muted);letter-spacing:0}
+.dbr .va,.dbr .vo{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums}
+.dbr .va{text-align:right;color:var(--ic);font-weight:600}
+.dbr .vo{text-align:left;color:var(--op)}
+.dbr .tr{position:relative;height:20px}
+.dbr .tr::before{content:"";position:absolute;left:0;right:0;top:9.5px;height:1px;background:var(--line-2)}
+.dbr .cn{position:absolute;top:8px;height:4px;border-radius:2px}
+.dbr .pt{position:absolute;top:4px;width:12px;height:12px;border-radius:50%;
+  border:2px solid var(--surface)}
+.dbr .pa{background:var(--ic)} .dbr .po{background:var(--op)}
+.dbr .jg{font-family:var(--mono);font-size:10px;letter-spacing:.02em;text-align:right;white-space:nowrap;
+  white-space:nowrap}
+.dbr .jg.up{color:var(--top)} .dbr .jg.dn{color:var(--bad)} .dbr .jg.md{color:var(--muted)}
+@media(max-width:620px){
+  .dbr{grid-template-columns:76px 40px 1fr 40px;gap:6px;row-gap:2px}
+  .dbr .jg{grid-column:2/-1;text-align:left;padding-top:1px}}
+
+/* ── 경기 카드 ── */
+.mcards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:1.9em 0}
+@media(max-width:700px){.mcards{grid-template-columns:1fr}}
+.mcard{border:1px solid var(--line);border-top:3px solid var(--ic);border-radius:3px;
+  background:var(--surface);padding:clamp(15px,2.6vw,20px);display:flex;flex-direction:column}
+.mcard .why{font-family:var(--mono);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ic);margin-bottom:.7em}
+.mcard .hd{display:flex;align-items:baseline;gap:.6em;flex-wrap:wrap;margin-bottom:.15em}
+.mcard .sc{font-family:var(--disp);font-weight:600;font-size:clamp(23px,3.6vw,29px);
+  line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.mcard .op{font-family:var(--body);font-size:14px;font-weight:600;color:var(--ink)}
+.mcard .rd{font-family:var(--mono);font-size:10.5px;color:var(--muted)}
+.mcard .kv{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;margin:1em 0 .9em;
+  padding:.85em 0;border-block:1px solid var(--line-2)}
+.mcard .kv dt{font-family:var(--mono);font-size:10.5px;color:var(--muted);white-space:nowrap}
+.mcard .kv dd{margin:0;font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;
+  color:var(--ink-2)}
+.mcard .kv dd b{color:var(--ic);font-weight:600}
+.mcard .kv dd em{background:none;padding:0;color:var(--bad);font-weight:600}
+.mcard p{font-size:13.5px;line-height:1.62;color:var(--ink-2);margin:0}
+.mcard p b{color:var(--ink);font-weight:600}
+
+/* ── 피치 ── */
+.pitches{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px}
+.pitchwrap .pttl{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:.5em;
+  letter-spacing:.03em}
+
+
+.dotw .drow{grid-template-columns:96px 0 1fr 150px}
+.dotw .dv{white-space:nowrap;font-size:11px}
+@media(max-width:560px){.dotw .drow{grid-template-columns:66px 0 1fr 116px;gap:5px}.dotw .dv{font-size:9.5px}.dotw .dn{font-size:11.5px;word-break:keep-all}}
+
+.dvb{display:flex;flex-direction:column;gap:7px}
+.dvr{display:grid;grid-template-columns:74px 1fr 62px;align-items:center;gap:10px}
+.dvr .lb{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);text-align:right}
+.dvr .tk{position:relative;height:17px;background:var(--surface-2);border-radius:1px}
+.dvr .zl{position:absolute;top:-4px;bottom:-4px;width:1.5px;background:var(--axis);transform:translateX(-.75px);z-index:1}
+.dvr .fl{position:absolute;top:0;bottom:0;background:var(--op);border-radius:1px}
+.dvr.neg .fl{opacity:.55}
+.dvr .vl{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;text-align:right;color:var(--ink-2)}
+.dvr.hi .lb,.dvr.hi .vl{color:var(--ic);font-weight:600}
+.dvr.hi .fl{background:var(--ic);opacity:1}
+.dvr.ax .axl{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px;color:var(--muted)}
+@media(max-width:560px){.dvr{grid-template-columns:68px 1fr 44px;gap:6px}.dvr .lb{word-break:keep-all}.dvr .lb,.dvr .vl{font-size:10.5px}}
+</style>
+
+<body>
+<header><div class="wrap">
+  <div class="badge">부산아이파크 2026 · K리그2 R1–R27 26경기</div>
+  <h1>두 개의 시즌</h1>
+  <p class="dek">7월의 부산은 선두였다. 9월의 부산은 6위다. 전반기 16경기에서 승점 36, 후반기 10경기에서 승점 5. 같은 팀의 같은 시즌이 이렇게 갈라진 이유를 리그 212경기에 같은 잣대를 대고 따라갔다 — 무엇이 운이었고, 무엇이 진짜 바뀌었는가.</p>
+  <div class="meta"><span>K리그2 2026 · 부산아이파크 26경기</span><span>2026년 9월 19일 경기까지</span><span>리그 212경기 · 원시 이벤트 304,486건</span><span>한혁진</span></div>
+</div></header>
+<div class="tiles"><div class="tile"><div class="k">전반기 R1–R17</div><div class="v gj">2.25</div><div class="s">경기당 승점 · 11승 3무 2패<br>승점 36</div></div><div class="tile"><div class="k">후반기 R18–R27</div><div class="v bad">0.50</div><div class="s">경기당 승점 · 1승 2무 7패<br>승점 5</div></div><div class="tile"><div class="k">전반기 기대 대비</div><div class="v ">+12.9</div><div class="s">승점 − 기대승점<br><b>리그 1위</b> · 2위 충남아산 +4.3</div></div><div class="tile"><div class="k">후반기 기대 대비</div><div class="v ">−6.2</div><div class="s">승점 − 기대승점<br>리그 3번째로 모자람</div></div></div>
+<div class="wrap">
+<section><div class="eyebrow"><span class="role">출발점</span><span class="cap">전반기 2.25 → 후반기 0.50</span></div><h2>7월엔 선두였다</h2><div class="body"><p class="lede">부산아이파크는 전반기 마지막 경기(R17, 7월 12일 김포 2-0)까지 16경기에서 11승 3무 2패, 승점 36를 쌓았다. 경기당 2.25점 — 34라운드로 늘리면 승점 70점대 중반의 페이스다. 당시 언론은 부산을 "선두"로 불렀다.</p><p>그 다음 경기부터 다른 팀이 됐다. R18 성남 원정 0-1을 시작으로 <b>8경기 무승(2무 6패)</b>. R26 김해전 2-0으로 끊었지만 R27 김포 원정에서 다시 졌다. 후반기 10경기 승점은 <b>5</b>, 경기당 0.50점. 강등권 팀의 속도다. 9월 순위표의 부산은 6위다.</p></div><div class="tbl "><table><thead><tr><th>구간</th><th>경기</th><th>승–무–패</th><th>승점</th><th>경기당</th><th>득–실</th></tr></thead><tbody><tr><td>전반기 R1–R17</td><td class="n">16</td><td class="n">11–3–2</td><td class="n"><b>36</b></td><td class="n"><b>2.25</b></td><td class="n">35–20</td></tr><tr><td>후반기 R18–R27</td><td class="n">10</td><td class="n">1–2–7</td><td class="n"><b>5</b></td><td class="n"><b>0.50</b></td><td class="n">6–14</td></tr><tr><td>시즌</td><td class="n">26</td><td class="n">12–5–9</td><td class="n">41</td><td class="n">1.58</td><td class="n">41–34</td></tr></tbody></table></div><div class="body"><p>이 글의 질문은 하나다. <b>어느 쪽이 진짜 부산인가.</b> 답을 찾으려면 결과(승점)와 과정(슛의 질)을 떼어 놓고 봐야 한다. 전반기와 후반기 모두, 결과는 과정에서 멀리 떨어져 있었다 — 방향만 반대로.</p></div></section>
+<section><div class="eyebrow"><span class="role">전반기 R1–R17</span><span class="cap">승점 36 · 기대승점 23.1</span></div><h2>슛이 말한 것보다 13점 많았다</h2><div class="body"><p class="lede">경기마다 양 팀의 모든 슛을 xG 확률대로 다시 차 보면, 그 경기에서 기대할 수 있는 승점이 나온다(기대승점). 전반기 부산의 기대승점은 <b>23.1</b>였다. 실제 승점은 36.</p><p>차이 +12.9점은 K리그2 17팀 중 <b>압도적 1위</b>다. 2위 충남아산가 +4.3다. 같은 슛을 2만 번 다시 차서 전반기 16경기를 반복하면, 승점 36 이상이 나오는 경우는 <b>0.3%</b>뿐이다. 특히 첫 11경기(9승 1무 1패, 승점 28)는 기대승점 14.7에서 나올 확률이 사실상 0이었다(2만 번 중 1번).</p></div><figure><div class="figtitle">실제 승점과 기대승점의 누적 — 전반기에 벌어지고, 후반기에 좁혀졌다</div><div class="figsub">라운드별 누적 · R25는 이벤트가 없어 기대승점을 더하지 않았다(점선 수평)</div><div class="legend"><span><i style="background:var(--ic)"></i>실제 승점</span><span><i style="background:var(--op)"></i>기대승점</span></div><div class="scat"><svg viewBox="0 0 580 330" role="img" aria-label="누적 승점" style="width:100%;height:auto"><line x1="44.0" y1="290.0" x2="510.0" y2="290.0" stroke="var(--grid)" stroke-width="1"/><text x="38.0" y="293.0" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">0</text><line x1="44.0" y1="259.6" x2="510.0" y2="259.6" stroke="var(--grid)" stroke-width="1"/><text x="38.0" y="262.6" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">5</text><line x1="44.0" y1="229.1" x2="510.0" y2="229.1" stroke="var(--grid)" stroke-width="1"/><text x="38.0" y="232.1" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">10</text><line x1="44.0" y1="198.7" x2="510.0" y2="198.7" stroke="var(--grid)" stroke-width="1"/><text x="38.0" y="201.7" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">15</text><line x1="44.0" y1="168.2" x2="510.0" y2="168.2" stroke="var(--grid)" stroke-width="1"/><text x="38.0" y="171.2" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">20</text><line x1="44.0" y1="137.8" x2="510.0" y2="137.8" stroke="var(--grid)" stroke-width="1"/><text x="38.0" y="140.8" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">25</text><line x1="44.0" y1="107.3" x2="510.0" y2="107.3" stroke="var(--grid)" stroke-width="1"/><text x="38.0" y="110.3" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">30</text><line x1="44.0" y1="76.9" x2="510.0" y2="76.9" stroke="var(--grid)" stroke-width="1"/><text x="38.0" y="79.9" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">35</text><line x1="44.0" y1="46.4" x2="510.0" y2="46.4" stroke="var(--grid)" stroke-width="1"/><text x="38.0" y="49.4" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">40</text><line x1="44.0" y1="16.0" x2="510.0" y2="16.0" stroke="var(--grid)" stroke-width="1"/><text x="38.0" y="19.0" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">45</text><text x="44.0" y="304.0" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">R1</text><text x="81.3" y="304.0" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">R3</text><text x="118.6" y="304.0" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">R5</text><text x="155.8" y="304.0" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">R7</text><text x="193.1" y="304.0" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">R9</text><text x="230.4" y="304.0" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">R11</text><text x="267.7" y="304.0" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">R14</text><text x="305.0" y="304.0" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">R16</text><text x="342.2" y="304.0" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">R18</text><text x="379.5" y="304.0" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">R20</text><text x="416.8" y="304.0" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">R22</text><text x="454.1" y="304.0" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">R24</text><text x="510.0" y="304.0" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">R27</text><line x1="332.9" y1="16.0" x2="332.9" y2="290.0" stroke="var(--ink)" stroke-opacity=".45" stroke-dasharray="4 3"/><text x="337.9" y="284.0" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">후반기 →</text><polyline points="44.0,283.9 62.6,265.6 81.3,247.4 99.9,229.1 118.6,210.8 137.2,192.6 155.8,174.3 174.5,156.0 193.1,156.0 211.8,137.8 230.4,119.5 249.0,119.5 267.7,101.2 286.3,95.2 305.0,89.1 323.6,70.8 342.2,70.8 360.9,70.8 379.5,70.8 398.2,70.8 416.8,64.7 435.4,58.6 454.1,58.6 472.7,58.6 491.4,40.4 510.0,40.4" fill="none" stroke="var(--ic)" stroke-width="2.4"  stroke-linejoin="round"/><circle cx="510.0" cy="40.4" r="3.5" fill="var(--ic)"/><text x="517.0" y="44.4" font-family="IBM Plex Sans KR,sans-serif" font-size="11" font-weight="600" fill="var(--ic)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">실제 승점</text><polyline points="44.0,280.0 62.6,263.4 81.3,252.8 99.9,248.9 118.6,240.9 137.2,235.2 155.8,225.9 174.5,223.3 193.1,222.6 211.8,208.7 230.4,200.5 249.0,194.1 267.7,181.9 286.3,175.2 305.0,162.2 323.6,149.6 342.2,139.5 360.9,136.9 379.5,129.0 398.2,125.3 416.8,122.2 435.4,113.5 454.1,108.4 472.7,108.4 491.4,90.9 510.0,81.4" fill="none" stroke="var(--op)" stroke-width="2.4" stroke-dasharray="5 4" stroke-linejoin="round"/><circle cx="510.0" cy="81.4" r="3.5" fill="var(--op)"/><text x="517.0" y="85.4" font-family="IBM Plex Sans KR,sans-serif" font-size="11" font-weight="600" fill="var(--op)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">기대승점</text><text x="277.0" y="324.0" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">라운드</text></svg></div><figcaption>R17 시점 격차 12.9점 → R27 시점 6.7점. 후반기에 6.2점이 되돌아갔다.</figcaption></figure><figure><div class="figtitle">전반기 승점 − 기대승점, 17팀</div><div class="figsub">R1–R17 · 이벤트가 있는 경기 기준</div><div class="legend"><span><i style="background:var(--ic)"></i>부산아이파크</span><span><i style="background:var(--op)"></i>다른 16개 구단</span></div><div class="dvb"><div class="dvr hi"><div class="lb"><b>부산</b></div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:46.15%;width:49.79%"></div></div><div class="vl">+12.9</div></div><div class="dvr "><div class="lb">충남아산</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:46.15%;width:16.36%"></div></div><div class="vl">+4.3</div></div><div class="dvr "><div class="lb">대구</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:46.15%;width:10.90%"></div></div><div class="vl">+2.8</div></div><div class="dvr "><div class="lb">화성</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:46.15%;width:10.57%"></div></div><div class="vl">+2.7</div></div><div class="dvr "><div class="lb">서울E</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:46.15%;width:9.29%"></div></div><div class="vl">+2.4</div></div><div class="dvr "><div class="lb">수원</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:46.15%;width:6.69%"></div></div><div class="vl">+1.7</div></div><div class="dvr "><div class="lb">수원FC</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:46.15%;width:6.37%"></div></div><div class="vl">+1.7</div></div><div class="dvr "><div class="lb">천안</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:46.15%;width:2.90%"></div></div><div class="vl">+0.8</div></div><div class="dvr "><div class="lb">안산</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:46.15%;width:0.48%"></div></div><div class="vl">+0.1</div></div><div class="dvr  neg"><div class="lb">파주</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:44.33%;width:1.82%"></div></div><div class="vl">−0.5</div></div><div class="dvr  neg"><div class="lb">김포</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:40.68%;width:5.47%"></div></div><div class="vl">−1.4</div></div><div class="dvr  neg"><div class="lb">경남</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:40.03%;width:6.13%"></div></div><div class="vl">−1.6</div></div><div class="dvr  neg"><div class="lb">김해</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:36.49%;width:9.66%"></div></div><div class="vl">−2.5</div></div><div class="dvr  neg"><div class="lb">성남</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:18.30%;width:27.85%"></div></div><div class="vl">−7.2</div></div><div class="dvr  neg"><div class="lb">용인</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:18.22%;width:27.94%"></div></div><div class="vl">−7.3</div></div><div class="dvr  neg"><div class="lb">충북청주</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:16.46%;width:29.70%"></div></div><div class="vl">−7.7</div></div><div class="dvr  neg"><div class="lb">전남</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:9.28%;width:36.87%"></div></div><div class="vl">−9.6</div></div><div class="dvr ax"><div></div><div class="axl"><span>← 기대보다 적게</span><span>기대보다 많이 →</span></div><div></div></div></div><figcaption>부산만 따로 떨어져 있다.</figcaption></figure><div class="body"><p>어디서 벌었나. 전반기 부산의 슛 204개는 xG 25.1였는데 <b>34골</b>이 들어갔다(+8.9). 상대 슛은 xG 23.4에서 17골(−6.4) — 여기에 부산 선수의 자책골 3골이 따로 있다. <b>양쪽 모두</b> 기대를 벗어났고, 득점 쪽이 조금 더 크다.</p><p>그 득점 초과는 한 사람의 것이 아니었다. 가브리엘 +3.4, 김민혁 +1.8, 손휘 +1.4, 백가온 +1.3, 김진혁 +1.1 — 다섯 명 이상에 고르게 흩어져 있다. 최다 득점자 크리스찬은 오히려 기대만큼(−0.6)이었다. 한 명의 결정력이라면 계속 기대할 수 있다. 여러 명에게 동시에 흩어진 초과는 <b>대개 분산, 즉 운의 신호</b>다.</p></div><div class="tbl "><table><thead><tr><th>선수</th><th>슛</th><th>xG</th><th>골</th><th>골 − xG</th></tr></thead><tbody><tr><td>크리스찬</td><td class="n">41</td><td class="n">6.6</td><td class="n">6</td><td class="n">−0.6</td></tr><tr><td>가브리엘</td><td class="n">32</td><td class="n">2.6</td><td class="n">6</td><td class="n">+3.4</td></tr><tr><td>김민혁</td><td class="n">10</td><td class="n">2.2</td><td class="n">4</td><td class="n">+1.8</td></tr><tr><td>백가온</td><td class="n">13</td><td class="n">2.7</td><td class="n">4</td><td class="n">+1.3</td></tr><tr><td>김진혁</td><td class="n">8</td><td class="n">1.9</td><td class="n">3</td><td class="n">+1.1</td></tr><tr><td>김찬</td><td class="n">15</td><td class="n">2.5</td><td class="n">2</td><td class="n">−0.5</td></tr><tr><td>손휘</td><td class="n">6</td><td class="n">0.6</td><td class="n">2</td><td class="n">+1.4</td></tr><tr><td>김세훈</td><td class="n">14</td><td class="n">1.2</td><td class="n">2</td><td class="n">+0.8</td></tr></tbody></table></div></section>
+<section><div class="eyebrow"><span class="role">후반기 R18–R27</span><span class="cap">승점 5 · 기대승점 11.2</span></div><h2>이번엔 슛이 말한 것보다 6점 적었다</h2><div class="body"><p class="lede">후반기는 거울상이다. 이벤트가 있는 9경기의 기대승점은 <b>11.2</b>, 실제는 5. 기대보다 6.2점 모자랐고, 이는 리그 3번째로 큰 부족분이다. 같은 슛으로 9경기를 다시 치러 승점 5 이하가 나올 확률은 3.5%다.</p><p>이번엔 득점 쪽이 거의 전부다. 슛 115개, xG 11.4에서 <b>6골</b>(−5.4). 실점은 상대 슛 xG 13.2에서 13골 — 기대 그대로다. 전반기에 기대보다 9골 가까이 더 넣던 팀이, 후반기엔 5골 넘게 덜 넣었다.</p></div><figure><div class="figtitle">후반기 승점 − 기대승점, 17팀</div><div class="figsub">R18–R27 · 이벤트가 있는 경기 기준</div><div class="legend"><span><i style="background:var(--ic)"></i>부산아이파크</span><span><i style="background:var(--op)"></i>다른 16개 구단</span></div><div class="dvb"><div class="dvr "><div class="lb">수원</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:46.15%;width:20.01%"></div></div><div class="vl">+5.2</div></div><div class="dvr "><div class="lb">성남</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:46.15%;width:15.67%"></div></div><div class="vl">+4.1</div></div><div class="dvr "><div class="lb">수원FC</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:46.15%;width:14.28%"></div></div><div class="vl">+3.7</div></div><div class="dvr "><div class="lb">경남</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:46.15%;width:13.77%"></div></div><div class="vl">+3.6</div></div><div class="dvr "><div class="lb">파주</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:46.15%;width:9.78%"></div></div><div class="vl">+2.5</div></div><div class="dvr "><div class="lb">서울E</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:46.15%;width:9.54%"></div></div><div class="vl">+2.5</div></div><div class="dvr "><div class="lb">전남</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:46.15%;width:9.12%"></div></div><div class="vl">+2.4</div></div><div class="dvr "><div class="lb">안산</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:46.15%;width:4.08%"></div></div><div class="vl">+1.1</div></div><div class="dvr "><div class="lb">화성</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:46.15%;width:1.88%"></div></div><div class="vl">+0.5</div></div><div class="dvr  neg"><div class="lb">대구</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:45.62%;width:0.54%"></div></div><div class="vl">−0.1</div></div><div class="dvr  neg"><div class="lb">충북청주</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:43.11%;width:3.04%"></div></div><div class="vl">−0.8</div></div><div class="dvr  neg"><div class="lb">용인</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:39.04%;width:7.11%"></div></div><div class="vl">−1.8</div></div><div class="dvr  neg"><div class="lb">충남아산</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:36.12%;width:10.03%"></div></div><div class="vl">−2.6</div></div><div class="dvr  neg"><div class="lb">김포</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:32.10%;width:14.05%"></div></div><div class="vl">−3.7</div></div><div class="dvr hi neg"><div class="lb"><b>부산</b></div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:22.28%;width:23.87%"></div></div><div class="vl">−6.2</div></div><div class="dvr  neg"><div class="lb">김해</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:17.60%;width:28.56%"></div></div><div class="vl">−7.4</div></div><div class="dvr  neg"><div class="lb">천안</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:11.63%;width:34.53%"></div></div><div class="vl">−9.0</div></div><div class="dvr ax"><div></div><div class="axl"><span>← 기대보다 적게</span><span>기대보다 많이 →</span></div><div></div></div></div><figcaption>전반기 1위였던 팀이 후반기엔 아래에서 3번째다.</figcaption></figure><div class="body"><p>그렇다면 과정은 그대로였나. <b>아니다 — 과정도 나빠졌다. 다만 결과만큼은 아니다.</b> PK를 뺀 경기당 기대 득실차는 전반기 +0.30에서 후반기 −0.19로 내려왔다. 경기당 기대승점으로 옮기면 1.44 → 1.25, 약 0.20점이 빠졌다. 실제 경기당 승점은 2.25 → 0.56(이벤트 경기 기준)로 1.69점이 빠졌다.</p></div><div class="strip"><div><div class="k">경기당 승점 하락</div><div class="v" style="color:var(--ink)">−1.69</div><div class="s">전반기 → 후반기 (이벤트 경기)</div></div><div><div class="k">과정이 설명하는 몫</div><div class="v" style="color:var(--op)">−0.20</div><div class="s">기대승점/경기의 변화</div></div><div><div class="k">전반기 운</div><div class="v" style="color:var(--ic)">+0.81</div><div class="s">경기당 승점 − 기대승점</div></div><div><div class="k">후반기 운</div><div class="v" style="color:var(--bad)">−0.69</div><div class="s">경기당 승점 − 기대승점</div></div></div><div class="body"><p>정리하면 이렇다. 전반기 부산은 과정보다 경기당 0.81점을 더 받았고, 후반기엔 0.69점을 덜 받았다. 슛의 질을 잣대로 쪼개면 추락폭의 <b>약 88%는 운이 돌아선 것</b>, 약 12%가 경기력이 실제로 떨어진 몫이다(xG 모델 하나에 기댄 분해다). 둘 중 어느 쪽도 "진짜 부산"이 아니다. 과정만 보면 부산은 시즌 내내 <b>경기당 기대승점 1.37</b>, 리그 중상위권 팀이었다.</p></div></section>
+<section><div class="eyebrow"><span class="role">국면</span><span class="cap">전반기 → 후반기</span></div><h2>더 많이 들어갔고, 덜 위험해졌다</h2><div class="body"><p class="lede">경기력 하락이 어디서 났는지 국면으로 쪼갰다. 세트피스·PK를 뺀 오픈플레이 체인 기준, 경기당 값이다.</p></div><div class="tbl "><table><thead><tr><th>공격 (부산)</th><th>전반기</th><th>후반기</th><th></th></tr></thead><tbody><tr><td>파이널서드 도달 / 경기</td><td class="n">32.2</td><td class="n">36.0</td><td class="n"><span class="up">▲</span></td></tr><tr><td>빌드업 → 파이널서드 도달</td><td class="n">25.5%</td><td class="n">33.8%</td><td class="n"><span class="up">▲</span></td></tr><tr><td>도달 → 슛</td><td class="n">29.1%</td><td class="n">25.0%</td><td class="n"><span class="dn">▼</span></td></tr><tr><td>도달 체인당 xG</td><td class="n">0.042</td><td class="n">0.027</td><td class="n"><span class="dn">▼</span></td></tr><tr><td>오픈플레이 xG / 경기</td><td class="n">1.35</td><td class="n">0.97</td><td class="n"><span class="dn">▼</span></td></tr><tr><td>오픈플레이 골 / 경기</td><td class="n">1.75</td><td class="n">0.33</td><td class="n"><span class="dn">▼</span></td></tr><tr><td>세트피스 xG / 경기</td><td class="n">0.17</td><td class="n">0.21</td><td class="n"><span class="up">▲</span></td></tr></tbody></table></div><div class="tbl "><table><thead><tr><th>수비 (상대의 공격)</th><th>전반기</th><th>후반기</th><th></th></tr></thead><tbody><tr><td>상대 파이널서드 도달 / 경기</td><td class="n">39.8</td><td class="n">34.6</td><td class="n"><span class="up">▼</span></td></tr><tr><td>상대 도달 → 슛</td><td class="n">22.6%</td><td class="n">24.4%</td><td class="n"><span class="dn">▲</span></td></tr><tr><td>상대 도달 체인당 xG</td><td class="n">0.027</td><td class="n">0.033</td><td class="n"><span class="dn">▲</span></td></tr><tr><td>상대 오픈플레이 xG / 경기</td><td class="n">1.06</td><td class="n">1.15</td><td class="n"><span class="dn">▲</span></td></tr><tr><td>상대 오픈플레이 골 / 경기</td><td class="n">0.56</td><td class="n">1.11</td><td class="n"><span class="dn">▲</span></td></tr></tbody></table></div><div class="body"><p>공격은 역설적이다. 후반기 부산은 <b>더 자주</b> 파이널서드에 들어갔다(32.2 → 36.0회). 빌드업에서 파이널서드까지 가는 비율도 올랐다. 그런데 들어간 공격 하나의 크기(xG)가 <b>0.042 → 0.027, 약 35% 줄었다.</b> 그 결과 오픈플레이 xG는 1.35 → 0.97로 내려갔고, 오픈플레이 골은 경기당 1.75골에서 0.33골로 무너졌다. 9경기 오픈플레이 3골.</p><p>수비는 반대 모양이다. 상대가 들어오는 횟수는 줄었는데(39.8 → 34.6회), 들어온 공격 하나의 크기는 0.027 → 0.033로 커졌다. 상대의 오픈플레이 골은 경기당 0.56에서 1.11로 두 배가 됐다.</p><p>⚠ 이 변화의 일부는 <b>스코어가 만든 것</b>이다. 공식 점유율은 전반기 49.4% → 후반기 54.3%로 올랐다. 뒤지는 팀은 공을 더 갖고, 더 자주 들어가고, 내려앉은 상대를 상대로 덜 위험한 슛을 쏜다. 그래서 다음 장에서 스코어 상태를 나눠 본다.</p></div></section>
+<section><div class="eyebrow"><span class="role">스코어 상태</span><span class="cap">리드 시간 40% → 15%</span></div><h2>앞서는 시간이 사라졌다</h2><div class="body"><p class="lede">전반기 부산은 경기 시간의 <b>40%를 앞선 채</b> 보냈다(667분). 후반기엔 15%(136분)다. 뒤진 시간은 12%에서 29%로 늘었다.</p><p>후반기에 부산이 선제골을 못 넣은 것도 아니다. R19 수원, R20 서울E, R23 대구, R24 수원FC — <b>네 경기 모두 먼저 넣었다.</b> 그리고 네 경기에서 승점 1을 땄다. 리드 후 놓친 승점이 후반기에만 11점이다(전반기 4점).</p></div><div class="tbl "><table><thead><tr><th>경기</th><th>상대</th><th>스코어</th><th></th><th>놓친 승점</th></tr></thead><tbody><tr><td>R1</td><td>성남</td><td class="n">1-1</td><td>선제골</td><td class="n">2</td></tr><tr><td>R15</td><td>충남아산</td><td class="n">2-2</td><td>선제골</td><td class="n">2</td></tr><tr><td>R19</td><td>수원</td><td class="n">1-4</td><td>선제골</td><td class="n">3</td></tr><tr><td>R20</td><td>서울E</td><td class="n">1-2</td><td>선제골</td><td class="n">3</td></tr><tr><td>R23</td><td>대구</td><td class="n">1-1</td><td>선제골</td><td class="n">2</td></tr><tr><td>R24</td><td>수원FC</td><td class="n">1-2</td><td>선제골</td><td class="n">3</td></tr></tbody></table></div><div class="body"><p>시즌 전체를 상태별로 나누면 부산의 성격이 드러난다(리그 212경기 비교).</p><ul class="clean"><li><b>앞설 때 — 전진을 멈춘다.</b> 자기 진영에서 시작한 공격이 중앙까지 가는 비율 55.1%, 리그 15위. 상대의 파이널서드 도달은 90분당 40.6회로 3번째로 많이 허용한다.</li><li><b>동점일 때 — 가장 좋은 부산.</b> 파이널서드에 닿은 공격 하나의 xG가 0.036, <b>리그 1위</b>다. 수비에선 상대 오픈플레이 골 90분당 0.41로 <b>리그에서 가장 적다</b>.</li><li><b>뒤질 때 — 만들지만 되돌리지 못한다.</b> 오픈플레이 xG 90분당 1.35로 리그 2위. 그런데 한 번이라도 뒤진 경기의 경기당 승점은 0.40점, 17팀 중 14위다.</li></ul><p>후반기는 앞서는 시간이 뒤지는 시간으로 바뀐 시즌이다. 앞설 때 공을 내주던 팀이 이제 뒤진 채 공을 쥐고 있다 — 국면 표에서 본 "더 자주 들어가고, 덜 위험한" 공격은 상당 부분 이 이동의 결과다. 상태 구성을 맞춰 놓고 다시 보면, 전반기 상대의 도달 → 슛 비율은 22.6%(상태 구성으로 본 기대 25.1%), 후반기는 24.4%(기대 25.5%)다. 전반기 수비가 기대보다 약간 단단했고, 후반기엔 평균으로 돌아왔다.</p></div></section>
+<section><div class="eyebrow"><span class="role">우주성</span><span class="cap">R16 이후 11경기 명단 제외</span></div><h2>오른쪽 수비수가 사라진 날</h2><div class="body"><p class="lede">경남·대구를 거쳐 올 시즌 부산에 합류한 베테랑 수비수 우주성은 전반기의 고정 멤버였다. R1부터 R16까지 14경기에 선발로 나섰다. 이벤트 위치로 보면 활동 영역은 오른쪽이다(부산 공격 방향 기준 평균 폭 위치 76 — 왼쪽 수비수 전성진은 14). 시즌 초 오른쪽 풀백으로 자리를 옮겨 적응했다는 기록과도 맞는다.</p><p>그리고 <b>R16 전남 원정(7월 5일)</b>, 0-2로 뒤진 하프타임에 교체됐다. 그 뒤 R17부터 R27까지 <b>11경기 연속으로 출전 명단에 없다.</b></p></div><figure><div class="figtitle">우주성의 라운드별 출전 시간</div><div class="figsub">막대 높이 = 출전 분 · 진한 막대 = 선발 · 점선 칸 = 출전 명단 제외 · 세로선 = 후반기 시작</div><div class="tl" style="align-items:flex-end"><div class="y"><div class="yb" style="height:36px;background:var(--ic)" title="R1 · 101분"></div><div class="yl">1</div></div><div class="y"><div class="yb" style="height:36px;background:var(--ic)" title="R2 · 107분"></div><div class="yl">2</div></div><div class="y"><div class="yb" style="height:36px;background:var(--ic)" title="R3 · 98분"></div><div class="yl">3</div></div><div class="y"><div class="yb" style="height:36px;background:var(--ic)" title="R4 · 103분"></div><div class="yl">4</div></div><div class="y"><div class="yb" style="height:36px;background:var(--ic)" title="R5 · 104분"></div><div class="yl">5</div></div><div class="y"><div class="yb" style="height:36px;background:var(--ic)" title="R6 · 99분"></div><div class="yl">6</div></div><div class="y"><div class="yb" style="height:36px;background:var(--ic)" title="R7 · 103분"></div><div class="yl">7</div></div><div class="y"><div class="yb" style="height:36px;background:var(--ic)" title="R8 · 100분"></div><div class="yl">8</div></div><div class="y"><div class="yb" style="height:36px;background:var(--ic)" title="R9 · 110분"></div><div class="yl">9</div></div><div class="y"><div class="yb" style="height:30px;background:var(--ic)" title="R10 · 73분 · 후반 25분 교체 아웃"></div><div class="yl">10</div></div><div class="y"><div class="yb" style="height:36px;background:var(--ic)" title="R11 · 103분"></div><div class="yl">11</div></div><div class="y"><div class="yb" style="height:10px;background:var(--ic-soft);border:1px solid var(--ic)" title="R12 · 13분 · 후반 37분 교체 투입"></div><div class="yl">12</div></div><div class="y"><div class="yb" style="height:36px;background:var(--ic)" title="R14 · 95분 · 후반 44분 교체 아웃"></div><div class="yl">14</div></div><div class="y"><div class="yb" style="height:36px;background:var(--ic)" title="R15 · 99분"></div><div class="yl">15</div></div><div class="y"><div class="yb" style="height:23px;background:var(--ic)" title="R16 · 50분 · 0-2로 뒤진 하프타임에 교체"></div><div class="yl">16</div></div><div class="y"><div class="yb" style="height:6px;background:var(--surface-2);border:1px dashed var(--line)" title="R17 · 0분 · 출전 명단 제외"></div><div class="yl">17</div></div><div style="width:2px;align-self:stretch;background:var(--ink);opacity:.35;margin:0 3px"></div><div class="y"><div class="yb" style="height:6px;background:var(--surface-2);border:1px dashed var(--line)" title="R18 · 0분 · 출전 명단 제외"></div><div class="yl">18</div></div><div class="y"><div class="yb" style="height:6px;background:var(--surface-2);border:1px dashed var(--line)" title="R19 · 0분 · 출전 명단 제외"></div><div class="yl">19</div></div><div class="y"><div class="yb" style="height:6px;background:var(--surface-2);border:1px dashed var(--line)" title="R20 · 0분 · 출전 명단 제외"></div><div class="yl">20</div></div><div class="y"><div class="yb" style="height:6px;background:var(--surface-2);border:1px dashed var(--line)" title="R21 · 0분 · 출전 명단 제외"></div><div class="yl">21</div></div><div class="y"><div class="yb" style="height:6px;background:var(--surface-2);border:1px dashed var(--line)" title="R22 · 0분 · 출전 명단 제외"></div><div class="yl">22</div></div><div class="y"><div class="yb" style="height:6px;background:var(--surface-2);border:1px dashed var(--line)" title="R23 · 0분 · 출전 명단 제외"></div><div class="yl">23</div></div><div class="y"><div class="yb" style="height:6px;background:var(--surface-2);border:1px dashed var(--line)" title="R24 · 0분 · 출전 명단 제외"></div><div class="yl">24</div></div><div class="y"><div class="yb" style="height:6px;background:var(--surface-2);border:1px dashed var(--line)" title="R25 · 0분 · 출전 명단 제외"></div><div class="yl">25</div></div><div class="y"><div class="yb" style="height:6px;background:var(--surface-2);border:1px dashed var(--line)" title="R26 · 0분 · 출전 명단 제외"></div><div class="yl">26</div></div><div class="y"><div class="yb" style="height:6px;background:var(--surface-2);border:1px dashed var(--line)" title="R27 · 0분 · 출전 명단 제외"></div><div class="yl">27</div></div></div><figcaption>R16 하프타임 교체가 마지막 출전이다.</figcaption></figure><div class="note warn"><p><b>결장 사유 — 공개 자료로는 확인되지 않았다.</b> 확인한 것은 네 가지다. ① 마지막 출전은 R16 하프타임 교체(스코어 0-2). ② 이후 11경기 출전 명단 제외. ③ 9월 28일 현재 구단 홈페이지 선수단 명단에는 5번 우주성이 그대로 올라 있다(이적·계약 해지는 아닌 것으로 보인다). ④ 부상·징계·전력 외 통보를 다룬 기사는 찾지 못했다(부진을 다룬 8월 6일·8월 30일·9월 9일·9월 14일 기사에도 이름이 나오지 않는다). 따라서 <b>부상인지, 감독의 선택인지 이 글은 판단하지 않는다.</b> 확인되면 이 칸을 고친다.</p></div><div class="body"><p>데이터가 말할 수 있는 것은 "그가 뛸 때와 없을 때"의 차이다. 출전 구간(교체 시각 기준)으로 나눴다.</p></div><div class="tbl "><table><thead><tr><th>부산의 90분</th><th>우주성 ON</th><th>OFF</th></tr></thead><tbody><tr><td>출전 시간(분)</td><td class="n">1341</td><td class="n">1195</td></tr><tr><td>실점 / 90분</td><td class="n">0.60</td><td class="n">1.13</td></tr><tr><td>상대 xG / 90분</td><td class="n">1.02</td><td class="n">1.25</td></tr><tr><td>상대 파이널서드 도달 / 90분</td><td class="n">35.5</td><td class="n">31.3</td></tr><tr><td>상대 도달 → 슛</td><td class="n">20.8%</td><td class="n">26.2%</td></tr><tr><td>부산 xG / 90분</td><td class="n">1.21</td><td class="n">1.28</td></tr><tr><td>부산 득점 / 90분</td><td class="n">1.68</td><td class="n">0.98</td></tr></tbody></table></div><div class="body"><p>차이는 수비 쪽에 몰려 있다. 그가 있을 때 실점은 90분당 0.60, 없을 때 1.13. 상대가 파이널서드에 들어오는 횟수는 오히려 그가 있을 때 더 많았다(35.5 대 31.3회) — <b>막는 방식이 달랐다</b>. 많이 들어오게 두고, 들어온 뒤 슛을 막았다(도달 → 슛 20.8% 대 26.2%). 전반기 부산 수비의 모양, 그대로다.</p><p>⚠ 하지만 이 표를 인과로 읽으면 안 되는 이유가 세 가지다. 첫째, OFF 시간의 대부분이 후반기 — 앞 장에서 본 운의 반전, 스코어 상태의 변화와 <b>시기가 완전히 겹친다</b>. 둘째, 같은 시기에 출전 시간이 줄어든 미드필더 이동수로 똑같이 나눠도 거의 같은 그림이 나온다(상대 도달 → 슛 ON 19.9% · OFF 27.0%). 두 사람의 효과를 떼어 낼 수 없다. 셋째, 그가 빠진 첫 경기 R17 김포전은 2-0 무실점 승리였다.</p><p>그의 자리는 나뉘어 채워졌다. 오른쪽 측면 안현범의 경기당 출전이 39분 → 90분으로 늘었고, 평균 폭 위치는 김진혁 58 → 70, 장호익 56 → 63 — 둘 다 오른쪽으로 옮겨 갔다. 8월 초에는 "플랜B 스리백" 가동이 보도됐다(스포티비뉴스 8월 6일). 오른쪽 수비 구성 자체가 바뀐 것이다.</p></div></section>
+<section><div class="eyebrow"><span class="role">맥락</span><span class="cap">같은 시기에 일어난 일</span></div><h2>한 가지 원인은 없다</h2><div class="body"><p class="lede">후반기의 부산에는 한꺼번에 여러 일이 있었다. 데이터와 보도로 확인되는 것만 시간순으로 놓는다.</p></div><div class="tbl "><table><thead><tr><th>시점</th><th>변화</th><th>근거</th></tr></thead><tbody><tr><td>R16 (7/5)</td><td>우주성 마지막 출전 — 하프타임 교체, 이후 명단 제외</td><td>구단 명단 등재 · 사유 미공개</td></tr><tr><td>R18 (7/18)</td><td>8경기 무승 시작(성남 0-1)</td><td>—</td></tr><tr><td>후반기</td><td>이동수 경기당 출전 73분 → 20분</td><td>라인업 데이터</td></tr><tr><td>8월 초</td><td>"플랜B 스리백" 가동 보도</td><td>스포티비뉴스 2026-08-06</td></tr><tr><td>9월 초</td><td>크리스찬 음주운전 적발 → 연맹 60일 활동정지(9/8), 이후 상벌위 15경기 출장정지·제재금</td><td>스타뉴스 09-09 · 베스트일레븐 09-14</td></tr><tr><td>R26–R27</td><td>크리스찬 결장 — 김해 2-0 승 · 김포 0-1 패</td><td>라인업 데이터</td></tr></tbody></table></div><div class="body"><p>크리스찬(팀 최다 득점)의 이탈은 <b>8경기 무승 이후</b>의 일이다. 무승 기간 내내 그는 뛰었다. 후반기 그의 슛 22개는 xG 2.7, 2골 — 기대 범위 안이다. 그러니 크리스찬은 추락의 원인이 아니라, <b>남은 7경기(R28–R34)의 조건</b>이다. 팀 슛의 20%를 쏘던 선수 없이 치르는 첫 표본이 R26·R27 두 경기뿐이다.</p></div></section>
+<section><div class="eyebrow"><span class="role">특이점</span><span class="cap">데이터가 튀는 곳</span></div><h2>열 가지 신호</h2><div class="tbl "><table><thead><tr><th>#</th><th>특이점</th><th>맥락</th></tr></thead><tbody><tr><td>1</td><td>전반기 승점 − 기대승점 <b>+12.9</b></td><td>리그 1위 · 2위 +4.3 · 우연 확률 0.3%</td></tr><tr><td>2</td><td>후반기 승점 − 기대승점 <b>−6.2</b></td><td>리그 3번째로 모자람 · 우연 확률 3.5%</td></tr><tr><td>3</td><td>후반기 오픈플레이 골 <b>3골 / 9경기</b></td><td>같은 기간 오픈플레이 xG 8.8</td></tr><tr><td>4</td><td>후반기 선제골 4경기 → 승점 1</td><td>리드 후 놓친 승점 후반기 11 · 전반기 4</td></tr><tr><td>5</td><td>도달 체인당 xG 0.042 → <b>0.027</b></td><td>도달 횟수는 32.2 → 36.0로 늘었다</td></tr><tr><td>6</td><td>시즌 오픈플레이 실점 − xG/90 <b>−0.29</b></td><td>리그에서 가장 적게 먹힘(17위) · 대부분 전반기</td></tr><tr><td>7</td><td>동점 시 도달 체인당 xG <b>리그 1위</b> · 상대 오픈플레이 골 <b>최저</b></td><td>부산이 가장 강한 상태</td></tr><tr><td>8</td><td>PK 획득 2(15위) · 허용 6(2위)</td><td>시즌 PK 수지 −4</td></tr><tr><td>9</td><td>우주성 ON/OFF 실점 90분당 0.60 / 1.13</td><td>시기 겹침 — 인과 판단 불가</td></tr><tr><td>10</td><td>점유율 49.4% → 54.3%</td><td>결과가 나빠진 구간에 공을 더 가졌다 — 스코어 효과</td></tr></tbody></table></div><div class="body"><p>1·2·3은 같은 이야기의 앞뒷면이다. 5는 "진짜로 나빠진 것"의 가장 뚜렷한 지표이고, 4는 그것이 승점으로 번진 자리다.</p></div></section>
+<section><div class="eyebrow"><span class="role">네 경기</span><span class="cap">규칙으로 고른 대표 경기</span></div><h2>전반기와 후반기를 보여 주는 네 경기</h2><div class="body"><p class="lede">대표 경기는 사람이 고르지 않는다. 이 연재의 네 가지 규칙을 그대로 적용했다 — ① 시즌 평균에 가장 가까운 경기 ② 부산다움(도달 대비 슛)이 가장 강한 경기 ③ 결과가 과정을 가장 많이 앞선 경기 ④ 과정이 결과를 가장 많이 앞선 경기.</p></div><div class="cases"><div class="mcard"><div class="why">① 전형 — 시즌 평균에 가장 가까운 경기</div><div class="hd"><span class="sc">2-2</span><span class="op">vs 충남아산</span></div><div class="rd">R15 · 06/05 · 홈</div><dl class="kv"><dt>NPxG</dt><dd>0.83 : 1.13</dd><dt>기대승점 → 실제</dt><dd>1.08 → 1</dd><dt>파이널서드 도달</dt><dd>28 : 36</dd><dt>도달 → 슛</dt><dd>32% : 19%</dd></dl><p>앞서다 비긴 경기. 전반기에도 리드를 놓친 적은 있었다.</p></div><div class="mcard"><div class="why">② 시그니처 — 들어가면 쏜다</div><div class="hd"><span class="sc">4-1</span><span class="op">vs 파주</span></div><div class="rd">R14 · 05/30 · 홈</div><dl class="kv"><dt>NPxG</dt><dd>2.30 : 1.36</dd><dt>기대승점 → 실제</dt><dd>2.01 → 3</dd><dt>파이널서드 도달</dt><dd>28 : 50</dd><dt>도달 → 슛</dt><dd>46% : 32%</dd></dl><p>파이널서드 도달 28회에서 슛 비율 46%. 전반기 부산 공격의 최고점.</p></div><div class="mcard"><div class="why">③ 결과 > 과정 — 전반기의 승리</div><div class="hd"><span class="sc">2-1</span><span class="op">vs 수원FC</span></div><div class="rd">R8 · 04/18 · 홈</div><dl class="kv"><dt>NPxG</dt><dd>1.16 : 1.83</dd><dt>기대승점 → 실제</dt><dd>0.44 → 3</dd><dt>파이널서드 도달</dt><dd>33 : 40</dd><dt>도달 → 슛</dt><dd>33% : 18%</dd></dl><p>기대승점 0.44에서 승점 3. xG에서 밀리고도 이긴, 전반기의 전형적인 승리.</p></div><div class="mcard"><div class="why">④ 과정 > 결과 — 후반기의 첫 경기</div><div class="hd"><span class="sc">0-1</span><span class="op">@ 성남</span></div><div class="rd">R18 · 07/18 · 원정</div><dl class="kv"><dt>NPxG</dt><dd>1.52 : 1.10</dd><dt>기대승점 → 실제</dt><dd>1.65 → 0</dd><dt>파이널서드 도달</dt><dd>43 : 26</dd><dt>도달 → 슛</dt><dd>28% : 23%</dd></dl><p>기대승점 1.65에서 승점 0. 후반기 첫 경기이자 8경기 무승의 시작. xG에서 앞서고도 졌다.</p></div></div><div class="body"><p>③은 전반기, ④는 후반기 첫 경기에서 나왔다. 규칙이 스스로 한 시즌을 둘로 갈라냈다.</p></div></section>
+<section><div class="eyebrow"><span class="role">기각</span><span class="cap">데이터가 받아들이지 않은 설명</span></div><h2>이렇게 읽으면 틀린다</h2><div class="dont"><div class="hd"><span class="x">✕</span><h3>"후반기 부진은 경기력 붕괴다"</h3></div><p>경기력도 떨어졌다. 그러나 경기당 기대승점은 1.44 → 1.25, 하락폭의 약 12%다. 나머지는 전반기에 과하게 받은 몫이 돌아가고, 후반기에 덜 받은 몫이다.</p></div><div class="dont"><div class="hd"><span class="x">✕</span><h3>"크리스찬이 빠져서 무너졌다"</h3></div><p>크리스찬은 8경기 무승 기간 내내 뛰었다. 그의 이탈은 무승이 끝난 뒤의 일이다.</p></div><div class="dont"><div class="hd"><span class="x">✕</span><h3>"전반기엔 해결사가 있었다"</h3></div><p>전반기 득점 초과는 5명 이상에게 고르게 흩어져 있고, 최다 득점자는 기대만큼 넣었다. 한 명의 결정력이 아니라 분산의 모양이다.</p></div><div class="dont"><div class="hd"><span class="x">✕</span><h3>"공을 더 가지니 졌다"</h3></div><p>점유율 49.4% → 54.3%는 뒤진 시간이 늘어난 결과다. 인과가 거꾸로다.</p></div><div class="dont"><div class="hd"><span class="x">✕</span><h3>"우주성이 빠져서 무너졌다"</h3></div><p>ON/OFF 차이는 크지만 시기가 완전히 겹치고, 이동수로 나눠도 같은 그림이 나오며, 그가 빠진 첫 경기는 무실점 승리였다. 결장 사유도 확인되지 않았다. 판단 보류.</p></div></section>
+<section><div class="eyebrow"><span class="role">정리</span><span class="cap">남은 7경기</span></div><h2>진짜 부산은 그 사이에 있다</h2><div class="body"><p class="lede">부산의 2026 시즌은 둘로 갈라진 것처럼 보이지만, 슛의 질로 보면 하나에 가깝다. 경기당 기대승점 1.37 — 전반기엔 그보다 훨씬 많이, 후반기엔 훨씬 적게 받았다.</p><p>다만 후반기에 진짜로 바뀐 것도 있다. <b>공격 하나의 크기가 35% 줄었고</b>, 앞서는 시간이 뒤지는 시간으로 바뀌었으며, 먼저 넣은 네 경기에서 승점 1만 남았다. 오른쪽 수비 구성이 바뀐 시점과 겹친다.</p><p>남은 7경기(R28–R34)에서 볼 것은 세 가지다.</p><ul class="clean"><li><b>도달 체인당 xG</b> — 전반기 0.042, 후반기 0.027. 회복하면 추락은 대부분 운이었다는 뜻이다.</li><li><b>리드 지키기</b> — 선제골 후 승점. 후반기 4경기 1점.</li><li><b>크리스찬 없는 공격</b> — 시즌 팀 슛의 20%를 쏘던 선수가 없다. 지금까지 표본은 2경기뿐이다.</li></ul></div><div class="note"><p><b>유보</b> · 포털 xG는 모델이 공개되지 않았다. 기대승점은 슛을 서로 독립으로 가정한다(스코어에 따라 슛이 달라지는 효과는 반영하지 않는다). 상대 강도 미보정. "전반기 = R1–R17"은 리그 공식 구분이지만, 운·경기력 분해의 비율은 구분점을 옮기면 달라진다(첫 11경기만 보면 기대승점 14.7에서 승점 28). R25(9월 5일) 이벤트 결측.</p></div></section>
+<footer><div class="wrap"><b>데이터</b> · K리그 데이터포털(portal.kleague.com) 직접 파싱. 부산아이파크 2026 K리그2 26경기(R13 휴식), 원시 이벤트 36,254건. <b>R25(9월 5일 안산전, 0-1)는 포털에 이벤트가 없다</b>(그날 K리그 전 경기 공통) — 승점에는 넣고 xG·국면 분석에서는 뺐다. 리그 비교는 K리그2 216경기 전량(이벤트 212경기 · 304,486건)을 같은 정의로 계산했다.<br><b>검증</b> · 순위표 재합산(26경기 승점 41 · 리그 17개 구단 승점 전부 일치), 경기기록부 득점 75 = 41+34, 이벤트 골 41 : 33(R25 제외), PA내 슈팅 · 키패스 · 오프사이드 양팀 일치. 골로 찍히지 않은 골 1건 보정(R20 서울E, "볼 획득"으로 기록).<br><b>기대승점</b> · 한 경기의 모든 슛을 xG 확률대로 2만 번 다시 차서 나온 승·무·패의 평균. PK 포함, 자책골 제외. 포털 xG 모델은 공개되지 않았다.<br><b>정의</b> · 전반기 = R1–R17(K리그2 공식 전반기, 7월 12일까지). 체인 = 한 팀이 공을 연속으로 가진 구간. 파이널서드 도달 = 체인 안에서 자기 이벤트 위치나 <b>성공한</b> 패스·돌파의 도착점이 x ≥ 66.7에 닿음. 국면 지표는 세트피스·PK 체인을 뺀다. 스코어 상태는 라이브 골 시각을 이벤트 시계로 되돌려(중앙값 64초 지연) 계산했다.<br><b>외부 자료</b> · 순위 흐름: 스타뉴스(2026-09-09), 서플(2026-08-30) · 크리스찬 징계: 스타뉴스(2026-09-09), 베스트일레븐(2026-09-14) · 스리백 전환: 스포티비뉴스(2026-08-06) · 우주성 포지션: 나무위키 부산 아이파크/2026년 · 구단 선수단 명단: busanipark.com(2026-09-28 확인).<br><b>작성</b> · 한혁진 · 2026년 9월</div></footer>
+</div>
+</body>
+</html>

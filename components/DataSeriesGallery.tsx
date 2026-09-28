@@ -33,6 +33,31 @@ type Episode = {
 
 const EPISODES: Episode[] = [
   {
+    slug: "busan",
+    no: "18",
+    publishedAt: "2026-09-28",
+    competition: {
+      en: "K League 2 2026 · Busan IPark · 26 matches, 212-match league pool",
+      ko: "하나은행 K리그2 2026 · 부산아이파크 · 26경기 · 리그 212경기 비교",
+    },
+    title: {
+      en: "Two Seasons in One",
+      ko: "두 개의 시즌",
+    },
+    sub: {
+      en: "Busan IPark were top of K League 2 in July and are sixth in September. The first half of the season (R1–R17) brought 36 points from 16 matches; the ten matches since have brought 5, with an eight-match winless run. Replaying every shot at its xG probability, the first half was worth 23.1 expected points — Busan beat that by 12.9, by far the most in the league (next best +4.3), a 0.3% outcome — and the scoring surplus was spread across five or more players rather than one finisher. In the second half the nine matches with event data were worth 11.2 and Busan took 5, almost entirely because they scored 6 goals from 11.4 xG. Performance did fall: non-penalty expected goal difference went from +0.30 to −0.19 per match, but that explains only about 12% of the drop in points. The clearest real change is the size of each attack: Busan got into the final third more often, yet xG per entry fell 35%, and open-play goals collapsed to 3 in nine matches. Time spent leading fell from 40% to 15%, and four matches in which they scored first yielded one point. Right-sided defender Jooseong Woo has not been in the squad since a half-time substitution in R16; the reason is not public. With him on the pitch Busan conceded 0.60 per 90, without him 1.13 — but the timing overlaps completely and the same split by Dongsu Lee gives the same picture, so no causal claim is made.",
+      ko: "부산아이파크는 7월에 K리그2 선두였고 9월엔 6위다. 전반기(R1–R17) 16경기에서 승점 36, 이후 10경기에서 승점 5 — 사이에 8경기 무승이 있다. 모든 슛을 xG 확률대로 다시 차 보면 전반기 기대승점은 23.1이었다. 부산은 그보다 12.9점을 더 받았고(리그 압도적 1위, 2위 +4.3, 우연 확률 0.3%), 득점 초과는 해결사 한 명이 아니라 다섯 명 이상에게 흩어져 있었다. 후반기 이벤트가 있는 9경기의 기대승점은 11.2, 실제는 5 — 거의 전부가 xG 11.4에서 6골에 그친 득점 쪽이다. 경기력도 떨어졌다. PK 제외 기대 득실차는 경기당 +0.30 → −0.19. 그러나 승점 하락폭의 약 12%만 설명한다. 가장 뚜렷한 진짜 변화는 공격 하나의 크기다. 파이널서드에는 더 자주 들어갔는데 진입 한 번의 xG가 35% 줄었고, 오픈플레이 골은 9경기 3골로 무너졌다. 앞서는 시간은 40%에서 15%로 줄었고, 먼저 넣은 네 경기에서 승점 1만 남았다. 오른쪽 수비수 우주성은 R16 하프타임 교체 이후 명단에 없다(사유 미공개). 그가 뛸 때 실점은 90분당 0.60, 없을 때 1.13 — 하지만 시기가 완전히 겹치고 이동수로 나눠도 같은 그림이라 인과는 말하지 않는다.",
+    },
+    blurb: {
+      en: "Top in July, sixth in September. One season split in two — about nine-tenths of the fall is luck turning, and one-tenth is real.",
+      ko: "7월엔 선두, 9월엔 6위. 한 시즌이 둘로 갈라졌다 — 추락의 약 9할은 운이 돌아선 것, 1할이 진짜다.",
+    },
+    stats: {
+      en: [["2.25 → 0.50", "points per match, first half → second half"], ["+12.9", "first-half points above expected, league 1st"], ["−35%", "xG per final-third entry, second half"]],
+      ko: [["2.25 → 0.50", "경기당 승점, 전반기 → 후반기"], ["+12.9", "전반기 승점 − 기대승점, 리그 1위"], ["−35%", "파이널서드 진입 한 번의 xG, 후반기"]],
+    },
+  },
+  {
     slug: "daegu",
     no: "17",
     publishedAt: "2026-09-28",

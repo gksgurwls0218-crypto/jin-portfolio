@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Two Seasons in One | Busan IPark 2026 | Hyuckjin Han</title>
+<meta name="description" content="In July, Busan were top of the table. In September they are 6th. 36 points from 16 matches before the halfway mark, 5 from the 10 since. I put all 212 league matches on one scale to find out why one team’s single season split in two — what was luck, and what really changed.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light;
+  --page:#f1f1ef; --surface:#fcfcfb; --surface-2:#e4e4e1; --raise:#f7f7f5;
+  --ink:#141413; --ink-2:#3c3c3a; --muted:#70706c;
+  --line:rgba(20,20,19,.14); --line-2:rgba(20,20,19,.07);
+  --grid:#e0e0dd; --axis:#c2c2be;
+  --ic:#b3202e; --op:#3d6a8e; --top:#3f7a1f; --bad:#8a5a00;
+  --ic-soft:rgba(179,32,46,.10); --op-soft:rgba(61,106,142,.12);
+  --top-soft:rgba(63,122,31,.11); --bad-soft:rgba(138,90,0,.10);
+  --sp:clamp(18px,4.5vw,30px);
+  --disp:"Hahmlet",'Nanum Myeongjo',serif;
+  --body:"IBM Plex Sans KR",-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,'SFMono-Regular',monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --page:#121211; --surface:#1a1a19; --surface-2:#262624; --raise:#1f1f1e;
+    --ink:#eaeae7; --ink-2:#b8b8b4; --muted:#8d8d89;
+    --line:rgba(234,234,231,.16); --line-2:rgba(234,234,231,.08);
+    --grid:#2d2d2b; --axis:#4a4a47;
+    --ic:#ef6f76; --op:#7ea6c8; --top:#5aa32e; --bad:#d9a441;
+    --ic-soft:rgba(239,111,118,.16); --op-soft:rgba(126,166,200,.17);
+    --top-soft:rgba(90,163,46,.15); --bad-soft:rgba(217,164,65,.14);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --page:#121211; --surface:#1a1a19; --surface-2:#262624; --raise:#1f1f1e;
+  --ink:#eaeae7; --ink-2:#b8b8b4; --muted:#8d8d89;
+  --line:rgba(234,234,231,.16); --line-2:rgba(234,234,231,.08);
+  --grid:#2d2d2b; --axis:#4a4a47;
+  --ic:#ef6f76; --op:#7ea6c8; --top:#5aa32e; --bad:#d9a441;
+  --ic-soft:rgba(239,111,118,.16); --op-soft:rgba(126,166,200,.17);
+  --top-soft:rgba(90,163,46,.15); --bad-soft:rgba(217,164,65,.14);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font-family:var(--body);
+  word-break:keep-all;overflow-wrap:break-word;
+  font-weight:400;font-size:16px;line-height:1.72;-webkit-font-smoothing:antialiased}
+.wrap{max-width:940px;margin:0 auto;padding-inline:var(--sp);padding-block:0}
+p{margin:0 0 1.05em}
+strong{font-weight:600;color:var(--ink)}
+em{font-style:normal;background:var(--ic-soft);padding:.06em .3em;border-radius:2px;font-weight:500}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums;font-weight:500;letter-spacing:-.01em}
+
+/* ── header ── */
+header{padding-block:clamp(48px,9vw,88px) clamp(30px,5vw,44px);border-bottom:1px solid var(--line)}
+.badge{display:inline-flex;align-items:center;gap:.55em;font-family:var(--mono);font-size:11px;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--ic);font-weight:500}
+.badge::before{content:"";width:22px;height:2px;background:var(--ic)}
+h1{font-family:var(--disp);font-weight:600;font-size:clamp(38px,8.6vw,68px);line-height:1.06;
+  letter-spacing:-.025em;margin:.34em 0 .3em;text-wrap:balance}
+.dek{font-family:var(--disp);font-weight:400;font-size:clamp(17px,2.5vw,21px);line-height:1.55;
+  color:var(--ink-2);max-width:34em;margin:0 0 1.5em}
+.meta{display:flex;flex-wrap:wrap;gap:.5em 0;font-family:var(--mono);font-size:11.5px;
+  color:var(--muted);letter-spacing:.02em}
+.meta span+span::before{content:"|";padding:0 .85em;color:var(--axis)}
+
+/* ── tiles ── */
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line-2);
+  border-block:1px solid var(--line);margin-block:0}
+@media(max-width:760px){.tiles{grid-template-columns:repeat(2,1fr)}}
+.tile{background:var(--page);padding:clamp(16px,3vw,24px) clamp(12px,2.4vw,20px);display:flex;
+  flex-direction:column;gap:.3em}
+.tile .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.tile .v{font-family:var(--disp);font-weight:600;font-size:clamp(26px,4.6vw,38px);line-height:1;
+  letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.tile .v.gj{color:var(--ic)} .tile .v.bad{color:var(--bad)}
+.tile .s{font-size:12.5px;line-height:1.45;color:var(--ink-2)}
+
+/* ── sections ── */
+section{padding-block:clamp(40px,7vw,68px);border-bottom:1px solid var(--line-2)}
+section:last-of-type{border-bottom:none}
+.eyebrow{display:flex;align-items:baseline;gap:.9em;margin-bottom:.9em}
+.eyebrow .role{font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--page);background:var(--ink-2);padding:.35em .7em;border-radius:2px;white-space:nowrap}
+.eyebrow .cap{font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--muted)}
+h2{font-family:var(--disp);font-weight:600;font-size:clamp(25px,4.4vw,37px);line-height:1.2;
+  letter-spacing:-.022em;margin:0 0 .6em;text-wrap:balance;max-width:19em}
+h3{font-family:var(--disp);font-weight:600;font-size:clamp(17px,2.4vw,21px);line-height:1.35;
+  letter-spacing:-.012em;margin:2.1em 0 .7em}
+.lede{font-size:clamp(16.5px,2.1vw,18.5px);line-height:1.68;color:var(--ink-2);max-width:33em;margin-bottom:1.6em}
+.body{max-width:35em}
+.body.wide{max-width:40em}
+
+/* ── pull ── */
+.pull{border-left:3px solid var(--ic);padding:.1em 0 .1em 1.15em;margin:1.9em 0;
+  font-family:var(--disp);font-weight:500;font-size:clamp(18px,2.7vw,23px);line-height:1.45;
+  letter-spacing:-.014em;color:var(--ink);max-width:24em;text-wrap:balance}
+
+/* ── figure ── */
+figure{margin:2em 0;padding:clamp(16px,3vw,26px);background:var(--surface);
+  border:1px solid var(--line);border-radius:3px}
+figcaption{font-family:var(--mono);font-size:11px;line-height:1.6;color:var(--muted);
+  margin-top:1.15em;padding-top:.85em;border-top:1px solid var(--line-2)}
+.figtitle{font-family:var(--body);font-weight:600;font-size:14px;line-height:1.4;color:var(--ink);
+  margin-bottom:.3em;letter-spacing:-.005em}
+.figsub{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:1.35em;letter-spacing:.01em}
+.legend{display:flex;flex-wrap:wrap;gap:.5em 1.3em;font-family:var(--mono);font-size:11px;
+  color:var(--ink-2);margin-bottom:1.1em}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:1px;margin-right:.45em;vertical-align:-1px}
+
+/* ── bar rows ── */
+.bars{display:flex;flex-direction:column;gap:7px}
+.br{display:grid;grid-template-columns:74px 1fr 62px;align-items:center;gap:10px}
+@media(max-width:560px){.br{grid-template-columns:60px 1fr 54px;gap:7px}}
+.br .lb{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);text-align:right;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bars.lbwrap .br{grid-template-columns:90px 1fr 46px}
+.bars.lbwrap .br .lb{white-space:normal;overflow:visible;text-overflow:clip;line-height:1.28}
+@media(max-width:560px){.bars.lbwrap .br{grid-template-columns:78px 1fr 40px;gap:7px}}
+.bars.lbwrap.vwide .br{grid-template-columns:90px 1fr 100px}
+.bars.lbwrap.vwide .br .vl{white-space:nowrap;font-size:10.5px}
+@media(max-width:560px){.bars.lbwrap.vwide .br{grid-template-columns:56px 1fr 90px;gap:6px}}
+.br .tk{height:17px;background:var(--surface-2);border-radius:1px;overflow:hidden}
+.br .fl{height:100%;background:var(--op);border-radius:1px}
+.br .vl{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;
+  color:var(--ink-2);text-align:right}
+.br.hi .lb{color:var(--ic);font-weight:600}
+.br.hi .fl{background:var(--ic)}
+.br.hi .vl{color:var(--ic);font-weight:600}
+.br.ref .fl{background:var(--top)}
+.br.ref .lb,.br.ref .vl{color:var(--top)}
+
+/* ── grouped pair bars ── */
+.pair{display:flex;flex-direction:column;gap:16px}
+.pg{display:grid;grid-template-columns:96px 1fr;gap:12px;align-items:center}
+@media(max-width:560px){.pg{grid-template-columns:1fr;gap:5px}}
+.pg .pn{font-family:var(--body);font-size:13px;font-weight:600;color:var(--ink)}
+.pg .pn small{display:block;font-family:var(--mono);font-weight:400;font-size:10.5px;color:var(--muted)}
+.pgb{display:flex;flex-direction:column;gap:5px}
+.pgr{display:grid;grid-template-columns:1fr 54px;gap:9px;align-items:center}
+.pgr .tk{height:15px;background:var(--surface-2);border-radius:1px;overflow:hidden}
+.pgr .fl{height:100%;border-radius:1px}
+.pgr .vl{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;text-align:right}
+
+/* ── table ── */
+.tbl{overflow-x:auto;margin:1.8em 0;border:1px solid var(--line);border-radius:3px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:13px}
+th,td{padding:9px 13px;text-align:left;border-bottom:1px solid var(--line-2);vertical-align:baseline}
+th{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;background:var(--raise);white-space:nowrap}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+td .nm{font-weight:600}
+td .no{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.up{color:var(--top);font-weight:600} .dn{color:var(--bad);font-weight:600}
+.dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:.5em;vertical-align:1px}
+.dot.on{background:var(--top)} .dot.mid{background:var(--axis)} .dot.off{background:transparent;
+  border:1px solid var(--axis)}
+
+/* ── slope svg ── */
+svg{display:block;max-width:100%;height:auto;overflow:visible}
+.sv-lb{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:var(--muted)}
+.sv-vl{font-family:"IBM Plex Mono",monospace;font-size:11.5px;font-weight:500}
+.sv-nm{font-family:"IBM Plex Sans KR",sans-serif;font-size:11.5px;font-weight:600;fill:var(--ink-2)}
+
+p.rate{font-size:13px;line-height:1.6;color:var(--muted);border-left:2px solid var(--line);
+  padding-left:1.1em;margin:1.5em 0}
+p.rate b{color:var(--ink-2);font-weight:600}
+
+/* ── callout ── */
+.note{background:var(--raise);border:1px solid var(--line);border-left:3px solid var(--axis);
+  border-radius:3px;padding:clamp(14px,2.6vw,20px);margin:1.9em 0;font-size:14px;line-height:1.65;
+  color:var(--ink-2)}
+.note b{color:var(--ink);font-weight:600}
+.note.warn{border-left-color:var(--bad)}
+.note.key{border-left-color:var(--ic);background:var(--ic-soft);border-color:var(--line)}
+
+/* ── stat strip ── */
+.strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-2);
+  border:1px solid var(--line);border-radius:3px;overflow:hidden;margin:1.9em 0}
+@media(max-width:620px){.strip{grid-template-columns:1fr}}
+.strip>div{background:var(--surface);padding:clamp(13px,2.4vw,18px)}
+.strip .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:.4em}
+.strip .v{font-family:var(--disp);font-weight:600;font-size:clamp(20px,3.4vw,27px);line-height:1.1;
+  font-variant-numeric:tabular-nums;letter-spacing:-.018em}
+.strip .s{font-size:12px;color:var(--ink-2);margin-top:.35em;line-height:1.45}
+
+/* ── list ── */
+ul.clean{list-style:none;padding:0;margin:1.3em 0;display:flex;flex-direction:column;gap:.85em;max-width:35em}
+ul.clean li{padding-left:1.5em;position:relative;font-size:14.5px;line-height:1.62;color:var(--ink-2)}
+ul.clean li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:1.5px;background:var(--axis)}
+ul.clean li b{color:var(--ink);font-weight:600}
+
+/* ── case panel ── */
+.case{border:1px solid var(--line);border-top:3px solid var(--ic);border-radius:3px;
+  background:var(--surface);padding:clamp(18px,3.2vw,28px);margin:2.2em 0}
+.case+.case{margin-top:1.4em}
+.case .ch{display:flex;flex-wrap:wrap;align-items:baseline;gap:.5em .9em;margin-bottom:.35em}
+.case .ct{font-family:var(--disp);font-weight:600;font-size:clamp(20px,3.2vw,26px);line-height:1.15;
+  letter-spacing:-.02em;color:var(--ink)}
+.case .cn{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.case .cs{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ic);border:1px solid var(--ic);border-radius:2px;padding:.22em .55em;white-space:nowrap}
+.case .cd{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:1.15em;
+  padding-bottom:1.15em;border-bottom:1px solid var(--line-2)}
+.case p{font-size:14.5px;line-height:1.68;color:var(--ink-2);margin-bottom:1em;max-width:40em}
+.case p:last-child{margin-bottom:0}
+.case p b,.case p strong{color:var(--ink);font-weight:600}
+.case h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;margin:1.6em 0 .7em}
+
+/* ── ledger (two-column consequence table inside a case) ── */
+.ledger{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line-2);
+  border:1px solid var(--line);border-radius:3px;overflow:hidden;margin:1.4em 0}
+@media(max-width:620px){.ledger{grid-template-columns:1fr}}
+.ledger>div{background:var(--raise);padding:clamp(13px,2.4vw,17px)}
+.ledger .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:.5em}
+.ledger .v{font-family:var(--disp);font-weight:600;font-size:clamp(17px,2.8vw,21px);line-height:1.2;
+  letter-spacing:-.015em;margin-bottom:.4em}
+.ledger .state .v{color:var(--ink-2)}
+.ledger .social .v{color:var(--bad)}
+.ledger .s{font-size:12.5px;line-height:1.5;color:var(--ink-2)}
+
+/* ── timeline strip ── */
+.tl{display:flex;gap:2px;margin:1.3em 0 .6em}
+.tl .y{flex:1;min-width:0;text-align:center}
+.tl .yb{height:30px;border-radius:1px;background:var(--surface-2)}
+.tl .yb.play{background:var(--op)}
+.tl .yb.gap{background:var(--bad-soft);border:1px dashed var(--bad)}
+.tl .yb.low{background:var(--ic-soft);border:1px solid var(--ic)}
+.tl .yl{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:.45em;
+  writing-mode:vertical-rl;transform:rotate(180deg);height:34px;display:inline-block}
+@media(min-width:560px){.tl .yl{writing-mode:horizontal-tb;transform:none;height:auto}}
+
+footer{padding-block:clamp(34px,6vw,54px) clamp(46px,8vw,74px);border-top:1px solid var(--line);
+  font-family:var(--mono);font-size:11.5px;line-height:1.85;color:var(--muted)}
+footer b{color:var(--ink-2);font-weight:500}
+@media(prefers-reduced-motion:no-preference){
+  section{animation:fi .5s ease-out both}
+  @keyframes fi{from{opacity:.55}to{opacity:1}}
+}
+
+/* ── scouting report components ── */
+.warnbar{background:var(--bad-soft);border:1px solid var(--bad);border-radius:3px;
+  padding:clamp(13px,2.4vw,18px);margin:1.6em 0;font-size:13.5px;line-height:1.6;color:var(--ink-2)}
+.warnbar b{color:var(--bad);font-weight:600}
+
+/* numbered instruction card */
+.instr{display:grid;grid-template-columns:44px 1fr;gap:clamp(12px,2.4vw,20px);
+  border:1px solid var(--line);border-left:3px solid var(--ic);border-radius:3px;
+  background:var(--surface);padding:clamp(15px,2.8vw,22px);margin:1.1em 0}
+@media(max-width:560px){.instr{grid-template-columns:32px 1fr;gap:12px}}
+.instr .n{font-family:var(--disp);font-weight:600;font-size:clamp(26px,4.4vw,34px);line-height:1;
+  color:var(--ic);letter-spacing:-.03em}
+.instr h3{font-family:var(--body);font-weight:600;font-size:clamp(15.5px,2.2vw,18px);
+  line-height:1.34;color:var(--ink);margin:0 0 .5em;letter-spacing:-.01em}
+.instr p{font-size:14px;line-height:1.62;color:var(--ink-2);margin:0 0 .7em;max-width:40em}
+.instr p:last-child{margin-bottom:0}
+.instr .ev{font-family:var(--mono);font-size:11.5px;line-height:1.55;color:var(--muted);
+  border-top:1px solid var(--line-2);padding-top:.7em;margin-top:.9em}
+.instr .ev b{color:var(--ic);font-weight:600}
+
+/* do-not list */
+.dont{border:1px solid var(--line);border-radius:3px;background:var(--raise);
+  padding:clamp(15px,2.8vw,22px);margin:1.1em 0}
+.dont .hd{display:flex;align-items:baseline;gap:.7em;margin-bottom:.55em}
+.dont .x{font-family:var(--mono);font-size:15px;color:var(--axis);line-height:1}
+.dont h3{font-family:var(--body);font-weight:600;font-size:15px;line-height:1.34;
+  color:var(--muted);margin:0;text-decoration:line-through;text-decoration-color:var(--axis)}
+.dont p{font-size:13.5px;line-height:1.6;color:var(--ink-2);margin:0;max-width:40em}
+.dont p b{color:var(--ink);font-weight:600}
+
+/* pitch zone map */
+.zgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin:1.2em 0}
+.zcell{padding:clamp(14px,2.6vw,22px) 10px;border-radius:2px;text-align:center}
+.zcell .zv{font-family:var(--disp);font-weight:600;font-size:clamp(22px,3.8vw,30px);
+  line-height:1;letter-spacing:-.02em}
+.zcell .zn{font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-top:.55em;
+  letter-spacing:.03em}
+.zcell .zr{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:.25em}
+
+/* player duel table */
+.duel{display:flex;flex-direction:column;gap:6px;margin:1.2em 0}
+.drow{display:grid;grid-template-columns:104px 60px 1fr 46px;align-items:center;gap:9px}
+@media(max-width:560px){.drow{grid-template-columns:84px 52px 1fr 40px;gap:6px}.drow .dp{font-size:9.5px}}
+.drow .dn{font-family:var(--body);font-size:12.5px;font-weight:600;color:var(--ink);
+  text-align:right;line-height:1.24}
+.drow .dp{font-family:var(--mono);font-size:10px;color:var(--muted);text-align:right;white-space:nowrap}
+.drow .dt{height:16px;background:var(--surface-2);border-radius:1px;position:relative;overflow:hidden}
+.drow .df{position:absolute;top:0;bottom:0;border-radius:1px}
+.drow .dm{position:absolute;top:-2px;bottom:-2px;width:1.5px;background:var(--axis);left:50%}
+.drow .dv{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;text-align:right}
+
+/* one-page summary */
+.sheet{border:2px solid var(--ink);border-radius:4px;padding:clamp(18px,3.4vw,30px);
+  margin:2em 0;background:var(--surface)}
+.sheet h3{font-family:var(--disp);font-weight:600;font-size:clamp(19px,3vw,25px);
+  letter-spacing:-.02em;color:var(--ink);margin:0 0 .2em}
+.sheet .sd{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:1.4em;
+  padding-bottom:1.1em;border-bottom:1px solid var(--line)}
+.sheet ol{margin:0;padding-left:1.35em;display:flex;flex-direction:column;gap:.7em}
+.sheet ol li{font-size:14px;line-height:1.55;color:var(--ink-2)}
+.sheet ol li b{color:var(--ink);font-weight:600}
+.sheet .neg{margin-top:1.5em;padding-top:1.2em;border-top:1px solid var(--line-2)}
+.sheet .neg .nl{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:.6em}
+.sheet .neg p{font-size:13px;line-height:1.6;color:var(--muted);margin:0}
+
+/* ── butterfly (대칭 막대) ── */
+.bf{display:flex;flex-direction:column;gap:0}
+.bfh{display:grid;grid-template-columns:78px 1fr 1fr 50px;gap:0;align-items:center;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--muted);
+  padding-bottom:7px;border-bottom:1px solid var(--line-2);margin-bottom:3px}
+.bfh .a{text-align:right;padding-right:11px} .bfh .b{padding-left:11px}
+.bfh .c{text-align:right}
+.bfr{display:grid;grid-template-columns:78px 1fr 1fr 50px;align-items:center;padding-block:3px}
+.bfr .bl{font-family:var(--body);font-size:12.5px;color:var(--ink-2);white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis;padding-right:8px}
+.bfr .ba{display:flex;justify-content:flex-end;align-items:center;gap:7px;
+  padding-right:9px;border-right:2px solid var(--axis)}
+.bfr .bb{display:flex;align-items:center;gap:7px;padding-left:9px}
+.bfr i{display:block;height:17px;border-radius:1px;flex:none}
+.bfr .ba i{background:var(--ic)} .bfr .bb i{background:var(--bad)}
+.bfr .v{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;
+  color:var(--ink-2);flex:none}
+.bfr .d{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;
+  text-align:right;color:var(--muted);padding-left:8px}
+.bfr.tot{margin-top:5px;padding-top:8px;border-top:1px solid var(--line)}
+.bfr.tot .bl,.bfr.tot .v,.bfr.tot .d{font-weight:600;color:var(--ink)}
+@media(max-width:560px){.bfh,.bfr{grid-template-columns:64px 1fr 1fr 48px}
+  .bfr .bl{font-size:11px;padding-right:5px}
+  .bfr .ba,.bfr .bb{padding-inline:6px}}
+
+/* ── dumbbell (연결점) ── */
+.db{display:flex;flex-direction:column;gap:2px}
+.dbr{display:grid;grid-template-columns:88px 44px 1fr 44px 118px;align-items:center;gap:8px;
+  padding:7px 0;border-bottom:1px solid var(--line-2)}
+.dbr:last-child{border-bottom:none}
+.dbr .nm{font-family:var(--body);font-size:12.5px;font-weight:600;color:var(--ink);line-height:1.22}
+.dbr .nm small{display:block;font-family:var(--mono);font-weight:400;font-size:9.5px;
+  color:var(--muted);letter-spacing:0}
+.dbr .va,.dbr .vo{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums}
+.dbr .va{text-align:right;color:var(--ic);font-weight:600}
+.dbr .vo{text-align:left;color:var(--op)}
+.dbr .tr{position:relative;height:20px}
+.dbr .tr::before{content:"";position:absolute;left:0;right:0;top:9.5px;height:1px;background:var(--line-2)}
+.dbr .cn{position:absolute;top:8px;height:4px;border-radius:2px}
+.dbr .pt{position:absolute;top:4px;width:12px;height:12px;border-radius:50%;
+  border:2px solid var(--surface)}
+.dbr .pa{background:var(--ic)} .dbr .po{background:var(--op)}
+.dbr .jg{font-family:var(--mono);font-size:10px;letter-spacing:.02em;text-align:right;white-space:nowrap;
+  white-space:nowrap}
+.dbr .jg.up{color:var(--top)} .dbr .jg.dn{color:var(--bad)} .dbr .jg.md{color:var(--muted)}
+@media(max-width:620px){
+  .dbr{grid-template-columns:76px 40px 1fr 40px;gap:6px;row-gap:2px}
+  .dbr .jg{grid-column:2/-1;text-align:left;padding-top:1px}}
+
+/* ── 경기 카드 ── */
+.mcards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:1.9em 0}
+@media(max-width:700px){.mcards{grid-template-columns:1fr}}
+.mcard{border:1px solid var(--line);border-top:3px solid var(--ic);border-radius:3px;
+  background:var(--surface);padding:clamp(15px,2.6vw,20px);display:flex;flex-direction:column}
+.mcard .why{font-family:var(--mono);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ic);margin-bottom:.7em}
+.mcard .hd{display:flex;align-items:baseline;gap:.6em;flex-wrap:wrap;margin-bottom:.15em}
+.mcard .sc{font-family:var(--disp);font-weight:600;font-size:clamp(23px,3.6vw,29px);
+  line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.mcard .op{font-family:var(--body);font-size:14px;font-weight:600;color:var(--ink)}
+.mcard .rd{font-family:var(--mono);font-size:10.5px;color:var(--muted)}
+.mcard .kv{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;margin:1em 0 .9em;
+  padding:.85em 0;border-block:1px solid var(--line-2)}
+.mcard .kv dt{font-family:var(--mono);font-size:10.5px;color:var(--muted);white-space:nowrap}
+.mcard .kv dd{margin:0;font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;
+  color:var(--ink-2)}
+.mcard .kv dd b{color:var(--ic);font-weight:600}
+.mcard .kv dd em{background:none;padding:0;color:var(--bad);font-weight:600}
+.mcard p{font-size:13.5px;line-height:1.62;color:var(--ink-2);margin:0}
+.mcard p b{color:var(--ink);font-weight:600}
+
+/* ── 피치 ── */
+.pitches{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px}
+.pitchwrap .pttl{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:.5em;
+  letter-spacing:.03em}
+
+
+.dotw .drow{grid-template-columns:96px 0 1fr 150px}
+.dotw .dv{white-space:nowrap;font-size:11px}
+@media(max-width:560px){.dotw .drow{grid-template-columns:66px 0 1fr 116px;gap:5px}.dotw .dv{font-size:9.5px}.dotw .dn{font-size:11.5px;word-break:keep-all}}
+
+.dvb{display:flex;flex-direction:column;gap:7px}
+.dvr{display:grid;grid-template-columns:74px 1fr 62px;align-items:center;gap:10px}
+.dvr .lb{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);text-align:right}
+.dvr .tk{position:relative;height:17px;background:var(--surface-2);border-radius:1px}
+.dvr .zl{position:absolute;top:-4px;bottom:-4px;width:1.5px;background:var(--axis);transform:translateX(-.75px);z-index:1}
+.dvr .fl{position:absolute;top:0;bottom:0;background:var(--op);border-radius:1px}
+.dvr.neg .fl{opacity:.55}
+.dvr .vl{font-family:var(--mono);font-size:11.5px;font-variant-numeric:tabular-nums;text-align:right;color:var(--ink-2)}
+.dvr.hi .lb,.dvr.hi .vl{color:var(--ic);font-weight:600}
+.dvr.hi .fl{background:var(--ic);opacity:1}
+.dvr.ax .axl{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px;color:var(--muted)}
+@media(max-width:560px){.dvr{grid-template-columns:68px 1fr 44px;gap:6px}.dvr .lb{word-break:keep-all}.dvr .lb,.dvr .vl{font-size:10.5px}}
+</style>
+
+<body>
+<header><div class="wrap">
+  <div class="badge">BUSAN IPARK · 2026 · K LEAGUE 2 · 26 MATCHES</div>
+  <h1>Two Seasons in One</h1>
+  <p class="dek">In July, Busan were top of the table. In September they are 6th. 36 points from 16 matches before the halfway mark, 5 from the 10 since. I put all 212 league matches on one scale to find out why one team’s single season split in two — what was luck, and what really changed.</p>
+  <div class="meta"><span>K League 2 2026 · 26 Busan IPark matches</span><span>Matches up to 19 Sep 2026</span><span>212 league matches · 304,486 raw events</span><span>Hyuckjin Han</span></div>
+</div></header>
+<div class="tiles"><div class="tile"><div class="k">First half R1–R17</div><div class="v gj">2.25</div><div class="s">points per match · 11W 3D 2L<br>36 points</div></div><div class="tile"><div class="k">Second half R18–R27</div><div class="v bad">0.50</div><div class="s">points per match · 1W 2D 7L<br>5 points</div></div><div class="tile"><div class="k">First half vs expected</div><div class="v ">+12.9</div><div class="s">points − expected points<br><b>1st in the league</b> · 2nd Chungnam Asan +4.3</div></div><div class="tile"><div class="k">Second half vs expected</div><div class="v ">−6.2</div><div class="s">points − expected points<br>3rd-largest shortfall in the league</div></div></div>
+<div class="wrap">
+<section><div class="eyebrow"><span class="role">Starting point</span><span class="cap">First half 2.25 → second half 0.50</span></div><h2>Top of the table in July</h2><div class="body"><p class="lede">By the last match of the first half of the season (R17, 12 July, 2-0 v Gimpo), Busan IPark had 11 wins, 3 draws and 2 defeats from 16 matches — 36 points. 2.25 points per match: stretched over 34 rounds, a pace in the mid-70s. The press at the time called Busan the league leaders.</p><p>From the very next match they were a different team. A 0-1 defeat at Seongnam in R18 began an <b>eight-match winless run (2 draws, 6 defeats)</b>. A 2-0 win over Gimhae in R26 ended it, but they lost again at Gimpo in R27. Ten matches since the halfway mark have brought <b>5</b> points, 0.50 per match — relegation form. In the September table Busan are 6th.</p></div><div class="tbl "><table><thead><tr><th>Stretch</th><th>P</th><th>W–D–L</th><th>Pts</th><th>Per match</th><th>GF–GA</th></tr></thead><tbody><tr><td>First half R1–R17</td><td class="n">16</td><td class="n">11–3–2</td><td class="n"><b>36</b></td><td class="n"><b>2.25</b></td><td class="n">35–20</td></tr><tr><td>Second half R18–R27</td><td class="n">10</td><td class="n">1–2–7</td><td class="n"><b>5</b></td><td class="n"><b>0.50</b></td><td class="n">6–14</td></tr><tr><td>Season</td><td class="n">26</td><td class="n">12–5–9</td><td class="n">41</td><td class="n">1.58</td><td class="n">41–34</td></tr></tbody></table></div><div class="body"><p>This piece asks one question. <b>Which one is the real Busan?</b> To answer it, results (points) have to be separated from process (the quality of the shots). In both halves, the results sat a long way from the process — just in opposite directions.</p></div></section>
+<section><div class="eyebrow"><span class="role">First half R1–R17</span><span class="cap">36 points · 23.1 expected</span></div><h2>Thirteen points more than the shots said</h2><div class="body"><p class="lede">Re-take every shot by both teams at its xG probability and you get the points a team could expect from each match — expected points. In the first half of the season Busan’s expected points were <b>23.1</b>. They took 36.</p><p>The gap of +12.9 is <b>by far the largest</b> of K League 2’s 17 clubs. Second-placed Chungnam Asan are at +4.3. Replay those 16 matches 20,000 times with the same shots and Busan reach 36 points or more in only <b>0.3%</b> of them. The first 11 matches alone (9 wins, 1 draw, 1 defeat, 28 points) were close to impossible from 14.7 expected points — 1 time in 20,000.</p></div><figure><div class="figtitle">Actual and expected points, cumulative — the gap opens in the first half and closes in the second</div><div class="figsub">Cumulative by round · R25 has no event data, so no expected points are added (flat dashed line)</div><div class="legend"><span><i style="background:var(--ic)"></i>Actual points</span><span><i style="background:var(--op)"></i>Expected points</span></div><div class="scat"><svg viewBox="0 0 580 330" role="img" aria-label="Cumulative points" style="width:100%;height:auto"><line x1="44.0" y1="290.0" x2="510.0" y2="290.0" stroke="var(--grid)" stroke-width="1"/><text x="38.0" y="293.0" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">0</text><line x1="44.0" y1="259.6" x2="510.0" y2="259.6" stroke="var(--grid)" stroke-width="1"/><text x="38.0" y="262.6" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">5</text><line x1="44.0" y1="229.1" x2="510.0" y2="229.1" stroke="var(--grid)" stroke-width="1"/><text x="38.0" y="232.1" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">10</text><line x1="44.0" y1="198.7" x2="510.0" y2="198.7" stroke="var(--grid)" stroke-width="1"/><text x="38.0" y="201.7" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">15</text><line x1="44.0" y1="168.2" x2="510.0" y2="168.2" stroke="var(--grid)" stroke-width="1"/><text x="38.0" y="171.2" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">20</text><line x1="44.0" y1="137.8" x2="510.0" y2="137.8" stroke="var(--grid)" stroke-width="1"/><text x="38.0" y="140.8" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">25</text><line x1="44.0" y1="107.3" x2="510.0" y2="107.3" stroke="var(--grid)" stroke-width="1"/><text x="38.0" y="110.3" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">30</text><line x1="44.0" y1="76.9" x2="510.0" y2="76.9" stroke="var(--grid)" stroke-width="1"/><text x="38.0" y="79.9" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">35</text><line x1="44.0" y1="46.4" x2="510.0" y2="46.4" stroke="var(--grid)" stroke-width="1"/><text x="38.0" y="49.4" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">40</text><line x1="44.0" y1="16.0" x2="510.0" y2="16.0" stroke="var(--grid)" stroke-width="1"/><text x="38.0" y="19.0" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">45</text><text x="44.0" y="304.0" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">R1</text><text x="81.3" y="304.0" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">R3</text><text x="118.6" y="304.0" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">R5</text><text x="155.8" y="304.0" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">R7</text><text x="193.1" y="304.0" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">R9</text><text x="230.4" y="304.0" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">R11</text><text x="267.7" y="304.0" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">R14</text><text x="305.0" y="304.0" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">R16</text><text x="342.2" y="304.0" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">R18</text><text x="379.5" y="304.0" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">R20</text><text x="416.8" y="304.0" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">R22</text><text x="454.1" y="304.0" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">R24</text><text x="510.0" y="304.0" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">R27</text><line x1="332.9" y1="16.0" x2="332.9" y2="290.0" stroke="var(--ink)" stroke-opacity=".45" stroke-dasharray="4 3"/><text x="337.9" y="284.0" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">second half →</text><polyline points="44.0,283.9 62.6,265.6 81.3,247.4 99.9,229.1 118.6,210.8 137.2,192.6 155.8,174.3 174.5,156.0 193.1,156.0 211.8,137.8 230.4,119.5 249.0,119.5 267.7,101.2 286.3,95.2 305.0,89.1 323.6,70.8 342.2,70.8 360.9,70.8 379.5,70.8 398.2,70.8 416.8,64.7 435.4,58.6 454.1,58.6 472.7,58.6 491.4,40.4 510.0,40.4" fill="none" stroke="var(--ic)" stroke-width="2.4"  stroke-linejoin="round"/><circle cx="510.0" cy="40.4" r="3.5" fill="var(--ic)"/><text x="517.0" y="44.4" font-family="IBM Plex Sans KR,sans-serif" font-size="11" font-weight="600" fill="var(--ic)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">Actual</text><polyline points="44.0,280.0 62.6,263.4 81.3,252.8 99.9,248.9 118.6,240.9 137.2,235.2 155.8,225.9 174.5,223.3 193.1,222.6 211.8,208.7 230.4,200.5 249.0,194.1 267.7,181.9 286.3,175.2 305.0,162.2 323.6,149.6 342.2,139.5 360.9,136.9 379.5,129.0 398.2,125.3 416.8,122.2 435.4,113.5 454.1,108.4 472.7,108.4 491.4,90.9 510.0,81.4" fill="none" stroke="var(--op)" stroke-width="2.4" stroke-dasharray="5 4" stroke-linejoin="round"/><circle cx="510.0" cy="81.4" r="3.5" fill="var(--op)"/><text x="517.0" y="85.4" font-family="IBM Plex Sans KR,sans-serif" font-size="11" font-weight="600" fill="var(--op)" stroke="var(--surface)" stroke-width="3" paint-order="stroke">Expected</text><text x="277.0" y="324.0" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="var(--muted)">Round</text></svg></div><figcaption>Gap at R17: 12.9 points → at R27: 6.7. 6.2 points came back in the second half.</figcaption></figure><figure><div class="figtitle">First-half points minus expected points, 17 clubs</div><div class="figsub">R1–R17 · matches with event data</div><div class="legend"><span><i style="background:var(--ic)"></i>Busan IPark</span><span><i style="background:var(--op)"></i>The other 16 clubs</span></div><div class="dvb"><div class="dvr hi"><div class="lb"><b>Busan</b></div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:46.15%;width:49.79%"></div></div><div class="vl">+12.9</div></div><div class="dvr "><div class="lb">Chungnam Asan</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:46.15%;width:16.36%"></div></div><div class="vl">+4.3</div></div><div class="dvr "><div class="lb">Daegu</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:46.15%;width:10.90%"></div></div><div class="vl">+2.8</div></div><div class="dvr "><div class="lb">Hwaseong</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:46.15%;width:10.57%"></div></div><div class="vl">+2.7</div></div><div class="dvr "><div class="lb">Seoul E-Land</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:46.15%;width:9.29%"></div></div><div class="vl">+2.4</div></div><div class="dvr "><div class="lb">Suwon Samsung</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:46.15%;width:6.69%"></div></div><div class="vl">+1.7</div></div><div class="dvr "><div class="lb">Suwon FC</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:46.15%;width:6.37%"></div></div><div class="vl">+1.7</div></div><div class="dvr "><div class="lb">Cheonan</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:46.15%;width:2.90%"></div></div><div class="vl">+0.8</div></div><div class="dvr "><div class="lb">Ansan</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:46.15%;width:0.48%"></div></div><div class="vl">+0.1</div></div><div class="dvr  neg"><div class="lb">Paju</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:44.33%;width:1.82%"></div></div><div class="vl">−0.5</div></div><div class="dvr  neg"><div class="lb">Gimpo</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:40.68%;width:5.47%"></div></div><div class="vl">−1.4</div></div><div class="dvr  neg"><div class="lb">Gyeongnam</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:40.03%;width:6.13%"></div></div><div class="vl">−1.6</div></div><div class="dvr  neg"><div class="lb">Gimhae</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:36.49%;width:9.66%"></div></div><div class="vl">−2.5</div></div><div class="dvr  neg"><div class="lb">Seongnam</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:18.30%;width:27.85%"></div></div><div class="vl">−7.2</div></div><div class="dvr  neg"><div class="lb">Yongin</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:18.22%;width:27.94%"></div></div><div class="vl">−7.3</div></div><div class="dvr  neg"><div class="lb">Chungbuk Cheongju</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:16.46%;width:29.70%"></div></div><div class="vl">−7.7</div></div><div class="dvr  neg"><div class="lb">Jeonnam</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:9.28%;width:36.87%"></div></div><div class="vl">−9.6</div></div><div class="dvr ax"><div></div><div class="axl"><span>← fewer than expected</span><span>more than expected →</span></div><div></div></div></div><figcaption>Busan stand on their own.</figcaption></figure><div class="body"><p>Where did it come from? Busan’s 204 first-half shots were worth 25.1 xG and produced <b>34 goals</b> (+8.9). Opponents’ shots were worth 23.4 xG and produced 17 goals (−6.4) — on top of which Busan players scored 3 own goals. <b>Both ends</b> beat expectation; the scoring end slightly more.</p><p>And the scoring surplus did not belong to one man. Gabriel +3.4, Minhyeok Kim +1.8, Hwi Son +1.4, Gaon Baek +1.3, Jinhyuk Kim +1.1 — spread evenly across five or more players. The top scorer, Cristian, was right on expectation (−0.6). One player’s finishing is something you can keep counting on. A surplus spread across many players at once is <b>usually variance — the signature of luck</b>.</p></div><div class="tbl "><table><thead><tr><th>Player</th><th>Shots</th><th>xG</th><th>Goals</th><th>Goals − xG</th></tr></thead><tbody><tr><td>Cristian</td><td class="n">41</td><td class="n">6.6</td><td class="n">6</td><td class="n">−0.6</td></tr><tr><td>Gabriel</td><td class="n">32</td><td class="n">2.6</td><td class="n">6</td><td class="n">+3.4</td></tr><tr><td>Minhyeok Kim</td><td class="n">10</td><td class="n">2.2</td><td class="n">4</td><td class="n">+1.8</td></tr><tr><td>Gaon Baek</td><td class="n">13</td><td class="n">2.7</td><td class="n">4</td><td class="n">+1.3</td></tr><tr><td>Jinhyuk Kim</td><td class="n">8</td><td class="n">1.9</td><td class="n">3</td><td class="n">+1.1</td></tr><tr><td>Chan Kim</td><td class="n">15</td><td class="n">2.5</td><td class="n">2</td><td class="n">−0.5</td></tr><tr><td>Hwi Son</td><td class="n">6</td><td class="n">0.6</td><td class="n">2</td><td class="n">+1.4</td></tr><tr><td>Sehoon Kim</td><td class="n">14</td><td class="n">1.2</td><td class="n">2</td><td class="n">+0.8</td></tr></tbody></table></div></section>
+<section><div class="eyebrow"><span class="role">Second half R18–R27</span><span class="cap">5 points · 11.2 expected</span></div><h2>This time, six points fewer than the shots said</h2><div class="body"><p class="lede">The second half is the mirror image. In the nine matches with event data Busan’s expected points were <b>11.2</b>; they took 5. That is 6.2 short — the 3rd-largest shortfall in the league. Replay those nine matches with the same shots and 5 points or fewer comes up 3.5% of the time.</p><p>This time it is almost all at the scoring end. 115 shots, 11.4 xG, <b>6 goals</b> (−5.4). Conceding: 13 goals from 13.2 xG of opponents’ shots — exactly on expectation. A team that scored nearly nine more than expected in the first half scored more than five fewer in the second.</p></div><figure><div class="figtitle">Second-half points minus expected points, 17 clubs</div><div class="figsub">R18–R27 · matches with event data</div><div class="legend"><span><i style="background:var(--ic)"></i>Busan IPark</span><span><i style="background:var(--op)"></i>The other 16 clubs</span></div><div class="dvb"><div class="dvr "><div class="lb">Suwon Samsung</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:46.15%;width:20.01%"></div></div><div class="vl">+5.2</div></div><div class="dvr "><div class="lb">Seongnam</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:46.15%;width:15.67%"></div></div><div class="vl">+4.1</div></div><div class="dvr "><div class="lb">Suwon FC</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:46.15%;width:14.28%"></div></div><div class="vl">+3.7</div></div><div class="dvr "><div class="lb">Gyeongnam</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:46.15%;width:13.77%"></div></div><div class="vl">+3.6</div></div><div class="dvr "><div class="lb">Paju</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:46.15%;width:9.78%"></div></div><div class="vl">+2.5</div></div><div class="dvr "><div class="lb">Seoul E-Land</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:46.15%;width:9.54%"></div></div><div class="vl">+2.5</div></div><div class="dvr "><div class="lb">Jeonnam</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:46.15%;width:9.12%"></div></div><div class="vl">+2.4</div></div><div class="dvr "><div class="lb">Ansan</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:46.15%;width:4.08%"></div></div><div class="vl">+1.1</div></div><div class="dvr "><div class="lb">Hwaseong</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:46.15%;width:1.88%"></div></div><div class="vl">+0.5</div></div><div class="dvr  neg"><div class="lb">Daegu</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:45.62%;width:0.54%"></div></div><div class="vl">−0.1</div></div><div class="dvr  neg"><div class="lb">Chungbuk Cheongju</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:43.11%;width:3.04%"></div></div><div class="vl">−0.8</div></div><div class="dvr  neg"><div class="lb">Yongin</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:39.04%;width:7.11%"></div></div><div class="vl">−1.8</div></div><div class="dvr  neg"><div class="lb">Chungnam Asan</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:36.12%;width:10.03%"></div></div><div class="vl">−2.6</div></div><div class="dvr  neg"><div class="lb">Gimpo</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:32.10%;width:14.05%"></div></div><div class="vl">−3.7</div></div><div class="dvr hi neg"><div class="lb"><b>Busan</b></div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:22.28%;width:23.87%"></div></div><div class="vl">−6.2</div></div><div class="dvr  neg"><div class="lb">Gimhae</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:17.60%;width:28.56%"></div></div><div class="vl">−7.4</div></div><div class="dvr  neg"><div class="lb">Cheonan</div><div class="tk"><div class="zl" style="left:46.15%"></div><div class="fl" style="left:11.63%;width:34.53%"></div></div><div class="vl">−9.0</div></div><div class="dvr ax"><div></div><div class="axl"><span>← fewer than expected</span><span>more than expected →</span></div><div></div></div></div><figcaption>First in the first half; third from bottom in the second.</figcaption></figure><div class="body"><p>So did the process stay the same? <b>No — the process got worse too. Just not by as much as the results.</b> Non-penalty expected goal difference per match fell from +0.30 to −0.19. In expected points per match that is 1.44 → 1.25, a drop of about 0.20. Actual points per match fell from 2.25 to 0.56 (matches with event data), a drop of 1.69.</p></div><div class="strip"><div><div class="k">Drop in points per match</div><div class="v" style="color:var(--ink)">−1.69</div><div class="s">first half → second half (event matches)</div></div><div><div class="k">Explained by process</div><div class="v" style="color:var(--op)">−0.20</div><div class="s">change in expected points per match</div></div><div><div class="k">First-half luck</div><div class="v" style="color:var(--ic)">+0.81</div><div class="s">points − expected, per match</div></div><div><div class="k">Second-half luck</div><div class="v" style="color:var(--bad)">−0.69</div><div class="s">points − expected, per match</div></div></div><div class="body"><p>Put simply: in the first half Busan took 0.81 points per match more than their process earned, and in the second half 0.69 fewer. Measured by shot quality, <b>about 88% of the fall is luck turning</b> and about 12% is a genuine drop in performance (a split that leans on a single xG model). Neither version is the “real Busan”. On process alone, Busan have been a <b>1.37 expected-points-per-match</b> team all season — upper-mid-table.</p></div></section>
+<section><div class="eyebrow"><span class="role">Phases</span><span class="cap">First half → second half</span></div><h2>More entries, less danger</h2><div class="body"><p class="lede">Where did the drop in performance come from? Split into phases: open-play chains only (set pieces and penalties removed), per match.</p></div><div class="tbl "><table><thead><tr><th>Attack (Busan)</th><th>First half</th><th>Second half</th><th></th></tr></thead><tbody><tr><td>Final-third entries / match</td><td class="n">32.2</td><td class="n">36.0</td><td class="n"><span class="up">▲</span></td></tr><tr><td>Build-up → final third</td><td class="n">25.5%</td><td class="n">33.8%</td><td class="n"><span class="up">▲</span></td></tr><tr><td>Entry → shot</td><td class="n">29.1%</td><td class="n">25.0%</td><td class="n"><span class="dn">▼</span></td></tr><tr><td>xG per entry chain</td><td class="n">0.042</td><td class="n">0.027</td><td class="n"><span class="dn">▼</span></td></tr><tr><td>Open-play xG / match</td><td class="n">1.35</td><td class="n">0.97</td><td class="n"><span class="dn">▼</span></td></tr><tr><td>Open-play goals / match</td><td class="n">1.75</td><td class="n">0.33</td><td class="n"><span class="dn">▼</span></td></tr><tr><td>Set-piece xG / match</td><td class="n">0.17</td><td class="n">0.21</td><td class="n"><span class="up">▲</span></td></tr></tbody></table></div><div class="tbl "><table><thead><tr><th>Defence (opponent attacks)</th><th>First half</th><th>Second half</th><th></th></tr></thead><tbody><tr><td>Opponent final-third entries / match</td><td class="n">39.8</td><td class="n">34.6</td><td class="n"><span class="up">▼</span></td></tr><tr><td>Opponent entry → shot</td><td class="n">22.6%</td><td class="n">24.4%</td><td class="n"><span class="dn">▲</span></td></tr><tr><td>Opponent xG per entry chain</td><td class="n">0.027</td><td class="n">0.033</td><td class="n"><span class="dn">▲</span></td></tr><tr><td>Opponent open-play xG / match</td><td class="n">1.06</td><td class="n">1.15</td><td class="n"><span class="dn">▲</span></td></tr><tr><td>Opponent open-play goals / match</td><td class="n">0.56</td><td class="n">1.11</td><td class="n"><span class="dn">▲</span></td></tr></tbody></table></div><div class="body"><p>The attack is a paradox. In the second half Busan got into the final third <b>more often</b> (32.2 → 36.0 times). The share of build-ups reaching the final third went up too. But the size of each entry (xG) <b>went from 0.042 to 0.027 — down about 35%.</b> Open-play xG fell from 1.35 to 0.97, and open-play goals collapsed from 1.75 to 0.33 per match: 3 open-play goals in nine matches.</p><p>The defence is the reverse shape. Opponents got in less often (39.8 → 34.6), but each entry grew from 0.027 to 0.033. Opponents’ open-play goals doubled, from 0.56 to 1.11 per match.</p><p>⚠ Part of this change is <b>made by the score</b>. Official possession rose from 49.4% to 54.3%. Teams that are behind have more of the ball, get in more often, and take less dangerous shots against a deeper block. That is why the next section splits by score state.</p></div></section>
+<section><div class="eyebrow"><span class="role">Score states</span><span class="cap">Time leading 40% → 15%</span></div><h2>The time spent in front disappeared</h2><div class="body"><p class="lede">In the first half of the season Busan spent <b>40% of match time in front</b> (667 minutes). In the second, 15% (136 minutes). Time spent behind rose from 12% to 29%.</p><p>It is not that they stopped scoring first. Suwon Samsung in R19, Seoul E-Land in R20, Daegu in R23, Suwon FC in R24 — <b>Busan scored first in all four.</b> They took one point from those four matches. Points dropped from winning positions: 11 in the second half alone (4 in the first).</p></div><div class="tbl "><table><thead><tr><th>Match</th><th>Opponent</th><th>Score</th><th></th><th>Points dropped</th></tr></thead><tbody><tr><td>R1</td><td>Seongnam</td><td class="n">1-1</td><td>scored first</td><td class="n">2</td></tr><tr><td>R15</td><td>Chungnam Asan</td><td class="n">2-2</td><td>scored first</td><td class="n">2</td></tr><tr><td>R19</td><td>Suwon Samsung</td><td class="n">1-4</td><td>scored first</td><td class="n">3</td></tr><tr><td>R20</td><td>Seoul E-Land</td><td class="n">1-2</td><td>scored first</td><td class="n">3</td></tr><tr><td>R23</td><td>Daegu</td><td class="n">1-1</td><td>scored first</td><td class="n">2</td></tr><tr><td>R24</td><td>Suwon FC</td><td class="n">1-2</td><td>scored first</td><td class="n">3</td></tr></tbody></table></div><div class="body"><p>Split the whole season by score state and Busan’s character shows (compared across 212 league matches).</p><ul class="clean"><li><b>Leading — they stop going forward.</b> Attacks starting in their own third reach midfield 55.1% of the time, 15th in the league. Opponents reach the final third 40.6 times per 90, the 3rd most allowed.</li><li><b>Level — Busan at their best.</b> xG per final-third entry 0.036, <b>1st in the league</b>. At the back, opponents score 0.41 open-play goals per 90 — <b>the fewest in the league</b>.</li><li><b>Trailing — they create, but cannot turn it round.</b> Open-play xG 1.35 per 90, 2nd in the league. Yet in matches where they fell behind at any point they take 0.40 points per match, 14th of 17.</li></ul><p>The second half is the stretch where time in front turned into time behind. A team that gave the ball away when ahead now holds it while behind — so much of the “more entries, less danger” attack in the phase table is a result of that shift. Matched for score-state mix, opponents’ entry → shot rate was 22.6% in the first half (25.1% expected from the state mix) and 24.4% in the second (25.5% expected). The first-half defence was a little tighter than expected; the second half returned to average.</p></div></section>
+<section><div class="eyebrow"><span class="role">Jooseong Woo</span><span class="cap">Out of the squad for 11 matches after R16</span></div><h2>The day the right-sided defender disappeared</h2><div class="body"><p class="lede">Jooseong Woo, a veteran defender who joined Busan this season after spells at Gyeongnam and Daegu, was a fixture in the first half. He started 14 matches between R1 and R16. His event locations put him on the right (average width 76 in Busan’s attacking direction — left-sided defender Sungjin Jeon sits at 14). That matches reports of him moving to right-back early in the season.</p><p>Then, <b>at Jeonnam in R16 (5 July)</b>, he was replaced at half-time with Busan 0-2 down. From R17 to R27 he was <b>missing from the matchday squad for 11 consecutive matches.</b></p></div><figure><div class="figtitle">Jooseong Woo, minutes by round</div><div class="figsub">Bar height = minutes · solid = started · dashed cell = not in matchday squad · vertical line = start of second half</div><div class="tl" style="align-items:flex-end"><div class="y"><div class="yb" style="height:36px;background:var(--ic)" title="R1 · 101분"></div><div class="yl">1</div></div><div class="y"><div class="yb" style="height:36px;background:var(--ic)" title="R2 · 107분"></div><div class="yl">2</div></div><div class="y"><div class="yb" style="height:36px;background:var(--ic)" title="R3 · 98분"></div><div class="yl">3</div></div><div class="y"><div class="yb" style="height:36px;background:var(--ic)" title="R4 · 103분"></div><div class="yl">4</div></div><div class="y"><div class="yb" style="height:36px;background:var(--ic)" title="R5 · 104분"></div><div class="yl">5</div></div><div class="y"><div class="yb" style="height:36px;background:var(--ic)" title="R6 · 99분"></div><div class="yl">6</div></div><div class="y"><div class="yb" style="height:36px;background:var(--ic)" title="R7 · 103분"></div><div class="yl">7</div></div><div class="y"><div class="yb" style="height:36px;background:var(--ic)" title="R8 · 100분"></div><div class="yl">8</div></div><div class="y"><div class="yb" style="height:36px;background:var(--ic)" title="R9 · 110분"></div><div class="yl">9</div></div><div class="y"><div class="yb" style="height:30px;background:var(--ic)" title="R10 · 73분 · subbed off 70′"></div><div class="yl">10</div></div><div class="y"><div class="yb" style="height:36px;background:var(--ic)" title="R11 · 103분"></div><div class="yl">11</div></div><div class="y"><div class="yb" style="height:10px;background:var(--ic-soft);border:1px solid var(--ic)" title="R12 · 13분 · came on 82′"></div><div class="yl">12</div></div><div class="y"><div class="yb" style="height:36px;background:var(--ic)" title="R14 · 95분 · subbed off 89′"></div><div class="yl">14</div></div><div class="y"><div class="yb" style="height:36px;background:var(--ic)" title="R15 · 99분"></div><div class="yl">15</div></div><div class="y"><div class="yb" style="height:23px;background:var(--ic)" title="R16 · 50분 · subbed at half-time, 0-2 down"></div><div class="yl">16</div></div><div class="y"><div class="yb" style="height:6px;background:var(--surface-2);border:1px dashed var(--line)" title="R17 · 0분 · not in matchday squad"></div><div class="yl">17</div></div><div style="width:2px;align-self:stretch;background:var(--ink);opacity:.35;margin:0 3px"></div><div class="y"><div class="yb" style="height:6px;background:var(--surface-2);border:1px dashed var(--line)" title="R18 · 0분 · not in matchday squad"></div><div class="yl">18</div></div><div class="y"><div class="yb" style="height:6px;background:var(--surface-2);border:1px dashed var(--line)" title="R19 · 0분 · not in matchday squad"></div><div class="yl">19</div></div><div class="y"><div class="yb" style="height:6px;background:var(--surface-2);border:1px dashed var(--line)" title="R20 · 0분 · not in matchday squad"></div><div class="yl">20</div></div><div class="y"><div class="yb" style="height:6px;background:var(--surface-2);border:1px dashed var(--line)" title="R21 · 0분 · not in matchday squad"></div><div class="yl">21</div></div><div class="y"><div class="yb" style="height:6px;background:var(--surface-2);border:1px dashed var(--line)" title="R22 · 0분 · not in matchday squad"></div><div class="yl">22</div></div><div class="y"><div class="yb" style="height:6px;background:var(--surface-2);border:1px dashed var(--line)" title="R23 · 0분 · not in matchday squad"></div><div class="yl">23</div></div><div class="y"><div class="yb" style="height:6px;background:var(--surface-2);border:1px dashed var(--line)" title="R24 · 0분 · not in matchday squad"></div><div class="yl">24</div></div><div class="y"><div class="yb" style="height:6px;background:var(--surface-2);border:1px dashed var(--line)" title="R25 · 0분 · not in matchday squad"></div><div class="yl">25</div></div><div class="y"><div class="yb" style="height:6px;background:var(--surface-2);border:1px dashed var(--line)" title="R26 · 0분 · not in matchday squad"></div><div class="yl">26</div></div><div class="y"><div class="yb" style="height:6px;background:var(--surface-2);border:1px dashed var(--line)" title="R27 · 0분 · not in matchday squad"></div><div class="yl">27</div></div></div><figcaption>The R16 half-time substitution was his last appearance.</figcaption></figure><div class="note warn"><p><b>Why he has been absent — not confirmed by any public source.</b> Four things are confirmed. ① His last appearance ended with a half-time substitution in R16 (0-2). ② He has not been in the matchday squad for the 11 matches since. ③ As of 28 September he is still listed as No. 5 in the squad on the club website (so apparently not a transfer or release). ④ I found no report of an injury, suspension or exclusion (he is not named in coverage of the slump on 6 Aug, 30 Aug, 9 Sep or 14 Sep). So <b>this piece does not judge whether it is injury or the coach’s choice.</b> This box will be corrected when it is confirmed.</p></div><div class="body"><p>What the data can say is the difference between when he played and when he did not, split by his on-pitch spells (using substitution times).</p></div><div class="tbl "><table><thead><tr><th>Busan per 90</th><th>Woo ON</th><th>OFF</th></tr></thead><tbody><tr><td>Minutes</td><td class="n">1341</td><td class="n">1195</td></tr><tr><td>Goals conceded / 90</td><td class="n">0.60</td><td class="n">1.13</td></tr><tr><td>Opponent xG / 90</td><td class="n">1.02</td><td class="n">1.25</td></tr><tr><td>Opponent final-third entries / 90</td><td class="n">35.5</td><td class="n">31.3</td></tr><tr><td>Opponent entry → shot</td><td class="n">20.8%</td><td class="n">26.2%</td></tr><tr><td>Busan xG / 90</td><td class="n">1.21</td><td class="n">1.28</td></tr><tr><td>Busan goals / 90</td><td class="n">1.68</td><td class="n">0.98</td></tr></tbody></table></div><div class="body"><p>The difference sits at the back. With him on the pitch Busan conceded 0.60 per 90; without him, 1.13. Opponents actually got into the final third more often when he played (35.5 vs 31.3) — <b>the way of defending was different</b>. Let them in, then stop the shot (entry → shot 20.8% vs 26.2%). Exactly the shape of Busan’s first-half defence.</p><p>⚠ But there are three reasons not to read this table as cause and effect. First, most of the OFF time falls in the second half — it <b>overlaps completely</b> with the luck turning and the score-state shift seen above. Second, splitting the same way by midfielder Dongsu Lee, whose minutes also fell over the same period, gives almost the same picture (opponent entry → shot ON 19.9% · OFF 27.0%). The two effects cannot be separated. Third, the first match without him, R17 against Gimpo, was a 2-0 win with a clean sheet.</p><p>His role was shared out. Right-sided Hyunbeom Ahn went from 39 to 90 minutes per match, and average width moved right for Jinhyuk Kim (58 → 70) and Hoik Jang (56 → 63). In early August a “Plan B back three” was reported (SPOTV News, 6 Aug). The make-up of the right side of the defence itself changed.</p></div></section>
+<section><div class="eyebrow"><span class="role">Context</span><span class="cap">What happened at the same time</span></div><h2>There is no single cause</h2><div class="body"><p class="lede">Several things happened to Busan at once in the second half. Here, in order, is only what the data and reporting confirm.</p></div><div class="tbl "><table><thead><tr><th>When</th><th>Change</th><th>Source</th></tr></thead><tbody><tr><td>R16 (5 Jul)</td><td>Woo’s last appearance — half-time substitution, then out of the squad</td><td>On club squad list · reason not public</td></tr><tr><td>R18 (18 Jul)</td><td>Eight-match winless run begins (0-1 at Seongnam)</td><td>—</td></tr><tr><td>Second half</td><td>Dongsu Lee minutes per match 73 → 20</td><td>Line-up data</td></tr><tr><td>Early August</td><td>“Plan B back three” reported</td><td>SPOTV News, 6 Aug 2026</td></tr><tr><td>Early September</td><td>Cristian caught drink-driving → 60-day league suspension (8 Sep), then a 15-match ban and fine from the disciplinary committee</td><td>Star News 9 Sep · Best Eleven 14 Sep</td></tr><tr><td>R26–R27</td><td>Cristian absent — 2-0 win v Gimhae · 0-1 defeat at Gimpo</td><td>Line-up data</td></tr></tbody></table></div><div class="body"><p>Cristian’s (the top scorer’s) departure came <b>after the eight-match winless run</b>. He played throughout it. His 22 second-half shots were worth 2.7 xG and produced 2 goals — within expectation. So Cristian is not a cause of the fall; he is <b>a condition for the remaining seven matches (R28–R34)</b>. The only sample without a player who took 20% of the team’s shots is R26 and R27.</p></div></section>
+<section><div class="eyebrow"><span class="role">Anomalies</span><span class="cap">Where the data spikes</span></div><h2>Ten signals</h2><div class="tbl "><table><thead><tr><th>#</th><th>Anomaly</th><th>Context</th></tr></thead><tbody><tr><td>1</td><td>First-half points − expected points <b>+12.9</b></td><td>1st in the league · 2nd +4.3 · chance 0.3%</td></tr><tr><td>2</td><td>Second-half points − expected points <b>−6.2</b></td><td>3rd-largest shortfall · chance 3.5%</td></tr><tr><td>3</td><td>Second-half open-play goals: <b>3 in 9 matches</b></td><td>open-play xG over the same stretch 8.8</td></tr><tr><td>4</td><td>Second half: scored first in 4 matches → 1 point</td><td>points dropped from winning positions: 11 in the second half · 4 in the first</td></tr><tr><td>5</td><td>xG per entry chain 0.042 → <b>0.027</b></td><td>entries rose from 32.2 to 36.0</td></tr><tr><td>6</td><td>Season open-play goals conceded − xG per 90 <b>−0.29</b></td><td>fewest conceded relative to xG in the league (17th) · mostly first half</td></tr><tr><td>7</td><td>Level: xG per entry chain <b>1st in the league</b> · opponent open-play goals <b>fewest</b></td><td>Busan’s strongest state</td></tr><tr><td>8</td><td>Penalties won 2 (15th) · conceded 6 (2nd)</td><td>season penalty balance −4</td></tr><tr><td>9</td><td>Woo ON/OFF goals conceded per 90: 0.60 / 1.13</td><td>timing overlaps — no causal judgement</td></tr><tr><td>10</td><td>Possession 49.4% → 54.3%</td><td>more of the ball in the stretch when results got worse — a score effect</td></tr></tbody></table></div><div class="body"><p>1, 2 and 3 are two sides of the same story. 5 is the clearest sign of what genuinely got worse, and 4 is where it spilled into points.</p></div></section>
+<section><div class="eyebrow"><span class="role">Four matches</span><span class="cap">Chosen by rule</span></div><h2>Four matches that show both halves</h2><div class="body"><p class="lede">Representative matches are not picked by hand. The series’ four rules are applied as they are — ① the match closest to the season average ② the most Busan-like match (shots per entry) ③ the match where the result most outran the process ④ the match where the process most outran the result.</p></div><div class="cases"><div class="mcard"><div class="why">① Typical — closest to the season average</div><div class="hd"><span class="sc">2-2</span><span class="op">v Chungnam Asan</span></div><div class="rd">R15 · 5 Jun · home</div><dl class="kv"><dt>NPxG</dt><dd>0.83 : 1.13</dd><dt>Expected → actual points</dt><dd>1.08 → 1</dd><dt>Final-third entries</dt><dd>28 : 36</dd><dt>Entry → shot</dt><dd>32% : 19%</dd></dl><p>A lead let slip. Even in the first half, leads were sometimes dropped.</p></div><div class="mcard"><div class="why">② Signature — get in and shoot</div><div class="hd"><span class="sc">4-1</span><span class="op">v Paju</span></div><div class="rd">R14 · 30 May · home</div><dl class="kv"><dt>NPxG</dt><dd>2.30 : 1.36</dd><dt>Expected → actual points</dt><dd>2.01 → 3</dd><dt>Final-third entries</dt><dd>28 : 50</dd><dt>Entry → shot</dt><dd>46% : 32%</dd></dl><p>28 final-third entries, a shot from 46% of them. The high point of Busan’s first-half attack.</p></div><div class="mcard"><div class="why">③ Result > process — a first-half win</div><div class="hd"><span class="sc">2-1</span><span class="op">v Suwon FC</span></div><div class="rd">R8 · 18 Apr · home</div><dl class="kv"><dt>NPxG</dt><dd>1.16 : 1.83</dd><dt>Expected → actual points</dt><dd>0.44 → 3</dd><dt>Final-third entries</dt><dd>33 : 40</dd><dt>Entry → shot</dt><dd>33% : 18%</dd></dl><p>3 points from 0.44 expected. Out-shot on xG and still won — a typical first-half victory.</p></div><div class="mcard"><div class="why">④ Process > result — the first match of the second half</div><div class="hd"><span class="sc">0-1</span><span class="op">@ Seongnam</span></div><div class="rd">R18 · 18 Jul · away</div><dl class="kv"><dt>NPxG</dt><dd>1.52 : 1.10</dd><dt>Expected → actual points</dt><dd>1.65 → 0</dd><dt>Final-third entries</dt><dd>43 : 26</dd><dt>Entry → shot</dt><dd>28% : 23%</dd></dl><p>0 points from 1.65 expected. The first match of the second half and the start of the eight-match winless run. Ahead on xG, and still lost.</p></div></div><div class="body"><p>③ comes from the first half, ④ from the first match of the second. The rules split the season in two on their own.</p></div></section>
+<section><div class="eyebrow"><span class="role">Rejected</span><span class="cap">Explanations the data does not accept</span></div><h2>Read it this way and you get it wrong</h2><div class="dont"><div class="hd"><span class="x">✕</span><h3>“The second-half slump is a collapse in performance”</h3></div><p>Performance did fall. But expected points per match went 1.44 → 1.25 — about 12% of the drop. The rest is the first half’s excess being paid back and the second half’s shortfall.</p></div><div class="dont"><div class="hd"><span class="x">✕</span><h3>“They fell apart because Cristian left”</h3></div><p>Cristian played throughout the eight-match winless run. His absence came after it ended.</p></div><div class="dont"><div class="hd"><span class="x">✕</span><h3>“In the first half they had a match-winner”</h3></div><p>The first-half scoring surplus is spread evenly across five or more players, and the top scorer scored exactly as expected. That is the shape of variance, not one player’s finishing.</p></div><div class="dont"><div class="hd"><span class="x">✕</span><h3>“Having more of the ball made them lose”</h3></div><p>Possession going from 49.4% to 54.3% is a result of more time spent behind. The causation runs the other way.</p></div><div class="dont"><div class="hd"><span class="x">✕</span><h3>“They fell apart because Woo was missing”</h3></div><p>The ON/OFF gap is large, but the timing overlaps completely, the same split by Dongsu Lee gives the same picture, and the first match without him was a clean-sheet win. The reason for his absence is unconfirmed. Judgement reserved.</p></div></section>
+<section><div class="eyebrow"><span class="role">Summary</span><span class="cap">Seven matches left</span></div><h2>The real Busan is somewhere in between</h2><div class="body"><p class="lede">Busan’s 2026 season looks as if it split in two, but by shot quality it is closer to one. 1.37 expected points per match — far more than that in the first half, far less in the second.</p><p>Some things did genuinely change in the second half. <b>The size of each attack fell by 35%</b>, time in front turned into time behind, and four matches in which they scored first left one point. It coincides with the change in the make-up of the right side of the defence.</p><p>Three things to watch in the remaining seven matches (R28–R34):</p><ul class="clean"><li><b>xG per entry chain</b> — 0.042 in the first half, 0.027 in the second. If it recovers, the fall was mostly luck.</li><li><b>Holding a lead</b> — points after scoring first. Second half: one point from four matches.</li><li><b>Attacking without Cristian</b> — the player who took 20% of the team’s shots this season is gone. The sample so far is two matches.</li></ul></div><div class="note"><p><b>Caveats</b> · The portal’s xG model is not published. Expected points assume shots are independent (they do not model how shots change with the score). No adjustment for opponent strength. “First half = R1–R17” is the league’s official split, but the luck/performance ratio changes if the split point moves (the first 11 matches alone: 28 points from 14.7 expected). R25 (5 September) has no event data.</p></div></section>
+<footer><div class="wrap"><b>Data</b> · Parsed directly from the K League data portal (portal.kleague.com). Busan IPark’s 26 K League 2 matches in 2026 (bye in R13), 36,254 raw events. <b>R25 (5 Sep, Ansan, 0-1) has no event data on the portal</b> (true of every K League match that day) — it counts towards points but is left out of the xG and phase analysis. League comparison: all 216 K League 2 matches (212 with events · 304,486 events), same definitions.<br><b>Validation</b> · League table re-summed (26 matches, 41 points; points match for all 17 clubs); match-report goals 75 = 41 + 34; event goals 41 : 33 (excluding R25); shots in the box, key passes and offsides match for both sides. One goal not tagged as a goal corrected (R20, Seoul E-Land — logged as a “ball recovery”).<br><b>Expected points</b> · Every shot in a match is re-taken 20,000 times at its xG probability; the average of the resulting wins, draws and losses. Penalties included, own goals excluded. The portal’s xG model is not published.<br><b>Definitions</b> · First half of the season = R1–R17 (K League 2’s official first half, up to 12 July). Chain = a spell in which one team keeps the ball. Final-third entry = within a chain, the team’s own event location or the end point of a <b>completed</b> pass or dribble reaches x ≥ 66.7. Phase metrics exclude set-piece and penalty chains. Score states use live-feed goal times moved back onto the event clock (median lag 64 seconds).<br><b>Outside sources</b> (Korean) · Table trajectory: Star News (9 Sep 2026), Supple (30 Aug 2026) · Cristian’s suspension: Star News (9 Sep 2026), Best Eleven (14 Sep 2026) · Back-three switch: SPOTV News (6 Aug 2026) · Woo’s position: Namuwiki, Busan IPark/2026 · Club squad list: busanipark.com (checked 28 Sep 2026).<br><b>Author</b> · Hyuckjin Han · September 2026</div></footer>
+</div>
+</body>
+</html>
