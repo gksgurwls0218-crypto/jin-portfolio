@@ -33,6 +33,31 @@ type Episode = {
 
 const EPISODES: Episode[] = [
   {
+    slug: "gimpo",
+    no: "19",
+    publishedAt: "2026-09-29",
+    competition: {
+      en: "K League 2 2026 · Gimpo FC · 25 matches, 212-match league pool",
+      ko: "하나은행 K리그2 2026 · 김포FC · 25경기 · 리그 212경기 비교",
+    },
+    title: {
+      en: "Strongest at Home, Unable to Win There",
+      ko: "집에서 가장 강하고, 집에서 이기지 못한다",
+    },
+    sub: {
+      en: "Gimpo FC played their first 13 matches of 2026 away from home while the Solter Football Stadium pitch was re-turfed — 23 points, 1.8 above expectation — and came home in June fifth in the table. Since then they have taken 12 points from 12 matches. At home they play the best football in K League 2: non-penalty xG difference +0.61 per match and 1.78 expected points per match, both 1st. Yet home points per match are 1.10, 11th — 6.8 fewer than expected, and all of the season's shortfall. Four of five summer home matches ended 1-1 after Gimpo controlled them. Breaking it down shows where: Gimpo win the ball in midfield and attack within 15 seconds better than anyone (1st), and away that weapon carries 79% of their non-penalty xG; at home only 65%, and the settled attack must push into the central box, where 9.6 xG became 5 goals. At the other end Gimpo concede fewer central entries than any side, yet opponents' shots on target went in 7.1 more times than their placement in the goal suggests (2nd in the league), 5.1 of them at home. Goalkeepers are named, but placement cannot measure speed, distance or deflections, so no verdict on ability is given.",
+      ko: "김포FC는 솔터축구장 잔디 전면 교체로 2026시즌 첫 13경기를 모두 원정에서 치렀고(승점 23, 기대보다 +1.8), 6월 5위로 집에 돌아왔다. 이후 12경기 승점 12. 홈에서 김포는 K리그2에서 가장 좋은 경기를 한다 — PK 제외 기대 득실차 경기당 +0.61, 기대승점 1.78 모두 1위. 그런데 홈 승점은 경기당 1.10으로 11위, 기대보다 6.8점 적고, 시즌 전체 부족분이 모두 여기서 나온다. 여름 홈 다섯 경기 중 네 번은 경기를 쥐고도 1-1이었다. 분해하면 자리가 보인다. 중앙에서 뺏어 15초 안에 끝내는 공격은 리그 1위이고, 원정에서는 PK 제외 xG의 79%를 이 무기가 만든다. 홈에서는 65% — 지공으로 박스 중앙까지 밀고 들어가야 하고, 그 자리에서 xG 9.6이 5골이 됐다. 반대편에서는 상대 중앙 진입을 리그에서 가장 적게 내주면서도, 상대 유효슛이 골문 코스로 본 기대보다 7.1골 더 들어갔다(리그 2위) — 그중 5.1골이 홈이다. 골키퍼는 실명으로 다루되, 코스만으로는 슛 속도·거리·굴절을 알 수 없어 능력 판정은 하지 않는다.",
+    },
+    blurb: {
+      en: "The best home football in K League 2, and 11th for home points. Gimpo are not outplayed at home — the last cell in front of both goals goes wrong at once.",
+      ko: "K리그2 최고의 홈 경기력, 홈 승점은 11위. 김포는 집에서 밀리지 않는다 — 양쪽 골문 앞 마지막 한 칸이 동시에 어긋난다.",
+    },
+    stats: {
+      en: [["+0.61", "home non-penalty xG difference per match, 1st"], ["1.10", "home points per match, 11th"], ["−6.8", "home points below expected"]],
+      ko: [["+0.61", "홈 PK 제외 기대 득실차(경기당), 1위"], ["1.10", "홈 경기당 승점, 11위"], ["−6.8", "홈 승점 − 기대승점"]],
+    },
+  },
+  {
     slug: "busan",
     no: "18",
     publishedAt: "2026-09-28",
