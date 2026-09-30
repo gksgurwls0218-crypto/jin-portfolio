@@ -33,6 +33,31 @@ type Episode = {
 
 const EPISODES: Episode[] = [
   {
+    slug: "asan",
+    no: "20",
+    publishedAt: "2026-10-01",
+    competition: {
+      en: "K League 2 2026 · Chungnam Asan · 25 matches, 212-match league pool",
+      ko: "하나은행 K리그2 2026 · 충남아산 · 25경기 · 리그 212경기 비교",
+    },
+    title: {
+      en: "They Only Win at Home",
+      ko: "집에서만 이긴다",
+    },
+    sub: {
+      en: "Chungnam Asan took 25 points from 14 home matches (1.79 per match) and 9 from 11 away (0.82) — the largest home–away gap of the 17 clubs. Replaying every shot at its xG, they took 6.3 points more than expected at home and 4.7 fewer away. Yet non-penalty expected goal difference is −0.22 per match at home and +0.06 away: they are outplayed more at home, the mirror image of part 19's Gimpo. Broken down by phase, the split is about the ball. When they win it back, they are the league's most lethal side: regain-chain goals beat xG by 7.9 (1st), regain to first shot takes 26.8 seconds (fastest), and 12 goals came from middle-third regains (1st). When they have it, they get to the box (build-up to final third 4th, half-space entry share 1st) but only 44% of box entries end in a shot (17th), and settled attacks have produced 2 goals (17th), none away. At home they have less of the ball — 47%, 43% in André's eight home matches — score first in 9 of 14 and hold on; away they have 51%, score first once in 11 and chase. The coaching change sharpened this: under André (from R12) possession fell from 53% to 47%, pressing eased, the block dropped about 5 m and xG against fell from 1.46 to 1.03. The price at home: opponents' cross-assisted shots, 23 of them worth 4.7 xG, produced 12 goals — 75% of home open-play goals conceded, by far the league's largest excess (an outlier found among many cuts). In matches with under 50% possession they took 22 points (expected 17.2); with 50% or more, 12 (expected 15.2) — an interpretation, since score state drives possession too. Five of the last seven are away.",
+      ko: "충남아산은 홈 14경기 승점 25(경기당 1.79), 원정 11경기 승점 9(0.82)로 홈·원정 승점 차가 17팀 중 가장 크다. 모든 슛을 xG대로 다시 차 보면 홈에서 기대보다 6.3점 더, 원정에서 4.7점 덜 가져갔다. 그런데 PK 제외 기대 득실차는 홈 −0.22, 원정 +0.06 — 홈에서 더 밀린다. 19편 김포의 거울이다. 국면별로 나누면 갈림길은 공이다. 공을 뺏은 순간의 충남아산은 리그에서 가장 치명적이다 — 탈취 체인 골이 xG보다 7.9골 많아 1위, 뺏은 뒤 첫 슛까지 26.8초로 가장 빠르고, 중앙 탈취에서만 12골(1위). 공을 쥐면 박스까지는 간다(빌드업→파이널서드 4위, 하프스페이스 진입 비중 1위). 하지만 박스에 들어간 공격의 44%만 슛으로 끝나(최하위) 지공 골은 시즌 2골(최하위), 원정 0골이다. 홈에서는 공을 덜 갖고(47%, 안드레 체제 홈 43%) 14경기 중 9번 먼저 넣고 지킨다. 원정에서는 51%를 쥐고 11경기 중 1번만 먼저 넣는다. 감독 교체가 이 모양을 굳혔다 — 안드레 체제(R12~) 점유 53% → 47%, 압박 완화, 수비 위치 약 5m 후퇴, 허용 xG 1.46 → 1.03. 홈의 대가는 크로스다. 크로스를 받아 쏜 상대 슛 23개(xG 4.7)에서 12골 — 홈 오픈플레이 실점의 75%, 리그에서 압도적으로 큰 초과(여러 지표를 훑다 찾은 이상치). 점유율 50% 미만 경기 승점 22(기대 17.2), 이상 경기 12(기대 15.2) — 스코어 상태가 점유율을 바꾸는 효과도 섞인 해석이다. 남은 7경기 중 5경기가 원정이다.",
+    },
+    blurb: {
+      en: "The biggest home–away points gap in K League 2 — and better performances away. Chungnam Asan score when they win the ball back, not when they have it, and they give it away at home.",
+      ko: "홈·원정 승점 차는 K리그2 최대, 경기력은 원정이 낫다. 충남아산은 공을 뺏었을 때 넣고, 쥐었을 때 넣지 못한다 — 그리고 홈에서 공을 더 내준다.",
+    },
+    stats: {
+      en: [["1.79 / 0.82", "points per match, home / away"], ["+7.9", "regain-chain goals above xG, 1st"], ["2", "settled-attack goals, fewest"]],
+      ko: [["1.79 / 0.82", "경기당 승점, 홈 / 원정"], ["+7.9", "탈취 체인 골 − xG, 리그 1위"], ["2", "지공 골, 리그 최하위"]],
+    },
+  },
+  {
     slug: "gimpo",
     no: "19",
     publishedAt: "2026-09-29",
