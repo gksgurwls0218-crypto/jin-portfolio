@@ -19,11 +19,11 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return META[isLocale(locale) ? locale : "en"];
 }
 
-// 「데이터가 말하는」 09편(대전하나시티즌 시즌 편)의 동반 경기 분석 — R28 대전 3–2 안양. 자체 완결형 HTML을 임베드한다.
-// 한국어: /public/data-daejeon-r28.ko.html · 영문: /public/data-daejeon-r28.html · 영상: /public/videos/daejeon-r28/
+// 경기 분석 리포트 — R28 대전 3–2 안양. 자체 완결형 HTML을 임베드한다 (korea-jordan과 같은 방식).
+// 한국어: /public/daejeon-r28.ko.html · 영문: /public/daejeon-r28.html · 영상: /public/videos/daejeon-r28/
 export default async function DaejeonR28Page({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
-  const src = locale === "ko" ? "/data-daejeon-r28.ko.html" : "/data-daejeon-r28.html";
+  const src = locale === "ko" ? "/daejeon-r28.ko.html" : "/daejeon-r28.html";
 
   return (
     <div style={{ background: "var(--stage)", paddingTop: 62, minHeight: "100vh" }}>

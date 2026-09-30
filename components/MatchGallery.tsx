@@ -42,6 +42,7 @@ const STANDALONE: CardEntry[] = [
   { kind: "report", key: "suwon-revision", publishedAt: "2026-08-27" },
   { kind: "report", key: "fcseoul-attacking-phases", publishedAt: "2026-09-02" },
   { kind: "report", key: "fcseoul-league-response", publishedAt: "2026-09-04" },
+  { kind: "report", key: "daejeon-r28", publishedAt: "2026-09-30" },
 ];
 
 const GALLERY_CARDS: CardEntry[] = [
@@ -194,7 +195,24 @@ type ReportCopy = {
   stats: Record<Locale, readonly ReportStat[]>;
 };
 
-const REPORTS: Record<"korea-jordan" | "suwon-cross-shot" | "wc2022-2026-champions" | "suwon-proposal-visuals" | "suwon-revision" | "fcseoul-attacking-phases" | "fcseoul-league-response", ReportCopy> = {
+const REPORTS: Record<"korea-jordan" | "suwon-cross-shot" | "wc2022-2026-champions" | "suwon-proposal-visuals" | "suwon-revision" | "fcseoul-attacking-phases" | "fcseoul-league-response" | "daejeon-r28", ReportCopy> = {
+  "daejeon-r28": {
+    tag: { en: "MATCH ANALYSIS", ko: "경기 분석" },
+    competition: { en: "K League 1 2026 · R28 · Daejeon Hana Citizen 3–2 FC Anyang", ko: "K리그1 2026 · 28라운드 · 대전하나시티즌 3–2 FC안양" },
+    title: { en: "Less of the Ball, More Arrivals", ko: "공을 덜 가지고, 더 많이 도착했다" },
+    sub: {
+      en: "71% possession and no goals before the break, 55% and three goals after it. Twenty-one observations from watching the match were checked one by one against 1,253 raw events; thirteen were adopted, four narrowed, four dropped. Anyang did not press the build-up (first-half PPDA 26.8), Daejeon moved the weight of their attack to the left (final-third entry success 50% to 79%), and Ludwigson drifted into the half-space with right-back Kang Ji-hoon following him — both open-play goals came beside him. After losing the ball Daejeon conceded 0.22 shots per ten losses, the lowest of their 27 matches. The match also points to two squad gaps: only one Seo Jin-su type to finish the left, and only one distributing No. 6 in Kim Bong-soo.",
+      ko: "전반 71% 점유에 0골, 후반 55% 점유에 3골. 경기를 보며 적은 관찰 21개를 원시 이벤트 1,253건과 하나씩 맞춰 13개를 채택하고 4개는 범위를 좁히고 4개는 뺐다. 안양은 빌드업을 압박하지 않았고(전반 PPDA 26.8), 대전은 공격의 무게를 왼쪽으로 옮겼으며(파이널서드 진입 성공 50% → 79%), 하프스페이스로 들어간 루빅손을 오른쪽 풀백 강지훈이 따라 들어오자 그 옆에서 필드골 두 개가 나왔다. 볼을 잃은 뒤 10회당 피슈팅 0.22는 시즌 27경기 중 최저. 그리고 두 자리의 선수층 — 왼쪽 끝을 맡을 서진수 유형과 배급형 6번이 각각 한 명뿐이다.",
+    },
+    blurb: {
+      en: "No goals with 71% of the ball, three with 55%. Twenty-one observations checked against the event data — and the comeback explained only with what both agree on.",
+      ko: "71% 점유에 0골, 55% 점유에 3골. 경기를 보며 적은 관찰 21개를 이벤트 데이터로 거르고, 둘이 같은 방향을 가리킨 것만으로 역전승을 설명한다.",
+    },
+    stats: {
+      en: [["71% → 55%", "possession, first half → second half"], ["50% → 79%", "left-side final-third entry success"], ["0.22", "shots conceded per 10 losses, season low"], ["13 + 4", "of 21 observations kept"]],
+      ko: [["71% → 55%", "점유율, 전반 → 후반"], ["50% → 79%", "왼쪽 파이널서드 진입 성공률"], ["0.22", "상실 10회당 피슈팅, 시즌 최저"], ["13 + 4", "관찰 21개 중 채택"]],
+    },
+  },
   "fcseoul-league-response": {
     tag: { en: "OPPOSITION RESPONSE", ko: "상대 응수 분석" },
     competition: { en: "K League 1 2026 · FC Seoul · 25 matches, 11 opponents", ko: "K리그1 2026 · FC서울 25경기 · 상대 11개 팀" },

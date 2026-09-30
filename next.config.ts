@@ -99,11 +99,11 @@ const nextConfig: NextConfig = {
         headers: [{ key: "Cache-Control", value: "no-cache, must-revalidate" }],
       },
       {
-        source: "/data-daejeon-r28.html",
+        source: "/daejeon-r28.html",
         headers: [{ key: "Cache-Control", value: "no-cache, must-revalidate" }],
       },
       {
-        source: "/data-daejeon-r28.ko.html",
+        source: "/daejeon-r28.ko.html",
         headers: [{ key: "Cache-Control", value: "no-cache, must-revalidate" }],
       },
       {
