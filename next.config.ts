@@ -83,6 +83,14 @@ const nextConfig: NextConfig = {
         headers: [{ key: "Cache-Control", value: "no-cache, must-revalidate" }],
       },
       {
+        source: "/data-gyeongnam.html",
+        headers: [{ key: "Cache-Control", value: "no-cache, must-revalidate" }],
+      },
+      {
+        source: "/data-gyeongnam.ko.html",
+        headers: [{ key: "Cache-Control", value: "no-cache, must-revalidate" }],
+      },
+      {
         source: "/data-asan.html",
         headers: [{ key: "Cache-Control", value: "no-cache, must-revalidate" }],
       },

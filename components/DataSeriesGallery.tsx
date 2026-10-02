@@ -33,6 +33,31 @@ type Episode = {
 
 const EPISODES: Episode[] = [
   {
+    slug: "gyeongnam",
+    no: "21",
+    publishedAt: "2026-10-02",
+    competition: {
+      en: "K League 2 2026 · Gyeongnam FC · 25 matches, 212-match league pool",
+      ko: "하나은행 K리그2 2026 · 경남FC · 25경기 · 리그 212경기 비교",
+    },
+    title: {
+      en: "How Not to Lose",
+      ko: "지지 않는 법",
+    },
+    sub: {
+      en: "Six minutes into the 2026 season Gyeongnam FC's new goalkeeper Kihyun Lee was sent off for denying a goal-scoring opportunity, and they lost 1-4. With Bumsoo Lee in goal, R1-R14 went 4W 3D 6L. Since Kihyun Lee returned in R15: 4W 7D 1L. Strangely, the chances conceded rose — non-penalty xG against from 0.96 to 1.25 per match — while goals against fell from 21 to 9. Lee faced 45 shots on target and conceded 8 against a placement expectation of 13.1, second among the league's 20 keepers, though the share of opponents' shots from inside the box also fell. The team changed with him after a month-long break: possession 47% to 53%, fewer balls lost, more build-ups reaching the final third, at the price of more xG allowed within 10 seconds of losing the ball. Laying the match status of all 25 games over their phases answers whether these were 'matches they would have lost'. Up to R14 they conceded first in 7 of 13 and lost 6 of them; since R15, 4 of 12, rescuing three draws away. Time trailing fell from 34% to 12%, time level rose to 73% — and level, they are outplayed 0.62 : 0.95 in open-play xG per 90. Of 10 draws, 6 came after scoring first (2nd most in the league) and only 3 after falling behind; the record seven away 1-1s split four and three. By performance, though, they stopped losing the matches in which they were outplayed. Up front they have the league's lowest xG per shot and longest shots, yet score 5.4 above xG — the surplus inside the box and from penalties. Enough for a 1-1, not for a 2-1. Four of the last seven are away.",
+      ko: "2026 개막전 6분, 경남FC의 새 골키퍼 이기현이 명백한 득점 기회 저지로 퇴장당했고 경남은 1-4로 졌다. 이범수가 지킨 R1–R14는 4승 3무 6패, 이기현이 돌아온 R15 이후는 4승 7무 1패. 이상하게도 내준 기회는 늘었다 — PK 제외 허용 xG 경기당 0.96 → 1.25 — 그런데 실점은 21 → 9골. 이기현은 유효슛 45개에 8실점, 코스 기대 13.1로 리그 골키퍼 20명 중 2위다(같은 시기 상대 슛의 박스 안 비중도 줄었다). 한 달 휴식기 뒤 팀도 변했다 — 점유 47 → 53%, 볼 잃음 감소, 빌드업의 파이널서드 도달 증가, 대신 뺏긴 뒤 10초 허용 xG 증가. 25경기의 스코어 흐름을 국면 위에 겹쳐 '질 경기를 비겼나'를 확인했다. R14까지 먼저 실점한 경기 13경기 중 7경기(그중 6패), R15 이후 12경기 중 4경기(원정 3무). 뒤진 시간은 34% → 12%, 동점 시간은 73% — 그리고 동점일 때 오픈플레이 xG는 90분당 0.62 : 0.95로 밀린다. 무승부 10번 중 먼저 넣고 비긴 경기가 6번(리그 2위), 먼저 먹고 따라붙은 경기는 3번 — 리그 최다 원정 1-1 일곱 번도 4대 3이다. 다만 경기력으로 보면 밀린 경기를 지지 않게 된 것은 분명하다. 공격은 슛 1개의 xG 최하위·슛 거리 2위인데 골은 xG보다 5.4골 많다(초과는 박스 안과 PK). 1-1에는 충분하고 2-1에는 부족하다. 남은 7경기 중 4경기가 원정이다.",
+    },
+    blurb: {
+      en: "One defeat in 12 since their goalkeeper returned — with more chances conceded. Match status over phases shows what not losing really meant: falling behind less, and as many leads let go as defeats rescued.",
+      ko: "골키퍼가 돌아온 뒤 12경기 1패 — 내준 기회는 오히려 늘었다. 스코어 흐름을 국면 위에 겹치면 '지지 않음'의 실체가 보인다: 덜 뒤지고, 건진 만큼 놓쳤다.",
+    },
+    stats: {
+      en: [["1", "defeat in 12 since R15"], ["6 / 3", "draws after scoring first / after conceding first"], ["0.082", "xG per shot, lowest"]],
+      ko: [["1", "R15 이후 12경기 패배"], ["6 / 3", "무승부: 먼저 넣고 / 먼저 먹고"], ["0.082", "슛 1개의 xG, 리그 최하위"]],
+    },
+  },
+  {
     slug: "asan",
     no: "20",
     publishedAt: "2026-10-01",
