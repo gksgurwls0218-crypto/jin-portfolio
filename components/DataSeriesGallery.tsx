@@ -33,6 +33,31 @@ type Episode = {
 
 const EPISODES: Episode[] = [
   {
+    slug: "seongnam",
+    no: "22",
+    publishedAt: "2026-10-07",
+    competition: {
+      en: "K League 2 2026 · Seongnam FC · 25 matches, 212-match league pool",
+      ko: "하나은행 K리그2 2026 · 성남FC · 25경기 · 리그 212경기 비교",
+    },
+    title: {
+      en: "The Moment They Lead",
+      ko: "앞서는 순간",
+    },
+    sub: {
+      en: "On 20 September Seongnam led Hwaseong for 84 minutes and were out-created 0.23 to 1.46 in open-play xG before a 95th-minute header made it 2-2. It was the eleventh time in thirteen leads that they conceded while ahead, the highest rate in the league; Suwon Samsung, top of the table, are at 32%. Seongnam are not a weak defensive side: at level, 61% of their minutes, they create 0.99 open-play xG per 90 and concede 0.66, the third-fewest in the league. The moment they lead, everything moves the same way: defensive actions 10.5 points deeper (league largest; next Gimpo 7.1), pass share down 13.7 points, their own xG 0.99 to 0.45 and the opponents' 0.66 to 1.11, both the biggest shifts in the league. From that deeper position opponents restart close to Seongnam's goal: attacks starting within 30 m rise from 8.1 to 13.1 per 90, corners double, and set pieces and penalties conceded while ahead are the league's most. Of the 13 goals conceded while leading, seven began within 30 m, five were headers, and seven came in the first 15 minutes after half-time; only four came from the 80th minute on. Before Kyungjun Jeon left on 4 August, Seongnam had 20 points from 26.1 expected (the pace of 8th place); in seven matches since, 11 points from 8.1, with performance worse (0.98 : 1.31) and leads still lost in five of six. Seven matches remain, starting at Chungbuk Cheongju, second in the league for conceding while ahead.",
+      ko: "9월 20일, 성남은 화성을 84분 동안 앞섰지만 그동안 오픈플레이 xG 0.23 : 1.46으로 밀렸고 90+5분 헤더로 2-2가 됐다. 앞선 13경기 중 11번째 리드 중 실점, 리그에서 가장 높은 비율이다(선두 수원은 32%). 성남이 수비가 약한 팀은 아니다. 경기 시간의 61%인 동점일 때 오픈플레이 xG는 90분당 0.99를 만들고 0.66만 내준다(리그 3번째로 적음). 앞서는 순간 모든 것이 같은 방향으로 움직인다 — 수비 행동 위치 10.5 하락(리그 최대, 2위 김포 7.1), 패스 점유 13.7%p 하락, 자기 xG 0.99 → 0.45, 상대 xG 0.66 → 1.11, 둘 다 리그 최대 변화. 내려앉은 자리에서 상대는 성남 골문 가까이에서 공격을 다시 시작한다. 성남 진영 30m 안에서 시작한 상대 공격이 90분당 8.1 → 13.1번, 상대 코너킥은 두 배, 앞선 동안 내준 세트피스와 PK는 리그 최다다. 리드 중 실점 13골 중 7골이 30m 안에서 시작했고, 헤더 5골, 후반 시작 15분 안에 7골 — 후반 35분 이후는 4골뿐이다. 8월 4일 전경준 감독과 결별하기 전 성남은 기대승점 26.1(리그 8위 페이스)에서 승점 20을 땄다. 교체 뒤 7경기는 기대 8.1에서 11점 — 경기 내용은 오히려 0.98 : 1.31로 밀렸고 리드는 6경기 중 5경기에서 또 지키지 못했다. 남은 7경기의 첫 상대는 리드 중 실점 비율 리그 2위 충북청주다.",
+    },
+    blurb: {
+      en: "Eleven of thirteen leads conceded in, the highest rate in the league. Top-half at level, Seongnam retreat deeper than anyone the moment they go ahead, and opponents restart in front of their goal.",
+      ko: "앞선 13경기 중 11경기에서 리드 중 실점, 리그 최고 비율. 동점일 때 상위권인 팀이 앞서는 순간 리그에서 가장 깊이 내려앉고, 상대는 골문 앞에서 공격을 다시 시작한다.",
+    },
+    stats: {
+      en: [["11 / 13", "leads conceded in, league highest"], ["−10.5", "defensive-action shift when ahead, deepest"], ["7", "of 13 conceded in first 15 min after half-time"]],
+      ko: [["11 / 13", "리드 중 실점 경기, 리그 최고"], ["−10.5", "앞서면 수비 위치 변화, 리그 최대"], ["7", "리드 중 실점 13골 중 후반 첫 15분"]],
+    },
+  },
+  {
     slug: "gyeongnam",
     no: "21",
     publishedAt: "2026-10-02",
