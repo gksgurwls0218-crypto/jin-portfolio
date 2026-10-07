@@ -33,6 +33,31 @@ type Episode = {
 
 const EPISODES: Episode[] = [
   {
+    slug: "cheonan",
+    no: "26",
+    publishedAt: "2026-10-11",
+    competition: {
+      en: "K League 2 2026 · Cheonan City FC · 26 matches, 212-match league pool",
+      ko: "하나은행 K리그2 2026 · 천안시티FC · 26경기 · 리그 212경기 비교",
+    },
+    title: {
+      en: "Same Football, Different Season",
+      ko: "같은 축구, 다른 시즌",
+    },
+    sub: {
+      en: "On 31 May Cheonan won 3-1 at Ansan. That was 18 points from 13 matches. Since then: 13 matches, five draws, eight defeats, no wins, down to 14th. The football is the same. Expected points per match were 1.18 before and 1.24 after; non-penalty xG 1.10 and 1.08 a match, xG allowed 1.32 and 1.26. Scoring was on expectation in both halves (14 from 14.3, 12 from 13.0). Conceding flipped: 11 from 17.2 xG, then 19 from 15.1. Dae-han Park, second-best keeper in the league against placement expectation, started R1–14; Seung-gyu Lee and Ju-won Park, who conceded about what was expected, took over — a coincidence in time, not a proven cause. By phase: the most regains, high regains and possessions lost in the league; the lowest settled entry-to-shot rate. Trailing they were the league's best (+6.8 against expectation, 11 goals after regains); leading they conceded 9 in 312 minutes, four of them equalising penalties. Gyeongnam at home is next, in R28.",
+      ko: "5월 31일, 천안은 안산 원정에서 3-1로 이겼다. 13경기 승점 18. 그 뒤 13경기는 5무 8패, 한 번도 이기지 못하고 14위까지 내려갔다. 축구는 그대로다. 경기당 기대승점 1.18 → 1.24, PK 제외 xG 1.10 → 1.08, 내준 xG 1.32 → 1.26. 넣은 골은 두 구간 모두 기대만큼(xG 14.3에 14골, 13.0에 12골)이었다. 먹은 골이 뒤집혔다 — xG 17.2에 11골, 그다음은 15.1에 19골. R1–14를 지킨 박대한은 코스 기대 대비 리그 2위 골키퍼였고, 뒤를 이은 이승규·박주원은 기대만큼 먹었다. 시점이 겹칠 뿐 원인은 단정할 수 없다. 국면별로는 탈취·높은 탈취·볼 잃음이 모두 리그 1위, 지공 진입 → 슛은 최하위다. 뒤질 때는 리그 최고(기대 대비 +6.8, 탈취 후 11골), 앞설 때는 312분 동안 9실점, 그중 넷이 PK 동점골이다. 다음 상대는 R28 홈의 경남이다.",
+    },
+    blurb: {
+      en: "Eighteen points from the first 13 matches, no wins in the next 13 — with the same chances made and allowed. The goals conceded flipped in front of goal, right where the goalkeeper changed.",
+      ko: "첫 13경기 승점 18, 다음 13경기 무승. 만든 기회도 내준 기회도 같았다. 뒤집힌 건 골문 앞의 실점이고, 그 경계에 골키퍼 교체가 겹친다.",
+    },
+    stats: {
+      en: [["1.38 → 0.33", "points per match before and after R14"], ["1.18 → 1.24", "expected points per match, unchanged"], ["−6.2 → +3.9", "non-penalty goals conceded − xG"]],
+      ko: [["1.38 → 0.33", "R14 전후 경기당 승점"], ["1.18 → 1.24", "경기당 기대승점, 그대로"], ["−6.2 → +3.9", "PK 제외 실점 − xG"]],
+    },
+  },
+  {
     slug: "yongin",
     no: "25",
     publishedAt: "2026-10-10",
