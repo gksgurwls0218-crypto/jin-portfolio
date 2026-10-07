@@ -33,6 +33,31 @@ type Episode = {
 
 const EPISODES: Episode[] = [
   {
+    slug: "chungbuk-cheongju",
+    no: "23",
+    publishedAt: "2026-10-08",
+    competition: {
+      en: "K League 2 2026 · Chungbuk Cheongju FC · 26 matches, 212-match league pool",
+      ko: "하나은행 K리그2 2026 · 충북청주FC · 26경기 · 리그 212경기 비교",
+    },
+    title: {
+      en: "Stoppable Goals",
+      ko: "막을 수 있던 골",
+    },
+    sub: {
+      en: "On 18 April Chungbuk Cheongju out-created Gimhae 2.67 to 0.55 in non-penalty xG, went ahead on 79 minutes and conceded in stoppage time to a shot with a 27% chance. It was the eighth match without a win; the first came only in R15. Over 26 matches they conceded 41 goals from 30.0 expected (+11.0, next-worst Yongin +3.7), while allowing the sixth-fewest expected goals and not a single penalty. The phases hold up: pass share 2nd, fewest balls lost, opponents' final-third entries 2nd-fewest, counter-press regains 2nd; the weak spots are slow, few settled entries and few regains. The leak is in the last yard. 41.4% of shots on target became goals (league average 27.1%); conceded goals beat expectation in the central box (+6.7) and from outside (+3.8), but not in the six-yard box. All four goalkeepers used conceded more than the placement expectation, and defenders block the third-fewest shots. By match status: level, 16 conceded from 16.3 expected; ahead, 15 from 5.9 — unlike Seongnam, who conceded what they allowed. Hence 14 draws (7.0 expected), seven after scoring first, and almost all the dropped points at home. Seongnam visit Cheongju next, in R28.",
+      ko: "4월 18일 충북청주는 김해를 PK 제외 xG 2.67 : 0.55로 몰아붙이고 79분에 앞섰지만, 추가시간 득점 확률 27%짜리 슛에 동점골을 내줬다. 8경기 무승, 첫 승은 R15에야 나왔다. 26경기 실점 41골, 상대 기대득점은 30.0(+11.0, 2위 용인 +3.7). 내준 기대실점은 리그 6번째로 적고 PK는 한 번도 내주지 않았다. 국면은 버틴다 — 점유 2위, 볼 잃음 최소, 상대 파이널서드 도달 2번째로 적음, 역압박 탈환 2위. 약점은 느린 전진과 적은 탈취 정도다. 새는 곳은 골문 앞 마지막 한 칸이다. 유효슛의 41.4%가 골이 됐고(리그 평균 27.1%), 박스 중앙(+6.7)과 박스 밖(+3.8)에서 기대보다 많이 먹었다. 6야드는 아니다. 골키퍼 4명 모두 코스 기대보다 더 먹었고, 수비가 몸으로 막은 슛 비율은 3번째로 낮다. 스코어 상태로 보면 동점일 때는 기대만큼(16 vs 16.3), 앞설 때는 기대실점 5.9에 15골 — 내준 만큼 먹은 성남과 다르다. 그래서 무승부 14번(기대 7.0), 그중 7번이 먼저 넣고 비긴 경기이고 놓친 승점은 거의 홈에서 나왔다. 다음 상대가 그 성남이다.",
+    },
+    blurb: {
+      en: "Second for possession, few chances allowed, and eleven goals more than expected conceded. Phase by phase the team holds up; the leak is in the last yard, and it turned wins into fourteen draws.",
+      ko: "점유 2위, 내주는 기회는 적은데 실점은 기대보다 11골 많다. 국면은 버티고, 새는 곳은 골문 앞 마지막 한 칸 — 그 골들이 승리를 열네 번의 무승부로 바꿨다.",
+    },
+    stats: {
+      en: [["+11.0", "goals conceded above expected, league worst"], ["52.9%", "shots on target saved, league lowest"], ["14", "draws, most in the league"]],
+      ko: [["+11.0", "실점 − 기대실점, 리그 최대"], ["52.9%", "유효슛 막은 비율, 리그 최하위"], ["14", "무승부, 리그 최다"]],
+    },
+  },
+  {
     slug: "seongnam",
     no: "22",
     publishedAt: "2026-10-07",
