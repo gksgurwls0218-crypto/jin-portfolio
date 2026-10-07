@@ -7,12 +7,12 @@ import { UI, type Locale } from "@/lib/i18n";
 import { useLocale } from "@/lib/useLocale";
 
 const GALLERY_COPY = {
-  eyebrow: { en: "02 / Match Analysis", ko: "02 / 경기 분석" },
+  eyebrow: { en: "02 / Match Analysis & Scouting", ko: "02 / 경기 분석 및 스카웃팅" },
   title1: { en: "Theory applied to", ko: "이론을 경기에" },
   title2: { en: "matches analysed.", ko: "적용해 분석하다" },
   intro: {
-    en: "Each analysis states what the framework predicted, then reports what actually happened. Newest first — single matches, team reports and whole-tournament parses in one list.",
-    ko: "각 분석은 프레임워크가 무엇을 예측했는지 밝힌 뒤, 실제로 무슨 일이 일어났는지 보고한다. 최신순이며 단일 경기·팀 리포트·대회 전수 분석이 한 목록에 놓인다.",
+    en: "Each analysis states what the framework predicted, then reports what actually happened. Newest first — single matches, team reports, whole-tournament parses and player scouting reports in one list.",
+    ko: "각 분석은 프레임워크가 무엇을 예측했는지 밝힌 뒤, 실제로 무슨 일이 일어났는지 보고한다. 최신순이며 단일 경기·팀 리포트·대회 전수 분석, 그리고 선수 스카웃팅 리포트가 한 목록에 놓인다.",
   },
 } as const;
 
@@ -43,6 +43,8 @@ const STANDALONE: CardEntry[] = [
   { kind: "report", key: "fcseoul-attacking-phases", publishedAt: "2026-09-02" },
   { kind: "report", key: "fcseoul-league-response", publishedAt: "2026-09-04" },
   { kind: "report", key: "daejeon-r28", publishedAt: "2026-09-30" },
+  { kind: "report", key: "scouting-han-chanhee", publishedAt: "2026-10-07" },
+  { kind: "report", key: "scouting-rebic", publishedAt: "2026-10-07" },
 ];
 
 const GALLERY_CARDS: CardEntry[] = [
@@ -195,7 +197,41 @@ type ReportCopy = {
   stats: Record<Locale, readonly ReportStat[]>;
 };
 
-const REPORTS: Record<"korea-jordan" | "suwon-cross-shot" | "wc2022-2026-champions" | "suwon-proposal-visuals" | "suwon-revision" | "fcseoul-attacking-phases" | "fcseoul-league-response" | "daejeon-r28", ReportCopy> = {
+const REPORTS: Record<"korea-jordan" | "suwon-cross-shot" | "wc2022-2026-champions" | "suwon-proposal-visuals" | "suwon-revision" | "fcseoul-attacking-phases" | "fcseoul-league-response" | "daejeon-r28" | "scouting-han-chanhee" | "scouting-rebic", ReportCopy> = {
+  "scouting-han-chanhee": {
+    tag: { en: "SCOUTING REPORT", ko: "스카웃팅 리포트" },
+    competition: { en: "Daejeon Hana Citizen · domestic distributing No. 6 · 116 players screened", ko: "대전하나시티즌 · 국내 배급형 6번 · 116명 검토" },
+    title: { en: "Han Chan-hee — the No. 6 for the days without Kim Bong-soo", ko: "한찬희 — 김봉수가 빠진 날의 6번" },
+    sub: {
+      en: "A player report that grew out of my Round 28 analysis of Daejeon: distribution depends on Kim Bong-soo alone. 116 Korean midfielders in K League 2, K League 1 and abroad were measured on two indices defined exactly as for Kim (distribution and recovery). Only Han Chan-hee and Jeong Ho-yeon have no shortfall, and Han (0.94 · 1.00) is the closer to Kim. The risks — a June knee injury and a shortfall in distribution in his K League 1 seasons — are set out with the same weight.",
+      ko: "대전 R28 경기분석의 문제 B — \"배급이 김봉수 한 명에게 걸려 있다\"에서 출발한 선수분석 보고서. K리그2 · K리그1 · 해외파 한국인 미드필더 116명을 김봉수와 같은 정의의 배급 · 회수 지수로 놓았다. 미달이 없는 선수는 한찬희와 정호연 둘, 김봉수에 더 가까운 쪽은 한찬희(0.94 · 1.00). 6월 무릎 부상과 K리그1 시절 배급 미달 같은 위험도 같은 무게로 적었다.",
+    },
+    blurb: {
+      en: "116 Korean midfielders on the same two indices as Kim Bong-soo. Two came through without a shortfall; the closer to Kim is Han Chan-hee — risks included.",
+      ko: "한국인 미드필더 116명을 김봉수와 같은 두 지수로. 미달 없는 두 명 중 김봉수에 더 가까운 6번은 한찬희 — 위험까지 함께.",
+    },
+    stats: {
+      en: [["0.94 · 1.00", "distribution · recovery (Kim = 1.00)"], ["116", "players screened"]],
+      ko: [["0.94 · 1.00", "배급 · 회수 지수 (김봉수 = 1.00)"], ["116", "같은 기준으로 검토한 선수"]],
+    },
+  },
+  "scouting-rebic": {
+    tag: { en: "SCOUTING REPORT", ko: "스카웃팅 리포트" },
+    competition: { en: "Daejeon Hana Citizen · foreign multi-role left forward · 130 players screened", ko: "대전하나시티즌 · 외국인 왼쪽 다기능 공격수 · 130명 검토" },
+    title: { en: "Ante Rebić — one more Seo Jin-su type", ko: "안테 레비치 — 서진수 유형 한 명 더" },
+    sub: {
+      en: "A player report that grew out of my Round 28 analysis of Daejeon: the ball was not kept on the left, and the answer was to come inside. 130 players were checked by name across five routes. Four had no shortfall on ball retention, box entries, structural fit and budget; Rebić meets the most (6.11 opponent-box touches per 90, LW · AM · ST) and, as a free agent on a documented €400k salary, can be signed now without a fee. Fifteen injuries since 2021 and two poor seasons are laid out just as plainly, with a 1+1 contract design.",
+      ko: "대전 R28 경기분석의 문제 A — \"왼쪽에서 받은 볼을 지키지 못했고, 해법은 안으로 들어가는 것\"에서 출발한 선수분석 보고서. 다섯 경로에서 130명을 이름으로 확인했다. 볼 보존 · 박스 진입 · 구조 적합 · 예산에 미달이 없는 넷 가운데 충족이 가장 많은 선수가 레비치(상대 박스 터치 6.11/90, LW · AM · ST)다. 무소속, 직전 연봉 €400k — 이적료 없이 지금 데려올 수 있다. 2021년 이후 부상 15건과 두 시즌 부진도 1+1 계약 설계와 함께 적었다.",
+    },
+    blurb: {
+      en: "130 players across five routes. Of the four with no shortfall, Rebić meets the most criteria and can be signed now without a fee — injuries and two poor seasons included.",
+      ko: "다섯 경로 130명. 미달 없는 넷 중 충족이 가장 많고, 이적료 없이 지금 데려올 수 있는 선수 — 부상 이력과 두 시즌 부진까지 함께.",
+    },
+    stats: {
+      en: [["6.11", "opponent-box touches / 90"], ["130", "players screened"]],
+      ko: [["6.11", "상대 박스 터치 / 90"], ["130", "같은 기준으로 검토한 선수"]],
+    },
+  },
   "daejeon-r28": {
     tag: { en: "MATCH ANALYSIS", ko: "경기 분석" },
     competition: { en: "K League 1 2026 · R28 · Daejeon Hana Citizen 3–2 FC Anyang", ko: "K리그1 2026 · 28라운드 · 대전하나시티즌 3–2 FC안양" },
