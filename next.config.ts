@@ -83,6 +83,14 @@ const nextConfig: NextConfig = {
         headers: [{ key: "Cache-Control", value: "no-cache, must-revalidate" }],
       },
       {
+        source: "/data-paju.html",
+        headers: [{ key: "Cache-Control", value: "no-cache, must-revalidate" }],
+      },
+      {
+        source: "/data-paju.ko.html",
+        headers: [{ key: "Cache-Control", value: "no-cache, must-revalidate" }],
+      },
+      {
         source: "/data-chungbuk-cheongju.html",
         headers: [{ key: "Cache-Control", value: "no-cache, must-revalidate" }],
       },

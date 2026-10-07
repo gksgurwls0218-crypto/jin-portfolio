@@ -33,6 +33,31 @@ type Episode = {
 
 const EPISODES: Episode[] = [
   {
+    slug: "paju",
+    no: "24",
+    publishedAt: "2026-10-09",
+    competition: {
+      en: "K League 2 2026 · Paju Frontier FC · 25 matches, 212-match league pool",
+      ko: "하나은행 K리그2 2026 · 파주 프런티어 FC · 25경기 · 리그 212경기 비교",
+    },
+    title: {
+      en: "The Goals They Kept Out",
+      ko: "막아낸 골",
+    },
+    sub: {
+      en: "On 23 August Paju were outplayed at Seoul E-Land, 0.28 to 2.58 in non-penalty xG; ten shots came on target and Wonwoo Ryu saved nine. 1-1. Over 25 matches Paju conceded 28 goals from 37.5 expected (−9.5, the league's best; episode 23's Chungbuk Cheongju sit at the other end on +11.0). The phases say they should concede more: pass share 41.3%, lowest in the league; direct final-third entries first, but entry → shot last; opponents' crosses the most in the league and box entries the second-most. The gap is in the last yard. 78.2% of shots on target were saved, first in the league. Minseung Kim (R1–14) conceded 16 from 52 on target, about as expected; Ryu (R15–27) conceded 8 from 58, 9.1 fewer than the placement expectation and first among league keepers. From R15 xG allowed rose from 1.23 to 1.40 per match while goals conceded fell from 1.46 to 0.75. The attack is the other face: scoring first brought 22 points from 10 matches, conceding first 3 from 11, with no draws after falling behind. Seven 0-1 defeats, eleven matches without a goal. Busan visit next, in R28.",
+      ko: "8월 23일 파주는 서울이랜드 원정에서 PK 제외 xG 0.28 : 2.58로 밀렸다. 유효슛 10개 중 9개를 류원우가 막았고, 경기는 1-1. 25경기 실점 28골, 상대 기대득점은 37.5(−9.5, 리그 최대 — 반대편 끝은 23편 충북청주 +11.0). 국면은 더 먹어야 한다고 말한다 — 패스 점유율 41.3%로 최하위, 파이널서드 직선 진입은 1위지만 진입 → 슛은 최하위, 상대 크로스 리그 최다·박스 진입 2위. 차이는 골문 앞 마지막 한 칸에 있다. 유효슛 막은 비율 78.2%로 리그 1위. 김민승(R1–14)은 유효슛 52개에 16실점으로 기대만큼, 류원우(R15–27)는 58개에 8실점으로 코스 기대보다 9.1골 적게 먹었다(리그 골키퍼 1위). R15 이후 경기당 내준 xG는 1.23 → 1.40으로 늘었는데 실점은 1.46 → 0.75로 줄었다. 반대편 얼굴은 공격이다. 먼저 넣은 10경기 승점 22, 먼저 먹은 11경기 승점 3, 먼저 먹고 비긴 경기는 없다. 0-1 패배 7번, 무득점 11경기. 다음 상대는 R28 홈의 부산이다.",
+    },
+    blurb: {
+      en: "The least possession in the league and plenty allowed, yet nine and a half goals fewer conceded than expected. The phases say they should concede more; the last yard, and one goalkeeper, say otherwise.",
+      ko: "점유는 리그 최하위, 내주는 기회는 많은데 실점은 기대보다 9.5골 적다. 국면은 더 먹어야 한다고 말하고, 골문 앞 마지막 한 칸과 한 골키퍼가 그 반대를 말한다.",
+    },
+    stats: {
+      en: [["−9.5", "goals conceded below expected, league best"], ["78.2%", "shots on target saved, league best"], ["3", "points from 11 matches after conceding first"]],
+      ko: [["−9.5", "실점 − 기대실점, 리그 최대"], ["78.2%", "유효슛 막은 비율, 리그 1위"], ["3", "먼저 실점한 11경기의 승점"]],
+    },
+  },
+  {
     slug: "chungbuk-cheongju",
     no: "23",
     publishedAt: "2026-10-08",
