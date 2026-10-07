@@ -33,6 +33,31 @@ type Episode = {
 
 const EPISODES: Episode[] = [
   {
+    slug: "yongin",
+    no: "25",
+    publishedAt: "2026-10-10",
+    competition: {
+      en: "K League 2 2026 · Yongin FC · 25 matches, 212-match league pool",
+      ko: "하나은행 K리그2 2026 · 용인FC · 25경기 · 리그 212경기 비교",
+    },
+    title: {
+      en: "The Next Goal",
+      ko: "다음 골",
+    },
+    sub: {
+      en: "On 1 March, in the first match in the club's history, Yongin fell behind to Cheonan twice and came back twice with Gabriel penalties: 2-2. That became the season. Twelve draws, the second-most in the league, five of them 2-2; 5W 12D 8L and 13th, though 1.46 expected points a match is the level of the seventh-placed team. The gap (−9.1 points, second-largest) is not in the totals: 30 goals from 30.7 xG, and Sungmin Hwang conceding 3.3 fewer than the placement expectation. It is in the order. Level, Yongin scored 10 from 16.1 xG and conceded 18 from 14.4 — 36% of the next goals against 53% expected, the worst in the league. Trailing, they scored 14 from 10.0. Phase by phase: settled attacks while level brought one goal from 4.8 xG (worst in the league); opponents' attacks after a regain cost ten goals from 7.3 xG; set pieces only flowed when behind (3 from 1.1 xG, first). Few shots but the best xG per shot, the fewest recoveries and the slowest counter: a team with few ways to break a 0-0. Jeonnam away is next, in R28.",
+      ko: "3월 1일 창단 첫 경기, 용인은 천안에 두 번 먼저 먹고 가브리엘의 PK로 두 번 따라붙었다. 2-2. 그 모양이 시즌이 됐다. 무승부 12번(리그 2위), 그중 2-2가 다섯 번. 5승 12무 8패로 13위지만 경기당 기대승점 1.46은 7위 수준이다. 승점 차 −9.1(리그 2위)은 합계에 있지 않다 — 넣은 골 30에 xG 30.7, 황성민은 코스 기대보다 3.3골 덜 먹었다. 순서에 있다. 동점일 때 10골을 넣고(xG 16.1) 18골을 먹었다(xG 14.4). 다음 골 36%, 기대 53%, 리그 최하위. 뒤질 때는 xG 10.0으로 14골. 국면별로는 동점일 때 지공이 xG 4.8에서 1골(리그 최하위), 상대의 탈취 후 공격에 xG 7.3으로 10실점, 세트피스는 뒤질 때만 터졌다(xG 1.1에 3골, 1위). 슛은 적고 질은 1위, 탈취는 최소, 역습은 가장 느리다 — 0-0을 깨는 길이 좁은 팀이다. 다음 상대는 R28 원정의 전남이다.",
+    },
+    blurb: {
+      en: "Seventh on performance, thirteenth in the table. The goals add up; their order does not. Level, the next goal kept going the other way; behind, Yongin kept coming back. Twelve draws.",
+      ko: "경기 내용은 7위, 순위는 13위. 골의 합계는 맞는데 순서가 어긋났다. 동점에서는 다음 골이 반대로 가고, 뒤지면 따라붙었다. 무승부 열두 번.",
+    },
+    stats: {
+      en: [["−9.1", "points below expected, 2nd-largest gap"], ["36%", "next goals won when level, league lowest"], ["12", "draws, 2nd-most in the league"]],
+      ko: [["−9.1", "승점 − 기대승점, 리그 2위 차이"], ["36%", "동점일 때 다음 골, 리그 최하위"], ["12", "무승부, 리그 2위"]],
+    },
+  },
+  {
     slug: "paju",
     no: "24",
     publishedAt: "2026-10-09",
