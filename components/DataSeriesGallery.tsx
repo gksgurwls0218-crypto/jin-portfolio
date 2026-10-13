@@ -33,6 +33,31 @@ type Episode = {
 
 const EPISODES: Episode[] = [
   {
+    slug: "ansan",
+    no: "27",
+    publishedAt: "2026-10-14",
+    competition: {
+      en: "K League 2 2026 · Ansan Greeners · 26 matches, 212-match league pool",
+      ko: "하나은행 K리그2 2026 · 안산 그리너스 · 26경기 · 리그 212경기 비교",
+    },
+    title: {
+      en: "After the Lead",
+      ko: "앞서고 나서",
+    },
+    sub: {
+      en: "On 20 September Ansan led Chungbuk Cheongju 1-0 after 12 minutes and lost 2-3. It was a familiar scene. In the 25 matches with event data they scored first eleven times and won twice (2W 2D 7L): 0.73 points a match after scoring first, the lowest in the league, where the average is 2.00. Across the 14 matches in which they led they dropped 25 points, the most in the league. Ansan are the league's weakest side on performance (0.71 expected points a match), and their total points are about what that deserves; it is the path that is uneven. Once ahead, their defensive actions drop to 25.7 on a 0–100 scale, the deepest of any team when leading; pass share falls to 33% and they face 16.0 shots per 90 while taking 4.0. They conceded 9 in 383 minutes ahead from 7.6 xG — not bad luck, just volume. By phase: the fewest entries and shots, but the best settled-attack finishing (+2.9); the most possessions lost in their own half and 16 goals conceded within 15 seconds of losing the ball; nine penalties given away, seven scored. At home they scored first seven times and took one point. All six remaining matches are away, starting at Suwon Samsung in R28.",
+      ko: "9월 20일, 안산은 홈에서 충북청주에 12분 만에 앞섰고 2-3으로 졌다. 낯선 장면이 아니다. 이벤트 25경기에서 먼저 넣은 경기가 11번, 그중 이긴 경기는 둘이다(2승 2무 7패). 선제골 경기의 경기당 승점 0.73은 리그 최하위다(평균 2.00). 앞선 14경기에서 놓친 승점 25점도 리그 최다다. 안산은 경기 내용으로 리그에서 가장 약한 팀이고(경기당 기대승점 0.71), 승점 합계는 그만큼 나왔다. 고르지 않은 건 길이다. 앞서는 순간 수비 행동 위치가 25.7(0–100)로 리드 중 리그 최저까지 내려가고, 패스 점유율 33%, 90분당 슛 4.0개를 쏘는 동안 16.0개를 맞았다. 앞선 383분의 실점 9골은 상대 xG 7.6 — 운이 아니라 양이다. 국면별로는 진입과 슛이 리그 최소지만 지공 마무리는 1위(+2.9), 자기 진영 볼 잃음 1위에 뺏긴 뒤 15초 실점 16골, PK는 9번 내줘 7골을 먹었다. 홈에서 먼저 넣은 7경기의 승점은 1. 남은 6경기는 R28 수원 원정부터 모두 원정이다.",
+    },
+    blurb: {
+      en: "The league's weakest side on performance scored first eleven times and won twice. Once ahead, they dropped deeper than anyone and faced the most shots. Twenty-five points dropped from leads, the most in the league.",
+      ko: "경기 내용은 리그 최하위, 그런데 먼저 넣은 경기가 열한 번. 이긴 건 두 번이다. 앞서면 리그에서 가장 깊이 내려서고 가장 많이 맞았다. 리드에서 놓친 승점 25, 리그 최다.",
+    },
+    stats: {
+      en: [["0.73", "points a match after scoring first, league lowest"], ["25", "points dropped from leads, most in the league"], ["1", "point from seven home matches after scoring first"]],
+      ko: [["0.73", "선제골 경기의 경기당 승점, 리그 최하위"], ["25", "리드에서 놓친 승점, 리그 최다"], ["1", "홈에서 먼저 넣은 7경기의 승점"]],
+    },
+  },
+  {
     slug: "cheonan",
     no: "26",
     publishedAt: "2026-10-11",
