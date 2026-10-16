@@ -33,6 +33,31 @@ type Episode = {
 
 const EPISODES: Episode[] = [
   {
+    slug: "gimhae",
+    no: "28",
+    publishedAt: "2026-10-15",
+    competition: {
+      en: "K League 2 2026 · Gimhae FC · 26 matches, 216-match league pool",
+      ko: "하나은행 K리그2 2026 · 김해FC · 26경기 · 리그 216경기 비교",
+    },
+    title: {
+      en: "At Home, at 0-0",
+      ko: "집에서, 0-0일 때",
+    },
+    sub: {
+      en: "Gimhae FC have taken 12 points from matches worth 22.1 — a shortfall of 10.1, the largest in K League 2. Almost all of it was lost at home: 2 points from the 11 analysed home matches against an expected 11.2, a 0.3% outcome, while 13 away matches returned 10 against 10.9. The mechanism is the level-score minutes, 46% of the season. There they allow 1.51 xG per 90, the highest in the league, and create 0.57; they score the next goal from level 17.2% of the time against 27.5% implied by their shots. So they concede first, have led for 206 minutes (fewest in the league) and have not scored once while ahead. By phase: own third to final third 26.9% (16th), open-play goals minus xG −0.25 (17th), regains 52.1 per 90 (4th) but 78.7% of them in their own third, opponents' 15-second transition xG 0.451 (1st), 0 goals from corners, one penalty won against six conceded. Of their non-penalty concessions, 38% arrive after 75 minutes.",
+      ko: "김해FC는 승점 12, 같은 경기들의 기대승점은 22.1이다. 미달 10.1은 K리그2에서 가장 크다. 그 미달은 거의 전부 집에서 생겼다 — 분석 대상 홈 11경기 승점 2에 기대 11.2(그 이하로 떨어질 확률 0.3%), 원정 13경기는 승점 10에 기대 10.9로 기대대로다. 메커니즘은 전체의 46%를 차지하는 동점 구간이다. 그 구간에서 허용 xG 1.51/90은 리그 1위, 같은 시간 자기 xG는 0.57이다. 동점에서 다음 골을 넣는 비율 17.2%는 슛의 질로 계산한 27.5%보다 10.3%p 낮다. 그래서 먼저 실점하고, 앞선 시간 206분은 리그 최소이며 앞선 동안 득점은 0이다. 국면별로는 자기 진영→파이널서드 도달 26.9%(16위), 오픈플레이 골−xG −0.25(17위), 탈취 52.1회/90(4위)인데 그 78.7%가 자기 진영, 상대 15초 전환 xG 0.451(1위), 코너킥 득점 0, PK 1개 획득에 6개 허용이다. 비PK 실점의 38%가 75분 이후에 나왔다.",
+    },
+    blurb: {
+      en: "The largest points shortfall in the league, and all of it at home. While the score is level they allow more than anyone and create almost nothing — so they concede first, and have led for fewer minutes than any team.",
+      ko: "리그에서 가장 큰 승점 미달, 그리고 그 전부가 홈에서 생겼다. 비기고 있는 동안 가장 많이 내주고 거의 만들지 못한다. 그래서 먼저 먹히고, 앞선 시간은 리그 최소다.",
+    },
+    stats: {
+      en: [["−10.1", "points below expectation, largest in the league"], ["2", "points from 11 home matches worth 11.2"], ["1.51", "xG allowed per 90 while level, highest in the league"]],
+      ko: [["−10.1", "기대승점 대비 미달, 리그 최대"], ["2", "분석 대상 홈 11경기 승점, 기대 11.2"], ["1.51", "동점 구간 허용 xG/90, 리그 1위"]],
+    },
+  },
+  {
     slug: "ansan",
     no: "27",
     publishedAt: "2026-10-14",
