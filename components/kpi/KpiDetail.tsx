@@ -39,7 +39,7 @@ function VisualEmbed({ src, caption, height = 420 }: { src: string; caption?: st
     <div className="mt-5">
       <div
         className="embed-frame overflow-hidden"
-        style={{ border: "0.5px solid var(--edge)", background: "var(--ink)", ["--embed-h" as string]: `${height}px` }}
+        style={{ border: "0.5px solid var(--edge)", background: "var(--stage)", ["--embed-h" as string]: `${height}px` }}
       >
         <iframe
           src={src}
