@@ -45,6 +45,7 @@ const STANDALONE: CardEntry[] = [
   { kind: "report", key: "daejeon-r28", publishedAt: "2026-09-30" },
   { kind: "report", key: "scouting-han-chanhee", publishedAt: "2026-10-07" },
   { kind: "report", key: "scouting-rebic", publishedAt: "2026-10-07" },
+  { kind: "report", key: "wc2018-2026-three-cycles", publishedAt: "2026-09-22" },
 ];
 
 const GALLERY_CARDS: CardEntry[] = [
@@ -197,7 +198,7 @@ type ReportCopy = {
   stats: Record<Locale, readonly ReportStat[]>;
 };
 
-const REPORTS: Record<"korea-jordan" | "suwon-cross-shot" | "wc2022-2026-champions" | "suwon-proposal-visuals" | "suwon-revision" | "fcseoul-attacking-phases" | "fcseoul-league-response" | "daejeon-r28" | "scouting-han-chanhee" | "scouting-rebic", ReportCopy> = {
+const REPORTS: Record<"korea-jordan" | "suwon-cross-shot" | "wc2022-2026-champions" | "suwon-proposal-visuals" | "suwon-revision" | "fcseoul-attacking-phases" | "fcseoul-league-response" | "wc2018-2026-three-cycles" | "daejeon-r28" | "scouting-han-chanhee" | "scouting-rebic", ReportCopy> = {
   "scouting-han-chanhee": {
     tag: { en: "SCOUTING REPORT", ko: "스카웃팅 리포트" },
     competition: { en: "Daejeon Hana Citizen · domestic distributing No. 6 · 116 players screened", ko: "대전하나시티즌 · 국내 배급형 6번 · 116명 검토" },
@@ -247,6 +248,23 @@ const REPORTS: Record<"korea-jordan" | "suwon-cross-shot" | "wc2022-2026-champio
     stats: {
       en: [["71% → 55%", "possession, first half → second half"], ["50% → 79%", "left-side final-third entry success"], ["0.22", "shots conceded per 10 losses, season low"], ["13 + 4", "of 21 observations kept"]],
       ko: [["71% → 55%", "점유율, 전반 → 후반"], ["50% → 79%", "왼쪽 파이널서드 진입 성공률"], ["0.22", "상실 10회당 피슈팅, 시즌 최저"], ["13 + 4", "관찰 21개 중 채택"]],
+    },
+  },
+  "wc2018-2026-three-cycles": {
+    tag: { en: "TOURNAMENT COMPARISON", ko: "대회 비교 리포트" },
+    competition: { en: "Russia 2018 × Qatar 2022 × North America 2026 · 232 matches", ko: "러시아 2018 × 카타르 2022 × 북중미 2026 · 232경기" },
+    title: { en: "Possession died twice and came back", ko: "점유율은 두 번 죽었다가 돌아왔다" },
+    sub: {
+      en: "The side with more of the ball won 55% of decided matches in 2018, 47% in 2022 and 76% in 2026. The three tournaments come from different providers, so 2022 is measured with both StatsBomb and the FIFA post-match reports — they agree on who had more possession 98.7% of the time — and only the metrics that hold up on that bridge are linked. 2018 blocked, 2022 struck, 2026 held.",
+      ko: "공을 더 가진 팀이 이긴 비율은 2018년 55%, 2022년 47%, 2026년 76%다. 세 대회는 데이터 제공자가 달라서 2022를 StatsBomb와 FIFA 공식 리포트 두 자로 모두 쟀고 — 점유 우위 판정이 98.7% 일치한다 — 그 다리가 버티는 지표만 이어 붙였다. 2018은 막았고, 2022는 찔렀고, 2026은 쥐었다.",
+    },
+    blurb: {
+      en: "The side with more of the ball won 55%, 47% and 76% of decided matches. Three World Cups, two data providers, one bridge built on 2022.",
+      ko: "공을 더 가진 팀이 이긴 비율은 55% · 47% · 76%. 세 번의 월드컵, 두 개의 데이터 제공자, 2022에 놓은 다리 하나.",
+    },
+    stats: {
+      en: [["55 → 47 → 76%", "side with more ball won"], ["0.20 → 0.62", "possession × points, ρ"], ["48.5 → 62.8%", "champion’s possession"], ["0.45 → 0.21", "penalties per match"]],
+      ko: [["55 → 47 → 76%", "공 더 가진 팀 승리"], ["0.20 → 0.62", "점유 × 승점 순위상관"], ["48.5 → 62.8%", "챔피언 점유"], ["0.45 → 0.21", "경기당 PK"]],
     },
   },
   "fcseoul-league-response": {

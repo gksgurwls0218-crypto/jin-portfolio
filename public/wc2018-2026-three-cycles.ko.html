@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>점유율은 두 번 죽었다가 세 번째에 돌아왔다 — 월드컵 3사이클 2018 · 2022 · 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+/* jin-tactics.com report design — same system as /approach and the
+   Structural Zone Covering page: white stage, charcoal, one signal red,
+   mono labels, hairline tables, flat bordered boxes. */
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  color-scheme:light;
+  --stage:#ffffff;--stage-2:#f5f7f6;--ink:#14181a;--body:rgba(20,24,26,.76);--muted:rgba(20,24,26,.56);--faint:rgba(20,24,26,.40);
+  --edge:rgba(20,24,26,.09);--edge-2:rgba(20,24,26,.16);--char:#171512;--char-mid:#232321;--void:#d2462b;--opp:#5f6f7e;
+  --f-display:"Space Grotesk","Noto Sans KR",-apple-system,sans-serif;
+  --f-body:"Inter","Noto Sans KR",-apple-system,"Apple SD Gothic Neo",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  /* legacy names used inline by the report */
+  --bg:#ffffff;--card:#ffffff;--soft:#f5f7f6;--border:rgba(20,24,26,.16);--hair:rgba(20,24,26,.09);--hl:rgba(210,70,43,.18);
+  --olive:#14181a;--clay:#d2462b;--sand:#5f6f7e;--brown:#232321;--blue:#5f6f7e;
+}
+html{background:var(--stage);color:var(--body);font-family:var(--f-body);font-size:16.5px;line-height:1.78;-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:break-word}
+body{max-width:1000px;margin:0 auto;padding:0 max(16px,env(safe-area-inset-left,0px)) 110px max(16px,env(safe-area-inset-right,0px));background:var(--stage)}
+h1,h2,h3,h4{font-family:var(--f-display);color:var(--ink);text-wrap:balance}
+b,strong{color:var(--ink);font-weight:600}
+em{font-style:normal;color:var(--ink);font-weight:600}
+.hl{background:linear-gradient(transparent 62%,var(--hl) 62%);padding:0 2px}
+.mono{font-family:var(--f-mono);font-weight:500;color:var(--ink)}
+
+.hero{margin:64px 0 36px;padding:0 0 40px;border-bottom:1px solid var(--ink)}
+.kicker{display:flex;align-items:center;gap:12px;font-family:var(--f-mono);font-size:.72rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--char-mid);margin-bottom:22px}
+.kicker::after{content:"";height:1px;width:56px;flex:0 0 auto;background:linear-gradient(90deg,var(--edge-2),transparent)}
+.hero h1{font-size:clamp(2.1rem,5vw,3.3rem);font-weight:700;letter-spacing:-.03em;line-height:1.12}
+.hero .sub{margin-top:24px;font-size:1.08rem;color:var(--body);max-width:760px}
+.hero-meta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--edge-2);border:1px solid var(--edge-2);border-radius:4px;overflow:hidden;margin-top:32px}
+.hm{background:var(--stage);padding:14px 16px;min-width:0}
+.hm b{display:block;font-family:var(--f-mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;font-weight:500}
+.hm span{font-size:.88rem;color:var(--ink);font-weight:500}
+@media(max-width:760px){.hero-meta{grid-template-columns:1fr 1fr}}
+
+.thesis{background:var(--char);color:#fff;border-radius:6px;padding:32px 34px;margin:34px 0 10px}
+.thesis .eyebrow{font-family:var(--f-mono);font-size:.66rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:14px}
+.thesis p{font-family:var(--f-display);font-size:clamp(1.2rem,2.6vw,1.5rem);line-height:1.45;font-weight:500;color:#fff;letter-spacing:-.02em}
+.thesis .foot{margin-top:16px;font-size:.9rem;color:rgba(255,255,255,.72);font-family:var(--f-body);line-height:1.6}
+
+.section{margin:80px 0;scroll-margin-top:20px}
+.sec-label{font-family:var(--f-mono);font-size:.72rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.sec-title{font-size:clamp(1.55rem,3vw,2.05rem);font-weight:600;letter-spacing:-.022em;margin-bottom:18px;line-height:1.25}
+.sec-intro{color:var(--body);font-size:1rem;margin-bottom:26px;max-width:760px}
+.section p{color:var(--body);margin-bottom:16px;max-width:760px}
+h3.sub{font-size:1.15rem;font-weight:600;margin:40px 0 12px;letter-spacing:-.01em}
+h4.sub2{font-size:.98rem;font-weight:600;margin:26px 0 8px}
+
+.kpi-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--edge-2);border:1px solid var(--edge-2);border-radius:4px;overflow:hidden;margin:32px 0}
+.kpi{background:var(--stage);padding:20px 18px;min-width:0}
+.kpi .t{font-family:var(--f-mono);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500;margin-bottom:12px;line-height:1.4}
+.kpi .n{font-family:var(--f-display);font-size:1.7rem;font-weight:600;letter-spacing:-.03em;line-height:1.05;color:var(--ink);font-variant-numeric:tabular-nums}
+.kpi .n .u{font-size:.85rem;font-weight:500;color:var(--muted)}
+.kpi .l{font-size:.76rem;color:var(--muted);margin-top:10px;line-height:1.5}
+@media(max-width:760px){.kpi-grid{grid-template-columns:1fr 1fr}.kpi .n{font-size:1.35rem}}
+
+.callout{background:var(--stage-2);border:0;border-left:2px solid var(--char);border-radius:0;padding:18px 22px;margin:26px 0}
+.callout.warn{border-left-color:var(--void)}
+.callout.good{border-left-color:var(--char)}
+.callout .eyebrow{font-family:var(--f-mono);font-size:.66rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.callout h4{font-size:1.02rem;font-weight:600;margin-bottom:9px}
+.callout p{font-size:.93rem;color:var(--body);margin-bottom:9px}
+.callout p:last-child{margin-bottom:0}
+
+.chart-box{background:var(--stage);border:1px solid var(--edge-2);border-radius:6px;padding:0;margin:30px 0;overflow:hidden}
+.chart-box h3{font-family:var(--f-mono);font-size:.8rem;font-weight:500;letter-spacing:.03em;color:var(--ink);margin:0;padding:12px 16px 4px}
+.chart-box .cap{font-size:.8rem;color:var(--muted);margin:0;padding:0 16px 14px;line-height:1.6;border-bottom:1px solid var(--edge-2)}
+.chart-box .chart-wrap,.chart-box .legend{margin:16px 16px 0}
+.chart-box .chart-wrap:last-child{margin-bottom:16px}
+.chart-box .note{font-size:.78rem;color:var(--muted);margin:16px 0 0;padding:12px 16px 14px;border-top:1px solid var(--edge);line-height:1.6;background:var(--stage)}
+.chart-wrap{position:relative;height:380px}
+.chart-wrap.tall{height:480px}
+.chart-wrap.short{height:280px}
+.two-col{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+@media(max-width:760px){.two-col{grid-template-columns:1fr}.chart-wrap{height:320px}.chart-wrap.tall{height:420px}}
+
+table{width:100%;border-collapse:collapse;font-size:.86rem;background:transparent}
+.table-scroll{overflow-x:auto;border:0;border-radius:0;margin:24px 0}
+thead th{background:transparent;color:var(--muted);font-family:var(--f-mono);font-weight:500;text-align:center;padding:10px 8px;letter-spacing:.06em;font-size:.68rem;text-transform:uppercase;border-bottom:1px solid var(--ink)}
+thead th:first-child,tbody td:first-child{text-align:left;padding-left:4px}
+tbody td{padding:11px 8px;text-align:center;border-bottom:1px solid var(--edge-2);color:var(--body);font-variant-numeric:tabular-nums}
+tbody tr:hover{background:var(--stage-2)}
+tbody td.tname{color:var(--ink);font-weight:600}
+.pos{color:var(--ink);font-weight:600}
+.neg{color:var(--void);font-weight:600}
+tr.hi td{background:var(--stage-2)}
+
+.verdict{display:flex;gap:12px;align-items:flex-start;background:var(--stage);border:1px solid var(--edge-2);border-radius:4px;padding:16px 20px;margin:12px 0}
+.verdict .mark{font-size:1.1rem;line-height:1.3;flex:0 0 auto}
+.verdict .txt h4{font-size:.98rem;margin-bottom:5px;font-weight:600}
+.verdict .txt p{font-size:.9rem;margin:0}
+.verdict.ok{box-shadow:inset 2px 0 0 var(--char)}
+.verdict.half{box-shadow:inset 2px 0 0 var(--faint)}
+.verdict.no{box-shadow:inset 2px 0 0 var(--void)}
+
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-family:var(--f-mono);font-size:.7rem;color:var(--muted);margin-bottom:14px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+
+.toc{background:var(--stage);border:1px solid var(--edge-2);border-radius:4px;padding:18px 22px;margin:30px 0}
+.toc .eyebrow{font-family:var(--f-mono);font-size:.66rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.toc ol{list-style:none;counter-reset:t;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));column-gap:28px}
+.toc li{counter-increment:t;padding:7px 0;font-size:.9rem;border-bottom:1px solid var(--edge)}
+.toc li:before{content:counter(t,decimal-leading-zero);color:var(--muted);font-family:var(--f-mono);font-size:.74rem;margin-right:10px}
+.toc a{color:var(--ink);text-decoration:none;font-weight:500}
+.toc a:hover{text-decoration:underline}
+
+footer{margin-top:80px;padding-top:28px;border-top:1px solid var(--ink);font-size:.82rem;color:var(--muted)}
+footer b{color:var(--ink)}
+.srcs{font-size:.78rem;line-height:1.9;margin-top:12px}
+
+.bridge{display:flex;align-items:center;justify-content:center;gap:0;margin:30px 0 8px;flex-wrap:wrap}
+.bridge .yr{background:var(--char);color:#fff;font-family:var(--f-display);font-weight:600;border-radius:4px;padding:12px 20px;font-size:1.1rem;text-align:center;min-width:92px}
+.bridge .yr small{display:block;font-family:var(--f-mono);font-size:.6rem;letter-spacing:.1em;color:rgba(255,255,255,.62);font-weight:500;margin-top:3px}
+.bridge .rod{flex:1;min-width:90px;max-width:210px;text-align:center;font-family:var(--f-mono);font-size:.68rem;color:var(--muted);font-weight:500;letter-spacing:.04em;border-bottom:1px solid var(--ink);padding-bottom:6px;margin:0 6px}
+.bridge .yr.mid{outline:2px solid var(--void);outline-offset:3px}
+ol[style*="color:var(--body)"] li{padding-left:2px}
+</style>
+</head>
+<body>
+
+<div class="hero"><div class="kicker">월드컵 3사이클 비교 · 2018 Russia × 2022 Qatar × 2026 North America · 232경기</div><h1>점유율은 두 번 죽었다가<br>세 번째 월드컵에서 돌아왔다</h1><p class="sub">공을 더 가진 팀이 이긴 비율은 <em>2018년 55%, 2022년 47%, 2026년 76%</em>였다. 두 대회 연속으로 동전 던지기였던 지표가 세 번째 대회에서 가장 강한 신호 중 하나가 됐다. 세 대회는 데이터 제공자가 다르다 — 그래서 <b>2022를 두 개의 자로 모두 재서 다리를 놓았고</b>, 다리가 버티는 지표만 이어 붙였다.</p><div class="hero-meta"><div class="hm"><b>데이터</b><span>232경기 · 464 팀-경기</span></div><div class="hm"><b>출처</b><span>FIFA PMSR · StatsBomb Open Data · FIFA TR 2018</span></div><div class="hm"><b>분석 단위</b><span>경기 내 적중률 · 대회 내 z</span></div><div class="hm"><b>작성</b><span>한혁진 · 2026-09</span></div></div></div>
+<div class="thesis"><div class="eyebrow">한 문장으로</div><p>2018은 막는 월드컵, 2022는 찌르는 월드컵, 2026은 쥐는 월드컵이었다.</p><div class="foot">세 대회 내내 변하지 않은 것도 하나 있다 — 유효슈팅은 언제나 점유보다 강한 신호였다. 2026은 점유와 위협이 다시 같은 팀에 모인 대회다.</div></div>
+<div class="kpi-grid"><div class="kpi"><div class="t">공 더 가진 팀의 승률</div><div class="n">55 → 47 → 76<span class="u"> %</span></div><div class="l">승부 난 경기 · 2018 SB / 2022·2026 FIFA</div></div><div class="kpi"><div class="t">팀 점유 × 경기당 승점</div><div class="n">0.20 → 0.62<span class="u"> ρ</span></div><div class="l">순위상관 · 2026만 p<0.001</div></div><div class="kpi"><div class="t">챔피언 평균 점유</div><div class="n">48.5 → 62.8<span class="u"> %</span></div><div class="l">프랑스 → 아르헨티나 57.7 → 스페인</div></div><div class="kpi"><div class="t">경기당 PK</div><div class="n">0.45 → 0.21<span class="u"> </span></div><div class="l">29개 → 23개 → 22개 (104경기)</div></div></div>
+<div class="toc"><ol><li><a href="#s1">두 개의 자로 잰 세 번의 월드컵</a></li><li><a href="#s2">점유는 무엇을 설명했나</a></li><li><a href="#s3">팀 단위 — 공을 가장 많이 가진 팀의 운명</a></li><li><a href="#s4">선전의 조건은 어떻게 이동했나</a></li><li><a href="#s5">부진의 조건 — 세 대회의 공통분모</a></li><li><a href="#s6">골은 어떻게 바뀌었나</a></li><li><a href="#s7">한국 — 점유율은 올랐고 성적은 따라오지 않았다</a></li><li><a href="#s8">이 비교가 답하지 못한 것</a></li><li><a href="#s9">그래서 무엇이 남는가</a></li></ol></div>
+<section class="section" id="s1"><div class="sec-label">01 · 방법</div><h2 class="sec-title">두 개의 자로 잰 세 번의 월드컵</h2><p class='sec-intro'>2018 월드컵에는 FIFA의 경기별 공식 리포트(PMSR)가 없다. 2018 FIFA 기술보고서는 팀 평균과 서술만 담는다. 그래서 2018과 2022는 <b>StatsBomb 이벤트 데이터</b>로, 2022와 2026은 <b>FIFA PMSR</b>로 비교한다. 한 비교 안에서는 자를 섞지 않는다.</p><div class="bridge"><div class="yr">2018</div><div class="rod">StatsBomb</div><div class="yr mid">2022<small>두 자로 모두 잼</small></div><div class="rod">FIFA PMSR</div><div class="yr">2026</div></div><p>연결의 정당성은 2022에서 나온다. 같은 64경기를 두 자로 쟀을 때 같은 답이 나오는가.</p><div class="table-scroll"><table><thead><tr><th>항목</th><th>StatsBomb 2022</th><th>FIFA 2022</th><th>판정</th></tr></thead><tbody><tr><td class="tname">점유 우위 팀 판정 일치</td><td>—</td><td>—</td><td><span class="pos">98.7%</span></td></tr><tr><td class="tname">팀-경기 패스 수 상관</td><td>—</td><td>—</td><td><span class="pos">r = 0.98</span></td></tr><tr><td class="tname">점유 적중률</td><td>49.0%</td><td>46.9%</td><td><span class="pos">같다</span></td></tr><tr><td class="tname">압박 적중률</td><td>51.1%</td><td>51.0%</td><td><span class="pos">같다</span></td></tr><tr><td class="tname">16강 이후 경기당 득점</td><td>3.25</td><td>3.25</td><td><span class="pos">같다</span></td></tr><tr><td class="tname">선제골 팀 승 / 패</td><td>75.4 / 10.5%</td><td>74.5 / 10.9%</td><td><span class="pos">근접</span></td></tr><tr><td class="tname">압박 횟수 (원값)</td><td>129</td><td>292</td><td><span class="neg">정의가 다르다</span></td></tr></tbody></table></div><div class='callout good'><h4>다리가 버티는 것과 버티지 못하는 것</h4><p>“누가 더 많이 했는가”(적중률)는 제공자가 바뀌어도 살아남는다. “몇 번 했는가”(원값)는 살아남지 않는다 — 같은 경기의 압박을 한쪽은 129번, 다른 쪽은 292번으로 센다. 이 리포트는 전자만 세 대회로 잇는다. xG도 모델이 달라 대회를 넘어 잇지 않는다.</p></div></section>
+<section class="section" id="s2"><div class="sec-label">02 · 승부</div><h2 class="sec-title">점유는 무엇을 설명했나</h2><p class='sec-intro'>승부가 난 경기에서 그 지표가 더 높은 팀이 이긴 비율이다. 50%면 승부와 무관하다.</p><div class="chart-box"><h3>그림 1 · 그 지표에서 앞선 팀이 이긴 비율</h3><div class="cap">2018 StatsBomb(n≈51) · 2022 FIFA(n=49, StatsBomb 값은 툴팁) · 2026 FIFA(n=80). 역습은 2018이 StatsBomb “역습에서 나온 슈팅”, 2022·2026이 FIFA “역습 국면 비중”이라 구성이 다르다 — 방향만 읽는다.</div><div class="chart-wrap "><canvas id="c1" role="img" aria-label="그림 1 · 그 지표에서 앞선 팀이 이긴 비율"></canvas></div><div class="note">게임 스테이트 주의 — 선제골을 넣은 팀이 내려앉으면 점유 적중률이 떨어진다. 이 효과는 세 대회에 똑같이 작동하므로 변화의 방향은 유효하지만, 2026의 76%가 “앞선 팀이 내려앉지 않았다”는 뜻일 가능성은 남는다.</div></div><div class="table-scroll"><table><thead><tr><th></th><th>2018</th><th>2022</th><th>2026</th></tr></thead><tbody><tr><td class="tname">점유율</td><td>54.9%</td><td>46.9%</td><td>76.2%</td></tr><tr><td class="tname">유효슈팅</td><td>63.8%</td><td>74.4%</td><td>86.3%</td></tr><tr><td class="tname">역습</td><td>66.7%</td><td>75.7%</td><td>43.1%</td></tr></tbody></table></div><div class="table-scroll"><table><thead><tr><th>점유 적중률 — 부분 표본</th><th>2018</th><th>2022</th><th>2026</th></tr></thead><tbody><tr><td class="tname">토너먼트만</td><td><b>33%</b> (n=12)</td><td>45% (n=11)</td><td><b>71%</b> (n=28)</td></tr><tr><td class="tname">1골차 경기만</td><td>55% (n=31)</td><td><b>29%</b> (n=24)</td><td>69% (n=35)</td></tr></tbody></table></div><div class='callout'><h4>프랑스 2018 — 공을 덜 가지고 들어 올린 트로피</h4><p>16강 아르헨티나전 39.5%, 4강 벨기에전 37.1%, 결승 크로아티아전 34.5%. 세 경기 모두 공을 덜 가진 쪽이 이겼다(8강 우루과이전만 61.7%로 공을 더 가졌다). 2018 토너먼트에서 공을 더 가진 팀은 12경기 중 4경기만 이겼다. FIFA 기술연구그룹은 프랑스를 “점유에 의존하지 않고 가능한 한 빨리 상대 진영에 들어가는 데 집중한 팀”이라고 썼다.</p></div><p>세 대회 내내 변하지 않은 것은 <b>유효슈팅이 점유보다 강했다</b>는 것이다(64 → 74 → 86%). 두 선의 간격은 9%p → 27%p → 10%p로 벌어졌다가 다시 좁혀졌다. 2022는 점유와 위협이 가장 멀리 떨어진 대회였고, 2026은 둘이 다시 같은 팀에 모인 대회다.</p></section>
+<section class="section" id="s3"><div class="sec-label">03 · 팀 단위</div><h2 class="sec-title">공을 가장 많이 가진 팀의 운명</h2><div class='two-col'><div class="chart-box"><h3>그림 2 · 팀 평균 점유율과 경기당 승점의 순위상관</h3><div class="cap">Spearman ρ. 2018 StatsBomb 32팀 · 2022 FIFA 32팀 · 2026 FIFA 48팀. 경합 점유를 뺀 정규화 점유율.</div><div class="chart-wrap short"><canvas id="c2" role="img" aria-label="그림 2 · 팀 평균 점유율과 경기당 승점의 순위상관"></canvas></div><div class="note">2018 p=0.27 · 2022 p=0.21 · 2026 p<0.001. 앞의 두 대회에서는 점유와 승점 사이에 통계적으로 의미 있는 관계가 없다.</div></div><div class="chart-box"><h3>그림 3 · 챔피언의 평균 점유율</h3><div class="cap">2018 StatsBomb 패스 점유 · 2022·2026 FIFA 정규화 점유. 2022 아르헨티나는 두 자 모두 57.7%.</div><div class="chart-wrap short"><canvas id="c3" role="img" aria-label="그림 3 · 챔피언의 평균 점유율"></canvas></div><div class="note">챔피언은 세 명뿐이다 — 법칙이 아니라 트렌드의 예시로 읽는다.</div></div></div><div class="table-scroll"><table><thead><tr><th></th><th>점유 1위</th><th>점유 상위권의 운명</th><th>챔피언 점유</th></tr></thead><tbody><tr><td class="tname">2018</td><td>스페인 73.9% → <span class="neg">16강 탈락</span></td><td>독일 71.6% <span class="neg">조별 탈락</span> · 아르헨티나 65.4% 16강</td><td>프랑스 48.5%</td></tr><tr><td class="tname">2022</td><td>스페인 75.3% → <span class="neg">16강 탈락</span></td><td>잉글랜드 63.1% · 포르투갈 60.9% 8강 · 덴마크 59.7% · 독일 59.0% <span class="neg">조별 탈락</span></td><td>아르헨티나 57.7%</td></tr><tr><td class="tname">2026</td><td>튀르키예 64.9% → 조별 탈락</td><td><span class="pos">스페인 62.8% 우승</span> · 독일 61.7% 32강 · 한국 61.6% 조별</td><td>스페인 62.8%</td></tr></tbody></table></div><p>2018에는 공을 가장 많이 가진 집단이 8강 팀이 아니라 <b>16강에서 떨어진 팀</b>이었다(평균 56.5% vs 8강 이상 49.8%). 스페인은 두 대회 연속 점유 1위로 16강에서 떠났고, 세 번째 대회에서 점유 상위권의 우승팀이 됐다.</p></section>
+<section class="section" id="s4"><div class="sec-label">04 · 선전의 조건</div><h2 class="sec-title">선전의 조건은 어떻게 이동했나</h2><p class='sec-intro'>8강 이상 팀과 조별 탈락 팀의 차이를 대회 내 표준화 점수(z)로 쟀다. z는 대회마다 평균과 편차로 나누므로 자가 달라도 “격차의 크기”를 나란히 놓을 수 있다(추정).</p><div class="chart-box"><h3>그림 4 · 8강 이상 팀과 조별 탈락 팀의 격차 (대회 내 z)</h3><div class="cap">양수 = 8강 팀이 더 높다. 실점 기대값(xGA)은 음수일수록 8강 팀이 덜 내줬다는 뜻. 2018·2022 StatsBomb, 2026 FIFA.</div><div class="chart-wrap tall"><canvas id="c4" role="img" aria-label="그림 4 · 8강 이상 팀과 조별 탈락 팀의 격차 (대회 내 z)"></canvas></div></div><div class="verdict half"><div class="txt"><h4>2018 — 먼저 막는 팀</h4><p>8강 팀을 가장 크게 가른 것은 덜 내준 기회(xGA −0.73)였고 공격 지표의 격차는 작았다. FIFA TSG: “라인 사이 공간이 사실상 없었다.”</p></div></div><div class="verdict half"><div class="txt"><h4>2022 — 공을 다루되, 이기는 건 전환</h4><p>패스 성공률 격차는 커졌지만(+0.86) 개별 경기는 역습이 갈랐다(적중률 76%). 8강 팀은 미드블록에서 기다렸다가 찔렀다.</p></div></div><div class="verdict ok"><div class="txt"><h4>2026 — 모든 축에서 벌어진 격차</h4><p>점유·패스·유효슈팅·xG·xGA가 전부 z 1.0 안팎으로 벌어졌다. 48개국 확대로 위와 아래가 멀어진 효과가 섞여 있어 분리할 수 없다.</p></div></div></section>
+<section class="section" id="s5"><div class="sec-label">05 · 부진의 조건</div><h2 class="sec-title">부진의 조건 — 세 대회의 공통분모</h2><div class="table-scroll"><table><thead><tr><th>유형</th><th>2018</th><th>2022</th><th>2026</th></tr></thead><tbody><tr><td class="tname">위협 없는 점유</td><td>독일 71.6% 조별 · 스페인 73.9% 16강 (러시아전 패스 1,157개, 승부차기 패)</td><td>스페인 75.3% 16강 · 덴마크 · 독일 조별</td><td>한국 61.6% 조별 · 우루과이</td></tr><tr><td class="tname">위협 없는 수비</td><td>파나마 36.2% · 3경기 11실점</td><td>코스타리카 · 카타르</td><td>조별 탈락 16팀 다수 — 점유 43.9%, 경기당 실점 2.38</td></tr></tbody></table></div><p>위협 없는 점유는 세 대회 모두에 있었다. 달라진 것은 <b>누가 그 함정에 빠졌느냐</b>다 — 2018과 2022에는 우승 후보(독일·스페인)가, 2026에는 중상위권이 빠졌다. 2018 한국 2-0 독일은 이 시기를 상징한다: 한국 점유 26.1%, 독일 73.9%.</p></section>
+<section class="section" id="s6"><div class="sec-label">06 · 골</div><h2 class="sec-title">골은 어떻게 바뀌었나</h2><div class="chart-box"><h3>그림 5 · 경기당 PK (승부차기 제외)</h3><div class="cap">2018 29개 · 2022 23개 · 2026 22개(104경기). 2018은 VAR이 처음 도입된 대회다.</div><div class="chart-wrap short"><canvas id="c5" role="img" aria-label="그림 5 · 경기당 PK (승부차기 제외)"></canvas></div><div class="note">원인은 이 데이터 밖에 있다 — VAR 운영 기준의 정착인지 박스 안 수비 방식의 변화인지는 판정 자료 없이 가를 수 없다.</div></div><div class="table-scroll"><table><thead><tr><th>지표</th><th>2018</th><th>2022</th><th>2026</th></tr></thead><tbody><tr><td class="tname">경기당 득점</td><td>2.64</td><td>2.69</td><td>2.96</td></tr><tr><td class="tname">· 16강 이후</td><td>2.94</td><td>3.25</td><td>3.19</td></tr><tr><td class="tname">0-0 경기</td><td>1</td><td>7</td><td>8</td></tr><tr><td class="tname">3골차 이상</td><td>8 (12.5%)</td><td>9 (14.1%)</td><td>22 (21.2%)</td></tr><tr><td class="tname">자책골</td><td><b>12</b></td><td>3 (FIFA 2)</td><td>14</td></tr><tr><td class="tname">헤더 득점 비중 (자책 제외)</td><td><b>20.4%</b></td><td>16.6%</td><td>16.7%</td></tr><tr><td class="tname">선제골 넣고 진 비율</td><td>9.5%</td><td>10.5%</td><td><b>16.9%</b></td></tr><tr><td class="tname">교체 (경기당, 양 팀 합)</td><td>5.97 (3명 체제)</td><td>9.17 (5명 체제)</td><td>—</td></tr></tbody></table></div><p style='font-size:.8rem;color:var(--muted)'>2018↔2022는 StatsBomb, 2022↔2026은 FIFA로 잰 값이다. 2022 값은 두 자에서 거의 같다(헤더 16.6 vs 15.9%, 선제골 패배 10.5 vs 10.9%). 2026 자책골 외에 FIFA 슈팅 로그에 없는 골이 6골 더 있다.</p><p>2018은 세트피스·PK·자책골의 대회였다. 2026의 총득점 증가는 조별리그에서만 나왔다 — 정상급끼리 맞붙는 16강 이후 득점은 2022와 같다. 그리고 선제골이 점점 덜 안전해지고 있다.</p></section>
+<section class="section" id="s7"><div class="sec-label">07 · 한국</div><h2 class="sec-title">점유율은 올랐고, 성적은 따라오지 않았다</h2><div class="table-scroll"><table><thead><tr><th></th><th>2018 러시아</th><th>2022 카타르</th><th>2026 북중미</th></tr></thead><tbody><tr><td class="tname">성적</td><td>조별 탈락 (1승 2패)</td><td><b>16강</b></td><td>조별 탈락 (1승 2패)</td></tr><tr><td class="tname">평균 점유 (정규화)</td><td>37.6%</td><td>48.2%</td><td><b>61.6%</b></td></tr><tr><td class="tname">상징 경기</td><td>독일 2-0 (점유 26.1%)</td><td>포르투갈 2-1 (38.2%)</td><td>멕시코 0-1 · 남아공 0-1 (55.9% · 66.8%)</td></tr></tbody></table></div><p>한국의 월드컵 명장면은 공을 내준 경기였다 — 그리고 그 두 대회는 대회 전체가 점유와 무관했던 시기다. 2026에 대회가 점유를 요구하자 한국은 공을 가졌지만, 패배한 두 경기의 xG는 0.87과 0.74에 그쳤다.</p><div class='callout warn'><p>한 대회 3~4경기다. “한국 축구가 이렇다”가 아니라 <b>대회의 흐름과 한국의 선택이 어긋난 순간</b>으로만 읽는다.</p></div></section>
+<section class="section" id="s8"><div class="sec-label">08 · 한계</div><h2 class="sec-title">이 비교가 답하지 못한 것</h2><div class="callout warn"><h4>게임 스테이트</h4><p>2026 점유 적중 76%가 팀 수준 효과인지, 앞선 팀이 내려앉지 않은 효과인지 가르지 못했다. StatsBomb 2018·2022는 이벤트 시간축이 있어 검정할 수 있지만 2026 PMSR에는 시간축이 없다.</p></div><div class="callout warn"><h4>원값은 잇지 않았다</h4><p>압박 횟수·xG·활동거리는 제공자마다 정의가 다르다. 세 대회를 잇는 것은 적중률·순위상관·대회 내 z 같은 상대 지표뿐이다.</p></div><div class="callout warn"><h4>48개국</h4><p>2026의 격차 확대에는 참가국 확대 효과가 섞여 있다. 2022↔2026 상세 리포트에서 두 대회 공통 출전 26개국만으로도 방향이 같음을 확인했지만, 크기는 분리하지 못했다.</p></div></section>
+<section class="section" id="s9"><div class="sec-label">09 · 결론</div><h2 class="sec-title">그래서 무엇이 남는가</h2><ol style='color:var(--body)'><li style="margin:0 0 12px 18px">점유는 2018·2022 두 번 연속 승부를 설명하지 못했고, 2026에 돌아왔다(55 → 47 → 76%). 두 제공자가 2022에 같은 값을 내므로 이 연결은 성립한다.</li><li style="margin:0 0 12px 18px">유효슈팅은 세 대회 내내 점유보다 강했다. “점유가 돌아왔다”는 정확히는 <b>위협이 실린 점유가 돌아왔다</b>는 뜻이다.</li><li style="margin:0 0 12px 18px">선전의 조건은 <b>막기(2018) → 찌르기(2022) → 쥐기(2026)</b>로 이동했다.</li><li style="margin:0 0 12px 18px">점유 1위 팀은 세 대회 모두 일찍 떠났다(스페인 16강 · 스페인 16강 · 튀르키예 조별). 달라진 것은 우승팀의 점유다 — 48.5 → 57.7 → 62.8%.</li><li style="margin:0 0 12px 18px">PK는 8년간 절반 이하로 줄었다(0.45 → 0.21).</li></ol></section>
+<footer><p><b>데이터</b> — 2018: StatsBomb Open Data(64경기 이벤트) + FIFA 2018 Technical Report. 2022: FIFA 공식 Post-Match Summary Report 64경기 + StatsBomb Open Data 64경기(다리 검증용). 2026: FIFA PMSR 104경기.</p><p style="margin-top:10px"><b>Data: StatsBomb Open Data</b> — github.com/statsbomb/open-data. 비상업 이용 조건에 따라 사용했다.</p><p style="margin-top:10px"><b>관련 리포트</b> — 2022 × 2026 상세: 「패배의 원인은 총량에서 배분으로 옮겨갔다」 · 2026 대회 전수 리포트</p></footer>
+<script>
+const F={"hit": {"poss": [54.9, 46.9, 76.2], "sot": [63.8, 74.4, 86.3], "counter": [66.7, 75.7, 43.1], "sb22": {"poss": 49.0, "sot": 70.0, "counter": 76.2}}, "rho": [0.2, 0.23, 0.62], "champ": [48.5, 57.7, 62.8], "pk": [0.45, 0.36, 0.21], "gap": {"poss": [0.3, 0.46, 0.95], "pass_pct": [0.33, 0.86, 1.1], "sot": [0.62, 0.56, 1.08], "xg": [0.51, 0.42, 1.13], "xga": [-0.73, -0.57, -0.87], "passes": [0.44, 0.68, 1.17]}}, T={"ser": ["점유율", "유효슈팅", "역습"], "tt_sb": "StatsBomb 2022", "gap_labels": ["점유율", "패스 수", "패스 성공률", "유효슈팅", "xG", "xGA (실점 기대값)"]};
+const C={ink:'#14181a',body:'rgba(20,24,26,.76)',muted:'rgba(20,24,26,.56)',grid:'rgba(20,24,26,.09)',card:'#ffffff',s1:'#171512',s2:'#d2462b',s3:'#8a959c',o1:'#cfd5d2',o2:'#8a959c',o3:'#171512'};
+Chart.defaults.font.family="'Inter','Noto Sans KR','Apple SD Gothic Neo',sans-serif";Chart.defaults.font.size=11;Chart.defaults.color=C.muted;
+Chart.defaults.plugins.legend.labels.boxWidth=11;Chart.defaults.plugins.legend.labels.boxHeight=11;Chart.defaults.plugins.legend.labels.color=C.body;
+Chart.defaults.plugins.tooltip.backgroundColor=C.ink;Chart.defaults.plugins.tooltip.padding=10;
+const GRID={grid:{color:C.grid,drawTicks:false},border:{display:false}},NOGRID={grid:{display:false},border:{display:false}};
+const YRS=['2018','2022','2026'];
+const endLabels={id:'endLabels',afterDatasetsDraw(ch){const {ctx}=ch;ch.data.datasets.forEach((ds,i)=>{const m=ch.getDatasetMeta(i);if(m.hidden)return;const p=m.data[m.data.length-1];ctx.save();ctx.fillStyle=C.ink;ctx.font="600 11px Inter, 'Noto Sans KR'";ctx.textBaseline='middle';ctx.fillText(ds.label+' '+ds.data[ds.data.length-1]+'%',p.x+12,p.y);ctx.restore();});}};
+const barLabels={id:'barLabels',afterDatasetsDraw(ch,a,o){const {ctx}=ch;ch.data.datasets.forEach((ds,i)=>{ch.getDatasetMeta(i).data.forEach((b,j)=>{const v=ds.data[j];ctx.save();ctx.fillStyle=C.ink;ctx.font="600 11px Inter, 'Noto Sans KR'";ctx.textAlign='center';ctx.fillText((o.fmt?o.fmt(v):v),b.x,b.y-8);ctx.restore();});});}};
+(()=>{const ser=[['poss',C.s1],['sot',C.s2],['counter',C.s3]];
+new Chart(document.getElementById('c1'),{type:'line',plugins:[endLabels],data:{labels:YRS,datasets:ser.map(([k,c],i)=>({label:T.ser[i],data:F.hit[k],borderColor:c,backgroundColor:c,borderWidth:2,pointRadius:5,pointHoverRadius:7,pointBorderColor:C.card,pointBorderWidth:2,tension:0}))},
+options:{responsive:true,maintainAspectRatio:false,layout:{padding:{right:140}},interaction:{mode:'index',intersect:false},
+plugins:{legend:{position:'top',align:'start'},tooltip:{callbacks:{label:c=>{const k=ser[c.datasetIndex][0];let s=' '+c.dataset.label+': '+c.parsed.y+'%';if(c.dataIndex===1)s+='  ('+T.tt_sb+' '+F.hit.sb22[k]+'%)';return s;}}}},
+scales:{y:{...GRID,min:20,max:100,ticks:{callback:v=>v+'%'}},x:{...NOGRID}}}});})();
+new Chart(document.getElementById('c2'),{type:'bar',plugins:[barLabels],data:{labels:YRS,datasets:[{label:'ρ',data:F.rho,backgroundColor:C.s1,borderRadius:4,borderSkipped:'bottom',barPercentage:.55}]},
+options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:18}},plugins:{legend:{display:false},barLabels:{fmt:v=>v.toFixed(2)},tooltip:{callbacks:{label:c=>' ρ = '+c.parsed.y.toFixed(2)}}},scales:{y:{...GRID,min:0,max:0.8},x:{...NOGRID}}}});
+new Chart(document.getElementById('c3'),{type:'bar',plugins:[barLabels],data:{labels:['2018 FRA','2022 ARG','2026 ESP'],datasets:[{label:'%',data:F.champ,backgroundColor:C.s1,borderRadius:4,borderSkipped:'bottom',barPercentage:.55}]},
+options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:18}},plugins:{legend:{display:false},barLabels:{fmt:v=>v+'%'},tooltip:{callbacks:{label:c=>' '+c.parsed.y+'%'}}},scales:{y:{...GRID,min:30,max:70,ticks:{callback:v=>v+'%'}},x:{...NOGRID}}}});
+(()=>{const keys=['poss','passes','pass_pct','sot','xg','xga'];const cols=[C.o1,C.o2,C.o3];
+new Chart(document.getElementById('c4'),{type:'bar',data:{labels:T.gap_labels,datasets:YRS.map((y,i)=>({label:y,data:keys.map(k=>F.gap[k][i]),backgroundColor:cols[i],borderColor:C.card,borderWidth:1,borderRadius:3,barPercentage:.85,categoryPercentage:.72}))},
+options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,interaction:{mode:'index',axis:'y',intersect:false},plugins:{legend:{position:'top',align:'start'},tooltip:{callbacks:{label:c=>' '+c.dataset.label+': z '+(c.parsed.x>0?'+':'')+c.parsed.x.toFixed(2)}}},
+scales:{x:{...GRID,min:-1.2,max:1.4},y:{...NOGRID,ticks:{color:C.body}}}}});})();
+new Chart(document.getElementById('c5'),{type:'bar',plugins:[barLabels],data:{labels:YRS,datasets:[{label:'PK',data:F.pk,backgroundColor:C.s1,borderRadius:4,borderSkipped:'bottom',barPercentage:.55}]},
+options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:18}},plugins:{legend:{display:false},barLabels:{fmt:v=>v.toFixed(2)},tooltip:{callbacks:{label:c=>' '+c.parsed.y.toFixed(2)}}},scales:{y:{...GRID,min:0,max:0.5},x:{...NOGRID}}}});
+</script>
+</body>
+</html>
