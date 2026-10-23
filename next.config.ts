@@ -27,6 +27,18 @@ const nextConfig: NextConfig = {
         headers: [{ key: "Cache-Control", value: "no-cache, must-revalidate" }],
       },
       {
+        source: "/structural-zone-covering.html",
+        headers: [{ key: "Cache-Control", value: "no-cache, must-revalidate" }],
+      },
+      {
+        source: "/structural-zone-covering.ko.html",
+        headers: [{ key: "Cache-Control", value: "no-cache, must-revalidate" }],
+      },
+      {
+        source: "/szc/:path*",
+        headers: [{ key: "Cache-Control", value: "no-cache, must-revalidate" }],
+      },
+      {
         source: "/korea-jordan.html",
         headers: [{ key: "Cache-Control", value: "no-cache, must-revalidate" }],
       },
@@ -48,6 +60,14 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/wc2022-2026-champions.html",
+        headers: [{ key: "Cache-Control", value: "no-cache, must-revalidate" }],
+      },
+      {
+        source: "/wc2018-2026-three-cycles.ko.html",
+        headers: [{ key: "Cache-Control", value: "no-cache, must-revalidate" }],
+      },
+      {
+        source: "/wc2018-2026-three-cycles.html",
         headers: [{ key: "Cache-Control", value: "no-cache, must-revalidate" }],
       },
       {
@@ -163,14 +183,6 @@ const nextConfig: NextConfig = {
         headers: [{ key: "Cache-Control", value: "no-cache, must-revalidate" }],
       },
       {
-        source: "/data-busan.html",
-        headers: [{ key: "Cache-Control", value: "no-cache, must-revalidate" }],
-      },
-      {
-        source: "/data-busan.ko.html",
-        headers: [{ key: "Cache-Control", value: "no-cache, must-revalidate" }],
-      },
-      {
         source: "/scouting-han-chanhee.html",
         headers: [{ key: "Cache-Control", value: "no-cache, must-revalidate" }],
       },
@@ -192,6 +204,14 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/daejeon-r28.ko.html",
+        headers: [{ key: "Cache-Control", value: "no-cache, must-revalidate" }],
+      },
+      {
+        source: "/data-busan.html",
+        headers: [{ key: "Cache-Control", value: "no-cache, must-revalidate" }],
+      },
+      {
+        source: "/data-busan.ko.html",
         headers: [{ key: "Cache-Control", value: "no-cache, must-revalidate" }],
       },
       {

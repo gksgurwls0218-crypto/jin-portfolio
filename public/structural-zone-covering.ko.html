@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>구조적 존 커버링 | Jin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="/szc/szc.css">
+</head>
+<body>
+<!-- HERO -->
+<section class="band">
+  <div class="inner">
+    <div class="hero-grid">
+      <div style="min-width:0">
+        <a class="back" href="/ko/approach" target="_top">← Approach · 변이 이론</a>
+        <div class="kicker">Approach · Defending principle</div>
+        <h1>구조적 존<br>커버링</h1>
+        <div class="en">Structural Zone Covering</div>
+        <p class="thesis">맨마킹 압박이 비운 자리를, 공이 없는 쪽이 구조로 메운다. 목적은 상대에게 반대 전환을 허락하지 않는 것이다.</p>
+        <p class="meta">기준 예시: 4-3-3 미들블록, 4백 · 형태와 무관하게 성립하는 원리로 서술 · 2026-10-23</p>
+      </div>
+      <div style="min-width:0">
+        <div class="tp bare" data-scenes="A" data-hero="1"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="band raised">
+  <div class="inner">
+    <div class="col">
+      <span class="secno">01 · QUESTION</span>
+      <h2>90분 내내, 한 시즌 모든 대회를 압박으로 지배할 수 있는가</h2>
+      <p>현대 축구에서는 어떤 블록에서든 맨마킹 기반 압박이 기본 베이스로 자리 잡아 가고 있다. 교체가 5장으로 늘면서 예전보다 사정은 나아졌다. 그래도 90분 내내 맨마킹으로 압박할 수는 없다. 탑 티어 리그와 팀으로 갈수록 대표팀 차출이 있고, 비행 거리는 무시할 수 없다. 피로는 부상의 한 요소다.</p>
+      <p>이 글의 관심은 <strong>지속가능한 축구</strong>다. 지속가능성은 네 가지 조건으로 정의한다.</p>
+    </div>
+    <div class="cond">
+      <div><div class="k">Goal</div><div class="v">모든 대회 우승</div><p>한 시즌 참가하는 모든 대회</p></div>
+      <div><div class="k">Injury</div><div class="v">비접촉 부상 최소화</div><p>충돌이 아니라 혼자 다치는 부상</p></div>
+      <div><div class="k">Squad</div><div class="v">최상의 조합 유지</div><p>베스트 조합을 시즌 내내 최대한 길게</p></div>
+      <div><div class="k">System</div><div class="v">전술의 큰 틀 유지</div><p>시즌 중 큰 틀을 바꾸지 않는다</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section class="band">
+  <div class="inner">
+    <div class="col">
+      <span class="secno">02 · PAIN POINT</span>
+      <h2>맨마킹 압박은 자리 이탈을 전제한다</h2>
+      <p>모두가 같이 맨마킹을 하면 겉으로는 구조적 압박이다. 하지만 디테일하게 보면 맨마킹 기반 압박은 <strong>본 포지션 이탈이 전제</strong>다. 게겐프레싱이든 하이블록이든, 특정 선수는 숫자 싸움을 위해 자기 자리를 벗어나 튕겨 나간다.</p>
+      <p>압박에 성공하면 문제가 없다. 문제는 실패했을 때다.</p>
+    </div>
+    <figure>
+      <svg class="static" viewBox="0 0 760 230" role="img" aria-label="맨마킹 압박의 두 결과: 성공하면 탈취, 실패하면 후방 수적 열세와 넓은 공간, 복귀 스프린트, 실점 위험">
+        <defs><marker id="m1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="rgba(20,24,26,.56)"/></marker>
+        <marker id="m2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#d2462b"/></marker></defs>
+        <rect x="10" y="85" width="170" height="60" rx="4" class="box-k"/>
+        <text x="95" y="111" class="tx-w" text-anchor="middle">맨마킹 압박</text>
+        <text x="95" y="130" fill="rgba(255,255,255,.7)" font-size="11" font-family="JetBrains Mono" text-anchor="middle">자리 이탈 전제</text>
+        <path d="M180 105 C230 105 230 50 270 50" class="ar" marker-end="url(#m1)"/>
+        <path d="M180 125 C230 125 230 180 270 180" class="ar-v" marker-end="url(#m2)"/>
+        <text x="222" y="62" class="tx-m" text-anchor="middle">성공</text>
+        <text x="222" y="178" class="tx-m" text-anchor="middle" fill="#d2462b">실패</text>
+        <rect x="272" y="25" width="190" height="50" rx="4" class="box"/>
+        <text x="367" y="55" class="tx" text-anchor="middle">볼 탈취 · 문제 없음</text>
+        <rect x="272" y="150" width="140" height="60" rx="4" class="box-v"/>
+        <text x="342" y="176" class="tx-v" text-anchor="middle">후방 수적 열세</text>
+        <text x="342" y="195" class="tx-v" text-anchor="middle">+ 넓은 공간</text>
+        <path d="M412 180 L452 180" class="ar-v" marker-end="url(#m2)"/>
+        <rect x="454" y="150" width="140" height="60" rx="4" class="box-v"/>
+        <text x="524" y="176" class="tx-v" text-anchor="middle">전력 복귀</text>
+        <text x="524" y="195" class="tx-v" text-anchor="middle">스프린트</text>
+        <path d="M594 180 L634 180" class="ar-v" marker-end="url(#m2)"/>
+        <rect x="636" y="150" width="114" height="60" rx="4" class="box-v"/>
+        <text x="693" y="176" class="tx-v" text-anchor="middle">체력 손실</text>
+        <text x="693" y="195" class="tx-v" text-anchor="middle">실점 위험</text>
+      </svg>
+    </figure>
+    <div class="tp" data-scenes="P"></div>
+    <div class="legend"><span><i style="background:var(--char)"></i>우리 팀</span><span><i style="border:1.8px solid var(--opp)"></i>상대</span><span><i style="background:var(--void-soft);border:1px dashed var(--void);border-radius:2px"></i>비워진 공간</span><span>점선 세로줄 = 5레인 (와이드 · 하프스페이스 · 중앙)</span></div>
+    <div class="col" style="margin-top:34px">
+      <p class="quote">맨마킹 압박은 모두가 같이 할 때 구조처럼 보이지만, 성향으로 보면 개별적인 압박이다. 자기 자리를 이탈하고, 후방 구조가 무너지기 때문이다.</p>
+      <p>맨마킹이 아니더라도 국면에 따라 수비 구조를 바꾸는 팀이 늘고 있다. 무리뉴의 로마는 스토퍼 한 명을 올려 수비하고 윙백을 내려 4백을 만드는 방식을 썼다. 어떤 방식이든 후방 구조가 바뀐다면 결국 <strong>누군가는 그 공간을 메워야 한다.</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- 03 -->
+<section class="band signal">
+  <div class="inner">
+    <div class="col">
+      <span class="secno" style="color:rgba(255,255,255,.6)">03 · DEFINITION</span>
+      <h2>공간의 커버를 구조로 대응한다</h2>
+      <p><strong>구조적 존 커버링</strong>은 압박이나 국면 전환으로 이탈한 선수의 공간을, 개인의 복귀 스프린트가 아니라 <strong>팀 구조의 재배치</strong>로 메우는 수비 원리다.</p>
+      <p>전제는 하나다. <strong>수비는 혼자 할 수 없다.</strong> 훌륭한 센터백 한 명이 있다고 실점이 줄지 않는다. 팀으로, 구조로 수비해야 한다. 가장 중요한 것은 공간을 압축하는 것이고, 문제는 어디에서 압축하느냐다.</p>
+      <p class="quote" style="color:#fff;border-color:#fff">공이 없는 반대편에서 공간을 커버하고, 좁혀서, 구조를 압축한다.</p>
+      <p>핵심 요소는 세 가지다. <strong>선과 선 사이의 간격</strong>, <strong>자리 이탈에 대한 합의와 소통</strong>, 그리고 <strong>다 같이 수비하는 토탈 풋볼적 요소</strong>. 공격의 스위칭처럼, 수비에서도 같은 역할을 다른 선수가 이어받는다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 04 -->
+<section class="band">
+  <div class="inner">
+    <div class="col">
+      <span class="secno">04 · OBJECTIVE</span>
+      <h2>전환을 허락하지 않는다</h2>
+      <p>미들블록이든 하이블록이든, 우리의 3선 높이는 상대가 반대 전환을 하거나 키 패스를 넣기 가장 좋은 높이다. 센터백을 앞으로 보내는 이유는 그 공간에서 <strong>수적 우위, 공간적 우위와 점유</strong>를 가져오기 위해서다. 전환이 나온 뒤에 대비하는 것이 아니라, <strong>전환할 시간과 여유를 처음부터 주지 않는 것</strong>이다.</p>
+    </div>
+    <div class="layers">
+      <div class="layer main"><div class="n">LAYER 1 · 본체</div><h4>차단</h4><p>3선 높이에서 수적·공간적 우위를 점유해 전환할 시간과 여유를 주지 않는다.</p></div>
+      <div class="layer"><div class="n">LAYER 2</div><h4>방해</h4><p>전환을 내주더라도 압박 속에서 차게 만들어 불편하고 부정확하게 만든다.</p></div>
+      <div class="layer"><div class="n">LAYER 3</div><h4>구조 이동</h4><p>정확한 전환이 나와도 공이 떠 있는 동안 구조 전체가 이동하고, 이탈한 센터백은 복귀한다.</p></div>
+    </div>
+    <figure>
+      <svg class="static" viewBox="0 0 760 210" role="img" aria-label="세 겹의 방어 개념도: 상대의 전환 의도가 1층 차단, 2층 방해, 3층 구조 이동을 거치며 위협이 줄어든다">
+        <text x="10" y="22" class="tx-m">개념도 · 수치가 아니라 층의 역할을 나타낸다</text>
+        <rect x="10" y="40" width="740" height="34" rx="3" class="bar-l" opacity=".35"/>
+        <text x="22" y="62" class="tx">상대가 반대 전환을 하고 싶은 모든 순간</text>
+        <rect x="10" y="84" width="420" height="34" rx="3" class="bar"/>
+        <text x="22" y="106" class="tx-w" style="font-size:13px">1층 차단 이후 · 실제로 찰 수 있었던 순간</text>
+        <rect x="10" y="128" width="210" height="34" rx="3" class="bar" opacity=".7"/>
+        <text x="232" y="150" class="tx">2층 방해 이후 · 정확하게 도착한 전환</text>
+        <rect x="10" y="172" width="80" height="34" rx="3" class="bar-v"/>
+        <text x="102" y="194" class="tx-v">3층 구조 이동 이후 · 실제로 전진에 성공한 전환</text>
+      </svg>
+      <figcaption>구현이 잘될수록 상대의 전환 자체가 줄고, 전환이 나와도 부정확하면 우리가 급하게 달려갈 이유도 사라진다. 이 원리의 체력적 이점은 여기서 나온다.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="band raised">
+  <div class="inner">
+    <div class="col">
+      <span class="secno">05 · MECHANISM</span>
+      <h2>트리거는 전방에 있다</h2>
+      <p>트리거는 팀마다 사정이 다르다. 아래는 4-3-3 미들블록 예시다. 게임 플랜은 상대를 밀어내고, 중앙의 수적 우위로 볼을 뺏어 숏카운터를 치는 것이다.</p>
+      <ol class="chain">
+        <li><span class="who">전방</span><span>상대 후방 빌드업이 시작되면 공격수가 <strong>채널링</strong>으로 방향을 건다. 이것이 트리거다.</span></li>
+        <li><span class="who">볼 쪽 CB</span><span>공이 전달된 쪽 센터백이 전진해 3선 미드필더를 돕는다. 볼 가진 상대가 어디로 뿌릴지, 펄스 나인의 움직임, 받으러 나오는 <strong>오퍼링 무브</strong>를 주시하다가 공이 들어오면 즉시 개입한다.</span></li>
+        <li><span class="who">풀백</span><span>센터백의 출발과 <strong>동시에</strong> 좁혀 후방 3백을 만든다.</span></li>
+        <li><span class="who">결과</span><span>후방이 <strong>3-2 코어</strong>로 바뀐다. 후방 3명 + 전진한 센터백과 수비형 미드필더.</span></li>
+      </ol>
+      <p>상대가 중앙으로 들어올 때도 규칙은 같다. <strong>3선 미드필더를 기준으로</strong> 공이 오는 쪽 센터백이 달려들고, 해당 풀백이 좁혀 3백을 만든다.</p>
+      <h3>두 프로토콜 중 팀이 고른다</h3>
+      <p>어느 채널링을 기본값으로 둘지는 감독이 원하는 축구와 선수단 구성이 정한다. 경기에서는 여러 상황이 동시에 일어나므로 두 프로토콜을 모두 준비한다.</p>
+    </div>
+    <div class="tp" data-scenes="A,B"></div>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>구분</th><th>프로토콜 A · 아웃 채널링</th><th>프로토콜 B · 인 채널링</th></tr></thead>
+        <tbody>
+          <tr><td>유도 방향</td><td>한쪽 측면, 터치라인 근처</td><td>중앙 트랩</td></tr>
+          <tr><td>압도 방식</td><td>터치라인을 한 명의 수비수처럼 쓰며 수적 우위로 압도</td><td>중앙에서 사방을 둘러싸 압도</td></tr>
+          <tr><td>비워 두는 곳</td><td>반대편 측면</td><td>양쪽 측면</td></tr>
+          <tr><td>탈취 후</td><td>측면에서 출발하므로 골까지 거리가 길다</td><td>중앙에서 출발하므로 골까지 거리가 짧다</td></tr>
+          <tr><td>실패 시</td><td>반대 전환 위험 → 6절의 대응</td><td>중앙이 뚫리면 곧바로 골문 앞 위험</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section class="band">
+  <div class="inner">
+    <div class="col">
+      <span class="secno">06 · WHY THE FAR SIDE CAN BE EMPTY</span>
+      <h2>반대편을 비워도 되는 이유</h2>
+      <p>프로토콜 A에서 상대는 왼쪽에서 공을 돌리고 있고, 우리는 더 왼쪽으로 유도했다. 전진한 센터백 덕분에 그 지역은 이미 수적 우위다. 이 상황에서 상대는 바로 반대로 전환하기 어렵다.</p>
+      <ul>
+        <li>오버로드 상황에서 한 번에 차는 킥은 <strong>부정확하다.</strong></li>
+        <li>조금만 낮게 차면 <strong>수비 구조에 걸린다.</strong></li>
+        <li>정확하게 차도 공은 높게 뜨고, <strong>날아가는 시간</strong>이 있다.</li>
+      </ul>
+      <p>반대편 윙어를 혼자 두는 것은 설계다. 목표는 그 윙어를 잡는 것이 아니라 <strong>그 윙어에게 공이 가지 않게 하는 것</strong>이다. 그래도 공이 갔다면 순서는 정해져 있다. <strong>가장 가까운 선수가 접근 → 뺏지 않고 시간 끌기 → 구조 완성.</strong></p>
+    </div>
+    <div class="tp" data-scenes="S"></div>
+    <figure>
+      <svg class="static" viewBox="0 0 760 250" role="img" aria-label="시간 비교 추정: 띄운 반대 전환 비행 2.5에서 3초, 받는 선수 첫 터치까지 약 1초 추가, 구조 재배치에 필요한 시간 약 2.2에서 2.7초, 낮게 깔아 찬 전환 약 1.5초">
+        <text x="10" y="20" class="tx-m">시간 비교 · 모두 추정치 (선수 횡이동 약 5.5m/s, 이동 거리 12~15m 가정)</text>
+        <g>
+          <line x1="250" y1="34" x2="250" y2="226" class="grid"/><line x1="370" y1="34" x2="370" y2="226" class="grid"/><line x1="490" y1="34" x2="490" y2="226" class="grid"/><line x1="610" y1="34" x2="610" y2="226" class="grid"/><line x1="730" y1="34" x2="730" y2="226" class="grid"/>
+          <text x="250" y="244" class="tx-m" text-anchor="middle">0s</text><text x="370" y="244" class="tx-m" text-anchor="middle">1s</text><text x="490" y="244" class="tx-m" text-anchor="middle">2s</text><text x="610" y="244" class="tx-m" text-anchor="middle">3s</text><text x="730" y="244" class="tx-m" text-anchor="middle">4s</text>
+        </g>
+        <text x="10" y="64" class="tx">띄운 반대 전환 (40m 안팎)</text>
+        <rect x="250" y="48" width="300" height="24" class="bar"/>
+        <rect x="550" y="48" width="60" height="24" class="bar" opacity=".45"/>
+        <text x="618" y="65" class="tx-m">2.5–3.0s</text>
+        <text x="10" y="104" class="tx">+ 받는 선수 첫 터치</text>
+        <rect x="250" y="88" width="300" height="24" class="bar" opacity=".25"/>
+        <rect x="550" y="88" width="120" height="24" class="bar-l"/>
+        <text x="678" y="105" class="tx-m">+ 약 1s</text>
+        <text x="10" y="150" class="tx-b">구조 재배치에 필요한 시간</text>
+        <rect x="250" y="134" width="264" height="24" class="bar-v"/>
+        <rect x="514" y="134" width="60" height="24" class="bar-v" opacity=".45"/>
+        <text x="582" y="151" class="tx-m" fill="#d2462b">2.2–2.7s</text>
+        <text x="10" y="200" class="tx">낮게 깔아 찬 전환</text>
+        <rect x="250" y="184" width="180" height="24" class="bar-l"/>
+        <text x="438" y="201" class="tx-m">약 1.5s · 1층 차단이 찰 시간을 주지 않는 것이 대응</text>
+      </svg>
+      <figcaption><b>재구성 시간 &lt; 공 비행 시간 + 첫 터치</b>이면 반대편은 비어 있어도 안전하다. 이 부등식이 이 원리의 반증 가능한 명제다. 실측은 트래킹 데이터가 있어야 한다.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- 07 -->
+<section class="band raised">
+  <div class="inner">
+    <div class="col">
+      <span class="secno">07 · TWO MODES</span>
+      <h2>복귀형과 이어받기형을 변이로 운용한다</h2>
+      <p>현대 축구에서 수비도 한 가지 방식으로만 대응할 수 없다. 그래서 두 모드를 모두 갖춘다.</p>
+    </div>
+    <div class="tbl" style="max-width:780px">
+      <table>
+        <thead><tr><th>모드</th><th>정의</th><th>성격</th></tr></thead>
+        <tbody>
+          <tr><td>복귀형</td><td>이탈했던 선수가 원래 자리로 돌아간다</td><td>클래식하고 확실하다</td></tr>
+          <tr><td>이어받기형</td><td>공과 가장 가까운 선수가 <strong>지금 서 있는 위치의 역할</strong>을 공격과 수비 모두에서 수행한다</td><td>유기적이다. 같은 역할을 다른 선수가 이어받는다</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col">
+      <p><strong>전진한 센터백.</strong> 4백에서 왼쪽 센터백이 3선 미드필더 옆으로 올라가 3-2로 수비한다면, 그 위치에 있는 동안 그는 수비형 미드필더다. 공을 뺏은 뒤에도 그 위치의 역할을 한다.</p>
+      <p><strong>익스체인징.</strong> 상대가 측면 뒷공간으로 롱볼을 보내면 센터백과 풀백이 잠시 위치를 바꿔 플레이한다. 클래식한 수비에서도 많이 쓰는 이어받기다.</p>
+      <p><strong>윙어와 스트라이커.</strong> 아웃 채널링으로 원톱이 공을 오른쪽 측면으로 몰았고, 그 과정에서 스트라이커가 측면에 자리를 잡았다. 오른쪽 윙어에게는 두 선택지가 있다. 정답은 감독이 원하는 축구에 있다. 이 원리의 제안은 <strong>두 선택지를 모두 살려 두는 것</strong>이다.</p>
+    </div>
+    <div class="tp" data-scenes="R1,R2"></div>
+    <div class="col" style="margin-top:22px">
+      <p>어느 쪽이든 고를 수 있는 상태가 공격의 variation theory와 같은 구조다. 수비에도 변이가 있다.</p>
+      <p class="note">전제 조건: 이어받기형은 선수가 다른 위치의 역할을 수행할 수 있어야 성립한다. 그런 선수가 없다면 복귀형이 기본이 된다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section class="band">
+  <div class="inner">
+    <div class="two">
+      <div class="col" style="min-width:0">
+        <span class="secno">08 · SIMULTANEITY</span>
+        <h2>왜 여러 명이 동시에 움직일 수 있는가</h2>
+        <p>이 원리는 여러 선수가 동시에 움직여야 성립한다. 그게 가능한 이유는 각 선수가 공을 읽는 것이 아니라 <strong>바로 옆 포지션의 선수를 보고 따라가면 되기 때문</strong>이다.</p>
+        <ul>
+          <li>트리거가 전방에 있으므로 <strong>공이 오기 전에 연쇄가 시작된다.</strong></li>
+          <li>옆 선수를 따라가는 것은 단순한 규칙이라 반응이 일정하다. 시간적 여유가 충분하다.</li>
+          <li>그래서 필요한 능력은 개인 수비력이 아니라 <strong>집중력과 공간 이해도</strong>다.</li>
+        </ul>
+        <p class="note">위험 요소: 연쇄는 오류도 전파한다. 한 명이 늦으면 그 뒤가 전부 늦는다. 훈련에서는 연쇄의 첫 고리(풀백의 좁힘 시점)를 먼저 점검한다.</p>
+      </div>
+      <div style="min-width:0">
+        <div class="tp" data-scenes="C"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 -->
+<section class="band raised">
+  <div class="inner">
+    <div class="col">
+      <span class="secno">09 · POSITIONING</span>
+      <h2>기존 개념과 무엇이 다른가</h2>
+      <p>반대편을 좁히는 행위 자체는 새롭지 않다. 이 원리가 새로 묶는 것은 <strong>맨마킹 시대의 비용을 전제로 한 재구성, 역할 이어받기, 시즌 지속가능성</strong>이다.</p>
+    </div>
+    <div class="tbl" style="max-width:860px">
+      <table>
+        <thead><tr><th>기존 개념</th><th>구조적 존 커버링</th></tr></thead>
+        <tbody>
+          <tr><td>커버와 밸런스</td><td>간격 조정이 아니라 <strong>라인 수 재구성</strong> (4백 → 3-2 코어)</td></tr>
+          <tr><td>스페어맨 (상시 한 명을 남김)</td><td>필요할 때만 <strong>동적으로</strong> 만든다. 몸 하나를 상시 쓰지 않는다</td></tr>
+          <tr><td>상시 백5</td><td>임시 3-2. 전방 숫자를 상시 잃지 않는다</td></tr>
+          <tr><td>전환에 대비</td><td><strong>전환을 허락하지 않는 것</strong>이 목적</td></tr>
+          <tr><td>공을 기준으로 반응</td><td><strong>전방 트리거 + 옆 선수 추종</strong>으로 동시 이동</td></tr>
+          <tr><td>단일 대응</td><td><strong>복귀형 / 이어받기형</strong>을 변이로 운용</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col">
+      <p>그리고 공수 대칭이 있다. 수비에서 만든 <strong>3-2 코어는 공격의 레스트 디펜스 형태와 같다.</strong> 볼을 뺏는 순간 뒤가 이미 갖춰져 있으므로, 숏카운터를 치더라도 역습에 노출되는 시간이 짧다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="band">
+  <div class="inner">
+    <div class="col">
+      <span class="secno">10 · SUSTAINABILITY</span>
+      <h2>비접촉 부상과 어떻게 연결되는가</h2>
+      <p>혼자 다치는 부상은 하나로 묶으면 설명이 틀린다. 근육 부상과 인대(ACL) 부상은 원인 변수가 다르다. 구조적 존 커버링은 두 계열에 <strong>서로 다른 경로</strong>로 닿는다.</p>
+    </div>
+    <figure>
+      <svg class="static" viewBox="0 0 760 270" role="img" aria-label="부상 경로 도식: 전환 불허가 복귀 스프린트를 줄여 근육 부상의 피로 경로에, 고립된 다급한 태클을 줄여 ACL의 동작 경로에 닿는다">
+        <defs><marker id="m3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="rgba(20,24,26,.56)"/></marker></defs>
+        <rect x="10" y="100" width="170" height="70" rx="4" class="box-k"/>
+        <text x="95" y="130" class="tx-w" text-anchor="middle">구조적 존 커버링</text>
+        <text x="95" y="150" fill="rgba(255,255,255,.7)" font-size="11" font-family="JetBrains Mono" text-anchor="middle">전환 불허</text>
+        <path d="M180 120 C215 120 215 62 250 62" class="ar" marker-end="url(#m3)"/>
+        <path d="M180 150 C215 150 215 208 250 208" class="ar" marker-end="url(#m3)"/>
+        <rect x="252" y="32" width="200" height="60" rx="4" class="box"/>
+        <text x="352" y="58" class="tx-b" text-anchor="middle">전력 복귀 스프린트 ↓</text>
+        <text x="352" y="78" class="tx-m" text-anchor="middle">뒷공간으로 되돌아가는 고속 러닝</text>
+        <rect x="252" y="178" width="200" height="60" rx="4" class="box"/>
+        <text x="352" y="204" class="tx-b" text-anchor="middle">고립된 다급한 태클 ↓</text>
+        <text x="352" y="224" class="tx-m" text-anchor="middle">넓은 공간에서 하는 1대1</text>
+        <path d="M452 62 L492 62" class="ar" marker-end="url(#m3)"/>
+        <path d="M452 208 L492 208" class="ar" marker-end="url(#m3)"/>
+        <rect x="494" y="22" width="256" height="80" rx="4" class="box"/>
+        <text x="508" y="46" class="tx-b">근육 부상 · 피로 경로</text>
+        <text x="508" y="68" class="tx-m">햄스트링 부상 약 50%가</text>
+        <text x="508" y="86" class="tx-m">각 하프 마지막 15분 (Ekstrand)</text>
+        <rect x="494" y="168" width="256" height="80" rx="4" class="box"/>
+        <text x="508" y="192" class="tx-b">ACL · 동작 경로</text>
+        <text x="508" y="214" class="tx-m">88% 무릎 직접 접촉 없음 · 47% 압박·태클</text>
+        <text x="508" y="232" class="tx-m">62% 전반전 → 피로보다 동작 (Della Villa)</text>
+      </svg>
+      <figcaption>여기에 대표팀 차출, 장거리 비행, 대회 수 증가가 겹친다. 같은 역할을 다른 선수가 이어받을 수 있다면 부하가 특정 선수에게 몰리지 않는다. 수비는 조직력이므로 최상의 페어로 가는 것이 맞지만, 경기가 늘고 부상이 일반화된 환경에서는 그에 대응하는 구조가 필요하다.</figcaption>
+    </figure>
+    <div class="col">
+      <p class="note">한계: 위 연결은 메커니즘상 그럴 법하다는 해석이며, 이 원리를 쓴 팀의 부상률을 측정한 결과가 아니다. 또한 전진하는 센터백은 3선에서 압박·경합이 늘고, 그 동작은 ACL 상황 패턴 1위다. 대응 논리는 "고립된 태클이 아니라 지원받는 수적 우위 속의 경합"이라는 질적 차이이며, 이것도 아직 측정되지 않았다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="band raised">
+  <div class="inner">
+    <div class="col">
+      <span class="secno">11 · MEASUREMENT</span>
+      <h2>작동하는지 무엇으로 보는가</h2>
+      <p>목적이 전환 불허이므로, 1차 지표는 <strong>상대의 전환</strong>이다.</p>
+    </div>
+    <div class="tbl" style="max-width:860px">
+      <table>
+        <thead><tr><th>층</th><th>지표</th><th>데이터</th></tr></thead>
+        <tbody>
+          <tr><td>1층 차단</td><td>우리가 3-2 상태일 때 상대의 반대 전환 시도율 (볼 쪽 소유 1회당)</td><td>이벤트</td></tr>
+          <tr><td>2층 방해</td><td>반대 전환 성공률 · 전환 직전 볼 소유 시간</td><td>이벤트 + 트래킹</td></tr>
+          <tr><td>3층 구조 이동</td><td>전환을 받은 선수의 다음 액션: 전진 성공 vs 백패스·스로인</td><td>이벤트</td></tr>
+          <tr><td>3층 구조 이동</td><td>구조 재배치 시간 vs 공 비행 시간 · 센터백 복귀 시간</td><td>트래킹</td></tr>
+          <tr><td>비용</td><td>3-2 상태에서 뚫렸을 때 N초 안의 슈팅·실점 허용</td><td>이벤트</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col"><p class="note">반대 전환(switch of play)의 조작적 정의는 아직 정하지 않았다. 가로 이동 거리, 중앙선 통과 여부, 공중볼 여부를 먼저 고정해야 수치를 낼 수 있다.</p></div>
+  </div>
+</section>
+
+<!-- 12 -->
+<section class="band">
+  <div class="inner">
+    <div class="col">
+      <span class="secno">12 · OBJECTIONS</span>
+      <h2>예상되는 반론</h2>
+    </div>
+    <div class="tbl" style="max-width:860px">
+      <table>
+        <thead><tr><th>반론</th><th>현재 대응</th></tr></thead>
+        <tbody>
+          <tr><td>상대가 일부러 한쪽에 몰아 놓고 반대편 1대1을 노리면?</td><td>정의상 이 원리는 상대가 유도한 고립이 아니라 <strong>우리가 유도한 쏠림</strong>을 전제한다. 상대의 오버로드 → 고립 전략과 맞붙는 경우의 대응은 아직 열려 있다</td></tr>
+          <tr><td>그냥 커버와 밸런스 아닌가?</td><td>09절. 라인 수 재구성 · 전환 불허 목적 · 이어받기형이 차이다</td></tr>
+          <tr><td>낮고 빠르게 깔아 차면 시간이 없다</td><td>1층(차단)이 그 킥을 찰 시간을 주지 않는 것이 목적이다. 낮은 킥은 수비 구조에 걸린다</td></tr>
+          <tr><td>ACL은 피로와 무관하다는 데이터가 있다</td><td>10절. 근육(피로 경로)과 ACL(동작 경로)을 분리해 대응한다</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col">
+      <h3 style="margin-top:20px">근거</h3>
+      <ul class="src">
+        <li>Della Villa et al. (2020), BJSM · ACL 부상 영상 분석 134건</li>
+        <li>ACL 영상 분석 메타분석 (2026), Sports Medicine · 수비 동작 2.51배, 비소유 2.31배</li>
+        <li>Ekstrand, UEFA Elite Club Injury Study · 햄스트링 부상 시점</li>
+        <li>Coaches' Voice, Half-spaces Explained · 백4에서 스텝아웃의 위험</li>
+        <li>Coaches' Voice, 4-3-2-1 Formation Explained · 반대편이 좁혀 커버</li>
+        <li>Coaches' Voice, Mourinho at Roma</li>
+      </ul>
+      <div class="next"><a href="/ko/approach" target="_top">← 변이 이론 전문</a><a href="/ko/match-analysis" target="_top">Match Analysis →</a></div>
+    </div>
+  </div>
+</section>
+<script src="/szc/szc-player.js"></script>
+</body>
+</html>
