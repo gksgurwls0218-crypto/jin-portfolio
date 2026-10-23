@@ -24,11 +24,12 @@ export default function BilingualNote({ tone = "light" }: { tone?: "light" | "mu
   return (
     <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
       <span
-        className="mono inline-flex items-center rounded-full"
+        className="mono inline-flex items-center"
         style={{
           fontSize: 10,
           letterSpacing: "0.16em",
-          padding: "4px 9px",
+          padding: "3px 8px",
+          borderRadius: 3,
           color: "var(--signal-ink)",
           background: "var(--green-bright)",
           whiteSpace: "nowrap",
@@ -50,11 +51,12 @@ export default function BilingualNote({ tone = "light" }: { tone?: "light" | "mu
       <Link
         href={`/${other}${rest}`}
         hrefLang={other}
-        className="mono inline-flex items-center gap-1.5 rounded-full transition-colors duration-200"
+        className="mono inline-flex items-center gap-1.5 transition-colors duration-200"
         style={{
           fontSize: 12,
-          padding: "6px 13px",
-          border: "1px solid var(--green-line)",
+          padding: "5px 11px",
+          borderRadius: 4,
+          border: "1px solid var(--edge-2)",
           color: "var(--green-bright)",
           background: "transparent",
           whiteSpace: "nowrap",

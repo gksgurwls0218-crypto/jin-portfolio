@@ -1,11 +1,11 @@
 import Hero from "@/components/Hero";
-import HomeCarousel from "@/components/HomeCarousel";
+import HomeIndex from "@/components/HomeIndex";
 
 export default function Home() {
   return (
     <>
       <Hero />
-      <HomeCarousel />
+      <HomeIndex />
     </>
   );
 }
