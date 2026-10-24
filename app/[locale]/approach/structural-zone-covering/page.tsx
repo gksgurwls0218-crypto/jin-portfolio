@@ -1,36 +1,9 @@
-import type { Metadata } from "next";
-import { isLocale, type Locale } from "@/lib/i18n";
+import { permanentRedirect } from "next/navigation";
+import { isLocale } from "@/lib/i18n";
 
-const META: Record<Locale, Metadata> = {
-  en: {
-    title: "Structural Zone Covering — Approach | Jin",
-    description: "The space a man-marking press leaves behind is filled by the far side, as a structure. A defending principle built to deny the switch, with animated pitch diagrams.",
-  },
-  ko: {
-    title: "구조적 존 커버링 — 접근법 | Jin",
-    description: "맨마킹 압박이 비운 자리를 공이 없는 쪽이 구조로 메운다. 반대 전환을 허락하지 않는 수비 원리, 움직이는 피치 도식과 함께.",
-  },
-};
-
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+// Moved to the Data & KPI Lab on 2026-10-25. Kept so links already shared
+// (LinkedIn, the /approach essay) keep working.
+export default async function StructuralZoneCoveringMoved({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
-  return META[isLocale(locale) ? locale : "en"];
-}
-
-// Authored as a self-contained animated HTML document (same pattern as
-// /approach): /public/structural-zone-covering(.ko).html, with the shared
-// pitch player and styles in /public/szc/.
-export default async function StructuralZoneCoveringPage({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params;
-  const src = locale === "ko" ? "/structural-zone-covering.ko.html" : "/structural-zone-covering.html";
-
-  return (
-    <div style={{ background: "var(--stage)", paddingTop: 62, minHeight: "100vh" }}>
-      <iframe
-        src={src}
-        title={locale === "ko" ? "구조적 존 커버링" : "Structural Zone Covering"}
-        style={{ width: "100%", height: "calc(100vh - 62px)", border: "none", display: "block" }}
-      />
-    </div>
-  );
+  permanentRedirect(`/${isLocale(locale) ? locale : "en"}/kpi-lab/lab/structural-zone-covering`);
 }

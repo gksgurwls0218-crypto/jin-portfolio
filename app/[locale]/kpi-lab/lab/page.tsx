@@ -41,10 +41,25 @@ const JWC = {
   },
 };
 
-/** The Signature Move series — self-contained research reports with their own
+/** Self-contained research pages (the HTML lives in /public): Structural Zone
+ *  Covering and the Signature Move series — self-contained research reports with their own
  *  pages (the HTML lives in /public). Listed here, in the Lab, because they are
  *  research in progress rather than finished tactical terms. */
 const SERIES = [
+  {
+    href: "/kpi-lab/lab/structural-zone-covering",
+    code: "SZC",
+    type: "Theory-derived",
+    status: "draft" as const,
+    added: "2026-10-23",
+    updated: "2026-10-23",
+    basedOn: ["Man-marking press", "Switch denial", "Return · Relay", "Non-contact injury"],
+    name: { en: "Structural Zone Covering", ko: "구조적 존 커버링" },
+    short: {
+      en: "The space a man-marking press leaves behind is filled by the side without the ball, as a structure — so the opponent never gets the switch. A defending principle, with animated pitch diagrams.",
+      ko: "맨마킹 압박이 비운 자리를 공이 없는 쪽이 구조로 메운다. 상대에게 반대 전환을 허락하지 않는 수비 원리 — 움직이는 피치 도식과 함께.",
+    },
+  },
   {
     href: "/kpi-lab/lab/signature-move-1",
     code: "SM-1",
