@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import KpiDetail from "@/components/kpi/KpiDetail";
 import LocaleLink from "@/components/LocaleLink";
-import { LAB, STATUS_BADGE, WC_BADGE, findLab } from "@/lib/kpiMetrics";
+import { LAB, STATUS_BADGE, findLab } from "@/lib/kpiMetrics";
 import { LAB_KO, LAB_TYPE_KO, STATUS_LABEL_KO } from "@/lib/kpiContent.ko";
 import { isLocale, type Locale } from "@/lib/i18n";
+import { LAB_FIGS } from "@/lib/labFigures";
 
 export function generateStaticParams() {
   return LAB.map((k) => ({ id: k.id }));
@@ -60,6 +61,11 @@ export default async function LabDetailPage({ params }: { params: Promise<{ id: 
     ? `기존 KPI/데이터에 기반: ${k.basedOn.join(", ")}.`
     : `Grounded in existing KPIs/data: ${k.basedOn.join(", ")}.`;
 
+  const idx = LAB.findIndex((x) => x.id === id);
+  const nameOf = (i: number) => (locale === "ko" ? LAB_KO[LAB[i].id]?.name : undefined) ?? LAB[i].name;
+  const prev = idx > 0 ? { href: `/kpi-lab/lab/${LAB[idx - 1].id}`, label: nameOf(idx - 1) } : undefined;
+  const next = idx < LAB.length - 1 ? { href: `/kpi-lab/lab/${LAB[idx + 1].id}`, label: nameOf(idx + 1) } : undefined;
+
   return (
     <KpiDetail
       backHref="/kpi-lab/lab"
@@ -67,8 +73,15 @@ export default async function LabDetailPage({ params }: { params: Promise<{ id: 
       kicker={`${k.code} · ${typeLabel}`}
       title={ko?.name ?? k.name}
       badge={localBadge}
+      status={k.status}
+      locale={locale}
+      prev={prev}
+      next={next}
       blocks={[
-        { label: L.what, text: ko?.detail ?? k.detail },
+        {
+          label: L.what, text: ko?.detail ?? k.detail,
+          svg: LAB_FIGS[id]?.[locale]?.svg, visualCaption: LAB_FIGS[id]?.[locale]?.caption,
+        },
         { label: L.from, text: builtFrom },
         { label: L.status, text: statusText(locale, k.status, badgeLabel) },
         ...(k.wc2026
@@ -76,25 +89,12 @@ export default async function LabDetailPage({ params }: { params: Promise<{ id: 
               label: L.example,
               text: (
                 <>
-                  <span
-                    className="mono"
-                    style={{
-                      fontSize: 10.5, fontWeight: 600, letterSpacing: "0.04em",
-                      color: WC_BADGE[k.wc2026.confidence].color,
-                      background: WC_BADGE[k.wc2026.confidence].bg,
-                      border: `0.5px solid ${WC_BADGE[k.wc2026.confidence].border}`,
-                      padding: "3px 10px", borderRadius: 20, display: "inline-block", marginBottom: 10,
-                    }}
-                  >
+                  <span className={`adv-badge ${k.wc2026.confidence}`}>
                     {WC_CONFIDENCE_LABEL[locale][k.wc2026.confidence]}
                   </span>
                   <br />
                   {ko?.wc2026 ?? k.wc2026.text}{" "}
-                  <LocaleLink
-                    href="/match-analysis/wc2026-report"
-                    className="mono transition-colors duration-300 hover:[color:var(--green-bright)]"
-                    style={{ color: "var(--green-mid)", fontSize: 14, whiteSpace: "nowrap" }}
-                  >
+                  <LocaleLink href="/match-analysis/wc2026-report" className="adv-inline">
                     {L.reportLink}
                   </LocaleLink>
                 </>

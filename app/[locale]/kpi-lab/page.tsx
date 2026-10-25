@@ -1,5 +1,6 @@
 import DoorLanding from "@/components/DoorLanding";
 import { isLocale, type Locale } from "@/lib/i18n";
+import { thumbSrc } from "@/lib/thumbs";
 
 const CONTENT: Record<Locale, { eyebrow: string; title: string; accent: string; intro: string; doors: { href: string; n: string; label: string; title: string; desc: string }[] }> = {
   en: {
@@ -27,5 +28,7 @@ const CONTENT: Record<Locale, { eyebrow: string; title: string; accent: string; 
 export default async function KpiLabPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   const c = CONTENT[isLocale(locale) ? locale : "en"];
-  return <DoorLanding eyebrow={c.eyebrow} title={c.title} accent={c.accent} intro={c.intro} doors={c.doors} />;
+  const loc: Locale = isLocale(locale) ? locale : "en";
+  const THUMB: Record<string, string> = { "/kpi-lab/advanced": "door-advanced", "/kpi-lab/lab": "door-lab" };
+  return <DoorLanding eyebrow={c.eyebrow} title={c.title} accent={c.accent} intro={c.intro} doors={c.doors.map((d) => ({ ...d, thumb: thumbSrc(THUMB[d.href], loc) }))} />;
 }

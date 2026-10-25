@@ -456,3 +456,90 @@ body {
   .adv-zoom-svg svg { max-height: calc(100svh - 40px); width: auto !important; max-width: 100% !important; }
   .adv-zoom-cap, .adv-zoom-hint { display: none; }
 }
+
+/* ============================================================
+   Site-wide card index (2026-10-25) — CardIndex.tsx. Builds on
+   the .adv-* system above; these are the extra parts.
+   ============================================================ */
+.ci-gap { height: 44px; }
+.adv-grid.ci-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.adv-grid.ci-2 .adv-card .pv { height: 220px; }
+.ci-ctx { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em; line-height: 1.5; color: var(--ink-4); margin-top: -2px; }
+.adv-card .top .abbr { text-transform: none; }
+.ci-badge { font-family: var(--font-mono); font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 2px 7px; border-radius: 3px; border: 1px solid var(--ink-4); color: var(--ink-3); white-space: nowrap; }
+.ci-badge.draft { border-color: var(--ink); color: var(--ink); }
+.ci-badge.concept { border-style: dashed; }
+.ci-badge.live { background: var(--ink); border-color: var(--ink); color: #fff; }
+.ci-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 4px; padding-top: 10px; border-top: 1px solid var(--edge); }
+.ci-stats dt { font-family: var(--font-display); font-weight: 600; font-size: 17px; letter-spacing: -0.02em; color: var(--ink); font-variant-numeric: tabular-nums; line-height: 1.2; }
+.ci-stats dd { font-family: var(--font-mono); font-size: 10.5px; line-height: 1.45; color: var(--ink-4); margin-top: 3px; }
+.ci-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 2px; }
+.ci-tags span { font-family: var(--font-mono); font-size: 10px; color: var(--ink-3); padding: 1px 7px; border: 1px solid var(--edge-2); border-radius: 3px; }
+.ci-foot { margin-top: auto; padding-top: 10px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.ci-foot .adv-enter { margin-top: 0; padding-top: 0; }
+.ci-meta { font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-4); white-space: nowrap; }
+.ci-score { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; }
+.ci-score b { font-weight: 700; font-variant-numeric: tabular-nums; }
+.ci-note { margin-top: 28px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.04em; color: var(--ink-4); }
+@media (max-width: 1000px) { .adv-grid.ci-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 760px) { .ci-gap { height: 28px; } .adv-grid.ci-2 .adv-card .pv { height: auto; } }
+@media (max-width: 620px) { .adv-grid.ci-2 { grid-template-columns: 1fr; } }
+
+/* Detail pages that render through KpiDetail (essays, Lab KPIs, JWC). */
+.kd-sketch { margin: 24px 0 0; border: 1px solid var(--edge-2); border-radius: 6px; background: #fff; overflow: hidden; }
+.kd-sketch .svg { padding: 18px 20px; }
+.kd-sketch figcaption, .kd-cap { padding: 10px 14px 12px; border-top: 1px solid var(--edge); font-size: 13px; line-height: 1.55; color: var(--ink-3); }
+.kd-embed { margin: 24px 0 0; border: 1px solid var(--edge-2); border-radius: 6px; overflow: hidden; background: var(--stage); }
+.kd-embed .embed-frame { border: 0 !important; }
+.kd-meta { display: flex; align-items: center; gap: 10px; margin-top: 18px; }
+@media (max-width: 760px) {
+  .kd-sketch, .kd-embed { margin-left: -20px; margin-right: -20px; border-radius: 0; border-left: 0; border-right: 0; }
+  .kd-sketch .svg { padding: 12px 10px; }
+  .kd-sketch figcaption, .kd-cap { padding: 10px 20px 12px; }
+}
+
+/* Match pages (MDX) — 2026-10-25 */
+.mh-video { padding-top: 62px; background: var(--stage); }
+.mh-video + .mh-wrap { padding-top: 48px; }
+.mh-title { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 .35em; }
+.mh-title b { font-variant-numeric: tabular-nums; color: var(--ink); }
+.mh-meta { margin-top: 16px; font-family: var(--font-mono); font-size: 13px; color: var(--ink-3); }
+.mh-goals { margin-top: 18px; max-width: 560px; }
+.mh-fig { margin-top: 28px; }
+.mh-cap { padding: 10px 16px; border-bottom: 1px solid var(--edge); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); }
+.mh-bars { padding: 6px 16px 14px; }
+.mh-teams { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 11.5px; color: var(--ink-3); padding: 6px 0 4px; margin-left: 170px; }
+.mh-row { display: grid; grid-template-columns: 158px 64px minmax(0, 1fr) 64px; align-items: center; gap: 12px; padding: 9px 0; border-top: 1px solid var(--edge); }
+.mh-lab { font-size: 14px; color: var(--ink); font-weight: 500; line-height: 1.3; }
+.mh-lab em { font-style: normal; font-family: var(--font-mono); font-size: 9.5px; color: var(--ink-3); border: 1px solid var(--edge-2); border-radius: 3px; padding: 0 4px; margin-left: 6px; vertical-align: 1px; }
+.mh-lab small { display: block; font-family: var(--font-mono); font-size: 10px; color: var(--ink-4); font-weight: 400; margin-top: 2px; }
+.mh-v { font-family: var(--font-mono); font-size: 14px; font-weight: 500; color: var(--ink); font-variant-numeric: tabular-nums; }
+.mh-v.h { text-align: right; }
+.mh-track { display: flex; height: 10px; gap: 2px; }
+.mh-track i { display: block; height: 100%; }
+.mh-track i.h { background: var(--ink); border-radius: 2px 0 0 2px; }
+.mh-track i.a { background: var(--opp, #5f6f7e); opacity: .55; border-radius: 0 2px 2px 0; }
+.mh-note { margin-top: 12px; font-family: var(--font-mono); font-size: 11px; line-height: 1.6; color: var(--ink-4); }
+.mh-body { padding-bottom: 110px; }
+.mh-verdict { background: var(--stage-2); border-left: 2px solid var(--ink); padding: 18px 22px; margin: 8px 0 12px; }
+.mh-verdict ol { list-style: none; display: grid; gap: 10px; }
+.mh-verdict li { display: grid; grid-template-columns: 22px minmax(0, 1fr); font-size: 15.5px; line-height: 1.65; color: var(--ink); }
+.mh-verdict li b { font-family: var(--font-mono); font-size: 12px; font-weight: 500; color: var(--ink-3); padding-top: 3px; }
+.mh-sec { padding: 32px 0; border-bottom: 1px solid var(--edge-2); scroll-margin-top: 80px; }
+.mh-sec h2 { font-family: var(--font-display); font-weight: 600; font-size: clamp(21px, 2.4vw, 26px); line-height: 1.2; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 14px; }
+.mh-prose, .mh-prose p { font-size: 16.5px; line-height: 1.8; color: var(--ink-2); }
+.mh-prose p + p { margin-top: 12px; }
+@media (max-width: 760px) {
+  .mh-video { padding-top: 56px; }
+  .mh-teams { margin-left: 0; }
+  .mh-row { grid-template-columns: 52px minmax(0, 1fr) 52px; gap: 8px; row-gap: 4px; }
+  .mh-lab { grid-column: 1 / -1; font-size: 13px; }
+  .mh-v { font-size: 13px; }
+  .mh-verdict { margin-left: -20px; margin-right: -20px; padding: 16px 20px; }
+}
+.mh-title span { color: var(--ink); }
+/* Preview box keeps the figure's proportions at every width (2026-10-25). */
+.adv-card .pv, .adv-grid.ci-2 .adv-card .pv { height: auto; aspect-ratio: 16 / 10; }
+/* Hairline grid without a filled gap, so a short last row leaves no grey block. */
+.adv-grid { gap: 0; background: transparent; border: 0; border-top: 1px solid var(--edge-2); border-left: 1px solid var(--edge-2); border-radius: 0; }
+.adv-card { border-right: 1px solid var(--edge-2); border-bottom: 1px solid var(--edge-2); }

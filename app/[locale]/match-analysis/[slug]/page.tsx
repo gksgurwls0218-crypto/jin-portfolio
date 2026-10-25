@@ -35,28 +35,22 @@ export default async function MatchAnalysisPage({ params }: { params: Promise<{ 
   return (
     <div style={{ background: "var(--stage)" }}>
       {frontmatter.video ? (
-        <MatchVideo src={frontmatter.video} captionsEn={frontmatter.captionsEn} captionsKo={frontmatter.captionsKo} />
+        <div className="mh-video">
+          <MatchVideo src={frontmatter.video} captionsEn={frontmatter.captionsEn} captionsKo={frontmatter.captionsKo} />
+        </div>
       ) : null}
       <MatchHeader frontmatter={frontmatter} locale={locale} />
 
-      <div className="px-6 md:px-10 pt-10">
-        <div className="max-w-[1000px] mx-auto rounded-2xl p-7" style={{ background: "var(--green-soft)", border: "0.5px solid var(--green-line)" }}>
-          <p className="mono mb-4" style={{ fontSize: 12, fontWeight: 500, letterSpacing: ".16em", textTransform: "uppercase", color: "var(--green-bright)" }}>
-            {verdictLabel}
-          </p>
-          {frontmatter.verdict3?.map((line, i) => (
-            <p key={i} className="mb-2.5 last:mb-0 flex gap-3" style={{ fontSize: 15.5, lineHeight: 1.6, color: "var(--ink)" }}>
-              <span className="mono shrink-0" style={{ color: "var(--green-mid)" }}>{i + 1}</span>
-              <span>{line}</span>
-            </p>
-          ))}
+      <div className="adv-in adv-narrow mh-body">
+        <div className="mh-verdict">
+          <p className="adv-blk-label">{verdictLabel}</p>
+          <ol>
+            {frontmatter.verdict3?.map((line, i) => (
+              <li key={i}><b>{i + 1}</b><span>{line}</span></li>
+            ))}
+          </ol>
         </div>
-      </div>
-
-      <div className="px-6 md:px-10 py-14">
-        <div className="max-w-[1000px] mx-auto">
-          <MDXRemote source={content} components={mdxComponents} options={{ blockJS: false }} />
-        </div>
+        <MDXRemote source={content} components={mdxComponents} options={{ blockJS: false }} />
       </div>
     </div>
   );

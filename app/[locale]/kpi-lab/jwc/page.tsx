@@ -22,6 +22,8 @@ export default async function JwcPage({ params }: { params: Promise<{ locale: st
       kicker={c.kicker}
       title={c.title}
       badge={{ ...badge, label: locale === "ko" ? "초안" : badge.label }}
+      status="draft"
+      locale={locale}
       blocks={c.blocks.map((b) => ({
         label: b.label,
         text: b.text,

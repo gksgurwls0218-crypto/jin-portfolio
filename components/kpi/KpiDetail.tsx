@@ -1,6 +1,13 @@
 import Link from "@/components/LocaleLink";
 import type { ReactNode } from "react";
 import { ESSAY_VISUALS } from "./EssayVisuals";
+import ChartZoomHost from "./ChartZoomHost";
+import { ZOOM_LABELS } from "./AdvancedDetail";
+
+/* Detail layout for the essays (new concepts), the Lab KPIs and JWC.
+   Since 2026-10-25 it uses the same design as /kpi-lab/advanced/[id]
+   (.adv-* classes): mono kicker, hairline title rule, labelled blocks,
+   light figure frames that open full screen on phones. */
 
 export type Badge = { label: string; color: string; bg: string; border: string };
 export type Block = {
@@ -10,37 +17,18 @@ export type Block = {
   visualSrc?: string;
   /** Optional key into the ESSAY_VISUALS registry — a redesigned, site-native sketch */
   visualComponent?: string;
+  /** Optional inline SVG figure (e.g. a Lab concept diagram). */
+  svg?: string;
   /** Small caption shown under the embed, e.g. source/credit note */
   visualCaption?: string;
   /** Embed height in px. Defaults to 420. Ignored by visualComponent. */
   visualHeight?: number;
 };
 
-function SketchFrame({ caption, children }: { caption?: string; children: ReactNode }) {
-  return (
-    <div className="mt-5">
-      <div
-        className="rounded-2xl"
-        style={{ border: "0.5px solid var(--edge)", background: "var(--ink)", padding: "20px 22px" }}
-      >
-        {children}
-      </div>
-      {caption ? (
-        <p className="mono mt-2" style={{ fontSize: 11, color: "var(--ink-4)" }}>
-          {caption}
-        </p>
-      ) : null}
-    </div>
-  );
-}
-
 function VisualEmbed({ src, caption, height = 420 }: { src: string; caption?: string; height?: number }) {
   return (
-    <div className="mt-5">
-      <div
-        className="embed-frame overflow-hidden"
-        style={{ border: "0.5px solid var(--edge)", background: "var(--stage)", ["--embed-h" as string]: `${height}px` }}
-      >
+    <figure className="kd-embed">
+      <div className="embed-frame overflow-hidden" style={{ background: "var(--stage)", ["--embed-h" as string]: `${height}px` }}>
         <iframe
           src={src}
           title={caption || "Variation Theory diagram"}
@@ -49,66 +37,62 @@ function VisualEmbed({ src, caption, height = 420 }: { src: string; caption?: st
           loading="lazy"
         />
       </div>
-      {caption ? (
-        <p className="mono mt-2" style={{ fontSize: 11, color: "var(--ink-4)" }}>
-          {caption}
-        </p>
-      ) : null}
-    </div>
+      {caption ? <figcaption className="kd-cap">{caption}</figcaption> : null}
+    </figure>
   );
 }
 
 export default function KpiDetail({
-  backHref, backLabel, kicker, title, badge, blocks,
-}: { backHref: string; backLabel: string; kicker: string; title: string; badge?: Badge; blocks: Block[] }) {
+  backHref, backLabel, kicker, title, badge, status, blocks, prev, next, locale = "en",
+}: {
+  backHref: string; backLabel: string; kicker: string; title: string; badge?: Badge;
+  /** draft / concept / live — badge style */
+  status?: "draft" | "concept" | "live";
+  blocks: Block[];
+  prev?: { href: string; label: string }; next?: { href: string; label: string };
+  locale?: "en" | "ko";
+}) {
   return (
-    <section className="relative px-6 md:px-10 pt-32 pb-40" style={{ background: "var(--stage)" }}>
-      <div className="max-w-[760px] mx-auto">
-        <Link
-          href={backHref}
-          className="mono inline-flex items-center gap-2 mb-14 transition-colors duration-300 hover:[color:var(--green-bright)]"
-          style={{ fontSize: 12, color: "var(--ink-3)" }}
-        >
-          ← {backLabel}
-        </Link>
+    <section className="adv-wrap">
+      <div className="adv-in adv-narrow">
+        <Link href={backHref} className="adv-back">← {backLabel}</Link>
+        <div className="adv-kicker">{kicker}</div>
+        <h1 className="adv-h1 adv-h1-detail">
+          {title}
+          {badge ? <span className="kd-meta"><span className={`ci-badge ${status ?? "plain"}`}>{badge.label}</span></span> : null}
+        </h1>
 
-        <div className="flex items-center gap-3 mb-5">
-          <span className="mono" style={{ fontSize: 12, letterSpacing: "0.1em", color: "var(--green-mid)" }}>{kicker}</span>
-          {badge && (
-            <span className="mono" style={{ fontSize: 10, fontWeight: 500, color: badge.color, padding: "3px 9px", borderRadius: 20, background: badge.bg, border: `0.5px solid ${badge.border}` }}>{badge.label}</span>
-          )}
-        </div>
-
-        <h1 className="display mb-14" style={{ fontSize: "clamp(32px,5vw,52px)", lineHeight: 1.04, letterSpacing: "-0.03em", color: "var(--ink)" }}>{title}</h1>
-
-        <div className="flex flex-col gap-10">
-          {blocks.map((b, i) => (
-            <div key={b.label} style={{ paddingTop: i === 0 ? 0 : 28, borderTop: i === 0 ? "none" : "0.5px solid var(--edge)" }}>
-              <p
-                className="mono mb-5"
-                style={{
-                  fontSize: 14, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase",
-                  color: "var(--ink)", display: "inline-block", borderBottom: "2px solid var(--ink)", paddingBottom: 6,
-                }}
-              >
-                {b.label}
-              </p>
-              <p style={{ fontSize: 17.5, lineHeight: 1.75, color: "var(--ink)" }}>{b.text}</p>
+        {blocks.map((b, i) => {
+          const Sketch = b.visualComponent ? ESSAY_VISUALS[b.visualComponent] : undefined;
+          return (
+            <div key={`${b.label}-${i}`} className="adv-blk">
+              <p className="adv-blk-label">{b.label}</p>
+              <div className="adv-blk-body"><p>{b.text}</p></div>
+              {b.svg ? (
+                <figure className="adv-fig">
+                  <div className="svg" dangerouslySetInnerHTML={{ __html: b.svg }} />
+                  {b.visualCaption ? <figcaption>{b.visualCaption}</figcaption> : null}
+                </figure>
+              ) : null}
               {b.visualSrc ? <VisualEmbed src={b.visualSrc} caption={b.visualCaption} height={b.visualHeight} /> : null}
-              {b.visualComponent && ESSAY_VISUALS[b.visualComponent]
-                ? (() => {
-                    const Sketch = ESSAY_VISUALS[b.visualComponent];
-                    return (
-                      <SketchFrame caption={b.visualCaption}>
-                        <Sketch />
-                      </SketchFrame>
-                    );
-                  })()
-                : null}
+              {Sketch ? (
+                <figure className="adv-fig kd-sketch">
+                  <div className="svg"><Sketch /></div>
+                  {b.visualCaption ? <figcaption>{b.visualCaption}</figcaption> : null}
+                </figure>
+              ) : null}
             </div>
-          ))}
-        </div>
+          );
+        })}
+
+        {prev || next ? (
+          <nav className="adv-pn">
+            {prev ? <Link href={prev.href}>← {prev.label}</Link> : <span />}
+            {next ? <Link href={next.href} className="r">{next.label} →</Link> : <span />}
+          </nav>
+        ) : null}
       </div>
+      <ChartZoomHost {...ZOOM_LABELS[locale]} />
     </section>
   );
 }

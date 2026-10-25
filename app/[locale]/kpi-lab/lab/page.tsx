@@ -2,6 +2,10 @@ import KpiIndex, { type IndexItem } from "@/components/kpi/KpiIndex";
 import { LAB, STATUS_BADGE } from "@/lib/kpiMetrics";
 import { LAB_KO, LAB_TYPE_KO, STATUS_LABEL_KO } from "@/lib/kpiContent.ko";
 import { isLocale, type Locale } from "@/lib/i18n";
+import { thumbSrc } from "@/lib/thumbs";
+
+const thumbOf = (key: string, locale: Locale) => thumbSrc(key, locale);
+const labThumb = (id: string, locale: Locale) => thumbSrc(`lab-${id}`, locale);
 
 const HEAD: Record<Locale, { eyebrow: string; title: string; accent: string; intro: string; backLabel: string }> = {
   en: {
@@ -157,6 +161,9 @@ export default async function LabIndexPage({ params }: { params: Promise<{ local
       badge: locale === "ko" ? { ...jwcBadge, label: STATUS_LABEL_KO[JWC.status] ?? jwcBadge.label } : jwcBadge,
       tags: JWC.basedOn,
       meta: dateNote(locale, JWC.added, JWC.updated),
+      status: JWC.status,
+      thumb: thumbOf("lab-jwc", locale),
+      ghost: JWC.code,
       added: JWC.added,
       updated: JWC.updated,
     },
@@ -170,6 +177,9 @@ export default async function LabIndexPage({ params }: { params: Promise<{ local
         badge: locale === "ko" ? { ...badge, label: STATUS_LABEL_KO[t.status] ?? badge.label } : badge,
         tags: t.basedOn,
         meta: dateNote(locale, t.added, t.updated),
+        status: t.status,
+        thumb: thumbOf(`lab-${t.href.split("/").pop()}`, locale),
+        ghost: t.code,
         added: t.added,
         updated: t.updated,
       };
@@ -184,6 +194,9 @@ export default async function LabIndexPage({ params }: { params: Promise<{ local
         badge: locale === "ko" ? { ...badge, label: STATUS_LABEL_KO[k.status] ?? badge.label } : badge,
         tags: k.basedOn,
         meta: dateNote(locale, k.added, k.updated),
+        status: k.status,
+        thumb: labThumb(k.id, locale),
+        ghost: k.code,
         added: k.added,
         updated: k.updated,
       };
