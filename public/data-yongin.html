@@ -4,43 +4,43 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>The Next Goal | Yongin FC 2026 | Hyuckjin Han</title>
 <meta name="description" content="On performance, Yongin FC in their first season are the 7th-best team in the league. In the table they are 13th. The totals of goals scored and conceded are close to what was expected. What differed was the order. When the score was level they took the next goal less often than any other team; when behind, they kept coming back. I put all 212 league matches on one scale and opened the four phases and that &quot;next goal&quot; one by one.">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
 <style>
 :root{
   color-scheme:light;
-  --page:#f1f1ef; --surface:#fcfcfb; --surface-2:#e4e4e1; --raise:#f7f7f5;
-  --ink:#141413; --ink-2:#3c3c3a; --muted:#70706c;
-  --line:rgba(20,20,19,.14); --line-2:rgba(20,20,19,.07);
-  --grid:#e0e0dd; --axis:#c2c2be;
-  --ic:#1d6f86; --op:#8a7a64; --top:#2e7d5b; --bad:#b5562a;
-  --ic-soft:rgba(29,111,134,.10); --op-soft:rgba(138,106,60,.12);
-  --top-soft:rgba(46,125,91,.11); --bad-soft:rgba(181,86,42,.10);
+  --page:#ffffff; --surface:#ffffff; --surface-2:#dce1e0; --raise:#f5f7f6;
+  --ink:#14181a; --ink-2:#343a3d; --muted:#5c6367;
+  --line:rgba(20,24,26,0.14); --line-2:rgba(20,24,26,0.07);
+  --grid:#dce1e0; --axis:#bec5c7;
+  --ic:#171512; --op:#5f6f7e; --top:#96a3ad; --bad:#d2462b;
+  --ic-soft:rgba(23,21,18,0.1); --op-soft:rgba(95,111,126,0.12);
+  --top-soft:rgba(150,163,173,0.11); --bad-soft:rgba(210,70,43,0.1);
   --sp:clamp(18px,4.5vw,30px);
-  --disp:"Hahmlet",'Nanum Myeongjo',serif;
-  --body:"IBM Plex Sans KR",-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;
-  --mono:"IBM Plex Mono",ui-monospace,'SFMono-Regular',monospace;
+  --disp:'Space Grotesk','Noto Sans KR',-apple-system,sans-serif;
+  --body:'Inter','Noto Sans KR',-apple-system,'Apple SD Gothic Neo',sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
     color-scheme:dark;
-    --page:#121211; --surface:#1a1a19; --surface-2:#262624; --raise:#1f1f1e;
-    --ink:#eaeae7; --ink-2:#b8b8b4; --muted:#8d8d89;
-    --line:rgba(234,234,231,.16); --line-2:rgba(234,234,231,.08);
-    --grid:#2d2d2b; --axis:#4a4a47;
-    --ic:#7cc8de; --op:#bfae94; --top:#6cc59a; --bad:#f0915e;
-    --ic-soft:rgba(124,200,222,.16); --op-soft:rgba(196,154,100,.17);
-    --top-soft:rgba(108,197,154,.15); --bad-soft:rgba(240,145,94,.14);
+    --page:#14181a; --surface:#14181a; --surface-2:#14181a; --raise:#14181a;
+    --ink:#ecefee; --ink-2:#bec5c7; --muted:#8a9296;
+    --line:rgba(236,239,238,0.16); --line-2:rgba(236,239,238,0.08);
+    --grid:#14181a; --axis:#343a3d;
+    --ic:#91908f; --op:#9aa4ae; --top:#96a3ad; --bad:#97a2ac;
+    --ic-soft:rgba(145,144,143,0.16); --op-soft:rgba(129,142,154,0.17);
+    --top-soft:rgba(150,163,173,0.15); --bad-soft:rgba(151,162,172,0.14);
   }
 }
 :root[data-theme="dark"]{
   color-scheme:dark;
-  --page:#121211; --surface:#1a1a19; --surface-2:#262624; --raise:#1f1f1e;
-  --ink:#eaeae7; --ink-2:#b8b8b4; --muted:#8d8d89;
-  --line:rgba(234,234,231,.16); --line-2:rgba(234,234,231,.08);
-  --grid:#2d2d2b; --axis:#4a4a47;
-  --ic:#7cc8de; --op:#bfae94; --top:#6cc59a; --bad:#f0915e;
-  --ic-soft:rgba(124,200,222,.16); --op-soft:rgba(196,154,100,.17);
-  --top-soft:rgba(108,197,154,.15); --bad-soft:rgba(240,145,94,.14);
+  --page:#14181a; --surface:#14181a; --surface-2:#14181a; --raise:#14181a;
+  --ink:#ecefee; --ink-2:#bec5c7; --muted:#8a9296;
+  --line:rgba(236,239,238,0.16); --line-2:rgba(236,239,238,0.08);
+  --grid:#14181a; --axis:#343a3d;
+  --ic:#91908f; --op:#9aa4ae; --top:#96a3ad; --bad:#97a2ac;
+  --ic-soft:rgba(145,144,143,0.16); --op-soft:rgba(129,142,154,0.17);
+  --top-soft:rgba(150,163,173,0.15); --bad-soft:rgba(151,162,172,0.14);
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--page);color:var(--ink);font-family:var(--body);
@@ -160,9 +160,9 @@ td .no{font-family:var(--mono);font-size:11px;color:var(--muted)}
 
 /* ── slope svg ── */
 svg{display:block;max-width:100%;height:auto;overflow:visible}
-.sv-lb{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:var(--muted)}
-.sv-vl{font-family:"IBM Plex Mono",monospace;font-size:11.5px;font-weight:500}
-.sv-nm{font-family:"IBM Plex Sans KR",sans-serif;font-size:11.5px;font-weight:600;fill:var(--ink-2)}
+.sv-lb{font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;font-size:10.5px;fill:var(--muted)}
+.sv-vl{font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;font-size:11.5px;font-weight:500}
+.sv-nm{font-family:'Inter','Noto Sans KR',-apple-system,'Apple SD Gothic Neo',sans-serif;font-size:11.5px;font-weight:600;fill:var(--ink-2)}
 
 p.rate{font-size:13px;line-height:1.6;color:var(--muted);border-left:2px solid var(--line);
   padding-left:1.1em;margin:1.5em 0}
@@ -522,4 +522,14 @@ footer b{color:var(--ink-2);font-weight:500}
 <footer><div class="wrap"><b>Data</b> · Parsed directly from the K League data portal (portal.kleague.com). Yongin FC's 25 K League 2 matches in 2026 (byes in R8 and R22), 33,346 raw events. The portal has no event data for R25 against Suwon FC (1-1), so only the match report (score and goal times) is used for it; event-based measures cover 24 matches. League comparison: all 216 K League 2 matches (212 with events · 304,486 events), same definitions.<br><b>Validation</b> · League table re-summed (25 matches, 27 points; points match for all 17 clubs); match-report goals 66 = 31 + 35; event goals 30 : 34 (R25 excluded; one shot missing its goal flag in the portal events was corrected against the live feed); shots in the box, key passes and offsides match for both sides.<br><b>xG · expected points</b> · xG is the portal's scoring probability for each shot; the portal's xG model is not published. Expected points: every shot in a match is re-taken 20,000 times at its xG probability, and the resulting wins, draws and losses are averaged. Penalties included, own goals excluded. Shots are treated as independent, so <b>the order of goals</b> is ignored — the gap this piece is about.<br><b>Match status</b> · Leading, level and trailing use live-feed goal times moved back onto the event clock (median lag 64 seconds). "Next goal when level" = Yongin's share of the goals scored while level; the expectation is the two teams' share of xG in that time. Own goals count for the team that benefits.<br><b>Definitions</b> · Chain = a spell in which one team keeps the ball. Settled attack = a chain that did not start with a defensive action. Attack after a regain = a chain that started with a defensive action. Phase profiles exclude set-piece and penalty chains. Placement expectation = expected goals conceded from the league-wide conversion of shots on target by goal cell (six cells; an approximation by starting keeper).<br><b>Outside sources</b> (Korean) · Yongin FC joining K League 2 in 2026, head coach Yoon-kyum Choi and the club's "sixth place" target, the first match against Cheonan on 1 March: press reports (Daum Sports, Newsis, Twig24 and others) · Remaining fixtures: K League data portal. Player names are romanised by the author where no official English spelling was found.<br><b>Author</b> · Hyuckjin Han · October 2026</div></footer>
 </div>
 </body>
-</html>
+</html><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+KR:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style id="site-theme">
+/* jin-tactics.com site theme (2026-10-25) — appended; content untouched. */
+html{-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:break-word}
+h1,h2,h3{font-family:"Space Grotesk","Noto Sans KR",-apple-system,sans-serif;letter-spacing:-.02em;text-wrap:balance}
+h1{letter-spacing:-.03em}
+::selection{background:rgba(210,70,43,.18)}
+a{text-underline-offset:3px}
+@media(max-width:620px){table{display:block!important;max-width:100%!important;overflow-x:auto;-webkit-overflow-scrolling:touch}}
+</style>
+

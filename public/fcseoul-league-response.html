@@ -1,16 +1,16 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>How the league learned to play FC Seoul — 2026</title><style>
 :root{color-scheme:light;
- --page:#f9f9f7;--surface:#fcfcfb;--surface-2:#f1f0ec;--fg:#0b0b0b;--fg2:#3a3936;--muted:#7b7973;
- --grid:#e1e0d9;--axis:#c3c2b7;--border:rgba(11,11,11,.11);
- --s-win:#1baf7a;--s-draw:#2a78d6;--s-loss:#d03b3b;--acc:#2a78d6}
+ --page:#ffffff;--surface:#ffffff;--surface-2:#ecefee;--fg:#14181a;--fg2:#14181a;--muted:#5c6367;
+ --grid:#dce1e0;--axis:#bec5c7;--border:rgba(20,24,26,0.11);
+ --s-win:#171512;--s-draw:#96a3ad;--s-loss:#d2462b;--acc:#96a3ad}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;
- --page:#141312;--surface:#1c1b19;--surface-2:#232120;--fg:#f0eeea;--fg2:#c8c5be;--muted:#94918a;
- --grid:#2f2c28;--axis:#413e39;--border:rgba(255,255,255,.11);
- --s-win:#2cc78d;--s-draw:#4b95e8;--s-loss:#e66767;--acc:#4b95e8}}
+ --page:#14181a;--surface:#14181a;--surface-2:#14181a;--fg:#ecefee;--fg2:#bec5c7;--muted:#8a9296;
+ --grid:#14181a;--axis:#343a3d;--border:rgba(255,255,255,0.11);
+ --s-win:#5f6f7e;--s-draw:#464442;--s-loss:#de7865;--acc:#464442}}
 :root[data-theme="dark"]{color-scheme:dark;
- --page:#141312;--surface:#1c1b19;--surface-2:#232120;--fg:#f0eeea;--fg2:#c8c5be;--muted:#94918a;
- --grid:#2f2c28;--axis:#413e39;--border:rgba(255,255,255,.11);
- --s-win:#2cc78d;--s-draw:#4b95e8;--s-loss:#e66767;--acc:#4b95e8}
+ --page:#14181a;--surface:#14181a;--surface-2:#14181a;--fg:#ecefee;--fg2:#bec5c7;--muted:#8a9296;
+ --grid:#14181a;--axis:#343a3d;--border:rgba(255,255,255,0.11);
+ --s-win:#5f6f7e;--s-draw:#464442;--s-loss:#de7865;--acc:#464442}
 *{box-sizing:border-box}
 body{margin:0;background:var(--page);color:var(--fg);
  font:16px/1.78 -apple-system,BlinkMacSystemFont,'Pretendard','Apple SD Gothic Neo','Noto Sans KR',sans-serif;
@@ -28,16 +28,16 @@ h3{font-size:16.5px;margin:36px 0 10px;font-weight:700}
 p{margin:0 0 17px}
 .lead{font-size:17px;color:var(--fg2)}
 b,strong{font-weight:700;color:var(--fg)}
-.tldr{border:1px solid var(--border);border-radius:8px;padding:22px 24px;margin:0 0 44px;background:var(--surface)}
+.tldr{border:1px solid var(--border);border-radius:6px;padding:22px 24px;margin:0 0 44px;background:var(--surface)}
 .tldr h4{margin:0 0 13px;font-size:12px;letter-spacing:.12em;color:var(--muted);font-weight:650}
 .tldr ol{margin:0;padding-left:20px}.tldr li{margin-bottom:9px;font-size:15px;color:var(--fg2)}
 .tldr li:last-child{margin-bottom:0}
-.fig{margin:30px 0 32px;border:1px solid var(--border);border-radius:8px;padding:14px 14px 2px;background:var(--surface)}
+.fig{margin:30px 0 32px;border:1px solid var(--border);border-radius:6px;padding:14px 14px 2px;background:var(--surface)}
 .fig svg{width:100%;height:auto;display:block;overflow:visible}
 figcaption{color:var(--muted);font-size:13px;line-height:1.66;margin:12px 2px 12px}
 figcaption b{color:var(--fg2);font-weight:650}
 .tip{color:var(--acc)}
-text{font-family:-apple-system,'Pretendard','Apple SD Gothic Neo',sans-serif}
+text{font-family:'Inter','Noto Sans KR',-apple-system,'Apple SD Gothic Neo',sans-serif}
 .lb{font-size:11px;font-weight:700;fill:var(--fg2)}
 .lb2{font-size:13px;fill:var(--fg2);font-weight:500}
 .lb3{font-size:12.5px;fill:var(--muted)}
@@ -58,12 +58,12 @@ text{font-family:-apple-system,'Pretendard','Apple SD Gothic Neo',sans-serif}
 .hp{cursor:pointer}
 #tt{position:fixed;z-index:99;pointer-events:none;opacity:0;transition:opacity .12s;
  background:var(--fg);color:var(--page);padding:8px 11px;border-radius:6px;font-size:12.5px;
- line-height:1.5;max-width:280px;box-shadow:0 4px 16px rgba(0,0,0,.22)}
+ line-height:1.5;max-width:280px;box-shadow:none}
 #tt b{display:block;color:var(--page);font-weight:750;margin-bottom:2px}
 #tt span{opacity:.78}
 .clips{display:flex;flex-direction:column;gap:20px;margin-top:18px}
-.clip{border:1px solid var(--border);border-radius:7px;overflow:hidden;background:var(--surface-2)}
-.clip video{width:100%;display:block;background:#000;aspect-ratio:16/9}
+.clip{border:1px solid var(--border);border-radius:6px;overflow:hidden;background:var(--surface-2)}
+.clip video{width:100%;display:block;background:#14181a;aspect-ratio:16/9}
 .clip .cap{padding:11px 14px;font-size:13.5px;color:var(--fg2);line-height:1.55}
 .clip .cap b{display:block;font-size:12.5px;color:var(--muted);font-weight:650;margin-bottom:3px}
 .tw{overflow-x:auto;margin:22px 0 24px}
@@ -76,7 +76,7 @@ td.n{white-space:nowrap}
 td.w{color:var(--s-win);font-weight:700;white-space:nowrap}
 td.l{color:var(--s-loss);font-weight:700;white-space:nowrap}
 tr.hl td{background:var(--surface-2)}
-.vid{border:1px solid var(--border);border-left:2px solid var(--acc);border-radius:0 8px 8px 0;
+.vid{border:1px solid var(--border);border-left:2px solid var(--acc);border-radius:0 6px 6px 0;
  padding:19px 22px;margin:30px 0;background:var(--surface)}
 .vid .tag{font-size:11px;letter-spacing:.11em;color:var(--acc);font-weight:700;margin-bottom:9px}
 .vid h4{margin:0 0 7px;font-size:16px;font-weight:750}
@@ -85,7 +85,7 @@ tr.hl td{background:var(--surface-2)}
 .vid li{margin-bottom:6px}.vid li:last-child{margin-bottom:0}
 .vid .ph{margin-top:14px;border:1px dashed var(--axis);border-radius:6px;padding:24px;text-align:center;
  color:var(--muted);font-size:12.5px}
-.note{border:1px solid var(--border);border-radius:8px;padding:15px 18px;margin:24px 0;font-size:14px;color:var(--fg2);background:var(--surface)}
+.note{border:1px solid var(--border);border-radius:6px;padding:15px 18px;margin:24px 0;font-size:14px;color:var(--fg2);background:var(--surface)}
 .note b{color:var(--fg)}
 .caveat{border-left:2px solid var(--s-loss);padding:4px 0 4px 18px;margin:24px 0;font-size:14px;color:var(--fg2)}
 .q{font-size:18.5px;line-height:1.64;color:var(--fg);border-left:2px solid var(--acc);
@@ -95,12 +95,22 @@ hr{border:none;border-top:1px solid var(--border);margin:54px 0}
 .app h2{font-size:18px;margin-top:38px}
 .app table{font-size:12.8px}
 .app ul{padding-left:19px}.app li{margin-bottom:7px}
-code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;
+code{font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;font-size:12.5px;
  background:var(--surface-2);padding:1.5px 5px;border-radius:4px}
 footer{margin-top:60px;padding-top:24px;border-top:1px solid var(--border);
  color:var(--muted);font-size:13px;line-height:1.75}
 @media(max-width:620px){.fig{padding:10px 10px 2px}main{padding:38px 16px 70px}}
-</style></head><body><main><header>
+</style><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+KR:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style id="site-theme">
+/* jin-tactics.com site theme (2026-10-25) — appended; content untouched. */
+html{-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:break-word}
+h1,h2,h3{font-family:"Space Grotesk","Noto Sans KR",-apple-system,sans-serif;letter-spacing:-.02em;text-wrap:balance}
+h1{letter-spacing:-.03em}
+::selection{background:rgba(210,70,43,.18)}
+a{text-underline-offset:3px}
+@media(max-width:620px){table{display:block!important;max-width:100%!important;overflow-x:auto;-webkit-overflow-scrolling:touch}}
+</style>
+</head><body><main><header>
 <div class="kick">K LEAGUE 1 2026 · FC SEOUL · 25 MATCHES · 11 OPPONENTS</div>
 <h1>How the league learned to play FC Seoul</h1>
 <p class="sub">This began as an attempt to sort Seoul's opponents into high, mid and low blocks. It failed:

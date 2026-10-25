@@ -16,15 +16,15 @@
 import type { ComponentType, ReactNode } from "react";
 
 // ---------- on-dark palette (mirrors EssayVisuals' D_* constants) ----------
-const T1 = "rgba(255,255,255,.94)";
-const T2 = "rgba(255,255,255,.72)";
-const T3 = "rgba(255,255,255,.58)";
-const T4 = "rgba(255,255,255,.40)";
-const E1 = "rgba(255,255,255,.14)";
-const E2 = "rgba(255,255,255,.24)";
-const DIM = "rgba(255,255,255,.26)";
-const DIM2 = "rgba(255,255,255,.44)";
-const CARD = "rgba(255,255,255,.045)";
+const T1 = "#14181a";
+const T2 = "rgba(20,24,26,.76)";
+const T3 = "rgba(20,24,26,.56)";
+const T4 = "rgba(20,24,26,.42)";
+const E1 = "rgba(20,24,26,.12)";
+const E2 = "rgba(20,24,26,.22)";
+const DIM = "rgba(20,24,26,.24)";
+const DIM2 = "rgba(20,24,26,.42)";
+const CARD = "rgba(20,24,26,.035)";
 const PITCH_LINE = "rgba(13,18,20,.5)";
 const PITCH_GRID = "rgba(13,18,20,.55)";
 
@@ -84,7 +84,7 @@ function Slope({ L: LB }: { L: SlopeLabels }) {
           </g>
         );
       })}
-      <rect x={L + 100} y={my - 44} width={150} height={26} rx="7" fill="rgba(255,255,255,.10)" />
+      <rect x={L + 100} y={my - 44} width={150} height={26} rx="7" fill="rgba(20,24,26,.06)" />
       <text x={L + 175} y={my - 26} fontSize="11.5" fill={T1} fontWeight="700" textAnchor="middle">{LB.callout}</text>
     </Frame>
   );
@@ -250,7 +250,7 @@ function pitchCells(grid: number[][], x0: number, kp: string) {
     for (let j = 0; j < NY; j++) {
       const v = Math.min(1, grid[i][j] / mx);
       const o = Math.round((0.035 + 0.93 * Math.pow(v, 0.8)) * 100) / 100;
-      out.push(<rect key={`${kp}${i}-${j}`} x={x0 + i * cw} y={PY + j * ch} width={cw + 0.5} height={ch + 0.5} fill={`rgba(255,255,255,${o})`} />);
+      out.push(<rect key={`${kp}${i}-${j}`} x={x0 + i * cw} y={PY + j * ch} width={cw + 0.5} height={ch + 0.5} fill={`rgba(20,24,26,${o})`} />);
     }
   }
   return out;
@@ -289,7 +289,7 @@ function EffectiveRole({ L: LB }: { L: RoleLabels }) {
       <Pitch x0={382} grid={DEF_GRID} title={LB.defence} sub={LB.defenceSub} centre={39.6} centreLabel={LB.centre(39.6)} kp="d" />
       <text x={0} y={fy} fontSize="10.5" fill={T3}>{LB.attackRole}</text>
       <text x={382} y={fy} fontSize="10.5" fill={T3}>{LB.defenceRole}</text>
-      <rect x={200} y={fy + 14} width={300} height={28} rx="8" fill="rgba(255,255,255,.10)" />
+      <rect x={200} y={fy + 14} width={300} height={28} rx="8" fill="rgba(20,24,26,.06)" />
       <text x={350} y={fy + 32} fontSize="11.5" fill={T1} fontWeight="700" textAnchor="middle">{LB.gap}</text>
     </Frame>
   );

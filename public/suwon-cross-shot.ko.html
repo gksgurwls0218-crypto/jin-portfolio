@@ -7,32 +7,32 @@
 <title>수원 삼성 — 크로스에서 슈팅으로: 결손 구간의 위치 확정</title>
 <style>
 :root{
-  --page:#f9f9f7; --surface-1:#fcfcfb;
-  --text-primary:#0b0b0b; --text-secondary:#52514e; --muted:#898781;
-  --grid:#e1e0d9; --axis:#c3c2b7; --border:rgba(11,11,11,0.10);
-  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a;
-  --good:#0ca30c; --critical:#d03b3b; --warning:#fab219;
-  --seq250:#86b6ef; --seq350:#5598e7; --seq450:#2a78d6; --seq600:#184f95;
+  --page:#ffffff; --surface-1:#ffffff;
+  --text-primary:#14181a; --text-secondary:#343a3d; --muted:#8a9296;
+  --grid:#dce1e0; --axis:#bec5c7; --border:rgba(20,24,26,0.1);
+  --s1:#171512; --s2:#d2462b; --s3:#5f6f7e;
+  --good:#171512; --critical:#d2462b; --warning:#e38f78;
+  --seq250:#71706e; --seq350:#171512; --seq450:#171512; --seq600:#12100e;
 }
 :root[data-theme="dark"]{
-  --page:#0d0d0d; --surface-1:#1a1a19;
-  --text-primary:#ffffff; --text-secondary:#c3c2b7; --muted:#898781;
-  --grid:#2c2c2a; --axis:#383835; --border:rgba(255,255,255,0.10);
-  --s1:#3987e5; --s2:#d95926; --s3:#199e70;
-  --seq250:#184f95; --seq350:#256abf; --seq450:#3987e5; --seq600:#86b6ef;
+  --page:#14181a; --surface-1:#14181a;
+  --text-primary:#ffffff; --text-secondary:#bec5c7; --muted:#8a9296;
+  --grid:#14181a; --axis:#14181a; --border:rgba(255,255,255,0.1);
+  --s1:#171512; --s2:#d2462b; --s3:#5f6f7e;
+  --seq250:#12100e; --seq350:#171512; --seq450:#171512; --seq600:#71706e;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --page:#0d0d0d; --surface-1:#1a1a19;
-    --text-primary:#ffffff; --text-secondary:#c3c2b7; --muted:#898781;
-    --grid:#2c2c2a; --axis:#383835; --border:rgba(255,255,255,0.10);
-    --s1:#3987e5; --s2:#d95926; --s3:#199e70;
-    --seq250:#184f95; --seq350:#256abf; --seq450:#3987e5; --seq600:#86b6ef;
+    --page:#14181a; --surface-1:#14181a;
+    --text-primary:#ffffff; --text-secondary:#bec5c7; --muted:#8a9296;
+    --grid:#14181a; --axis:#14181a; --border:rgba(255,255,255,0.1);
+    --s1:#171512; --s2:#d2462b; --s3:#5f6f7e;
+    --seq250:#12100e; --seq350:#171512; --seq450:#171512; --seq600:#71706e;
   }
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--page);color:var(--text-primary);
-  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.65;
+  font-family:'Inter','Noto Sans KR',-apple-system,'Apple SD Gothic Neo',sans-serif;line-height:1.65;
   -webkit-font-smoothing:antialiased;}
 .wrap{max-width:920px;margin:0 auto;padding:0 22px 90px}
 header.hero{padding:64px 0 34px;border-bottom:1px solid var(--border);margin-bottom:44px}
@@ -51,13 +51,13 @@ li{margin:6px 0}
 .lede{font-size:17px;color:var(--text-primary);border-left:3px solid var(--s2);
   padding:2px 0 2px 18px;margin:22px 0 28px;max-width:66ch}
 .statrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:26px 0 8px}
-.stat{background:var(--surface-1);border:1px solid var(--border);border-radius:12px;padding:16px 17px}
+.stat{background:var(--surface-1);border:1px solid var(--border);border-radius:6px;padding:16px 17px}
 .stat .lab{font-size:12px;color:var(--muted);font-weight:600;letter-spacing:.01em}
 .stat .val{font-size:31px;font-weight:700;letter-spacing:-.025em;margin:5px 0 2px;line-height:1.1}
 .stat .note{font-size:12.5px;color:var(--text-secondary)}
 .stat.hl{border-color:var(--s2)} .stat.hl .val{color:var(--s2)}
 figure{margin:30px 0 8px;background:var(--surface-1);border:1px solid var(--border);
-  border-radius:14px;padding:20px 20px 14px}
+  border-radius:6px;padding:20px 20px 14px}
 figcaption{font-size:13px;color:var(--text-secondary);margin-top:12px;padding-top:11px;
   border-top:1px solid var(--grid)}
 .figtitle{font-size:15.5px;font-weight:660;margin:0 0 3px;color:var(--text-primary)}
@@ -71,26 +71,26 @@ th:first-child,td:first-child{text-align:left;font-variant-numeric:normal}
 thead th{color:var(--muted);font-weight:640;font-size:12px;border-bottom:1px solid var(--axis)}
 tbody tr.hl td{background:color-mix(in srgb,var(--s2) 9%,transparent);font-weight:640;color:var(--text-primary)}
 .tbtn{font:inherit;font-size:12.5px;color:var(--text-secondary);background:none;
-  border:1px solid var(--border);border-radius:7px;padding:4px 11px;cursor:pointer;margin-top:11px}
+  border:1px solid var(--border);border-radius:6px;padding:4px 11px;cursor:pointer;margin-top:11px}
 .tbtn:hover{background:var(--page)}
 .tblwrap{display:none;overflow-x:auto;max-height:340px}
 .tblwrap.on{display:block}
 .callout{background:var(--surface-1);border:1px solid var(--border);border-left:3px solid var(--s1);
-  border-radius:10px;padding:15px 18px;margin:24px 0;font-size:14.5px;color:var(--text-primary);max-width:70ch}
+  border-radius:6px;padding:15px 18px;margin:24px 0;font-size:14.5px;color:var(--text-primary);max-width:70ch}
 .callout.warn{border-left-color:var(--warning)}
 .callout.key{border-left-color:var(--s2)}
 .callout .t{font-weight:680;font-size:12px;letter-spacing:.08em;text-transform:uppercase;
   color:var(--muted);display:block;margin-bottom:6px}
 .tip{position:fixed;pointer-events:none;background:var(--surface-1);border:1px solid var(--border);
-  border-radius:9px;padding:8px 11px;font-size:12.5px;color:var(--text-primary);opacity:0;
-  transition:opacity .09s;box-shadow:0 6px 22px rgba(0,0,0,.13);z-index:99;white-space:nowrap}
+  border-radius:6px;padding:8px 11px;font-size:12.5px;color:var(--text-primary);opacity:0;
+  transition:opacity .09s;box-shadow:none;z-index:99;white-space:nowrap}
 .tip b{font-weight:670} .tip .m{color:var(--text-secondary)}
 .toggle{position:fixed;top:16px;right:16px;z-index:50;background:var(--surface-1);
-  border:1px solid var(--border);border-radius:9px;padding:6px 12px;font:inherit;font-size:12.5px;
+  border:1px solid var(--border);border-radius:6px;padding:6px 12px;font:inherit;font-size:12.5px;
   color:var(--text-secondary);cursor:pointer}
 footer{margin-top:70px;padding-top:26px;border-top:1px solid var(--border);font-size:12.5px;color:var(--muted)}
 footer p{color:var(--muted);font-size:12.5px;max-width:74ch}
-.pill{display:inline-block;font-size:11.5px;font-weight:650;padding:2px 9px;border-radius:20px;
+.pill{display:inline-block;font-size:11.5px;font-weight:650;padding:2px 9px;border-radius:6px;
   border:1px solid var(--border);color:var(--text-secondary);margin-right:6px}
 @media(max-width:640px){.stat .val{font-size:26px}figure{padding:16px 13px 11px}}
 
@@ -103,15 +103,25 @@ table.scope td.nt{text-align:left;white-space:normal;color:var(--muted);font-siz
   min-width:250px;font-variant-numeric:normal;line-height:1.5}
 table.scope td.nt b{color:var(--text-secondary);font-weight:640}
 /* --- T block --- */
-.tblock{border:1.5px dashed var(--axis);border-radius:12px;padding:18px 20px 6px;margin:30px 0 8px;
+.tblock{border:1.5px dashed var(--axis);border-radius:6px;padding:18px 20px 6px;margin:30px 0 8px;
   background:color-mix(in srgb,var(--s2) 3.5%,transparent)}
 .tblock h3{margin-top:0}
 .tblock ol{color:var(--text-secondary);max-width:70ch;padding-left:22px;margin:10px 0}
 .tblock ol li{margin:7px 0}
 .badge{display:inline-block;font-size:11px;font-weight:670;letter-spacing:.04em;padding:2px 9px;
-  border-radius:20px;background:color-mix(in srgb,var(--s2) 14%,transparent);color:var(--s2);
+  border-radius:6px;background:color-mix(in srgb,var(--s2) 14%,transparent);color:var(--s2);
   vertical-align:2px;margin-left:8px}
 .callout.rb .t{text-transform:none;font-size:13px;letter-spacing:.01em;color:var(--text-secondary)}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+KR:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style id="site-theme">
+/* jin-tactics.com site theme (2026-10-25) — appended; content untouched. */
+html{-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:break-word}
+h1,h2,h3{font-family:"Space Grotesk","Noto Sans KR",-apple-system,sans-serif;letter-spacing:-.02em;text-wrap:balance}
+h1{letter-spacing:-.03em}
+::selection{background:rgba(210,70,43,.18)}
+a{text-underline-offset:3px}
+@media(max-width:620px){table{display:block!important;max-width:100%!important;overflow-x:auto;-webkit-overflow-scrolling:touch}}
 </style>
 </head>
 <body>

@@ -1,7 +1,7 @@
 "use client";
-import Link from "@/components/LocaleLink";
+import CardIndex, { type CardItem } from "@/components/ui/CardIndex";
+import { thumbSrc } from "@/lib/thumbs";
 import Crest from "@/components/Crest";
-import Reveal from "@/components/Reveal";
 import { MATCHES, type GalleryMatch, type Side } from "@/lib/matchGallery";
 import { UI, type Locale } from "@/lib/i18n";
 import { useLocale } from "@/lib/useLocale";
@@ -73,57 +73,6 @@ function scorerLine(match: GalleryMatch, side: Side) {
   return order.map((n) => `${n} ${map[n].join(", ")}`).join(" · ");
 }
 
-function Row({ match }: { match: GalleryMatch }) {
-  const locale = useLocale();
-  const home = scorerLine(match, "home");
-  const away = scorerLine(match, "away");
-  const goalless = match.home.score === 0 && match.away.score === 0;
-  const scorers = home || away
-    ? [home, away].filter(Boolean).join("  —  ")
-    : goalless ? (locale === "ko" ? "무득점 무승부" : "Goalless draw") : (locale === "ko" ? "득점자 미입력" : "Scorers to be added");
-
-  return (
-    <Link href={`/match-analysis/${match.slug}`} className="list-row">
-      <div className="flex-1 min-w-0">
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-1.5">
-          <span className="mono px-1.5 rounded-full shrink-0" style={{ fontSize: 8.5, letterSpacing: ".12em", border: "0.5px solid var(--green-line)", color: "var(--green-bright)" }}>
-            {MATCH_TAG[locale]}
-          </span>
-          {match.featured && (
-            <span className="mono px-1.5 rounded-full shrink-0" style={{ fontSize: 8.5, letterSpacing: ".12em", background: "var(--green-soft)", border: "0.5px solid var(--green-line)", color: "var(--green-bright)" }}>
-              {UI.common.featured[locale]}
-            </span>
-          )}
-          <span className="mono truncate" style={{ fontSize: 10, letterSpacing: ".07em", color: "var(--ink-4)", maxWidth: "100%" }}>
-            {match.competition}
-          </span>
-        </div>
-
-        <h2 className="lr-title display flex flex-wrap items-center gap-x-2.5 gap-y-1" style={{ fontSize: "clamp(19px,2vw,24px)", lineHeight: 1.22, letterSpacing: "-0.03em" }}>
-          <Crest name={match.home.name} size={22} />
-          <span>{match.home.name}</span>
-          <span style={{ fontVariantNumeric: "tabular-nums" }}>{match.home.score}&ndash;{match.away.score}</span>
-          <span>{match.away.name}</span>
-          <Crest name={match.away.name} size={22} />
-        </h2>
-
-        <p className="lr-clamp mt-2" style={{ fontSize: 13.5, lineHeight: 1.62, color: "var(--ink-3)", maxWidth: 620 }}>
-          {scorers}
-        </p>
-      </div>
-
-      <div className="hidden lg:flex flex-col gap-1.5 shrink-0 self-center" style={{ width: 186 }}>
-        <span className="mono block" style={{ fontSize: 11, color: "var(--ink-2)" }}>{match.date}</span>
-        <span className="mono block" style={{ fontSize: 9, lineHeight: 1.45, letterSpacing: ".08em", color: "var(--ink-4)" }}>{match.venue}</span>
-      </div>
-
-      <span className="lr-arrow mono shrink-0 self-center hidden sm:block" style={{ fontSize: 13 }} aria-hidden>
-        &rarr;
-      </span>
-    </Link>
-  );
-}
-
 /* Tournament-scale report — a whole competition rather than a single fixture, so it
    gets its own card shape instead of the home-vs-away scoreline used above. */
 const TOURNAMENT_COPY = {
@@ -143,45 +92,6 @@ const TOURNAMENT_COPY = {
     ko: [["15전 0승", "무력한 반응형 (녹아웃)"], ["88.9%", "생산적 반응형 승률"], ["86.2%", "xG의 승자 적중률"], ["104", "전 경기 파싱"]],
   },
 } as const;
-
-function TournamentRow() {
-  const locale = useLocale();
-  return (
-    <Link href="/match-analysis/wc2026-report" className="list-row">
-      <div className="flex-1 min-w-0">
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-1.5">
-          <span className="mono px-1.5 rounded-full shrink-0" style={{ fontSize: 8.5, letterSpacing: ".12em", border: "0.5px solid var(--green-line)", color: "var(--green-bright)" }}>
-            {TOURNAMENT_COPY.tag[locale]}
-          </span>
-          <span className="mono truncate" style={{ fontSize: 10, letterSpacing: ".07em", color: "var(--ink-4)", maxWidth: "100%" }}>
-            {TOURNAMENT_COPY.competition[locale]}
-          </span>
-        </div>
-
-        <h2 className="lr-title display" style={{ fontSize: "clamp(19px,2vw,24px)", lineHeight: 1.22, letterSpacing: "-0.03em" }}>
-          {TOURNAMENT_COPY.title[locale]}
-        </h2>
-
-        <p className="lr-clamp mt-2" style={{ fontSize: 13.5, lineHeight: 1.62, color: "var(--ink-3)", maxWidth: 620 }}>
-          {TOURNAMENT_COPY.blurb[locale]}
-        </p>
-      </div>
-
-      <div className="hidden lg:flex flex-col gap-3 shrink-0 self-center" style={{ width: 186 }}>
-        {TOURNAMENT_COPY.stats[locale].slice(0, 2).map(([big, label]) => (
-          <div key={label}>
-            <span className="display block" style={{ fontSize: 15, letterSpacing: "-0.02em", color: "var(--ink-2)" }}>{big}</span>
-            <span className="mono block" style={{ fontSize: 8.5, lineHeight: 1.45, letterSpacing: ".1em", color: "var(--ink-4)" }}>{label}</span>
-          </div>
-        ))}
-      </div>
-
-      <span className="lr-arrow mono shrink-0 self-center hidden sm:block" style={{ fontSize: 13 }} aria-hidden>
-        &rarr;
-      </span>
-    </Link>
-  );
-}
 
 /* Standalone long-form reports — each authored as a self-contained HTML document
    and embedded at /match-analysis/[key], so they get a report-shaped card rather
@@ -390,72 +300,51 @@ const REPORTS: Record<"korea-jordan" | "suwon-cross-shot" | "wc2022-2026-champio
 
 type ReportId = keyof typeof REPORTS;
 
-function ReportRow({ id }: { id: ReportId }) {
-  const locale = useLocale();
-  const c = REPORTS[id];
-  return (
-    <Link href={`/match-analysis/${id}`} className="list-row">
-      <div className="flex-1 min-w-0">
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-1.5">
-          <span className="mono px-1.5 rounded-full shrink-0" style={{ fontSize: 8.5, letterSpacing: ".12em", border: "0.5px solid var(--green-line)", color: "var(--green-bright)" }}>
-            {c.tag[locale]}
-          </span>
-          <span className="mono truncate" style={{ fontSize: 10, letterSpacing: ".07em", color: "var(--ink-4)", maxWidth: "100%" }}>
-            {c.competition[locale]}
-          </span>
-        </div>
-
-        <h2 className="lr-title display" style={{ fontSize: "clamp(19px,2vw,24px)", lineHeight: 1.22, letterSpacing: "-0.03em" }}>
-          {c.title[locale]}
-        </h2>
-
-        <p className="lr-clamp mt-2" style={{ fontSize: 13.5, lineHeight: 1.62, color: "var(--ink-3)", maxWidth: 620 }}>
-          {c.blurb[locale]}
-        </p>
-      </div>
-
-      <div className="hidden lg:flex flex-col gap-3 shrink-0 self-center" style={{ width: 186 }}>
-        {c.stats[locale].slice(0, 2).map(([big, label]) => (
-          <div key={label}>
-            <span className="display block" style={{ fontSize: 15, letterSpacing: "-0.02em", color: "var(--ink-2)" }}>{big}</span>
-            <span className="mono block" style={{ fontSize: 8.5, lineHeight: 1.45, letterSpacing: ".1em", color: "var(--ink-4)" }}>{label}</span>
-          </div>
-        ))}
-      </div>
-
-      <span className="lr-arrow mono shrink-0 self-center hidden sm:block" style={{ fontSize: 13 }} aria-hidden>
-        &rarr;
-      </span>
-    </Link>
-  );
-}
+function pubLabel(d: string) { return d || ""; }
 
 export default function MatchGallery() {
   const locale = useLocale();
+  const items: CardItem[] = GALLERY_CARDS.map((c) => {
+    const thumb = thumbSrc(`ma-${c.key}`, locale);
+    if (c.kind === "tournament") {
+      return {
+        href: "/match-analysis/wc2026-report", code: TOURNAMENT_COPY.tag[locale], num: pubLabel(c.publishedAt),
+        context: TOURNAMENT_COPY.competition[locale], title: TOURNAMENT_COPY.title[locale], short: TOURNAMENT_COPY.blurb[locale],
+        stats: TOURNAMENT_COPY.stats[locale], thumb, ghost: "WC26",
+      };
+    }
+    if (c.kind === "report") {
+      const r = REPORTS[c.key as ReportId];
+      return {
+        href: `/match-analysis/${c.key}`, code: r.tag[locale], num: pubLabel(c.publishedAt),
+        context: r.competition[locale], title: r.title[locale], short: r.blurb[locale], stats: r.stats[locale], thumb,
+      };
+    }
+    const m = c.match;
+    const home = scorerLine(m, "home");
+    const away = scorerLine(m, "away");
+    const goalless = m.home.score === 0 && m.away.score === 0;
+    const scorers = home || away
+      ? [home, away].filter(Boolean).join("  —  ")
+      : goalless ? (locale === "ko" ? "무득점 무승부" : "Goalless draw") : (locale === "ko" ? "득점자 미입력" : "Scorers to be added");
+    return {
+      href: `/match-analysis/${m.slug}`, code: MATCH_TAG[locale], num: m.date,
+      badge: m.featured ? { label: UI.common.featured[locale], tone: "live" as const } : undefined,
+      context: m.competition,
+      title: (
+        <span className="ci-score">
+          <Crest name={m.home.name} size={20} /> {m.home.name} <b>{m.home.score}–{m.away.score}</b> {m.away.name} <Crest name={m.away.name} size={20} />
+        </span>
+      ),
+      short: scorers, thumb, ghost: `${m.home.score}–${m.away.score}`,
+    };
+  });
   return (
-    <section className="relative px-6 md:px-10 pt-36 pb-40" style={{ background: "var(--stage-2)" }}>
-      <div className="max-w-[1180px] mx-auto">
-        <Reveal>
-          <p className="mono t-eyebrow kicker mb-7">{GALLERY_COPY.eyebrow[locale]}</p>
-          <h1 className="display t-section mb-8" style={{ color: "var(--ink)", maxWidth: 900 }}>
-            {GALLERY_COPY.title1[locale]}<br />
-            <span style={{ color: "var(--green-bright)" }}>{GALLERY_COPY.title2[locale]}</span>
-          </h1>
-          <p className="mb-14" style={{ color: "var(--ink-2)", fontSize: "clamp(16px,1.6vw,19px)", lineHeight: 1.6, maxWidth: 640 }}>
-            {GALLERY_COPY.intro[locale]}
-          </p>
-        </Reveal>
-
-        <div className="flex flex-col" style={{ borderTop: "0.5px solid var(--green-line)" }}>
-          {GALLERY_CARDS.map((c, i) => (
-            <Reveal key={c.key} delay={i * 40}>
-              {c.kind === "tournament" ? <TournamentRow />
-                : c.kind === "report" ? <ReportRow id={c.key as ReportId} />
-                : <Row match={c.match} />}
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
+    <CardIndex
+      back={{ href: "/match-analysis", label: locale === "ko" ? "경기 분석 & 새로운 개념" : "Match Analysis & Essays" }}
+      eyebrow={GALLERY_COPY.eyebrow[locale]} title={GALLERY_COPY.title1[locale]} accent={GALLERY_COPY.title2[locale]} intro={GALLERY_COPY.intro[locale]}
+      enterLabel={locale === "ko" ? "읽기" : "Read"} previewLabel={locale === "ko" ? "미리보기" : "Preview"}
+      items={items}
+    />
   );
 }

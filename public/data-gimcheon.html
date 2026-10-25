@@ -5,45 +5,45 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Lost on Dead Balls — The Conscript Club</title>
 <meta name="description" content="Eighteen draws in 29 matches. Split the goal difference by phase and the season stops looking like an eleventh-placed team &mdash; and two popular explanations for it, plus one of my own findings, do not survive the follow-up tests.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@400;500;600;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+
+
 <style>
 :root{
   color-scheme:light;
-  --page:#f1f1ef; --surface:#fcfcfb; --surface-2:#e4e4e1; --raise:#f7f7f5;
-  --ink:#141413; --ink-2:#3c3c3a; --muted:#70706c;
-  --line:rgba(20,20,19,.14); --line-2:rgba(20,20,19,.07);
-  --grid:#e0e0dd; --axis:#c2c2be;
-  --kc:#a32b36; --lg:#2f6fa8; --top:#0e7c52; --bad:#8a1f27;
-  --kc-soft:rgba(163,43,54,.11); --lg-soft:rgba(47,111,168,.11);
-  --top-soft:rgba(14,124,82,.11); --bad-soft:rgba(138,31,39,.10);
+  --page:#ffffff; --surface:#ffffff; --surface-2:#dce1e0; --raise:#f5f7f6;
+  --ink:#14181a; --ink-2:#343a3d; --muted:#5c6367;
+  --line:rgba(20,24,26,0.14); --line-2:rgba(20,24,26,0.07);
+  --grid:#dce1e0; --axis:#bec5c7;
+  --kc:#171512; --lg:#5f6f7e; --top:#96a3ad; --bad:#d2462b;
+  --kc-soft:rgba(23,21,18,0.11); --lg-soft:rgba(95,111,126,0.11);
+  --top-soft:rgba(150,163,173,0.11); --bad-soft:rgba(210,70,43,0.1);
   --sp:clamp(18px,4.5vw,30px);
-  --disp:"Hahmlet",'Nanum Myeongjo',serif;
-  --body:"IBM Plex Sans KR",-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;
-  --mono:"IBM Plex Mono",ui-monospace,'SFMono-Regular',monospace;
+  --disp:'Space Grotesk','Noto Sans KR',-apple-system,sans-serif;
+  --body:'Inter','Noto Sans KR',-apple-system,'Apple SD Gothic Neo',sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
     color-scheme:dark;
-    --page:#121211; --surface:#1a1a19; --surface-2:#262624; --raise:#1f1f1e;
-    --ink:#eaeae7; --ink-2:#b8b8b4; --muted:#8d8d89;
-    --line:rgba(234,234,231,.16); --line-2:rgba(234,234,231,.08);
-    --grid:#2d2d2b; --axis:#4a4a47;
-    --kc:#d9555f; --lg:#4e90cc; --top:#17a077; --bad:#e8737c;
-    --kc-soft:rgba(217,85,95,.16); --lg-soft:rgba(78,144,204,.15);
-    --top-soft:rgba(23,160,119,.15); --bad-soft:rgba(232,115,124,.14);
+    --page:#14181a; --surface:#14181a; --surface-2:#14181a; --raise:#14181a;
+    --ink:#ecefee; --ink-2:#bec5c7; --muted:#8a9296;
+    --line:rgba(236,239,238,0.16); --line-2:rgba(236,239,238,0.08);
+    --grid:#14181a; --axis:#343a3d;
+    --kc:#d2462b; --lg:#171512; --top:#5f6f7e; --bad:#dc6e59;
+    --kc-soft:rgba(210,70,43,0.16); --lg-soft:rgba(23,21,18,0.15);
+    --top-soft:rgba(95,111,126,0.15); --bad-soft:rgba(220,110,89,0.14);
   }
 }
 :root[data-theme="dark"]{
   color-scheme:dark;
-  --page:#121211; --surface:#1a1a19; --surface-2:#262624; --raise:#1f1f1e;
-  --ink:#eaeae7; --ink-2:#b8b8b4; --muted:#8d8d89;
-  --line:rgba(234,234,231,.16); --line-2:rgba(234,234,231,.08);
-  --grid:#2d2d2b; --axis:#4a4a47;
-  --kc:#d9555f; --lg:#4e90cc; --top:#17a077; --bad:#e8737c;
-  --kc-soft:rgba(217,85,95,.16); --lg-soft:rgba(78,144,204,.15);
-  --top-soft:rgba(23,160,119,.15); --bad-soft:rgba(232,115,124,.14);
+  --page:#14181a; --surface:#14181a; --surface-2:#14181a; --raise:#14181a;
+  --ink:#ecefee; --ink-2:#bec5c7; --muted:#8a9296;
+  --line:rgba(236,239,238,0.16); --line-2:rgba(236,239,238,0.08);
+  --grid:#14181a; --axis:#343a3d;
+  --kc:#d2462b; --lg:#171512; --top:#5f6f7e; --bad:#dc6e59;
+  --kc-soft:rgba(210,70,43,0.16); --lg-soft:rgba(23,21,18,0.15);
+  --top-soft:rgba(95,111,126,0.15); --bad-soft:rgba(220,110,89,0.14);
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--page);color:var(--ink);font-family:var(--body);
@@ -160,9 +160,9 @@ td .no{font-family:var(--mono);font-size:11px;color:var(--muted)}
 
 /* ── slope svg ── */
 svg{display:block;max-width:100%;height:auto;overflow:visible}
-.sv-lb{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:var(--muted)}
-.sv-vl{font-family:"IBM Plex Mono",monospace;font-size:11.5px;font-weight:500}
-.sv-nm{font-family:"IBM Plex Sans KR",sans-serif;font-size:11.5px;font-weight:600;fill:var(--ink-2)}
+.sv-lb{font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;font-size:10.5px;fill:var(--muted)}
+.sv-vl{font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;font-size:11.5px;font-weight:500}
+.sv-nm{font-family:'Inter','Noto Sans KR',-apple-system,'Apple SD Gothic Neo',sans-serif;font-size:11.5px;font-weight:600;fill:var(--ink-2)}
 
 p.rate{font-size:13px;line-height:1.6;color:var(--muted);border-left:2px solid var(--line);
   padding-left:1.1em;margin:1.5em 0}
@@ -269,8 +269,18 @@ footer b{color:var(--ink-2);font-weight:500}
 .pitch{background:var(--raise);border:1px solid var(--line);border-radius:3px;padding:10px}
 </style>
 
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+KR:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style id="site-theme">
+/* jin-tactics.com site theme (2026-10-25) — appended; content untouched. */
+html{-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:break-word}
+h1,h2,h3{font-family:"Space Grotesk","Noto Sans KR",-apple-system,sans-serif;letter-spacing:-.02em;text-wrap:balance}
+h1{letter-spacing:-.03em}
+::selection{background:rgba(210,70,43,.18)}
+a{text-underline-offset:3px}
+@media(max-width:620px){table{display:block!important;max-width:100%!important;overflow-x:auto;-webkit-overflow-scrolling:touch}}
+</style>
 </head>
-<body data-palette="#a32b36,#2f6fa8,#0e7c52">
+<body data-palette="#171512,#5f6f7e,#96a3ad">
 <nav class="serienav"><div class="in"><b>Data Series</b><span class="sep">/</span><span>Part 2 of 2</span><span class="sep">|</span><a href="/en/match-analysis/data-series/gimcheon-club">1</a><span class="sep">·</span><a href="/en/match-analysis/data-series/gimcheon" aria-current="page">2</a></div></nav><header><div class="wrap">
   <div class="badge">Part 2 · The data</div>
   <h1>Lost on Dead Balls</h1>

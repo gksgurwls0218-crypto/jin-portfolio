@@ -5,7 +5,7 @@
    diagrams are labelled as such inline, per project rules.
 
    IMPORTANT: every sketch below renders inside KpiDetail's SketchFrame,
-   whose card background is the dark var(--ink) token (not the page's light
+   whose card background was the dark var(--ink) token until 2026-10-25 (now white; the D_* constants were remapped to ink tones) (not the page's light
    var(--stage)). Any text/line drawn directly on that card — i.e. not
    inside one of the light var(--stage-2) sub-cards used by StatPair,
    PlayerFitGrid, LeverkusenFlow's boxes, CBTempoDiagram's boxes — must use
@@ -18,13 +18,13 @@ import { JWC_VISUALS } from "./JwcVisuals";
 // ---------- on-dark palette (for text/lines sitting directly on the
 // SketchFrame's dark card, as opposed to inside a light --stage-2 sub-card) ----------
 
-const D_TEXT = "rgba(255,255,255,.94)";
-const D_TEXT2 = "rgba(255,255,255,.72)";
-const D_TEXT3 = "rgba(255,255,255,.58)";
-const D_TEXT4 = "rgba(255,255,255,.40)";
-const D_EDGE = "rgba(255,255,255,.14)";
-const D_EDGE2 = "rgba(255,255,255,.22)";
-const D_ACCENT = "rgba(255,255,255,.98)"; // the "pop" on dark — weight, not a new hue
+const D_TEXT = "#14181a";
+const D_TEXT2 = "rgba(20,24,26,.76)";
+const D_TEXT3 = "rgba(20,24,26,.56)";
+const D_TEXT4 = "rgba(20,24,26,.42)";
+const D_EDGE = "rgba(20,24,26,.12)";
+const D_EDGE2 = "rgba(20,24,26,.20)";
+const D_ACCENT = "#d2462b"; // the one signal colour (2026-10-25 light redesign)
 
 // ---------- shared bits ----------
 
@@ -258,8 +258,8 @@ export function PHSZoneDiagram() {
         <path d="M 32 380 A 12 12 0 0 1 20 368" fill="none" stroke={EDGE} strokeWidth="1" />
 
         {/* Pre-Half Space — narrow strip, wide band only, nearest the final third */}
-        <rect x="340" y="20" width="80" height="60" fill="rgba(125,255,106,0.20)" stroke={GREEN} strokeWidth="1.5" rx="3" />
-        <rect x="340" y="320" width="80" height="60" fill="rgba(125,255,106,0.20)" stroke={GREEN} strokeWidth="1.5" rx="3" />
+        <rect x="340" y="20" width="80" height="60" fill="rgba(210,70,43,0.14)" stroke={GREEN} strokeWidth="1.5" rx="3" />
+        <rect x="340" y="320" width="80" height="60" fill="rgba(210,70,43,0.14)" stroke={GREEN} strokeWidth="1.5" rx="3" />
         <text x="380" y="45" textAnchor="middle" className="mono" fontSize="10.5" fontWeight={600} fill={GREEN}>PHS</text>
         <text x="380" y="355" textAnchor="middle" className="mono" fontSize="10.5" fontWeight={600} fill={GREEN}>PHS</text>
       </svg>
@@ -296,7 +296,7 @@ export function GwangjuRoleDiagram() {
       <div className="flex flex-col gap-4">
         {rows.map((r) => (
           <div key={r.primary} className="flex items-center gap-3 flex-wrap">
-            <div style={{ padding: "8px 14px", borderRadius: 10, background: "rgba(255,255,255,.08)", border: `0.5px solid ${D_EDGE2}` }}>
+            <div style={{ padding: "8px 14px", borderRadius: 10, background: "rgba(20,24,26,.04)", border: `0.5px solid ${D_EDGE2}` }}>
               <p className="mono" style={{ fontSize: 12.5, color: D_ACCENT, fontWeight: 600 }}>{r.primary}</p>
             </div>
             <span className="mono" style={{ fontSize: 11, color: D_TEXT4 }}>role covered by →</span>

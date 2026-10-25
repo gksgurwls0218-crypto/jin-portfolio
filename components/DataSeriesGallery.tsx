@@ -1,6 +1,6 @@
 "use client";
-import Link from "@/components/LocaleLink";
-import Reveal from "@/components/Reveal";
+import CardIndex from "@/components/ui/CardIndex";
+import { thumbSrc } from "@/lib/thumbs";
 import { type Locale } from "@/lib/i18n";
 import { useLocale } from "@/lib/useLocale";
 
@@ -774,87 +774,27 @@ const COPY = {
   },
 } as const;
 
-function EpisodeRow({ ep }: { ep: Episode }) {
-  const locale = useLocale();
-  return (
-    <Link href={`/match-analysis/data-series/${ep.slug}`} className="list-row">
-      <span className="lr-lead display shrink-0 pt-0.5" style={{ fontSize: 15, width: 30, letterSpacing: "-0.02em" }}>
-        {ep.no}
-      </span>
-
-      <div className="flex-1 min-w-0">
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-1.5">
-          <span className="mono truncate" style={{ fontSize: 10, letterSpacing: ".07em", color: "var(--ink-4)", maxWidth: "100%" }}>
-            {ep.competition[locale]}
-          </span>
-          {ep.companion && (
-            <span className="mono px-1.5 rounded-full" style={{ fontSize: 8.5, letterSpacing: ".12em", border: "0.5px solid var(--edge)", color: "var(--ink-3)" }}>
-              {ep.companion[locale]}
-            </span>
-          )}
-          {ep.koOnly && locale === "en" && (
-            <span className="mono px-1.5 rounded-full" style={{ fontSize: 8.5, letterSpacing: ".12em", border: "0.5px solid var(--edge)", color: "var(--ink-3)" }}>
-              KOREAN EDITION
-            </span>
-          )}
-        </div>
-
-        <h2 className="lr-title display" style={{ fontSize: "clamp(19px,2vw,24px)", lineHeight: 1.22, letterSpacing: "-0.03em" }}>
-          {ep.title[locale]}
-        </h2>
-
-        <p className="lr-clamp mt-2" style={{ fontSize: 13.5, lineHeight: 1.62, color: "var(--ink-3)", maxWidth: 620 }}>
-          {ep.blurb[locale]}
-        </p>
-      </div>
-
-      <div className="hidden lg:flex flex-col gap-3 shrink-0 self-center" style={{ width: 186 }}>
-        {ep.stats[locale].slice(0, 2).map(([big, label]) => (
-          <div key={label}>
-            <span className="display block" style={{ fontSize: 15, letterSpacing: "-0.02em", color: "var(--ink-2)" }}>{big}</span>
-            <span className="mono block" style={{ fontSize: 8.5, lineHeight: 1.45, letterSpacing: ".1em", color: "var(--ink-4)" }}>{label}</span>
-          </div>
-        ))}
-      </div>
-
-      <span className="lr-arrow mono shrink-0 self-center hidden sm:block" style={{ fontSize: 13 }} aria-hidden>
-        &rarr;
-      </span>
-    </Link>
-  );
-}
-
 export default function DataSeriesGallery() {
   const locale = useLocale();
   const episodes = [...EPISODES].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
   return (
-    <section className="relative px-6 md:px-10 pt-36 pb-40" style={{ background: "var(--stage-2)" }}>
-      <div className="max-w-[1180px] mx-auto">
-        <Reveal>
-          <p className="mono t-eyebrow kicker mb-7">{COPY.eyebrow[locale]}</p>
-          <h1 className="display t-section mb-8" style={{ color: "var(--ink)", maxWidth: 900 }}>
-            {COPY.title1[locale]}<br />
-            <span style={{ color: "var(--green-bright)" }}>{COPY.title2[locale]}</span>
-          </h1>
-          <p className="mb-14" style={{ color: "var(--ink-2)", fontSize: "clamp(16px,1.6vw,19px)", lineHeight: 1.6, maxWidth: 640 }}>
-            {COPY.intro[locale]}
-          </p>
-        </Reveal>
-
-        <div className="flex flex-col" style={{ borderTop: "0.5px solid var(--green-line)" }}>
-          {episodes.map((ep, i) => (
-            <Reveal key={ep.slug} delay={i * 40}>
-              <EpisodeRow ep={ep} />
-            </Reveal>
-          ))}
-        </div>
-
-        <Reveal delay={140}>
-          <p className="mono mt-12" style={{ fontSize: 12, letterSpacing: ".08em", color: "var(--ink-4)" }}>
-            {COPY.next[locale]}
-          </p>
-        </Reveal>
-      </div>
-    </section>
+    <CardIndex
+      back={{ href: "/match-analysis", label: locale === "ko" ? "경기 분석 & 새로운 개념" : "Match Analysis & Essays" }}
+      eyebrow={COPY.eyebrow[locale]} title={COPY.title1[locale]} accent={COPY.title2[locale]} intro={COPY.intro[locale]}
+      enterLabel={locale === "ko" ? "읽기" : "Read"} previewLabel={locale === "ko" ? "미리보기" : "Preview"}
+      note={COPY.next[locale]}
+      items={episodes.map((ep) => ({
+        href: `/match-analysis/data-series/${ep.slug}`,
+        code: ep.companion ? ep.companion[locale] : (locale === "ko" ? `${ep.no}편` : `No. ${ep.no}`),
+        num: ep.publishedAt,
+        context: ep.competition[locale],
+        title: ep.title[locale],
+        short: ep.blurb[locale],
+        stats: ep.stats[locale],
+        meta: ep.koOnly && locale === "en" ? "KOREAN EDITION" : undefined,
+        thumb: thumbSrc(`ds-${ep.slug}`, locale),
+        ghost: ep.companion ? "—" : ep.no,
+      }))}
+    />
   );
 }

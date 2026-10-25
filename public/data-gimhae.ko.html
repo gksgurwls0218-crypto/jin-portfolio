@@ -4,43 +4,43 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>김해FC 2026 — 집에서, 0-0일 때</title>
 <meta name="description" content="김해FC는 승점 12을 쌓았고 기대승점은 22.1이었다. 차이 −10.1은 리그에서 가장 크다. 그 차이는 거의 전부 집에서, 스코어가 0-0인 동안 생겼다. 국면별로 쪼개면 &quot;어디까지 되고 어디서 끊기는지&quot;가 보인다.">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
 <style>
 :root{
   color-scheme:light;
-  --page:#f1f1ef; --surface:#fcfcfb; --surface-2:#e4e4e1; --raise:#f7f7f5;
-  --ink:#141413; --ink-2:#3c3c3a; --muted:#70706c;
-  --line:rgba(20,20,19,.14); --line-2:rgba(20,20,19,.07);
-  --grid:#e0e0dd; --axis:#c2c2be;
-  --ic:#1d6f86; --op:#8a7a64; --top:#2e7d5b; --bad:#b5562a;
-  --ic-soft:rgba(29,111,134,.10); --op-soft:rgba(138,106,60,.12);
-  --top-soft:rgba(46,125,91,.11); --bad-soft:rgba(181,86,42,.10);
+  --page:#ffffff; --surface:#ffffff; --surface-2:#dce1e0; --raise:#f5f7f6;
+  --ink:#14181a; --ink-2:#343a3d; --muted:#5c6367;
+  --line:rgba(20,24,26,0.14); --line-2:rgba(20,24,26,0.07);
+  --grid:#dce1e0; --axis:#bec5c7;
+  --ic:#171512; --op:#5f6f7e; --top:#96a3ad; --bad:#d2462b;
+  --ic-soft:rgba(23,21,18,0.1); --op-soft:rgba(95,111,126,0.12);
+  --top-soft:rgba(150,163,173,0.11); --bad-soft:rgba(210,70,43,0.1);
   --sp:clamp(18px,4.5vw,30px);
-  --disp:"Hahmlet",'Nanum Myeongjo',serif;
-  --body:"IBM Plex Sans KR",-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;
-  --mono:"IBM Plex Mono",ui-monospace,'SFMono-Regular',monospace;
+  --disp:'Space Grotesk','Noto Sans KR',-apple-system,sans-serif;
+  --body:'Inter','Noto Sans KR',-apple-system,'Apple SD Gothic Neo',sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
     color-scheme:dark;
-    --page:#121211; --surface:#1a1a19; --surface-2:#262624; --raise:#1f1f1e;
-    --ink:#eaeae7; --ink-2:#b8b8b4; --muted:#8d8d89;
-    --line:rgba(234,234,231,.16); --line-2:rgba(234,234,231,.08);
-    --grid:#2d2d2b; --axis:#4a4a47;
-    --ic:#7cc8de; --op:#bfae94; --top:#6cc59a; --bad:#f0915e;
-    --ic-soft:rgba(124,200,222,.16); --op-soft:rgba(196,154,100,.17);
-    --top-soft:rgba(108,197,154,.15); --bad-soft:rgba(240,145,94,.14);
+    --page:#14181a; --surface:#14181a; --surface-2:#14181a; --raise:#14181a;
+    --ink:#ecefee; --ink-2:#bec5c7; --muted:#8a9296;
+    --line:rgba(236,239,238,0.16); --line-2:rgba(236,239,238,0.08);
+    --grid:#14181a; --axis:#343a3d;
+    --ic:#91908f; --op:#9aa4ae; --top:#96a3ad; --bad:#97a2ac;
+    --ic-soft:rgba(145,144,143,0.16); --op-soft:rgba(129,142,154,0.17);
+    --top-soft:rgba(150,163,173,0.15); --bad-soft:rgba(151,162,172,0.14);
   }
 }
 :root[data-theme="dark"]{
   color-scheme:dark;
-  --page:#121211; --surface:#1a1a19; --surface-2:#262624; --raise:#1f1f1e;
-  --ink:#eaeae7; --ink-2:#b8b8b4; --muted:#8d8d89;
-  --line:rgba(234,234,231,.16); --line-2:rgba(234,234,231,.08);
-  --grid:#2d2d2b; --axis:#4a4a47;
-  --ic:#7cc8de; --op:#bfae94; --top:#6cc59a; --bad:#f0915e;
-  --ic-soft:rgba(124,200,222,.16); --op-soft:rgba(196,154,100,.17);
-  --top-soft:rgba(108,197,154,.15); --bad-soft:rgba(240,145,94,.14);
+  --page:#14181a; --surface:#14181a; --surface-2:#14181a; --raise:#14181a;
+  --ink:#ecefee; --ink-2:#bec5c7; --muted:#8a9296;
+  --line:rgba(236,239,238,0.16); --line-2:rgba(236,239,238,0.08);
+  --grid:#14181a; --axis:#343a3d;
+  --ic:#91908f; --op:#9aa4ae; --top:#96a3ad; --bad:#97a2ac;
+  --ic-soft:rgba(145,144,143,0.16); --op-soft:rgba(129,142,154,0.17);
+  --top-soft:rgba(150,163,173,0.15); --bad-soft:rgba(151,162,172,0.14);
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--page);color:var(--ink);font-family:var(--body);
@@ -160,9 +160,9 @@ td .no{font-family:var(--mono);font-size:11px;color:var(--muted)}
 
 /* ── slope svg ── */
 svg{display:block;max-width:100%;height:auto;overflow:visible}
-.sv-lb{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:var(--muted)}
-.sv-vl{font-family:"IBM Plex Mono",monospace;font-size:11.5px;font-weight:500}
-.sv-nm{font-family:"IBM Plex Sans KR",sans-serif;font-size:11.5px;font-weight:600;fill:var(--ink-2)}
+.sv-lb{font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;font-size:10.5px;fill:var(--muted)}
+.sv-vl{font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;font-size:11.5px;font-weight:500}
+.sv-nm{font-family:'Inter','Noto Sans KR',-apple-system,'Apple SD Gothic Neo',sans-serif;font-size:11.5px;font-weight:600;fill:var(--ink-2)}
 
 p.rate{font-size:13px;line-height:1.6;color:var(--muted);border-left:2px solid var(--line);
   padding-left:1.1em;margin:1.5em 0}
@@ -524,4 +524,14 @@ footer b{color:var(--ink-2);font-weight:500}
 <footer><div class="wrap">데이터: K리그 데이터포털(portal.kleague.com) · 김해FC 26경기 수집, 분석 대상 24경기. 리그 비교는 2026-09-20까지의 216경기 풀(R28은 풀 밖, R25는 이벤트 없음). 기대승점은 각 경기의 슛 xG로 2만 회 시뮬레이션한 값. 국면 지표의 순위는 17개 구단 기준. 순위표는 2026-10-14 기준. 작성 한혁진 · jin-tactics.com</div></footer>
 </div>
 </body>
-</html>
+</html><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+KR:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style id="site-theme">
+/* jin-tactics.com site theme (2026-10-25) — appended; content untouched. */
+html{-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:break-word}
+h1,h2,h3{font-family:"Space Grotesk","Noto Sans KR",-apple-system,sans-serif;letter-spacing:-.02em;text-wrap:balance}
+h1{letter-spacing:-.03em}
+::selection{background:rgba(210,70,43,.18)}
+a{text-underline-offset:3px}
+@media(max-width:620px){table{display:block!important;max-width:100%!important;overflow-x:auto;-webkit-overflow-scrolling:touch}}
+</style>
+

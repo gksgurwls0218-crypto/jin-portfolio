@@ -4,20 +4,20 @@
 <meta name="description" content="Jeju SK concede from opponents' slow build at 0.44x the expected rate. What beats them is the counter — and those counters start not with the goalkeeper's long ball but with a short forward pass in their own defensive third.">
 <style>
 :root{color-scheme:light;
- --page:#f9f9f7;--surface:#fcfcfb;--surface-2:#f1f0ec;--fg:#0b0b0b;--fg2:#3a3936;--muted:#7b7973;
- --grid:#e1e0d9;--axis:#c3c2b7;--border:rgba(11,11,11,.11);
- --s-jj:#c2410c;--s-jb:#047857;--s-opp:#1d4ed8;--s-bad:#9f1239;--s-neu:#8a8578;
- --s-jj-w:rgba(194,65,12,.13);--s-opp-w:rgba(29,78,216,.13);--acc:#c2410c}
+ --page:#ffffff;--surface:#ffffff;--surface-2:#ecefee;--fg:#14181a;--fg2:#14181a;--muted:#5c6367;
+ --grid:#dce1e0;--axis:#bec5c7;--border:rgba(20,24,26,0.11);
+ --s-jj:#171512;--s-jb:#727c84;--s-opp:#5f6f7e;--s-bad:#d2462b;--s-neu:#8a9296;
+ --s-jj-w:rgba(23,21,18,0.13);--s-opp-w:rgba(95,111,126,0.13);--acc:#171512}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;
- --page:#141312;--surface:#1c1b19;--surface-2:#232120;--fg:#f0eeea;--fg2:#c8c5be;--muted:#94918a;
- --grid:#2f2c28;--axis:#413e39;--border:rgba(255,255,255,.11);
- --s-jj:#e06a10;--s-jb:#1fae85;--s-opp:#4285e8;--s-bad:#e85670;--s-neu:#9a958a;
- --s-jj-w:rgba(224,106,16,.16);--s-opp-w:rgba(66,133,232,.16);--acc:#e06a10}}
+ --page:#14181a;--surface:#14181a;--surface-2:#14181a;--fg:#ecefee;--fg2:#bec5c7;--muted:#8a9296;
+ --grid:#14181a;--axis:#343a3d;--border:rgba(255,255,255,0.11);
+ --s-jj:#171512;--s-jb:#96a3ad;--s-opp:#5f6f7e;--s-bad:#e38a79;--s-neu:#8a9296;
+ --s-jj-w:rgba(23,21,18,0.16);--s-opp-w:rgba(95,111,126,0.16);--acc:#171512}}
 :root[data-theme="dark"]{color-scheme:dark;
- --page:#141312;--surface:#1c1b19;--surface-2:#232120;--fg:#f0eeea;--fg2:#c8c5be;--muted:#94918a;
- --grid:#2f2c28;--axis:#413e39;--border:rgba(255,255,255,.11);
- --s-jj:#e06a10;--s-jb:#1fae85;--s-opp:#4285e8;--s-bad:#e85670;--s-neu:#9a958a;
- --s-jj-w:rgba(224,106,16,.16);--s-opp-w:rgba(66,133,232,.16);--acc:#e06a10}
+ --page:#14181a;--surface:#14181a;--surface-2:#14181a;--fg:#ecefee;--fg2:#bec5c7;--muted:#8a9296;
+ --grid:#14181a;--axis:#343a3d;--border:rgba(255,255,255,0.11);
+ --s-jj:#171512;--s-jb:#96a3ad;--s-opp:#5f6f7e;--s-bad:#e38a79;--s-neu:#8a9296;
+ --s-jj-w:rgba(23,21,18,0.16);--s-opp-w:rgba(95,111,126,0.16);--acc:#171512}
 *{box-sizing:border-box}
 body{margin:0;background:var(--page);color:var(--fg);
  font:16px/1.78 -apple-system,BlinkMacSystemFont,'Pretendard','Apple SD Gothic Neo','Noto Sans KR',sans-serif;
@@ -36,17 +36,17 @@ h3{font-size:16.5px;margin:36px 0 10px;font-weight:700}
 p{margin:0 0 17px}
 .lead{font-size:17px;color:var(--fg2)}
 b,strong{font-weight:700;color:var(--fg)}
-.tldr{border:1px solid var(--border);border-radius:8px;padding:22px 24px;margin:0 0 44px;background:var(--surface)}
+.tldr{border:1px solid var(--border);border-radius:6px;padding:22px 24px;margin:0 0 44px;background:var(--surface)}
 .tldr h4{margin:0 0 13px;font-size:12px;letter-spacing:.12em;color:var(--muted);font-weight:650}
 .tldr ol{margin:0;padding-left:20px}.tldr li{margin-bottom:9px;font-size:15px;color:var(--fg2)}
 .tldr li:last-child{margin-bottom:0}
-.fig{margin:30px 0 32px;border:1px solid var(--border);border-radius:8px;padding:14px 14px 2px;background:var(--surface)}
+.fig{margin:30px 0 32px;border:1px solid var(--border);border-radius:6px;padding:14px 14px 2px;background:var(--surface)}
 .fig svg{width:100%;height:auto;display:block;overflow:visible}
 figcaption{color:var(--muted);font-size:13px;line-height:1.66;margin:12px 2px 12px}
 figcaption b{color:var(--fg2);font-weight:650}
 .leg{display:flex;flex-wrap:wrap;gap:5px 16px;margin:2px 2px 10px;font-size:12px;color:var(--muted)}
 .leg i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
-text{font-family:-apple-system,'Pretendard','Apple SD Gothic Neo',sans-serif}
+text{font-family:'Inter','Noto Sans KR',-apple-system,'Apple SD Gothic Neo',sans-serif}
 .lb{font-size:11.5px;font-weight:700;fill:var(--fg2)}
 .lg{font-size:11.5px;fill:var(--muted);font-weight:500}
 .vl{font-size:12.5px;font-weight:700;fill:var(--fg);font-variant-numeric:tabular-nums}
@@ -60,7 +60,7 @@ text{font-family:-apple-system,'Pretendard','Apple SD Gothic Neo',sans-serif}
 .hp{cursor:pointer}
 #tt{position:fixed;z-index:99;pointer-events:none;opacity:0;transition:opacity .12s;
  background:var(--fg);color:var(--page);padding:8px 11px;border-radius:6px;font-size:12.5px;
- line-height:1.5;max-width:280px;box-shadow:0 4px 16px rgba(0,0,0,.22)}
+ line-height:1.5;max-width:280px;box-shadow:none}
 #tt b{display:block;color:var(--page);font-weight:750;margin-bottom:2px}
 #tt span{opacity:.78}
 .tw{overflow-x:auto;margin:22px 0 24px}
@@ -73,7 +73,7 @@ td.w{color:var(--fg);font-weight:750;white-space:nowrap}
 td.l{color:var(--s-bad);font-weight:700;white-space:nowrap}
 td.dr{color:var(--muted);font-weight:600;white-space:nowrap}
 tr.hl td{background:var(--surface-2)}
-.note{border:1px solid var(--border);border-radius:8px;padding:15px 18px;margin:24px 0;font-size:14px;color:var(--fg2);background:var(--surface)}
+.note{border:1px solid var(--border);border-radius:6px;padding:15px 18px;margin:24px 0;font-size:14px;color:var(--fg2);background:var(--surface)}
 .note b{color:var(--fg)}
 .caveat{border-left:2px solid var(--s-bad);padding:4px 0 4px 18px;margin:24px 0;font-size:14px;color:var(--fg2)}
 .q{font-size:18.5px;line-height:1.64;color:var(--fg);border-left:2px solid var(--s-jj);
@@ -83,11 +83,11 @@ hr{border:none;border-top:1px solid var(--border);margin:54px 0}
 .app h2{font-size:18px;margin-top:38px}
 .app table{font-size:12.8px}
 .app ul{padding-left:19px}.app li{margin-bottom:7px}
-code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;
+code{font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;font-size:12.5px;
  background:var(--surface-2);padding:1.5px 5px;border-radius:4px}
 .cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:24px 0}
 @media(max-width:600px){.cards{grid-template-columns:1fr}}
-.mcard{border:1px solid var(--border);border-radius:8px;background:var(--surface);padding:18px 20px}
+.mcard{border:1px solid var(--border);border-radius:6px;background:var(--surface);padding:18px 20px}
 .mcard .rd{font-size:11.5px;letter-spacing:.1em;font-weight:700;color:var(--muted);margin-bottom:4px}
 .mcard h3{margin:0 0 2px;font-size:17px;font-weight:750}
 .mcard .sc{font-size:15px;font-weight:750;color:var(--s-jj)}
@@ -100,7 +100,17 @@ footer{margin-top:60px;padding-top:24px;border-top:1px solid var(--border);
  color:var(--muted);font-size:13px;line-height:1.75}
 @media(max-width:620px){.fig{padding:10px 10px 2px}main{padding:38px 16px 70px}}
 @media (forced-colors: active){.fig svg *{forced-color-adjust:none}}
-</style></head><body><main><header>
+</style><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+KR:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style id="site-theme">
+/* jin-tactics.com site theme (2026-10-25) — appended; content untouched. */
+html{-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:break-word}
+h1,h2,h3{font-family:"Space Grotesk","Noto Sans KR",-apple-system,sans-serif;letter-spacing:-.02em;text-wrap:balance}
+h1{letter-spacing:-.03em}
+::selection{background:rgba(210,70,43,.18)}
+a{text-underline-offset:3px}
+@media(max-width:620px){table{display:block!important;max-width:100%!important;overflow-x:auto;-webkit-overflow-scrolling:touch}}
+</style>
+</head><body><main><header>
 <div class="series">WHAT THE DATA SAYS · 05</div>
 <h1>The risk they never bought,<br>the chances they never got</h1>
 <p class="sub">Jeju SK absorb organised attacks better than anyone in K League 1.

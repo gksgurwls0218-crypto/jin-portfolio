@@ -5,32 +5,32 @@
 <meta name="description" content="The club that crosses more than anyone in K League 2 ranks 6th for goals. 21 matches set against 96 Big 5 clubs narrow the leak to one phase — what needs changing is not the volume but the conditions in front of it. Twelve figures for an eight-act proposal.">
 <style>
 :root{
-  --page:#f9f9f7; --surface-1:#fcfcfb;
-  --text-primary:#0b0b0b; --text-secondary:#52514e; --muted:#898781;
-  --grid:#e1e0d9; --axis:#c3c2b7; --border:rgba(11,11,11,0.10);
-  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a;
-  --good:#0ca30c; --critical:#d03b3b; --warning:#fab219;
-  --seq250:#86b6ef; --seq350:#5598e7; --seq450:#2a78d6; --seq600:#184f95;
+  --page:#ffffff; --surface-1:#ffffff;
+  --text-primary:#14181a; --text-secondary:#343a3d; --muted:#8a9296;
+  --grid:#dce1e0; --axis:#bec5c7; --border:rgba(20,24,26,0.1);
+  --s1:#171512; --s2:#5f6f7e; --s3:#96a3ad;
+  --good:#171512; --critical:#d2462b; --warning:#e38f78;
+  --seq250:#71706e; --seq350:#171512; --seq450:#171512; --seq600:#12100e;
 }
 :root[data-theme="dark"]{
-  --page:#0d0d0d; --surface-1:#1a1a19;
-  --text-primary:#ffffff; --text-secondary:#c3c2b7; --muted:#898781;
-  --grid:#2c2c2a; --axis:#383835; --border:rgba(255,255,255,0.10);
-  --s1:#3987e5; --s2:#d95926; --s3:#199e70;
-  --seq250:#184f95; --seq350:#256abf; --seq450:#3987e5; --seq600:#86b6ef;
+  --page:#14181a; --surface-1:#14181a;
+  --text-primary:#ffffff; --text-secondary:#bec5c7; --muted:#8a9296;
+  --grid:#14181a; --axis:#14181a; --border:rgba(255,255,255,0.1);
+  --s1:#171512; --s2:#5f6f7e; --s3:#96a3ad;
+  --seq250:#12100e; --seq350:#171512; --seq450:#171512; --seq600:#71706e;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --page:#0d0d0d; --surface-1:#1a1a19;
-    --text-primary:#ffffff; --text-secondary:#c3c2b7; --muted:#898781;
-    --grid:#2c2c2a; --axis:#383835; --border:rgba(255,255,255,0.10);
-    --s1:#3987e5; --s2:#d95926; --s3:#199e70;
-    --seq250:#184f95; --seq350:#256abf; --seq450:#3987e5; --seq600:#86b6ef;
+    --page:#14181a; --surface-1:#14181a;
+    --text-primary:#ffffff; --text-secondary:#bec5c7; --muted:#8a9296;
+    --grid:#14181a; --axis:#14181a; --border:rgba(255,255,255,0.1);
+    --s1:#171512; --s2:#5f6f7e; --s3:#96a3ad;
+    --seq250:#12100e; --seq350:#171512; --seq450:#171512; --seq600:#71706e;
   }
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--page);color:var(--text-primary);
-  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.65;
+  font-family:'Inter','Noto Sans KR',-apple-system,'Apple SD Gothic Neo',sans-serif;line-height:1.65;
   -webkit-font-smoothing:antialiased;}
 .wrap{max-width:920px;margin:0 auto;padding:0 22px 90px}
 header.hero{padding:64px 0 34px;border-bottom:1px solid var(--border);margin-bottom:44px}
@@ -49,13 +49,13 @@ li{margin:6px 0}
 .lede{font-size:17px;color:var(--text-primary);border-left:3px solid var(--s2);
   padding:2px 0 2px 18px;margin:22px 0 28px;max-width:66ch}
 .statrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:26px 0 8px}
-.stat{background:var(--surface-1);border:1px solid var(--border);border-radius:12px;padding:16px 17px}
+.stat{background:var(--surface-1);border:1px solid var(--border);border-radius:6px;padding:16px 17px}
 .stat .lab{font-size:12px;color:var(--muted);font-weight:600;letter-spacing:.01em}
 .stat .val{font-size:31px;font-weight:700;letter-spacing:-.025em;margin:5px 0 2px;line-height:1.1}
 .stat .note{font-size:12.5px;color:var(--text-secondary)}
 .stat.hl{border-color:var(--s2)} .stat.hl .val{color:var(--s2)}
 figure{margin:30px 0 8px;background:var(--surface-1);border:1px solid var(--border);
-  border-radius:14px;padding:20px 20px 14px}
+  border-radius:6px;padding:20px 20px 14px}
 figcaption{font-size:13px;color:var(--text-secondary);margin-top:12px;padding-top:11px;
   border-top:1px solid var(--grid)}
 .figtitle{font-size:15.5px;font-weight:660;margin:0 0 3px;color:var(--text-primary)}
@@ -69,26 +69,26 @@ th:first-child,td:first-child{text-align:left;font-variant-numeric:normal}
 thead th{color:var(--muted);font-weight:640;font-size:12px;border-bottom:1px solid var(--axis)}
 tbody tr.hl td{background:color-mix(in srgb,var(--s2) 9%,transparent);font-weight:640;color:var(--text-primary)}
 .tbtn{font:inherit;font-size:12.5px;color:var(--text-secondary);background:none;
-  border:1px solid var(--border);border-radius:7px;padding:4px 11px;cursor:pointer;margin-top:11px}
+  border:1px solid var(--border);border-radius:6px;padding:4px 11px;cursor:pointer;margin-top:11px}
 .tbtn:hover{background:var(--page)}
 .tblwrap{display:none;overflow-x:auto;max-height:340px}
 .tblwrap.on{display:block}
 .callout{background:var(--surface-1);border:1px solid var(--border);border-left:3px solid var(--s1);
-  border-radius:10px;padding:15px 18px;margin:24px 0;font-size:14.5px;color:var(--text-primary);max-width:70ch}
+  border-radius:6px;padding:15px 18px;margin:24px 0;font-size:14.5px;color:var(--text-primary);max-width:70ch}
 .callout.warn{border-left-color:var(--warning)}
 .callout.key{border-left-color:var(--s2)}
 .callout .t{font-weight:680;font-size:12px;letter-spacing:.08em;text-transform:uppercase;
   color:var(--muted);display:block;margin-bottom:6px}
 .tip{position:fixed;pointer-events:none;background:var(--surface-1);border:1px solid var(--border);
-  border-radius:9px;padding:8px 11px;font-size:12.5px;color:var(--text-primary);opacity:0;
-  transition:opacity .09s;box-shadow:0 6px 22px rgba(0,0,0,.13);z-index:99;white-space:nowrap}
+  border-radius:6px;padding:8px 11px;font-size:12.5px;color:var(--text-primary);opacity:0;
+  transition:opacity .09s;box-shadow:none;z-index:99;white-space:nowrap}
 .tip b{font-weight:670} .tip .m{color:var(--text-secondary)}
 .toggle{position:fixed;top:16px;right:16px;z-index:50;background:var(--surface-1);
-  border:1px solid var(--border);border-radius:9px;padding:6px 12px;font:inherit;font-size:12.5px;
+  border:1px solid var(--border);border-radius:6px;padding:6px 12px;font:inherit;font-size:12.5px;
   color:var(--text-secondary);cursor:pointer}
 footer{margin-top:70px;padding-top:26px;border-top:1px solid var(--border);font-size:12.5px;color:var(--muted)}
 footer p{color:var(--muted);font-size:12.5px;max-width:74ch}
-.pill{display:inline-block;font-size:11.5px;font-weight:650;padding:2px 9px;border-radius:20px;
+.pill{display:inline-block;font-size:11.5px;font-weight:650;padding:2px 9px;border-radius:6px;
   border:1px solid var(--border);color:var(--text-secondary);margin-right:6px}
 @media(max-width:640px){.stat .val{font-size:26px}figure{padding:16px 13px 11px}}
 
@@ -101,17 +101,17 @@ table.scope td.nt{text-align:left;white-space:normal;color:var(--muted);font-siz
   min-width:250px;font-variant-numeric:normal;line-height:1.5}
 table.scope td.nt b{color:var(--text-secondary);font-weight:640}
 /* --- T block --- */
-.tblock{border:1.5px dashed var(--axis);border-radius:12px;padding:18px 20px 6px;margin:30px 0 8px;
+.tblock{border:1.5px dashed var(--axis);border-radius:6px;padding:18px 20px 6px;margin:30px 0 8px;
   background:color-mix(in srgb,var(--s2) 3.5%,transparent)}
 .tblock h3{margin-top:0}
 .tblock ol{color:var(--text-secondary);max-width:70ch;padding-left:22px;margin:10px 0}
 .tblock ol li{margin:7px 0}
 .badge{display:inline-block;font-size:11px;font-weight:670;letter-spacing:.04em;padding:2px 9px;
-  border-radius:20px;background:color-mix(in srgb,var(--s2) 14%,transparent);color:var(--s2);
+  border-radius:6px;background:color-mix(in srgb,var(--s2) 14%,transparent);color:var(--s2);
   vertical-align:2px;margin-left:8px}
 /* --- language switch --- */
 .langsw{position:fixed;top:16px;right:96px;z-index:50;background:var(--surface-1);
-  border:1px solid var(--border);border-radius:9px;padding:6px 12px;font-size:12.5px;
+  border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:12.5px;
   color:var(--text-secondary);cursor:pointer;text-decoration:none}
 .langsw:hover{background:var(--page);color:var(--text-primary)}
 @media(max-width:640px){.langsw{right:88px;padding:6px 10px}}
@@ -119,13 +119,13 @@ table.scope td.nt b{color:var(--text-secondary);font-weight:640}
 /* ===== viz catalog additions ===== */
 .actnav{display:flex;flex-wrap:wrap;gap:7px;margin:26px 0 8px}
 .actnav a{font-size:12.5px;text-decoration:none;color:var(--text-secondary);border:1px solid var(--border);
-  border-radius:20px;padding:5px 12px;background:var(--surface-1)}
+  border-radius:6px;padding:5px 12px;background:var(--surface-1)}
 .actnav a:hover{border-color:var(--s1);color:var(--text-primary)}
 .act{margin:66px 0 0;padding-top:8px}
 .actlab{display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:.1em;
-  color:var(--s2);border:1px solid var(--s2);border-radius:20px;padding:2px 11px;margin-bottom:10px}
+  color:var(--s2);border:1px solid var(--s2);border-radius:6px;padding:2px 11px;margin-bottom:10px}
 .why{background:color-mix(in srgb,var(--s1) 5%,transparent);border:1px solid var(--border);
-  border-left:3px solid var(--s1);border-radius:10px;padding:13px 16px;margin:16px 0 6px;
+  border-left:3px solid var(--s1);border-radius:6px;padding:13px 16px;margin:16px 0 6px;
   font-size:13.5px;color:var(--text-secondary);max-width:72ch}
 .why b{color:var(--text-primary);font-weight:660}
 .why .h{display:block;font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
@@ -134,12 +134,12 @@ table.scope td.nt b{color:var(--text-secondary);font-weight:640}
   color:var(--text-secondary);max-width:70ch;font-style:normal}
 .qt cite{display:block;font-style:normal;font-size:12px;color:var(--muted);margin-top:6px}
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:13px;margin:22px 0 6px}
-.card{background:var(--surface-1);border:1px solid var(--border);border-radius:13px;padding:16px 17px}
+.card{background:var(--surface-1);border:1px solid var(--border);border-radius:6px;padding:16px 17px}
 .card .n{font-size:11.5px;font-weight:700;letter-spacing:.06em;color:var(--s2)}
 .card h4{margin:6px 0 8px;font-size:15.5px;font-weight:680;color:var(--text-primary)}
 .card p{font-size:13px;margin:6px 0;color:var(--text-secondary);max-width:none}
 .card .tagr{margin-top:10px;display:flex;gap:6px;flex-wrap:wrap}
-.card .tg{font-size:11px;padding:2px 8px;border-radius:20px;border:1px solid var(--border);color:var(--muted)}
+.card .tg{font-size:11px;padding:2px 8px;border-radius:6px;border:1px solid var(--border);color:var(--muted)}
 .card.p1{border-top:3px solid var(--s2)} .card.p2{border-top:3px solid var(--s1)}
 .card.p3{border-top:3px solid var(--s3)} .card.p4{border-top:3px solid var(--axis)}
 table.ref td.v{color:var(--critical);font-weight:660;white-space:nowrap}
@@ -149,7 +149,7 @@ table.ref td.e{text-align:left;font-size:12.5px;color:var(--text-secondary);font
 table.ref tr.own td.v{color:var(--warning)}
 .gaugewrap{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:6px 0 4px}
 @media(max-width:620px){.gaugewrap{grid-template-columns:1fr}}
-.gauge{border:1px solid var(--border);border-radius:12px;padding:15px 16px;background:var(--page)}
+.gauge{border:1px solid var(--border);border-radius:6px;padding:15px 16px;background:var(--page)}
 .gauge.on{border-color:var(--s3);background:color-mix(in srgb,var(--s3) 6%,transparent)}
 .gauge.off{border-color:var(--s2);background:color-mix(in srgb,var(--s2) 5%,transparent)}
 .gauge .gt{font-size:14.5px;font-weight:680;margin-bottom:2px}
@@ -163,7 +163,7 @@ table.ref tr.own td.v{color:var(--warning)}
 .gsum{margin-top:12px;padding-top:10px;border-top:1px solid var(--grid);font-size:12.5px;color:var(--text-secondary)}
 .gsum b{color:var(--text-primary)}
 .chain{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;margin:8px 0 2px}
-.ch{flex:1 1 130px;border:1px solid var(--border);border-radius:11px;padding:12px 13px;background:var(--page);min-width:0}
+.ch{flex:1 1 130px;border:1px solid var(--border);border-radius:6px;padding:12px 13px;background:var(--page);min-width:0}
 .ch .cl{font-size:11px;letter-spacing:.08em;font-weight:700;color:var(--muted)}
 .ch .cn{font-size:15px;font-weight:680;margin:3px 0 5px}
 .ch .cd{font-size:12px;color:var(--text-secondary);line-height:1.5}
@@ -182,7 +182,7 @@ table.ref tr.own td.v{color:var(--warning)}
 @media(max-width:720px){.boards{grid-template-columns:1fr;gap:22px}}
 /* --- index computation table --- */
 .frm{font-size:13px;color:var(--text-secondary);background:var(--page);border:1px solid var(--border);
-  border-radius:9px;padding:10px 14px;margin:16px 0 4px;line-height:1.9}
+  border-radius:6px;padding:10px 14px;margin:16px 0 4px;line-height:1.9}
 .frm b{color:var(--text-primary);font-weight:660}
 .frm .mop{color:var(--muted);margin:0 6px}
 table.idx{width:100%;border-collapse:collapse;font-size:13.5px;margin:6px 0 2px}
@@ -204,7 +204,7 @@ table.idx td.lo{color:var(--s2);font-weight:680}
 .idxwrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
 @media(max-width:600px){table.idx{min-width:520px}}
 /* --- inline glossary --- */
-.gloss{margin:14px 0 0;padding:11px 14px;border:1px dashed var(--axis);border-radius:9px;
+.gloss{margin:14px 0 0;padding:11px 14px;border:1px dashed var(--axis);border-radius:6px;
   background:color-mix(in srgb,var(--s1) 3.5%,transparent);font-size:12.5px;line-height:1.75;
   color:var(--text-secondary);max-width:none}
 .gloss .gh{display:block;font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;
@@ -220,6 +220,16 @@ a.cx::after{content:"↗";font-size:.78em;margin-left:2px;vertical-align:1px;col
 .cxnote{font-size:12px;color:var(--muted);margin:14px 0 0;padding-top:11px;border-top:1px solid var(--grid)}
 .cxnote a.cx{font-weight:600}
 
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+KR:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style id="site-theme">
+/* jin-tactics.com site theme (2026-10-25) — appended; content untouched. */
+html{-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:break-word}
+h1,h2,h3{font-family:"Space Grotesk","Noto Sans KR",-apple-system,sans-serif;letter-spacing:-.02em;text-wrap:balance}
+h1{letter-spacing:-.03em}
+::selection{background:rgba(210,70,43,.18)}
+a{text-underline-offset:3px}
+@media(max-width:620px){table{display:block!important;max-width:100%!important;overflow-x:auto;-webkit-overflow-scrolling:touch}}
 </style>
 </head><body>
 <div class="wrap">
@@ -828,7 +838,7 @@ function halfPitch(s,ox,oy,PW,depth){
 function pl(g,x,y,type,lab){
  var fill = type==='a'?'var(--s1)': type==='d'?'var(--axis)':'var(--s2)';
  g.appendChild(mk('circle',{cx:x,cy:y,r:8.5,fill:fill,stroke:'var(--surface-1)','stroke-width':1.6}));
- if(lab)g.appendChild(txt(x,y+3.6,lab,{ta:'middle',fs:9.5,fill:'#fff',fw:700}));
+ if(lab)g.appendChild(txt(x,y+3.6,lab,{ta:'middle',fs:9.5,fill:'#ffffff',fw:700}));
 }
 function board(host,cfg){
  var PWD=364,DEP=40,PHT=DEP*(PWD/68),PY=52,H=PY+PHT+26,W=PWD;
@@ -965,8 +975,8 @@ function v10(){
    hov(cc,'<b>Zone '+num+' · '+NM[num]+'</b><br><span class="m">K1 '+(d>=0?'ahead':'behind')+' — VAEP '+v.toFixed(2)+'×</span>');
    s.appendChild(cc);
    if(big){
-     s.appendChild(txt(x,y-2,v.toFixed(2)+'×',{ta:'middle',fs:num===8?17:14,fill:'#fff',fw:730}));
-     s.appendChild(txt(x,y+14,NM[num],{ta:'middle',fs:9.5,fill:'#fff',fw:560,tn:false}));
+     s.appendChild(txt(x,y-2,v.toFixed(2)+'×',{ta:'middle',fs:num===8?17:14,fill:'#ffffff',fw:730}));
+     s.appendChild(txt(x,y+14,NM[num],{ta:'middle',fs:9.5,fill:'#ffffff',fw:560,tn:false}));
    }else{
      s.appendChild(txt(x,y+rad+16,v.toFixed(2)+'×',{ta:'middle',fs:12.5,fill:'var(--text-primary)',fw:690}));
      s.appendChild(txt(x,y+rad+29,NM[num],{ta:'middle',fs:10.5,fill:'var(--muted)',fw:530,tn:false}));

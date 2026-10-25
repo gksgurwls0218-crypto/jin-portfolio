@@ -4,43 +4,43 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>They Give Away the Least, and Concede More — Incheon United 2026 | Hyuckjin Han</title>
 <meta name="description" content="No side in the league allows fewer open-play chances than Incheon. Rate their matches on expected goals and only Seoul are better. Yet they sit seventh, and have conceded more than six goals above expectation. To separate luck from structure, I put all 168 league matches on the same scale and checked one step at a time.">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
 <style>
 :root{
   color-scheme:light;
-  --page:#f1f1ef; --surface:#fcfcfb; --surface-2:#e4e4e1; --raise:#f7f7f5;
-  --ink:#141413; --ink-2:#3c3c3a; --muted:#70706c;
-  --line:rgba(20,20,19,.14); --line-2:rgba(20,20,19,.07);
-  --grid:#e0e0dd; --axis:#c2c2be;
-  --ic:#1d5fa6; --op:#b0620f; --top:#3f7a1f; --bad:#8a1f27;
-  --ic-soft:rgba(29,95,166,.11); --op-soft:rgba(176,98,15,.12);
-  --top-soft:rgba(63,122,31,.11); --bad-soft:rgba(138,31,39,.10);
+  --page:#ffffff; --surface:#ffffff; --surface-2:#dce1e0; --raise:#f5f7f6;
+  --ink:#14181a; --ink-2:#343a3d; --muted:#5c6367;
+  --line:rgba(20,24,26,0.14); --line-2:rgba(20,24,26,0.07);
+  --grid:#dce1e0; --axis:#bec5c7;
+  --ic:#171512; --op:#5f6f7e; --top:#96a3ad; --bad:#d2462b;
+  --ic-soft:rgba(23,21,18,0.11); --op-soft:rgba(95,111,126,0.12);
+  --top-soft:rgba(150,163,173,0.11); --bad-soft:rgba(210,70,43,0.1);
   --sp:clamp(18px,4.5vw,30px);
-  --disp:"Hahmlet",'Nanum Myeongjo',serif;
-  --body:"IBM Plex Sans KR",-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;
-  --mono:"IBM Plex Mono",ui-monospace,'SFMono-Regular',monospace;
+  --disp:'Space Grotesk','Noto Sans KR',-apple-system,sans-serif;
+  --body:'Inter','Noto Sans KR',-apple-system,'Apple SD Gothic Neo',sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
     color-scheme:dark;
-    --page:#121211; --surface:#1a1a19; --surface-2:#262624; --raise:#1f1f1e;
-    --ink:#eaeae7; --ink-2:#b8b8b4; --muted:#8d8d89;
-    --line:rgba(234,234,231,.16); --line-2:rgba(234,234,231,.08);
-    --grid:#2d2d2b; --axis:#4a4a47;
-    --ic:#5b95d8; --op:#b8762c; --top:#5aa32e; --bad:#e8737c;
-    --ic-soft:rgba(91,149,216,.17); --op-soft:rgba(184,118,44,.17);
-    --top-soft:rgba(90,163,46,.15); --bad-soft:rgba(232,115,124,.14);
+    --page:#14181a; --surface:#14181a; --surface-2:#14181a; --raise:#14181a;
+    --ink:#ecefee; --ink-2:#bec5c7; --muted:#8a9296;
+    --line:rgba(236,239,238,0.16); --line-2:rgba(236,239,238,0.08);
+    --grid:#14181a; --axis:#343a3d;
+    --ic:#696866; --op:#5f6f7e; --top:#96a3ad; --bad:#e9a79a;
+    --ic-soft:rgba(105,104,102,0.17); --op-soft:rgba(95,111,126,0.17);
+    --top-soft:rgba(150,163,173,0.15); --bad-soft:rgba(233,167,154,0.14);
   }
 }
 :root[data-theme="dark"]{
   color-scheme:dark;
-  --page:#121211; --surface:#1a1a19; --surface-2:#262624; --raise:#1f1f1e;
-  --ink:#eaeae7; --ink-2:#b8b8b4; --muted:#8d8d89;
-  --line:rgba(234,234,231,.16); --line-2:rgba(234,234,231,.08);
-  --grid:#2d2d2b; --axis:#4a4a47;
-  --ic:#5b95d8; --op:#b8762c; --top:#5aa32e; --bad:#e8737c;
-  --ic-soft:rgba(91,149,216,.17); --op-soft:rgba(184,118,44,.17);
-  --top-soft:rgba(90,163,46,.15); --bad-soft:rgba(232,115,124,.14);
+  --page:#14181a; --surface:#14181a; --surface-2:#14181a; --raise:#14181a;
+  --ink:#ecefee; --ink-2:#bec5c7; --muted:#8a9296;
+  --line:rgba(236,239,238,0.16); --line-2:rgba(236,239,238,0.08);
+  --grid:#14181a; --axis:#343a3d;
+  --ic:#696866; --op:#5f6f7e; --top:#96a3ad; --bad:#e9a79a;
+  --ic-soft:rgba(105,104,102,0.17); --op-soft:rgba(95,111,126,0.17);
+  --top-soft:rgba(150,163,173,0.15); --bad-soft:rgba(233,167,154,0.14);
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--page);color:var(--ink);font-family:var(--body);
@@ -160,9 +160,9 @@ td .no{font-family:var(--mono);font-size:11px;color:var(--muted)}
 
 /* ── slope svg ── */
 svg{display:block;max-width:100%;height:auto;overflow:visible}
-.sv-lb{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:var(--muted)}
-.sv-vl{font-family:"IBM Plex Mono",monospace;font-size:11.5px;font-weight:500}
-.sv-nm{font-family:"IBM Plex Sans KR",sans-serif;font-size:11.5px;font-weight:600;fill:var(--ink-2)}
+.sv-lb{font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;font-size:10.5px;fill:var(--muted)}
+.sv-vl{font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;font-size:11.5px;font-weight:500}
+.sv-nm{font-family:'Inter','Noto Sans KR',-apple-system,'Apple SD Gothic Neo',sans-serif;font-size:11.5px;font-weight:600;fill:var(--ink-2)}
 
 p.rate{font-size:13px;line-height:1.6;color:var(--muted);border-left:2px solid var(--line);
   padding-left:1.1em;margin:1.5em 0}
@@ -428,4 +428,14 @@ footer b{color:var(--ink-2);font-weight:500}
 <footer><div class="wrap"><b>Data</b> · Parsed directly from the K League data portal (portal.kleague.com). Incheon’s 29 K League 1 matches in 2026 (R22 postponed to 27 September). 40,233 raw events (20,886 Incheon), 29 match reports. The league comparison combines, match by match, the eleven club folders I have parsed the same way: <b>168 matches · 239,842 events</b> (Seoul 26 matches, the rest 28–29 — each club was collected on a different date).<br><b>Validation</b> · 21 event-versus-official-record checks, all matching. League table re-summed; shots 288 · on target 92 · inside the box 183 · corners 120 · fouls 259 · offsides 48 · tackles 153 · interceptions 188 · clearances 563 · passes 11,122 · key passes 127. Three mis-tagged goals corrected.<br><b>★ Missing data</b> · <b>The events for R27 (5 September, 0–1 away at Seoul) do not exist on the portal.</b> Bucheon–Daejeon on the same day is also empty, so it looks as if every match from 5 September is missing. Event figures cover 28 Incheon matches; points and goals cover 29.<br><b>Definitions</b> · Chain = a spell in which one team keeps the ball. Transition = within 15 seconds of winning the ball. “Unchallenged shot” = no defensive or duel event by the defending team in the 3 seconds before the shot (a proxy — body contact and blocked angles are not logged as events).<br><b>Author</b> · Hyuckjin Han · September 2026</div></footer>
 </div>
 </body>
-</html>
+</html><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+KR:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style id="site-theme">
+/* jin-tactics.com site theme (2026-10-25) — appended; content untouched. */
+html{-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:break-word}
+h1,h2,h3{font-family:"Space Grotesk","Noto Sans KR",-apple-system,sans-serif;letter-spacing:-.02em;text-wrap:balance}
+h1{letter-spacing:-.03em}
+::selection{background:rgba(210,70,43,.18)}
+a{text-underline-offset:3px}
+@media(max-width:620px){table{display:block!important;max-width:100%!important;overflow-x:auto;-webkit-overflow-scrolling:touch}}
+</style>
+

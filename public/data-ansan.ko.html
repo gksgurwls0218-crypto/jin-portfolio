@@ -4,43 +4,43 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>앞서고 나서 — 안산 그리너스 2026 | 한혁진</title>
 <meta name="description" content="안산 그리너스는 경기 내용으로 리그에서 가장 약한 팀이다. 그런데 먼저 골을 넣는 일은 드물지 않았다 — 이벤트가 있는 25경기에서 열한 번. 그 열한 경기에서 안산은 두 번 이겼다. 홈에서 먼저 넣은 일곱 경기의 승점은 1이다. 리그 212경기를 같은 잣대로 놓고, 안산이 앞선 뒤에 무슨 일이 일어났는지를 네 국면과 스코어 상태로 나눠 열었다.">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@400;600&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
 <style>
 :root{
   color-scheme:light;
-  --page:#f1f1ef; --surface:#fcfcfb; --surface-2:#e4e4e1; --raise:#f7f7f5;
-  --ink:#141413; --ink-2:#3c3c3a; --muted:#70706c;
-  --line:rgba(20,20,19,.14); --line-2:rgba(20,20,19,.07);
-  --grid:#e0e0dd; --axis:#c2c2be;
-  --ic:#1d6f86; --op:#8a7a64; --top:#2e7d5b; --bad:#b5562a;
-  --ic-soft:rgba(29,111,134,.10); --op-soft:rgba(138,106,60,.12);
-  --top-soft:rgba(46,125,91,.11); --bad-soft:rgba(181,86,42,.10);
+  --page:#ffffff; --surface:#ffffff; --surface-2:#dce1e0; --raise:#f5f7f6;
+  --ink:#14181a; --ink-2:#343a3d; --muted:#5c6367;
+  --line:rgba(20,24,26,0.14); --line-2:rgba(20,24,26,0.07);
+  --grid:#dce1e0; --axis:#bec5c7;
+  --ic:#171512; --op:#5f6f7e; --top:#96a3ad; --bad:#d2462b;
+  --ic-soft:rgba(23,21,18,0.1); --op-soft:rgba(95,111,126,0.12);
+  --top-soft:rgba(150,163,173,0.11); --bad-soft:rgba(210,70,43,0.1);
   --sp:clamp(18px,4.5vw,30px);
-  --disp:"Hahmlet",'Nanum Myeongjo',serif;
-  --body:"IBM Plex Sans KR",-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;
-  --mono:"IBM Plex Mono",ui-monospace,'SFMono-Regular',monospace;
+  --disp:'Space Grotesk','Noto Sans KR',-apple-system,sans-serif;
+  --body:'Inter','Noto Sans KR',-apple-system,'Apple SD Gothic Neo',sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
     color-scheme:dark;
-    --page:#121211; --surface:#1a1a19; --surface-2:#262624; --raise:#1f1f1e;
-    --ink:#eaeae7; --ink-2:#b8b8b4; --muted:#8d8d89;
-    --line:rgba(234,234,231,.16); --line-2:rgba(234,234,231,.08);
-    --grid:#2d2d2b; --axis:#4a4a47;
-    --ic:#7cc8de; --op:#bfae94; --top:#6cc59a; --bad:#f0915e;
-    --ic-soft:rgba(124,200,222,.16); --op-soft:rgba(196,154,100,.17);
-    --top-soft:rgba(108,197,154,.15); --bad-soft:rgba(240,145,94,.14);
+    --page:#14181a; --surface:#14181a; --surface-2:#14181a; --raise:#14181a;
+    --ink:#ecefee; --ink-2:#bec5c7; --muted:#8a9296;
+    --line:rgba(236,239,238,0.16); --line-2:rgba(236,239,238,0.08);
+    --grid:#14181a; --axis:#343a3d;
+    --ic:#91908f; --op:#9aa4ae; --top:#96a3ad; --bad:#97a2ac;
+    --ic-soft:rgba(145,144,143,0.16); --op-soft:rgba(129,142,154,0.17);
+    --top-soft:rgba(150,163,173,0.15); --bad-soft:rgba(151,162,172,0.14);
   }
 }
 :root[data-theme="dark"]{
   color-scheme:dark;
-  --page:#121211; --surface:#1a1a19; --surface-2:#262624; --raise:#1f1f1e;
-  --ink:#eaeae7; --ink-2:#b8b8b4; --muted:#8d8d89;
-  --line:rgba(234,234,231,.16); --line-2:rgba(234,234,231,.08);
-  --grid:#2d2d2b; --axis:#4a4a47;
-  --ic:#7cc8de; --op:#bfae94; --top:#6cc59a; --bad:#f0915e;
-  --ic-soft:rgba(124,200,222,.16); --op-soft:rgba(196,154,100,.17);
-  --top-soft:rgba(108,197,154,.15); --bad-soft:rgba(240,145,94,.14);
+  --page:#14181a; --surface:#14181a; --surface-2:#14181a; --raise:#14181a;
+  --ink:#ecefee; --ink-2:#bec5c7; --muted:#8a9296;
+  --line:rgba(236,239,238,0.16); --line-2:rgba(236,239,238,0.08);
+  --grid:#14181a; --axis:#343a3d;
+  --ic:#91908f; --op:#9aa4ae; --top:#96a3ad; --bad:#97a2ac;
+  --ic-soft:rgba(145,144,143,0.16); --op-soft:rgba(129,142,154,0.17);
+  --top-soft:rgba(150,163,173,0.15); --bad-soft:rgba(151,162,172,0.14);
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--page);color:var(--ink);font-family:var(--body);
@@ -160,9 +160,9 @@ td .no{font-family:var(--mono);font-size:11px;color:var(--muted)}
 
 /* ── slope svg ── */
 svg{display:block;max-width:100%;height:auto;overflow:visible}
-.sv-lb{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:var(--muted)}
-.sv-vl{font-family:"IBM Plex Mono",monospace;font-size:11.5px;font-weight:500}
-.sv-nm{font-family:"IBM Plex Sans KR",sans-serif;font-size:11.5px;font-weight:600;fill:var(--ink-2)}
+.sv-lb{font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;font-size:10.5px;fill:var(--muted)}
+.sv-vl{font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;font-size:11.5px;font-weight:500}
+.sv-nm{font-family:'Inter','Noto Sans KR',-apple-system,'Apple SD Gothic Neo',sans-serif;font-size:11.5px;font-weight:600;fill:var(--ink-2)}
 
 p.rate{font-size:13px;line-height:1.6;color:var(--muted);border-left:2px solid var(--line);
   padding-left:1.1em;margin:1.5em 0}
@@ -523,4 +523,14 @@ footer b{color:var(--ink-2);font-weight:500}
 <footer><div class="wrap"><b>데이터</b> · K리그 데이터포털(portal.kleague.com) 직접 파싱. 안산 그리너스 2026 K리그2 26경기(R15 휴식), 원시 이벤트 37,686건. R25 부산 원정(1-0 승)은 포털에 이벤트가 없어 경기기록부(스코어)만 쓰고, 이벤트 기반 지표는 25경기로 계산했다. 리그 비교는 K리그2 216경기 전량(이벤트 212경기 · 304,486건)을 같은 정의로 계산했다.<br><b>검증</b> · 순위표 재합산(26경기 승점 22 · 리그 17개 구단 승점 전부 일치), 경기기록부 득점 76 = 27+49, 이벤트 골(R25 제외)과 경기기록부 일치 — 포털 이벤트에서 골 표시가 빠진 슛 3개(R20 장현수 · R20 김해 우제욱 · R23 김정현)는 라이브 기록과 직후 골키퍼 실점 이벤트로 대조해 보정했다. PA내 슈팅 · 키패스 · 오프사이드 양팀 일치.<br><b>기대득점(xG) · 기대승점</b> · xG는 포털이 슛마다 매긴 득점 확률이다. 포털 xG 모델은 공개되지 않았다. 기대승점은 한 경기의 모든 슛을 xG 확률대로 2만 번 다시 차서 나온 승·무·패의 평균이다. 자책골 제외. 포털은 PK에 xG를 거의 매기지 않아 PK는 골 수로 다룬다.<br><b>스코어 상태</b> · 리드·동점·열세는 라이브 골 시각을 이벤트 시계로 되돌려(중앙값 64초 지연) 나눴다. 자책골은 이득 팀의 골로 센다. "리드에서 놓친 승점" = 한 번이라도 앞선 경기에서 3점에 못 미친 만큼의 합.<br><b>정의</b> · 체인 = 한 팀이 공을 연속으로 가진 구간. 지공 = 수비 행동으로 되찾은 게 아닌 소유에서 시작한 체인. 탈취 후 공격 = 수비 행동으로 되찾고 시작한 체인. 수비 행동 평균 위치 = 0(자기 골라인)–100(상대 골라인). 코스 기대 = 유효슛이 향한 골문 6칸별 리그 전환율로 계산한 기대 실점(선발 골키퍼 기준 근사).<br><b>외부 자료</b> · 이관우 감독 체제: 언론 보도(골닷컴 코리아 등). 남은 일정: K리그 데이터포털 경기일정.<br><b>작성</b> · 한혁진 · 2026년 10월</div></footer>
 </div>
 </body>
-</html>
+</html><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+KR:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style id="site-theme">
+/* jin-tactics.com site theme (2026-10-25) — appended; content untouched. */
+html{-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:break-word}
+h1,h2,h3{font-family:"Space Grotesk","Noto Sans KR",-apple-system,sans-serif;letter-spacing:-.02em;text-wrap:balance}
+h1{letter-spacing:-.03em}
+::selection{background:rgba(210,70,43,.18)}
+a{text-underline-offset:3px}
+@media(max-width:620px){table{display:block!important;max-width:100%!important;overflow-x:auto;-webkit-overflow-scrolling:touch}}
+</style>
+

@@ -4,42 +4,42 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>아홉 번의 침묵</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@400;500;600;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+
+
 <style>
 :root{
   color-scheme:light;
-  --page:#eef0ec; --surface:#fafbf9; --surface-2:#e2e6e0; --raise:#f4f6f3;
-  --ink:#12150f; --ink-2:#3a4036; --muted:#6d7568;
-  --line:rgba(18,21,15,.14); --line-2:rgba(18,21,15,.07);
-  --grid:#dde2da; --axis:#bfc7bb;
-  --dj:#b8690b; --lg:#3068b8; --top:#0f7f5e; --bad:#a3272f;
-  --dj-soft:rgba(184,105,11,.13); --top-soft:rgba(15,127,94,.11);
+  --page:#ffffff; --surface:#ffffff; --surface-2:#ecefee; --raise:#f5f7f6;
+  --ink:#14181a; --ink-2:#343a3d; --muted:#5c6367;
+  --line:rgba(20,24,26,0.14); --line-2:rgba(20,24,26,0.07);
+  --grid:#dce1e0; --axis:#bec5c7;
+  --dj:#171512; --lg:#5f6f7e; --top:#96a3ad; --bad:#d2462b;
+  --dj-soft:rgba(23,21,18,0.13); --top-soft:rgba(150,163,173,0.11);
   --sp:clamp(18px,4.5vw,30px);
-  --disp:"Hahmlet",'Nanum Myeongjo',serif;
-  --body:"IBM Plex Sans KR",-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;
-  --mono:"IBM Plex Mono",ui-monospace,'SFMono-Regular',monospace;
+  --disp:'Space Grotesk','Noto Sans KR',-apple-system,sans-serif;
+  --body:'Inter','Noto Sans KR',-apple-system,'Apple SD Gothic Neo',sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
     color-scheme:dark;
-    --page:#101310; --surface:#171a16; --surface-2:#232720; --raise:#1d211c;
-    --ink:#e9ece5; --ink-2:#b9c0b4; --muted:#8b9386;
-    --line:rgba(233,236,229,.16); --line-2:rgba(233,236,229,.08);
-    --grid:#2b302a; --axis:#464c43;
-    --dj:#c47d0a; --lg:#4a8ace; --top:#159876; --bad:#d4565e;
-    --dj-soft:rgba(196,125,10,.17); --top-soft:rgba(21,152,118,.15);
+    --page:#14181a; --surface:#14181a; --surface-2:#14181a; --raise:#14181a;
+    --ink:#ecefee; --ink-2:#bec5c7; --muted:#8a9296;
+    --line:rgba(236,239,238,0.16); --line-2:rgba(236,239,238,0.08);
+    --grid:#14181a; --axis:#343a3d;
+    --dj:#171512; --lg:#96a3ad; --top:#5f6f7e; --bad:#d2462b;
+    --dj-soft:rgba(23,21,18,0.17); --top-soft:rgba(95,111,126,0.15);
   }
 }
 :root[data-theme="dark"]{
   color-scheme:dark;
-  --page:#101310; --surface:#171a16; --surface-2:#232720; --raise:#1d211c;
-  --ink:#e9ece5; --ink-2:#b9c0b4; --muted:#8b9386;
-  --line:rgba(233,236,229,.16); --line-2:rgba(233,236,229,.08);
-  --grid:#2b302a; --axis:#464c43;
-  --dj:#c47d0a; --lg:#4a8ace; --top:#159876; --bad:#d4565e;
-  --dj-soft:rgba(196,125,10,.17); --top-soft:rgba(21,152,118,.15);
+  --page:#14181a; --surface:#14181a; --surface-2:#14181a; --raise:#14181a;
+  --ink:#ecefee; --ink-2:#bec5c7; --muted:#8a9296;
+  --line:rgba(236,239,238,0.16); --line-2:rgba(236,239,238,0.08);
+  --grid:#14181a; --axis:#343a3d;
+  --dj:#171512; --lg:#96a3ad; --top:#5f6f7e; --bad:#d2462b;
+  --dj-soft:rgba(23,21,18,0.17); --top-soft:rgba(95,111,126,0.15);
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--page);color:var(--ink);font-family:var(--body);
@@ -177,13 +177,13 @@ footer b{color:var(--ink-2);font-weight:500}
   font-family:var(--mono);font-size:9.5px;color:var(--page);font-variant-numeric:tabular-nums}
 .stackrow{display:flex;height:30px;border-radius:2px;overflow:hidden;margin-bottom:5px}
 .stackrow div{display:flex;align-items:center;justify-content:center;font-family:var(--mono);
-  font-size:10px;color:#fff;white-space:nowrap;overflow:hidden}
+  font-size:10px;color:#ffffff;white-space:nowrap;overflow:hidden}
 .stacklb{font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-bottom:.5em}
 </style>
 <style>
 svg{display:block;max-width:100%;height:auto;overflow:visible}
-.sv-lb{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:var(--muted)}
-.sv-nm{font-family:"IBM Plex Sans KR",sans-serif;font-size:11.5px;font-weight:600;fill:var(--ink-2)}
+.sv-lb{font-family:'JetBrains Mono',ui-monospace,Menlo,monospace;font-size:10.5px;fill:var(--muted)}
+.sv-nm{font-family:'Inter','Noto Sans KR',-apple-system,'Apple SD Gothic Neo',sans-serif;font-size:11.5px;font-weight:600;fill:var(--ink-2)}
 </style>
 <style>
 .mcards{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line-2);
@@ -205,6 +205,16 @@ svg{display:block;max-width:100%;height:auto;overflow:visible}
 .mc .kv .v2.mute{color:var(--ink-2);font-weight:500}
 </style>
 <style>*{box-sizing:border-box}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+KR:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style id="site-theme">
+/* jin-tactics.com site theme (2026-10-25) — appended; content untouched. */
+html{-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:break-word}
+h1,h2,h3{font-family:"Space Grotesk","Noto Sans KR",-apple-system,sans-serif;letter-spacing:-.02em;text-wrap:balance}
+h1{letter-spacing:-.03em}
+::selection{background:rgba(210,70,43,.18)}
+a{text-underline-offset:3px}
+@media(max-width:620px){table{display:block!important;max-width:100%!important;overflow-x:auto;-webkit-overflow-scrolling:touch}}
+</style>
 </head>
 <body>
 
@@ -525,19 +535,19 @@ svg{display:block;max-width:100%;height:auto;overflow:visible}
     <div class="stacklb">전반기 R1–19 · 경기당 3.37회</div>
     <div class="stackrow">
       <div style="width:27%;background:var(--lg)">서진수 27%</div>
-      <div style="width:16%;background:#4a7fc4">루빅손 16%</div>
-      <div style="width:14%;background:#6b96d0">이명재 14%</div>
-      <div style="width:8%;background:#8aacdb">이현식</div>
-      <div style="width:8%;background:#a5c1e4">박규현</div>
+      <div style="width:16%;background:#96a3ad">루빅손 16%</div>
+      <div style="width:14%;background:#96a3ad">이명재 14%</div>
+      <div style="width:8%;background:#b9c2c8">이현식</div>
+      <div style="width:8%;background:#cad0d5">박규현</div>
       <div style="width:27%;background:var(--surface-2);color:var(--muted)">그 외 27%</div>
     </div>
     <div class="stacklb" style="margin-top:1.3em">후반기 R20–28 · 경기당 4.50회</div>
     <div class="stackrow">
       <div style="width:42%;background:var(--dj)">이명재(16) 42%</div>
-      <div style="width:14%;background:#c98a3a">서진수 14%</div>
-      <div style="width:14%;background:#d6a463">루빅손 14%</div>
-      <div style="width:8%;background:#e0bb8b">마사</div>
-      <div style="width:6%;background:#e9d0b0">주민규</div>
+      <div style="width:14%;background:#3f3e3b">서진수 14%</div>
+      <div style="width:14%;background:#696765">루빅손 14%</div>
+      <div style="width:8%;background:#8f8e8c">마사</div>
+      <div style="width:6%;background:#b2b1b0">주민규</div>
       <div style="width:16%;background:var(--surface-2);color:var(--muted)">그 외</div>
     </div>
     <figcaption>양이 늘었을 뿐 아니라(3.37 → 4.50) 한 사람에게 모였다. 같은 자리에 같은 사람이 서면 상대도 알지만, 동료도 안다.</figcaption>
@@ -556,17 +566,17 @@ svg{display:block;max-width:100%;height:auto;overflow:visible}
         <h4>전반기 R1–19</h4>
         <div class="heat">
           <div class="rl">공격3</div>
-          <div class="c" style="background:rgba(184,105,11,.26)">1.05</div>
-          <div class="c" style="background:rgba(184,105,11,.42)">1.68</div>
-          <div class="c" style="background:rgba(184,105,11,.36)">1.42</div>
-          <div class="c" style="background:rgba(184,105,11,.32)">1.26</div>
-          <div class="c" style="background:rgba(184,105,11,.33)">1.32</div>
+          <div class="c" style="background:rgba(23,21,18,0.26)">1.05</div>
+          <div class="c" style="background:rgba(23,21,18,0.42)">1.68</div>
+          <div class="c" style="background:rgba(23,21,18,0.36)">1.42</div>
+          <div class="c" style="background:rgba(23,21,18,0.32)">1.26</div>
+          <div class="c" style="background:rgba(23,21,18,0.33)">1.32</div>
           <div class="rl">중앙3</div>
-          <div class="c" style="background:rgba(184,105,11,.08)">0.32</div>
-          <div class="c" style="background:rgba(184,105,11,.07)">0.26</div>
-          <div class="c" style="background:rgba(184,105,11,.12)">0.47</div>
-          <div class="c" style="background:rgba(184,105,11,.05)">0.21</div>
-          <div class="c" style="background:rgba(184,105,11,.01)">0.05</div>
+          <div class="c" style="background:rgba(23,21,18,0.08)">0.32</div>
+          <div class="c" style="background:rgba(23,21,18,0.07)">0.26</div>
+          <div class="c" style="background:rgba(23,21,18,0.12)">0.47</div>
+          <div class="c" style="background:rgba(23,21,18,0.05)">0.21</div>
+          <div class="c" style="background:rgba(23,21,18,0.01)">0.05</div>
           <div class="rl"></div>
           <div class="cl">좌측</div><div class="cl">좌하프</div><div class="cl">중앙</div><div class="cl">우하프</div><div class="cl">우측</div>
         </div>
@@ -575,17 +585,17 @@ svg{display:block;max-width:100%;height:auto;overflow:visible}
         <h4>후반기 R20–28</h4>
         <div class="heat">
           <div class="rl">공격3</div>
-          <div class="c" style="background:rgba(184,105,11,.50)">2.00</div>
-          <div class="c" style="background:rgba(184,105,11,.38)">1.50</div>
-          <div class="c" style="background:rgba(184,105,11,.28)">1.12</div>
-          <div class="c" style="background:rgba(184,105,11,.38)">1.50</div>
-          <div class="c" style="background:rgba(184,105,11,.50)">2.00</div>
+          <div class="c" style="background:rgba(23,21,18,0.5)">2.00</div>
+          <div class="c" style="background:rgba(23,21,18,0.38)">1.50</div>
+          <div class="c" style="background:rgba(23,21,18,0.28)">1.12</div>
+          <div class="c" style="background:rgba(23,21,18,0.38)">1.50</div>
+          <div class="c" style="background:rgba(23,21,18,0.5)">2.00</div>
           <div class="rl">중앙3</div>
-          <div class="c" style="background:rgba(184,105,11,.10)">0.38</div>
-          <div class="c" style="background:rgba(184,105,11,.16)">0.62</div>
-          <div class="c" style="background:rgba(184,105,11,.16)">0.62</div>
-          <div class="c" style="background:rgba(184,105,11,.03)">0.12</div>
-          <div class="c" style="background:rgba(184,105,11,.06)">0.25</div>
+          <div class="c" style="background:rgba(23,21,18,0.1)">0.38</div>
+          <div class="c" style="background:rgba(23,21,18,0.16)">0.62</div>
+          <div class="c" style="background:rgba(23,21,18,0.16)">0.62</div>
+          <div class="c" style="background:rgba(23,21,18,0.03)">0.12</div>
+          <div class="c" style="background:rgba(23,21,18,0.06)">0.25</div>
           <div class="rl"></div>
           <div class="cl">좌측</div><div class="cl">좌하프</div><div class="cl">중앙</div><div class="cl">우하프</div><div class="cl">우측</div>
         </div>
