@@ -14,13 +14,13 @@ export default function Footer() {
         <div className="flex flex-col gap-4">
           <span className="mono t-eyebrow" style={{ color: "var(--green-mid)" }}>{UI.common.getInTouch[locale]}</span>
           <a
-            href="mailto:218apple@naver.com"
+            href="mailto:gksgurwls0218@gmail.com"
             className="display group inline-flex items-center gap-3 w-fit transition-colors duration-300"
             style={{ fontSize: "clamp(28px, 4.5vw, 52px)", lineHeight: 1, color: "var(--ink)", letterSpacing: "-0.03em" }}
             onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "var(--green-bright)")}
             onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "var(--ink)")}
           >
-            218apple@naver.com
+            gksgurwls0218@gmail.com
             <span className="transition-transform duration-300 group-hover:translate-x-1.5" style={{ color: "var(--green-mid)" }}>→</span>
           </a>
         </div>
